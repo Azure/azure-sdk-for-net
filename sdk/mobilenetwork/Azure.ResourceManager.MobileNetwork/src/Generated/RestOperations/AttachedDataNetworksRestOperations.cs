@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         MobileAttachedDataNetworkData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MobileAttachedDataNetworkData.DeserializeMobileAttachedDataNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         MobileAttachedDataNetworkData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MobileAttachedDataNetworkData.DeserializeMobileAttachedDataNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         MobileAttachedDataNetworkData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MobileAttachedDataNetworkData.DeserializeMobileAttachedDataNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         MobileAttachedDataNetworkData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MobileAttachedDataNetworkData.DeserializeMobileAttachedDataNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         AttachedDataNetworkListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AttachedDataNetworkListResult.DeserializeAttachedDataNetworkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         AttachedDataNetworkListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AttachedDataNetworkListResult.DeserializeAttachedDataNetworkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         AttachedDataNetworkListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AttachedDataNetworkListResult.DeserializeAttachedDataNetworkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         AttachedDataNetworkListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AttachedDataNetworkListResult.DeserializeAttachedDataNetworkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

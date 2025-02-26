@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Automation
 
         DscCompilationJobResource IOperationSource<DscCompilationJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DscCompilationJobData.DeserializeDscCompilationJobData(document.RootElement);
+            var data = ModelReaderWriter.Read<DscCompilationJobData>(new BinaryData(response.ContentStream));
             return new DscCompilationJobResource(_client, data);
         }
 
         async ValueTask<DscCompilationJobResource> IOperationSource<DscCompilationJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DscCompilationJobData.DeserializeDscCompilationJobData(document.RootElement);
-            return new DscCompilationJobResource(_client, data);
+            var data = ModelReaderWriter.Read<DscCompilationJobData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new DscCompilationJobResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

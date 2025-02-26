@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Avs
 
         WorkloadNetworkSegmentResource IOperationSource<WorkloadNetworkSegmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(document.RootElement);
+            var data = ModelReaderWriter.Read<WorkloadNetworkSegmentData>(new BinaryData(response.ContentStream));
             return new WorkloadNetworkSegmentResource(_client, data);
         }
 
         async ValueTask<WorkloadNetworkSegmentResource> IOperationSource<WorkloadNetworkSegmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(document.RootElement);
-            return new WorkloadNetworkSegmentResource(_client, data);
+            var data = ModelReaderWriter.Read<WorkloadNetworkSegmentData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new WorkloadNetworkSegmentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.FrontDoor
 
         FrontDoorWebApplicationFirewallPolicyResource IOperationSource<FrontDoorWebApplicationFirewallPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(document.RootElement);
+            var data = ModelReaderWriter.Read<FrontDoorWebApplicationFirewallPolicyData>(new BinaryData(response.ContentStream));
             return new FrontDoorWebApplicationFirewallPolicyResource(_client, data);
         }
 
         async ValueTask<FrontDoorWebApplicationFirewallPolicyResource> IOperationSource<FrontDoorWebApplicationFirewallPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(document.RootElement);
-            return new FrontDoorWebApplicationFirewallPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<FrontDoorWebApplicationFirewallPolicyData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new FrontDoorWebApplicationFirewallPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

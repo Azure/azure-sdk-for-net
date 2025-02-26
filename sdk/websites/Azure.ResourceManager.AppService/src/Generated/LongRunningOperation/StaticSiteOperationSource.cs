@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.AppService
 
         StaticSiteResource IOperationSource<StaticSiteResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = StaticSiteData.DeserializeStaticSiteData(document.RootElement);
+            var data = ModelReaderWriter.Read<StaticSiteData>(new BinaryData(response.ContentStream));
             return new StaticSiteResource(_client, data);
         }
 
         async ValueTask<StaticSiteResource> IOperationSource<StaticSiteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = StaticSiteData.DeserializeStaticSiteData(document.RootElement);
-            return new StaticSiteResource(_client, data);
+            var data = ModelReaderWriter.Read<StaticSiteData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new StaticSiteResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

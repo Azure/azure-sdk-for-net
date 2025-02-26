@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Network
 
         IPAllocationResource IOperationSource<IPAllocationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = IPAllocationData.DeserializeIPAllocationData(document.RootElement);
+            var data = ModelReaderWriter.Read<IPAllocationData>(new BinaryData(response.ContentStream));
             return new IPAllocationResource(_client, data);
         }
 
         async ValueTask<IPAllocationResource> IOperationSource<IPAllocationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = IPAllocationData.DeserializeIPAllocationData(document.RootElement);
-            return new IPAllocationResource(_client, data);
+            var data = ModelReaderWriter.Read<IPAllocationData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new IPAllocationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

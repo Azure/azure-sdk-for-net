@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPoliciesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JitNetworkAccessPoliciesList.DeserializeJitNetworkAccessPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPoliciesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JitNetworkAccessPoliciesList.DeserializeJitNetworkAccessPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPoliciesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JitNetworkAccessPoliciesList.DeserializeJitNetworkAccessPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPoliciesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JitNetworkAccessPoliciesList.DeserializeJitNetworkAccessPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPoliciesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JitNetworkAccessPoliciesList.DeserializeJitNetworkAccessPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPoliciesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JitNetworkAccessPoliciesList.DeserializeJitNetworkAccessPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPoliciesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JitNetworkAccessPoliciesList.DeserializeJitNetworkAccessPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPoliciesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JitNetworkAccessPoliciesList.DeserializeJitNetworkAccessPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 202:
                     {
                         JitNetworkAccessRequestInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JitNetworkAccessRequestInfo.DeserializeJitNetworkAccessRequestInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -775,7 +775,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 202:
                     {
                         JitNetworkAccessRequestInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JitNetworkAccessRequestInfo.DeserializeJitNetworkAccessRequestInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPoliciesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JitNetworkAccessPoliciesList.DeserializeJitNetworkAccessPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -851,7 +851,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPoliciesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JitNetworkAccessPoliciesList.DeserializeJitNetworkAccessPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPoliciesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JitNetworkAccessPoliciesList.DeserializeJitNetworkAccessPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -929,7 +929,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPoliciesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JitNetworkAccessPoliciesList.DeserializeJitNetworkAccessPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -980,7 +980,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPoliciesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JitNetworkAccessPoliciesList.DeserializeJitNetworkAccessPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPoliciesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JitNetworkAccessPoliciesList.DeserializeJitNetworkAccessPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1061,7 +1061,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPoliciesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JitNetworkAccessPoliciesList.DeserializeJitNetworkAccessPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1091,7 +1091,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         JitNetworkAccessPoliciesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JitNetworkAccessPoliciesList.DeserializeJitNetworkAccessPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

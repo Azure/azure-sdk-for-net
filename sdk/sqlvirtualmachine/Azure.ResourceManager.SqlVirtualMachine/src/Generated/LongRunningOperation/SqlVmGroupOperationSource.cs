@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         SqlVmGroupResource IOperationSource<SqlVmGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SqlVmGroupData.DeserializeSqlVmGroupData(document.RootElement);
+            var data = ModelReaderWriter.Read<SqlVmGroupData>(new BinaryData(response.ContentStream));
             return new SqlVmGroupResource(_client, data);
         }
 
         async ValueTask<SqlVmGroupResource> IOperationSource<SqlVmGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SqlVmGroupData.DeserializeSqlVmGroupData(document.RootElement);
-            return new SqlVmGroupResource(_client, data);
+            var data = ModelReaderWriter.Read<SqlVmGroupData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new SqlVmGroupResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

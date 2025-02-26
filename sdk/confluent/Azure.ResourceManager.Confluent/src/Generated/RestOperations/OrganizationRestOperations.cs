@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentOrganizationListResult.DeserializeConfluentOrganizationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentOrganizationListResult.DeserializeConfluentOrganizationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentOrganizationListResult.DeserializeConfluentOrganizationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentOrganizationListResult.DeserializeConfluentOrganizationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentOrganizationData.DeserializeConfluentOrganizationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentOrganizationData.DeserializeConfluentOrganizationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentOrganizationData.DeserializeConfluentOrganizationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentOrganizationData.DeserializeConfluentOrganizationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         GetEnvironmentsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GetEnvironmentsResponse.DeserializeGetEnvironmentsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         GetEnvironmentsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GetEnvironmentsResponse.DeserializeGetEnvironmentsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         SCEnvironmentRecord value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SCEnvironmentRecord.DeserializeSCEnvironmentRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         SCEnvironmentRecord value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SCEnvironmentRecord.DeserializeSCEnvironmentRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ListClustersSuccessResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListClustersSuccessResponse.DeserializeListClustersSuccessResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ListClustersSuccessResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListClustersSuccessResponse.DeserializeListClustersSuccessResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -990,7 +990,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ListSchemaRegistryClustersResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListSchemaRegistryClustersResponse.DeserializeListSchemaRegistryClustersResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1023,7 +1023,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ListSchemaRegistryClustersResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListSchemaRegistryClustersResponse.DeserializeListSchemaRegistryClustersResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1094,7 +1094,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentRegionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentRegionListResult.DeserializeConfluentRegionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1125,7 +1125,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentRegionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentRegionListResult.DeserializeConfluentRegionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1208,7 +1208,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentApiKeyRecord value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentApiKeyRecord.DeserializeConfluentApiKeyRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1243,7 +1243,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentApiKeyRecord value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentApiKeyRecord.DeserializeConfluentApiKeyRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1404,7 +1404,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentApiKeyRecord value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentApiKeyRecord.DeserializeConfluentApiKeyRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1435,7 +1435,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentApiKeyRecord value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentApiKeyRecord.DeserializeConfluentApiKeyRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1510,7 +1510,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         SchemaRegistryClusterRecord value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SchemaRegistryClusterRecord.DeserializeSchemaRegistryClusterRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1543,7 +1543,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         SchemaRegistryClusterRecord value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SchemaRegistryClusterRecord.DeserializeSchemaRegistryClusterRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1618,7 +1618,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         SCClusterRecord value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SCClusterRecord.DeserializeSCClusterRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1651,7 +1651,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         SCClusterRecord value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SCClusterRecord.DeserializeSCClusterRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1700,7 +1700,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentOrganizationListResult.DeserializeConfluentOrganizationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1727,7 +1727,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentOrganizationListResult.DeserializeConfluentOrganizationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1778,7 +1778,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentOrganizationListResult.DeserializeConfluentOrganizationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1807,7 +1807,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentOrganizationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentOrganizationListResult.DeserializeConfluentOrganizationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1862,7 +1862,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         GetEnvironmentsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GetEnvironmentsResponse.DeserializeGetEnvironmentsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1895,7 +1895,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         GetEnvironmentsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GetEnvironmentsResponse.DeserializeGetEnvironmentsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1952,7 +1952,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ListClustersSuccessResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListClustersSuccessResponse.DeserializeListClustersSuccessResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1987,7 +1987,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ListClustersSuccessResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListClustersSuccessResponse.DeserializeListClustersSuccessResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2044,7 +2044,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ListSchemaRegistryClustersResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListSchemaRegistryClustersResponse.DeserializeListSchemaRegistryClustersResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2079,7 +2079,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ListSchemaRegistryClustersResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListSchemaRegistryClustersResponse.DeserializeListSchemaRegistryClustersResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

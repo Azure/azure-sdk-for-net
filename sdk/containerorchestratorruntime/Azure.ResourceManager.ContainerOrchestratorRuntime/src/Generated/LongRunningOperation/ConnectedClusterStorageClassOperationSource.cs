@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 
         ConnectedClusterStorageClassResource IOperationSource<ConnectedClusterStorageClassResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ConnectedClusterStorageClassData.DeserializeConnectedClusterStorageClassData(document.RootElement);
+            var data = ModelReaderWriter.Read<ConnectedClusterStorageClassData>(new BinaryData(response.ContentStream));
             return new ConnectedClusterStorageClassResource(_client, data);
         }
 
         async ValueTask<ConnectedClusterStorageClassResource> IOperationSource<ConnectedClusterStorageClassResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ConnectedClusterStorageClassData.DeserializeConnectedClusterStorageClassData(document.RootElement);
-            return new ConnectedClusterStorageClassResource(_client, data);
+            var data = ModelReaderWriter.Read<ConnectedClusterStorageClassData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new ConnectedClusterStorageClassResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

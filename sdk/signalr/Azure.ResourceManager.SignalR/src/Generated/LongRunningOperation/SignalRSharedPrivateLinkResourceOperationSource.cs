@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.SignalR
 
         SignalRSharedPrivateLinkResource IOperationSource<SignalRSharedPrivateLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SignalRSharedPrivateLinkResourceData.DeserializeSignalRSharedPrivateLinkResourceData(document.RootElement);
+            var data = ModelReaderWriter.Read<SignalRSharedPrivateLinkResourceData>(new BinaryData(response.ContentStream));
             return new SignalRSharedPrivateLinkResource(_client, data);
         }
 
         async ValueTask<SignalRSharedPrivateLinkResource> IOperationSource<SignalRSharedPrivateLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SignalRSharedPrivateLinkResourceData.DeserializeSignalRSharedPrivateLinkResourceData(document.RootElement);
-            return new SignalRSharedPrivateLinkResource(_client, data);
+            var data = ModelReaderWriter.Read<SignalRSharedPrivateLinkResourceData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new SignalRSharedPrivateLinkResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.ManagedNetwork
 
         ManagedNetworkResource IOperationSource<ManagedNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ManagedNetworkData.DeserializeManagedNetworkData(document.RootElement);
+            var data = ModelReaderWriter.Read<ManagedNetworkData>(new BinaryData(response.ContentStream));
             return new ManagedNetworkResource(_client, data);
         }
 
         async ValueTask<ManagedNetworkResource> IOperationSource<ManagedNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ManagedNetworkData.DeserializeManagedNetworkData(document.RootElement);
-            return new ManagedNetworkResource(_client, data);
+            var data = ModelReaderWriter.Read<ManagedNetworkData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new ManagedNetworkResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

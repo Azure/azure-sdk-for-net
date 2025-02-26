@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsAccountListResult.DeserializeDataLakeAnalyticsAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsAccountListResult.DeserializeDataLakeAnalyticsAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsAccountListResult.DeserializeDataLakeAnalyticsAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsAccountListResult.DeserializeDataLakeAnalyticsAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsAccountData.DeserializeDataLakeAnalyticsAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsAccountData.DeserializeDataLakeAnalyticsAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsAccountNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsAccountNameAvailabilityResult.DeserializeDataLakeAnalyticsAccountNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsAccountNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsAccountNameAvailabilityResult.DeserializeDataLakeAnalyticsAccountNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsAccountListResult.DeserializeDataLakeAnalyticsAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -859,7 +859,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsAccountListResult.DeserializeDataLakeAnalyticsAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsAccountListResult.DeserializeDataLakeAnalyticsAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsAccountListResult.DeserializeDataLakeAnalyticsAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

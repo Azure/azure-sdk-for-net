@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.HybridCompute
 
         ArcGatewayResource IOperationSource<ArcGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ArcGatewayData.DeserializeArcGatewayData(document.RootElement);
+            var data = ModelReaderWriter.Read<ArcGatewayData>(new BinaryData(response.ContentStream));
             return new ArcGatewayResource(_client, data);
         }
 
         async ValueTask<ArcGatewayResource> IOperationSource<ArcGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ArcGatewayData.DeserializeArcGatewayData(document.RootElement);
-            return new ArcGatewayResource(_client, data);
+            var data = ModelReaderWriter.Read<ArcGatewayData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new ArcGatewayResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

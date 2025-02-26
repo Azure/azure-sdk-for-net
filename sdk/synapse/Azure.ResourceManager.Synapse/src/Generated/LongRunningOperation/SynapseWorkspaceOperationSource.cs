@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseWorkspaceResource IOperationSource<SynapseWorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SynapseWorkspaceData.DeserializeSynapseWorkspaceData(document.RootElement);
+            var data = ModelReaderWriter.Read<SynapseWorkspaceData>(new BinaryData(response.ContentStream));
             return new SynapseWorkspaceResource(_client, data);
         }
 
         async ValueTask<SynapseWorkspaceResource> IOperationSource<SynapseWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SynapseWorkspaceData.DeserializeSynapseWorkspaceData(document.RootElement);
-            return new SynapseWorkspaceResource(_client, data);
+            var data = ModelReaderWriter.Read<SynapseWorkspaceData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new SynapseWorkspaceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

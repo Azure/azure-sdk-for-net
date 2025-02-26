@@ -68,13 +68,13 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         DataFlowResource IOperationSource<DataFlowResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return DataFlowResource.DeserializeDataFlowResource(document.RootElement);
         }
 
         async ValueTask<DataFlowResource> IOperationSource<DataFlowResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return DataFlowResource.DeserializeDataFlowResource(document.RootElement);
         }
     }

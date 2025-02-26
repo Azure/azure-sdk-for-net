@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.IotOperations
 
         IotOperationsDataflowEndpointResource IOperationSource<IotOperationsDataflowEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = IotOperationsDataflowEndpointData.DeserializeIotOperationsDataflowEndpointData(document.RootElement);
+            var data = ModelReaderWriter.Read<IotOperationsDataflowEndpointData>(new BinaryData(response.ContentStream));
             return new IotOperationsDataflowEndpointResource(_client, data);
         }
 
         async ValueTask<IotOperationsDataflowEndpointResource> IOperationSource<IotOperationsDataflowEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = IotOperationsDataflowEndpointData.DeserializeIotOperationsDataflowEndpointData(document.RootElement);
-            return new IotOperationsDataflowEndpointResource(_client, data);
+            var data = ModelReaderWriter.Read<IotOperationsDataflowEndpointData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new IotOperationsDataflowEndpointResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

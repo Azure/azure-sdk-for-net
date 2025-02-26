@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.MobileNetwork
 
         MobileAttachedDataNetworkResource IOperationSource<MobileAttachedDataNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MobileAttachedDataNetworkData.DeserializeMobileAttachedDataNetworkData(document.RootElement);
+            var data = ModelReaderWriter.Read<MobileAttachedDataNetworkData>(new BinaryData(response.ContentStream));
             return new MobileAttachedDataNetworkResource(_client, data);
         }
 
         async ValueTask<MobileAttachedDataNetworkResource> IOperationSource<MobileAttachedDataNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MobileAttachedDataNetworkData.DeserializeMobileAttachedDataNetworkData(document.RootElement);
-            return new MobileAttachedDataNetworkResource(_client, data);
+            var data = ModelReaderWriter.Read<MobileAttachedDataNetworkData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new MobileAttachedDataNetworkResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

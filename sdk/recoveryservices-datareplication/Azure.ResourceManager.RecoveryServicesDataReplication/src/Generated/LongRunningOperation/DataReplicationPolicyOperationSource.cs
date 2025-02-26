@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 
         DataReplicationPolicyResource IOperationSource<DataReplicationPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DataReplicationPolicyData.DeserializeDataReplicationPolicyData(document.RootElement);
+            var data = ModelReaderWriter.Read<DataReplicationPolicyData>(new BinaryData(response.ContentStream));
             return new DataReplicationPolicyResource(_client, data);
         }
 
         async ValueTask<DataReplicationPolicyResource> IOperationSource<DataReplicationPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DataReplicationPolicyData.DeserializeDataReplicationPolicyData(document.RootElement);
-            return new DataReplicationPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<DataReplicationPolicyData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new DataReplicationPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

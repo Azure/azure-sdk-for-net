@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Datadog
 
         DatadogMonitorResource IOperationSource<DatadogMonitorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(document.RootElement);
+            var data = ModelReaderWriter.Read<DatadogMonitorResourceData>(new BinaryData(response.ContentStream));
             return new DatadogMonitorResource(_client, data);
         }
 
         async ValueTask<DatadogMonitorResource> IOperationSource<DatadogMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(document.RootElement);
-            return new DatadogMonitorResource(_client, data);
+            var data = ModelReaderWriter.Read<DatadogMonitorResourceData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new DatadogMonitorResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

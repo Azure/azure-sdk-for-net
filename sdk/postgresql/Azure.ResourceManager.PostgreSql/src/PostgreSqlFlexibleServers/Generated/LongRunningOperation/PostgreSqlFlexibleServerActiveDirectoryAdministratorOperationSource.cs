@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         PostgreSqlFlexibleServerActiveDirectoryAdministratorResource IOperationSource<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = PostgreSqlFlexibleServerActiveDirectoryAdministratorData.DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(document.RootElement);
+            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>(new BinaryData(response.ContentStream));
             return new PostgreSqlFlexibleServerActiveDirectoryAdministratorResource(_client, data);
         }
 
         async ValueTask<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource> IOperationSource<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = PostgreSqlFlexibleServerActiveDirectoryAdministratorData.DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(document.RootElement);
-            return new PostgreSqlFlexibleServerActiveDirectoryAdministratorResource(_client, data);
+            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new PostgreSqlFlexibleServerActiveDirectoryAdministratorResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

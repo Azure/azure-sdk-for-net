@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleEligibilityScheduleInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleEligibilityScheduleInstanceListResult.DeserializeRoleEligibilityScheduleInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleEligibilityScheduleInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleEligibilityScheduleInstanceListResult.DeserializeRoleEligibilityScheduleInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleEligibilityScheduleInstanceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleEligibilityScheduleInstanceData.DeserializeRoleEligibilityScheduleInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleEligibilityScheduleInstanceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleEligibilityScheduleInstanceData.DeserializeRoleEligibilityScheduleInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleEligibilityScheduleInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleEligibilityScheduleInstanceListResult.DeserializeRoleEligibilityScheduleInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleEligibilityScheduleInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleEligibilityScheduleInstanceListResult.DeserializeRoleEligibilityScheduleInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

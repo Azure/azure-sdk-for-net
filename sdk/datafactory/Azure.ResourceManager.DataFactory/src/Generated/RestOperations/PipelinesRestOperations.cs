@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryPipelineListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryPipelineListResult.DeserializeDataFactoryPipelineListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryPipelineListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryPipelineListResult.DeserializeDataFactoryPipelineListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryPipelineData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryPipelineData.DeserializeDataFactoryPipelineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryPipelineData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryPipelineData.DeserializeDataFactoryPipelineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryPipelineData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryPipelineData.DeserializeDataFactoryPipelineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryPipelineData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryPipelineData.DeserializeDataFactoryPipelineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.DataFactory
 #if NET6_0_OR_GREATER
 				content.JsonWriter.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
                     }
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         PipelineCreateRunResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PipelineCreateRunResult.DeserializePipelineCreateRunResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         PipelineCreateRunResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PipelineCreateRunResult.DeserializePipelineCreateRunResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryPipelineListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryPipelineListResult.DeserializeDataFactoryPipelineListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryPipelineListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryPipelineListResult.DeserializeDataFactoryPipelineListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

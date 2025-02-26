@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         ContainerRegistryAgentPoolResource IOperationSource<ContainerRegistryAgentPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ContainerRegistryAgentPoolData.DeserializeContainerRegistryAgentPoolData(document.RootElement);
+            var data = ModelReaderWriter.Read<ContainerRegistryAgentPoolData>(new BinaryData(response.ContentStream));
             return new ContainerRegistryAgentPoolResource(_client, data);
         }
 
         async ValueTask<ContainerRegistryAgentPoolResource> IOperationSource<ContainerRegistryAgentPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ContainerRegistryAgentPoolData.DeserializeContainerRegistryAgentPoolData(document.RootElement);
-            return new ContainerRegistryAgentPoolResource(_client, data);
+            var data = ModelReaderWriter.Read<ContainerRegistryAgentPoolData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new ContainerRegistryAgentPoolResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

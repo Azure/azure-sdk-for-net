@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Network
 
         NetworkInterfaceTapConfigurationResource IOperationSource<NetworkInterfaceTapConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetworkInterfaceTapConfigurationData.DeserializeNetworkInterfaceTapConfigurationData(document.RootElement);
+            var data = ModelReaderWriter.Read<NetworkInterfaceTapConfigurationData>(new BinaryData(response.ContentStream));
             return new NetworkInterfaceTapConfigurationResource(_client, data);
         }
 
         async ValueTask<NetworkInterfaceTapConfigurationResource> IOperationSource<NetworkInterfaceTapConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetworkInterfaceTapConfigurationData.DeserializeNetworkInterfaceTapConfigurationData(document.RootElement);
-            return new NetworkInterfaceTapConfigurationResource(_client, data);
+            var data = ModelReaderWriter.Read<NetworkInterfaceTapConfigurationData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new NetworkInterfaceTapConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

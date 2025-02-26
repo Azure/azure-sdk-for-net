@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 
         KubernetesClusterExtensionResource IOperationSource<KubernetesClusterExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = KubernetesClusterExtensionData.DeserializeKubernetesClusterExtensionData(document.RootElement);
+            var data = ModelReaderWriter.Read<KubernetesClusterExtensionData>(new BinaryData(response.ContentStream));
             return new KubernetesClusterExtensionResource(_client, data);
         }
 
         async ValueTask<KubernetesClusterExtensionResource> IOperationSource<KubernetesClusterExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = KubernetesClusterExtensionData.DeserializeKubernetesClusterExtensionData(document.RootElement);
-            return new KubernetesClusterExtensionResource(_client, data);
+            var data = ModelReaderWriter.Read<KubernetesClusterExtensionData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new KubernetesClusterExtensionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

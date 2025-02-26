@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudClusterMetricsConfigurationResource IOperationSource<NetworkCloudClusterMetricsConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetworkCloudClusterMetricsConfigurationData.DeserializeNetworkCloudClusterMetricsConfigurationData(document.RootElement);
+            var data = ModelReaderWriter.Read<NetworkCloudClusterMetricsConfigurationData>(new BinaryData(response.ContentStream));
             return new NetworkCloudClusterMetricsConfigurationResource(_client, data);
         }
 
         async ValueTask<NetworkCloudClusterMetricsConfigurationResource> IOperationSource<NetworkCloudClusterMetricsConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetworkCloudClusterMetricsConfigurationData.DeserializeNetworkCloudClusterMetricsConfigurationData(document.RootElement);
-            return new NetworkCloudClusterMetricsConfigurationResource(_client, data);
+            var data = ModelReaderWriter.Read<NetworkCloudClusterMetricsConfigurationData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new NetworkCloudClusterMetricsConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

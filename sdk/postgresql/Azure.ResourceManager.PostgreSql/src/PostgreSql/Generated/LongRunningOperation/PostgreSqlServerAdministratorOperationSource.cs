@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.PostgreSql
 
         PostgreSqlServerAdministratorResource IOperationSource<PostgreSqlServerAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = PostgreSqlServerAdministratorData.DeserializePostgreSqlServerAdministratorData(document.RootElement);
+            var data = ModelReaderWriter.Read<PostgreSqlServerAdministratorData>(new BinaryData(response.ContentStream));
             return new PostgreSqlServerAdministratorResource(_client, data);
         }
 
         async ValueTask<PostgreSqlServerAdministratorResource> IOperationSource<PostgreSqlServerAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = PostgreSqlServerAdministratorData.DeserializePostgreSqlServerAdministratorData(document.RootElement);
-            return new PostgreSqlServerAdministratorResource(_client, data);
+            var data = ModelReaderWriter.Read<PostgreSqlServerAdministratorData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new PostgreSqlServerAdministratorResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

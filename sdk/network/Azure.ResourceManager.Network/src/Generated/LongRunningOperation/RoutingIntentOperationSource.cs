@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Network
 
         RoutingIntentResource IOperationSource<RoutingIntentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = RoutingIntentData.DeserializeRoutingIntentData(document.RootElement);
+            var data = ModelReaderWriter.Read<RoutingIntentData>(new BinaryData(response.ContentStream));
             return new RoutingIntentResource(_client, data);
         }
 
         async ValueTask<RoutingIntentResource> IOperationSource<RoutingIntentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = RoutingIntentData.DeserializeRoutingIntentData(document.RootElement);
-            return new RoutingIntentResource(_client, data);
+            var data = ModelReaderWriter.Read<RoutingIntentData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new RoutingIntentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

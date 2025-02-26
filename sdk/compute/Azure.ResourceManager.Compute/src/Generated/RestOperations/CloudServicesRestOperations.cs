@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudServiceData.DeserializeCloudServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudServiceData.DeserializeCloudServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceInstanceView value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudServiceInstanceView.DeserializeCloudServiceInstanceView(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceInstanceView value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudServiceInstanceView.DeserializeCloudServiceInstanceView(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudServiceListResult.DeserializeCloudServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudServiceListResult.DeserializeCloudServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudServiceListResult.DeserializeCloudServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudServiceListResult.DeserializeCloudServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1250,7 +1250,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudServiceListResult.DeserializeCloudServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1277,7 +1277,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudServiceListResult.DeserializeCloudServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1328,7 +1328,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudServiceListResult.DeserializeCloudServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1357,7 +1357,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudServiceListResult.DeserializeCloudServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Sphere
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSphereImageData(document.RootElement, options);
                     }
                 default:

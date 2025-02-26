@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.LargeInstance
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLargeStorageInstanceData(document.RootElement, options);
                     }
                 default:

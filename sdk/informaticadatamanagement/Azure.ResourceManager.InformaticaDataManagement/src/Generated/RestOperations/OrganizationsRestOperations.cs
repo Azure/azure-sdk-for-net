@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 case 200:
                     {
                         InformaticaOrganizationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InformaticaOrganizationData.DeserializeInformaticaOrganizationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 case 200:
                     {
                         InformaticaOrganizationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InformaticaOrganizationData.DeserializeInformaticaOrganizationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 case 200:
                     {
                         InformaticaOrganizationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InformaticaOrganizationData.DeserializeInformaticaOrganizationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 case 200:
                     {
                         InformaticaOrganizationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InformaticaOrganizationData.DeserializeInformaticaOrganizationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 case 200:
                     {
                         InformaticaOrganizationResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InformaticaOrganizationResourceListResult.DeserializeInformaticaOrganizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 case 200:
                     {
                         InformaticaOrganizationResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InformaticaOrganizationResourceListResult.DeserializeInformaticaOrganizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 case 200:
                     {
                         InformaticaOrganizationResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InformaticaOrganizationResourceListResult.DeserializeInformaticaOrganizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 case 200:
                     {
                         InformaticaOrganizationResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InformaticaOrganizationResourceListResult.DeserializeInformaticaOrganizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 case 200:
                     {
                         ServerlessMetadataResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServerlessMetadataResponse.DeserializeServerlessMetadataResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 case 200:
                     {
                         ServerlessMetadataResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServerlessMetadataResponse.DeserializeServerlessMetadataResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 case 200:
                     {
                         InformaticaServerlessRuntimeResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InformaticaServerlessRuntimeResourceList.DeserializeInformaticaServerlessRuntimeResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 case 200:
                     {
                         InformaticaServerlessRuntimeResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InformaticaServerlessRuntimeResourceList.DeserializeInformaticaServerlessRuntimeResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 case 200:
                     {
                         InformaticaOrganizationResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InformaticaOrganizationResourceListResult.DeserializeInformaticaOrganizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 case 200:
                     {
                         InformaticaOrganizationResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InformaticaOrganizationResourceListResult.DeserializeInformaticaOrganizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -880,7 +880,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 case 200:
                     {
                         InformaticaOrganizationResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InformaticaOrganizationResourceListResult.DeserializeInformaticaOrganizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -907,7 +907,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 case 200:
                     {
                         InformaticaOrganizationResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InformaticaOrganizationResourceListResult.DeserializeInformaticaOrganizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

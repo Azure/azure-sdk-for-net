@@ -75,7 +75,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         JobProperties value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JobProperties.DeserializeJobProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -102,7 +102,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         JobProperties value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JobProperties.DeserializeJobProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -136,7 +136,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         IReadOnlyList<JobProperties> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<JobProperties> array = new List<JobProperties>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -161,7 +161,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         IReadOnlyList<JobProperties> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<JobProperties> array = new List<JobProperties>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -208,7 +208,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         JobProperties value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JobProperties.DeserializeJobProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -235,7 +235,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         JobProperties value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JobProperties.DeserializeJobProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -277,7 +277,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         JobResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JobResponse.DeserializeJobResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -304,7 +304,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         JobResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JobResponse.DeserializeJobResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -355,7 +355,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         JobResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JobResponse.DeserializeJobResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -387,7 +387,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         JobResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JobResponse.DeserializeJobResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -430,7 +430,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         JobResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JobResponse.DeserializeJobResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -457,7 +457,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         JobResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JobResponse.DeserializeJobResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -501,7 +501,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         QueryResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QueryResult.DeserializeQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -523,7 +523,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         QueryResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QueryResult.DeserializeQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

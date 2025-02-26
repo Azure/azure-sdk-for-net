@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayServerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FluidRelayServerData.DeserializeFluidRelayServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayServerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FluidRelayServerData.DeserializeFluidRelayServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayServerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FluidRelayServerData.DeserializeFluidRelayServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayServerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FluidRelayServerData.DeserializeFluidRelayServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayServerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FluidRelayServerData.DeserializeFluidRelayServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayServerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FluidRelayServerData.DeserializeFluidRelayServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayServerKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FluidRelayServerKeys.DeserializeFluidRelayServerKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayServerKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FluidRelayServerKeys.DeserializeFluidRelayServerKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayServerKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FluidRelayServerKeys.DeserializeFluidRelayServerKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayServerKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FluidRelayServerKeys.DeserializeFluidRelayServerKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayServerList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FluidRelayServerList.DeserializeFluidRelayServerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayServerList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FluidRelayServerList.DeserializeFluidRelayServerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayServerList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FluidRelayServerList.DeserializeFluidRelayServerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayServerList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FluidRelayServerList.DeserializeFluidRelayServerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayServerList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FluidRelayServerList.DeserializeFluidRelayServerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayServerList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FluidRelayServerList.DeserializeFluidRelayServerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayServerList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FluidRelayServerList.DeserializeFluidRelayServerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayServerList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FluidRelayServerList.DeserializeFluidRelayServerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

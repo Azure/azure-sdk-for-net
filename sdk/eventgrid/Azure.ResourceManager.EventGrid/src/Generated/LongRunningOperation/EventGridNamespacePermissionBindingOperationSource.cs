@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.EventGrid
 
         EventGridNamespacePermissionBindingResource IOperationSource<EventGridNamespacePermissionBindingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = EventGridNamespacePermissionBindingData.DeserializeEventGridNamespacePermissionBindingData(document.RootElement);
+            var data = ModelReaderWriter.Read<EventGridNamespacePermissionBindingData>(new BinaryData(response.ContentStream));
             return new EventGridNamespacePermissionBindingResource(_client, data);
         }
 
         async ValueTask<EventGridNamespacePermissionBindingResource> IOperationSource<EventGridNamespacePermissionBindingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = EventGridNamespacePermissionBindingData.DeserializeEventGridNamespacePermissionBindingData(document.RootElement);
-            return new EventGridNamespacePermissionBindingResource(_client, data);
+            var data = ModelReaderWriter.Read<EventGridNamespacePermissionBindingData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new EventGridNamespacePermissionBindingResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

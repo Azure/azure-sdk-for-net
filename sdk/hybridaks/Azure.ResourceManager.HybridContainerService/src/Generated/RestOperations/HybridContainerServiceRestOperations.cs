@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case 200:
                     {
                         KubernetesVersionProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KubernetesVersionProfileData.DeserializeKubernetesVersionProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case 200:
                     {
                         KubernetesVersionProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KubernetesVersionProfileData.DeserializeKubernetesVersionProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case 200:
                     {
                         HybridContainerServiceVmSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridContainerServiceVmSkuData.DeserializeHybridContainerServiceVmSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case 200:
                     {
                         HybridContainerServiceVmSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridContainerServiceVmSkuData.DeserializeHybridContainerServiceVmSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

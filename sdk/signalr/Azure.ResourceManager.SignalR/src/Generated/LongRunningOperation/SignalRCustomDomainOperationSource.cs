@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.SignalR
 
         SignalRCustomDomainResource IOperationSource<SignalRCustomDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SignalRCustomDomainData.DeserializeSignalRCustomDomainData(document.RootElement);
+            var data = ModelReaderWriter.Read<SignalRCustomDomainData>(new BinaryData(response.ContentStream));
             return new SignalRCustomDomainResource(_client, data);
         }
 
         async ValueTask<SignalRCustomDomainResource> IOperationSource<SignalRCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SignalRCustomDomainData.DeserializeSignalRCustomDomainData(document.RootElement);
-            return new SignalRCustomDomainResource(_client, data);
+            var data = ModelReaderWriter.Read<SignalRCustomDomainData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new SignalRCustomDomainResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

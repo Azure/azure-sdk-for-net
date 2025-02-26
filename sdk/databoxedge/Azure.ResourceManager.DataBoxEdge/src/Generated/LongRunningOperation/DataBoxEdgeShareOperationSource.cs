@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         DataBoxEdgeShareResource IOperationSource<DataBoxEdgeShareResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(document.RootElement);
+            var data = ModelReaderWriter.Read<DataBoxEdgeShareData>(new BinaryData(response.ContentStream));
             return new DataBoxEdgeShareResource(_client, data);
         }
 
         async ValueTask<DataBoxEdgeShareResource> IOperationSource<DataBoxEdgeShareResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(document.RootElement);
-            return new DataBoxEdgeShareResource(_client, data);
+            var data = ModelReaderWriter.Read<DataBoxEdgeShareData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new DataBoxEdgeShareResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

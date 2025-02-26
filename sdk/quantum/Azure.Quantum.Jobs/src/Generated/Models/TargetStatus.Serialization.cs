@@ -59,7 +59,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static TargetStatus FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTargetStatus(document.RootElement);
         }
     }

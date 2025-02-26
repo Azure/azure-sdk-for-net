@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseExtendedServerBlobAuditingPolicyResource IOperationSource<SynapseExtendedServerBlobAuditingPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SynapseExtendedServerBlobAuditingPolicyData.DeserializeSynapseExtendedServerBlobAuditingPolicyData(document.RootElement);
+            var data = ModelReaderWriter.Read<SynapseExtendedServerBlobAuditingPolicyData>(new BinaryData(response.ContentStream));
             return new SynapseExtendedServerBlobAuditingPolicyResource(_client, data);
         }
 
         async ValueTask<SynapseExtendedServerBlobAuditingPolicyResource> IOperationSource<SynapseExtendedServerBlobAuditingPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SynapseExtendedServerBlobAuditingPolicyData.DeserializeSynapseExtendedServerBlobAuditingPolicyData(document.RootElement);
-            return new SynapseExtendedServerBlobAuditingPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<SynapseExtendedServerBlobAuditingPolicyData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new SynapseExtendedServerBlobAuditingPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

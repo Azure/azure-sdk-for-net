@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosDBSqlClientEncryptionKeyResource IOperationSource<CosmosDBSqlClientEncryptionKeyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(document.RootElement);
+            var data = ModelReaderWriter.Read<CosmosDBSqlClientEncryptionKeyData>(new BinaryData(response.ContentStream));
             return new CosmosDBSqlClientEncryptionKeyResource(_client, data);
         }
 
         async ValueTask<CosmosDBSqlClientEncryptionKeyResource> IOperationSource<CosmosDBSqlClientEncryptionKeyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(document.RootElement);
-            return new CosmosDBSqlClientEncryptionKeyResource(_client, data);
+            var data = ModelReaderWriter.Read<CosmosDBSqlClientEncryptionKeyData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new CosmosDBSqlClientEncryptionKeyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

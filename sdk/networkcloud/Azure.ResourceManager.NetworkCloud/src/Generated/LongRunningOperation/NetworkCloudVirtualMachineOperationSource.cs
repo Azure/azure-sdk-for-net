@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudVirtualMachineResource IOperationSource<NetworkCloudVirtualMachineResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetworkCloudVirtualMachineData.DeserializeNetworkCloudVirtualMachineData(document.RootElement);
+            var data = ModelReaderWriter.Read<NetworkCloudVirtualMachineData>(new BinaryData(response.ContentStream));
             return new NetworkCloudVirtualMachineResource(_client, data);
         }
 
         async ValueTask<NetworkCloudVirtualMachineResource> IOperationSource<NetworkCloudVirtualMachineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetworkCloudVirtualMachineData.DeserializeNetworkCloudVirtualMachineData(document.RootElement);
-            return new NetworkCloudVirtualMachineResource(_client, data);
+            var data = ModelReaderWriter.Read<NetworkCloudVirtualMachineData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new NetworkCloudVirtualMachineResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

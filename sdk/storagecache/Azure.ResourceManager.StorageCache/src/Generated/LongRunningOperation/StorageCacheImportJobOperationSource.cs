@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.StorageCache
 
         StorageCacheImportJobResource IOperationSource<StorageCacheImportJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = StorageCacheImportJobData.DeserializeStorageCacheImportJobData(document.RootElement);
+            var data = ModelReaderWriter.Read<StorageCacheImportJobData>(new BinaryData(response.ContentStream));
             return new StorageCacheImportJobResource(_client, data);
         }
 
         async ValueTask<StorageCacheImportJobResource> IOperationSource<StorageCacheImportJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = StorageCacheImportJobData.DeserializeStorageCacheImportJobData(document.RootElement);
-            return new StorageCacheImportJobResource(_client, data);
+            var data = ModelReaderWriter.Read<StorageCacheImportJobData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new StorageCacheImportJobResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

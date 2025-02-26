@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.HybridContainerService
 
         KubernetesVersionProfileResource IOperationSource<KubernetesVersionProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = KubernetesVersionProfileData.DeserializeKubernetesVersionProfileData(document.RootElement);
+            var data = ModelReaderWriter.Read<KubernetesVersionProfileData>(new BinaryData(response.ContentStream));
             return new KubernetesVersionProfileResource(_client, data);
         }
 
         async ValueTask<KubernetesVersionProfileResource> IOperationSource<KubernetesVersionProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = KubernetesVersionProfileData.DeserializeKubernetesVersionProfileData(document.RootElement);
-            return new KubernetesVersionProfileResource(_client, data);
+            var data = ModelReaderWriter.Read<KubernetesVersionProfileData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new KubernetesVersionProfileResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

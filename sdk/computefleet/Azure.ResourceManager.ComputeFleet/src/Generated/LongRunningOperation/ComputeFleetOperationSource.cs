@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.ComputeFleet
 
         ComputeFleetResource IOperationSource<ComputeFleetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ComputeFleetData.DeserializeComputeFleetData(document.RootElement);
+            var data = ModelReaderWriter.Read<ComputeFleetData>(new BinaryData(response.ContentStream));
             return new ComputeFleetResource(_client, data);
         }
 
         async ValueTask<ComputeFleetResource> IOperationSource<ComputeFleetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ComputeFleetData.DeserializeComputeFleetData(document.RootElement);
-            return new ComputeFleetResource(_client, data);
+            var data = ModelReaderWriter.Read<ComputeFleetData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new ComputeFleetResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

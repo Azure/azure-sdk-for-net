@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 201:
                     {
                         BlueprintData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BlueprintData.DeserializeBlueprintData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 201:
                     {
                         BlueprintData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BlueprintData.DeserializeBlueprintData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         BlueprintData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BlueprintData.DeserializeBlueprintData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         BlueprintData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BlueprintData.DeserializeBlueprintData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         BlueprintData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BlueprintData.DeserializeBlueprintData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         BlueprintData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BlueprintData.DeserializeBlueprintData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         BlueprintList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BlueprintList.DeserializeBlueprintList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         BlueprintList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BlueprintList.DeserializeBlueprintList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         BlueprintList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BlueprintList.DeserializeBlueprintList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         BlueprintList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BlueprintList.DeserializeBlueprintList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

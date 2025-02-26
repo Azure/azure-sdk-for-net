@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         DnsPrivateZoneListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DnsPrivateZoneListResult.DeserializeDnsPrivateZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         DnsPrivateZoneListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DnsPrivateZoneListResult.DeserializeDnsPrivateZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         OracleDnsPrivateZoneData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OracleDnsPrivateZoneData.DeserializeOracleDnsPrivateZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         OracleDnsPrivateZoneData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OracleDnsPrivateZoneData.DeserializeOracleDnsPrivateZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         DnsPrivateZoneListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DnsPrivateZoneListResult.DeserializeDnsPrivateZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         DnsPrivateZoneListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DnsPrivateZoneListResult.DeserializeDnsPrivateZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

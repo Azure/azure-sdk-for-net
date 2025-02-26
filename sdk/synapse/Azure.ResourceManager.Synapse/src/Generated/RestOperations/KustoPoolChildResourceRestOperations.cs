@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         KustoPoolNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KustoPoolNameAvailabilityResult.DeserializeKustoPoolNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         KustoPoolNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KustoPoolNameAvailabilityResult.DeserializeKustoPoolNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

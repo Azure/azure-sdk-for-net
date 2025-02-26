@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         ShareDataSetMappingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ShareDataSetMappingData.DeserializeShareDataSetMappingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         ShareDataSetMappingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ShareDataSetMappingData.DeserializeShareDataSetMappingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataShare
                 case 201:
                     {
                         ShareDataSetMappingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ShareDataSetMappingData.DeserializeShareDataSetMappingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DataShare
                 case 201:
                     {
                         ShareDataSetMappingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ShareDataSetMappingData.DeserializeShareDataSetMappingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataSetMappingList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataSetMappingList.DeserializeDataSetMappingList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataSetMappingList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataSetMappingList.DeserializeDataSetMappingList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataSetMappingList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataSetMappingList.DeserializeDataSetMappingList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataSetMappingList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataSetMappingList.DeserializeDataSetMappingList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

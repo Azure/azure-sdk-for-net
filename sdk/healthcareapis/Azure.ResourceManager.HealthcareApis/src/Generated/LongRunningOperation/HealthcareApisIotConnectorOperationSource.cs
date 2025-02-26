@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.HealthcareApis
 
         HealthcareApisIotConnectorResource IOperationSource<HealthcareApisIotConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(document.RootElement);
+            var data = ModelReaderWriter.Read<HealthcareApisIotConnectorData>(new BinaryData(response.ContentStream));
             return new HealthcareApisIotConnectorResource(_client, data);
         }
 
         async ValueTask<HealthcareApisIotConnectorResource> IOperationSource<HealthcareApisIotConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(document.RootElement);
-            return new HealthcareApisIotConnectorResource(_client, data);
+            var data = ModelReaderWriter.Read<HealthcareApisIotConnectorData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new HealthcareApisIotConnectorResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

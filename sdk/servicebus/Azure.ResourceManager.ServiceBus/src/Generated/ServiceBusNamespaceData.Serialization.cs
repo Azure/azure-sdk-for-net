@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServiceBusNamespaceData(document.RootElement, options);
                     }
                 default:

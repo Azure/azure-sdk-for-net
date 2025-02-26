@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountCertificateListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountCertificateListResult.DeserializeIntegrationAccountCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountCertificateListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountCertificateListResult.DeserializeIntegrationAccountCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountCertificateData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountCertificateData.DeserializeIntegrationAccountCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountCertificateData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountCertificateData.DeserializeIntegrationAccountCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Logic
                 case 201:
                     {
                         IntegrationAccountCertificateData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountCertificateData.DeserializeIntegrationAccountCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Logic
                 case 201:
                     {
                         IntegrationAccountCertificateData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountCertificateData.DeserializeIntegrationAccountCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountCertificateListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountCertificateListResult.DeserializeIntegrationAccountCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountCertificateListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountCertificateListResult.DeserializeIntegrationAccountCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

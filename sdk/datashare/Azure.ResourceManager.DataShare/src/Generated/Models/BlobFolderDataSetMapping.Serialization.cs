@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBlobFolderDataSetMapping(document.RootElement, options);
                     }
                 default:

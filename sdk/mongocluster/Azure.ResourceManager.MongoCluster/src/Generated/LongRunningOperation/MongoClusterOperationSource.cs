@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.MongoCluster
 
         MongoClusterResource IOperationSource<MongoClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MongoClusterData.DeserializeMongoClusterData(document.RootElement);
+            var data = ModelReaderWriter.Read<MongoClusterData>(new BinaryData(response.ContentStream));
             return new MongoClusterResource(_client, data);
         }
 
         async ValueTask<MongoClusterResource> IOperationSource<MongoClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MongoClusterData.DeserializeMongoClusterData(document.RootElement);
-            return new MongoClusterResource(_client, data);
+            var data = ModelReaderWriter.Read<MongoClusterData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new MongoClusterResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

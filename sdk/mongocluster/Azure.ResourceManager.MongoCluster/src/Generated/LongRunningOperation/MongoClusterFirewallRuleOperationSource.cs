@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.MongoCluster
 
         MongoClusterFirewallRuleResource IOperationSource<MongoClusterFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MongoClusterFirewallRuleData.DeserializeMongoClusterFirewallRuleData(document.RootElement);
+            var data = ModelReaderWriter.Read<MongoClusterFirewallRuleData>(new BinaryData(response.ContentStream));
             return new MongoClusterFirewallRuleResource(_client, data);
         }
 
         async ValueTask<MongoClusterFirewallRuleResource> IOperationSource<MongoClusterFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MongoClusterFirewallRuleData.DeserializeMongoClusterFirewallRuleData(document.RootElement);
-            return new MongoClusterFirewallRuleResource(_client, data);
+            var data = ModelReaderWriter.Read<MongoClusterFirewallRuleData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new MongoClusterFirewallRuleResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

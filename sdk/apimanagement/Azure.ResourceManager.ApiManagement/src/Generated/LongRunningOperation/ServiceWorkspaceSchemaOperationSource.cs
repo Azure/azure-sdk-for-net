@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.ApiManagement
 
         ServiceWorkspaceSchemaResource IOperationSource<ServiceWorkspaceSchemaResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(document.RootElement);
+            var data = ModelReaderWriter.Read<ApiManagementGlobalSchemaData>(new BinaryData(response.ContentStream));
             return new ServiceWorkspaceSchemaResource(_client, data);
         }
 
         async ValueTask<ServiceWorkspaceSchemaResource> IOperationSource<ServiceWorkspaceSchemaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(document.RootElement);
-            return new ServiceWorkspaceSchemaResource(_client, data);
+            var data = ModelReaderWriter.Read<ApiManagementGlobalSchemaData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new ServiceWorkspaceSchemaResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

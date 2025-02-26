@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Avs
 
         ScriptExecutionResource IOperationSource<ScriptExecutionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ScriptExecutionData.DeserializeScriptExecutionData(document.RootElement);
+            var data = ModelReaderWriter.Read<ScriptExecutionData>(new BinaryData(response.ContentStream));
             return new ScriptExecutionResource(_client, data);
         }
 
         async ValueTask<ScriptExecutionResource> IOperationSource<ScriptExecutionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ScriptExecutionData.DeserializeScriptExecutionData(document.RootElement);
-            return new ScriptExecutionResource(_client, data);
+            var data = ModelReaderWriter.Read<ScriptExecutionData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new ScriptExecutionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

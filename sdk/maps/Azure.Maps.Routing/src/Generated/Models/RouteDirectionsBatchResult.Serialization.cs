@@ -54,7 +54,7 @@ namespace Azure.Maps.Routing.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new RouteDirectionsBatchResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeRouteDirectionsBatchResult(document.RootElement);
         }
     }

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsStorageAccountInformationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsStorageAccountInformationListResult.DeserializeDataLakeAnalyticsStorageAccountInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsStorageAccountInformationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsStorageAccountInformationListResult.DeserializeDataLakeAnalyticsStorageAccountInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsStorageAccountInformationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsStorageAccountInformationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsStorageContainerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsStorageContainerListResult.DeserializeDataLakeAnalyticsStorageContainerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsStorageContainerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsStorageContainerListResult.DeserializeDataLakeAnalyticsStorageContainerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsStorageContainerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsStorageContainerData.DeserializeDataLakeAnalyticsStorageContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsStorageContainerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsStorageContainerData.DeserializeDataLakeAnalyticsStorageContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsSasTokenInformationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsSasTokenInformationListResult.DeserializeDataLakeAnalyticsSasTokenInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -895,7 +895,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsSasTokenInformationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsSasTokenInformationListResult.DeserializeDataLakeAnalyticsSasTokenInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsStorageAccountInformationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsStorageAccountInformationListResult.DeserializeDataLakeAnalyticsStorageAccountInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -991,7 +991,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsStorageAccountInformationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsStorageAccountInformationListResult.DeserializeDataLakeAnalyticsStorageAccountInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1046,7 +1046,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsStorageContainerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsStorageContainerListResult.DeserializeDataLakeAnalyticsStorageContainerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1079,7 +1079,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsStorageContainerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsStorageContainerListResult.DeserializeDataLakeAnalyticsStorageContainerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1136,7 +1136,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsSasTokenInformationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsSasTokenInformationListResult.DeserializeDataLakeAnalyticsSasTokenInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1171,7 +1171,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsSasTokenInformationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsSasTokenInformationListResult.DeserializeDataLakeAnalyticsSasTokenInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

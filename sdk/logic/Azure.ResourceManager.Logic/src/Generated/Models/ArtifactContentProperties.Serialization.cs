@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Logic.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Content);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Content))
+                using (JsonDocument document = JsonDocument.Parse(Content, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeArtifactContentProperties(document.RootElement, options);
                     }
                 default:

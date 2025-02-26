@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.AppService
 
         HostingEnvironmentWorkerPoolResource IOperationSource<HostingEnvironmentWorkerPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AppServiceWorkerPoolData.DeserializeAppServiceWorkerPoolData(document.RootElement);
+            var data = ModelReaderWriter.Read<AppServiceWorkerPoolData>(new BinaryData(response.ContentStream));
             return new HostingEnvironmentWorkerPoolResource(_client, data);
         }
 
         async ValueTask<HostingEnvironmentWorkerPoolResource> IOperationSource<HostingEnvironmentWorkerPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AppServiceWorkerPoolData.DeserializeAppServiceWorkerPoolData(document.RootElement);
-            return new HostingEnvironmentWorkerPoolResource(_client, data);
+            var data = ModelReaderWriter.Read<AppServiceWorkerPoolData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new HostingEnvironmentWorkerPoolResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

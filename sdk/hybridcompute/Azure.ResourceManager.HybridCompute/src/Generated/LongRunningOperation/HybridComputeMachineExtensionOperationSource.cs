@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.HybridCompute
 
         HybridComputeMachineExtensionResource IOperationSource<HybridComputeMachineExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(document.RootElement);
+            var data = ModelReaderWriter.Read<HybridComputeMachineExtensionData>(new BinaryData(response.ContentStream));
             return new HybridComputeMachineExtensionResource(_client, data);
         }
 
         async ValueTask<HybridComputeMachineExtensionResource> IOperationSource<HybridComputeMachineExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(document.RootElement);
-            return new HybridComputeMachineExtensionResource(_client, data);
+            var data = ModelReaderWriter.Read<HybridComputeMachineExtensionData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new HybridComputeMachineExtensionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

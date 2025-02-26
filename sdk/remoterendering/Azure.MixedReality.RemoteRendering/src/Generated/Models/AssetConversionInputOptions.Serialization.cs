@@ -73,7 +73,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AssetConversionInputOptions FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAssetConversionInputOptions(document.RootElement);
         }
 

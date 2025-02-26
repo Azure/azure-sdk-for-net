@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                     {
                         BillingMeterCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingMeterCollection.DeserializeBillingMeterCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                     {
                         BillingMeterCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingMeterCollection.DeserializeBillingMeterCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

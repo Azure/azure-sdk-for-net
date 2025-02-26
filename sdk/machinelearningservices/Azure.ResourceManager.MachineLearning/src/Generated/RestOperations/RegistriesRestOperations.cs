@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         RegistryTrackedResourceArmPaginatedResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RegistryTrackedResourceArmPaginatedResult.DeserializeRegistryTrackedResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         RegistryTrackedResourceArmPaginatedResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RegistryTrackedResourceArmPaginatedResult.DeserializeRegistryTrackedResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         RegistryTrackedResourceArmPaginatedResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RegistryTrackedResourceArmPaginatedResult.DeserializeRegistryTrackedResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         RegistryTrackedResourceArmPaginatedResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RegistryTrackedResourceArmPaginatedResult.DeserializeRegistryTrackedResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningRegistryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MachineLearningRegistryData.DeserializeMachineLearningRegistryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningRegistryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MachineLearningRegistryData.DeserializeMachineLearningRegistryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningRegistryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MachineLearningRegistryData.DeserializeMachineLearningRegistryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningRegistryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MachineLearningRegistryData.DeserializeMachineLearningRegistryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         RegistryTrackedResourceArmPaginatedResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RegistryTrackedResourceArmPaginatedResult.DeserializeRegistryTrackedResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         RegistryTrackedResourceArmPaginatedResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RegistryTrackedResourceArmPaginatedResult.DeserializeRegistryTrackedResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         RegistryTrackedResourceArmPaginatedResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RegistryTrackedResourceArmPaginatedResult.DeserializeRegistryTrackedResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         RegistryTrackedResourceArmPaginatedResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RegistryTrackedResourceArmPaginatedResult.DeserializeRegistryTrackedResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaJobListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MediaJobListResult.DeserializeMediaJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaJobListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MediaJobListResult.DeserializeMediaJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaJobData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MediaJobData.DeserializeMediaJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaJobData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MediaJobData.DeserializeMediaJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Media
                 case 201:
                     {
                         MediaJobData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MediaJobData.DeserializeMediaJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Media
                 case 201:
                     {
                         MediaJobData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MediaJobData.DeserializeMediaJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaJobData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MediaJobData.DeserializeMediaJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaJobData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MediaJobData.DeserializeMediaJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaJobListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MediaJobListResult.DeserializeMediaJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaJobListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MediaJobListResult.DeserializeMediaJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

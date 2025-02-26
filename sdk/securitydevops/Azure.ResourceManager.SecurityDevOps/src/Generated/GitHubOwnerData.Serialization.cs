@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGitHubOwnerData(document.RootElement, options);
                     }
                 default:

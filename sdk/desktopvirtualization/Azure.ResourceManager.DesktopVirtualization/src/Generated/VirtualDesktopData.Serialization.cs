@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(IconContent);
 #else
-                using (JsonDocument document = JsonDocument.Parse(IconContent))
+                using (JsonDocument document = JsonDocument.Parse(IconContent, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualDesktopData(document.RootElement, options);
                     }
                 default:

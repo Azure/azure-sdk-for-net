@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudStorageApplianceResource IOperationSource<NetworkCloudStorageApplianceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetworkCloudStorageApplianceData.DeserializeNetworkCloudStorageApplianceData(document.RootElement);
+            var data = ModelReaderWriter.Read<NetworkCloudStorageApplianceData>(new BinaryData(response.ContentStream));
             return new NetworkCloudStorageApplianceResource(_client, data);
         }
 
         async ValueTask<NetworkCloudStorageApplianceResource> IOperationSource<NetworkCloudStorageApplianceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetworkCloudStorageApplianceData.DeserializeNetworkCloudStorageApplianceData(document.RootElement);
-            return new NetworkCloudStorageApplianceResource(_client, data);
+            var data = ModelReaderWriter.Read<NetworkCloudStorageApplianceData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new NetworkCloudStorageApplianceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

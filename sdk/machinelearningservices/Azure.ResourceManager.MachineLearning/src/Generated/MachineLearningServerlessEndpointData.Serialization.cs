@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMachineLearningServerlessEndpointData(document.RootElement, options);
                     }
                 default:

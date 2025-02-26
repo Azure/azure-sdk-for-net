@@ -68,7 +68,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new EntitiesLROTask FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeEntitiesLROTask(document.RootElement);
         }
 

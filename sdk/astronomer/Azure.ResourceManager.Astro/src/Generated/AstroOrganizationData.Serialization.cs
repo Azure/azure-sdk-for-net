@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Astro
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAstroOrganizationData(document.RootElement, options);
                     }
                 default:

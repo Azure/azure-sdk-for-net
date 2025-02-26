@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Network
 
         DdosCustomPolicyResource IOperationSource<DdosCustomPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DdosCustomPolicyData.DeserializeDdosCustomPolicyData(document.RootElement);
+            var data = ModelReaderWriter.Read<DdosCustomPolicyData>(new BinaryData(response.ContentStream));
             return new DdosCustomPolicyResource(_client, data);
         }
 
         async ValueTask<DdosCustomPolicyResource> IOperationSource<DdosCustomPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DdosCustomPolicyData.DeserializeDdosCustomPolicyData(document.RootElement);
-            return new DdosCustomPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<DdosCustomPolicyData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new DdosCustomPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

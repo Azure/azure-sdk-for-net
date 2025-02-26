@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         GrafanaPrivateEndpointConnectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GrafanaPrivateEndpointConnectionData.DeserializeGrafanaPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         GrafanaPrivateEndpointConnectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GrafanaPrivateEndpointConnectionData.DeserializeGrafanaPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         GrafanaPrivateEndpointConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GrafanaPrivateEndpointConnectionListResult.DeserializeGrafanaPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         GrafanaPrivateEndpointConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GrafanaPrivateEndpointConnectionListResult.DeserializeGrafanaPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         GrafanaPrivateEndpointConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GrafanaPrivateEndpointConnectionListResult.DeserializeGrafanaPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Grafana
                 case 200:
                     {
                         GrafanaPrivateEndpointConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GrafanaPrivateEndpointConnectionListResult.DeserializeGrafanaPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

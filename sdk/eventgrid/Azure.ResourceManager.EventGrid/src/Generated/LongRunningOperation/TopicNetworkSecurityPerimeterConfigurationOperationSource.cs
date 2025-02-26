@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.EventGrid
 
         TopicNetworkSecurityPerimeterConfigurationResource IOperationSource<TopicNetworkSecurityPerimeterConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(document.RootElement);
+            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterConfigurationData>(new BinaryData(response.ContentStream));
             return new TopicNetworkSecurityPerimeterConfigurationResource(_client, data);
         }
 
         async ValueTask<TopicNetworkSecurityPerimeterConfigurationResource> IOperationSource<TopicNetworkSecurityPerimeterConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(document.RootElement);
-            return new TopicNetworkSecurityPerimeterConfigurationResource(_client, data);
+            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterConfigurationData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new TopicNetworkSecurityPerimeterConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

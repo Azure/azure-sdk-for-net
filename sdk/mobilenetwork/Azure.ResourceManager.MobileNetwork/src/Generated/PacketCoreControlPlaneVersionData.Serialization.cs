@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePacketCoreControlPlaneVersionData(document.RootElement, options);
                     }
                 default:

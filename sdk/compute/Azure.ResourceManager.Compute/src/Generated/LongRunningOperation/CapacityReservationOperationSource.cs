@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Compute
 
         CapacityReservationResource IOperationSource<CapacityReservationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CapacityReservationData.DeserializeCapacityReservationData(document.RootElement);
+            var data = ModelReaderWriter.Read<CapacityReservationData>(new BinaryData(response.ContentStream));
             return new CapacityReservationResource(_client, data);
         }
 
         async ValueTask<CapacityReservationResource> IOperationSource<CapacityReservationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CapacityReservationData.DeserializeCapacityReservationData(document.RootElement);
-            return new CapacityReservationResource(_client, data);
+            var data = ModelReaderWriter.Read<CapacityReservationData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new CapacityReservationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

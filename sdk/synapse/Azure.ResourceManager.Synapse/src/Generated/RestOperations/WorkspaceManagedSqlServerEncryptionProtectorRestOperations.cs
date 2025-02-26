@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseEncryptionProtectorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseEncryptionProtectorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseEncryptionProtectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseEncryptionProtectorListResult.DeserializeSynapseEncryptionProtectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseEncryptionProtectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseEncryptionProtectorListResult.DeserializeSynapseEncryptionProtectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseEncryptionProtectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseEncryptionProtectorListResult.DeserializeSynapseEncryptionProtectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseEncryptionProtectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseEncryptionProtectorListResult.DeserializeSynapseEncryptionProtectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

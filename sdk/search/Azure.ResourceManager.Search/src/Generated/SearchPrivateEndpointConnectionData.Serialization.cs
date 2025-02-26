@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Search
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSearchPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

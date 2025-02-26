@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceGuardResourceList.DeserializeResourceGuardResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceGuardResourceList.DeserializeResourceGuardResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceGuardResourceList.DeserializeResourceGuardResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceGuardResourceList.DeserializeResourceGuardResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 201:
                     {
                         ResourceGuardData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceGuardData.DeserializeResourceGuardData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 201:
                     {
                         ResourceGuardData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceGuardData.DeserializeResourceGuardData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceGuardData.DeserializeResourceGuardData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceGuardData.DeserializeResourceGuardData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceGuardData.DeserializeResourceGuardData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceGuardData.DeserializeResourceGuardData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -761,7 +761,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -920,7 +920,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1014,7 +1014,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1043,7 +1043,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1108,7 +1108,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1137,7 +1137,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1206,7 +1206,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardProtectedObjectData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1237,7 +1237,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardProtectedObjectData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1306,7 +1306,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardProtectedObjectData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1337,7 +1337,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardProtectedObjectData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1406,7 +1406,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardProtectedObjectData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1437,7 +1437,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardProtectedObjectData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1506,7 +1506,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardProtectedObjectData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1537,7 +1537,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardProtectedObjectData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1606,7 +1606,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardProtectedObjectData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1637,7 +1637,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardProtectedObjectData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1706,7 +1706,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardProtectedObjectData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1737,7 +1737,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardProtectedObjectData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1786,7 +1786,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceGuardResourceList.DeserializeResourceGuardResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1813,7 +1813,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceGuardResourceList.DeserializeResourceGuardResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1864,7 +1864,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceGuardResourceList.DeserializeResourceGuardResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1893,7 +1893,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         ResourceGuardResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceGuardResourceList.DeserializeResourceGuardResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1946,7 +1946,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1977,7 +1977,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2030,7 +2030,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2061,7 +2061,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2114,7 +2114,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2145,7 +2145,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2198,7 +2198,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2229,7 +2229,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2282,7 +2282,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2313,7 +2313,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2366,7 +2366,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2397,7 +2397,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DppBaseResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

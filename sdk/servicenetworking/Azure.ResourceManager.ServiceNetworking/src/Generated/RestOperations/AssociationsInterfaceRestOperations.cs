@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         AssociationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssociationListResult.DeserializeAssociationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         AssociationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssociationListResult.DeserializeAssociationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         AssociationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssociationData.DeserializeAssociationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         AssociationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssociationData.DeserializeAssociationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         AssociationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssociationData.DeserializeAssociationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         AssociationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssociationData.DeserializeAssociationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         AssociationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssociationListResult.DeserializeAssociationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         AssociationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssociationListResult.DeserializeAssociationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

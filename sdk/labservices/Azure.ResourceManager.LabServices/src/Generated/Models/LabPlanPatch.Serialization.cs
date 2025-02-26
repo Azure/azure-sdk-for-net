@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLabPlanPatch(document.RootElement, options);
                     }
                 default:

@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.MachineLearning
 
         MachineLearningOnlineDeploymentResource IOperationSource<MachineLearningOnlineDeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MachineLearningOnlineDeploymentData.DeserializeMachineLearningOnlineDeploymentData(document.RootElement);
+            var data = ModelReaderWriter.Read<MachineLearningOnlineDeploymentData>(new BinaryData(response.ContentStream));
             return new MachineLearningOnlineDeploymentResource(_client, data);
         }
 
         async ValueTask<MachineLearningOnlineDeploymentResource> IOperationSource<MachineLearningOnlineDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MachineLearningOnlineDeploymentData.DeserializeMachineLearningOnlineDeploymentData(document.RootElement);
-            return new MachineLearningOnlineDeploymentResource(_client, data);
+            var data = ModelReaderWriter.Read<MachineLearningOnlineDeploymentData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new MachineLearningOnlineDeploymentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

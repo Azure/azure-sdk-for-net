@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case 200:
                     {
                         ProvisionedClusterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProvisionedClusterData.DeserializeProvisionedClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case 200:
                     {
                         ProvisionedClusterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProvisionedClusterData.DeserializeProvisionedClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case 200:
                     {
                         ProvisionedClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProvisionedClusterListResult.DeserializeProvisionedClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case 200:
                     {
                         ProvisionedClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProvisionedClusterListResult.DeserializeProvisionedClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case 200:
                     {
                         ProvisionedClusterUpgradeProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProvisionedClusterUpgradeProfileData.DeserializeProvisionedClusterUpgradeProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case 200:
                     {
                         ProvisionedClusterUpgradeProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProvisionedClusterUpgradeProfileData.DeserializeProvisionedClusterUpgradeProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case 200:
                     {
                         ProvisionedClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProvisionedClusterListResult.DeserializeProvisionedClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case 200:
                     {
                         ProvisionedClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProvisionedClusterListResult.DeserializeProvisionedClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

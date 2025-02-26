@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkFabricInternetGatewayRuleResource IOperationSource<NetworkFabricInternetGatewayRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(document.RootElement);
+            var data = ModelReaderWriter.Read<NetworkFabricInternetGatewayRuleData>(new BinaryData(response.ContentStream));
             return new NetworkFabricInternetGatewayRuleResource(_client, data);
         }
 
         async ValueTask<NetworkFabricInternetGatewayRuleResource> IOperationSource<NetworkFabricInternetGatewayRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(document.RootElement);
-            return new NetworkFabricInternetGatewayRuleResource(_client, data);
+            var data = ModelReaderWriter.Read<NetworkFabricInternetGatewayRuleData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new NetworkFabricInternetGatewayRuleResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

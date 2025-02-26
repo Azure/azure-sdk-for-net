@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Grafana
 
         GrafanaPrivateEndpointConnectionResource IOperationSource<GrafanaPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = GrafanaPrivateEndpointConnectionData.DeserializeGrafanaPrivateEndpointConnectionData(document.RootElement);
+            var data = ModelReaderWriter.Read<GrafanaPrivateEndpointConnectionData>(new BinaryData(response.ContentStream));
             return new GrafanaPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<GrafanaPrivateEndpointConnectionResource> IOperationSource<GrafanaPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = GrafanaPrivateEndpointConnectionData.DeserializeGrafanaPrivateEndpointConnectionData(document.RootElement);
-            return new GrafanaPrivateEndpointConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<GrafanaPrivateEndpointConnectionData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new GrafanaPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

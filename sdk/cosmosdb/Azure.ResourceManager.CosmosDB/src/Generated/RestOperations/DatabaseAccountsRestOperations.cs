@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CosmosDBAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CosmosDBAccountData.DeserializeCosmosDBAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CosmosDBAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CosmosDBAccountData.DeserializeCosmosDBAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         DatabaseAccountsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatabaseAccountsListResult.DeserializeDatabaseAccountsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         DatabaseAccountsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatabaseAccountsListResult.DeserializeDatabaseAccountsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         DatabaseAccountsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatabaseAccountsListResult.DeserializeDatabaseAccountsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         DatabaseAccountsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatabaseAccountsListResult.DeserializeDatabaseAccountsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CosmosDBAccountKeyList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CosmosDBAccountKeyList.DeserializeCosmosDBAccountKeyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CosmosDBAccountKeyList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CosmosDBAccountKeyList.DeserializeCosmosDBAccountKeyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         DatabaseAccountListConnectionStringsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatabaseAccountListConnectionStringsResult.DeserializeDatabaseAccountListConnectionStringsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         DatabaseAccountListConnectionStringsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatabaseAccountListConnectionStringsResult.DeserializeDatabaseAccountListConnectionStringsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1084,7 +1084,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CosmosDBAccountReadOnlyKeyList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CosmosDBAccountReadOnlyKeyList.DeserializeCosmosDBAccountReadOnlyKeyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1113,7 +1113,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CosmosDBAccountReadOnlyKeyList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CosmosDBAccountReadOnlyKeyList.DeserializeCosmosDBAccountReadOnlyKeyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1356,7 +1356,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CosmosDBMetricListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CosmosDBMetricListResult.DeserializeCosmosDBMetricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1387,7 +1387,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CosmosDBMetricListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CosmosDBMetricListResult.DeserializeCosmosDBMetricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1461,7 +1461,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CosmosDBUsagesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CosmosDBUsagesResult.DeserializeCosmosDBUsagesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1491,7 +1491,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CosmosDBUsagesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CosmosDBUsagesResult.DeserializeCosmosDBUsagesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1556,7 +1556,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CosmosDBMetricDefinitionsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CosmosDBMetricDefinitionsListResult.DeserializeCosmosDBMetricDefinitionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1585,7 +1585,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CosmosDBMetricDefinitionsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CosmosDBMetricDefinitionsListResult.DeserializeCosmosDBMetricDefinitionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

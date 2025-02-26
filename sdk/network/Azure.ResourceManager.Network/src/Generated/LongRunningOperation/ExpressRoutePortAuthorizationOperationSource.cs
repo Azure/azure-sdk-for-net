@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Network
 
         ExpressRoutePortAuthorizationResource IOperationSource<ExpressRoutePortAuthorizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ExpressRoutePortAuthorizationData.DeserializeExpressRoutePortAuthorizationData(document.RootElement);
+            var data = ModelReaderWriter.Read<ExpressRoutePortAuthorizationData>(new BinaryData(response.ContentStream));
             return new ExpressRoutePortAuthorizationResource(_client, data);
         }
 
         async ValueTask<ExpressRoutePortAuthorizationResource> IOperationSource<ExpressRoutePortAuthorizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ExpressRoutePortAuthorizationData.DeserializeExpressRoutePortAuthorizationData(document.RootElement);
-            return new ExpressRoutePortAuthorizationResource(_client, data);
+            var data = ModelReaderWriter.Read<ExpressRoutePortAuthorizationData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new ExpressRoutePortAuthorizationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ImportJobCollection FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeImportJobCollection(document.RootElement);
         }
     }

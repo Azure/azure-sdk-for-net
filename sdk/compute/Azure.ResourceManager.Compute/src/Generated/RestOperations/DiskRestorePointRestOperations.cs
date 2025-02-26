@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskRestorePointData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskRestorePointData.DeserializeDiskRestorePointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskRestorePointData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskRestorePointData.DeserializeDiskRestorePointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskRestorePointList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskRestorePointList.DeserializeDiskRestorePointList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskRestorePointList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskRestorePointList.DeserializeDiskRestorePointList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskRestorePointList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskRestorePointList.DeserializeDiskRestorePointList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskRestorePointList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskRestorePointList.DeserializeDiskRestorePointList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

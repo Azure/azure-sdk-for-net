@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AlertList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AlertList.DeserializeAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AlertList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AlertList.DeserializeAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AlertList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AlertList.DeserializeAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AlertList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AlertList.DeserializeAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AlertList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AlertList.DeserializeAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AlertList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AlertList.DeserializeAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AlertList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AlertList.DeserializeAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AlertList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AlertList.DeserializeAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAlertData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityAlertData.DeserializeSecurityAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAlertData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityAlertData.DeserializeSecurityAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAlertData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityAlertData.DeserializeSecurityAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAlertData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityAlertData.DeserializeSecurityAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1382,7 +1382,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AlertList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AlertList.DeserializeAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1409,7 +1409,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AlertList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AlertList.DeserializeAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1460,7 +1460,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AlertList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AlertList.DeserializeAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1489,7 +1489,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AlertList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AlertList.DeserializeAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1539,7 +1539,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AlertList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AlertList.DeserializeAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1567,7 +1567,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AlertList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AlertList.DeserializeAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1619,7 +1619,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AlertList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AlertList.DeserializeAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1649,7 +1649,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AlertList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AlertList.DeserializeAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

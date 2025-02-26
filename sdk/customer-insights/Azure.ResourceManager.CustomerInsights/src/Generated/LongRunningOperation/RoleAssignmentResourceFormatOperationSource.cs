@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.CustomerInsights
 
         RoleAssignmentResourceFormatResource IOperationSource<RoleAssignmentResourceFormatResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = RoleAssignmentResourceFormatData.DeserializeRoleAssignmentResourceFormatData(document.RootElement);
+            var data = ModelReaderWriter.Read<RoleAssignmentResourceFormatData>(new BinaryData(response.ContentStream));
             return new RoleAssignmentResourceFormatResource(_client, data);
         }
 
         async ValueTask<RoleAssignmentResourceFormatResource> IOperationSource<RoleAssignmentResourceFormatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = RoleAssignmentResourceFormatData.DeserializeRoleAssignmentResourceFormatData(document.RootElement);
-            return new RoleAssignmentResourceFormatResource(_client, data);
+            var data = ModelReaderWriter.Read<RoleAssignmentResourceFormatData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new RoleAssignmentResourceFormatResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.HybridContainerService
 
         HybridContainerServiceVmSkuResource IOperationSource<HybridContainerServiceVmSkuResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = HybridContainerServiceVmSkuData.DeserializeHybridContainerServiceVmSkuData(document.RootElement);
+            var data = ModelReaderWriter.Read<HybridContainerServiceVmSkuData>(new BinaryData(response.ContentStream));
             return new HybridContainerServiceVmSkuResource(_client, data);
         }
 
         async ValueTask<HybridContainerServiceVmSkuResource> IOperationSource<HybridContainerServiceVmSkuResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = HybridContainerServiceVmSkuData.DeserializeHybridContainerServiceVmSkuData(document.RootElement);
-            return new HybridContainerServiceVmSkuResource(_client, data);
+            var data = ModelReaderWriter.Read<HybridContainerServiceVmSkuData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new HybridContainerServiceVmSkuResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

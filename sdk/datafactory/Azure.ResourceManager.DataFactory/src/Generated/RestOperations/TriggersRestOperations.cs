@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryTriggerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryTriggerListResult.DeserializeDataFactoryTriggerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryTriggerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryTriggerListResult.DeserializeDataFactoryTriggerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryTriggerQueryResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryTriggerQueryResult.DeserializeDataFactoryTriggerQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryTriggerQueryResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryTriggerQueryResult.DeserializeDataFactoryTriggerQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryTriggerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryTriggerData.DeserializeDataFactoryTriggerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryTriggerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryTriggerData.DeserializeDataFactoryTriggerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryTriggerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryTriggerData.DeserializeDataFactoryTriggerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryTriggerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryTriggerData.DeserializeDataFactoryTriggerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryTriggerSubscriptionOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryTriggerSubscriptionOperationResult.DeserializeDataFactoryTriggerSubscriptionOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryTriggerSubscriptionOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryTriggerSubscriptionOperationResult.DeserializeDataFactoryTriggerSubscriptionOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1068,7 +1068,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryTriggerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryTriggerListResult.DeserializeDataFactoryTriggerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1099,7 +1099,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryTriggerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryTriggerListResult.DeserializeDataFactoryTriggerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

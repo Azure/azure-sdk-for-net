@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.ScVmm
 
         ScVmmGuestAgentResource IOperationSource<ScVmmGuestAgentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ScVmmGuestAgentData.DeserializeScVmmGuestAgentData(document.RootElement);
+            var data = ModelReaderWriter.Read<ScVmmGuestAgentData>(new BinaryData(response.ContentStream));
             return new ScVmmGuestAgentResource(_client, data);
         }
 
         async ValueTask<ScVmmGuestAgentResource> IOperationSource<ScVmmGuestAgentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ScVmmGuestAgentData.DeserializeScVmmGuestAgentData(document.RootElement);
-            return new ScVmmGuestAgentResource(_client, data);
+            var data = ModelReaderWriter.Read<ScVmmGuestAgentData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new ScVmmGuestAgentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }
