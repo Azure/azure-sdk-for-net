@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> A pipeline group definition. </summary>
-    public partial class PipelineGroupPatch : ResourceData
+    /// <summary> JsonArrayMapper destination field used to describe the field to which the parsed output will be written. </summary>
+    public partial class PipelineGroupJsonMapperDestinationField
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,30 +45,25 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PipelineGroupPatch"/>. </summary>
-        public PipelineGroupPatch()
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupJsonMapperDestinationField"/>. </summary>
+        public PipelineGroupJsonMapperDestinationField()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PipelineGroupPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupJsonMapperDestinationField"/>. </summary>
+        /// <param name="destination"> Define the destination's element. The element is the body or the attributes of the message, to which the json array mapper will write the output map. </param>
+        /// <param name="fieldName"> Define a destination field name under the given element. Leaving this empty, means the root of the element. In case element=attributes and fieldName is empty, the object's attributes themselves will contain the key value output pairs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PipelineGroupPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PipelineGroupPropertiesUpdate properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PipelineGroupJsonMapperDestinationField(PipelineGroupJsonMapperElement? destination, string fieldName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
-            Tags = tags;
+            Destination = destination;
+            FieldName = fieldName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public PipelineGroupPropertiesUpdate Properties { get; set; }
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Define the destination's element. The element is the body or the attributes of the message, to which the json array mapper will write the output map. </summary>
+        public PipelineGroupJsonMapperElement? Destination { get; set; }
+        /// <summary> Define a destination field name under the given element. Leaving this empty, means the root of the element. In case element=attributes and fieldName is empty, the object's attributes themselves will contain the key value output pairs. </summary>
+        public string FieldName { get; set; }
     }
 }
