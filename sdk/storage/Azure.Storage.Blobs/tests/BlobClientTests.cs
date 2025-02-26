@@ -1020,7 +1020,11 @@ namespace Azure.Storage.Blobs.Test
 
                 var buffer = new byte[count];
                 stream.Seek(i, SeekOrigin.Begin);
-                int numBytesRead = await stream.ReadAsync(buffer, 0, count);
+#if NET6_0_OR_GREATER
+                await stream.ReadExactlyAsync(buffer, 0, count);
+#else
+                await stream.ReadAsync(buffer, 0, count);
+#endif
 
                 TestHelper.AssertSequenceEqual(
                     buffer,
@@ -1348,7 +1352,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(1024)));
             }
         }
-        #endregion Upload
+#endregion Upload
 
         [Test]
         [Explicit]

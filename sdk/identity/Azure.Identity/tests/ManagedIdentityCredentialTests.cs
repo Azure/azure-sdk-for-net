@@ -1100,17 +1100,7 @@ namespace Azure.Identity.Tests
             string tokenFilePath = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
 
 #if NET9_0_OR_GREATER
-            var certType = X509Certificate2.GetCertContentType(assertionCertPath);
-            X509Certificate2 assertionCert;
-            switch (certType)
-            {
-                case X509ContentType.Cert:
-                    assertionCert = X509CertificateLoader.LoadCertificateFromFile(assertionCertPath);
-                    break;
-                default:
-                    assertionCert = X509CertificateLoader.LoadPkcs12FromFile(assertionCertPath, null);
-                    break;
-            }
+            var assertionCert = X509CertificateLoader.LoadPkcs12FromFile(assertionCertPath, null);
 #else
             var assertionCert = new X509Certificate2(assertionCertPath);
 #endif

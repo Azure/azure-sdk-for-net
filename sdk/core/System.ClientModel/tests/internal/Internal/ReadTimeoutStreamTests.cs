@@ -20,8 +20,7 @@ public class ReadTimeoutStreamTests
         var testStream = new TestStream();
         var timeoutStream = new ReadTimeoutStream(testStream, _defaultTimeout);
 
-#pragma warning disable CA2022 // Avoid inexact read with Stream.Read (A call to Stream.Read or Stream.ReadAsync is made and the return value isn't checked)
-        // The return value of ReadAsync is not needed for this test
+#pragma warning disable CA2022 // The return value of ReadAsync is not needed for this test
         Assert.Throws<TaskCanceledException>(() => timeoutStream.Read(_buffer, 0, 1));
 #pragma warning restore CA2022
     }

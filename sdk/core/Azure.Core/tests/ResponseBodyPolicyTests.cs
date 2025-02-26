@@ -110,8 +110,7 @@ namespace Azure.Core.Tests
             Response response = await SendGetRequest(mockTransport, TimeoutPolicy, bufferResponse: false);
 
             var buffer = new byte[100];
-#pragma warning disable CA2022 // Avoid inexact read with Stream.Read (A call to Stream.Read or Stream.ReadAsync is made and the return value isn't checked)
-            // The return value of ReadAsync is not needed for this test
+#pragma warning disable CA2022 // The return value of ReadAsync is not needed for this test
             Assert.ThrowsAsync<TaskCanceledException>(async () => await response.ContentStream.ReadAsync(buffer, 0, 100));
 #pragma warning restore CA2022
             Assert.AreEqual(50, hangingStream.ReadTimeout);

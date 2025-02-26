@@ -572,8 +572,7 @@ namespace Azure.Core.Tests
             var buffer = new byte[10];
             Assert.AreEqual(1, await responseContentStream.ReadAsync(buffer, 0, 1));
 
-#pragma warning disable CA2022 // Avoid inexact read with Stream.Read (A call to Stream.Read or Stream.ReadAsync is made and the return value isn't checked)
-            // The return value of ReadAsync is not needed for this test
+#pragma warning disable CA2022 // The return value of ReadAsync is not needed for this test
             var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await responseContentStream.ReadAsync(buffer, 0, 10));
 #pragma warning restore CA2022
             Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. " +

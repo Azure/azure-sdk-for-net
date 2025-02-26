@@ -92,7 +92,9 @@ namespace Azure.Storage.Tests
             var readTest = new byte[bufferSize];
             foreach (var _ in Enumerable.Range(0, 10))
             {
-                int numBytesRead = await readStream.ReadAsync(readTest, 0, readTest.Length);
+#pragma warning disable CA2022 // This test is specfically testing the behavior of the stream
+                await readStream.ReadAsync(readTest, 0, readTest.Length);
+#pragma warning restore CA2022
                 // seek back to exact start of current buffer
                 readStream.Position = offset;
             }

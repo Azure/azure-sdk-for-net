@@ -938,7 +938,11 @@ namespace Azure.Core.Tests
                 async context =>
                 {
                     // read part of the request
-                    int numBytesRead = await context.Request.Body.ReadAsync(buffer, 0, 100);
+#if NET6_0_OR_GREATER
+                    await context.Request.Body.ReadExactlyAsync(buffer, 0, 100);
+#else
+                    await context.Request.Body.ReadAsync(buffer, 0, 100);
+#endif
                     tcs.SetResult(null);
                     await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
                 }, https);
@@ -1005,7 +1009,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task ServerCertificateCustomValidationCallbackIsHonored([Values(true, false)] bool setCertCallback, [Values(true, false)] bool isValidCert)
         {
-#if !NET9_0_OR_GREATER // ServicePointManager is obsolete in .NET 9
+#if NETFRAMEWORK // ServicePointManager is obsolete and doesn't affect HttpClient
             // This test assumes ServicePointManager.ServerCertificateValidationCallback will be unset.
             ServicePointManager.ServerCertificateValidationCallback = null;
 #endif
@@ -1081,7 +1085,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task ClientCertificateIsHonored([Values(true, false)] bool setClientCertificate)
         {
-#if NETFRAMEWORK
+#if NETFRAMEWORK // ServicePointManager is obsolete and doesn't affect HttpClient
             // This test assumes ServicePointManager.ServerCertificateValidationCallback will be unset.
             ServicePointManager.ServerCertificateValidationCallback = null;
 #endif

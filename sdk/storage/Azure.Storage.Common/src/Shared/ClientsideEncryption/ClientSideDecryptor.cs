@@ -243,7 +243,14 @@ namespace Azure.Storage.Cryptography
                     }
                     else
                     {
-                        int numBytesRead = ciphertext.Read(IV, 0, IV.Length);
+                        int totalRead = 0;
+                        while (totalRead < IV.Length)
+                        {
+                            //  Stream.Read may return fewer bytes than requested, resulting in unreliable code.
+                            var bytesRead = ciphertext.Read(IV, totalRead, IV.Length - totalRead);
+                            totalRead += bytesRead;
+                            if (bytesRead == 0) break;
+                        }
                     }
                     //read = IV.Length;
                 }
@@ -343,7 +350,7 @@ namespace Azure.Storage.Cryptography
 
             throw Errors.ClientSideEncryption.BadEncryptionAlgorithm(encryptionData.EncryptionAgent.EncryptionAlgorithm.ToString());
         }
-        #endregion
+#endregion
 
         /// <summary>
         /// Returns the content encryption key for blob. First tries to get the key encryption key from KeyResolver,
