@@ -73,6 +73,32 @@ namespace Azure.AI.Agents
             return new UnknownMessageTextAnnotation(type, text, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Agents.MessageTextUrlCitationAnnotation"/>. </summary>
+        /// <param name="text"> The textual content associated with this text annotation item. </param>
+        /// <param name="urlCitation"> The details of the URL citation. </param>
+        /// <param name="startIndex"> The first text index associated with this text annotation. </param>
+        /// <param name="endIndex"> The last text index associated with this text annotation. </param>
+        /// <returns> A new <see cref="Agents.MessageTextUrlCitationAnnotation"/> instance for mocking. </returns>
+        public static MessageTextUrlCitationAnnotation MessageTextUrlCitationAnnotation(string text = null, MessageTextUrlCitationDetails urlCitation = null, int? startIndex = null, int? endIndex = null)
+        {
+            return new MessageTextUrlCitationAnnotation(
+                "url_citation",
+                text,
+                serializedAdditionalRawData: null,
+                urlCitation,
+                startIndex,
+                endIndex);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Agents.MessageTextUrlCitationDetails"/>. </summary>
+        /// <param name="url"> The URL associated with this citation. </param>
+        /// <param name="title"> The title of the URL. </param>
+        /// <returns> A new <see cref="Agents.MessageTextUrlCitationDetails"/> instance for mocking. </returns>
+        public static MessageTextUrlCitationDetails MessageTextUrlCitationDetails(string url = null, string title = null)
+        {
+            return new MessageTextUrlCitationDetails(url, title, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Agents.RequiredToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
@@ -528,7 +554,7 @@ namespace Azure.AI.Agents
         /// <param name="annotations">
         /// Annotations for the text.
         /// Please note <see cref="Agents.MessageDeltaTextAnnotation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Agents.MessageDeltaTextFileCitationAnnotation"/> and <see cref="Agents.MessageDeltaTextFilePathAnnotation"/>.
+        /// The available derived classes include <see cref="Agents.MessageDeltaTextFileCitationAnnotation"/>, <see cref="Agents.MessageDeltaTextFilePathAnnotation"/> and <see cref="Agents.MessageDeltaTextUrlCitationAnnotation"/>.
         /// </param>
         /// <returns> A new <see cref="Agents.MessageDeltaTextContentObject"/> instance for mocking. </returns>
         public static MessageDeltaTextContentObject MessageDeltaTextContentObject(string value = null, IEnumerable<MessageDeltaTextAnnotation> annotations = null)
@@ -545,6 +571,32 @@ namespace Azure.AI.Agents
         public static MessageDeltaTextAnnotation MessageDeltaTextAnnotation(int index = default, string type = null)
         {
             return new UnknownMessageDeltaTextAnnotation(index, type, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Agents.MessageDeltaTextUrlCitationAnnotation"/>. </summary>
+        /// <param name="index"> The index of the annotation within a text content part. </param>
+        /// <param name="urlCitation"> The details of the URL citation. </param>
+        /// <param name="startIndex"> The first text index associated with this text annotation. </param>
+        /// <param name="endIndex"> The last text index associated with this text annotation. </param>
+        /// <returns> A new <see cref="Agents.MessageDeltaTextUrlCitationAnnotation"/> instance for mocking. </returns>
+        public static MessageDeltaTextUrlCitationAnnotation MessageDeltaTextUrlCitationAnnotation(int index = default, MessageDeltaTextUrlCitationDetails urlCitation = null, int? startIndex = null, int? endIndex = null)
+        {
+            return new MessageDeltaTextUrlCitationAnnotation(
+                index,
+                "url_citation",
+                serializedAdditionalRawData: null,
+                urlCitation,
+                startIndex,
+                endIndex);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Agents.MessageDeltaTextUrlCitationDetails"/>. </summary>
+        /// <param name="url"> The URL associated with this citation. </param>
+        /// <param name="title"> The title of the URL. </param>
+        /// <returns> A new <see cref="Agents.MessageDeltaTextUrlCitationDetails"/> instance for mocking. </returns>
+        public static MessageDeltaTextUrlCitationDetails MessageDeltaTextUrlCitationDetails(string url = null, string title = null)
+        {
+            return new MessageDeltaTextUrlCitationDetails(url, title, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Agents.MessageDeltaTextFileCitationAnnotation"/>. </summary>
@@ -689,10 +741,8 @@ namespace Azure.AI.Agents
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="fileSearch"> Reserved for future use. </param>
         /// <returns> A new <see cref="Agents.RunStepDeltaFileSearchToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaFileSearchToolCall RunStepDeltaFileSearchToolCall(int index = default, string id = null, IReadOnlyDictionary<string, string> fileSearch = null)
+        public static RunStepDeltaFileSearchToolCall RunStepDeltaFileSearchToolCall(int index = default, string id = null, RunStepFileSearchToolCallResults fileSearch = null)
         {
-            fileSearch ??= new Dictionary<string, string>();
-
             return new RunStepDeltaFileSearchToolCall(index, id, "file_search", serializedAdditionalRawData: null, fileSearch);
         }
 
