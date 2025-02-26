@@ -43,6 +43,6 @@ group the direct packages by matrix configuration
 
 Notice that packages are grouped initially by _the matrix associated with their ci.yml_. In the `pullrequest` pipeline, the service directory of a package no longer matters, only what matrix it belongs to.
 
-`indirect` batching works the same way, but doesn't the _full_ test matrix by default. It instead deterministically selects a single item from the resolved test matrix and assigns the batch of packages to it.
+`indirect` batching works the same way, but doesn't use the _full_ test matrix by default. It instead deterministically selects a single item from the resolved test matrix and assigns the batch of packages to it.
 
 The suffixes `b1` or `ib1` or are added automatically as needed by the job pull request [matrix creation.](../../../common/scripts/job-matrix/Create-JobMatrix.ps1).
