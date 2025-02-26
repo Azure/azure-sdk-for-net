@@ -47,21 +47,21 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
         /// <summary> Initializes a new instance of <see cref="ProjectTrainedModel"/>. </summary>
         /// <param name="modelId"> The model ID. </param>
-        /// <param name="lastTrainedDateTime"> The last trained date time of the model. </param>
+        /// <param name="lastTrainedOn"> The last trained date time of the model. </param>
         /// <param name="lastTrainingDurationInSeconds"> The duration of the model's last training request in seconds. </param>
-        /// <param name="modelExpirationDate"> The model expiration date. </param>
+        /// <param name="modelExpiredOn"> The model expiration date. </param>
         /// <param name="modelTrainingConfigVersion"> The model training config version. </param>
         /// <param name="hasSnapshot"> The flag to indicate if the trained model has a snapshot ready. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="modelTrainingConfigVersion"/> is null. </exception>
-        internal ProjectTrainedModel(string modelId, DateTimeOffset lastTrainedDateTime, int lastTrainingDurationInSeconds, DateTimeOffset modelExpirationDate, string modelTrainingConfigVersion, bool hasSnapshot)
+        internal ProjectTrainedModel(string modelId, DateTimeOffset lastTrainedOn, int lastTrainingDurationInSeconds, DateTimeOffset modelExpiredOn, string modelTrainingConfigVersion, bool hasSnapshot)
         {
             Argument.AssertNotNull(modelId, nameof(modelId));
             Argument.AssertNotNull(modelTrainingConfigVersion, nameof(modelTrainingConfigVersion));
 
             ModelId = modelId;
-            LastTrainedDateTime = lastTrainedDateTime;
+            LastTrainedOn = lastTrainedOn;
             LastTrainingDurationInSeconds = lastTrainingDurationInSeconds;
-            ModelExpirationDate = modelExpirationDate;
+            ModelExpiredOn = modelExpiredOn;
             ModelTrainingConfigVersion = modelTrainingConfigVersion;
             HasSnapshot = hasSnapshot;
         }
@@ -69,19 +69,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> Initializes a new instance of <see cref="ProjectTrainedModel"/>. </summary>
         /// <param name="label"> The trained model label. </param>
         /// <param name="modelId"> The model ID. </param>
-        /// <param name="lastTrainedDateTime"> The last trained date time of the model. </param>
+        /// <param name="lastTrainedOn"> The last trained date time of the model. </param>
         /// <param name="lastTrainingDurationInSeconds"> The duration of the model's last training request in seconds. </param>
-        /// <param name="modelExpirationDate"> The model expiration date. </param>
+        /// <param name="modelExpiredOn"> The model expiration date. </param>
         /// <param name="modelTrainingConfigVersion"> The model training config version. </param>
         /// <param name="hasSnapshot"> The flag to indicate if the trained model has a snapshot ready. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectTrainedModel(string label, string modelId, DateTimeOffset lastTrainedDateTime, int lastTrainingDurationInSeconds, DateTimeOffset modelExpirationDate, string modelTrainingConfigVersion, bool hasSnapshot, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProjectTrainedModel(string label, string modelId, DateTimeOffset lastTrainedOn, int lastTrainingDurationInSeconds, DateTimeOffset modelExpiredOn, string modelTrainingConfigVersion, bool hasSnapshot, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Label = label;
             ModelId = modelId;
-            LastTrainedDateTime = lastTrainedDateTime;
+            LastTrainedOn = lastTrainedOn;
             LastTrainingDurationInSeconds = lastTrainingDurationInSeconds;
-            ModelExpirationDate = modelExpirationDate;
+            ModelExpiredOn = modelExpiredOn;
             ModelTrainingConfigVersion = modelTrainingConfigVersion;
             HasSnapshot = hasSnapshot;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -97,11 +97,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> The model ID. </summary>
         public string ModelId { get; }
         /// <summary> The last trained date time of the model. </summary>
-        public DateTimeOffset LastTrainedDateTime { get; }
+        public DateTimeOffset LastTrainedOn { get; }
         /// <summary> The duration of the model's last training request in seconds. </summary>
         public int LastTrainingDurationInSeconds { get; }
         /// <summary> The model expiration date. </summary>
-        public DateTimeOffset ModelExpirationDate { get; }
+        public DateTimeOffset ModelExpiredOn { get; }
         /// <summary> The model training config version. </summary>
         public string ModelTrainingConfigVersion { get; }
         /// <summary> The flag to indicate if the trained model has a snapshot ready. </summary>

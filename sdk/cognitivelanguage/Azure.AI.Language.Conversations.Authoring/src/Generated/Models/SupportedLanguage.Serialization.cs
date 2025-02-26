@@ -34,8 +34,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 throw new FormatException($"The model {nameof(SupportedLanguage)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("languageName"u8);
-            writer.WriteStringValue(LanguageName);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("languageName"u8);
+                writer.WriteStringValue(LanguageName);
+            }
             writer.WritePropertyName("languageCode"u8);
             writer.WriteStringValue(LanguageCode);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

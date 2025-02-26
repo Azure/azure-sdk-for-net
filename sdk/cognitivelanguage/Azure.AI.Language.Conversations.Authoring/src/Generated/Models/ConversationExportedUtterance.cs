@@ -66,7 +66,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="intent"> The intent of the utterance. </param>
         /// <param name="dataset"> The dataset for this utterance. Allowed values are 'Train' and 'Test'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationExportedUtterance(IList<ExportedUtteranceEntityLabel> entities, string text, string language, string intent, string dataset, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationExportedUtterance(IList<ExportedUtteranceEntityLabel> entities, string text, string language, string intent, DatasetType? dataset, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Entities = entities;
             Text = text;
@@ -90,6 +90,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> The intent of the utterance. </summary>
         public string Intent { get; }
         /// <summary> The dataset for this utterance. Allowed values are 'Train' and 'Test'. </summary>
-        public string Dataset { get; set; }
+        public DatasetType? Dataset { get; set; }
     }
 }

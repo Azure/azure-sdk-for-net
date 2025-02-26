@@ -46,9 +46,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EntityEvaluationSummary"/>. </summary>
-        /// <param name="f1"> Represents the model precision. </param>
-        /// <param name="precision"> Represents the model recall. </param>
-        /// <param name="recall"> Represents the model F1 score. </param>
+        /// <param name="f1"> Represents the model F1 score. </param>
+        /// <param name="precision"> Represents the model precision. </param>
+        /// <param name="recall"> Represents the model precision. </param>
         /// <param name="truePositiveCount"> Represents the count of true positive. </param>
         /// <param name="trueNegativeCount"> Represents the count of true negative. </param>
         /// <param name="falsePositiveCount"> Represents the count of false positive. </param>
@@ -65,9 +65,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityEvaluationSummary"/>. </summary>
-        /// <param name="f1"> Represents the model precision. </param>
-        /// <param name="precision"> Represents the model recall. </param>
-        /// <param name="recall"> Represents the model F1 score. </param>
+        /// <param name="f1"> Represents the model F1 score. </param>
+        /// <param name="precision"> Represents the model precision. </param>
+        /// <param name="recall"> Represents the model precision. </param>
         /// <param name="truePositiveCount"> Represents the count of true positive. </param>
         /// <param name="trueNegativeCount"> Represents the count of true negative. </param>
         /// <param name="falsePositiveCount"> Represents the count of false positive. </param>
@@ -90,11 +90,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         {
         }
 
-        /// <summary> Represents the model precision. </summary>
-        public double F1 { get; }
-        /// <summary> Represents the model recall. </summary>
-        public double Precision { get; }
         /// <summary> Represents the model F1 score. </summary>
+        public double F1 { get; }
+        /// <summary> Represents the model precision. </summary>
+        public double Precision { get; }
+        /// <summary> Represents the model precision. </summary>
         public double Recall { get; }
         /// <summary> Represents the count of true positive. </summary>
         public int TruePositiveCount { get; }

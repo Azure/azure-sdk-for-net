@@ -9,9 +9,10 @@ To create an `AuthoringClient`, you will need the service endpoint and credentia
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+string projectName = "MyNewProject";
+ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 ```
 
 ## Delete a Trained Model
@@ -19,8 +20,7 @@ AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuth
 To delete a trained model, call DeleteTrainedModel on the AnalyzeConversationAuthoring client.
 
 ```C# Snippet:Sample11_ConversationsAuthoring_DeleteTrainedModel
-Response response = authoringClient.DeleteTrainedModel(
-    projectName: projectName,
+Response response = modelAuthoringClient.DeleteTrainedModel(
     trainedModelLabel: trainedModelLabel
 );
 

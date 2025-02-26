@@ -49,7 +49,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="modelLabel"> Represents the output model label. </param>
         /// <param name="trainingMode"> Represents the mode of the training operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelLabel"/> is null. </exception>
-        public TrainingJobDetails(string modelLabel, TrainingMode trainingMode)
+        public TrainingJobDetails(string modelLabel, AnalyzeConversationAuthoringTrainingMode trainingMode)
         {
             Argument.AssertNotNull(modelLabel, nameof(modelLabel));
 
@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="trainingMode"> Represents the mode of the training operation. </param>
         /// <param name="evaluationOptions"> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrainingJobDetails(string modelLabel, string trainingConfigVersion, TrainingMode trainingMode, EvaluationDetails evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrainingJobDetails(string modelLabel, string trainingConfigVersion, AnalyzeConversationAuthoringTrainingMode trainingMode, EvaluationDetails evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelLabel = modelLabel;
             TrainingConfigVersion = trainingConfigVersion;
@@ -82,7 +82,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> Represents training config version. By default, "latest" value is used which uses the latest released training config version. </summary>
         public string TrainingConfigVersion { get; set; }
         /// <summary> Represents the mode of the training operation. </summary>
-        public TrainingMode TrainingMode { get; }
+        public AnalyzeConversationAuthoringTrainingMode TrainingMode { get; }
         /// <summary> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </summary>
         public EvaluationDetails EvaluationOptions { get; set; }
     }

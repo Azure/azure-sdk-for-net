@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
 
             writer.WritePropertyName("evaluationOptions"u8);
-            writer.WriteObjectValue(EvaluationOptions, options);
+            writer.WriteObjectValue(EvaluationDetails, options);
             writer.WritePropertyName("modelLabel"u8);
             writer.WriteStringValue(ModelLabel);
             writer.WritePropertyName("trainingConfigVersion"u8);
