@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.AppService
 
         SiteSlotInstanceExtensionResource IOperationSource<SiteSlotInstanceExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MSDeployStatusData.DeserializeMSDeployStatusData(document.RootElement);
+            var data = ModelReaderWriter.Read<MSDeployStatusData>(new BinaryData(response.ContentStream));
             return new SiteSlotInstanceExtensionResource(_client, data);
         }
 
         async ValueTask<SiteSlotInstanceExtensionResource> IOperationSource<SiteSlotInstanceExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MSDeployStatusData.DeserializeMSDeployStatusData(document.RootElement);
-            return new SiteSlotInstanceExtensionResource(_client, data);
+            var data = ModelReaderWriter.Read<MSDeployStatusData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new SiteSlotInstanceExtensionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -67,7 +67,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ManagedPrivateEndpoint FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeManagedPrivateEndpoint(document.RootElement);
         }
 

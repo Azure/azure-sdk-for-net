@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         SupportNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SupportNameAvailabilityResult.DeserializeSupportNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         SupportNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SupportNameAvailabilityResult.DeserializeSupportNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         CommunicationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationsListResult.DeserializeCommunicationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         CommunicationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationsListResult.DeserializeCommunicationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         SupportTicketCommunicationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         SupportTicketCommunicationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         CommunicationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationsListResult.DeserializeCommunicationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         CommunicationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationsListResult.DeserializeCommunicationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

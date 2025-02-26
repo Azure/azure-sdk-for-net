@@ -78,7 +78,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
                 case 200:
                     {
                         ManagedPrivateEndpoint value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedPrivateEndpoint.DeserializeManagedPrivateEndpoint(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -110,7 +110,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
                 case 200:
                     {
                         ManagedPrivateEndpoint value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedPrivateEndpoint.DeserializeManagedPrivateEndpoint(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -168,7 +168,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
                 case 200:
                     {
                         ManagedPrivateEndpoint value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedPrivateEndpoint.DeserializeManagedPrivateEndpoint(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -205,7 +205,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
                 case 200:
                     {
                         ManagedPrivateEndpoint value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedPrivateEndpoint.DeserializeManagedPrivateEndpoint(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -320,7 +320,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
                 case 200:
                     {
                         ManagedPrivateEndpointListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedPrivateEndpointListResponse.DeserializeManagedPrivateEndpointListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -347,7 +347,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
                 case 200:
                     {
                         ManagedPrivateEndpointListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedPrivateEndpointListResponse.DeserializeManagedPrivateEndpointListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -392,7 +392,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
                 case 200:
                     {
                         ManagedPrivateEndpointListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedPrivateEndpointListResponse.DeserializeManagedPrivateEndpointListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -424,7 +424,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
                 case 200:
                     {
                         ManagedPrivateEndpointListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedPrivateEndpointListResponse.DeserializeManagedPrivateEndpointListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

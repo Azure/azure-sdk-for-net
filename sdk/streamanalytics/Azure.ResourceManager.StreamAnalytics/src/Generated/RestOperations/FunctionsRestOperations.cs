@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 201:
                     {
                         StreamingJobFunctionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StreamingJobFunctionData.DeserializeStreamingJobFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 201:
                     {
                         StreamingJobFunctionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StreamingJobFunctionData.DeserializeStreamingJobFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamingJobFunctionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StreamingJobFunctionData.DeserializeStreamingJobFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamingJobFunctionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StreamingJobFunctionData.DeserializeStreamingJobFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamingJobFunctionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StreamingJobFunctionData.DeserializeStreamingJobFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamingJobFunctionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StreamingJobFunctionData.DeserializeStreamingJobFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamingJobFunctionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StreamingJobFunctionListResult.DeserializeStreamingJobFunctionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamingJobFunctionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StreamingJobFunctionListResult.DeserializeStreamingJobFunctionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamingJobFunctionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StreamingJobFunctionData.DeserializeStreamingJobFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamingJobFunctionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StreamingJobFunctionData.DeserializeStreamingJobFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamingJobFunctionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StreamingJobFunctionListResult.DeserializeStreamingJobFunctionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamingJobFunctionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StreamingJobFunctionListResult.DeserializeStreamingJobFunctionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

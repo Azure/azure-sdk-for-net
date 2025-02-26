@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseClusterPrincipalAssignmentResource IOperationSource<SynapseClusterPrincipalAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SynapseClusterPrincipalAssignmentData.DeserializeSynapseClusterPrincipalAssignmentData(document.RootElement);
+            var data = ModelReaderWriter.Read<SynapseClusterPrincipalAssignmentData>(new BinaryData(response.ContentStream));
             return new SynapseClusterPrincipalAssignmentResource(_client, data);
         }
 
         async ValueTask<SynapseClusterPrincipalAssignmentResource> IOperationSource<SynapseClusterPrincipalAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SynapseClusterPrincipalAssignmentData.DeserializeSynapseClusterPrincipalAssignmentData(document.RootElement);
-            return new SynapseClusterPrincipalAssignmentResource(_client, data);
+            var data = ModelReaderWriter.Read<SynapseClusterPrincipalAssignmentData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new SynapseClusterPrincipalAssignmentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

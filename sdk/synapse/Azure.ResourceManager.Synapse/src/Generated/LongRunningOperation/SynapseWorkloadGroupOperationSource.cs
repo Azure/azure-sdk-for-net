@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseWorkloadGroupResource IOperationSource<SynapseWorkloadGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SynapseWorkloadGroupData.DeserializeSynapseWorkloadGroupData(document.RootElement);
+            var data = ModelReaderWriter.Read<SynapseWorkloadGroupData>(new BinaryData(response.ContentStream));
             return new SynapseWorkloadGroupResource(_client, data);
         }
 
         async ValueTask<SynapseWorkloadGroupResource> IOperationSource<SynapseWorkloadGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SynapseWorkloadGroupData.DeserializeSynapseWorkloadGroupData(document.RootElement);
-            return new SynapseWorkloadGroupResource(_client, data);
+            var data = ModelReaderWriter.Read<SynapseWorkloadGroupData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new SynapseWorkloadGroupResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

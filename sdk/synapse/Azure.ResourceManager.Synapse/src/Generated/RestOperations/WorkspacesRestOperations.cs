@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseWorkspaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseWorkspaceListResult.DeserializeSynapseWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseWorkspaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseWorkspaceListResult.DeserializeSynapseWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseWorkspaceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseWorkspaceData.DeserializeSynapseWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseWorkspaceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseWorkspaceData.DeserializeSynapseWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseWorkspaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseWorkspaceListResult.DeserializeSynapseWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseWorkspaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseWorkspaceListResult.DeserializeSynapseWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseWorkspaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseWorkspaceListResult.DeserializeSynapseWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseWorkspaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseWorkspaceListResult.DeserializeSynapseWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseWorkspaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseWorkspaceListResult.DeserializeSynapseWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseWorkspaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseWorkspaceListResult.DeserializeSynapseWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

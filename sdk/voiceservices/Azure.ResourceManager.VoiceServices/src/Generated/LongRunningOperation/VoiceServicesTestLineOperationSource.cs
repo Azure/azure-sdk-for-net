@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.VoiceServices
 
         VoiceServicesTestLineResource IOperationSource<VoiceServicesTestLineResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = VoiceServicesTestLineData.DeserializeVoiceServicesTestLineData(document.RootElement);
+            var data = ModelReaderWriter.Read<VoiceServicesTestLineData>(new BinaryData(response.ContentStream));
             return new VoiceServicesTestLineResource(_client, data);
         }
 
         async ValueTask<VoiceServicesTestLineResource> IOperationSource<VoiceServicesTestLineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = VoiceServicesTestLineData.DeserializeVoiceServicesTestLineData(document.RootElement);
-            return new VoiceServicesTestLineResource(_client, data);
+            var data = ModelReaderWriter.Read<VoiceServicesTestLineData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new VoiceServicesTestLineResource(_client, data)).ConfigureAwait(false);
         }
     }
 }
