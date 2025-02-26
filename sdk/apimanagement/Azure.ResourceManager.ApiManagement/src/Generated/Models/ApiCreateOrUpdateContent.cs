@@ -74,6 +74,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <param name="apiVersionSet"> Version set details. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="value"> Content value when Importing an API. </param>
         /// <param name="format"> Format of the Content in which the API is getting imported. New formats can be added in the future. </param>
         /// <param name="wsdlSelector"> Criteria to limit import of WSDL to a subset of the document. </param>
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </param>
         /// <param name="translateRequiredQueryParametersConduct"> Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCreateOrUpdateContent(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, IList<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string value, ContentFormat? format, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector, SoapApiType? soapApiType, TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiCreateOrUpdateContent(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, IList<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string provisioningState, string value, ContentFormat? format, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector, SoapApiType? soapApiType, TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -110,6 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Path = path;
             Protocols = protocols;
             ApiVersionSet = apiVersionSet;
+            ProvisioningState = provisioningState;
             Value = value;
             Format = format;
             WsdlSelector = wsdlSelector;
@@ -181,6 +183,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Version set details. </summary>
         [WirePath("properties.apiVersionSet")]
         public ApiVersionSetContractDetails ApiVersionSet { get; set; }
+        /// <summary> The provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
+        public string ProvisioningState { get; }
         /// <summary> Content value when Importing an API. </summary>
         [WirePath("properties.value")]
         public string Value { get; set; }
