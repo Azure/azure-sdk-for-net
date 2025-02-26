@@ -53,13 +53,13 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Initializes a new instance of <see cref="AutoStopCriteria"/>. </summary>
         /// <param name="autoStopDisabled"> Whether auto-stop should be disabled. The default value is false. </param>
         /// <param name="errorRate"> Threshold percentage of errors on which test run should be automatically stopped. Allowed values are in range of 0.0-100.0. </param>
-        /// <param name="errorRateTimeWindowInSeconds"> Time window during which the error percentage should be evaluated in seconds. </param>
+        /// <param name="errorRateTimeWindow"> Time window during which the error percentage should be evaluated in seconds. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoStopCriteria(bool? autoStopDisabled, float? errorRate, int? errorRateTimeWindowInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutoStopCriteria(bool? autoStopDisabled, float? errorRate, TimeSpan? errorRateTimeWindow, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AutoStopDisabled = autoStopDisabled;
             ErrorRate = errorRate;
-            ErrorRateTimeWindowInSeconds = errorRateTimeWindowInSeconds;
+            ErrorRateTimeWindow = errorRateTimeWindow;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -68,6 +68,6 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Threshold percentage of errors on which test run should be automatically stopped. Allowed values are in range of 0.0-100.0. </summary>
         public float? ErrorRate { get; set; }
         /// <summary> Time window during which the error percentage should be evaluated in seconds. </summary>
-        public int? ErrorRateTimeWindowInSeconds { get; set; }
+        public TimeSpan? ErrorRateTimeWindow { get; set; }
     }
 }
