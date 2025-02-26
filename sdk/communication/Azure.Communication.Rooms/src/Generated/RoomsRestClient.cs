@@ -30,7 +30,7 @@ namespace Azure.Communication.Rooms
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public RoomsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2025-03-07")
+        public RoomsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2025-03-13")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -38,7 +38,7 @@ namespace Azure.Communication.Rooms
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateCreateRequest(DateTimeOffset? validFrom, DateTimeOffset? validUntil, IDictionary<string, ParticipantProperties> participants, bool? pstnDialOutEnabled)
+        internal HttpMessage CreateCreateRequest(DateTimeOffset? validFrom, DateTimeOffset? validUntil, bool? pstnDialOutEnabled, IDictionary<string, ParticipantProperties> participants)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -75,12 +75,12 @@ namespace Azure.Communication.Rooms
         /// <summary> Creates a new room. </summary>
         /// <param name="validFrom"> The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. The default value is the current date time. </param>
         /// <param name="validUntil"> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. The default value is the current date time plus 180 days. </param>
-        /// <param name="participants"> (Optional) Participants to be invited to the room. </param>
         /// <param name="pstnDialOutEnabled"> Set this flag to true if, at the time of the call, dial out to a PSTN number is enabled in a particular room. By default, this flag is set to false. </param>
+        /// <param name="participants"> (Optional) Participants to be invited to the room. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CommunicationRoom>> CreateAsync(DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, IDictionary<string, ParticipantProperties> participants = null, bool? pstnDialOutEnabled = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CommunicationRoom>> CreateAsync(DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, bool? pstnDialOutEnabled = null, IDictionary<string, ParticipantProperties> participants = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(validFrom, validUntil, participants, pstnDialOutEnabled);
+            using var message = CreateCreateRequest(validFrom, validUntil, pstnDialOutEnabled, participants);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -99,12 +99,12 @@ namespace Azure.Communication.Rooms
         /// <summary> Creates a new room. </summary>
         /// <param name="validFrom"> The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. The default value is the current date time. </param>
         /// <param name="validUntil"> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. The default value is the current date time plus 180 days. </param>
-        /// <param name="participants"> (Optional) Participants to be invited to the room. </param>
         /// <param name="pstnDialOutEnabled"> Set this flag to true if, at the time of the call, dial out to a PSTN number is enabled in a particular room. By default, this flag is set to false. </param>
+        /// <param name="participants"> (Optional) Participants to be invited to the room. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CommunicationRoom> Create(DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, IDictionary<string, ParticipantProperties> participants = null, bool? pstnDialOutEnabled = null, CancellationToken cancellationToken = default)
+        public Response<CommunicationRoom> Create(DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, bool? pstnDialOutEnabled = null, IDictionary<string, ParticipantProperties> participants = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(validFrom, validUntil, participants, pstnDialOutEnabled);
+            using var message = CreateCreateRequest(validFrom, validUntil, pstnDialOutEnabled, participants);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
