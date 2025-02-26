@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-// touch
 
 extern alias DMBlobs;
 extern alias BaseBlobs;
@@ -65,6 +64,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
         }
 
+        // a code comment
         private void AssertBlobStorageResourceType(
             StorageResource resource,
             BlobType blobType,
