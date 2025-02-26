@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_ListBySubscription</description>
+        /// <description>TrafficController_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_ListBySubscription</description>
+        /// <description>TrafficController_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
