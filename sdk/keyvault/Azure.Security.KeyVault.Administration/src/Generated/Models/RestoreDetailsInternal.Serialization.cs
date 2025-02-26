@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 return null;
             }
-            string status = default;
+            OperationStatus? status = default;
             string statusDetails = default;
             KeyVaultServiceError error = default;
             string jobId = default;
@@ -28,7 +28,11 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 if (property.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = new OperationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("statusDetails"u8))
