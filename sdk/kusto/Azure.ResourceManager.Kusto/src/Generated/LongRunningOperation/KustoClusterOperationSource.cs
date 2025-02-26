@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Kusto
 
         KustoClusterResource IOperationSource<KustoClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = KustoClusterData.DeserializeKustoClusterData(document.RootElement);
+            var data = ModelReaderWriter.Read<KustoClusterData>(new BinaryData(response.ContentStream));
             return new KustoClusterResource(_client, data);
         }
 
         async ValueTask<KustoClusterResource> IOperationSource<KustoClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = KustoClusterData.DeserializeKustoClusterData(document.RootElement);
-            return new KustoClusterResource(_client, data);
+            var data = ModelReaderWriter.Read<KustoClusterData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new KustoClusterResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

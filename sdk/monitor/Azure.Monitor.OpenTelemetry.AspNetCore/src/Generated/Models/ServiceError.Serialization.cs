@@ -57,7 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ServiceError FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeServiceError(document.RootElement);
         }
     }

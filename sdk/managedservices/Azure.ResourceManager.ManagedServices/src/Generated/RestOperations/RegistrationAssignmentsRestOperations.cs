@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedServices
                 case 200:
                     {
                         ManagedServicesRegistrationAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ManagedServices
                 case 200:
                     {
                         ManagedServicesRegistrationAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ManagedServices
                 case 200:
                     {
                         ManagedServicesRegistrationAssignmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedServicesRegistrationAssignmentListResult.DeserializeManagedServicesRegistrationAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ManagedServices
                 case 200:
                     {
                         ManagedServicesRegistrationAssignmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedServicesRegistrationAssignmentListResult.DeserializeManagedServicesRegistrationAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.ManagedServices
                 case 200:
                     {
                         ManagedServicesRegistrationAssignmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedServicesRegistrationAssignmentListResult.DeserializeManagedServicesRegistrationAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.ManagedServices
                 case 200:
                     {
                         ManagedServicesRegistrationAssignmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedServicesRegistrationAssignmentListResult.DeserializeManagedServicesRegistrationAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

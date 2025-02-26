@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Rendering
 {
@@ -39,7 +40,7 @@ namespace Azure.Maps.Rendering
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static CopyrightCaption FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCopyrightCaption(document.RootElement);
         }
     }

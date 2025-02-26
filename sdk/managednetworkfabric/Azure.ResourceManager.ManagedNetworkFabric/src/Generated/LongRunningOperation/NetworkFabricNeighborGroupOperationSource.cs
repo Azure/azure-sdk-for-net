@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkFabricNeighborGroupResource IOperationSource<NetworkFabricNeighborGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetworkFabricNeighborGroupData.DeserializeNetworkFabricNeighborGroupData(document.RootElement);
+            var data = ModelReaderWriter.Read<NetworkFabricNeighborGroupData>(new BinaryData(response.ContentStream));
             return new NetworkFabricNeighborGroupResource(_client, data);
         }
 
         async ValueTask<NetworkFabricNeighborGroupResource> IOperationSource<NetworkFabricNeighborGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetworkFabricNeighborGroupData.DeserializeNetworkFabricNeighborGroupData(document.RootElement);
-            return new NetworkFabricNeighborGroupResource(_client, data);
+            var data = ModelReaderWriter.Read<NetworkFabricNeighborGroupData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new NetworkFabricNeighborGroupResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

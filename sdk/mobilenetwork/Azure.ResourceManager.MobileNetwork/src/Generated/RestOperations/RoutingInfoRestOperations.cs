@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         RoutingInfoListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoutingInfoListResult.DeserializeRoutingInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         RoutingInfoListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoutingInfoListResult.DeserializeRoutingInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         MobileNetworkRoutingInfoData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MobileNetworkRoutingInfoData.DeserializeMobileNetworkRoutingInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         MobileNetworkRoutingInfoData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MobileNetworkRoutingInfoData.DeserializeMobileNetworkRoutingInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         RoutingInfoListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoutingInfoListResult.DeserializeRoutingInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         RoutingInfoListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoutingInfoListResult.DeserializeRoutingInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

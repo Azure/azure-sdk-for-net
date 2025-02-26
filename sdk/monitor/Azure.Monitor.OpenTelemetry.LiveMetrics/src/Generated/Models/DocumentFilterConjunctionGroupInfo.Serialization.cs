@@ -39,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DocumentFilterConjunctionGroupInfo FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDocumentFilterConjunctionGroupInfo(document.RootElement);
         }
     }

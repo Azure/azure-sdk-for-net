@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.MachineLearning
 
         MachineLearningServerlessEndpointResource IOperationSource<MachineLearningServerlessEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MachineLearningServerlessEndpointData.DeserializeMachineLearningServerlessEndpointData(document.RootElement);
+            var data = ModelReaderWriter.Read<MachineLearningServerlessEndpointData>(new BinaryData(response.ContentStream));
             return new MachineLearningServerlessEndpointResource(_client, data);
         }
 
         async ValueTask<MachineLearningServerlessEndpointResource> IOperationSource<MachineLearningServerlessEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MachineLearningServerlessEndpointData.DeserializeMachineLearningServerlessEndpointData(document.RootElement);
-            return new MachineLearningServerlessEndpointResource(_client, data);
+            var data = ModelReaderWriter.Read<MachineLearningServerlessEndpointData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new MachineLearningServerlessEndpointResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Media
 
         StreamingEndpointResource IOperationSource<StreamingEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = StreamingEndpointData.DeserializeStreamingEndpointData(document.RootElement);
+            var data = ModelReaderWriter.Read<StreamingEndpointData>(new BinaryData(response.ContentStream));
             return new StreamingEndpointResource(_client, data);
         }
 
         async ValueTask<StreamingEndpointResource> IOperationSource<StreamingEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = StreamingEndpointData.DeserializeStreamingEndpointData(document.RootElement);
-            return new StreamingEndpointResource(_client, data);
+            var data = ModelReaderWriter.Read<StreamingEndpointData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new StreamingEndpointResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

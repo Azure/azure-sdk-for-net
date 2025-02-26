@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         UEInfoList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UEInfoList.DeserializeUEInfoList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         UEInfoList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UEInfoList.DeserializeUEInfoList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         UEInfoList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UEInfoList.DeserializeUEInfoList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         UEInfoList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UEInfoList.DeserializeUEInfoList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

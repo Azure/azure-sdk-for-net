@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.MySql
 
         MySqlFirewallRuleResource IOperationSource<MySqlFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(document.RootElement);
+            var data = ModelReaderWriter.Read<MySqlFirewallRuleData>(new BinaryData(response.ContentStream));
             return new MySqlFirewallRuleResource(_client, data);
         }
 
         async ValueTask<MySqlFirewallRuleResource> IOperationSource<MySqlFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(document.RootElement);
-            return new MySqlFirewallRuleResource(_client, data);
+            var data = ModelReaderWriter.Read<MySqlFirewallRuleData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new MySqlFirewallRuleResource(_client, data)).ConfigureAwait(false);
         }
     }
 }
