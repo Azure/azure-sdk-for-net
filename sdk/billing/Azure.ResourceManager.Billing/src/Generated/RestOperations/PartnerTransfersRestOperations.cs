@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PartnerTransferDetailData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PartnerTransferDetailData.DeserializePartnerTransferDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PartnerTransferDetailData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PartnerTransferDetailData.DeserializePartnerTransferDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Billing
                 case 201:
                     {
                         PartnerTransferDetailData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PartnerTransferDetailData.DeserializePartnerTransferDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Billing
                 case 201:
                     {
                         PartnerTransferDetailData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PartnerTransferDetailData.DeserializePartnerTransferDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PartnerTransferDetailData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PartnerTransferDetailData.DeserializePartnerTransferDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PartnerTransferDetailData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PartnerTransferDetailData.DeserializePartnerTransferDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PartnerTransferDetailsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PartnerTransferDetailsListResult.DeserializePartnerTransferDetailsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PartnerTransferDetailsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PartnerTransferDetailsListResult.DeserializePartnerTransferDetailsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PartnerTransferDetailsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PartnerTransferDetailsListResult.DeserializePartnerTransferDetailsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PartnerTransferDetailsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PartnerTransferDetailsListResult.DeserializePartnerTransferDetailsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

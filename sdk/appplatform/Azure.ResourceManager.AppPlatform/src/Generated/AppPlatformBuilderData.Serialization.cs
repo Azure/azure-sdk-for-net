@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAppPlatformBuilderData(document.RootElement, options);
                     }
                 default:

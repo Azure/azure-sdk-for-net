@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Automation
                 case 201:
                     {
                         SourceControlSyncJob value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SourceControlSyncJob.DeserializeSourceControlSyncJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Automation
                 case 201:
                     {
                         SourceControlSyncJob value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SourceControlSyncJob.DeserializeSourceControlSyncJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SourceControlSyncJobResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SourceControlSyncJobResult.DeserializeSourceControlSyncJobResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SourceControlSyncJobResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SourceControlSyncJobResult.DeserializeSourceControlSyncJobResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SourceControlSyncJobListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SourceControlSyncJobListResult.DeserializeSourceControlSyncJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SourceControlSyncJobListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SourceControlSyncJobListResult.DeserializeSourceControlSyncJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SourceControlSyncJobListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SourceControlSyncJobListResult.DeserializeSourceControlSyncJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SourceControlSyncJobListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SourceControlSyncJobListResult.DeserializeSourceControlSyncJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

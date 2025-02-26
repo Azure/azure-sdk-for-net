@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRoleDefinitionData.DeserializeBillingRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRoleDefinitionData.DeserializeBillingRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRoleDefinitionData.DeserializeBillingRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRoleDefinitionData.DeserializeBillingRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRoleDefinitionData.DeserializeBillingRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRoleDefinitionData.DeserializeBillingRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRoleDefinitionData.DeserializeBillingRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRoleDefinitionData.DeserializeBillingRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRoleDefinitionData.DeserializeBillingRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRoleDefinitionData.DeserializeBillingRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -926,7 +926,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1016,7 +1016,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRoleDefinitionData.DeserializeBillingRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1047,7 +1047,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRoleDefinitionData.DeserializeBillingRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1108,7 +1108,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1135,7 +1135,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1186,7 +1186,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1215,7 +1215,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1268,7 +1268,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1299,7 +1299,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1352,7 +1352,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1383,7 +1383,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1432,7 +1432,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1459,7 +1459,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1510,7 +1510,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1539,7 +1539,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1590,7 +1590,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1619,7 +1619,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingRoleDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingRoleDefinitionListResult.DeserializeBillingRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.AppPlatform
 
         AppPlatformConfigurationServiceResource IOperationSource<AppPlatformConfigurationServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AppPlatformConfigurationServiceData.DeserializeAppPlatformConfigurationServiceData(document.RootElement);
+            var data = ModelReaderWriter.Read<AppPlatformConfigurationServiceData>(new BinaryData(response.ContentStream));
             return new AppPlatformConfigurationServiceResource(_client, data);
         }
 
         async ValueTask<AppPlatformConfigurationServiceResource> IOperationSource<AppPlatformConfigurationServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AppPlatformConfigurationServiceData.DeserializeAppPlatformConfigurationServiceData(document.RootElement);
-            return new AppPlatformConfigurationServiceResource(_client, data);
+            var data = ModelReaderWriter.Read<AppPlatformConfigurationServiceData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new AppPlatformConfigurationServiceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

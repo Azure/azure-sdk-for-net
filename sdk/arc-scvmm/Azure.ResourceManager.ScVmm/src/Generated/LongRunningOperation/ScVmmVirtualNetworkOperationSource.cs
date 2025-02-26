@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.ScVmm
 
         ScVmmVirtualNetworkResource IOperationSource<ScVmmVirtualNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(document.RootElement);
+            var data = ModelReaderWriter.Read<ScVmmVirtualNetworkData>(new BinaryData(response.ContentStream));
             return new ScVmmVirtualNetworkResource(_client, data);
         }
 
         async ValueTask<ScVmmVirtualNetworkResource> IOperationSource<ScVmmVirtualNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(document.RootElement);
-            return new ScVmmVirtualNetworkResource(_client, data);
+            var data = ModelReaderWriter.Read<ScVmmVirtualNetworkData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new ScVmmVirtualNetworkResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -141,7 +141,7 @@ namespace Azure.AI.Projects
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeApplicationInsightsConfiguration(document.RootElement, options);
                     }
                 default:
@@ -155,7 +155,7 @@ namespace Azure.AI.Projects
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new ApplicationInsightsConfiguration FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeApplicationInsightsConfiguration(document.RootElement);
         }
 

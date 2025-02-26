@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Billing
 
         BillingRequestResource IOperationSource<BillingRequestResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = BillingRequestData.DeserializeBillingRequestData(document.RootElement);
+            var data = ModelReaderWriter.Read<BillingRequestData>(new BinaryData(response.ContentStream));
             return new BillingRequestResource(_client, data);
         }
 
         async ValueTask<BillingRequestResource> IOperationSource<BillingRequestResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = BillingRequestData.DeserializeBillingRequestData(document.RootElement);
-            return new BillingRequestResource(_client, data);
+            var data = ModelReaderWriter.Read<BillingRequestData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new BillingRequestResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

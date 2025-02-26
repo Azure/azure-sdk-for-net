@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationRunbookDraft value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationRunbookDraft value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         RunbookDraftUndoEditResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RunbookDraftUndoEditResult.DeserializeRunbookDraftUndoEditResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         RunbookDraftUndoEditResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RunbookDraftUndoEditResult.DeserializeRunbookDraftUndoEditResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

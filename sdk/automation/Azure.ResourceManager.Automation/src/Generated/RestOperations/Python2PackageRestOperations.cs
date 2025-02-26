@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationModuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationModuleData.DeserializeAutomationModuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationModuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationModuleData.DeserializeAutomationModuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Automation
                 case 201:
                     {
                         AutomationModuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationModuleData.DeserializeAutomationModuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Automation
                 case 201:
                     {
                         AutomationModuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationModuleData.DeserializeAutomationModuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationModuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationModuleData.DeserializeAutomationModuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationModuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationModuleData.DeserializeAutomationModuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationModuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationModuleListResult.DeserializeAutomationModuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationModuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationModuleListResult.DeserializeAutomationModuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationModuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationModuleListResult.DeserializeAutomationModuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationModuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationModuleListResult.DeserializeAutomationModuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

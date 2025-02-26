@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingDepartmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingDepartmentData.DeserializeBillingDepartmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingDepartmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingDepartmentData.DeserializeBillingDepartmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         DepartmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DepartmentListResult.DeserializeDepartmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         DepartmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DepartmentListResult.DeserializeDepartmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         DepartmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DepartmentListResult.DeserializeDepartmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         DepartmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DepartmentListResult.DeserializeDepartmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

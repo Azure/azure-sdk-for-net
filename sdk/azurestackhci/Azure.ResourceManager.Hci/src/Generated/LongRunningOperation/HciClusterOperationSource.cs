@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Hci
 
         HciClusterResource IOperationSource<HciClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = HciClusterData.DeserializeHciClusterData(document.RootElement);
+            var data = ModelReaderWriter.Read<HciClusterData>(new BinaryData(response.ContentStream));
             return new HciClusterResource(_client, data);
         }
 
         async ValueTask<HciClusterResource> IOperationSource<HciClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = HciClusterData.DeserializeHciClusterData(document.RootElement);
-            return new HciClusterResource(_client, data);
+            var data = ModelReaderWriter.Read<HciClusterData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new HciClusterResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DscNodeData.DeserializeDscNodeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DscNodeData.DeserializeDscNodeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DscNodeData.DeserializeDscNodeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DscNodeData.DeserializeDscNodeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DscNodeListResult.DeserializeDscNodeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DscNodeListResult.DeserializeDscNodeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DscNodeListResult.DeserializeDscNodeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DscNodeListResult.DeserializeDscNodeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

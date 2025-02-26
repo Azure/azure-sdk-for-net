@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Avs
 
         WorkloadNetworkPortMirroringProfileResource IOperationSource<WorkloadNetworkPortMirroringProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = WorkloadNetworkPortMirroringProfileData.DeserializeWorkloadNetworkPortMirroringProfileData(document.RootElement);
+            var data = ModelReaderWriter.Read<WorkloadNetworkPortMirroringProfileData>(new BinaryData(response.ContentStream));
             return new WorkloadNetworkPortMirroringProfileResource(_client, data);
         }
 
         async ValueTask<WorkloadNetworkPortMirroringProfileResource> IOperationSource<WorkloadNetworkPortMirroringProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = WorkloadNetworkPortMirroringProfileData.DeserializeWorkloadNetworkPortMirroringProfileData(document.RootElement);
-            return new WorkloadNetworkPortMirroringProfileResource(_client, data);
+            var data = ModelReaderWriter.Read<WorkloadNetworkPortMirroringProfileData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new WorkloadNetworkPortMirroringProfileResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

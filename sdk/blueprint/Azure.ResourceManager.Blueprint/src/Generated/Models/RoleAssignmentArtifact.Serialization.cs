@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Blueprint.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PrincipalIds);
 #else
-            using (JsonDocument document = JsonDocument.Parse(PrincipalIds))
+            using (JsonDocument document = JsonDocument.Parse(PrincipalIds, ModelSerializationExtensions.JsonDocumentOptions))
             {
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRoleAssignmentArtifact(document.RootElement, options);
                     }
                 default:
