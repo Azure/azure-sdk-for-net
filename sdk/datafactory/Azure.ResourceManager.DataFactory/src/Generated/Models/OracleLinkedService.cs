@@ -15,13 +15,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class OracleLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="OracleLinkedService"/>. </summary>
-        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Only used for Version 1.0. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
-        public OracleLinkedService(DataFactoryElement<string> connectionString)
+        public OracleLinkedService()
         {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
-
-            ConnectionString = connectionString;
             LinkedServiceType = "Oracle";
         }
 
@@ -70,11 +65,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             FetchTswtzAsTimestamp = fetchTswtzAsTimestamp;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Oracle";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OracleLinkedService"/> for deserialization. </summary>
-        internal OracleLinkedService()
-        {
         }
 
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Only used for Version 1.0. </summary>
