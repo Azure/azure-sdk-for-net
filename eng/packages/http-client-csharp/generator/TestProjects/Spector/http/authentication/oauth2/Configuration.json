@@ -1,5 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "Authentication.OAuth2",
-  "library-name": "Authentication.OAuth2"
+  "package-name": "Authentication.OAuth2"
 }

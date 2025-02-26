@@ -1,5 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "Server.Endpoint.NotDefined",
-  "library-name": "Server.Endpoint.NotDefined"
+  "package-name": "Server.Endpoint.NotDefined"
 }

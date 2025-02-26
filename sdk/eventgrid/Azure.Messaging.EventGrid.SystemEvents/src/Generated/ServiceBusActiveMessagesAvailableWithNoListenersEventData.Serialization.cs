@@ -34,35 +34,38 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(ServiceBusActiveMessagesAvailableWithNoListenersEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(NamespaceName))
-            {
-                writer.WritePropertyName("namespaceName"u8);
-                writer.WriteStringValue(NamespaceName);
-            }
-            if (Optional.IsDefined(RequestUri))
-            {
-                writer.WritePropertyName("requestUri"u8);
-                writer.WriteStringValue(RequestUri);
-            }
-            if (Optional.IsDefined(EntityType))
-            {
-                writer.WritePropertyName("entityType"u8);
-                writer.WriteStringValue(EntityType);
-            }
-            if (Optional.IsDefined(QueueName))
+            writer.WritePropertyName("namespaceName"u8);
+            writer.WriteStringValue(NamespaceName);
+            writer.WritePropertyName("requestUri"u8);
+            writer.WriteStringValue(RequestUri);
+            writer.WritePropertyName("entityType"u8);
+            writer.WriteStringValue(EntityType);
+            if (QueueName != null)
             {
                 writer.WritePropertyName("queueName"u8);
                 writer.WriteStringValue(QueueName);
             }
-            if (Optional.IsDefined(TopicName))
+            else
+            {
+                writer.WriteNull("queueName");
+            }
+            if (TopicName != null)
             {
                 writer.WritePropertyName("topicName"u8);
                 writer.WriteStringValue(TopicName);
             }
-            if (Optional.IsDefined(SubscriptionName))
+            else
+            {
+                writer.WriteNull("topicName");
+            }
+            if (SubscriptionName != null)
             {
                 writer.WritePropertyName("subscriptionName"u8);
                 writer.WriteStringValue(SubscriptionName);
+            }
+            else
+            {
+                writer.WriteNull("subscriptionName");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -128,16 +131,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("queueName"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        queueName = null;
+                        continue;
+                    }
                     queueName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("topicName"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        topicName = null;
+                        continue;
+                    }
                     topicName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("subscriptionName"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        subscriptionName = null;
+                        continue;
+                    }
                     subscriptionName = property.Value.GetString();
                     continue;
                 }

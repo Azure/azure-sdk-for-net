@@ -1,5 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "Server.Path.Single",
-  "library-name": "Server.Path.Single"
+  "package-name": "Server.Path.Single"
 }

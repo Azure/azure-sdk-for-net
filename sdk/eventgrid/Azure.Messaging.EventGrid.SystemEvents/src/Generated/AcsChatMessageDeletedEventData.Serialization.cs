@@ -35,8 +35,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("deleteTime"u8);
-            writer.WriteStringValue(DeleteTime, "O");
+            if (Optional.IsDefined(DeleteTime))
+            {
+                writer.WritePropertyName("deleteTime"u8);
+                writer.WriteStringValue(DeleteTime.Value, "O");
+            }
         }
 
         AcsChatMessageDeletedEventData IJsonModel<AcsChatMessageDeletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -59,11 +62,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            DateTimeOffset deleteTime = default;
+            DateTimeOffset? deleteTime = default;
             string messageId = default;
             CommunicationIdentifierModel senderCommunicationIdentifier = default;
             string senderDisplayName = default;
-            DateTimeOffset composeTime = default;
+            DateTimeOffset? composeTime = default;
             string type = default;
             long? version = default;
             CommunicationIdentifierModel recipientCommunicationIdentifier = default;
@@ -75,6 +78,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("deleteTime"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     deleteTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -95,6 +102,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("composeTime"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     composeTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
