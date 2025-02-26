@@ -102,7 +102,7 @@ function installModule([string]$moduleName, [string]$version, $repoUrl) {
 
   Write-Verbose "Installing module $moduleName with min version $version from $repoUrl"
   # Install under CurrentUser scope so that the end up under $CurrentUserModulePath for caching
-  Install-Module $moduleName -MinimumVersion $version -Repository $repo.Name -Scope CurrentUser -Force
+  Install-Module $moduleName -MinimumVersion $version -Repository $repo.Name -Scope CurrentUser -Force -WhatIf:$false
   # Ensure module installed
   $modules = (Get-Module -ListAvailable $moduleName)
   if ($version -as [Version]) {
