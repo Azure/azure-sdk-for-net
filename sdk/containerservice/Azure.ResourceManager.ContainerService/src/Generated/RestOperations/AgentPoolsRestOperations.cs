@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ContainerServiceAgentPoolListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerServiceAgentPoolListResult.DeserializeContainerServiceAgentPoolListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ContainerServiceAgentPoolListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerServiceAgentPoolListResult.DeserializeContainerServiceAgentPoolListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ContainerServiceAgentPoolData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerServiceAgentPoolData.DeserializeContainerServiceAgentPoolData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ContainerServiceAgentPoolData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerServiceAgentPoolData.DeserializeContainerServiceAgentPoolData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         AgentPoolUpgradeProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AgentPoolUpgradeProfileData.DeserializeAgentPoolUpgradeProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         AgentPoolUpgradeProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AgentPoolUpgradeProfileData.DeserializeAgentPoolUpgradeProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         AgentPoolAvailableVersions value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AgentPoolAvailableVersions.DeserializeAgentPoolAvailableVersions(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         AgentPoolAvailableVersions value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AgentPoolAvailableVersions.DeserializeAgentPoolAvailableVersions(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ContainerServiceAgentPoolListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerServiceAgentPoolListResult.DeserializeContainerServiceAgentPoolListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -889,7 +889,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ContainerServiceAgentPoolListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerServiceAgentPoolListResult.DeserializeContainerServiceAgentPoolListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

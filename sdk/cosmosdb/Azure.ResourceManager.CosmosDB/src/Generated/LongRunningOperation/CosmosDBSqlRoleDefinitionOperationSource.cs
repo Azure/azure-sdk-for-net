@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosDBSqlRoleDefinitionResource IOperationSource<CosmosDBSqlRoleDefinitionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CosmosDBSqlRoleDefinitionData.DeserializeCosmosDBSqlRoleDefinitionData(document.RootElement);
+            var data = ModelReaderWriter.Read<CosmosDBSqlRoleDefinitionData>(new BinaryData(response.ContentStream));
             return new CosmosDBSqlRoleDefinitionResource(_client, data);
         }
 
         async ValueTask<CosmosDBSqlRoleDefinitionResource> IOperationSource<CosmosDBSqlRoleDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CosmosDBSqlRoleDefinitionData.DeserializeCosmosDBSqlRoleDefinitionData(document.RootElement);
-            return new CosmosDBSqlRoleDefinitionResource(_client, data);
+            var data = ModelReaderWriter.Read<CosmosDBSqlRoleDefinitionData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new CosmosDBSqlRoleDefinitionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

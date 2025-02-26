@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         DataBoxEdgeOrderResource IOperationSource<DataBoxEdgeOrderResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DataBoxEdgeOrderData.DeserializeDataBoxEdgeOrderData(document.RootElement);
+            var data = ModelReaderWriter.Read<DataBoxEdgeOrderData>(new BinaryData(response.ContentStream));
             return new DataBoxEdgeOrderResource(_client, data);
         }
 
         async ValueTask<DataBoxEdgeOrderResource> IOperationSource<DataBoxEdgeOrderResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DataBoxEdgeOrderData.DeserializeDataBoxEdgeOrderData(document.RootElement);
-            return new DataBoxEdgeOrderResource(_client, data);
+            var data = ModelReaderWriter.Read<DataBoxEdgeOrderData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new DataBoxEdgeOrderResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

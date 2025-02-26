@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         EmailServiceResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EmailServiceResourceData.DeserializeEmailServiceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         EmailServiceResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EmailServiceResourceData.DeserializeEmailServiceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         EmailServiceResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EmailServiceResourceList.DeserializeEmailServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         EmailServiceResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EmailServiceResourceList.DeserializeEmailServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         EmailServiceResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EmailServiceResourceList.DeserializeEmailServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         EmailServiceResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EmailServiceResourceList.DeserializeEmailServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         IReadOnlyList<string> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<string> array = new List<string>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         IReadOnlyList<string> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<string> array = new List<string>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         EmailServiceResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EmailServiceResourceList.DeserializeEmailServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         EmailServiceResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EmailServiceResourceList.DeserializeEmailServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         EmailServiceResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EmailServiceResourceList.DeserializeEmailServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         EmailServiceResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EmailServiceResourceList.DeserializeEmailServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Settings);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Settings))
+                using (JsonDocument document = JsonDocument.Parse(Settings, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ProtectedSettings);
 #else
-                using (JsonDocument document = JsonDocument.Parse(ProtectedSettings))
+                using (JsonDocument document = JsonDocument.Parse(ProtectedSettings, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Compute
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualMachineScaleSetExtensionData(document.RootElement, options);
                     }
                 default:

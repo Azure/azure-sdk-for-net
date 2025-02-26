@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         ContainerRegistryPrivateEndpointConnectionResource IOperationSource<ContainerRegistryPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ContainerRegistryPrivateEndpointConnectionData.DeserializeContainerRegistryPrivateEndpointConnectionData(document.RootElement);
+            var data = ModelReaderWriter.Read<ContainerRegistryPrivateEndpointConnectionData>(new BinaryData(response.ContentStream));
             return new ContainerRegistryPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<ContainerRegistryPrivateEndpointConnectionResource> IOperationSource<ContainerRegistryPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ContainerRegistryPrivateEndpointConnectionData.DeserializeContainerRegistryPrivateEndpointConnectionData(document.RootElement);
-            return new ContainerRegistryPrivateEndpointConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<ContainerRegistryPrivateEndpointConnectionData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new ContainerRegistryPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

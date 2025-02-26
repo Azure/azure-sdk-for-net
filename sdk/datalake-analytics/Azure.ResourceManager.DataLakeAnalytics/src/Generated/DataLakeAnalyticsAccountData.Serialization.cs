@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataLakeAnalyticsAccountData(document.RootElement, options);
                     }
                 default:

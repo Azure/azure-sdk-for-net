@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogApiKeyListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatadogApiKeyListResponse.DeserializeDatadogApiKeyListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogApiKeyListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatadogApiKeyListResponse.DeserializeDatadogApiKeyListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogApiKey value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatadogApiKey.DeserializeDatadogApiKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogApiKey value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatadogApiKey.DeserializeDatadogApiKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogHostListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatadogHostListResponse.DeserializeDatadogHostListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogHostListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatadogHostListResponse.DeserializeDatadogHostListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         LinkedResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LinkedResourceListResponse.DeserializeLinkedResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         LinkedResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LinkedResourceListResponse.DeserializeLinkedResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         MonitoredResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitoredResourceListResponse.DeserializeMonitoredResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         MonitoredResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitoredResourceListResponse.DeserializeMonitoredResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogMonitorResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatadogMonitorResourceListResponse.DeserializeDatadogMonitorResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogMonitorResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatadogMonitorResourceListResponse.DeserializeDatadogMonitorResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogMonitorResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatadogMonitorResourceListResponse.DeserializeDatadogMonitorResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogMonitorResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatadogMonitorResourceListResponse.DeserializeDatadogMonitorResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogMonitorResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogMonitorResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1185,7 +1185,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogSetPasswordLink value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatadogSetPasswordLink.DeserializeDatadogSetPasswordLink(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1214,7 +1214,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogSetPasswordLink value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatadogSetPasswordLink.DeserializeDatadogSetPasswordLink(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1267,7 +1267,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogApiKeyListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatadogApiKeyListResponse.DeserializeDatadogApiKeyListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1298,7 +1298,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogApiKeyListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatadogApiKeyListResponse.DeserializeDatadogApiKeyListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1351,7 +1351,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogHostListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatadogHostListResponse.DeserializeDatadogHostListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1382,7 +1382,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogHostListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatadogHostListResponse.DeserializeDatadogHostListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1435,7 +1435,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         LinkedResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LinkedResourceListResponse.DeserializeLinkedResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1466,7 +1466,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         LinkedResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LinkedResourceListResponse.DeserializeLinkedResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1519,7 +1519,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         MonitoredResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitoredResourceListResponse.DeserializeMonitoredResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1550,7 +1550,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         MonitoredResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitoredResourceListResponse.DeserializeMonitoredResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1599,7 +1599,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogMonitorResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatadogMonitorResourceListResponse.DeserializeDatadogMonitorResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1626,7 +1626,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogMonitorResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatadogMonitorResourceListResponse.DeserializeDatadogMonitorResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1677,7 +1677,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogMonitorResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatadogMonitorResourceListResponse.DeserializeDatadogMonitorResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1706,7 +1706,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogMonitorResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatadogMonitorResourceListResponse.DeserializeDatadogMonitorResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

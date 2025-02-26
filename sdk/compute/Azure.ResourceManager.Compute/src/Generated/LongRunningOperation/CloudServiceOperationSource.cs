@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Compute
 
         CloudServiceResource IOperationSource<CloudServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CloudServiceData.DeserializeCloudServiceData(document.RootElement);
+            var data = ModelReaderWriter.Read<CloudServiceData>(new BinaryData(response.ContentStream));
             return new CloudServiceResource(_client, data);
         }
 
         async ValueTask<CloudServiceResource> IOperationSource<CloudServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CloudServiceData.DeserializeCloudServiceData(document.RootElement);
-            return new CloudServiceResource(_client, data);
+            var data = ModelReaderWriter.Read<CloudServiceData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new CloudServiceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

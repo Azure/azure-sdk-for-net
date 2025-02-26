@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         KpiResourceFormatData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KpiResourceFormatData.DeserializeKpiResourceFormatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         KpiResourceFormatData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KpiResourceFormatData.DeserializeKpiResourceFormatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         KpiListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KpiListResult.DeserializeKpiListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         KpiListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KpiListResult.DeserializeKpiListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         KpiListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KpiListResult.DeserializeKpiListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         KpiListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KpiListResult.DeserializeKpiListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

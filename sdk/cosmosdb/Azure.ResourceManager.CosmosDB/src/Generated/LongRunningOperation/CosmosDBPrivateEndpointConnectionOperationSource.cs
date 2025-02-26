@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosDBPrivateEndpointConnectionResource IOperationSource<CosmosDBPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CosmosDBPrivateEndpointConnectionData.DeserializeCosmosDBPrivateEndpointConnectionData(document.RootElement);
+            var data = ModelReaderWriter.Read<CosmosDBPrivateEndpointConnectionData>(new BinaryData(response.ContentStream));
             return new CosmosDBPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<CosmosDBPrivateEndpointConnectionResource> IOperationSource<CosmosDBPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CosmosDBPrivateEndpointConnectionData.DeserializeCosmosDBPrivateEndpointConnectionData(document.RootElement);
-            return new CosmosDBPrivateEndpointConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<CosmosDBPrivateEndpointConnectionData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new CosmosDBPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

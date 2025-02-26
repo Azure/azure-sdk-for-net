@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosDBThroughputPoolAccountResource IOperationSource<CosmosDBThroughputPoolAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CosmosDBThroughputPoolAccountData.DeserializeCosmosDBThroughputPoolAccountData(document.RootElement);
+            var data = ModelReaderWriter.Read<CosmosDBThroughputPoolAccountData>(new BinaryData(response.ContentStream));
             return new CosmosDBThroughputPoolAccountResource(_client, data);
         }
 
         async ValueTask<CosmosDBThroughputPoolAccountResource> IOperationSource<CosmosDBThroughputPoolAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CosmosDBThroughputPoolAccountData.DeserializeCosmosDBThroughputPoolAccountData(document.RootElement);
-            return new CosmosDBThroughputPoolAccountResource(_client, data);
+            var data = ModelReaderWriter.Read<CosmosDBThroughputPoolAccountData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new CosmosDBThroughputPoolAccountResource(_client, data)).ConfigureAwait(false);
         }
     }
 }
