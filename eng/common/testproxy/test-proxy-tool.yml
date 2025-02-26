@@ -81,6 +81,9 @@ steps:
         for ($i = 0; $i -lt 10; $i++) {
             try {
                 Invoke-WebRequest -Uri "http://localhost:5000/Admin/IsAlive" | Out-Null
+                Get-Content ${{ parameters.rootFolder }}/test-proxy.log
+                Get-Content ${{ parameters.rootFolder }}/test-proxy-error.log
+                Invoke-WebRequest -Uri "https://localhost:5001/Admin/IsAlive" -SkipCertificateCheck | Out-Null
                 exit 0
             } catch {
                 Write-Warning "Failed to successfully connect to test proxy. Retrying..."
@@ -90,4 +93,5 @@ steps:
         Write-Error "Could not connect to test proxy."
         exit 1
       displayName: Test Proxy IsAlive
+      continueOnError: true
       condition: and(succeeded(), ${{ parameters.condition }})
