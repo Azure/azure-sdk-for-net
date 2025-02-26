@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.FrontendData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    [System.ObsoleteAttribute("This class is now deprecated. Please use the new class `TrafficControllerFrontendResrouce` moving forward.")]
+    [System.ObsoleteAttribute("This class is now deprecated. Please use the new class `TrafficControllerFrontendResource` moving forward.")]
     public partial class FrontendResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.FrontendData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.FrontendData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;

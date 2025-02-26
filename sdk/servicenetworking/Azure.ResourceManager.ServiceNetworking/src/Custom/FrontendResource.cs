@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceNetworking
     /// from an instance of <see cref="ArmClient"/> using the GetFrontendResource method.
     /// Otherwise you can get one from its parent resource <see cref="TrafficControllerResource"/> using the GetFrontend method.
     /// </summary>
-    [Obsolete("This class is now deprecated. Please use the new class `TrafficControllerFrontendResrouce` moving forward.")]
+    [Obsolete("This class is now deprecated. Please use the new class `TrafficControllerFrontendResource` moving forward.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class FrontendResource : ArmResource
     {
