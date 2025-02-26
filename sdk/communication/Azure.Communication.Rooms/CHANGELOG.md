@@ -5,6 +5,10 @@
 ### Features Added
 Introduce Collaborator role to supported participant roles.
 
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
 ### Breaking Changes
 
 ### Bugs Fixed
