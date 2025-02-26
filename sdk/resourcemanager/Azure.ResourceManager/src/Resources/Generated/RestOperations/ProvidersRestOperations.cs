@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceProviderData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceProviderData.DeserializeResourceProviderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceProviderData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceProviderData.DeserializeResourceProviderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ProviderPermissionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProviderPermissionListResult.DeserializeProviderPermissionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ProviderPermissionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProviderPermissionListResult.DeserializeProviderPermissionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceProviderData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceProviderData.DeserializeResourceProviderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceProviderData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceProviderData.DeserializeResourceProviderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceProviderListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceProviderListResult.DeserializeResourceProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceProviderListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceProviderListResult.DeserializeResourceProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TenantResourceProviderListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TenantResourceProviderListResult.DeserializeTenantResourceProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TenantResourceProviderListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TenantResourceProviderListResult.DeserializeTenantResourceProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceProviderData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceProviderData.DeserializeResourceProviderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceProviderData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceProviderData.DeserializeResourceProviderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TenantResourceProvider value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TenantResourceProvider.DeserializeTenantResourceProvider(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TenantResourceProvider value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TenantResourceProvider.DeserializeTenantResourceProvider(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceProviderListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceProviderListResult.DeserializeResourceProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceProviderListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceProviderListResult.DeserializeResourceProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TenantResourceProviderListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TenantResourceProviderListResult.DeserializeTenantResourceProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -790,7 +790,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TenantResourceProviderListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TenantResourceProviderListResult.DeserializeTenantResourceProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

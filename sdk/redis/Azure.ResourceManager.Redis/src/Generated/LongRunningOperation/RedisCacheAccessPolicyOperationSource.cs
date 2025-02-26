@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.Redis
 
         RedisCacheAccessPolicyResource IOperationSource<RedisCacheAccessPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = RedisCacheAccessPolicyData.DeserializeRedisCacheAccessPolicyData(document.RootElement);
+            var data = ModelReaderWriter.Read<RedisCacheAccessPolicyData>(new BinaryData(response.ContentStream));
             return new RedisCacheAccessPolicyResource(_client, data);
         }
 
         async ValueTask<RedisCacheAccessPolicyResource> IOperationSource<RedisCacheAccessPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = RedisCacheAccessPolicyData.DeserializeRedisCacheAccessPolicyData(document.RootElement);
-            return new RedisCacheAccessPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<RedisCacheAccessPolicyData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new RedisCacheAccessPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

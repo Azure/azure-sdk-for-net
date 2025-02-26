@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ManagementGroupSubscriptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagementGroupSubscriptionData.DeserializeManagementGroupSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ManagementGroupSubscriptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagementGroupSubscriptionData.DeserializeManagementGroupSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ManagementGroupSubscriptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagementGroupSubscriptionData.DeserializeManagementGroupSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ManagementGroupSubscriptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagementGroupSubscriptionData.DeserializeManagementGroupSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ListSubscriptionUnderManagementGroup value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListSubscriptionUnderManagementGroup.DeserializeListSubscriptionUnderManagementGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ListSubscriptionUnderManagementGroup value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListSubscriptionUnderManagementGroup.DeserializeListSubscriptionUnderManagementGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ListSubscriptionUnderManagementGroup value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListSubscriptionUnderManagementGroup.DeserializeListSubscriptionUnderManagementGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 case 200:
                     {
                         ListSubscriptionUnderManagementGroup value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListSubscriptionUnderManagementGroup.DeserializeListSubscriptionUnderManagementGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

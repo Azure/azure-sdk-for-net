@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Reservations
                 case 200:
                     {
                         CatalogsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CatalogsResult.DeserializeCatalogsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Reservations
                 case 200:
                     {
                         CatalogsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CatalogsResult.DeserializeCatalogsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Reservations
                 case 200:
                     {
                         AppliedReservationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppliedReservationData.DeserializeAppliedReservationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Reservations
                 case 200:
                     {
                         AppliedReservationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppliedReservationData.DeserializeAppliedReservationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Reservations
                 case 200:
                     {
                         CatalogsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CatalogsResult.DeserializeCatalogsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Reservations
                 case 200:
                     {
                         CatalogsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CatalogsResult.DeserializeCatalogsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
