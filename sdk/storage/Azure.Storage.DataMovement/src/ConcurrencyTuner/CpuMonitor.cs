@@ -29,15 +29,34 @@ namespace Azure.Storage.DataMovement
     ///
     /// A lot of computations were taken from the azcopy cpuMonitor
     /// </summary>
-    internal class CpuMonitor
+    internal class CpuMonitor : ICpuMonitor
     {
         private Task _monitoringWorker;
-        private readonly TimeSpan _monitoringInterval;
         private CancellationTokenSource _cancellationTokenSource;
 
         public float CpuUsage { get; private set; }
 
         public bool IsRunning { get; private set; }
+
+        private double PreviousProcessorTime { get; set; } = 0;
+        private double CurrentProcessorTime { get; set; }
+        private TimeSpan MonitoringInterval { get; set; }
+
+        private Process CurrentProcess
+        {
+            get
+            {
+                return Process.GetCurrentProcess();
+            }
+        }
+
+        private Process[] AllProcesses
+        {
+            get
+            {
+                return Process.GetProcesses();
+            }
+        }
 
         /// <summary>
         /// CPUContentionExists returns true if demand for CPU capacity is affecting
@@ -45,13 +64,6 @@ namespace Azure.Storage.DataMovement
         /// </summary>
 
         public bool ContentionExists { get; private set; }
-
-        // TODO: Need to check whether there is a symbol for Testing already
-//#if TESTING
-//        public FrameworkInfo FrameworkInfo { get; set; }
-//#else
-//        public FrameworkInfo Framework { get; private set; }
-//#endif
 
         /// <summary>
         /// Initalizes the CPU monitor.
@@ -64,7 +76,7 @@ namespace Azure.Storage.DataMovement
 
         public CpuMonitor(TimeSpan monitoringInterval)
         {
-            _monitoringInterval = monitoringInterval;
+            MonitoringInterval = monitoringInterval;
         }
 
         /// <summary>
@@ -157,12 +169,21 @@ namespace Azure.Storage.DataMovement
 
         public void StartMonitoring()
         {
+            if (IsRunning)
+                return;
+
+            IsRunning = true;
+
             _cancellationTokenSource = new CancellationTokenSource();
             Task.Run(() => MonitorCpuUsage(_cancellationTokenSource.Token));
         }
 
         public void StopMonitoring()
         {
+            if (!IsRunning)
+                throw new InvalidOperationException();
+
+            IsRunning = false;
             _cancellationTokenSource?.Cancel();
         }
 
@@ -191,17 +212,25 @@ namespace Azure.Storage.DataMovement
 
         private async Task MonitorCpuUsage(CancellationToken cancellationToken)
         {
-            // Use processor directives here instead
-            // Oldest version we support is .NET Standard 2.0
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                await Task.Delay(MonitoringInterval, cancellationToken).ConfigureAwait(false);
+                // calculate the current time on teh processor
+                // calculate cpu
+                // set p
 
-            //#if NET6_0_OR_GREATER
-            //    await MonitorCpuUsageNet6Plus(cancellationToken).ConfigureAwait(false);
-            //#elif NETCOREAPP3_0_OR_GREATER
-            //    await MonitorCpuUsageNetCore3(cancellationToken).ConfigureAwait(false);
-            //#else
-            //    await MonitorCpuUsageLegacy(cancellationToken).ConfigureAwait(false);
-            //#endif
-            await MonitorCpuUsageLegacy(cancellationToken).ConfigureAwait(false);
+                // Use processor directives here instead
+                // Oldest version we support is .NET Standard 2.0
+
+                //#if NET6_0_OR_GREATER
+                //    await MonitorCpuUsageNet6Plus(cancellationToken).ConfigureAwait(false);
+                //#elif NETCOREAPP3_0_OR_GREATER
+                //    await MonitorCpuUsageNetCore3(cancellationToken).ConfigureAwait(false);
+                //#else
+                //    await MonitorCpuUsageLegacy(cancellationToken).ConfigureAwait(false);
+                //#endif
+                MonitorCpuUsageLegacy();
+            }
         }
 
         private async Task MonitorCpuUsageNet6Plus(CancellationToken cancellationToken)
@@ -223,28 +252,24 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        private async Task MonitorCpuUsageLegacy(CancellationToken cancellationToken)
+        private void MonitorCpuUsageLegacy()
         {
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                // using process would work on all old and new frameworks
-                // https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.process.getcurrentprocess?view=net-9.0#system-diagnostics-process-getcurrentprocess
-                // This also has a GetAllProcesses() method
-
-                var currentProcess = GetCurrentProcess();
-                currentProcess.Refresh();
-                CpuUsage = NormalizeProcessingTime(currentProcess, _monitoringInterval);
-                await Task.Delay(_monitoringInterval, cancellationToken).ConfigureAwait(false);
-            }
+            // using process would work on all old and new frameworks
+            // https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.process.getcurrentprocess?view=net-9.0#system-diagnostics-process-getcurrentprocess
+            // This also has a GetAllProcesses() method
+            SetCurrentProcessorTime();
+            CpuUsage = CalculateCpuUsage();
+            PreviousProcessorTime = CurrentProcessorTime;
         }
 
-        private static float NormalizeProcessingTime(Process currentProcess, TimeSpan monitoringInterval)
+        private float CalculateCpuUsage()
         {
             // CPU Usage = (CPU Time Used / (Time Elapsed * Number of Cores)) * 100
+            // Delta CPU Time Used = Current CPU Time - Previous CPU Time
             // Process.TotalProcessorTime.TotlMilliseconds returns the processing time across all processors
             // Environment.ProcessorCount returns then total number of cores (which includes physical cores plus hyper
             // threaded cores
-            return (float)(currentProcess.TotalProcessorTime.TotalMilliseconds / (monitoringInterval.TotalMilliseconds * GetCoreCount()));
+            return (float)(CurrentProcessorTime / (MonitoringInterval.TotalMilliseconds * GetCoreCount()));
         }
 
         private static int GetCoreCount()
@@ -252,59 +277,11 @@ namespace Azure.Storage.DataMovement
             return Environment.ProcessorCount;
         }
 
-        //private FrameworkInfo GetFrameworkVersion()
-        //{
-        //    //return Environment.Version;
-        //    var frameworkInfo = new FrameworkInfo();
-        //    frameworkInfo.Type = RuntimeInformation.FrameworkDescription;
-        //    frameworkInfo.Version = Environment.Version;
-
-        //    return frameworkInfo;
-        //}
-
-        private Process GetCurrentProcess()
+        private void SetCurrentProcessorTime()
         {
-            return Process.GetCurrentProcess();
+            // Calling Refresh forces the Process object to update its cached information with current values from the OS.
+            CurrentProcess.Refresh();
+            CurrentProcessorTime = CurrentProcess.TotalProcessorTime.TotalMilliseconds - PreviousProcessorTime;
         }
-
-        private Process[] GetAllProcesses()
-        {
-            return Process.GetProcesses();
-        }
-
-        //internal class FrameworkInfo
-        //{
-        //    public string Type { get; set; }
-        //    public Version Version { get; set; }
-
-        //    public FrameworkInfo()
-        //    {
-        //        string frameworkDescription = RuntimeInformation.FrameworkDescription;
-        //        string frameworkName = ExtractFrameworkName(frameworkDescription);
-
-        //        Type = frameworkName;
-        //        Version = Environment.Version;
-        //    }
-
-        //    private static string ExtractFrameworkName(string frameworkDescription)
-        //    {
-        //        if (frameworkDescription.StartsWith(".NET Framework"))
-        //        {
-        //            return ".NET Framework";
-        //        }
-        //        else if (frameworkDescription.StartsWith(".NET Core"))
-        //        {
-        //            return ".NET Core";
-        //        }
-        //        else if (frameworkDescription.StartsWith(".NET"))
-        //        {
-        //            return ".NET";
-        //        }
-        //        else
-        //        {
-        //            return "Unknown Framework";
-        //        }
-        //    }
-        //}
     }
 }
