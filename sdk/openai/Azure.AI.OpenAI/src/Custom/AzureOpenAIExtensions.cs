@@ -5,7 +5,6 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI;
@@ -79,43 +78,5 @@ public static class AzureOpenAIExtensions
         ClientConnection connection = provider.GetConnection(typeof(EmbeddingClient).FullName!);
         EmbeddingClient embeddings = client.GetEmbeddingClient(deploymentName ?? connection.Locator);
         return embeddings;
-    }
-
-    /// <summary>
-    /// returns full text of all parts.
-    /// </summary>
-    /// <returns></returns>
-    public static string AsText(this ClientResult<ChatCompletion> completionResult)
-        => AsText(completionResult.Value);
-
-    /// <summary>
-    /// returns full text of all parts.
-    /// </summary>
-    /// <param name="completion"></param>
-    /// <returns></returns>
-    public static string AsText(this ChatCompletion completion)
-        => completion.Content.AsText();
-
-    /// <summary>
-    /// returns full text of all parts.
-    /// </summary>
-    /// <param name="content"></param>
-    /// <returns></returns>
-    public static string AsText(this ChatMessageContent content)
-    {
-        StringBuilder sb = new();
-        foreach (ChatMessageContentPart part in content)
-        {
-            switch (part.Kind)
-            {
-                case ChatMessageContentPartKind.Text:
-                    sb.AppendLine(part.Text);
-                    break;
-                default:
-                    sb.AppendLine($"<{part.Kind}>");
-                    break;
-            }
-        }
-        return sb.ToString();
     }
 }

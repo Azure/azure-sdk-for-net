@@ -65,9 +65,6 @@ namespace Azure.AI.OpenAI
     }
     public static partial class AzureOpenAIExtensions
     {
-        public static string AsText(this OpenAI.Chat.ChatCompletion completion) { throw null; }
-        public static string AsText(this OpenAI.Chat.ChatMessageContent content) { throw null; }
-        public static string AsText(this System.ClientModel.ClientResult<OpenAI.Chat.ChatCompletion> completionResult) { throw null; }
         public static OpenAI.Chat.ChatClient GetOpenAIChatClient(this System.ClientModel.Primitives.ConnectionProvider provider, string? deploymentName = null) { throw null; }
         public static OpenAI.Embeddings.EmbeddingClient GetOpenAIEmbeddingsClient(this System.ClientModel.Primitives.ConnectionProvider provider, string? deploymentName = null) { throw null; }
     }

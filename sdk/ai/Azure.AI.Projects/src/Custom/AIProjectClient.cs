@@ -4,8 +4,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading;
 using Azure.Core;
 using Azure.Identity;
 
@@ -15,25 +13,8 @@ namespace Azure.AI.Projects
     /// <summary> The AzureAI service client. </summary>
     public partial class AIProjectClient : ConnectionProvider
     {
-        /// <summary>
-        /// Protects the <see cref="Connections"/> collection from concurrent access. Separated from <see cref="_connectionCacheLock"/> to reduce contention.
-        /// </summary>
-        private readonly ReaderWriterLockSlim _connectionsLock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
-
-        /// <summary>
-        /// Protects the <see cref="_connectionCache"/> dictionary from concurrent access. Separated from <see cref="_connectionsLock"/> to improve concurrency in read-heavy scenarios.
-        /// </summary>
-        private readonly ReaderWriterLockSlim _connectionCacheLock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
-
-        /// <summary>
-        /// Subclient connections.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ConnectionCollection Connections { get; } = [];
-
+        private readonly ConnectionCacheManager _cacheManager;
         private readonly ConnectionsClient _connectionsClient;
-
-        private readonly Dictionary<ConnectionType, ConnectionResponse> _connectionCache = new();
 
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
         /// <param name="connectionString">The Azure AI Foundry project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
@@ -43,20 +24,7 @@ namespace Azure.AI.Projects
         public AIProjectClient(string connectionString, TokenCredential credential = null) : this(connectionString, BuildCredential(credential), new AIProjectClientOptions())
         {
             _connectionsClient = new ConnectionsClient(connectionString, _tokenCredential);
-        }
-
-        private static TokenCredential BuildCredential(TokenCredential credential)
-        {
-            if (credential != null)
-            {
-                return credential;
-            }
-
-            string clientId = Environment.GetEnvironmentVariable("CLOUDMACHINE_MANAGED_IDENTITY_CLIENT_ID");
-
-            return !string.IsNullOrEmpty(clientId)
-                ? new ManagedIdentityCredential(clientId)
-                : new ChainedTokenCredential(new AzureCliCredential(), new AzureDeveloperCliCredential());
+            _cacheManager = new ConnectionCacheManager(_connectionsClient, _tokenCredential);
         }
 
         /// <summary>
@@ -80,160 +48,25 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Retrieves the connection options for a specified client type and instance ID.
         /// </summary>
-        /// <param name="connectionId">The connection ID.</param>
-        /// <returns>The connection options for the specified client type and instance ID.</returns>
-        public override ClientConnection GetConnection(string connectionId)
-        {
-            // First, try to read from the Connections collection with a read lock.
-            _connectionsLock.EnterReadLock();
-            try
-            {
-                if (Connections.Contains(connectionId))
-                {
-                    return Connections[connectionId];
-                }
-            }
-            finally
-            {
-                _connectionsLock.ExitReadLock();
-            }
-
-            // Get the connection type based on the Connection ID.
-            ConnectionType connectionType = GetConnectionTypeFromId(connectionId);
-
-            // Check if the connection details are already cached (read lock).
-            ConnectionResponse connection = null;
-            _connectionCacheLock.EnterReadLock();
-            try
-            {
-                _connectionCache.TryGetValue(connectionType, out connection);
-            }
-            finally
-            {
-                _connectionCacheLock.ExitReadLock();
-            }
-
-            // If not in cache, acquire a write lock to populate it.
-            if (connection == null)
-            {
-                _connectionCacheLock.EnterWriteLock();
-                try
-                {
-                    // Double-check in case another thread already added it.
-                    if (!_connectionCache.TryGetValue(connectionType, out connection))
-                    {
-                        connection = _connectionsClient.GetDefaultConnection(connectionType, true);
-                        _connectionCache[connectionType] = connection;
-                    }
-                }
-                finally
-                {
-                    _connectionCacheLock.ExitWriteLock();
-                }
-            }
-
-            // If the connection uses API key auth, validate and add if needed.
-            if (connection.Properties is ConnectionPropertiesApiKeyAuth apiKeyAuthProperties)
-            {
-                if (string.IsNullOrWhiteSpace(apiKeyAuthProperties.Target))
-                {
-                    throw new ArgumentException(
-                        $"The API key authentication target URI is missing or invalid for {connectionId}.");
-                }
-
-                if (apiKeyAuthProperties.Credentials == null
-                    || string.IsNullOrWhiteSpace(apiKeyAuthProperties.Credentials.Key))
-                {
-                    throw new ArgumentException($"The API key is missing or invalid for {connectionId}.");
-                }
-
-                // Build the new connection object.
-                var newConnection = new ClientConnection(connectionId, apiKeyAuthProperties.Target, apiKeyAuthProperties.Credentials.Key);
-
-                // Now we need to re-check and possibly add to Connections under a write lock.
-                _connectionsLock.EnterUpgradeableReadLock();
-                try
-                {
-                    if (Connections.Contains(connectionId))
-                    {
-                        return Connections[connectionId];
-                    }
-                    else
-                    {
-                        _connectionsLock.EnterWriteLock();
-                        try
-                        {
-                            // Double-check again after acquiring write lock.
-                            if (!Connections.Contains(connectionId))
-                            {
-                                Connections.Add(newConnection);
-                                return newConnection;
-                            }
-                            else
-                            {
-                                return Connections[connectionId]; // Some thread beat us to it.
-                            }
-                        }
-                        finally
-                        {
-                            _connectionsLock.ExitWriteLock();
-                        }
-                    }
-                }
-                finally
-                {
-                    _connectionsLock.ExitUpgradeableReadLock();
-                }
-            }
-            else
-            {
-                throw new ArgumentException(
-                    $"Cannot connect with {connectionId}! Ensure valid API key authentication."
-                );
-            }
-        }
-
-        private ConnectionType GetConnectionTypeFromId(string connectionId)
-        {
-            switch (connectionId)
-            {
-                // AzureOpenAI
-                case "Azure.AI.OpenAI.AzureOpenAIClient":
-                case "OpenAI.Chat.ChatClient":
-                case "OpenAI.Embeddings.EmbeddingClient":
-                    return ConnectionType.AzureOpenAI;
-
-                // Inference
-                case "Azure.AI.Inference.ChatCompletionsClient":
-                case "Azure.AI.Inference.EmbeddingsClient":
-                    return ConnectionType.Serverless;
-
-                // AzureAISearch
-                case "Azure.Search.Documents.SearchClient":
-                case "Azure.Search.Documents.Indexes.SearchIndexClient":
-                case "Azure.Search.Documents.Indexes.SearchIndexerClient":
-                    return ConnectionType.AzureAISearch;
-
-                default:
-                    throw new ArgumentException($"Unknown connection type for ID: {connectionId}");
-            }
-        }
+        public override ClientConnection GetConnection(string connectionId) => _cacheManager.GetConnection(connectionId);
 
         /// <summary>
         /// Retrieves all connection options.
         /// </summary>
-        /// <returns>All connection options.</returns>
-        public override IEnumerable<ClientConnection> GetAllConnections()
+        public override IEnumerable<ClientConnection> GetAllConnections() => _cacheManager.GetAllConnections();
+
+        private static TokenCredential BuildCredential(TokenCredential credential)
         {
-            _connectionsLock.EnterReadLock();
-            try
+            if (credential != null)
             {
-                return Connections;
+                return credential;
             }
-            finally
-            {
-                _connectionsLock.ExitReadLock();
-            }
+
+            string clientId = Environment.GetEnvironmentVariable("CLOUDMACHINE_MANAGED_IDENTITY_CLIENT_ID");
+
+            return !string.IsNullOrEmpty(clientId)
+                ? new ManagedIdentityCredential(clientId)
+                : new ChainedTokenCredential(new AzureCliCredential(), new AzureDeveloperCliCredential());
         }
     }
 }

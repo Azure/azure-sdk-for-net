@@ -5,6 +5,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using Azure.Core;
 
 namespace Azure.AI.Inference
 {
@@ -31,7 +32,9 @@ namespace Azure.AI.Inference
             {
                 throw new InvalidOperationException("Invalid URI.");
             }
-            return new ChatCompletionsClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
+            return connection.Authentication == ClientAuthenticationMethod.Credential
+            ? new ChatCompletionsClient(uri, connection.Credential as TokenCredential)
+            : new ChatCompletionsClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
         }
 
         /// <summary>
@@ -52,7 +55,9 @@ namespace Azure.AI.Inference
             {
                 throw new InvalidOperationException("Invalid URI.");
             }
-            return new EmbeddingsClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
+            return connection.Authentication == ClientAuthenticationMethod.Credential
+            ? new EmbeddingsClient(uri, connection.Credential as TokenCredential)
+            : new EmbeddingsClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
         }
     }
 }

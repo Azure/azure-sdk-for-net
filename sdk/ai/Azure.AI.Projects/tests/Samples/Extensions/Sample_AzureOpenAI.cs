@@ -20,12 +20,7 @@ public class Sample_AzureOpenAI : SamplesBase<AIProjectsTestEnvironment>
         AIProjectClient client = new AIProjectClient(connectionString);
         ChatClient chatClient = client.GetOpenAIChatClient("gpt-4o-mini");
 
-        ChatCompletion completion = chatClient.CompleteChat(
-            [
-                new SystemChatMessage("You are a helpful assistant."),
-                new UserChatMessage("List all the colors of the rainbow"),
-            ]);
-
-        Console.WriteLine($"{completion.Role}: {completion.Content[0].Text}");
+        ChatCompletion result = chatClient.CompleteChat("List all the rainbow colors");
+        Console.WriteLine(result.Content[0].Text);
     }
 }

@@ -5,6 +5,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using Azure.Core;
 using Azure.Search.Documents.Indexes;
 
 namespace Azure.Search.Documents;
@@ -22,7 +23,7 @@ public static class SearchExtensions
     /// <returns></returns>
     public static SearchClient GetSearchClient(this ConnectionProvider provider, string indexName)
     {
-        SearchClient searchClient = provider.Subclients.GetClient(() => CreateSearchClient(provider, indexName));
+        SearchClient searchClient = provider.Subclients.GetClient(() => CreateSearchClient(provider, indexName), indexName);
         return searchClient;
     }
 
@@ -33,7 +34,9 @@ public static class SearchExtensions
         {
             throw new InvalidOperationException("Invalid URI.");
         }
-        return new(uri, indexName, new AzureKeyCredential(connection.ApiKeyCredential!));
+        return connection.Authentication == ClientAuthenticationMethod.Credential
+            ? new SearchClient(uri, indexName, connection.Credential as TokenCredential)
+            : new SearchClient(uri, indexName, new AzureKeyCredential(connection.ApiKeyCredential!));
     }
 
     /// <summary>
@@ -54,7 +57,9 @@ public static class SearchExtensions
         {
             throw new InvalidOperationException("Invalid URI.");
         }
-        return new(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
+        return connection.Authentication == ClientAuthenticationMethod.Credential
+            ? new SearchIndexClient(uri, connection.Credential as TokenCredential)
+            : new SearchIndexClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
     }
 
     /// <summary>
@@ -75,6 +80,8 @@ public static class SearchExtensions
         {
             throw new InvalidOperationException("Invalid URI.");
         }
-        return new(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
+        return connection.Authentication == ClientAuthenticationMethod.Credential
+            ? new SearchIndexerClient(uri, connection.Credential as TokenCredential)
+            : new SearchIndexerClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
     }
 }
