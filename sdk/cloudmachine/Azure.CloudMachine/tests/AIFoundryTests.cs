@@ -8,8 +8,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.Inference;
 using Azure.AI.Projects;
-using Azure.CloudMachine.AIFoundry;
-using Azure.CloudMachine.OpenAI;
+using Azure.Projects.AIFoundry;
+using Azure.Projects.OpenAI;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
@@ -17,9 +17,9 @@ using NUnit.Framework;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
 
-namespace Azure.CloudMachine.Tests;
+namespace Azure.Projects.Tests;
 
-public partial class AIFoundryTests : SamplesBase<CloudMachineTestEnvironment>
+public partial class AIFoundryTests : SamplesBase<AzureProjectsTestEnvironment>
 {
     [Test]
     public void AIFoundryScenariosTests()
