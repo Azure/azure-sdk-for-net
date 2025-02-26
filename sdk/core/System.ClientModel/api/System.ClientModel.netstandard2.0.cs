@@ -86,7 +86,7 @@ namespace System.ClientModel.Primitives
     public partial class ClientCache
     {
         public ClientCache() { }
-        public T GetClient<T>(System.Func<T> createClient, string id = "") where T : class { throw null; }
+        public T GetClient<T>(System.Func<T> createClient, string? id) where T : class { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ClientConnection
