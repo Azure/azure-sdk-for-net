@@ -152,6 +152,8 @@ jobs:
           }
         displayName: Set variable for the project list file and coverage directory
 
+      - template: /eng/common/testproxy/test-proxy-tool.yml
+
       - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
@@ -175,6 +177,13 @@ jobs:
           $(AdditionalTestArguments)
           $(DiagnosticArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
+        env:
+          PROXY_DEBUG_MODE: true
+
+      - pwsh: |
+          Get-Content $(Build.SourcesDirectory)/test-proxy.log
+        displayName: Dump Proxy Content
+        condition: succeededOrFailed()
 
       - task: PublishTestResults@2
         condition: always()
