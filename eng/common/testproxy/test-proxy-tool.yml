@@ -49,7 +49,7 @@ steps:
         Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Path]${{ parameters.templateRoot }}/eng/common/testproxy/dotnet-devcert.pfx"
         Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Password]password"
         Write-Host "##vso[task.setvariable variable=PROXY_MANUAL_START]true"
-        Write-Host "##vso[task.setvariable variable=ASPNET_URLS]http://localhost:5000;https://localhost:5001"
+        Write-Host "##vso[task.setvariable variable=ASPNETCORE_URLS]http://127.0.0.1:5000;https://127.0.0.1:5001"
       displayName: 'Configure Kestrel and PROXY_MANUAL_START Variables'
       condition: and(succeeded(), ${{ parameters.condition }})
 
@@ -80,7 +80,7 @@ steps:
     - pwsh: |
         for ($i = 0; $i -lt 10; $i++) {
             try {
-                Invoke-WebRequest -Uri "http://localhost:5000/Admin/IsAlive" | Out-Null
+                Invoke-WebRequest -Uri "http://127.0.0.1:5000/Admin/IsAlive" | Out-Null
                 Get-Content ${{ parameters.rootFolder }}/test-proxy.log
                 Get-Content ${{ parameters.rootFolder }}/test-proxy-error.log
                 Invoke-WebRequest -Uri "https://localhost:5001/Admin/IsAlive" -SkipCertificateCheck | Out-Null
