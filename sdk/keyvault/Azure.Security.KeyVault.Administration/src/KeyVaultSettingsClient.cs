@@ -16,8 +16,7 @@ namespace Azure.Security.KeyVault.Administration
     /// </summary>
     public class KeyVaultSettingsClient
     {
-        private readonly ClientDiagnostics _diagnostics;
-        private readonly SettingsRestClient _restClient;
+        private readonly KeyVaultRestClient _restClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultSettingsClient"/> class for the specified vault.
@@ -44,13 +43,8 @@ namespace Azure.Security.KeyVault.Administration
             VaultUri = vaultUri;
 
             options ??= new KeyVaultAdministrationClientOptions();
-            string apiVersion = options.GetVersionString();
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options,
-                    new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
-
-            _diagnostics = new ClientDiagnostics(options);
-            _restClient = new SettingsRestClient(_diagnostics, pipeline, apiVersion);
+            _restClient = new KeyVaultRestClient(vaultUri,credential, options);
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultBackupClient"/> class for mocking.
@@ -76,11 +70,11 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSetting)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSetting)}");
             scope.Start();
             try
             {
-                return _restClient.GetSetting(VaultUri.AbsoluteUri, name, cancellationToken);
+                return _restClient.GetSetting(name, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -102,11 +96,11 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSetting)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSetting)}");
             scope.Start();
             try
             {
-                return await _restClient.GetSettingAsync(VaultUri.AbsoluteUri, name, cancellationToken).ConfigureAwait(false);
+                return await _restClient.GetSettingAsync(name, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -123,11 +117,11 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<GetSettingsResult> GetSettings(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSettings)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSettings)}");
             scope.Start();
             try
             {
-                return _restClient.GetSettings(VaultUri.AbsoluteUri, cancellationToken);
+                return _restClient.GetSettings(cancellationToken);
             }
             catch (Exception ex)
             {
@@ -144,11 +138,11 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<GetSettingsResult>> GetSettingsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSettings)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSettings)}");
             scope.Start();
             try
             {
-                return await _restClient.GetSettingsAsync(VaultUri.AbsoluteUri, cancellationToken).ConfigureAwait(false);
+                return await _restClient.GetSettingsAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -168,11 +162,12 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNull(setting, nameof(setting));
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(UpdateSetting)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(UpdateSetting)}");
             scope.Start();
             try
             {
-                return _restClient.UpdateSetting(VaultUri.AbsoluteUri, setting.Name, setting.Value.ToString(), cancellationToken);
+                Response response = _restClient.UpdateSetting(setting.Name, setting.Value.ToString());
+                return Response.FromValue(KeyVaultSetting.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -192,11 +187,12 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNull(setting, nameof(setting));
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(UpdateSetting)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(UpdateSetting)}");
             scope.Start();
             try
             {
-                return await _restClient.UpdateSettingAsync(VaultUri.AbsoluteUri, setting.Name, setting.Value.ToString(), cancellationToken).ConfigureAwait(false);
+                Response response = await _restClient.UpdateSettingAsync(setting.Name, setting.Value.ToString()).ConfigureAwait(false);
+                return Response.FromValue(KeyVaultSetting.FromResponse(response), response);
             }
             catch (Exception ex)
             {

@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="jobId"> Identifier for the selective key restore operation. </param>
         /// <param name="startTime"> The start time of the restore operation. </param>
         /// <param name="endTime"> The end time of the restore operation. </param>
-        internal SelectiveKeyRestoreDetailsInternal(string status, string statusDetails, KeyVaultServiceError error, string jobId, DateTimeOffset? startTime, DateTimeOffset? endTime)
+        internal SelectiveKeyRestoreDetailsInternal(OperationStatus? status, string statusDetails, KeyVaultServiceError error, string jobId, DateTimeOffset? startTime, DateTimeOffset? endTime)
         {
             Status = status;
             StatusDetails = statusDetails;
@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         }
 
         /// <summary> Status of the restore operation. </summary>
-        public string Status { get; }
+        public OperationStatus? Status { get; }
         /// <summary> The status details of restore operation. </summary>
         public string StatusDetails { get; }
         /// <summary> Error encountered, if any, during the selective key restore operation. </summary>
