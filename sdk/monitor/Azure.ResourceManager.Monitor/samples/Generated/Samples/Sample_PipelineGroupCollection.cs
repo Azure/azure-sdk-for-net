@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAPipelineGroupInstanceUsingUDPReceiver()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/PipelineGroupCreateUdp.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/PipelineGroups/preview/2024-10-01-preview/examples/PipelineGroupCreateUdp.json
             // this example is just showing the usage of "PipelineGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -44,19 +44,18 @@ namespace Azure.ResourceManager.Monitor.Samples
             string pipelineGroupName = "plGroup1";
             PipelineGroupData data = new PipelineGroupData(new AzureLocation("eastus2"))
             {
-                ExtendedLocation = new ExtendedLocation
-                {
-                    Name = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation",
-                },
-                Receivers = {new PipelineGroupReceiver(PipelineGroupReceiverType.Udp, "udp-receiver1")
+                Properties = new PipelineGroupProperties(new PipelineGroupReceiver[]
+            {
+new PipelineGroupReceiver(PipelineGroupReceiverType.Udp, "udp-receiver1")
 {
 Udp = new UdpReceiver("0.0.0.0:518")
 {
 Encoding = StreamEncodingType.Utf8,
 },
-}},
-                Processors = { },
-                Exporters = {new PipelineGroupExporter(PipelineGroupExporterType.AzureMonitorWorkspaceLogs, "my-workspace-logs-exporter1")
+}
+            }, Array.Empty<PipelineGroupProcessor>(), new PipelineGroupExporter[]
+            {
+new PipelineGroupExporter(PipelineGroupExporterType.AzureMonitorWorkspaceLogs, "my-workspace-logs-exporter1")
 {
 AzureMonitorWorkspaceLogs = new MonitorWorkspaceLogsExporter(new MonitorWorkspaceLogsApiConfig(new Uri("https://logs-myingestion-eb0s.eastus-1.ingest.monitor.azure.com"), "Custom-MyTableRawData_CL", "dcr-00000000000000000000000000000000", new MonitorWorkspaceLogsSchemaMap(new MonitorWorkspaceLogsRecordMap[]
 {
@@ -71,14 +70,106 @@ WorkerCount = 4,
 BatchQueueSize = 100,
 },
 },
-}},
-                Service = new PipelineGroupService(new PipelineGroupServicePipeline[]
+}
+            }, new PipelineGroupService(new PipelineGroupServicePipeline[]
             {
-new PipelineGroupServicePipeline("MyPipelineForLogs1", PipelineGroupServicePipelineType.Logs, new string[]{"udp-receiver1"}, new string[]{"my-workspace-logs-exporter1"})
+new PipelineGroupServicePipeline("MyPipelineForLogs1", new PipelineGroupServicePipelineType("Logs"), new string[]{"udp-receiver1"}, new string[]{"my-workspace-logs-exporter1"})
 {
 Processors = {},
 }
-            }),
+            })),
+                ExtendedLocation = new ExtendedLocation
+                {
+                    Name = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation",
+                },
+                Tags =
+{
+["tag1"] = "A",
+["tag2"] = "B"
+},
+            };
+            ArmOperation<PipelineGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, pipelineGroupName, data);
+            PipelineGroupResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PipelineGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAPipelineGroupInstanceUsingAUDPReceiverWithJsonArrayMapper()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/PipelineGroups/preview/2024-10-01-preview/examples/PipelineGroupCreateUdpWithJsonArrayMapper.json
+            // this example is just showing the usage of "PipelineGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this PipelineGroupResource
+            PipelineGroupCollection collection = resourceGroupResource.GetPipelineGroups();
+
+            // invoke the operation
+            string pipelineGroupName = "plGroup1";
+            PipelineGroupData data = new PipelineGroupData(new AzureLocation("eastus2"))
+            {
+                Properties = new PipelineGroupProperties(new PipelineGroupReceiver[]
+            {
+new PipelineGroupReceiver(PipelineGroupReceiverType.Udp, "udp-receiver1")
+{
+Udp = new UdpReceiver("0.0.0.0:518")
+{
+Encoding = StreamEncodingType.Utf8,
+JsonArrayMapper = new PipelineGroupJsonArrayMapper(new string[]{"key1", "key2", "key3"})
+{
+FieldName = "field1",
+DestinationField = new PipelineGroupJsonMapperDestinationField
+{
+Destination = PipelineGroupJsonMapperElement.Attributes,
+},
+},
+},
+}
+            }, Array.Empty<PipelineGroupProcessor>(), new PipelineGroupExporter[]
+            {
+new PipelineGroupExporter(PipelineGroupExporterType.AzureMonitorWorkspaceLogs, "my-workspace-logs-exporter1")
+{
+AzureMonitorWorkspaceLogs = new MonitorWorkspaceLogsExporter(new MonitorWorkspaceLogsApiConfig(new Uri("https://logs-myingestion-eb0s.eastus-1.ingest.monitor.azure.com"), "Custom-MyTableRawData_CL", "dcr-00000000000000000000000000000000", new MonitorWorkspaceLogsSchemaMap(new MonitorWorkspaceLogsRecordMap[]
+{
+new MonitorWorkspaceLogsRecordMap("body", "Body"),
+new MonitorWorkspaceLogsRecordMap("severity_text", "SeverityText"),
+new MonitorWorkspaceLogsRecordMap("time_unix_nano", "TimeGenerated")
+})))
+{
+Concurrency = new MonitorWorkspaceLogsExporterConcurrencyConfiguration
+{
+WorkerCount = 4,
+BatchQueueSize = 100,
+},
+},
+}
+            }, new PipelineGroupService(new PipelineGroupServicePipeline[]
+            {
+new PipelineGroupServicePipeline("MyPipelineForLogs1", new PipelineGroupServicePipelineType("Logs"), new string[]{"udp-receiver1"}, new string[]{"my-workspace-logs-exporter1"})
+{
+Processors = {},
+}
+            })),
+                ExtendedLocation = new ExtendedLocation
+                {
+                    Name = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation",
+                },
                 Tags =
 {
 ["tag1"] = "A",
@@ -99,7 +190,7 @@ Processors = {},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAPipelineGroupInstanceUsingASyslogReceiver()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/PipelineGroupCreateSyslogs.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/PipelineGroups/preview/2024-10-01-preview/examples/PipelineGroupCreateSyslogs.json
             // this example is just showing the usage of "PipelineGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,16 +212,18 @@ Processors = {},
             string pipelineGroupName = "plGroup1";
             PipelineGroupData data = new PipelineGroupData(new AzureLocation("eastus2"))
             {
-                ExtendedLocation = new ExtendedLocation
-                {
-                    Name = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation",
-                },
-                Receivers = {new PipelineGroupReceiver(PipelineGroupReceiverType.Syslog, "syslog-receiver1")
+                Properties = new PipelineGroupProperties(new PipelineGroupReceiver[]
+            {
+new PipelineGroupReceiver(PipelineGroupReceiverType.Syslog, "syslog-receiver1")
 {
 Syslog = new SyslogReceiver("0.0.0.0:514"),
-}},
-                Processors = { new PipelineGroupProcessor(PipelineGroupProcessorType.Batch, "batch-processor1") },
-                Exporters = {new PipelineGroupExporter(PipelineGroupExporterType.AzureMonitorWorkspaceLogs, "my-workspace-logs-exporter1")
+}
+            }, new PipelineGroupProcessor[]
+            {
+new PipelineGroupProcessor(PipelineGroupProcessorType.Batch, "batch-processor1")
+            }, new PipelineGroupExporter[]
+            {
+new PipelineGroupExporter(PipelineGroupExporterType.AzureMonitorWorkspaceLogs, "my-workspace-logs-exporter1")
 {
 AzureMonitorWorkspaceLogs = new MonitorWorkspaceLogsExporter(new MonitorWorkspaceLogsApiConfig(new Uri("https://logs-myingestion-eb0s.eastus-1.ingest.monitor.azure.com"), "Custom-MyTableRawData_CL", "dcr-00000000000000000000000000000000", new MonitorWorkspaceLogsSchemaMap(new MonitorWorkspaceLogsRecordMap[]
 {
@@ -145,14 +238,18 @@ WorkerCount = 4,
 BatchQueueSize = 100,
 },
 },
-}},
-                Service = new PipelineGroupService(new PipelineGroupServicePipeline[]
+}
+            }, new PipelineGroupService(new PipelineGroupServicePipeline[]
             {
-new PipelineGroupServicePipeline("MyPipelineForLogs1", PipelineGroupServicePipelineType.Logs, new string[]{"syslog-receiver1"}, new string[]{"my-workspace-logs-exporter1"})
+new PipelineGroupServicePipeline("MyPipelineForLogs1", new PipelineGroupServicePipelineType("Logs"), new string[]{"syslog-receiver1"}, new string[]{"my-workspace-logs-exporter1"})
 {
 Processors = {"batch-processor1"},
 }
-            }),
+            })),
+                ExtendedLocation = new ExtendedLocation
+                {
+                    Name = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation",
+                },
                 Tags =
 {
 ["tag1"] = "A",
@@ -173,7 +270,7 @@ Processors = {"batch-processor1"},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAPipelineGroupInstanceUsingASyslogReceiverAndCache()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/PipelineGroupCreateSyslogsWithCache.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/PipelineGroups/preview/2024-10-01-preview/examples/PipelineGroupCreateSyslogsWithCache.json
             // this example is just showing the usage of "PipelineGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -195,16 +292,18 @@ Processors = {"batch-processor1"},
             string pipelineGroupName = "plGroup1";
             PipelineGroupData data = new PipelineGroupData(new AzureLocation("eastus2"))
             {
-                ExtendedLocation = new ExtendedLocation
-                {
-                    Name = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation",
-                },
-                Receivers = {new PipelineGroupReceiver(PipelineGroupReceiverType.Syslog, "syslog-receiver1")
+                Properties = new PipelineGroupProperties(new PipelineGroupReceiver[]
+            {
+new PipelineGroupReceiver(PipelineGroupReceiverType.Syslog, "syslog-receiver1")
 {
 Syslog = new SyslogReceiver("0.0.0.0:514"),
-}},
-                Processors = { new PipelineGroupProcessor(PipelineGroupProcessorType.Batch, "batch-processor1") },
-                Exporters = {new PipelineGroupExporter(PipelineGroupExporterType.AzureMonitorWorkspaceLogs, "my-workspace-logs-exporter1")
+}
+            }, new PipelineGroupProcessor[]
+            {
+new PipelineGroupProcessor(PipelineGroupProcessorType.Batch, "batch-processor1")
+            }, new PipelineGroupExporter[]
+            {
+new PipelineGroupExporter(PipelineGroupExporterType.AzureMonitorWorkspaceLogs, "my-workspace-logs-exporter1")
 {
 AzureMonitorWorkspaceLogs = new MonitorWorkspaceLogsExporter(new MonitorWorkspaceLogsApiConfig(new Uri("https://logs-myingestion-eb0s.eastus-1.ingest.monitor.azure.com"), "Custom-MyTableRawData_CL", "dcr-00000000000000000000000000000000", new MonitorWorkspaceLogsSchemaMap(new MonitorWorkspaceLogsRecordMap[]
 {
@@ -224,14 +323,18 @@ MaxStorageUsage = 100,
 RetentionPeriod = 10,
 },
 },
-}},
-                Service = new PipelineGroupService(new PipelineGroupServicePipeline[]
+}
+            }, new PipelineGroupService(new PipelineGroupServicePipeline[]
             {
-new PipelineGroupServicePipeline("MyPipelineForLogs1", PipelineGroupServicePipelineType.Logs, new string[]{"syslog-receiver1"}, new string[]{"my-workspace-logs-exporter1"})
+new PipelineGroupServicePipeline("MyPipelineForLogs1", new PipelineGroupServicePipelineType("Logs"), new string[]{"syslog-receiver1"}, new string[]{"my-workspace-logs-exporter1"})
 {
 Processors = {"batch-processor1"},
 }
-            }),
+            })),
+                ExtendedLocation = new ExtendedLocation
+                {
+                    Name = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation",
+                },
                 Tags =
 {
 ["tag1"] = "A",
@@ -252,7 +355,7 @@ Processors = {"batch-processor1"},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAPipelineGroupInstanceUsingASyslogReceiverAndNetworkingConfigurations()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/PipelineGroupCreateSyslogsWithNetworking.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/PipelineGroups/preview/2024-10-01-preview/examples/PipelineGroupCreateSyslogsWithNetworking.json
             // this example is just showing the usage of "PipelineGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -274,16 +377,15 @@ Processors = {"batch-processor1"},
             string pipelineGroupName = "plGroup1";
             PipelineGroupData data = new PipelineGroupData(new AzureLocation("eastus2"))
             {
-                ExtendedLocation = new ExtendedLocation
-                {
-                    Name = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation",
-                },
-                Receivers = {new PipelineGroupReceiver(PipelineGroupReceiverType.Syslog, "syslog-receiver1")
+                Properties = new PipelineGroupProperties(new PipelineGroupReceiver[]
+            {
+new PipelineGroupReceiver(PipelineGroupReceiverType.Syslog, "syslog-receiver1")
 {
 Syslog = new SyslogReceiver("0.0.0.0:514"),
-}},
-                Processors = { },
-                Exporters = {new PipelineGroupExporter(PipelineGroupExporterType.AzureMonitorWorkspaceLogs, "my-workspace-logs-exporter1")
+}
+            }, Array.Empty<PipelineGroupProcessor>(), new PipelineGroupExporter[]
+            {
+new PipelineGroupExporter(PipelineGroupExporterType.AzureMonitorWorkspaceLogs, "my-workspace-logs-exporter1")
 {
 AzureMonitorWorkspaceLogs = new MonitorWorkspaceLogsExporter(new MonitorWorkspaceLogsApiConfig(new Uri("https://logs-myingestion-eb0s.eastus-1.ingest.monitor.azure.com"), "Custom-MyTableRawData_CL", "dcr-00000000000000000000000000000000", new MonitorWorkspaceLogsSchemaMap(new MonitorWorkspaceLogsRecordMap[]
 {
@@ -298,21 +400,27 @@ WorkerCount = 4,
 BatchQueueSize = 100,
 },
 },
-}},
-                Service = new PipelineGroupService(new PipelineGroupServicePipeline[]
+}
+            }, new PipelineGroupService(new PipelineGroupServicePipeline[]
             {
-new PipelineGroupServicePipeline("MyPipelineForLogs1", PipelineGroupServicePipelineType.Logs, new string[]{"syslog-receiver1"}, new string[]{"my-workspace-logs-exporter1"})
+new PipelineGroupServicePipeline("MyPipelineForLogs1", new PipelineGroupServicePipelineType("Logs"), new string[]{"syslog-receiver1"}, new string[]{"my-workspace-logs-exporter1"})
 {
 Processors = {},
 }
-            }),
-                NetworkingConfigurations = {new PipelineGroupNetworkingConfiguration(PipelineGroupExternalNetworkingMode.LoadBalancerOnly, new PipelineGroupNetworkingRoute[]
+            }))
+                {
+                    NetworkingConfigurations = {new PipelineGroupNetworkingConfiguration(PipelineGroupExternalNetworkingMode.LoadBalancerOnly, new PipelineGroupNetworkingRoute[]
 {
 new PipelineGroupNetworkingRoute("syslog-receiver1")
 })
 {
 Host = "azuremonitorpipeline.contoso.com",
 }},
+                },
+                ExtendedLocation = new ExtendedLocation
+                {
+                    Name = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation",
+                },
                 Tags =
 {
 ["tag1"] = "A",
@@ -333,7 +441,7 @@ Host = "azuremonitorpipeline.contoso.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrievesAPipelineGroupInstanceByName()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/PipelineGroupGet.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/PipelineGroups/preview/2024-10-01-preview/examples/PipelineGroupGet.json
             // this example is just showing the usage of "PipelineGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -366,7 +474,7 @@ Host = "azuremonitorpipeline.contoso.com",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPipelineGroupsByResourceGroup()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/PipelineGroupListByResourceGroup.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/PipelineGroups/preview/2024-10-01-preview/examples/PipelineGroupListByResourceGroup.json
             // this example is just showing the usage of "PipelineGroups_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -401,7 +509,7 @@ Host = "azuremonitorpipeline.contoso.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_RetrievesAPipelineGroupInstanceByName()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/PipelineGroupGet.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/PipelineGroups/preview/2024-10-01-preview/examples/PipelineGroupGet.json
             // this example is just showing the usage of "PipelineGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -430,7 +538,7 @@ Host = "azuremonitorpipeline.contoso.com",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RetrievesAPipelineGroupInstanceByName()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/PipelineGroupGet.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/PipelineGroups/preview/2024-10-01-preview/examples/PipelineGroupGet.json
             // this example is just showing the usage of "PipelineGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
