@@ -1,5 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "Authentication.ApiKey",
-  "library-name": "Authentication.ApiKey"
+  "package-name": "Authentication.ApiKey"
 }

@@ -111,5 +111,17 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
             return new DisposingContainer(container);
         }
+
+        public static async Task<DisposingContainer> GetOAuthTestContainerAsync(
+            this BlobsClientBuilder clientBuilder,
+            string containerName,
+            TokenCredential credential)
+        {
+            containerName ??= clientBuilder.GetNewContainerName();
+            BlobServiceClient service = clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigDefault, credential);
+            BlobContainerClient container = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetBlobContainerClient(containerName));
+            await container.CreateIfNotExistsAsync();
+            return new DisposingContainer(container);
+        }
     }
 }

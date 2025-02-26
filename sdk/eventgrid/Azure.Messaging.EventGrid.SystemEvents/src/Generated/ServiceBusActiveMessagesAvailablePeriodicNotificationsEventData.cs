@@ -46,8 +46,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData"/>. </summary>
-        internal ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData()
+        /// <param name="namespaceName"> The namespace name of the Microsoft.ServiceBus resource. </param>
+        /// <param name="requestUri"> The endpoint of the Microsoft.ServiceBus resource. </param>
+        /// <param name="entityType"> The entity type of the Microsoft.ServiceBus resource. Could be one of 'queue' or 'subscriber'. </param>
+        /// <param name="queueName"> The name of the Microsoft.ServiceBus queue. If the entity type is of type 'subscriber', then this value will be null. </param>
+        /// <param name="topicName"> The name of the Microsoft.ServiceBus topic. If the entity type is of type 'queue', then this value will be null. </param>
+        /// <param name="subscriptionName"> The name of the Microsoft.ServiceBus topic's subscription. If the entity type is of type 'queue', then this value will be null. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/>, <paramref name="requestUri"/> or <paramref name="entityType"/> is null. </exception>
+        internal ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData(string namespaceName, string requestUri, string entityType, string queueName, string topicName, string subscriptionName)
         {
+            Argument.AssertNotNull(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNull(requestUri, nameof(requestUri));
+            Argument.AssertNotNull(entityType, nameof(entityType));
+
+            NamespaceName = namespaceName;
+            RequestUri = requestUri;
+            EntityType = entityType;
+            QueueName = queueName;
+            TopicName = topicName;
+            SubscriptionName = subscriptionName;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData"/>. </summary>
@@ -67,6 +84,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             TopicName = topicName;
             SubscriptionName = subscriptionName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData"/> for deserialization. </summary>
+        internal ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData()
+        {
         }
 
         /// <summary> The namespace name of the Microsoft.ServiceBus resource. </summary>

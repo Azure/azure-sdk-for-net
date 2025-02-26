@@ -1,6 +1,7 @@
 parameters:
   ArtifactPath: $(Build.ArtifactStagingDirectory)
   ArtifactName: 'packages'
+  RepoRoot: $(Build.SourcesDirectory)
 
 steps:
   - pwsh: |
@@ -11,7 +12,7 @@ steps:
 
   - task: Powershell@2
     inputs:
-      filePath: $(Build.SourcesDirectory)/eng/common/scripts/Detect-Api-Changes.ps1
+      filePath: ${{ parameters.RepoRoot }}/eng/common/scripts/Detect-Api-Changes.ps1
       arguments: >
         -ArtifactPath ${{parameters.ArtifactPath}}
         -CommitSha '$(Build.SourceVersion)'

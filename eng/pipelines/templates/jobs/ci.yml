@@ -139,6 +139,7 @@ jobs:
               /p:ProjectListOverrideFile=$(ProjectListOverrideFile) `
               /p:IncludePerf=false `
               /p:IncludeStress=false `
+              /p:IncludeIntegrationTests=false `
               /p:EnableOverrideExclusions=true `
               $(DiagnosticArguments)
           displayName: "Build and Package for PR"
@@ -328,6 +329,7 @@ jobs:
                 /p:PublicSign=false `
                 /p:Configuration=$(BuildConfiguration) `
                 /p:EnableSourceLink=false `
+                /p:ProjectListOverrideFile="" `
                 /p:BuildSnippets=true `
                 $(DiagnosticArguments)
             }

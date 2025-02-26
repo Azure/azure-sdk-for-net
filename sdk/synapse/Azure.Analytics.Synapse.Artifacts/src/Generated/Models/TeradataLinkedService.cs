@@ -20,6 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of <see cref="TeradataLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -34,14 +35,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
+        /// <param name="sslMode"> SSL mode for connection. Valid values including: “Disable”, “Allow”, “Prefer”, “Require”, “Verify-CA”, “Verify-Full”. Default value is “Verify-Full”. Type: string (or Expression with resultType string). Only applied for version 2.0. </param>
+        /// <param name="portNumber"> The port numbers when connecting to server through non HTTPS/TLS connections. Type: integer (or Expression with resultType integer). Only used for V2. Only applied for version 2.0. </param>
+        /// <param name="httpsPortNumber"> The port numbers when connecting to server through HTTPS/TLS connections. Type: integer (or Expression with resultType integer). Only applied for version 2.0. </param>
+        /// <param name="useDataEncryption"> Specifies whether to encrypt all communication with the Teradata database. Allowed values are 0 or 1. This setting will be ignored for HTTPS/TLS connections. Type: integer (or Expression with resultType integer). Only applied for version 2.0. </param>
+        /// <param name="characterSet"> The character set to use for the connection. Type: string (or Expression with resultType string). Only applied for version 2.0. </param>
+        /// <param name="maxRespSize"> The maximum size of the response buffer for SQL requests, in bytes. Type: integer. Only applied for version 2.0. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal TeradataLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, object server, TeradataAuthenticationType? authenticationType, object username, SecretBase password, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal TeradataLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, object server, TeradataAuthenticationType? authenticationType, object username, SecretBase password, object sslMode, object portNumber, object httpsPortNumber, object useDataEncryption, object characterSet, object maxRespSize, object encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             Server = server;
             AuthenticationType = authenticationType;
             Username = username;
             Password = password;
+            SslMode = sslMode;
+            PortNumber = portNumber;
+            HttpsPortNumber = httpsPortNumber;
+            UseDataEncryption = useDataEncryption;
+            CharacterSet = characterSet;
+            MaxRespSize = maxRespSize;
             EncryptedCredential = encryptedCredential;
             Type = type ?? "Teradata";
         }
@@ -60,6 +73,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </summary>
         public SecretBase Password { get; set; }
+        /// <summary> SSL mode for connection. Valid values including: “Disable”, “Allow”, “Prefer”, “Require”, “Verify-CA”, “Verify-Full”. Default value is “Verify-Full”. Type: string (or Expression with resultType string). Only applied for version 2.0. </summary>
+        public object SslMode { get; set; }
+        /// <summary> The port numbers when connecting to server through non HTTPS/TLS connections. Type: integer (or Expression with resultType integer). Only used for V2. Only applied for version 2.0. </summary>
+        public object PortNumber { get; set; }
+        /// <summary> The port numbers when connecting to server through HTTPS/TLS connections. Type: integer (or Expression with resultType integer). Only applied for version 2.0. </summary>
+        public object HttpsPortNumber { get; set; }
+        /// <summary> Specifies whether to encrypt all communication with the Teradata database. Allowed values are 0 or 1. This setting will be ignored for HTTPS/TLS connections. Type: integer (or Expression with resultType integer). Only applied for version 2.0. </summary>
+        public object UseDataEncryption { get; set; }
+        /// <summary> The character set to use for the connection. Type: string (or Expression with resultType string). Only applied for version 2.0. </summary>
+        public object CharacterSet { get; set; }
+        /// <summary> The maximum size of the response buffer for SQL requests, in bytes. Type: integer. Only applied for version 2.0. </summary>
+        public object MaxRespSize { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
     }
