@@ -36,9 +36,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="aspnet-host\appsettings.Development.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="aspnet-host\appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
