@@ -16,7 +16,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary></summary>
-    public partial class FooListResult : IJsonModel<FooListResult>
+    internal partial class FooListResult : IJsonModel<FooListResult>
     {
         internal FooListResult()
         {

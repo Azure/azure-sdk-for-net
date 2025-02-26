@@ -37,7 +37,7 @@ namespace MgmtTypeSpec
 
         public static string ToString(TimeSpan value, string format) => format switch
         {
-            "P" => System.Xml.XmlConvert.ToString(value),
+            "P" => XmlConvert.ToString(value),
             _ => value.ToString(format, CultureInfo.InvariantCulture)
         };
 
@@ -130,7 +130,7 @@ namespace MgmtTypeSpec
 
         public static TimeSpan ParseTimeSpan(string value, string format) => format switch
         {
-            "P" => System.Xml.XmlConvert.ToTimeSpan(value),
+            "P" => XmlConvert.ToTimeSpan(value),
             _ => TimeSpan.ParseExact(value, format, CultureInfo.InvariantCulture)
         };
 
@@ -144,7 +144,7 @@ namespace MgmtTypeSpec
             IEnumerable<string> s0 => string.Join(",", s0),
             DateTimeOffset dateTime when format != null => ToString(dateTime, format),
             TimeSpan timeSpan when format != null => ToString(timeSpan, format),
-            TimeSpan timeSpan0 => System.Xml.XmlConvert.ToString(timeSpan0),
+            TimeSpan timeSpan0 => XmlConvert.ToString(timeSpan0),
             Guid guid => guid.ToString(),
             BinaryData binaryData => ConvertToString(binaryData.ToArray(), format),
             _ => value.ToString()
