@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+#pragma warning disable AZC0007
 
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,7 @@ namespace Azure.Communication.Rooms
         /// </summary>
         /// <param name="connectionString"></param>
         /// <param name="options"></param>
+
         public RoomsClient(string connectionString, RoomsClientOptions options)
             : this(
                 ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
@@ -51,8 +53,20 @@ namespace Azure.Communication.Rooms
         /// </summary>
         /// <param name="endpoint"></param>
         /// <param name="credential"></param>
+        public RoomsClient(Uri endpoint, AzureKeyCredential credential)
+            : this(
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(credential, nameof(credential)),
+                new RoomsClientOptions())
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RoomsClient"/> class.
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="credential"></param>
         /// <param name="options"></param>
-        public RoomsClient(Uri endpoint, AzureKeyCredential credential, RoomsClientOptions options = default)
+        public RoomsClient(Uri endpoint, AzureKeyCredential credential, RoomsClientOptions options )
             : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 Argument.CheckNotNull(credential, nameof(credential)),
@@ -64,8 +78,20 @@ namespace Azure.Communication.Rooms
         /// </summary>
         /// <param name="endpoint"></param>
         /// <param name="credential"></param>
+        public RoomsClient(Uri endpoint, TokenCredential credential)
+            : this(
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(credential, nameof(credential)),
+                new RoomsClientOptions())
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RoomsClient"/> class.
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="credential"></param>
         /// <param name="options"></param>
-        public RoomsClient(Uri endpoint, TokenCredential credential, RoomsClientOptions options = default)
+        public RoomsClient(Uri endpoint, TokenCredential credential, RoomsClientOptions options)
             : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 Argument.CheckNotNull(credential, nameof(credential)),
