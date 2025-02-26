@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.AI.Agents;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
@@ -16,19 +17,21 @@ public partial class Sample_Agent_Basics : SamplesBase<AIProjectsTestEnvironment
     [Test]
     public async Task BasicExample()
     {
+        var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
         #region Snippet:OverviewCreateAgentClient
 #if SNIPPET
         var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
 #endif
-        AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+        AIProjectClient projectClient = new(connectionString, new DefaultAzureCredential());
+        AgentsClient client = projectClient.GetAgentsClient();
         #endregion
 
         // Step 1: Create an agent
         #region Snippet:OverviewCreateAgent
         Response<Agent> agentResponse = await client.CreateAgentAsync(
-            model: "gpt-4-1106-preview",
+            model: modelName,
             name: "Math Tutor",
             instructions: "You are a personal math tutor. Write and run code to answer math questions.",
             tools: new List<ToolDefinition> { new CodeInterpreterToolDefinition() });

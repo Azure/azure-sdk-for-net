@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.AI.Agents;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
@@ -18,6 +19,7 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIProjectsTest
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var clientOptions = new AIProjectClientOptions();
+        var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
 
         clientOptions.AddPolicy(new CustomHeadersPolicy(), HttpPipelinePosition.PerCall);
         var projectClient = new AIProjectClient(
@@ -27,7 +29,7 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIProjectsTest
         var agentClient = projectClient.GetAgentsClient();
 
         Response<Agent> agentResponse = await agentClient.CreateAgentAsync(
-            model: "gpt-4-1106-preview",
+            model: modelName,
             name: "Math Tutor",
             instructions: "You are a personal electronics tutor. Write and run code to answer questions.",
             tools: [new CodeInterpreterToolDefinition()]);

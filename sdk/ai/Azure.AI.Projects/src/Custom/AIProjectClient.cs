@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using Azure.AI.Inference;
+using Azure.AI.Agents;
 using Azure.Core;
 
 namespace Azure.AI.Projects
@@ -12,6 +13,7 @@ namespace Azure.AI.Projects
     /// <summary> The AzureAI service client. </summary>
     public partial class AIProjectClient
     {
+        private string _connectionString;
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
         /// <param name="connectionString">The Azure AI Foundry project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
@@ -37,10 +39,22 @@ namespace Azure.AI.Projects
                   credential,
                   options)
         {
+            _connectionString = connectionString;
         }
 
         private ChatCompletionsClient _chatCompletionsClient;
         private EmbeddingsClient _embeddingsClient;
+        private AgentsClient _agentsClient;
+
+        /// <summary>
+        /// Initializes a new instance of an AgentsClient.
+        /// </summary>
+        /// <returns>The new or existig instance of an agents client.</returns>
+        public virtual AgentsClient GetAgentsClient()
+        {
+            _agentsClient ??= new AgentsClient(_endpoint, _subscriptionId, _resourceGroupName, _projectName, _tokenCredential);
+            return _agentsClient;
+        }
 
         /// <summary> Initializes a new instance of Inference's ChatCompletionsClient. </summary>
         public virtual ChatCompletionsClient GetChatCompletionsClient()

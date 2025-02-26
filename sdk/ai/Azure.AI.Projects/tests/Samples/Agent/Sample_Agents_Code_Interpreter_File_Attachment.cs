@@ -7,6 +7,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.AI.Agents;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
@@ -27,7 +28,8 @@ public partial class Sample_Agents_Code_Interpreter_File_Attachment : SamplesBas
         var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
 
         #region Snippet:CreateAgentWithInterpreterTool
-        AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+        AIProjectClient projectClient = new(connectionString, new DefaultAzureCredential());
+        AgentsClient client = projectClient.GetAgentsClient();
 
         List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
         Response<Agent> agentResponse = await client.CreateAgentAsync(
