@@ -3,12 +3,10 @@
 
 #if NET8_0_OR_GREATER
 
-using System.Reflection;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 
 namespace Azure.Core.Extensions.Tests;
 
