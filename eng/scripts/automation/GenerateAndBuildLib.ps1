@@ -557,21 +557,15 @@ function Invoke-GenerateAndBuildSDK () {
     )
     $serviceA = "service"
     $readmeFile = $readmeAbsolutePath -replace "\\", "/"
-    Write-Host "[ERROR] AAThe service"
-    Write-Host "[ERROR] ABThe service"
-    Write-Host "[ERROR] ACThe service" -ErrorAction SilentlyContinue | Out-String -Stream
     Write-Host "readmeFile:$readmeFile"
     $service, $serviceType = Get-ResourceProviderFromReadme $readmeFile
     Write-Host "service:$service, serviceType:$serviceType"
-    Write-Host "[ERROR] Failed to create sdk project folder.service:service,package:package,"
-    Write-Host "[ERROR] sdkPath:sdkRootPath,readme:readmeFile.exit code: $?."
     # Write-Host "[ERROR] Please review the detail errors for potential fixes."
     # Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at DotNetSupportChannelLink and include this spec pull request."
     Write-Host "AAPath doesn't exist. create template."
     Write-Host "adsadasdasddsadsasdasdasdsdasdBBPath doesn't exist. create template."
     Write-Host "CCPath doesn't exist. create template."
     Write-Host "[ERROR] AAThe service $serviceA is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-    exit 1
     if (!$readmeFile.StartsWith("http") -And !(Test-Path -Path $readmeFile)) {
         Write-Host "[ERROR] readme file '$readmeFile' does not exist. Please provide a valid readme file path."
         exit 1
