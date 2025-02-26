@@ -36,11 +36,7 @@ namespace Azure.Generator
         private LongRunningOperationProvider? _genericArmOperation;
         internal LongRunningOperationProvider GenericArmOperation => _genericArmOperation ??= new LongRunningOperationProvider(true);
 
-        /// <summary>
-        /// Builds the resources for this library.
-        /// </summary>
-        /// <returns></returns>
-        protected internal override IReadOnlyList<ResourceClientProvider> BuildResources()
+        private IReadOnlyList<ResourceClientProvider> BuildResources()
         {
             var result = new List<ResourceClientProvider>();
             foreach ((var schemaName, var operationSets) in _specNameToOperationSetsMap)
