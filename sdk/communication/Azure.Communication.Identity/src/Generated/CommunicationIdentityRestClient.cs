@@ -32,7 +32,7 @@ namespace Azure.Communication.Identity
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2023-10-01")
+        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2025-04-01-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -40,7 +40,7 @@ namespace Azure.Communication.Identity
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateCreateRequest(IEnumerable<CommunicationTokenScope> createTokenWithScopes, int? expiresInMinutes)
+        internal HttpMessage CreateCreateRequest(string externalId, IEnumerable<CommunicationTokenScope> createTokenWithScopes, int? expiresInMinutes)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -54,6 +54,7 @@ namespace Azure.Communication.Identity
             request.Headers.Add("Content-Type", "application/json");
             CommunicationIdentityCreateRequest communicationIdentityCreateRequest = new CommunicationIdentityCreateRequest()
             {
+                ExternalId = externalId,
                 ExpiresInMinutes = expiresInMinutes
             };
             if (createTokenWithScopes != null)
@@ -71,15 +72,17 @@ namespace Azure.Communication.Identity
         }
 
         /// <summary> Create a new identity, and optionally, an access token. </summary>
+        /// <param name="externalId"> Set to tag the identity with your own id. </param>
         /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
         /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CommunicationUserIdentifierAndToken>> CreateAsync(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CommunicationUserIdentifierAndToken>> CreateAsync(string externalId = null, IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(createTokenWithScopes, expiresInMinutes);
+            using var message = CreateCreateRequest(externalId, createTokenWithScopes, expiresInMinutes);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 201:
                     {
                         CommunicationUserIdentifierAndToken value = default;
@@ -93,15 +96,17 @@ namespace Azure.Communication.Identity
         }
 
         /// <summary> Create a new identity, and optionally, an access token. </summary>
+        /// <param name="externalId"> Set to tag the identity with your own id. </param>
         /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
         /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CommunicationUserIdentifierAndToken> Create(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
+        public Response<CommunicationUserIdentifierAndToken> Create(string externalId = null, IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(createTokenWithScopes, expiresInMinutes);
+            using var message = CreateCreateRequest(externalId, createTokenWithScopes, expiresInMinutes);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 201:
                     {
                         CommunicationUserIdentifierAndToken value = default;
@@ -168,6 +173,75 @@ namespace Azure.Communication.Identity
             {
                 case 204:
                     return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetRequest(string id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/identities/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get an identity by its id. </summary>
+        /// <param name="id"> Identifier of the identity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public async Task<Response<CommunicationIdentityResult>> GetAsync(string id, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            using var message = CreateGetRequest(id);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CommunicationIdentityResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = CommunicationIdentityResult.DeserializeCommunicationIdentityResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get an identity by its id. </summary>
+        /// <param name="id"> Identifier of the identity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public Response<CommunicationIdentityResult> Get(string id, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            using var message = CreateGetRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CommunicationIdentityResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = CommunicationIdentityResult.DeserializeCommunicationIdentityResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
