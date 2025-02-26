@@ -47,7 +47,11 @@ namespace Azure.Identity.Tests
 
             ValidateTenantIdArgumentException(tenantId, "tenantId", ex);
 
+#if NET9_0_OR_GREATER
+            var certificate = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
             var certificate = new X509Certificate2(certificatePath);
+#endif
 
             ex = Assert.Catch<ArgumentException>(() => new ClientCertificateCredential(tenantId, clientId, certificate));
 

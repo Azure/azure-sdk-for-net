@@ -25,7 +25,7 @@ namespace Azure.Core.TestFramework
     /// </summary>
     public abstract class TestEnvironment
     {
-        [EditorBrowsableAttribute(EditorBrowsableState.Never)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static string RepositoryRoot { get; }
 
         public static string DevCertPath { get; }
@@ -94,9 +94,11 @@ namespace Azure.Core.TestFramework
             {
                 if (File.Exists(testEnvironmentFile))
                 {
+#pragma warning disable CA1416 // env files are only supported on windows
                     var json = JsonDocument.Parse(
                         ProtectedData.Unprotect(File.ReadAllBytes(testEnvironmentFile), null, DataProtectionScope.CurrentUser)
                     );
+#pragma warning restore CA1416
 
                     foreach (var property in json.RootElement.EnumerateObject())
                     {
