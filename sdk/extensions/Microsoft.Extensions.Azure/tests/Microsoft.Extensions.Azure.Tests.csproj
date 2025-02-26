@@ -38,7 +38,7 @@
     <GenerateProgramFile>false</GenerateProgramFile>
   </PropertyGroup>
 
-  <!-- Include the content root markers for the ASPNET Core application -->
+  <!-- Include the solution and content root markers for the ASPNET Core application -->
   <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
     <Copy SourceFiles="aspnet-host\AspNetHostRoot.sln" DestinationFolder="$(OutDir)" />
   </Target>
