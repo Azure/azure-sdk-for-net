@@ -46,7 +46,7 @@ public static class SearchExtensions
     /// <returns></returns>
     public static SearchIndexClient GetSearchIndexClient(this ConnectionProvider provider)
     {
-        SearchIndexClient searchIndexClient = provider.Subclients.GetClient(() => CreateSearchIndexClient(provider));
+        SearchIndexClient searchIndexClient = provider.Subclients.GetClient(() => CreateSearchIndexClient(provider), null);
         return searchIndexClient;
     }
 
@@ -69,7 +69,7 @@ public static class SearchExtensions
     /// <returns></returns>
     public static SearchIndexerClient GetSearchIndexerClient(this ConnectionProvider provider)
     {
-        SearchIndexerClient searchIndexerClient = provider.Subclients.GetClient(() => CreateSearchIndexerClient(provider));
+        SearchIndexerClient searchIndexerClient = provider.Subclients.GetClient(() => CreateSearchIndexerClient(provider), null);
         return searchIndexerClient;
     }
 

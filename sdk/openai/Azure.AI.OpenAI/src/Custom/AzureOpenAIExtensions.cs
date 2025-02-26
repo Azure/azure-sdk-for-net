@@ -26,7 +26,7 @@ public static class AzureOpenAIExtensions
 
         ChatClient chatClient = provider.Subclients.GetClient(() =>
         {
-            AzureOpenAIClient aoiaClient = provider.Subclients.GetClient(() => CreateAzureOpenAIClient(provider));
+            AzureOpenAIClient aoiaClient = provider.Subclients.GetClient(() => CreateAzureOpenAIClient(provider), null);
             return provider.CreateChatClient(aoiaClient, deploymentName);
         }, name);
 
@@ -45,7 +45,7 @@ public static class AzureOpenAIExtensions
 
         EmbeddingClient embeddingsClient = provider.Subclients.GetClient(() =>
         {
-            AzureOpenAIClient aoiaClient = provider.Subclients.GetClient(() => CreateAzureOpenAIClient(provider));
+            AzureOpenAIClient aoiaClient = provider.Subclients.GetClient(() => CreateAzureOpenAIClient(provider), null);
             return provider.CreateEmbeddingsClient(aoiaClient, deploymentName);
         }, name);
 

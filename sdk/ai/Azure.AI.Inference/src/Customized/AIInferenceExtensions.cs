@@ -21,7 +21,7 @@ namespace Azure.AI.Inference
         /// <returns></returns>
         public static ChatCompletionsClient GetChatCompletionsClient(this ConnectionProvider provider)
         {
-            ChatCompletionsClient chatClient = provider.Subclients.GetClient(() => CreateChatCompletionsClient(provider));
+            ChatCompletionsClient chatClient = provider.Subclients.GetClient(() => CreateChatCompletionsClient(provider), null);
             return chatClient;
         }
 
@@ -44,7 +44,7 @@ namespace Azure.AI.Inference
         /// <returns></returns>
         public static EmbeddingsClient GetEmbeddingsClient(this ConnectionProvider provider)
         {
-            EmbeddingsClient embeddingsClient = provider.Subclients.GetClient(() => CreateEmbeddingsClient(provider));
+            EmbeddingsClient embeddingsClient = provider.Subclients.GetClient(() => CreateEmbeddingsClient(provider), null);
             return embeddingsClient;
         }
 

@@ -25,9 +25,9 @@ public class ClientCache
     /// </summary>
     /// <typeparam name="T">The type of the client.</typeparam>
     /// <param name="createClient">A factory function to create the client if not cached.</param>
-    /// <param name="id">An optional identifier for the client instance.</param>
+    /// <param name="id">An identifier for the client instance.</param>
     /// <returns>The cached or newly created client instance.</returns>
-    public T GetClient<T>(Func<T> createClient, string id = "") where T : class
+    public T GetClient<T>(Func<T> createClient, string? id) where T : class
     {
         (Type, string) key = (typeof(T), id ?? string.Empty);
 
