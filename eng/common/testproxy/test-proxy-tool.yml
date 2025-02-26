@@ -49,6 +49,7 @@ steps:
         Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Path]${{ parameters.templateRoot }}/eng/common/testproxy/dotnet-devcert.pfx"
         Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Password]password"
         Write-Host "##vso[task.setvariable variable=PROXY_MANUAL_START]true"
+        Write-Host "##vso[task.setvariable variable=ASPNET_URLS]http://localhost:5000;https://localhost:5001"
       displayName: 'Configure Kestrel and PROXY_MANUAL_START Variables'
       condition: and(succeeded(), ${{ parameters.condition }})
 
