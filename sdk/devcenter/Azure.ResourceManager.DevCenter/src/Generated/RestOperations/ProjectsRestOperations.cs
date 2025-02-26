@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         ProjectListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProjectListResult.DeserializeProjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         ProjectListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProjectListResult.DeserializeProjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         ProjectListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProjectListResult.DeserializeProjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         ProjectListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProjectListResult.DeserializeProjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         DevCenterProjectData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevCenterProjectData.DeserializeDevCenterProjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         DevCenterProjectData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevCenterProjectData.DeserializeDevCenterProjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         ProjectListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProjectListResult.DeserializeProjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         ProjectListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProjectListResult.DeserializeProjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         ProjectListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProjectListResult.DeserializeProjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         ProjectListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProjectListResult.DeserializeProjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.DevCenter
 
         DevBoxDefinitionResource IOperationSource<DevBoxDefinitionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DevBoxDefinitionData.DeserializeDevBoxDefinitionData(document.RootElement);
+            var data = ModelReaderWriter.Read<DevBoxDefinitionData>(new BinaryData(response.ContentStream));
             return new DevBoxDefinitionResource(_client, data);
         }
 
         async ValueTask<DevBoxDefinitionResource> IOperationSource<DevBoxDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DevBoxDefinitionData.DeserializeDevBoxDefinitionData(document.RootElement);
-            return new DevBoxDefinitionResource(_client, data);
+            var data = ModelReaderWriter.Read<DevBoxDefinitionData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new DevBoxDefinitionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

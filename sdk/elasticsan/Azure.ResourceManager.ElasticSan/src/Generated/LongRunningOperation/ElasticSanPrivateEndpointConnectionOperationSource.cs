@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.ElasticSan
 
         ElasticSanPrivateEndpointConnectionResource IOperationSource<ElasticSanPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(document.RootElement);
+            var data = ModelReaderWriter.Read<ElasticSanPrivateEndpointConnectionData>(new BinaryData(response.ContentStream));
             return new ElasticSanPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<ElasticSanPrivateEndpointConnectionResource> IOperationSource<ElasticSanPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(document.RootElement);
-            return new ElasticSanPrivateEndpointConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<ElasticSanPrivateEndpointConnectionData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new ElasticSanPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

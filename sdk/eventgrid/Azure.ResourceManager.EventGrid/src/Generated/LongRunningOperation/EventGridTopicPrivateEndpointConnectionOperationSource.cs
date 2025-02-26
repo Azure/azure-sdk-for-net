@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.EventGrid
 
         EventGridTopicPrivateEndpointConnectionResource IOperationSource<EventGridTopicPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(document.RootElement);
+            var data = ModelReaderWriter.Read<EventGridPrivateEndpointConnectionData>(new BinaryData(response.ContentStream));
             return new EventGridTopicPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<EventGridTopicPrivateEndpointConnectionResource> IOperationSource<EventGridTopicPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(document.RootElement);
-            return new EventGridTopicPrivateEndpointConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<EventGridPrivateEndpointConnectionData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new EventGridTopicPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

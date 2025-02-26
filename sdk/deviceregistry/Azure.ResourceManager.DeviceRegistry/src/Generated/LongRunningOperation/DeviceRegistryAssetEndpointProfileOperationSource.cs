@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.DeviceRegistry
 
         DeviceRegistryAssetEndpointProfileResource IOperationSource<DeviceRegistryAssetEndpointProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DeviceRegistryAssetEndpointProfileData.DeserializeDeviceRegistryAssetEndpointProfileData(document.RootElement);
+            var data = ModelReaderWriter.Read<DeviceRegistryAssetEndpointProfileData>(new BinaryData(response.ContentStream));
             return new DeviceRegistryAssetEndpointProfileResource(_client, data);
         }
 
         async ValueTask<DeviceRegistryAssetEndpointProfileResource> IOperationSource<DeviceRegistryAssetEndpointProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DeviceRegistryAssetEndpointProfileData.DeserializeDeviceRegistryAssetEndpointProfileData(document.RootElement);
-            return new DeviceRegistryAssetEndpointProfileResource(_client, data);
+            var data = ModelReaderWriter.Read<DeviceRegistryAssetEndpointProfileData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new DeviceRegistryAssetEndpointProfileResource(_client, data)).ConfigureAwait(false);
         }
     }
 }
