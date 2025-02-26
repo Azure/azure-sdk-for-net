@@ -18,7 +18,7 @@
     <PackageReference Include="Microsoft.Azure.SignalR.Protocols" />
     <PackageReference Include="Microsoft.Azure.SignalR.Serverless.Protocols" />
     <!--Pin the following version to avoid issue https://github.com/Azure/azure-functions-host/issues/10575 in the short term.-->
-    <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.7.3"/>
+    <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.7.5"/>
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
   </ItemGroup>
 
