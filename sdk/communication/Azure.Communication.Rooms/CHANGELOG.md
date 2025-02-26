@@ -1,5 +1,10 @@
 # Release History
 
+## 1.2.0 (2025-03-13)
+
+### Features Added
+Introduce Collaborator role to supported participant roles.
+
 ## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
