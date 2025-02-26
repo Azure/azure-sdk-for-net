@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+// touch
 
 extern alias DMBlobs;
 extern alias BaseBlobs;
@@ -14,7 +15,6 @@ using Moq;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using System.Threading;
-
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
