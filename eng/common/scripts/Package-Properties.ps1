@@ -320,7 +320,9 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     # packages. We should never return NO validation.
     if ($packagesWithChanges.Count -eq 0) {
         $packagesWithChanges += ($allPackageProperties | Where-Object { $_.ServiceDirectory -eq "template" })
-        $packagesWithChanges[0].IncludedForValidation = $true
+        foreach ($package in $packagesWithChanges) {
+            $package.IncludedForValidation = $true
+        }
     }
 
     return $packagesWithChanges
