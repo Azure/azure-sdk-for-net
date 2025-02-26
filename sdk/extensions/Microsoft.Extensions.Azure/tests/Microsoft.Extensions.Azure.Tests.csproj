@@ -2,6 +2,9 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="aspnet-host\AspNetHostRoot.sln" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" VersionOverride="8.0.1" />
@@ -34,6 +37,11 @@
   <PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <GenerateProgramFile>false</GenerateProgramFile>
   </PropertyGroup>
+
+  <!-- Include the content root markers for the ASPNET Core application -->
+  <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
+    <Copy SourceFiles="aspnet-host\AspNetHostRoot.sln" DestinationFolder="$(OutDir)" />
+  </Target>
 
   <ItemGroup>
     <None Update="aspnet-host\appsettings.json">

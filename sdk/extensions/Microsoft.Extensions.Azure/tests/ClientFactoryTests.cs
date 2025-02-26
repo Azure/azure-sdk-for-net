@@ -16,6 +16,7 @@ using NUnit.Framework;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 #endif
 
 namespace Azure.Core.Extensions.Tests
@@ -648,15 +649,11 @@ namespace Azure.Core.Extensions.Tests
             var factory = new WebApplicationFactory<AspNetHost>()
                 .WithWebHostBuilder(builder =>
                 {
-                    var configuration = new ConfigurationBuilder()
-                         .AddInMemoryCollection(
-                         [
-                             new KeyValuePair<string, string>("KeyVault:VaultUri", expectedKeyVaultUriValue)
-                         ])
-                         .Build();
+                    builder.UseContentRoot("aspnet-host");
 
-                    builder.UseConfiguration(configuration);
-                    builder.UseContentRoot("./aspnet-host");
+                    builder.UseConfiguration(
+                        GetConfiguration(
+                            new KeyValuePair<string, string>("KeyVault:VaultUri", expectedKeyVaultUriValue)));
                 });
 
             var client = factory.CreateClient();

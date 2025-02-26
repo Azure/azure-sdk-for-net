@@ -3,10 +3,12 @@
 
 #if NET8_0_OR_GREATER
 
+using System.Reflection;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 
 namespace Azure.Core.Extensions.Tests;
 
@@ -15,7 +17,7 @@ public class AspNetHost
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        builder.Environment.ContentRootPath = "./aspnet-host";
+        builder.Environment.ContentRootPath = "aspnet-host";
 
         builder.Services.AddAzureClients(clientBuilder =>
         {
