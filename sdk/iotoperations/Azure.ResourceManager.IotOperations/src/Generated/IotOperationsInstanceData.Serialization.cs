@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.IotOperations
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIotOperationsInstanceData(document.RootElement, options);
                     }
                 default:

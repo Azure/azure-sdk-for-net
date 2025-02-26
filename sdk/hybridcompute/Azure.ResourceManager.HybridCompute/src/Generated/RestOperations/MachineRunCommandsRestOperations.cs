@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         MachineRunCommandData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MachineRunCommandData.DeserializeMachineRunCommandData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         MachineRunCommandData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MachineRunCommandData.DeserializeMachineRunCommandData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         MachineRunCommandsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MachineRunCommandsListResult.DeserializeMachineRunCommandsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         MachineRunCommandsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MachineRunCommandsListResult.DeserializeMachineRunCommandsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         MachineRunCommandsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MachineRunCommandsListResult.DeserializeMachineRunCommandsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         MachineRunCommandsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MachineRunCommandsListResult.DeserializeMachineRunCommandsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

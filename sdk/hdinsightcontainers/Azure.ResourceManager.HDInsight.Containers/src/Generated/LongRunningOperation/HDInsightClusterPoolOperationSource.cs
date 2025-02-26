@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
 
         HDInsightClusterPoolResource IOperationSource<HDInsightClusterPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(document.RootElement);
+            var data = ModelReaderWriter.Read<HDInsightClusterPoolData>(new BinaryData(response.ContentStream));
             return new HDInsightClusterPoolResource(_client, data);
         }
 
         async ValueTask<HDInsightClusterPoolResource> IOperationSource<HDInsightClusterPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(document.RootElement);
-            return new HDInsightClusterPoolResource(_client, data);
+            var data = ModelReaderWriter.Read<HDInsightClusterPoolData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new HDInsightClusterPoolResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

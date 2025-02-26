@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +24,14 @@ namespace Azure.ResourceManager.IotOperations
 
         IotOperationsBrokerListenerResource IOperationSource<IotOperationsBrokerListenerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = IotOperationsBrokerListenerData.DeserializeIotOperationsBrokerListenerData(document.RootElement);
+            var data = ModelReaderWriter.Read<IotOperationsBrokerListenerData>(new BinaryData(response.ContentStream));
             return new IotOperationsBrokerListenerResource(_client, data);
         }
 
         async ValueTask<IotOperationsBrokerListenerResource> IOperationSource<IotOperationsBrokerListenerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = IotOperationsBrokerListenerData.DeserializeIotOperationsBrokerListenerData(document.RootElement);
-            return new IotOperationsBrokerListenerResource(_client, data);
+            var data = ModelReaderWriter.Read<IotOperationsBrokerListenerData>(new BinaryData(response.ContentStream));
+            return await Task.FromResult(new IotOperationsBrokerListenerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLicenseProfileArmEsuPropertiesWithoutAssignedLicense(document.RootElement, options);
                     }
                 default:

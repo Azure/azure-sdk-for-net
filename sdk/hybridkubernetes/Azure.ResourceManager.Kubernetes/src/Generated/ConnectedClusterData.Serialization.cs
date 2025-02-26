@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.Kubernetes
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConnectedClusterData(document.RootElement, options);
                     }
                 default:

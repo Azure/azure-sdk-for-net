@@ -72,7 +72,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         TwinConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TwinConfiguration.DeserializeTwinConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -99,7 +99,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         TwinConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TwinConfiguration.DeserializeTwinConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -156,7 +156,7 @@ namespace Azure.IoT.Hub.Service
                 case 201:
                     {
                         TwinConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TwinConfiguration.DeserializeTwinConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.IoT.Hub.Service
                 case 201:
                     {
                         TwinConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TwinConfiguration.DeserializeTwinConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -293,7 +293,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         IReadOnlyList<TwinConfiguration> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<TwinConfiguration> array = new List<TwinConfiguration>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -319,7 +319,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         IReadOnlyList<TwinConfiguration> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<TwinConfiguration> array = new List<TwinConfiguration>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -369,7 +369,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         ConfigurationQueriesTestResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfigurationQueriesTestResponse.DeserializeConfigurationQueriesTestResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -396,7 +396,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         ConfigurationQueriesTestResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfigurationQueriesTestResponse.DeserializeConfigurationQueriesTestResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
