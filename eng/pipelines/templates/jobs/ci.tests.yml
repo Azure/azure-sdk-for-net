@@ -175,6 +175,8 @@ jobs:
           $(AdditionalTestArguments)
           $(DiagnosticArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
+        env:
+          AZURE_ENABLE_TEST_PROXY_DEBUG_LOGS: true
 
       - pwsh: |
           $items = Get-ChildItem -Path $env:DOTNET_INSTALL_DIR -Force -Recurse  -Filter "testproxyreroute.log"
