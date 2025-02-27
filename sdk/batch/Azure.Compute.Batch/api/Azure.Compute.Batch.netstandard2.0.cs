@@ -2628,12 +2628,15 @@ namespace Azure.Compute.Batch
     public enum CreateTaskResultStatus
     {
         Success = 0,
-        Retry = 1,
+        Failure = 1,
+        Retry = 2,
     }
     public partial class CreateTasksResult
     {
         public CreateTasksResult(System.Collections.Generic.List<Azure.Compute.Batch.BatchTaskAddResult> batchTaskAddResults) { }
         public System.Collections.Generic.List<Azure.Compute.Batch.BatchTaskAddResult> BatchTaskAddResults { get { throw null; } }
+        public int Fail { get { throw null; } set { } }
+        public int Pass { get { throw null; } set { } }
     }
     public partial class DataDisk : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.DataDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.DataDisk>
     {

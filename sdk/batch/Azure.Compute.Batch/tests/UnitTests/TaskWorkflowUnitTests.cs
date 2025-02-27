@@ -372,6 +372,119 @@ namespace Azure.Compute.Batch.Tests.UnitTests
         }
 
         [Test]
+        public async Task Tasks_10000_Parrellel_100_ServerErrors()
+        {
+            // Arrange
+            int tasksCount = 10000;
+            int parrellelTasks = 100;
+
+            Mock<BatchClient> clientMock = new Mock<BatchClient>();
+
+            clientMock.Setup(c => c.CreateTaskCollectionAsync(
+               It.IsAny<string>(),
+               It.IsAny<BatchTaskGroup>(),
+               It.IsAny<int?>(),
+               It.IsAny<DateTimeOffset?>(),
+               It.IsAny<CancellationToken>())
+           )
+           .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
+           {
+               // creating a BatchTaskAddCollectionResult with 50% success rate, should triger retries
+               BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection,0.5);
+               return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
+           }
+           );
+
+            BatchClient batchClient = clientMock.Object;
+            BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
+            {
+                MaxDegreeOfParallelism = parrellelTasks
+            };
+
+            TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", parallelOptions);
+
+            List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
+            for (int i = 0; i < tasksCount; i++)
+            {
+                tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
+            }
+
+            // Act
+            CreateTasksResult result = await addTasksWorkflowManager.AddTasksAsync(tasks, "jobId");
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.AreEqual(tasksCount, result.BatchTaskAddResults.Count);
+            Assert.AreEqual(tasksCount, result.Pass);
+            Assert.AreEqual(0, result.Fail);
+        }
+
+        [Test]
+        public async Task Tasks_10000_Parrellel_10_TooManyRequests()
+        {
+            // Arrange
+            int tasksCount = 10000;
+            int parrellelTasks = 10;
+
+            Mock<BatchClient> clientMock = new Mock<BatchClient>();
+
+            clientMock.Setup(c => c.CreateTaskCollectionAsync(
+               It.IsAny<string>(),
+               It.IsAny<BatchTaskGroup>(),
+               It.IsAny<int?>(),
+               It.IsAny<DateTimeOffset?>(),
+               It.IsAny<CancellationToken>())
+           )
+           .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
+           {
+               var random = new Random();
+               if (random.NextDouble() < 0.1) // 10% chance to execute
+               {
+                   // mock the service call failing due to too many requests
+                   var mockResponse = new Mock<Response>();
+                   var batchErrorJson = "{\"code\":\"TooManyRequests\",\"message\":{\"value\":\"TooManyRequests\"},\"values\":[{\"key\": \"key1\",\"value\":\"value1\"},{\"key\": \"key2\",\"value\":\"value2\"}]}";
+                   var binaryData = new BinaryData(batchErrorJson);
+                   mockResponse.Setup(response => response.Content).Returns(binaryData);
+
+                   throw new RequestFailedException(mockResponse.Object);
+               }
+               else
+               {
+                   // The defaul size should be 100
+                   Assert.AreEqual(100, taskCollection.Value.Count);
+
+                   BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
+                   return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
+               }
+           }
+           );
+
+            BatchClient batchClient = clientMock.Object;
+            BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
+            {
+                MaxDegreeOfParallelism = parrellelTasks,
+                MaxTimeBetweenCallsInSeconds = 0
+            };
+
+            TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", parallelOptions);
+
+            List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
+            for (int i = 0; i < tasksCount; i++)
+            {
+                tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
+            }
+
+            // Act
+            CreateTasksResult result = await addTasksWorkflowManager.AddTasksAsync(tasks, "jobId");
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.AreEqual(tasksCount, result.BatchTaskAddResults.Count);
+            Assert.AreEqual(tasksCount, result.Pass);
+            Assert.AreEqual(0, result.Fail);
+        }
+
+        [Test]
         public async Task Tasks_100000_Parrellel_1000()
         {
             // Arrange
@@ -476,7 +589,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
         /// </summary>
         /// <param name="batchTaskGroup"></param>
         /// <returns>A BatchTaskAddCollectionResult object</returns>
-        private BatchTaskAddCollectionResult CreateBatchTaskAddCollectionResult(BatchTaskGroup batchTaskGroup)
+        private BatchTaskAddCollectionResult CreateBatchTaskAddCollectionResult(BatchTaskGroup batchTaskGroup, double passPercentage=1)
         {
             var mockResponse = new Mock<Response>();
 
@@ -487,12 +600,40 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             int v = batchTaskGroup.Value.Count;
             for (int i = 0; i < v; i++)
             {
-                batchTaskAddCollectionJson += @"
+                var random = new Random();
+                if (random.NextDouble() <= passPercentage) // chance for success result
+                {
+                    batchTaskAddCollectionJson += @"
                 {
                   ""taskId"": """ + batchTaskGroup.Value[i].Id + @""",
                   ""status"": ""success"",
                   ""error"": null
                 }";
+                }
+                else
+                {
+                    batchTaskAddCollectionJson += @"
+                {
+                  ""taskId"": """ + batchTaskGroup.Value[i].Id + @""",
+                  ""status"": ""servererror"",
+                  ""error"": {
+                     ""code"": ""OperationTimedOut"",
+                     ""message"": {
+                         ""value"": ""Error message""
+                     },
+                     ""values"": [
+                       {
+                        ""key"": ""key1"",
+                        ""value"": ""value1""
+                       },
+                       {
+                         ""key"": ""key2"",
+                         ""value"": ""value2""
+                       }
+                     ]
+                   }
+                }";
+                }
 
                 if ( i+1 < v)
                 {
