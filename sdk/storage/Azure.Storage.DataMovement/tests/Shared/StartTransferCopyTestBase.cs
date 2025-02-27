@@ -832,6 +832,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(true, transfer.Status.HasSkippedItems);
         }
 
+        // a change to datamovement files shares
         private async Task CopyRemoteObjects_VerifyProperties(
             TSourceContainerClient sourceContainer,
             TDestinationContainerClient destinationContainer,
