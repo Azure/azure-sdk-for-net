@@ -1,6 +1,6 @@
 # Release History
 
-## 12.1.0 (Unreleased)
+## 12.1.0 (2025-02-27)
 
 ### Features Added
 - Added support for anonymous access by adding a default constructor for `BlobsStorageResourceProvider`.
