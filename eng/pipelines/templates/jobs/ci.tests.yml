@@ -176,6 +176,14 @@ jobs:
           $(DiagnosticArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
 
+      - pwsh: |
+          $items = Get-ChildItem -Path / -Force
+          $items | ForEach-Object {
+            Write-Host $_.FullName
+          }
+        displayName: Dump Error Logs
+        condition: succeededOrFailed()
+
       - task: PublishTestResults@2
         condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"
