@@ -6242,6 +6242,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Host { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryKeyVaultSecret Password { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactorySecret PasswordV2 { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> Port { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> SslMode { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Username { get { throw null; } set { } }
@@ -8786,6 +8787,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class OracleLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.OracleLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.OracleLinkedService>
     {
         public OracleLinkedService() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public OracleLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> connectionString) { }
         public Azure.ResourceManager.DataFactory.Models.OracleAuthenticationType? AuthenticationType { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ConnectionString { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> CryptoChecksumClient { get { throw null; } set { } }
