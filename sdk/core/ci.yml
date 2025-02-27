@@ -12,6 +12,7 @@ trigger:
     - eng/
     exclude:
     - eng/mgmt/
+    - eng/common/
     - eng/packages/
     - eng/scripts/typespec/
 
@@ -30,6 +31,7 @@ pr:
     - samples/
     exclude:
     - eng/mgmt/
+    - eng/common/
     - eng/packages/
     - eng/scripts/typespec/
 

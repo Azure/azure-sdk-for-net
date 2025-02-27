@@ -176,17 +176,6 @@ jobs:
           $(AdditionalTestArguments)
           $(DiagnosticArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
-        env:
-          AZURE_ENABLE_TEST_PROXY_DEBUG_LOGS: true
-
-      - pwsh: |
-          $items = Get-ChildItem -Path $env:DOTNET_INSTALL_DIR -Force -Recurse  -Filter "testproxyreroute.log"
-          $items | ForEach-Object {
-            Write-Host $_.FullName
-            Get-Content $_.FullName
-          }
-        displayName: Dump Error Logs
-        condition: succeededOrFailed()
 
       - task: PublishTestResults@2
         condition: always()
