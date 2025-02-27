@@ -125,6 +125,7 @@ jobs:
         - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
           parameters:
             PackageInfo: '$(Build.SourcesDirectory)/PackageInfo'
+            Restore: true
 
         - pwsh: |
             if ("$(ProjectNames)" -like "*storage*") {
@@ -155,30 +156,6 @@ jobs:
       - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
-
-      - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
-        - template: /eng/common/testproxy/test-proxy-tool.yml
-          parameters:
-            runProxy: false
-
-        - pwsh: |
-            $packageProperties = Get-ChildItem -Recurse '$(Build.ArtifactStagingDirectory)/PackageInfo' -Filter *.json `
-              | Foreach-Object { Get-Content -Raw -Path $_.FullName | ConvertFrom-Json }
-            $packageSet = "$ProjectNames" -split ","
-            $changedProjects = $packageProperties | Where-Object { $packageSet -contains $_.ArtifactName }
-
-            foreach ($proj in $changedProjects) {
-              $assets = Join-Path (Join-Path "$(Build.SourcesDirectory)" $proj.DirectoryPath) "assets.json"
-              if (Test-Path $assets) {
-                Write-Host "Restoring $assets"
-                if ($IsWindows) {
-                  & "$(Build.BinariesDirectory)/test-proxy/test-proxy.exe" restore -a $assets
-                } else {
-                  & "$(Build.BinariesDirectory)/test-proxy/test-proxy" restore -a $assets
-                }
-              }
-            }
-          displayName: Restore Recordings
 
       - script: >-
           dotnet test eng/service.proj
