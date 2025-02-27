@@ -7,15 +7,19 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <NoWarn>$(NoWarn);CS1591;AZC0012;SA1649;SA1402;</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;AZC0012;SA1649;SA1402;AZC0007;</NoWarn>
     <LangVersion>latest</LangVersion>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="Azure.AI.Inference" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\System.ClientModel\src\System.ClientModel.csproj" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
