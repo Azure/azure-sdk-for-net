@@ -64,10 +64,17 @@ namespace Azure.Storage.DataMovement
         ///
         /// This should be called early on in the job transfers.
         /// </summary>
-        public CpuMonitor()
-        {
-        }
+        ///
+        public CpuMonitor() { }
 
+        /// <summary>
+        /// Initalizes the CPU monitor.
+        ///
+        /// This should be called early on in the job transfers.
+        /// Monitoring intervals below 100 Milliseconds are likely to give 0 readings.
+        /// Monitoring intervals should be above 1000 Milliseconds to be able to get readings
+        /// </summary>
+        ///
         public CpuMonitor(TimeSpan monitoringInterval)
         {
             MonitoringInterval = monitoringInterval;

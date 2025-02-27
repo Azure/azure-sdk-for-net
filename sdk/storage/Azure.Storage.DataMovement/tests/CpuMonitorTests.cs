@@ -41,7 +41,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             cpuMonitor.StartMonitoring();
-            SimulateCpuLoad(5);
+            SimulateCpuLoad(10);
             cpuMonitor.StopMonitoring();
 
             // Assert
@@ -51,6 +51,25 @@ namespace Azure.Storage.DataMovement.Tests
             //}
             Assert.That(cpuMonitor.CpuUsage, Is.LessThan(1));
             Assert.Greater(cpuMonitor.CpuUsage, 0);
+        }
+
+        [Test]
+        public void CpuUsage_TimeSpanUnder10MillisecondsShouldHaveZeroReadings()
+        {
+            // Arrange
+            var cpuMonitor = new CpuMonitor(TimeSpan.FromMilliseconds(10));
+
+            // Act
+            cpuMonitor.StartMonitoring();
+            SimulateCpuLoad(2);
+            cpuMonitor.StopMonitoring();
+
+            // Assert
+            //for (var i = 0; i < 1000; i++)
+            //{
+            //    Assert.That(cpuMonitor.CpuUsage, Is.LessThan(1));
+            //}
+            Assert.AreEqual(cpuMonitor.CpuUsage, 0);
         }
 
         [Test]
@@ -65,6 +84,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         private void SimulateCpuLoad(int durationInSeconds)
         {
+            Thread.Sleep(100);
             DateTime end = DateTime.Now.AddSeconds(durationInSeconds);
             while (DateTime.Now < end)
             {
@@ -75,6 +95,7 @@ namespace Azure.Storage.DataMovement.Tests
                     result += Math.Sqrt(i);
                 }
             }
+            Thread.Sleep(100);
         }
     }
 }
