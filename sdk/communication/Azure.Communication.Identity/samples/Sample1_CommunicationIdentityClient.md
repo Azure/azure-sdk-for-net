@@ -46,6 +46,33 @@ Console.WriteLine($"User id: {user.Id}");
 
 You will need to store the `identity` that is returned by Azure Communication Services. This is necessary for creating tokens or refreshing them in the future and to map your user identities with Azure Communication Services identities. The `identity` value should be treated as a secret.
 
+## Create a user with an associated externalId
+
+The `CommunicationIdentityClient` allows you to create users with an associated externalId. This externalId can be used to map your application's user identities with Azure Communication Services identities.
+
+```C# Snippet:CreateCommunicationUserWithExternalId
+var externalId = "alice@contoso.com";
+Response<CommunicationUserIdentifier> userResponse = client.CreateUser(externalId);
+CommunicationUserIdentifier user = userResponse.Value;
+Console.WriteLine($"User id: {user.Id}");
+```
+
+If you call the CreateUser method again with the same externalId, it will return the same user.Id. Therefore, you do not need to store this mapping yourself.
+
+## Get user
+
+The CommunicationIdentityClient can be used to retrieve details about a user. This includes the user's ID, external ID, and the last time a token was issued for the user.
+
+```C# Snippet:GetUser
+var externalId = "alice@contoso.com";
+Response<CommunicationUserIdentifier> userResponse = client.CreateUser(externalId);
+CommunicationUserIdentifier user = userResponse.Value;
+var userDetails = client.GetUser(user);
+Console.WriteLine($"User id: {userDetails.Id}");
+Console.WriteLine($"External id: {userDetails.ExternalId}");
+Console.WriteLine($"Last token issued at: {userDetails.LastTokenIssuedAt}");
+```
+
 ## Generate a user token
 
  <!---: TODO: Update the website address for explaining the scopes -->
@@ -79,8 +106,10 @@ Console.WriteLine($"Expires On: {expiresOn}");
 You can create user and token in the same request. You can specify expiration time for the token. The token can be configured to expire in as little as one hour or as long as 24 hours. The default expiration time is 24 hours.
 
 ```C# Snippet:CreateCommunicationUserAndTokenWithCustomExpiration
+var externalId = "alice@contoso.com";
 TimeSpan tokenExpiresIn = TimeSpan.FromHours(1);
-Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
+Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(externalId,
+scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
 var (user, token) = response.Value;
 Console.WriteLine($"User id: {user.Id}");
 Console.WriteLine($"Token: {token.Token}");
