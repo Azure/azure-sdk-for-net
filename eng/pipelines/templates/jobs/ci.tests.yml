@@ -177,7 +177,7 @@ jobs:
         displayName: "Build & Test ($(TestTargetFramework))"
 
       - pwsh: |
-          $items = Get-ChildItem -Path / -Force
+          $items = Get-ChildItem -Path / -Force -Recurse
           $items | ForEach-Object {
             Write-Host $_.FullName
           }
