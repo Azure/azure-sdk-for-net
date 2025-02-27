@@ -177,9 +177,10 @@ jobs:
         displayName: "Build & Test ($(TestTargetFramework))"
 
       - pwsh: |
-          $items = Get-ChildItem -Path / -Force -Recurse
+          $items = Get-ChildItem -Path / -Force -Recurse  -Filter "testproxyreroute.log"
           $items | ForEach-Object {
             Write-Host $_.FullName
+            Get-Content $_.FullName
           }
         displayName: Dump Error Logs
         condition: succeededOrFailed()
