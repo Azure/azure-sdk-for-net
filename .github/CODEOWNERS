@@ -1115,5 +1115,5 @@
 #PRLabel: %CodeGen %Client
 /eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire
 
-# PRLabel: Azure Impact Reporting
+# PRLabel: %impactreporting - Azure Impact Reporting
 /sdk/impactreporting/Azure.ResourceManager.*/                @adityareddy305
