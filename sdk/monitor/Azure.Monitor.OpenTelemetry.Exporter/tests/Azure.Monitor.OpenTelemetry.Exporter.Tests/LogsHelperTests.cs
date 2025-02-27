@@ -7,7 +7,7 @@ using System.Linq;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.Extensions.Logging;
 
 using OpenTelemetry;
@@ -575,6 +575,58 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.True(properties.TryGetValue(expectedScopeKey, out string actualScopeValue));
             Assert.Equal(duplicateScopeValue2, actualScopeValue);
         }
+
+        // TODO: SHOULD ADD TESTS FOR EVENTNAME, EVALUATING BOTH ATTRIBUTES (MAPPED) AND SCOPE (NOT MAPPED).
+
+        [Fact]
+        public void VerifyEventName()
+        {
+            // Arrange.
+            var logRecords = new List<LogRecord>(1);
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.AddInMemoryExporter(logRecords);
+                });
+            });
+
+            var logger = loggerFactory.CreateLogger("Some category");
+            logger.LogInformation("{microsoft.custom_event.name}", "MyCustomEventName");
+
+            // Assert.
+            var logRecord = logRecords.Single();
+            var properties = new ChangeTrackingDictionary<string, string>();
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName);
+
+            Assert.Equal("MyCustomEventName", eventName);
+        }
+
+#if !NET6_0
+        [Fact]
+        public void VerifyEventName_UsingLoggerExtensions()
+        {
+            // Arrange.
+            var logRecords = new List<LogRecord>(1);
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.AddInMemoryExporter(logRecords);
+                });
+            });
+
+            var logger = loggerFactory.CreateLogger("Some category");
+            logger.WriteSimpleCustomEvent("MyCustomEventName");
+
+            // Assert.
+            var logRecord = logRecords.Single();
+            var properties = new ChangeTrackingDictionary<string, string>();
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName);
+
+            Assert.Equal("MyCustomEventName", eventName);
+        }
+#endif
 
         private class CustomObject
         {

@@ -22,8 +22,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
     /// </summary>
     public class CustomEventsTests
     {
-        // TODO: WHAT IF A USER SUPPLIES CUSTOMEVENT ATTRIBUTE IN BOTH MESSAGE TEMPLATE/PROPERTIES AND SCOPE?
-
         internal readonly TelemetryItemOutputHelper telemetryOutput;
 
         internal readonly Dictionary<string, object> testResourceAttributes = new()
@@ -221,7 +219,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // ACT
             var logger = loggerFactory.CreateLogger(logCategoryName);
 
-            logger.WriteCustomEvent("MyCustomEventName");
+            logger.WriteSimpleCustomEvent("MyCustomEventName");
 
             // CLEANUP
             loggerFactory.Dispose();
@@ -273,7 +271,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             using (logger.BeginScope(customEventScope))
             {
-                logger.WriteLog("value1");
+                logger.WriteSimpleLog("value1");
             }
 
             // CLEANUP
@@ -380,7 +378,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             using (logger.BeginScope(customEventScope))
             {
-                logger.WriteCustomEvent("Name1");
+                logger.WriteSimpleCustomEvent("Name1");
             }
 
             // CLEANUP
@@ -398,22 +396,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedSpanId: null,
                 expectedTraceId: null);
         }
-    }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "UnitTest")]
-    public static partial class CustomEventLoggerExtensions
-    {
-        [LoggerMessage(level: LogLevel.Information, Message = "{key1}")]
-        public static partial void WriteLog(this ILogger logger, string key1);
-
-        // TODO: REMOVE THIS PRAGMA AFTER Microsoft.Extensions.Telemetry SHIPS THE TagName API AS STABLE.
-#pragma warning disable EXTEXP0003 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-        [LoggerMessage(level: LogLevel.Information, Message = "{microsoft.custom_event.name}")]
-        public static partial void WriteCustomEvent(this ILogger logger, [TagName("microsoft.custom_event.name")] string customEventName);
-
-        [LoggerMessage(level: LogLevel.Information, Message = "{microsoft.custom_event.name} {key1} {key2}")]
-        public static partial void WriteCustomEventWithAdditionalProperties(this ILogger logger, [TagName("microsoft.custom_event.name")] string customEventName, string key1, string key2);
-#pragma warning restore EXTEXP0003
     }
 #endif
 }
