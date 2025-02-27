@@ -13,8 +13,8 @@ namespace Azure.Projects.OpenAI
         public static string AsText(this OpenAI.Chat.ChatCompletion completion) { throw null; }
         public static string AsText(this OpenAI.Chat.ChatMessageContent content) { throw null; }
         public static string AsText(this System.ClientModel.ClientResult<OpenAI.Chat.ChatCompletion> completionResult) { throw null; }
-        public static OpenAI.Chat.ChatClient GetOpenAIChatClient(this Azure.Core.ClientWorkspace workspace, string? deploymentName = null) { throw null; }
-        public static OpenAI.Embeddings.EmbeddingClient GetOpenAIEmbeddingsClient(this Azure.Core.ClientWorkspace workspace, string? deploymentName = null) { throw null; }
+        public static OpenAI.Chat.ChatClient GetOpenAIChatClient(this System.ClientModel.Primitives.ConnectionProvider workspace, string? deploymentName = null) { throw null; }
+        public static OpenAI.Embeddings.EmbeddingClient GetOpenAIEmbeddingsClient(this System.ClientModel.Primitives.ConnectionProvider workspace, string? deploymentName = null) { throw null; }
         public static void Trim(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages) { }
     }
     public partial class ChatTools
@@ -27,6 +27,7 @@ namespace Azure.Projects.OpenAI
         public string Call(string name, object[] arguments) { throw null; }
         public System.Collections.Generic.IEnumerable<OpenAI.Chat.ToolChatMessage> CallAll(System.Collections.Generic.IEnumerable<OpenAI.Chat.ChatToolCall> toolCalls) { throw null; }
         public static implicit operator OpenAI.Chat.ChatCompletionOptions (Azure.Projects.OpenAI.ChatTools tools) { throw null; }
+        public OpenAI.Chat.ChatCompletionOptions ToOptions() { throw null; }
     }
     public partial class EmbeddingsVectorbase
     {
@@ -46,8 +47,8 @@ namespace Azure.Projects.OpenAI
         public OpenAIModelFeature(string model, string modelVersion, Azure.Projects.OpenAI.AIModelKind kind = Azure.Projects.OpenAI.AIModelKind.Chat) { }
         public string Model { get { throw null; } }
         public string ModelVersion { get { throw null; } }
-        public Azure.Core.ClientConnection CreateConnection(string cmId) { throw null; }
-        protected override void EmitConnections(System.Collections.Generic.ICollection<Azure.Core.ClientConnection> connections, string cmId) { }
+        public System.ClientModel.Primitives.ClientConnection CreateConnection(string cmId) { throw null; }
+        protected override void EmitConnections(System.Collections.Generic.ICollection<System.ClientModel.Primitives.ClientConnection> connections, string cmId) { }
         protected override void EmitFeatures(Azure.Projects.Core.FeatureCollection features, string cmId) { }
         protected override Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.Projects.ProjectInfrastructure cm) { throw null; }
     }
