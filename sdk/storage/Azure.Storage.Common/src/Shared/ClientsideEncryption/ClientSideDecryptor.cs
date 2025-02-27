@@ -350,7 +350,7 @@ namespace Azure.Storage.Cryptography
 
             throw Errors.ClientSideEncryption.BadEncryptionAlgorithm(encryptionData.EncryptionAgent.EncryptionAlgorithm.ToString());
         }
-#endregion
+        #endregion
 
         /// <summary>
         /// Returns the content encryption key for blob. First tries to get the key encryption key from KeyResolver,

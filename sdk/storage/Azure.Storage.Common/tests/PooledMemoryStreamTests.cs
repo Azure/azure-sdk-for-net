@@ -29,7 +29,7 @@ namespace Azure.Storage.Tests
 
             var buffer = new byte[dataSize];
             var predictableStream = new PredictableStream();
-#pragma warning disable CA2022 // This test is specfically testing the behavior of the stream
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the stream
             predictableStream.Read(buffer, 0, dataSize);
 #pragma warning restore CA2022
             Assert.AreEqual(dataSize, predictableStream.Position);
@@ -52,7 +52,7 @@ namespace Azure.Storage.Tests
 
             byte[] originalStreamData = new byte[dataSize];
             byte[] poolStreamData = new byte[dataSize];
-#pragma warning disable CA2022 // This test is specfically testing the behavior of the stream
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the stream
             originalStream.Read(originalStreamData, 0, dataSize);
             arrayPoolStream.Read(poolStreamData, 0, dataSize);
 #pragma warning restore CA2022
@@ -99,7 +99,7 @@ namespace Azure.Storage.Tests
             // Act
             await pooledMemoryStream.WriteAsync(originalData, 0, dataSize);
             pooledMemoryStream.Position = 0;
-#pragma warning disable CA2022 // This test is specfically testing the behavior of the stream
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the stream
             await pooledMemoryStream.ReadAsync(readData, 0, dataSize);
 #pragma warning restore CA2022
 
@@ -127,7 +127,7 @@ namespace Azure.Storage.Tests
             if (initialReadSize > 0)
             {
                 byte[] readData = new byte[initialReadSize];
-#pragma warning disable CA2022 // This test is specfically testing the behavior of the stream
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the stream
                 await pooledMemoryStream.ReadAsync(readData, 0, initialReadSize);
 #pragma warning restore CA2022
             }

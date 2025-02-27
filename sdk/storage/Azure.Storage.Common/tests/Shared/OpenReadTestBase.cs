@@ -138,7 +138,7 @@ namespace Azure.Storage.Test.Shared
             // Act
             Stream outputStream = await OpenReadAsync(client);
             byte[] outputBytes = new byte[size];
-#pragma warning disable CA2022 // This test is specfically testing the behavior of the returned stream
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the returned stream
             await outputStream.ReadAsync(outputBytes, 0, size);
 #pragma warning restore CA2022
 
@@ -334,7 +334,7 @@ namespace Azure.Storage.Test.Shared
             // Act
             Stream outputStream = await OpenReadAsync(client, bufferSize: bufferSize);
             byte[] outputBytes = new byte[size];
-#pragma warning disable CA2022 // This test is specfically testing the behavior of the returned stream
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the returned stream
             await outputStream.ReadAsync(outputBytes, 0, size / 2);
 #pragma warning restore CA2022
 
@@ -373,14 +373,14 @@ namespace Azure.Storage.Test.Shared
             // Act
             Stream outputStream = await OpenReadAsync(client, allowModifications: true);
             byte[] outputBytes = new byte[2 * size];
-#pragma warning disable CA2022 // This test is specfically testing the behavior of the returned stream
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the returned stream
             await outputStream.ReadAsync(outputBytes, 0, size);
 #pragma warning restore CA2022
 
             // Modify the blob.
             await ModifyDataAsync(client, new MemoryStream(data1), ModifyDataMode.Append);
 
-#pragma warning disable CA2022 // This test is specfically testing the behavior of the returned stream
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the returned stream
             await outputStream.ReadAsync(outputBytes, size, size);
 #pragma warning restore CA2022
 
@@ -488,7 +488,7 @@ namespace Azure.Storage.Test.Shared
 
             Assert.AreEqual(0, outputStream.Position);
 
-#pragma warning disable CA2022 // This test is specfically testing the behavior of the returned stream
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the returned stream
             await outputStream.ReadAsync(outputBytes, 0, size);
 #pragma warning restore CA2022
 
@@ -557,7 +557,7 @@ namespace Azure.Storage.Test.Shared
 
             Stream outputStream = await OpenReadAsync(client);
             int readBytes = 512;
-#pragma warning disable CA2022 // This test is specfically testing the behavior of the returned stream
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the returned stream
             await outputStream.ReadAsync(new byte[readBytes], 0, readBytes);
 #pragma warning restore CA2022
             Assert.AreEqual(512, outputStream.Position);
@@ -627,7 +627,7 @@ namespace Azure.Storage.Test.Shared
         [RecordedTest]
         // lower position within _buffer
         [TestCase(400)]
-        // higher positiuon within _buffer
+        // higher position within _buffer
         [TestCase(500)]
         // lower position below _buffer
         [TestCase(250)]
@@ -685,7 +685,7 @@ namespace Azure.Storage.Test.Shared
             // Act
             Stream outputStream = await OpenReadAsyncOverload(client, allowModifications: true);
             byte[] outputBytesBeforeModify = new byte[size];
-#pragma warning disable CA2022 // This test is specfically testing the behavior of the returned stream
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the returned stream
             await outputStream.ReadAsync(outputBytesBeforeModify, 0, size);
 #pragma warning restore CA2022
 
@@ -694,7 +694,9 @@ namespace Azure.Storage.Test.Shared
 
             byte[] outputBytesAfterModify = new byte[size];
             byte[] emptyBytes = new byte[size];
-            int numBytesReadModified = await outputStream.ReadAsync(outputBytesAfterModify, 0, size);
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the returned stream
+            await outputStream.ReadAsync(outputBytesAfterModify, 0, size);
+#pragma warning restore CA2022
 
             // Assert
             TestHelper.AssertSequenceEqual(expectedDataBeforeModify, outputBytesBeforeModify);
@@ -722,7 +724,7 @@ namespace Azure.Storage.Test.Shared
             // Act
             Stream outputStream = await OpenReadAsyncOverload(client, allowModifications: false);
             byte[] outputBytesBeforeModify = new byte[size];
-#pragma warning disable CA2022 // This test is specfically testing the behavior of the returned stream
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the returned stream
             await outputStream.ReadAsync(outputBytesBeforeModify, 0, size);
 #pragma warning restore CA2022
 
@@ -731,7 +733,7 @@ namespace Azure.Storage.Test.Shared
 
             byte[] outputBytesAfterModify = new byte[size];
             byte[] emptyBytes = new byte[size];
-#pragma warning disable CA2022 // This test is specfically testing the behavior of the returned stream
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the returned stream
             await outputStream.ReadAsync(outputBytesAfterModify, 0, size);
 #pragma warning restore CA2022
 

@@ -158,7 +158,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             Stream outputStream = await file.OpenReadAsync(options).ConfigureAwait(false);
             byte[] outputBytes = new byte[size];
-#pragma warning disable CA2022 // This test is specfically testing the behavior of the returned stream
+#pragma warning disable CA2022 // This test is specifically testing the behavior of the returned stream
             await outputStream.ReadAsync(outputBytes, 0, size);
 #pragma warning restore CA2022
 

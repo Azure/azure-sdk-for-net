@@ -1352,7 +1352,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(1024)));
             }
         }
-#endregion Upload
+        #endregion Upload
 
         [Test]
         [Explicit]
