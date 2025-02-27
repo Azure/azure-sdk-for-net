@@ -152,6 +152,7 @@
     "structs",
     "Sysctls",
     "SYSLIB",
+    "Tswtz",
     "Uefi",
     "uints",
     "unbilled",
