@@ -40,6 +40,8 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override long MaxSupportedChunkSize => Constants.Blob.Block.MaxStageBytes;
 
+        protected override int MaxSupportedChunkCount => Constants.Blob.Block.MaxBlocks;
+
         protected override long? Length => ResourceProperties?.ResourceLength;
 
         /// <summary>

@@ -26,6 +26,7 @@ namespace Azure.AI.Projects.Tests
         private const string TEMP_DIR = "cs_e2e_temp_dir";
 
         private const string FILE_UPLOAD_CONSTRAINT = "The file is being uploaded as a multipart multipart/form-data, which cannot be recorded.";
+        private const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
 
         public AgentClientTests(bool isAsync) : base(isAsync) {
             TestDiagnostics = false;
@@ -617,16 +618,24 @@ namespace Azure.AI.Projects.Tests
         }
 
         [RecordedTest]
-        [TestCase(VecrorStoreTestType.JustVectorStore, true)]
-        [TestCase(VecrorStoreTestType.Batch, true)]
-        [TestCase(VecrorStoreTestType.File, true)]
-        [TestCase(VecrorStoreTestType.JustVectorStore, false)]
-        [TestCase(VecrorStoreTestType.Batch, false)]
-        [TestCase(VecrorStoreTestType.File, false)]
-        public async Task TestCreateVectorStore(VecrorStoreTestType testType, bool useFileSource)
+        [TestCase(VecrorStoreTestType.JustVectorStore, true, false)]
+        [TestCase(VecrorStoreTestType.Batch, true, false)]
+        [TestCase(VecrorStoreTestType.File, true, false)]
+        [TestCase(VecrorStoreTestType.JustVectorStore, false, false)]
+        [TestCase(VecrorStoreTestType.Batch, false, false)]
+        [TestCase(VecrorStoreTestType.File, false, false)]
+        [TestCase(VecrorStoreTestType.JustVectorStore, true, true)]
+        [TestCase(VecrorStoreTestType.Batch, true, true)]
+        [TestCase(VecrorStoreTestType.File, true, true)]
+        [TestCase(VecrorStoreTestType.JustVectorStore, false, true)]
+        [TestCase(VecrorStoreTestType.Batch, false, true)]
+        [TestCase(VecrorStoreTestType.File, false, true)]
+        public async Task TestCreateVectorStore(VecrorStoreTestType testType, bool useFileSource, bool useStreaming)
         {
             if (useFileSource && Mode != RecordedTestMode.Live)
                 Assert.Inconclusive(FILE_UPLOAD_CONSTRAINT);
+            if (useStreaming && !IsAsync)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             AgentsClient client = GetClient();
             VectorStore vectorStore;
 
@@ -693,11 +702,29 @@ namespace Azure.AI.Projects.Tests
                 role: MessageRole.User,
                 content: "What does the attachment say?"
             ));
-            ThreadRun fileSearchRun = await client.CreateThreadAndRunAsync(
-                assistantId: agent.Id,
-                thread: threadOp
-            );
-            fileSearchRun = await WaitForRun(client, fileSearchRun);
+            ThreadRun fileSearchRun = default;
+            if (useStreaming)
+            {
+                AgentThread thread = await client.CreateThreadAsync(messages: [new ThreadMessageOptions(
+                    role: MessageRole.User,
+                    content: "What does the attachment say?"
+                )]);
+                await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
+                {
+                    if (streamingUpdate is RunUpdate runUpdate)
+                        fileSearchRun = runUpdate.Value;
+                }
+                Assert.AreEqual(RunStatus.Completed, fileSearchRun.Status, fileSearchRun.LastError?.ToString());
+            }
+            else
+            {
+                fileSearchRun = await client.CreateThreadAndRunAsync(
+                    assistantId: agent.Id,
+                    thread: threadOp
+                );
+                fileSearchRun = await WaitForRun(client, fileSearchRun);
+            }
+            Assert.IsNotNull(fileSearchRun);
             PageableList<ThreadMessage> messages = await client.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
             Assert.Greater(messages.Data.Count, 1);
             // Check list, get and delete operations.
@@ -892,7 +919,7 @@ namespace Azure.AI.Projects.Tests
         public async Task TestIncludeFileSearchContent(bool useStream, bool includeContent)
         {
             if (useStream && !IsAsync)
-                Assert.Inconclusive("The test framework does not support iteration of stream in Sync mode.");
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             AgentsClient client = GetClient();
             VectorStoreDataSource vectorStoreDataSource = new(
                     assetIdentifier: TestEnvironment.AZURE_BLOB_URI,
@@ -1229,7 +1256,7 @@ namespace Azure.AI.Projects.Tests
             while (run.Status == RunStatus.Queued
                 || run.Status == RunStatus.InProgress
                 || run.Status == RunStatus.RequiresAction);
-            Assert.AreEqual(RunStatus.Completed, run.Status);
+            Assert.AreEqual(RunStatus.Completed, run.Status, message: run.LastError?.ToString());
             return run;
         }
 

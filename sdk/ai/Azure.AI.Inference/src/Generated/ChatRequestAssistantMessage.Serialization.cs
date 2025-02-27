@@ -37,15 +37,8 @@ namespace Azure.AI.Inference
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Content))
             {
-                if (Content != null)
-                {
-                    writer.WritePropertyName("content"u8);
-                    writer.WriteStringValue(Content);
-                }
-                else
-                {
-                    writer.WriteNull("content");
-                }
+                writer.WritePropertyName("content"u8);
+                writer.WriteStringValue(Content);
             }
             if (Optional.IsCollectionDefined(ToolCalls))
             {
@@ -88,11 +81,6 @@ namespace Azure.AI.Inference
             {
                 if (property.NameEquals("content"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        content = null;
-                        continue;
-                    }
                     content = property.Value.GetString();
                     continue;
                 }

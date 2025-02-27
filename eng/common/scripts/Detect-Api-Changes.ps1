@@ -46,7 +46,7 @@ function Submit-Request($filePath, $packageName)
     }
     $uri = [System.UriBuilder]$APIViewUri
     $uri.query = $query.toString()
-    Write-Host "Request URI: $($uri.Uri.OriginalString)"
+    LogInfo "Request URI: $($uri.Uri.OriginalString)"
     try
     {
         $Response = Invoke-WebRequest -Method 'GET' -Uri $uri.Uri -MaximumRetryCount 3
@@ -54,7 +54,7 @@ function Submit-Request($filePath, $packageName)
     }
     catch
     {
-        Write-Host "Error $StatusCode - Exception details: $($_.Exception.Response)"
+        LogError "Error $StatusCode - Exception details: $($_.Exception.Response)"
         $StatusCode = $_.Exception.Response.StatusCode
     }
 
@@ -67,7 +67,7 @@ function Should-Process-Package($pkgPath, $packageName)
     $pkgPropPath = Join-Path -Path $configFileDir "$packageName.json"
     if (!(Test-Path $pkgPropPath))
     {
-        Write-Host " Package property file path $($pkgPropPath) is invalid."
+        LogWarning "Package property file path $($pkgPropPath) is invalid."
         return $False
     }
     # Get package info from json file created before updating version to daily dev
@@ -75,27 +75,29 @@ function Should-Process-Package($pkgPath, $packageName)
     $packagePath = $pkgInfo.DirectoryPath
     $modifiedFiles  = @(Get-ChangedFiles -DiffPath "$packagePath/*" -DiffFilterType '')
     $filteredFileCount = $modifiedFiles.Count
-    Write-Host "Number of modified files for package: $filteredFileCount"
+    LogInfo "Number of modified files for package: $filteredFileCount"
     return ($filteredFileCount -gt 0 -and $pkgInfo.IsNewSdk)
 }
 
 function Log-Input-Params()
 {
-    Write-Host "Artifact Path: $($ArtifactPath)"
-    Write-Host "Artifact Name: $($ArtifactName)"
-    Write-Host "PullRequest Number: $($PullRequestNumber)"
-    Write-Host "BuildId: $($BuildId)"
-    Write-Host "Language: $($Language)"
-    Write-Host "Commit SHA: $($CommitSha)"
-    Write-Host "Repo Name: $($RepoFullName)"
-    Write-Host "Project: $($DevopsProject)"
+    LogGroupStart "Input Parameters for $($ArtifactName)"
+    LogInfo "Artifact Path: $($ArtifactPath)"
+    LogInfo "Artifact Name: $($ArtifactName)"
+    LogInfo "PullRequest Number: $($PullRequestNumber)"
+    LogInfo "BuildId: $($BuildId)"
+    LogInfo "Language: $($Language)"
+    LogInfo "Commit SHA: $($CommitSha)"
+    LogInfo "Repo Name: $($RepoFullName)"
+    LogInfo "Project: $($DevopsProject)"
+    LogGroupEnd
 }
 
 Log-Input-Params
 
 if (!($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiReviewFn")))
 {
-    Write-Host "The function for 'FindArtifactForApiReviewFn' was not found.`
+    LogError "The function for 'FindArtifactForApiReviewFn' was not found.`
     Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
     See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
     exit 1
@@ -103,9 +105,11 @@ if (!($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiR
 
 $responses = @{}
 
+LogInfo "Processing PackageInfo at $configFileDir"
+
 $packageProperties = Get-ChildItem -Recurse -Force "$configFileDir" `
   | Where-Object { 
-      $_.Extension -eq '.json' -and ($_.FullName.Substring($configFileDir.Length + 1) -notmatch '^_.*?\\')
+      $_.Extension -eq '.json' -and ($_.FullName.Substring($configFileDir.Length + 1) -notmatch '^_.*?[\\\/]')
     }
 
 foreach ($packagePropFile in $packageProperties)
@@ -113,7 +117,7 @@ foreach ($packagePropFile in $packageProperties)
     $packageMetadata = Get-Content $packagePropFile | ConvertFrom-Json
     $pkgArtifactName = $packageMetadata.ArtifactName ?? $packageMetadata.Name
 
-    Write-Host "Processing $($pkgArtifactName)"
+    LogInfo "Processing $($pkgArtifactName)"
 
     $packages = &$FindArtifactForApiReviewFn $ArtifactPath $pkgArtifactName
 
@@ -121,7 +125,7 @@ foreach ($packagePropFile in $packageProperties)
     {
         $pkgPath = $packages.Values[0]
         $isRequired = Should-Process-Package -pkgPath $pkgPath -packageName $pkgArtifactName
-        Write-Host "Is API change detect required for $($pkgArtifactName):$($isRequired)"
+        LogInfo "Is API change detect required for $($pkgArtifactName):$($isRequired)"
         if ($isRequired -eq $True)
         {
             $filePath = $pkgPath.Replace($ArtifactPath , "").Replace("\", "/")
@@ -133,16 +137,16 @@ foreach ($packagePropFile in $packageProperties)
         }
         else
         {
-            Write-Host "Pull request does not have any change for $($pkgArtifactName)). Skipping API change detect."
+            LogInfo "Pull request does not have any change for $($pkgArtifactName)). Skipping API change detect."
         }
     }
     else
     {
-        Write-Host "No package is found in artifact path to find API changes for $($pkgArtifactName)"
+        LogInfo "No package is found in artifact path to find API changes for $($pkgArtifactName)"
     }
 }
 
 foreach($pkg in $responses.keys)
 {
-    Write-Host "API detection request status for $($pkg) : $($responses[$pkg])"
+    LogInfo "API detection request status for $($pkg) : $($responses[$pkg])"
 }

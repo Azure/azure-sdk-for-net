@@ -8,6 +8,7 @@
   {
    "$id": "2",
    "Name": "UnionClient",
+   "ClientNamespace": "Authentication.Union",
    "Doc": "Illustrates clients generated with ApiKey and OAuth2 authentication.",
    "Operations": [
     {

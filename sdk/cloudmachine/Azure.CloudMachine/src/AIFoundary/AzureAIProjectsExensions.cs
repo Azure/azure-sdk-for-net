@@ -7,7 +7,7 @@ using Azure.Core;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
 
-namespace Azure.CloudMachine;
+namespace Azure.Projects;
 
 /// <summary>
 /// The Azure AI Projects extensions.

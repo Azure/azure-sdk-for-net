@@ -1,6 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "SpecialWords",
-  "library-name": "SpecialWords",
-  "use-model-reader-writer": true
+  "package-name": "SpecialWords"
 }

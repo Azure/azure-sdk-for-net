@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Generator.CSharp.ClientModel.Providers;
-using Microsoft.Generator.CSharp.Expressions;
-using Microsoft.Generator.CSharp.Primitives;
-using static Microsoft.Generator.CSharp.Snippets.Snippet;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Primitives;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers.Abstraction
 {

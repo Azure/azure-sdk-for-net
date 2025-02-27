@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.CloudMachine.Core;
-using Azure.CloudMachine.ServiceBus;
+using Azure.Projects.Core;
+using Azure.Projects.ServiceBus;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.EventGrid;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ServiceBus;
 
-namespace Azure.CloudMachine.EventGrid;
+namespace Azure.Projects.EventGrid;
 
-internal class SystemTopicEventSubscriptionFeature(string name, EventGridSystemTopicFeature parent, ServiceBusTopicFeature destination, ServiceBusNamespaceFeature parentNamespace) : CloudMachineFeature
+internal class SystemTopicEventSubscriptionFeature(string name, EventGridSystemTopicFeature parent, ServiceBusTopicFeature destination, ServiceBusNamespaceFeature parentNamespace) : AzureProjectFeature
 {
     protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {

@@ -39,6 +39,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("statusMessage"u8);
                 writer.WriteStringValue(StatusMessage);
             }
+            if (Optional.IsDefined(RecipientMailServerHostName))
+            {
+                writer.WritePropertyName("recipientMailServerHostName"u8);
+                writer.WriteStringValue(RecipientMailServerHostName);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -77,6 +82,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             string statusMessage = default;
+            string recipientMailServerHostName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,13 +92,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     statusMessage = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("recipientMailServerHostName"u8))
+                {
+                    recipientMailServerHostName = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AcsEmailDeliveryReportStatusDetails(statusMessage, serializedAdditionalRawData);
+            return new AcsEmailDeliveryReportStatusDetails(statusMessage, recipientMailServerHostName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcsEmailDeliveryReportStatusDetails>.Write(ModelReaderWriterOptions options)

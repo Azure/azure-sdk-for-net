@@ -89,8 +89,9 @@ function ProcessLink([System.Uri]$linkUri) {
     # and invalid links return a 302 redirecting the user to a Bing search 
     return ProcessRedirectLink $linkUri -invalidStatusCodes 302
   }
-  elseif ($linkUri -match '^https?://crates\.io/(?<path>(crates|users|teams)/.+)') {
-    return ProcessCratesIoLink $linkUri $matches.path
+  elseif ($linkUri -match '^https?://crates\.io(/(?<path>(crates|users|teams)/.+))?') {
+    # See comment in function below for details.
+    return ProcessCratesIoLink $linkUri $matches['path']
   }
   else {
     return ProcessStandardLink $linkUri
@@ -113,8 +114,14 @@ function ProcessRedirectLink([System.Uri]$linkUri, [int[]]$invalidStatusCodes) {
 }
 
 function ProcessCratesIoLink([System.Uri]$linkUri, $path) {
-  # Crates.io links are handled by a SPA. Even for missing pages, the response will be a 200, and the spa will only
-  # show a 404 page after it makes a request to the api. We can check the api to see if the page exists.
+  # crates.io is an SPA that will return a 404 if no 'accept: text/html' header is sent; however, even if you do
+  # send that header it will 200 on every request - even for missing pages. If a create/user/team path was sent,
+  # call into their API documented at https://doc.rust-lang.org/cargo/reference/registry-web-api.html; otherwise,
+  # assume the page exists since there's no other way to know.
+  if (!$path) {
+    return $true
+  }
+
   $apiUri = "https://crates.io/api/v1/$path"
 
   # Invoke-WebRequest will throw an exception for invalid status codes. They are handled in CheckLink

@@ -43,7 +43,7 @@
 /.github/                                                          @jsquire @ronniegeraghty
 
 # PRLabel: %EngSys
-/sdk/template/                                                     @hallipr @weshaggard @benbp @chunyu3 @lirenhe @jsquire
+/sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
 
 # Smoke tests
 /common/SmokeTests/                                                @schaabs @tg-msft @jsquire
@@ -61,7 +61,7 @@
 /sdk/core/                                                         @Azure/azure-sdk-write-net-core
 
 # ServiceLabel: %Azure.Core
-# AzureSdkOwners:                                                  @annelo-msft
+# AzureSdkOwners:                                                  @m-redding
 
 # PRLabel: %Azure.Identity
 /sdk/identity/                                                     @schaabs @christothes @Azure/azure-sdk-write-identity
@@ -330,7 +330,7 @@
 /sdk/communication/Azure.Communication.Identity/                   @Azure/acs-identity-sdk @AikoBB @maximrytych-ms @mjafferi-msft
 
 # PRLabel: %Communication - Phone Numbers
-/sdk/communication/Azure.Communication.PhoneNumbers/               @miguhern @whisper6284 @danielav7
+/sdk/communication/Azure.Communication.PhoneNumbers/               @whisper6284 @danielav7
 
 # PRLabel: %Communication - Programmable Connectivity
 /sdk/communication/Azure.Communication.ProgrammableConnectivity/   @Azure/azure-sdk-write-communication
@@ -980,10 +980,10 @@
 # ServiceOwners:                                                   @sahilarora92 @rahuls-microsoft
 
 # PRLael: %Container Orchestrator Runtime
-/sdk/containerorchestratorruntime/Azure.ResourceManager.*/         @HE-Xinyu @ddadaal
+/sdk/containerorchestratorruntime/Azure.ResourceManager.*/         @ddadaal
 
 # ServiceLabel: %Container Orchestrator Runtime
-# ServiceOwners:                                                   @HE-Xinyu @ddadaal
+# ServiceOwners:                                                   @ddadaal
 
 # PRLabel: %Device Registry
 /sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
@@ -1021,6 +1021,12 @@
 # ServiceLabel: %Large Instance %Mgmt
 # ServiceOwners:                                                   @8Gitbrix
 
+# PRLabel: %Monitor
+/sdk/monitor/Azure.ResourceManager.Monitor/                        @thomasp98296
+
+# ServiceLabel: %Monitor
+# ServiceOwners:                                                   @thomasp98296
+
 # PRLabel: %Neon Postgres
 /sdk/neonpostgres/Azure.ResourceManager.*/                         @archerzz @ArcturusZhang @ArthurMa1978
 
@@ -1046,10 +1052,10 @@
 # ServiceOwners:                                                   @vipray-ms
 
 # PRLabel: %Nginx
-/sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti
+/sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti @amwaleh @briantkim93
 
 # ServiceLabel: %Nginx %Mgmt
-# ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti
+# ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti @amwaleh @briantkim93
 
 # PRLabel: %Operator Nexus - Network Cloud
 /sdk/networkcloud/Azure.ResourceManager.*/                         @Azure/azure-sdk-write-networkcloud
@@ -1104,7 +1110,7 @@
 # AzureSdkOwners:                                                  @JoshLove-msft
 
 #PRLabel: %CodeGen %Client
-/eng/packages/http-client-csharp/generator/Azure.Generator/        @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @annelo-msft
+/eng/packages/http-client-csharp/generator/Azure.Generator/        @JoshLove-msft @m-nash @jorgerangel-msft @jsquire
 
 #PRLabel: %CodeGen %Client
-/eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @annelo-msft
+/eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire

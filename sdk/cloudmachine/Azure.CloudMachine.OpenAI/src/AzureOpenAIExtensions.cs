@@ -9,7 +9,7 @@ using Azure.Core;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
 
-namespace Azure.CloudMachine.OpenAI;
+namespace Azure.Projects.OpenAI;
 
 /// <summary>
 /// The Azure OpenAI extensions.
