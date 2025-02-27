@@ -1,5 +1,4 @@
-﻿using Azure.Messaging.EventGrid.SystemEvents;
-using Azure.Projects;
+﻿using Azure.Projects;
 using Azure.Projects.OpenAI;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
@@ -24,6 +23,15 @@ while (true)
     string prompt = Console.ReadLine();
     if (string.IsNullOrEmpty(prompt)) continue;
     if (string.Equals(prompt, "bye", StringComparison.OrdinalIgnoreCase)) break;
+    if (prompt.StartsWith("fact:", StringComparison.OrdinalIgnoreCase))
+    {
+        string fact = prompt[5..].Trim();
+        vectorDb.Add(fact);
+        continue;
+    }
+
+    var related = vectorDb.Find(prompt);
+    messages.Add(related);
 
     messages.Add(ChatMessage.CreateUserMessage(prompt));
 
