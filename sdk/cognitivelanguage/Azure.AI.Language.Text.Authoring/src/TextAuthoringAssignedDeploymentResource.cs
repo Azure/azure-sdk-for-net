@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text.Authoring.Models
+namespace Azure.AI.Language.Text.Authoring
 {
     //[CodeGenSuppress("AssignedDeploymentResource", typeof(AzureLocation))]
     //[CodeGenSuppress("AssignedDeploymentResource", typeof(ResourceIdentifier), typeof(AzureLocation), typeof(IDictionary<string, BinaryData>))]

@@ -3,7 +3,6 @@
 
 using System.Threading;
 using Azure.Core;
-using Azure.AI.Language.Text.Authoring.Models;
 using System.Threading.Tasks;
 using System;
 using Azure.Core.Pipeline;
@@ -13,13 +12,16 @@ namespace Azure.AI.Language.Text.Authoring
     [CodeGenClient("AuthoringClient")]
     [CodeGenSuppress("GetTextAuthoringDeploymentClient", typeof(string))]
     [CodeGenSuppress("GetTextAuthoringProjectClient", typeof(string))]
-    [CodeGenSuppress("GetTextAuthoringModelClient", typeof(string))]
+    [CodeGenSuppress("GetTextAuthoringExportedModelClient", typeof(string))]
+    [CodeGenSuppress("GetTextAuthoringTrainedModelClient", typeof(string))]
     [CodeGenSuppress("GetTextAuthoringDeploymentClient")]
     [CodeGenSuppress("GetTextAuthoringProjectClient")]
-    [CodeGenSuppress("GetTextAuthoringModelClient")]
+    [CodeGenSuppress("GetTextAuthoringExportedModelClient")]
+    [CodeGenSuppress("GetTextAuthoringTrainedModelClient")]
     [CodeGenSuppress("_cachedTextAuthoringDeployment")]
     [CodeGenSuppress("_cachedTextAuthoringProject")]
-    [CodeGenSuppress("_cachedTextAuthoringModel")]
+    [CodeGenSuppress("_cachedTextAuthoringTrainedModel")]
+    [CodeGenSuppress("_cachedTextAuthoringExportedModel")]
     public partial class TextAnalysisAuthoringClient
     {
         private readonly string _apiVersion;
@@ -45,7 +47,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Initializes a new instance of TextAuthoringDeployment. </summary>
         /// <param name="projectName"> The project name to use for this subclient. </param>
         /// <param name="deploymentName"> Represents deployment name. </param>
-        public virtual TextAuthoringDeployment GetDeployments(string projectName, string deploymentName)
+        public virtual TextAuthoringDeployment GetDeployment(string projectName, string deploymentName)
         {
             var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
@@ -54,7 +56,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary> Initializes a new instance of TextAuthoringProject. </summary>
-        public virtual TextAuthoringProject GetProjects(string projectName)
+        public virtual TextAuthoringProject GetProject(string projectName)
         {
             var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
@@ -62,14 +64,26 @@ namespace Azure.AI.Language.Text.Authoring
             return new TextAuthoringProject(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
         }
 
-        /// <summary> Initializes a new instance of TextAuthoringModel. </summary>
+        /// <summary> Initializes a new instance of TextAuthoringExportedModel. </summary>
         /// <param name="projectName"> The project name to use for this subclient. </param>
-        public virtual TextAuthoringModel GetModels(string projectName)
+        /// <param name="exportedModelName"> The exported model name to use for this subclient. </param>
+        public virtual TextAuthoringExportedModel GetExportedModel(string projectName, string exportedModelName)
         {
             var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new TextAuthoringModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
+            return new TextAuthoringExportedModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName, exportedModelName);
+        }
+
+        /// <summary> Initializes a new instance of TextAuthoringTrainedModel. </summary>
+        /// <param name="projectName"> The project name to use for this subclient. </param>
+        /// <param name="trainedModelLabel"> The trained model label to use for this subclient. </param>
+        public virtual TextAuthoringTrainedModel GetTrainedModel(string projectName, string trainedModelLabel)
+        {
+            var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
+            Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
+
+            return new TextAuthoringTrainedModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName, trainedModelLabel);
         }
     }
 }

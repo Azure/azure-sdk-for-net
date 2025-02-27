@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.Language.Text.Authoring.Models
+namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Model factory for Text Authoring models. </summary>
     [CodeGenModel("AILanguageTextAuthoringModelFactory")]

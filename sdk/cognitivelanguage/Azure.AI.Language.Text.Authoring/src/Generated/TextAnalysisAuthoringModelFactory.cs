@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
-namespace Azure.AI.Language.Text.Authoring.Models
+namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Model factory for models. </summary>
     public static partial class TextAnalysisAuthoringModelFactory
@@ -123,9 +124,9 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="azureResourceId"> The resource ID. </param>
         /// <param name="region"> The resource region. </param>
         /// <returns> A new <see cref="Authoring.TextAuthoringAssignedDeploymentResource"/> instance for mocking. </returns>
-        public static Authoring.TextAuthoringAssignedDeploymentResource TextAuthoringAssignedDeploymentResource(string azureResourceId = null, string region = null)
+        public static TextAuthoringAssignedDeploymentResource TextAuthoringAssignedDeploymentResource(string azureResourceId = null, AzureLocation region = default)
         {
-            return new Authoring.TextAuthoringAssignedDeploymentResource(azureResourceId, region, serializedAdditionalRawData: null);
+            return new TextAuthoringAssignedDeploymentResource(azureResourceId, region, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringTrainingState"/>. </summary>
@@ -231,50 +232,6 @@ namespace Azure.AI.Language.Text.Authoring.Models
         public static TextAuthoringTrainingConfigVersion TextAuthoringTrainingConfigVersion(string trainingConfigVersion = null, DateTimeOffset modelExpiredOn = default)
         {
             return new TextAuthoringTrainingConfigVersion(trainingConfigVersion, modelExpiredOn, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringExportedModelState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
-        /// <param name="expiresOn"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringExportedModelState"/> instance for mocking. </returns>
-        public static TextAuthoringExportedModelState TextAuthoringExportedModelState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
-        {
-            warnings ??= new List<ResponseError>();
-            errors ??= new List<ResponseError>();
-
-            return new TextAuthoringExportedModelState(
-                jobId,
-                createdOn,
-                lastUpdatedOn,
-                expiresOn,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.ExportedModelManifest"/>. </summary>
-        /// <param name="modelFiles"> The model files belonging to this model. </param>
-        /// <returns> A new <see cref="Authoring.ExportedModelManifest"/> instance for mocking. </returns>
-        public static ExportedModelManifest ExportedModelManifest(IEnumerable<TextAuthoringModelFile> modelFiles = null)
-        {
-            modelFiles ??= new List<TextAuthoringModelFile>();
-
-            return new ExportedModelManifest(modelFiles?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringModelFile"/>. </summary>
-        /// <param name="name"> The name of the file. </param>
-        /// <param name="contentUri"> The URI to retrieve the content of the file. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringModelFile"/> instance for mocking. </returns>
-        public static TextAuthoringModelFile TextAuthoringModelFile(string name = null, Uri contentUri = null)
-        {
-            return new TextAuthoringModelFile(name, contentUri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringEvaluationJobResult"/>. </summary>
@@ -773,6 +730,50 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 falsePositiveCount,
                 falseNegativeCount,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringExportedModelState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
+        /// <param name="expiresOn"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Authoring.TextAuthoringExportedModelState"/> instance for mocking. </returns>
+        public static TextAuthoringExportedModelState TextAuthoringExportedModelState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        {
+            warnings ??= new List<ResponseError>();
+            errors ??= new List<ResponseError>();
+
+            return new TextAuthoringExportedModelState(
+                jobId,
+                createdOn,
+                lastUpdatedOn,
+                expiresOn,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.ExportedModelManifest"/>. </summary>
+        /// <param name="modelFiles"> The model files belonging to this model. </param>
+        /// <returns> A new <see cref="Authoring.ExportedModelManifest"/> instance for mocking. </returns>
+        public static ExportedModelManifest ExportedModelManifest(IEnumerable<TextAuthoringModelFile> modelFiles = null)
+        {
+            modelFiles ??= new List<TextAuthoringModelFile>();
+
+            return new ExportedModelManifest(modelFiles?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringModelFile"/>. </summary>
+        /// <param name="name"> The name of the file. </param>
+        /// <param name="contentUri"> The URI to retrieve the content of the file. </param>
+        /// <returns> A new <see cref="Authoring.TextAuthoringModelFile"/> instance for mocking. </returns>
+        public static TextAuthoringModelFile TextAuthoringModelFile(string name = null, Uri contentUri = null)
+        {
+            return new TextAuthoringModelFile(name, contentUri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringDeploymentState"/>. </summary>
