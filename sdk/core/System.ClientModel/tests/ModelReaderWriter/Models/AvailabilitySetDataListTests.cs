@@ -33,13 +33,152 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             private Lazy<TestModelReaderWriterContext> _LibraryContext = new Lazy<TestModelReaderWriterContext>(() => new TestModelReaderWriterContext());
 
-            public override Func<object>? GetActivator(Type type)
+            public override ModelInfo? GetModelInfo(Type type)
             {
                 return type switch
                 {
-                    Type t when t == typeof(Dictionary<string, AvailabilitySetData>) => () => new Dictionary<string, AvailabilitySetData>(),
-                    _ => _LibraryContext.Value.GetActivator(type)
+                    Type t when t == typeof(Dictionary<string, AvailabilitySetData>) => new Dictionary_String_AvailabilitySetData_Info(),
+                    Type t when t == typeof(HashSet<AvailabilitySetData>) => new HashSet_AvailabilitySetData_Info(),
+                    Type t when t == typeof(AvailabilitySetData[]) => new Array_AvailabilitySetData_Info(),
+                    Type t when t == typeof(Collection<AvailabilitySetData>) => new Collection_AvailabilitySetData_Info(),
+                    Type t when t == typeof(LinkedList<AvailabilitySetData>) => new LinkedList_AvailabilitySetData_Info(),
+                    Type t when t == typeof(ObservableCollection<AvailabilitySetData>) => new ObservableCollection_AvailabilitySetData_Info(),
+                    Type t when t == typeof(Queue<AvailabilitySetData>) => new Queue_AvailabilitySetData_Info(),
+                    Type t when t == typeof(SortedSet<AvailabilitySetData>) => new SortedSet_AvailabilitySetData_Info(),
+                    Type t when t == typeof(Stack<AvailabilitySetData>) => new Stack_AvailabilitySetData_Info(),
+                    _ => _LibraryContext.Value.GetModelInfo(type)
                 };
+            }
+
+            private class Stack_AvailabilitySetData_Info : ModelInfo
+            {
+                public override object CreateObject() => new Stack_AvailabilitySetData_Builder();
+
+                private class Stack_AvailabilitySetData_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<Stack<AvailabilitySetData>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Push(AssertItem<AvailabilitySetData>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+                }
+            }
+
+            private class SortedSet_AvailabilitySetData_Info : ModelInfo
+            {
+                public override object CreateObject() => new SortedSet_AvailabilitySetData_Builder();
+
+                private class SortedSet_AvailabilitySetData_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<SortedSet<AvailabilitySetData>> _instance = new(() => new(new AvailabilitySetDataComparer()));
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+                }
+            }
+
+            private class Queue_AvailabilitySetData_Info : ModelInfo
+            {
+                public override object CreateObject() => new Queue_AvailabilitySetData_Builder();
+
+                private class Queue_AvailabilitySetData_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<Queue<AvailabilitySetData>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Enqueue(AssertItem<AvailabilitySetData>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+                }
+            }
+
+            private class ObservableCollection_AvailabilitySetData_Info : ModelInfo
+            {
+                public override object CreateObject() => new ObservableCollection_AvailabilitySetData_Builder();
+
+                private class ObservableCollection_AvailabilitySetData_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<ObservableCollection<AvailabilitySetData>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+                }
+            }
+
+            private class LinkedList_AvailabilitySetData_Info : ModelInfo
+            {
+                public override object CreateObject() => new LinkedList_AvailabilitySetData_Builder();
+
+                private class LinkedList_AvailabilitySetData_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<LinkedList<AvailabilitySetData>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.AddLast(AssertItem<AvailabilitySetData>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+                }
+            }
+
+            private class Collection_AvailabilitySetData_Info : ModelInfo
+            {
+                public override object CreateObject() => new Collection_AvailabilitySetData_Builder();
+
+                private class Collection_AvailabilitySetData_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<Collection<AvailabilitySetData>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+                }
+            }
+
+            private class Array_AvailabilitySetData_Info : ModelInfo
+            {
+                public override object CreateObject() => new Array_AvailabilitySetData_Builder();
+
+                private class Array_AvailabilitySetData_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<List<AvailabilitySetData>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+
+                    protected override object ToObject() => _instance.Value.ToArray();
+                }
+            }
+
+            private class HashSet_AvailabilitySetData_Info : ModelInfo
+            {
+                public override object CreateObject() => new HashSet_AvailabilitySetData_Builder();
+
+                private class HashSet_AvailabilitySetData_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<HashSet<AvailabilitySetData>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+                }
+            }
+
+            private class Dictionary_String_AvailabilitySetData_Info : ModelInfo
+            {
+                private class Dictionary_String_AvailabilitySetData_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<Dictionary<string, AvailabilitySetData>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null)
+                    {
+                        _instance.Value.Add(AssertKey(key), AssertItem<AvailabilitySetData>(item));
+                    }
+
+                    protected override object GetBuilder() => _instance.Value;
+                }
+
+                public override object CreateObject() => new Dictionary_String_AvailabilitySetData_Builder();
             }
         }
 
@@ -66,20 +205,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             }
         }
 
-        private static readonly List<object> s_collections =
-        [
-            new List<AvailabilitySetData>(s_availabilitySets),
-            new AvailabilitySetData[] { s_availabilitySets[0], s_availabilitySets[1] },
-            new Collection<AvailabilitySetData> (s_availabilitySets),
-            new ObservableCollection<AvailabilitySetData> (s_availabilitySets),
-            new HashSet<AvailabilitySetData> (s_availabilitySets),
-            new Queue<AvailabilitySetData> (s_availabilitySets),
-            new Stack<AvailabilitySetData> (s_availabilitySets.Reverse()), //stack has the order flipped
-            new LinkedList<AvailabilitySetData> (s_availabilitySets),
-            new SortedSet<AvailabilitySetData> (s_availabilitySets, new AvailabilitySetDataComparer()),
-            new ArrayList (new Collection<AvailabilitySetData>(s_availabilitySets)),
-        ];
-
         [Test]
         public void ReadListGeneric()
         {
@@ -105,21 +230,102 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.IsTrue(asetList2[1].Name!.Equals("testAS-3376"));
         }
 
-        [TestCaseSource(nameof(s_collections))]
-        public void WriteCollection(object collection)
+        [Test]
+        public void RoundTrip_SortedSet()
+        {
+            RoundTripCollection(new SortedSet<AvailabilitySetData>(s_availabilitySets, new AvailabilitySetDataComparer()));
+        }
+
+        [Test]
+        public void RoundTrip_LinkedList()
+        {
+            RoundTripCollection(new LinkedList<AvailabilitySetData>(s_availabilitySets));
+        }
+
+        [Test]
+        public void RoundTrip_Stack()
+        {
+            //stack has the order flipped
+            RoundTripCollection(new Stack<AvailabilitySetData>(s_availabilitySets.Reverse()), true);
+        }
+
+        [Test]
+        public void RoundTrip_Queue()
+        {
+            RoundTripCollection(new Queue<AvailabilitySetData>(s_availabilitySets));
+        }
+
+        [Test]
+        public void RoundTrip_HashSet()
+        {
+            RoundTripCollection(new HashSet<AvailabilitySetData>(s_availabilitySets));
+        }
+
+        [Test]
+        public void RoundTrip_ObservableCollection()
+        {
+            RoundTripCollection(new ObservableCollection<AvailabilitySetData>(s_availabilitySets));
+        }
+
+        [Test]
+        public void RoundTrip_Collection()
+        {
+            RoundTripCollection(new Collection<AvailabilitySetData>(s_availabilitySets));
+        }
+
+        [Test]
+        public void RoundTrip_Array()
+        {
+            RoundTripCollection(new AvailabilitySetData[] { s_availabilitySets[0], s_availabilitySets[1] });
+        }
+
+        [Test]
+        public void RoundTrip_List()
+        {
+            RoundTripCollection(new List<AvailabilitySetData>(s_availabilitySets));
+        }
+
+        private void RoundTripCollection(IEnumerable collection, bool reverse = false)
         {
             BinaryData data = ModelReaderWriter.Write(collection);
             Assert.IsNotNull(data);
             Assert.AreEqual(s_collapsedPayload, data.ToString());
+
+            var roundTripCollection = ModelReaderWriter.Read(data, collection.GetType(), s_readerWriterContext) as IEnumerable;
+            Assert.IsNotNull(roundTripCollection);
+            if (reverse)
+            {
+                Stack<AvailabilitySetData> newStack = new Stack<AvailabilitySetData>();
+                var reverseEnumerator = roundTripCollection!.GetEnumerator();
+                while (reverseEnumerator.MoveNext())
+                {
+                    newStack.Push((AvailabilitySetData)reverseEnumerator.Current);
+                }
+                roundTripCollection = newStack;
+            }
+            Assert.AreEqual(collection.GetType(), roundTripCollection!.GetType());
+            var enumerator = collection.GetEnumerator();
+            var roundTripEnumerator = roundTripCollection.GetEnumerator();
+            var comparer = new AvailabilitySetDataComparer();
+            while (enumerator.MoveNext())
+            {
+                Assert.IsTrue(roundTripEnumerator.MoveNext(), "Less items found in round trip collection");
+                Assert.AreEqual(0, comparer.Compare(enumerator.Current as AvailabilitySetData, roundTripEnumerator.Current as AvailabilitySetData));
+            }
+            //assert none left in round trip
+            Assert.IsFalse(roundTripEnumerator.MoveNext(), "More items found in round trip collection");
+
+            BinaryData data2 = ModelReaderWriter.Write(roundTripCollection);
+            Assert.AreEqual(data.Length, data2.Length);
+            Assert.IsTrue(data.ToMemory().Span.SequenceEqual(data2.ToMemory().Span));
         }
 
         [Test]
         public void ReadUnsupportedCollectionGeneric()
         {
-            var ex = Assert.Throws<ArgumentException>(() => ModelReaderWriter.Read<SortedDictionary<string, AvailabilitySetData>>(s_data, s_readerWriterContext));
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<SortedDictionary<string, AvailabilitySetData>>(s_data, s_readerWriterContext));
             Assert.IsNotNull(ex);
-            Assert.IsTrue(ex!.Message.Contains("Collection Type "));
-            Assert.AreEqual("T", ex.ParamName);
+            Assert.AreEqual("No model info found for SortedDictionary`2.", ex!.Message);
         }
 
         [Test]

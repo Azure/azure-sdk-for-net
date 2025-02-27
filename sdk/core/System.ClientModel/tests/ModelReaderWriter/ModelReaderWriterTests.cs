@@ -200,7 +200,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "[{\"x\":1},{\"y\":2}]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<DoesNotImplementInterface>>(BinaryData.FromString(json), s_readerWriterContext));
             Assert.IsNotNull(ex);
-            Assert.IsTrue(ex!.Message.EndsWith("does not implement IPersistableModel"));
+            Assert.AreEqual("Element type System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+DoesNotImplementInterface must implement IJsonModel or CollectionBuilder", ex!.Message);
         }
 
         [Test]
@@ -318,7 +318,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<PersistableModel>>(BinaryData.FromString(json), s_readerWriterContext, new ModelReaderWriterOptions(format)));
             Assert.IsNotNull(ex);
             var expectedMessage = format == "J"
-                ? "Element type System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+PersistableModel must implement IJsonModel"
+                ? "Element type System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+PersistableModel must implement IJsonModel or CollectionBuilder"
                 : "System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+PersistableModel has a wire format of 'X' it must be 'J' to be read as a collection";
             Assert.AreEqual(expectedMessage, ex!.Message);
         }
@@ -331,7 +331,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<List<PersistableModel>>>(BinaryData.FromString(json), s_readerWriterContext, new ModelReaderWriterOptions(format)));
             Assert.IsNotNull(ex);
             var expectedMessage = format == "J"
-                ? "Element type System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+PersistableModel must implement IJsonModel"
+                ? "Element type System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+PersistableModel must implement IJsonModel or CollectionBuilder"
                 : "System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+PersistableModel has a wire format of 'X' it must be 'J' to be read as a collection";
             Assert.AreEqual(expectedMessage, ex!.Message);
         }
@@ -360,7 +360,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "{}";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<NoActivator>(BinaryData.FromString(json), s_readerWriterContext));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("No activator found for NoActivator.", ex!.Message);
+            Assert.AreEqual("No model info found for NoActivator.", ex!.Message);
         }
 
         [Test]
@@ -369,7 +369,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "[{}]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<NoActivator>>(BinaryData.FromString(json), s_readerWriterContext));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("No activator found for List`1.", ex!.Message);
+            Assert.AreEqual("No model info found for List`1.", ex!.Message);
         }
 
         [Test]
@@ -378,7 +378,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "[[{}]]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<List<NoActivator>>>(BinaryData.FromString(json), s_readerWriterContext));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("No activator found for List`1.", ex!.Message);
+            Assert.AreEqual("No model info found for List`1.", ex!.Message);
         }
 
         private class DoesNotImplementInterface { }
@@ -525,25 +525,171 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             private Lazy<TestModelReaderWriterContext> _LibraryContext = new Lazy<TestModelReaderWriterContext>(() => new TestModelReaderWriterContext());
 
-            public override Func<object>? GetActivator(Type type)
+            public override ModelInfo? GetModelInfo(Type type)
             {
                 return type switch
                 {
-                    Type t when t == typeof(Dictionary<string, SubType>) => () => new Dictionary<string, SubType>(),
-                    Type t when t == typeof(List<List<SubType>>) => () => new List<List<SubType>>(),
-                    Type t when t == typeof(List<SubType>) => () => new List<SubType>(),
-                    Type t when t == typeof(List<Dictionary<string, SubType>>) => () => new List<Dictionary<string, SubType>>(),
-                    Type t when t == typeof(List<DoesNotImplementInterface>) => () => new List<DoesNotImplementInterface>(),
-                    Type t when t == typeof(SubType) => () => new SubType(),
-                    Type t when t == typeof(DoesNotImplementInterface) => () => new DoesNotImplementInterface(),
-                    Type t when t == typeof(NonJWire) => () => new NonJWire(),
-                    Type t when t == typeof(PersistableModel) => () => new PersistableModel(),
-                    Type t when t == typeof(List<PersistableModel>) => () => new List<PersistableModel>(),
-                    Type t when t == typeof(List<List<PersistableModel>>) => () => new List<List<PersistableModel>>(),
-                    Type t when t == typeof(List<NonJWire>) => () => new List<NonJWire>(),
-                    Type t when t == typeof(List<List<NonJWire>>) => () => new List<List<NonJWire>>(),
-                    _ => _LibraryContext.Value.GetActivator(type)
+                    Type t when t == typeof(Dictionary<string, SubType>) => new Dictionary_String_SubType_Info(),
+                    Type t when t == typeof(List<List<SubType>>) => new List_List_SubType_Info(),
+                    Type t when t == typeof(List<SubType>) => new List_SubType_Info(),
+                    Type t when t == typeof(List<Dictionary<string, SubType>>) => new List_Dictionary_String_SubType_Info(),
+                    Type t when t == typeof(List<DoesNotImplementInterface>) => new List_DoesNotImplementInterface_Info(),
+                    Type t when t == typeof(SubType) => new SubType_Info(),
+                    Type t when t == typeof(DoesNotImplementInterface) => new DoesNotImplementInterface_Info(),
+                    Type t when t == typeof(NonJWire) => new NonJWire_Info(),
+                    Type t when t == typeof(PersistableModel) => new PersistableModel_Info(),
+                    Type t when t == typeof(List<PersistableModel>) => new List_PersistableModel_Info(),
+                    Type t when t == typeof(List<List<PersistableModel>>) => new List_List_PersistableModel_Info(),
+                    Type t when t == typeof(List<NonJWire>) => new List_NonJWire_Info(),
+                    Type t when t == typeof(List<List<NonJWire>>) => new List_List_NonJWire_Info(),
+                    _ => _LibraryContext.Value.GetModelInfo(type)
                 };
+            }
+
+            private class List_List_NonJWire_Info : ModelInfo
+            {
+                public override object CreateObject() => new List_List_NonJWire_Builder();
+
+                private class List_List_NonJWire_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<List<List<NonJWire>>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<List<NonJWire>>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+                }
+            }
+
+            private class List_NonJWire_Info : ModelInfo
+            {
+                public override object CreateObject() => new List_NonJWire_Builder();
+
+                private class List_NonJWire_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<List<NonJWire>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<NonJWire>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+                }
+            }
+
+            private class List_List_PersistableModel_Info : ModelInfo
+            {
+                public override object CreateObject() => new List_List_PersistableModel_Builder();
+
+                private class List_List_PersistableModel_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<List<List<PersistableModel>>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<List<PersistableModel>>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+                }
+            }
+
+            private class List_PersistableModel_Info : ModelInfo
+            {
+                public override object CreateObject() => new List_PersistableModel_Builder();
+
+                private class List_PersistableModel_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<List<PersistableModel>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<PersistableModel>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+                }
+            }
+
+            private class PersistableModel_Info : ModelInfo
+            {
+                public override object CreateObject() => new PersistableModel();
+            }
+
+            private class NonJWire_Info : ModelInfo
+            {
+                public override object CreateObject() => new NonJWire();
+            }
+
+            private class DoesNotImplementInterface_Info : ModelInfo
+            {
+                public override object CreateObject() => new DoesNotImplementInterface();
+            }
+
+            private class SubType_Info : ModelInfo
+            {
+                public override object CreateObject() => new SubType();
+            }
+
+            private class List_DoesNotImplementInterface_Info : ModelInfo
+            {
+                public override object CreateObject() => new List_DoesNotImplementInterface_Builder();
+
+                private class List_DoesNotImplementInterface_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<List<DoesNotImplementInterface>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<DoesNotImplementInterface>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+                }
+            }
+
+            private class List_Dictionary_String_SubType_Info : ModelInfo
+            {
+                public override object CreateObject() => new List_Dictionary_String_SubType_Builder();
+
+                private class List_Dictionary_String_SubType_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<List<Dictionary<string, SubType>>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<Dictionary<string, SubType>>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+                }
+            }
+
+            private class List_SubType_Info : ModelInfo
+            {
+                public override object CreateObject() => new List_SubType_Builder();
+
+                private class List_SubType_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<List<SubType>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<SubType>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+                }
+            }
+
+            private class List_List_SubType_Info : ModelInfo
+            {
+                public override object CreateObject() => new List_List_SubType_Builder();
+
+                private class List_List_SubType_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<List<List<SubType>>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<List<SubType>>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+                }
+            }
+
+            private class Dictionary_String_SubType_Info : ModelInfo
+            {
+                public override object CreateObject() => new Dictionary_String_SubType_Builder();
+
+                private class Dictionary_String_SubType_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<Dictionary<string, SubType>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertKey(key), AssertItem<SubType>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+                }
             }
         }
     }

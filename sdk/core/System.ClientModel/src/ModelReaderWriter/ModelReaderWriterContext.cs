@@ -11,17 +11,17 @@ public abstract class ModelReaderWriterContext : IActivatorFactory
     /// <summary>
     /// Gets a factory method to construct a type for deserialization.
     /// </summary>
-    /// <param name="type"></param>
+    /// <param name="type">The type to activate.</param>
     /// <returns></returns>
-    public abstract Func<object>? GetActivator(Type type);
+    public abstract ModelInfo? GetModelInfo(Type type);
 
-    object IActivatorFactory.CreateObject(Type type)
+    ModelInfo IActivatorFactory.GetModelInfo(Type type)
     {
-        var activator = GetActivator(type);
-        if (activator is null)
+        var modelInfo = GetModelInfo(type);
+        if (modelInfo is null)
         {
-            throw new InvalidOperationException($"No activator found for {type.Name}.");
+            throw new InvalidOperationException($"No model info found for {type.Name}.");
         }
-        return activator();
+        return modelInfo;
     }
 }

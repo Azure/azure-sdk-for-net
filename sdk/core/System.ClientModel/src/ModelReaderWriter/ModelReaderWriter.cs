@@ -146,37 +146,8 @@ public static class ModelReaderWriter
         IActivatorFactory activatorFactory,
         ModelReaderWriterOptions? options = default)
     {
-        if (data is null)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
-
-        options ??= ModelReaderWriterOptions.Json;
-
-        Type typeOfT = typeof(T);
-
-        if (typeOfT.IsArray)
-        {
-            throw new ArgumentException("Arrays are not supported. Use List<> instead.", nameof(T));
-        }
-
-        var genericType = typeOfT.IsGenericType ? typeOfT.GetGenericTypeDefinition() : null;
-
-        if (genericType is not null)
-        {
-            if (!s_supportedCollectionTypes.Contains(genericType))
-            {
-                throw new ArgumentException($"Collection Type {typeOfT.Name} is not supported.", nameof(T));
-            }
-
-            var collectionReader = CollectionReader.GetCollectionReader(typeOfT, data, activatorFactory, nameof(T), options);
-            return (T)collectionReader.Read(typeOfT, data, activatorFactory, options);
-        }
-        else
-        {
-            var iModel = GetInstance(typeOfT, activatorFactory) as IPersistableModel<T>;
-            return iModel!.Create(data, options);
-        }
+        var obj = ReadInternal(data, typeof(T), activatorFactory, options);
+        return obj is null ? (T?)obj : (T)obj;
     }
 
     /// <summary>
@@ -245,35 +216,27 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(returnType));
         }
 
-        if (returnType.IsArray)
-        {
-            throw new ArgumentException("Arrays are not supported. Use List<> instead.", nameof(returnType));
-        }
-
         options ??= ModelReaderWriterOptions.Json;
 
-        var genericType = returnType.IsGenericType ? returnType.GetGenericTypeDefinition() : null;
-
-        if (genericType is not null)
+        var returnObj = activatorFactory.GetModelInfo(returnType).CreateObject();
+        if (returnObj is CollectionBuilder builder)
         {
-            if (!s_supportedCollectionTypes.Contains(genericType))
-            {
-                throw new ArgumentException($"Collection Type {returnType.Name} is not supported.", nameof(returnType));
-            }
-
-            var collectionReader = CollectionReader.GetCollectionReader(returnType, data, activatorFactory, nameof(returnType), options);
+            var collectionReader = CollectionReader.GetCollectionReader(returnType, data, activatorFactory, options);
             return collectionReader.Read(returnType, data, activatorFactory, options);
+        }
+        else if (returnObj is IPersistableModel<object> persistableModel)
+        {
+            return persistableModel.Create(data, options);
         }
         else
         {
-            var iModel = GetInstance(returnType, activatorFactory);
-            return iModel!.Create(data, options);
+            throw new InvalidOperationException($"{returnType.Name} does not implement CollectionBuilder or IPersistableModel");
         }
     }
 
     internal static IPersistableModel<object> GetInstance(Type returnType, IActivatorFactory activatorFactory)
     {
-        var model = activatorFactory.CreateObject(returnType) as IPersistableModel<object>;
+        var model = activatorFactory.GetModelInfo(returnType).CreateObject() as IPersistableModel<object>;
         if (model is null)
         {
             throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IPersistableModel<object>)}");

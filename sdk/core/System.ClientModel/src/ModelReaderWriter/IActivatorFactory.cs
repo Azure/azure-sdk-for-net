@@ -5,5 +5,5 @@ namespace System.ClientModel.Primitives;
 
 internal interface IActivatorFactory
 {
-    object CreateObject(Type type);
+    ModelInfo GetModelInfo(Type type);
 }

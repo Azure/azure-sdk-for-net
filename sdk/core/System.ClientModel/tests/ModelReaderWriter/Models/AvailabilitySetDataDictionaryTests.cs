@@ -30,13 +30,27 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             private Lazy<TestModelReaderWriterContext> _LibraryContext = new Lazy<TestModelReaderWriterContext>(() => new TestModelReaderWriterContext());
 
-            public override Func<object>? GetActivator(Type type)
+            public override ModelInfo? GetModelInfo(Type type)
             {
                 return type switch
                 {
-                    Type t when t == typeof(Dictionary<string, AvailabilitySetData>) => () => new Dictionary<string, AvailabilitySetData>(),
-                    _ => _LibraryContext.Value.GetActivator(type)
+                    Type t when t == typeof(Dictionary<string, AvailabilitySetData>) => new Dictionary_String_AvailabilitySetData_Info(),
+                    _ => _LibraryContext.Value.GetModelInfo(type)
                 };
+            }
+
+            private class Dictionary_String_AvailabilitySetData_Info : ModelInfo
+            {
+                public override object CreateObject() => new Dictionary_String_AvailabilitySetData_Builder();
+
+                private class Dictionary_String_AvailabilitySetData_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<Dictionary<string, AvailabilitySetData>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertKey(key), AssertItem<AvailabilitySetData>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+                }
             }
         }
 
