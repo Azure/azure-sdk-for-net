@@ -9,9 +9,9 @@ namespace System.ClientModel.Primitives;
 
 internal class JsonCollectionReader : CollectionReader
 {
-    internal override object Read(Type returnType, BinaryData data, IActivatorFactory activatorFactory, ModelReaderWriterOptions options)
+    internal override object Read(Type returnType, BinaryData data, ModelReaderWriterContext context, ModelReaderWriterOptions options)
     {
-        object collection = activatorFactory.GetModelInfo(returnType).CreateObject();
+        object collection = context.GetModelInfoInternal(returnType).CreateObject();
         Utf8JsonReader reader = new Utf8JsonReader(data);
         reader.Read();
         var genericType = returnType.IsGenericType ? returnType.GetGenericTypeDefinition() : null;
@@ -27,7 +27,7 @@ internal class JsonCollectionReader : CollectionReader
             throw new FormatException("Expected start of array.");
         }
         var builder = AssertCollectionBuilder(collection);
-        ReadJsonCollection(ref reader, builder, options, activatorFactory);
+        ReadJsonCollection(ref reader, builder, options, context);
         return builder.ToObject();
     }
 
@@ -45,7 +45,7 @@ internal class JsonCollectionReader : CollectionReader
         ref Utf8JsonReader reader,
         CollectionBuilder collectionBuilder,
         ModelReaderWriterOptions options,
-        IActivatorFactory activatorFactory)
+        ModelReaderWriterContext context)
     {
         object collection = collectionBuilder.GetBuilder();
         int argNumber = collection is IDictionary ? 1 : 0;
@@ -56,7 +56,7 @@ internal class JsonCollectionReader : CollectionReader
         IJsonModel<object>? jsonModel = null;
         string? propertyName = null;
 
-        var element = activatorFactory.GetModelInfo(elementType).CreateObject();
+        var element = context.GetModelInfoInternal(elementType).CreateObject();
         if (element is CollectionBuilder elementBuilder)
         {
             isInnerCollection = true;
@@ -80,9 +80,9 @@ internal class JsonCollectionReader : CollectionReader
                     {
                         if (isElementDictionary)
                         {
-                            var innerDictionary = activatorFactory.GetModelInfo(elementType).CreateObject();
+                            var innerDictionary = context.GetModelInfoInternal(elementType).CreateObject();
                             var dictBuilder = AssertCollectionBuilder(innerDictionary);
-                            ReadJsonCollection(ref reader, dictBuilder, options, activatorFactory);
+                            ReadJsonCollection(ref reader, dictBuilder, options, context);
                             collectionBuilder.AddItem(dictBuilder.ToObject(), propertyName);
                         }
                         else
@@ -101,9 +101,9 @@ internal class JsonCollectionReader : CollectionReader
                         throw new FormatException("Unexpected StartArray found.");
                     }
 
-                    object innerList = activatorFactory.GetModelInfo(elementType).CreateObject();
+                    object innerList = context.GetModelInfoInternal(elementType).CreateObject();
                     var builder = AssertCollectionBuilder(innerList);
-                    ReadJsonCollection(ref reader, builder, options, activatorFactory);
+                    ReadJsonCollection(ref reader, builder, options, context);
                     collectionBuilder.AddItem(builder.ToObject(), propertyName);
                     break;
                 case JsonTokenType.EndArray:

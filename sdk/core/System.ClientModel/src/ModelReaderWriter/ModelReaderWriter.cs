@@ -143,10 +143,10 @@ public static class ModelReaderWriter
 
     private static T? ReadInternal<T>(
         BinaryData data,
-        IActivatorFactory activatorFactory,
+        ModelReaderWriterContext context,
         ModelReaderWriterOptions? options = default)
     {
-        var obj = ReadInternal(data, typeof(T), activatorFactory, options);
+        var obj = ReadInternal(data, typeof(T), context, options);
         return obj is null ? (T?)obj : (T)obj;
     }
 
@@ -203,7 +203,7 @@ public static class ModelReaderWriter
     private static object? ReadInternal(
         BinaryData data,
         Type returnType,
-        IActivatorFactory activatorFactory,
+        ModelReaderWriterContext context,
         ModelReaderWriterOptions? options = default)
     {
         if (data is null)
@@ -218,11 +218,11 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        var returnObj = activatorFactory.GetModelInfo(returnType).CreateObject();
+        var returnObj = context.GetModelInfoInternal(returnType).CreateObject();
         if (returnObj is CollectionBuilder builder)
         {
-            var collectionReader = CollectionReader.GetCollectionReader(returnType, data, activatorFactory, options);
-            return collectionReader.Read(returnType, data, activatorFactory, options);
+            var collectionReader = CollectionReader.GetCollectionReader(returnType, data, context, options);
+            return collectionReader.Read(returnType, data, context, options);
         }
         else if (returnObj is IPersistableModel<object> persistableModel)
         {
@@ -234,9 +234,9 @@ public static class ModelReaderWriter
         }
     }
 
-    internal static IPersistableModel<object> GetInstance(Type returnType, IActivatorFactory activatorFactory)
+    internal static IPersistableModel<object> GetInstance(Type returnType, ModelReaderWriterContext context)
     {
-        var model = activatorFactory.GetModelInfo(returnType).CreateObject() as IPersistableModel<object>;
+        var model = context.GetModelInfoInternal(returnType).CreateObject() as IPersistableModel<object>;
         if (model is null)
         {
             throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IPersistableModel<object>)}");

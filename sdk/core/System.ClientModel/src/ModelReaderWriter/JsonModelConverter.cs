@@ -82,7 +82,7 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
         {
             Debug.Assert(_context is null, "This should only be called when _context is null.");
             var context = new ReflectionContext();
-            return context.GetModelInfo(typeToConvert).CreateObject() as IJsonModel<object>;
+            return context.GetModelInfoInternal(typeToConvert).CreateObject() as IJsonModel<object>;
         }
 
         IJsonModel<object>? iJsonModel = _context is null ? NonAotCompatActivate() : AotCompatActivate();

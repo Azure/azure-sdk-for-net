@@ -15,7 +15,7 @@ internal class ReflectionModelInfo : ModelInfo
     }
 
     //This will be replaced with RequiresUnreferencedCode when this issue is fixed https://github.com/Azure/azure-sdk-for-net/issues/48294
-    [UnconditionalSuppressMessage("Trimming", "IL2067",
+    [UnconditionalSuppressMessage("Trimming", "IL2077",
       Justification = "We will only call this when we went through ModelReaderWriter.Read which has DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors).")]
     public override object CreateObject()
     {

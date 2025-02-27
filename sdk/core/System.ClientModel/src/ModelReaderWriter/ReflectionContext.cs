@@ -3,9 +3,9 @@
 
 namespace System.ClientModel.Primitives;
 
-internal class ReflectionContext : IActivatorFactory
+internal class ReflectionContext : ModelReaderWriterContext
 {
-    public ModelInfo GetModelInfo(Type type)
+    public override ModelInfo? GetModelInfo(Type type)
     {
         return new ReflectionModelInfo(type);
     }

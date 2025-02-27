@@ -7,7 +7,7 @@ namespace System.ClientModel.Primitives;
 
 internal abstract class CollectionReader
 {
-    internal static CollectionReader GetCollectionReader(Type returnType, BinaryData data, IActivatorFactory activatorFactory, ModelReaderWriterOptions options)
+    internal static CollectionReader GetCollectionReader(Type returnType, BinaryData data, ModelReaderWriterContext context, ModelReaderWriterOptions options)
     {
         if (options.Format != "J" && options.Format != "W")
         {
@@ -20,7 +20,7 @@ internal abstract class CollectionReader
         }
         else // W format
         {
-            var persistableModel = GetPersistableModel(returnType, activatorFactory);
+            var persistableModel = GetPersistableModel(returnType, context);
             var wireFormat = persistableModel.GetFormatFromOptions(options);
             if (wireFormat == "J" && persistableModel is IJsonModel<object>)
             {
@@ -30,36 +30,36 @@ internal abstract class CollectionReader
         }
     }
 
-    private static IPersistableModel<object> GetPersistableModel(Type returnType, IActivatorFactory activatorFactory)
+    private static IPersistableModel<object> GetPersistableModel(Type returnType, ModelReaderWriterContext context)
     {
-        var obj = activatorFactory.GetModelInfo(returnType).CreateObject();
+        var obj = context.GetModelInfoInternal(returnType).CreateObject();
         if (obj is IPersistableModel<object> persistableModel)
         {
             return persistableModel;
         }
         else if (obj is CollectionBuilder builder)
         {
-            return GetPersistableModelFromEnumerable((IEnumerable)builder.GetBuilder(), activatorFactory);
+            return GetPersistableModelFromEnumerable((IEnumerable)builder.GetBuilder(), context);
         }
         throw new InvalidOperationException($"Unable to read type {returnType.FullName} can only read collections of IPersistableModel");
     }
 
-    private static IPersistableModel<object> GetPersistableModelFromEnumerable(IEnumerable enumerable, IActivatorFactory activatorFactory)
+    private static IPersistableModel<object> GetPersistableModelFromEnumerable(IEnumerable enumerable, ModelReaderWriterContext context)
     {
         var genericArguments = enumerable.GetType().GetGenericArguments();
         var elementType = enumerable is IDictionary ? genericArguments[1] : genericArguments[0];
-        var element = activatorFactory.GetModelInfo(elementType).CreateObject();
+        var element = context.GetModelInfoInternal(elementType).CreateObject();
         if (element is IPersistableModel<object> persistableModel)
         {
             return persistableModel;
         }
         else if (element is CollectionBuilder builder)
         {
-            return GetPersistableModelFromEnumerable((IEnumerable)builder.GetBuilder(), activatorFactory);
+            return GetPersistableModelFromEnumerable((IEnumerable)builder.GetBuilder(), context);
         }
 
         throw new InvalidOperationException($"Unable to read type {enumerable.GetType().FullName} can only read collections of IPersistableModel");
     }
 
-    internal abstract object Read(Type returnType, BinaryData data, IActivatorFactory activatorFactory, ModelReaderWriterOptions options);
+    internal abstract object Read(Type returnType, BinaryData data, ModelReaderWriterContext context, ModelReaderWriterOptions options);
 }
