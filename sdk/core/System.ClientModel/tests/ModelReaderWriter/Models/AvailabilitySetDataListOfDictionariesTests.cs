@@ -28,14 +28,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         private class LocalContext : ModelReaderWriterContext
         {
-            private Lazy<TestModelReaderWriterContext> _LibraryContext = new Lazy<TestModelReaderWriterContext>(() => new TestModelReaderWriterContext());
+            private readonly Lazy<TestModelReaderWriterContext> _LibraryContext = new(() => new());
+            private List_Dictionary_String_AvailabilitySetData_Info? _list_Dictionary_String_AvailabilitySetData_Info;
+            private Dictionary_String_AvailabilitySetData_Info? _dictionary_String_AvailabilitySetData_Info;
 
             public override ModelInfo? GetModelInfo(Type type)
             {
                 return type switch
                 {
-                    Type t when t == typeof(List<Dictionary<string, AvailabilitySetData>>) => new List_Dictionary_String_AvailabilitySetData_Info(),
-                    Type t when t == typeof(Dictionary<string, AvailabilitySetData>) => new Dictionary_String_AvailabilitySetData_Info(),
+                    Type t when t == typeof(List<Dictionary<string, AvailabilitySetData>>) => _list_Dictionary_String_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(Dictionary<string, AvailabilitySetData>) => _dictionary_String_AvailabilitySetData_Info ??= new(),
                     _ => _LibraryContext.Value.GetModelInfo(type)
                 };
             }

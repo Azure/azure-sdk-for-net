@@ -29,37 +29,62 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         private class LocalContext : ModelReaderWriterContext
         {
-            private Lazy<TestModelReaderWriterContext> _LibraryContext = new Lazy<TestModelReaderWriterContext>(() => new TestModelReaderWriterContext());
+            private readonly Lazy<TestModelReaderWriterContext> _LibraryContext = new(() => new());
+            private List_List_AvailabilitySetData_Info? _list_List_AvailabilitySetData_Info;
+            private List_Collection_AvailabilitySetData_Info? _list_Collection_AvailabilitySetData_Info;
+            private Array_Array_AvailabilitySetData_Info? _array_Array_AvailabilitySetData_Info;
+            private Array_AvailabilitySetData_Info? _array_AvailabilitySetData_Info;
+            private Array_List_AvailabilitySetData_Info? _array_List_AvailabilitySetData_Info;
+            private Collection_Collection_AvailabilitySetData_Info? _collection_Collection_AvailabilitySetData_Info;
+            private Collection_AvailabilitySetData_Info? _collection_AvailabilitySetData_Info;
+            private Collection_List_AvailabilitySetData_Info? _collection_List_AvailabilitySetData_Info;
+            private HashSet_HashSet_AvailabilitySetData_Info? _hashSet_HashSet_AvailabilitySetData_Info;
+            private HashSet_AvailabilitySetData_Info? _hashSet_AvailabilitySetData_Info;
+            private HashSet_List_AvailabilitySetData_Info? _hashSet_List_AvailabilitySetData_Info;
+            private LinkedList_LinkedList_AvailabilitySetData_Info? _linkedList_LinkedList_AvailabilitySetData_Info;
+            private LinkedList_AvailabilitySetData_Info? _linkedList_AvailabilitySetData_Info;
+            private LinkedList_List_AvailabilitySetData_Info? _linkedList_List_AvailabilitySetData_Info;
+            private List_Array_AvailabilitySetData_Info? _list_Array_AvailabilitySetData_Info;
+            private ArrayOfArray_AvailabilitySetData_Info? _arrayOfArray_AvailabilitySetData_Info;
+            private ObservableCollection_List_AvailabilitySetData_Info? _observableCollection_List_AvailabilitySetData_Info;
+            private ObservableCollection_ObservableCollection_AvailabilitySetData_Info? _observableCollection_ObservableCollection_AvailabilitySetData_Info;
+            private ObservableCollection_AvailabilitySetData_Info? _observableCollection_AvailabilitySetData_Info;
+            private Queue_List_AvailabilitySetData_Info? _queue_List_AvailabilitySetData_Info;
+            private Queue_Queue_AvailabilitySetData_Info? _queue_Queue_AvailabilitySetData_Info;
+            private Queue_AvailabilitySetData_Info? _queue_AvailabilitySetData_Info;
+            private Stack_List_AvailabilitySetData_Info? _stack_List_AvailabilitySetData_Info;
+            private Stack_Stack_AvailabilitySetData_Info? _stack_Stack_AvailabilitySetData_Info;
+            private Stack_AvailabilitySetData_Info? _stack_AvailabilitySetData_Info;
 
             public override ModelInfo? GetModelInfo(Type type)
             {
                 return type switch
                 {
-                    Type t when t == typeof(List<List<AvailabilitySetData>>) => new List_List_AvailabilitySetData_Info(),
-                    Type t when t == typeof(List<Collection<AvailabilitySetData>>) => new List_Collection_AvailabilitySetData_Info(),
-                    Type t when t == typeof(AvailabilitySetData[][]) => new Array_Array_AvailabilitySetData_Info(),
-                    Type t when t == typeof(AvailabilitySetData[]) => new Array_AvailabilitySetData_Info(),
-                    Type t when t == typeof(List<AvailabilitySetData>[]) => new Array_List_AvailabilitySetData_Info(),
-                    Type t when t == typeof(Collection<Collection<AvailabilitySetData>>) => new Collection_Collection_AvailabilitySetData_Info(),
-                    Type t when t == typeof(Collection<AvailabilitySetData>) => new Collection_AvailabilitySetData_Info(),
-                    Type t when t == typeof(Collection<List<AvailabilitySetData>>) => new Collection_List_AvailabilitySetData_Info(),
-                    Type t when t == typeof(HashSet<HashSet<AvailabilitySetData>>) => new HashSet_HashSet_AvailabilitySetData_Info(),
-                    Type t when t == typeof(HashSet<AvailabilitySetData>) => new HashSet_AvailabilitySetData_Info(),
-                    Type t when t == typeof(HashSet<List<AvailabilitySetData>>) => new HashSet_List_AvailabilitySetData_Info(),
-                    Type t when t == typeof(LinkedList<LinkedList<AvailabilitySetData>>) => new LinkedList_LinkedList_AvailabilitySetData_Info(),
-                    Type t when t == typeof(LinkedList<AvailabilitySetData>) => new LinkedList_AvailabilitySetData_Info(),
-                    Type t when t == typeof(LinkedList<List<AvailabilitySetData>>) => new LinkedList_List_AvailabilitySetData_Info(),
-                    Type t when t == typeof(List<AvailabilitySetData[]>) => new List_Array_AvailabilitySetData_Info(),
-                    Type t when t == typeof(AvailabilitySetData[,]) => new ArrayOfArray_AvailabilitySetData_Info(),
-                    Type t when t == typeof(ObservableCollection<List<AvailabilitySetData>>) => new ObservableCollection_List_AvailabilitySetData_Info(),
-                    Type t when t == typeof(ObservableCollection<ObservableCollection<AvailabilitySetData>>) => new ObservableCollection_ObservableCollection_AvailabilitySetData_Info(),
-                    Type t when t == typeof(ObservableCollection<AvailabilitySetData>) => new ObservableCollection_AvailabilitySetData_Info(),
-                    Type t when t == typeof(Queue<List<AvailabilitySetData>>) => new Queue_List_AvailabilitySetData_Info(),
-                    Type t when t == typeof(Queue<Queue<AvailabilitySetData>>) => new Queue_Queue_AvailabilitySetData_Info(),
-                    Type t when t == typeof(Queue<AvailabilitySetData>) => new Queue_AvailabilitySetData_Info(),
-                    Type t when t == typeof(Stack<List<AvailabilitySetData>>) => new Stack_List_AvailabilitySetData_Info(),
-                    Type t when t == typeof(Stack<Stack<AvailabilitySetData>>) => new Stack_Stack_AvailabilitySetData_Info(),
-                    Type t when t == typeof(Stack<AvailabilitySetData>) => new Stack_AvailabilitySetData_Info(),
+                    Type t when t == typeof(List<List<AvailabilitySetData>>) => _list_List_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(List<Collection<AvailabilitySetData>>) => _list_Collection_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(AvailabilitySetData[][]) => _array_Array_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(AvailabilitySetData[]) => _array_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(List<AvailabilitySetData>[]) => _array_List_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(Collection<Collection<AvailabilitySetData>>) => _collection_Collection_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(Collection<AvailabilitySetData>) => _collection_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(Collection<List<AvailabilitySetData>>) => _collection_List_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(HashSet<HashSet<AvailabilitySetData>>) => _hashSet_HashSet_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(HashSet<AvailabilitySetData>) => _hashSet_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(HashSet<List<AvailabilitySetData>>) => _hashSet_List_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(LinkedList<LinkedList<AvailabilitySetData>>) => _linkedList_LinkedList_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(LinkedList<AvailabilitySetData>) => _linkedList_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(LinkedList<List<AvailabilitySetData>>) => _linkedList_List_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(List<AvailabilitySetData[]>) => _list_Array_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(AvailabilitySetData[,]) => _arrayOfArray_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(ObservableCollection<List<AvailabilitySetData>>) => _observableCollection_List_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(ObservableCollection<ObservableCollection<AvailabilitySetData>>) => _observableCollection_ObservableCollection_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(ObservableCollection<AvailabilitySetData>) => _observableCollection_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(Queue<List<AvailabilitySetData>>) => _queue_List_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(Queue<Queue<AvailabilitySetData>>) => _queue_Queue_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(Queue<AvailabilitySetData>) => _queue_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(Stack<List<AvailabilitySetData>>) => _stack_List_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(Stack<Stack<AvailabilitySetData>>) => _stack_Stack_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(Stack<AvailabilitySetData>) => _stack_AvailabilitySetData_Info ??= new(),
                     _ => _LibraryContext.Value.GetModelInfo(type)
                 };
             }

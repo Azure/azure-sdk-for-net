@@ -9,17 +9,20 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 {
     public class TestModelReaderWriterContext : ModelReaderWriterContext
     {
+        private AvailabilitySetData_Info? _availabilitySetDataInfo;
+        private List_AvailabilitySetData_Info? _list_AvailabilitySet_Info;
+
         public override ModelInfo? GetModelInfo(Type type)
         {
             return type switch
             {
-                Type t when t == typeof(AvailabilitySetData) => new AvailabilitySetDataInfo(),
-                Type t when t == typeof(List<AvailabilitySetData>) => new List_AvailabilitySetDataInfo(),
+                Type t when t == typeof(AvailabilitySetData) => _availabilitySetDataInfo ??= new(),
+                Type t when t == typeof(List<AvailabilitySetData>) => _list_AvailabilitySet_Info ??= new(),
                 _ => null
             };
         }
 
-        private class List_AvailabilitySetDataInfo : ModelInfo
+        private class List_AvailabilitySetData_Info : ModelInfo
         {
             public override object CreateObject() => new List_AvailabilitySetData_Builder();
 
@@ -36,7 +39,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             }
         }
 
-        private class AvailabilitySetDataInfo : ModelInfo
+        private class AvailabilitySetData_Info : ModelInfo
         {
             public override object CreateObject() => new AvailabilitySetData();
         }

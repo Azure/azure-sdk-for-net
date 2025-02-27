@@ -31,21 +31,30 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         private class LocalContext : ModelReaderWriterContext
         {
-            private Lazy<TestModelReaderWriterContext> _LibraryContext = new Lazy<TestModelReaderWriterContext>(() => new TestModelReaderWriterContext());
+            private readonly Lazy<TestModelReaderWriterContext> _LibraryContext = new(() => new());
+            private Dictionary_String_AvailabilitySetData_Info? _dictionary_String_AvailabilitySetData_Info;
+            private HashSet_AvailabilitySetData_Info? _hashSet_AvailabilitySetData_Info;
+            private Array_AvailabilitySetData_Info? _array_AvailabilitySetData_Info;
+            private Collection_AvailabilitySetData_Info? _collection_AvailabilitySetData_Info;
+            private LinkedList_AvailabilitySetData_Info? _linkedList_AvailabilitySetData_Info;
+            private ObservableCollection_AvailabilitySetData_Info? _observableCollection_AvailabilitySetData_Info;
+            private Queue_AvailabilitySetData_Info? _queue_AvailabilitySetData_Info;
+            private SortedSet_AvailabilitySetData_Info? _sortedSet_AvailabilitySetData_Info;
+            private Stack_AvailabilitySetData_Info? _stack_AvailabilitySetData_Info;
 
             public override ModelInfo? GetModelInfo(Type type)
             {
                 return type switch
                 {
-                    Type t when t == typeof(Dictionary<string, AvailabilitySetData>) => new Dictionary_String_AvailabilitySetData_Info(),
-                    Type t when t == typeof(HashSet<AvailabilitySetData>) => new HashSet_AvailabilitySetData_Info(),
-                    Type t when t == typeof(AvailabilitySetData[]) => new Array_AvailabilitySetData_Info(),
-                    Type t when t == typeof(Collection<AvailabilitySetData>) => new Collection_AvailabilitySetData_Info(),
-                    Type t when t == typeof(LinkedList<AvailabilitySetData>) => new LinkedList_AvailabilitySetData_Info(),
-                    Type t when t == typeof(ObservableCollection<AvailabilitySetData>) => new ObservableCollection_AvailabilitySetData_Info(),
-                    Type t when t == typeof(Queue<AvailabilitySetData>) => new Queue_AvailabilitySetData_Info(),
-                    Type t when t == typeof(SortedSet<AvailabilitySetData>) => new SortedSet_AvailabilitySetData_Info(),
-                    Type t when t == typeof(Stack<AvailabilitySetData>) => new Stack_AvailabilitySetData_Info(),
+                    Type t when t == typeof(Dictionary<string, AvailabilitySetData>) => _dictionary_String_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(HashSet<AvailabilitySetData>) => _hashSet_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(AvailabilitySetData[]) => _array_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(Collection<AvailabilitySetData>) => _collection_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(LinkedList<AvailabilitySetData>) => _linkedList_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(ObservableCollection<AvailabilitySetData>) => _observableCollection_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(Queue<AvailabilitySetData>) => _queue_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(SortedSet<AvailabilitySetData>) => _sortedSet_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(Stack<AvailabilitySetData>) => _stack_AvailabilitySetData_Info ??= new(),
                     _ => _LibraryContext.Value.GetModelInfo(type)
                 };
             }

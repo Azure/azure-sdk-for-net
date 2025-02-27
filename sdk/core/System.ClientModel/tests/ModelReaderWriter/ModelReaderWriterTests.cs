@@ -524,24 +524,37 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         private class LocalContext : ModelReaderWriterContext
         {
             private Lazy<TestModelReaderWriterContext> _LibraryContext = new Lazy<TestModelReaderWriterContext>(() => new TestModelReaderWriterContext());
+            private Dictionary_String_SubType_Info? _dictionary_String_SubType_Info;
+            private List_List_SubType_Info? _list_List_SubType_Info;
+            private List_SubType_Info? _list_SubType_Info;
+            private List_Dictionary_String_SubType_Info? _list_Dictionary_String_SubType_Info;
+            private List_DoesNotImplementInterface_Info? _list_DoesNotImplementInterface_Info;
+            private SubType_Info? _subType_Info;
+            private DoesNotImplementInterface_Info? _doesNotImplementInterface_Info;
+            private NonJWire_Info? _nonJWire_Info;
+            private PersistableModel_Info? _persistableModel_Info;
+            private List_PersistableModel_Info? _list_PersistableModel_Info;
+            private List_List_PersistableModel_Info? _list_List_PersistableModel_Info;
+            private List_NonJWire_Info? _list_NonJWire_Info;
+            private List_List_NonJWire_Info? _list_List_NonJWire_Info;
 
             public override ModelInfo? GetModelInfo(Type type)
             {
                 return type switch
                 {
-                    Type t when t == typeof(Dictionary<string, SubType>) => new Dictionary_String_SubType_Info(),
-                    Type t when t == typeof(List<List<SubType>>) => new List_List_SubType_Info(),
-                    Type t when t == typeof(List<SubType>) => new List_SubType_Info(),
-                    Type t when t == typeof(List<Dictionary<string, SubType>>) => new List_Dictionary_String_SubType_Info(),
-                    Type t when t == typeof(List<DoesNotImplementInterface>) => new List_DoesNotImplementInterface_Info(),
-                    Type t when t == typeof(SubType) => new SubType_Info(),
-                    Type t when t == typeof(DoesNotImplementInterface) => new DoesNotImplementInterface_Info(),
-                    Type t when t == typeof(NonJWire) => new NonJWire_Info(),
-                    Type t when t == typeof(PersistableModel) => new PersistableModel_Info(),
-                    Type t when t == typeof(List<PersistableModel>) => new List_PersistableModel_Info(),
-                    Type t when t == typeof(List<List<PersistableModel>>) => new List_List_PersistableModel_Info(),
-                    Type t when t == typeof(List<NonJWire>) => new List_NonJWire_Info(),
-                    Type t when t == typeof(List<List<NonJWire>>) => new List_List_NonJWire_Info(),
+                    Type t when t == typeof(Dictionary<string, SubType>) => _dictionary_String_SubType_Info ??= new(),
+                    Type t when t == typeof(List<List<SubType>>) => _list_List_SubType_Info ??= new(),
+                    Type t when t == typeof(List<SubType>) => _list_SubType_Info ??= new(),
+                    Type t when t == typeof(List<Dictionary<string, SubType>>) => _list_Dictionary_String_SubType_Info ??= new(),
+                    Type t when t == typeof(List<DoesNotImplementInterface>) => _list_DoesNotImplementInterface_Info ??= new(),
+                    Type t when t == typeof(SubType) => _subType_Info ??= new(),
+                    Type t when t == typeof(DoesNotImplementInterface) => _doesNotImplementInterface_Info ??= new(),
+                    Type t when t == typeof(NonJWire) => _nonJWire_Info ??= new(),
+                    Type t when t == typeof(PersistableModel) => _persistableModel_Info ??= new(),
+                    Type t when t == typeof(List<PersistableModel>) => _list_PersistableModel_Info ??= new(),
+                    Type t when t == typeof(List<List<PersistableModel>>) => _list_List_PersistableModel_Info ??= new(),
+                    Type t when t == typeof(List<NonJWire>) => _list_NonJWire_Info ??= new(),
+                    Type t when t == typeof(List<List<NonJWire>>) => _list_List_NonJWire_Info ??= new(),
                     _ => _LibraryContext.Value.GetModelInfo(type)
                 };
             }
