@@ -5,7 +5,6 @@ using Azure.Generator.Mgmt.Models;
 using Azure.Generator.Providers;
 using Azure.Generator.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
-using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
@@ -36,9 +35,9 @@ namespace Azure.Generator
         private LongRunningOperationProvider? _genericArmOperation;
         internal LongRunningOperationProvider GenericArmOperation => _genericArmOperation ??= new LongRunningOperationProvider(true);
 
-        private IReadOnlyList<ResourceClientProvider> BuildResources()
+        private IReadOnlyList<TypeProvider> BuildResources()
         {
-            var result = new List<ResourceClientProvider>();
+            var result = new List<TypeProvider>();
             foreach ((var schemaName, var operationSets) in _specNameToOperationSetsMap)
             {
                 var model = _inputTypeMap[schemaName];
@@ -47,7 +46,7 @@ namespace Azure.Generator
                 {
                     var requestPath = operationSet.RequestPath;
                     var resourceType = ResourceDetection.GetResourceTypeFromPath(requestPath);
-                    var resource = new ResourceClientProvider(operationSet, schemaName, resourceData, resourceType);
+                    TypeProvider resource = CreateResourceCore(operationSet, operationSet.InputClient, operationSet.RequestPath, schemaName, resourceData, resourceType);
                     AzureClientPlugin.Instance.AddTypeToKeep(resource.Name);
                     result.Add(resource);
                 }
@@ -55,12 +54,27 @@ namespace Azure.Generator
             return result;
         }
 
+        /// <summary>
+        /// Create a resource client provider
+        /// </summary>
+        /// <param name="operationSet"></param>
+        /// <param name="inputClient"></param>
+        /// <param name="requestPath"></param>
+        /// <param name="schemaName"></param>
+        /// <param name="resourceData"></param>
+        /// <param name="resourceType"></param>
+        /// <returns></returns>
+        public virtual TypeProvider CreateResourceCore(IReadOnlyCollection<InputOperation> operationSet, InputClient inputClient, string requestPath, string schemaName, ModelProvider resourceData, string resourceType)
+        {
+            return new ResourceClientProvider(operationSet, inputClient, requestPath, schemaName, resourceData, resourceType);
+        }
+
         private Dictionary<string, HashSet<OperationSet>> EnsureOperationsetMap()
         {
             var result = new Dictionary<string, HashSet<OperationSet>>();
             foreach (var operationSet in _pathToOperationSetMap.Values)
             {
-                if (AzureClientPlugin.Instance.ResourceDetection.TryGetResourceDataSchema(operationSet, out var resourceSpecName, out var resourceSchema))
+                if (AzureClientPlugin.Instance.ResourceDetection.TryGetResourceDataSchema(operationSet, operationSet.RequestPath, out var resourceSpecName, out var resourceSchema))
                 {
                     // if this operation set corresponds to a SDK resource, we add it to the map
                     if (!result.TryGetValue(resourceSpecName!, out HashSet<OperationSet>? value))
@@ -111,7 +125,7 @@ namespace Azure.Generator
             if (AzureClientPlugin.Instance.IsAzureArm.Value == true)
             {
                 var resources = BuildResources();
-                return [.. baseProviders, new RequestContextExtensionsDefinition(), ArmOperation, GenericArmOperation, .. resources, .. resources.Select(r => r.Source)];
+                return [.. baseProviders, new RequestContextExtensionsDefinition(), ArmOperation, GenericArmOperation, .. resources, .. resources.Select(r => ((ResourceClientProvider)r).Source)];
             }
             return [.. baseProviders, new RequestContextExtensionsDefinition()];
         }

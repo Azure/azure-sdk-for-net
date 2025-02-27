@@ -31,7 +31,8 @@ namespace Azure.Generator.Providers
     /// </summary>
     internal class ResourceClientProvider : TypeProvider
     {
-        private OperationSet _operationSet;
+        private IReadOnlyCollection<InputOperation> _operationSet;
+        private string _requestPath;
         private ClientProvider _clientProvider;
         private readonly IReadOnlyList<string> _contextualParameters;
 
@@ -40,13 +41,14 @@ namespace Azure.Generator.Providers
         private FieldProvider _restClientField;
         private FieldProvider _resourcetypeField;
 
-        public ResourceClientProvider(OperationSet operationSet, string specName, ModelProvider resourceData, string resrouceType)
+        public ResourceClientProvider(IReadOnlyCollection<InputOperation> operationSet, InputClient inputClient, string requestPath, string specName, ModelProvider resourceData, string resrouceType)
         {
             _operationSet = operationSet;
+            _requestPath = requestPath;
             SpecName = specName;
             ResourceData = resourceData;
-            _clientProvider = AzureClientPlugin.Instance.TypeFactory.CreateClient(operationSet.InputClient)!;
-            _contextualParameters = GetContextualParameters(operationSet.RequestPath);
+            _clientProvider = AzureClientPlugin.Instance.TypeFactory.CreateClient(inputClient)!;
+            _contextualParameters = GetContextualParameters(requestPath);
 
             _dataField = new FieldProvider(FieldModifiers.Private, resourceData.Type, "_data", this);
             _clientDiagonosticsField = new FieldProvider(FieldModifiers.Private, typeof(ClientDiagnostics), $"_{specName.ToLower()}ClientDiagnostics", this);
@@ -199,7 +201,7 @@ namespace Azure.Generator.Providers
                 }
 
                 // only update for non-singleton resource
-                var isUpdateOnly = operation.HttpMethod == HttpMethod.Put.ToString() && !AzureClientPlugin.Instance.SingletonDetection.IsSingletonResource(_operationSet);
+                var isUpdateOnly = operation.HttpMethod == HttpMethod.Put.ToString() && !AzureClientPlugin.Instance.SingletonDetection.IsSingletonResource(_operationSet, new RequestPath(_requestPath));
                 operationMethods.Add(BuildOperationMethod(operation, convenienceMethod, false, isUpdateOnly));
                 var asyncConvenienceMethod = GetCorrespondingConvenienceMethod(operation, true);
                 operationMethods.Add(BuildOperationMethod(operation, asyncConvenienceMethod, true, isUpdateOnly));

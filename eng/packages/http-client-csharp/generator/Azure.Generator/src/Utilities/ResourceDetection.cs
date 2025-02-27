@@ -6,6 +6,7 @@ using Azure.Generator.Mgmt.Models;
 using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,7 @@ namespace Azure.Generator.Utilities
 
         private ConcurrentDictionary<RequestPath, (string Name, InputModelType? InputModel)?> _resourceDataSchemaCache = new ConcurrentDictionary<RequestPath, (string Name, InputModelType? InputModel)?>();
 
-        public bool IsResource(OperationSet set) => TryGetResourceDataSchema(set, out _, out _);
+        public bool IsResource(IReadOnlyCollection<InputOperation> set, RequestPath requestPath) => TryGetResourceDataSchema(set, requestPath, out _, out _);
 
         public static string GetResourceTypeFromPath(RequestPath requestPath)
         {
@@ -51,13 +52,13 @@ namespace Azure.Generator.Utilities
             return result.ToString();
         }
 
-        public bool TryGetResourceDataSchema(OperationSet set, [MaybeNullWhen(false)] out string resourceSpecName, out InputModelType? inputModel)
+        public bool TryGetResourceDataSchema(IReadOnlyCollection<InputOperation> set, RequestPath requestPath, [MaybeNullWhen(false)] out string resourceSpecName, out InputModelType? inputModel)
         {
             resourceSpecName = null;
             inputModel = null;
 
             // get the result from cache
-            if (_resourceDataSchemaCache.TryGetValue(set.RequestPath, out var resourceSchemaTuple))
+            if (_resourceDataSchemaCache.TryGetValue(requestPath, out var resourceSchemaTuple))
             {
                 resourceSpecName = resourceSchemaTuple is null ? null : resourceSchemaTuple?.Name!;
                 inputModel = resourceSchemaTuple?.InputModel;
@@ -67,18 +68,18 @@ namespace Azure.Generator.Utilities
             // TODO: try to find it in the partial resource list
 
             // Check if the request path has even number of segments after the providers segment
-            if (!CheckEvenSegments(set.RequestPath))
+            if (!CheckEvenSegments(requestPath))
                 return false;
 
             // before we are finding any operations, we need to ensure this operation set has a GET request.
-            if (set.FindOperation(RequestMethod.Get) is null)
+            if (FindOperation(set, RequestMethod.Get) is null)
                 return false;
 
             // try put operation to get the resource name
             if (TryOperationWithMethod(set, RequestMethod.Put, out inputModel))
             {
                 resourceSpecName = inputModel.Name;
-                _resourceDataSchemaCache.TryAdd(set.RequestPath, (resourceSpecName, inputModel));
+                _resourceDataSchemaCache.TryAdd(requestPath, (resourceSpecName, inputModel));
                 return true;
             }
 
@@ -86,12 +87,12 @@ namespace Azure.Generator.Utilities
             if (TryOperationWithMethod(set, RequestMethod.Get, out inputModel))
             {
                 resourceSpecName = inputModel.Name;
-                _resourceDataSchemaCache.TryAdd(set.RequestPath, (resourceSpecName, inputModel));
+                _resourceDataSchemaCache.TryAdd(requestPath, (resourceSpecName, inputModel));
                 return true;
             }
 
             // We tried everything, this is not a resource
-            _resourceDataSchemaCache.TryAdd(set.RequestPath, null);
+            _resourceDataSchemaCache.TryAdd(requestPath, null);
             return false;
         }
 
@@ -106,11 +107,11 @@ namespace Azure.Generator.Utilities
             return following.Count % 2 == 0;
         }
 
-        private bool TryOperationWithMethod(OperationSet set, RequestMethod method, [MaybeNullWhen(false)] out InputModelType inputModel)
+        private bool TryOperationWithMethod(IReadOnlyCollection<InputOperation> operations, RequestMethod method, [MaybeNullWhen(false)] out InputModelType inputModel)
         {
             inputModel = null;
 
-            var operation = set.FindOperation(method);
+            var operation = FindOperation(operations, method);
             if (operation is null)
                 return false;
             // find the response with code 200
@@ -128,6 +129,11 @@ namespace Azure.Generator.Utilities
 
             inputModel = responseType;
             return true;
+        }
+
+        private InputOperation? FindOperation(IReadOnlyCollection<InputOperation> operations, RequestMethod method)
+        {
+            return operations.FirstOrDefault(operation => operation.HttpMethod == method.ToString());
         }
 
         private static bool IsResourceModel(InputModelType inputModelType)

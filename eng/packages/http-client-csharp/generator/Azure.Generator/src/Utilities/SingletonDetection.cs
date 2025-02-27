@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Mgmt.Models;
+using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -14,31 +15,31 @@ namespace Azure.Generator.Utilities
     {
         private static HashSet<string> SingletonKeywords = new(){ "default", "latest", "current" };
 
-        private ConcurrentDictionary<OperationSet, SingletonResourceSuffix?> _singletonResourceCache;
+        private ConcurrentDictionary<IReadOnlyCollection<InputOperation>, SingletonResourceSuffix?> _singletonResourceCache;
 
         public SingletonDetection()
         {
-            _singletonResourceCache = new ConcurrentDictionary<OperationSet, SingletonResourceSuffix?>();
+            _singletonResourceCache = new ConcurrentDictionary<IReadOnlyCollection<InputOperation>, SingletonResourceSuffix?>();
         }
 
-        public bool IsSingletonResource(OperationSet operationSet)
+        public bool IsSingletonResource(IReadOnlyCollection<InputOperation> operationSet, RequestPath requstPath)
         {
-            return TryGetSingletonResourceSuffix(operationSet, out _);
+            return TryGetSingletonResourceSuffix(operationSet, requstPath, out _);
         }
 
-        private bool TryGetSingletonResourceSuffix(OperationSet operationSet, [MaybeNullWhen(false)] out SingletonResourceSuffix suffix)
+        private bool TryGetSingletonResourceSuffix(IReadOnlyCollection<InputOperation> operationSet, RequestPath requestPath, [MaybeNullWhen(false)] out SingletonResourceSuffix suffix)
         {
             suffix = null;
             if (_singletonResourceCache.TryGetValue(operationSet, out suffix))
                 return suffix != null;
 
-            bool result = IsSingleton(operationSet, out var singletonIdSuffix);
-            suffix = ParseSingletonIdSuffix(operationSet, singletonIdSuffix);
+            bool result = IsSingleton(operationSet, requestPath, out var singletonIdSuffix);
+            suffix = ParseSingletonIdSuffix(operationSet, requestPath, singletonIdSuffix);
             _singletonResourceCache.TryAdd(operationSet, suffix);
             return result;
         }
 
-        private static SingletonResourceSuffix? ParseSingletonIdSuffix(OperationSet operationSet, string? singletonIdSuffix)
+        private static SingletonResourceSuffix? ParseSingletonIdSuffix(IReadOnlyCollection<InputOperation> operationSet, RequestPath requestPath, string? singletonIdSuffix)
         {
             if (singletonIdSuffix == null)
                 return null;
@@ -48,13 +49,13 @@ namespace Azure.Generator.Utilities
             // check if even segments
             if (segments.Count % 2 != 0)
             {
-                throw new InvalidOperationException($"the singleton suffix set for operation set {operationSet.RequestPath} must have even segments, but got {singletonIdSuffix}");
+                throw new InvalidOperationException($"the singleton suffix set for operation set {requestPath} must have even segments, but got {singletonIdSuffix}");
             }
 
             return SingletonResourceSuffix.Parse(segments);
         }
 
-        private static bool IsSingleton(OperationSet operationSet, [MaybeNullWhen(false)] out string singletonIdSuffix)
+        private static bool IsSingleton(IReadOnlyCollection<InputOperation> operationSet, RequestPath requestPath, [MaybeNullWhen(false)] out string singletonIdSuffix)
         {
             singletonIdSuffix = null;
 
@@ -68,11 +69,11 @@ namespace Azure.Generator.Utilities
 
             // we cannot find the corresponding request path in the configuration, trying to deduce from the path
             // return false if this is not a resource
-            if (!AzureClientPlugin.Instance.ResourceDetection.IsResource(operationSet))
+            if (!AzureClientPlugin.Instance.ResourceDetection.IsResource(operationSet, requestPath))
                 return false;
 
             // get the request path
-            var currentRequestPath = operationSet.RequestPath;
+            var currentRequestPath = requestPath;
             // if we are a singleton resource,
             // we need to find the suffix which should be the difference between our path and our parent resource
             var parentRequestPath = AzureClientPlugin.Instance.ParentDetection.GetParentRequestPath(currentRequestPath);
