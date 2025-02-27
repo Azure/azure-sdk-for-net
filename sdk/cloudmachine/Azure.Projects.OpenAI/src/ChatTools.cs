@@ -143,6 +143,20 @@ public class ChatTools
         return messages;
     }
 
+    /// <summary>
+    /// Converts the <see cref="ChatTools"/> to a <see cref="ChatCompletionOptions"/>.
+    /// </summary>
+    /// <returns></returns>
+    public ChatCompletionOptions ToOptions()
+    {
+        ChatCompletionOptions options = new();
+        foreach (ChatTool tool in _definitions)
+        {
+            options.Tools.Add(tool);
+        }
+        return options;
+    }
+
     private static string MethodInfoToDescription(MethodInfo function)
     {
         var description = function.Name;
