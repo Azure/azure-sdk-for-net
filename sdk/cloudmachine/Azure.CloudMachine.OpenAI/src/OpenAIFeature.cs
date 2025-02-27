@@ -31,7 +31,7 @@ internal class OpenAIFeature : AzureProjectFeature
 
     protected override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
     {
-        ClientConnection connection = new("Azure.AI.OpenAI.AzureOpenAIClient", $"https://{cmId}.openai.azure.com");
+        ClientConnection connection = new("Azure.AI.OpenAI.AzureOpenAIClient", $"https://{cmId}.openai.azure.com", ClientAuthenticationMethod.Credential);
 
         if (!connections.Contains(connection))
         {
