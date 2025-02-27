@@ -38,5 +38,11 @@ namespace Azure.ResourceManager.AgriculturePlatform.Tests
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }
+
+        protected async Task<ResourceGroupResource> GetResourceGroup(SubscriptionResource subscription, string name)
+        {
+            var rg = await subscription.GetResourceGroups().GetAsync(name);
+            return rg;
+        }
     }
 }

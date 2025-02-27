@@ -18,6 +18,9 @@ namespace Azure.ResourceManager.AgriculturePlatform.Tests.Scenario
     [TestFixture]
     public class AgriculturePlatformCRUDTest : AgriculturePlatformManagementTestBase
     {
+        private string resourceGroup;
+        private string resourceName;
+
         public AgriculturePlatformCRUDTest() : base(true)
         {
         }
@@ -41,26 +44,34 @@ namespace Azure.ResourceManager.AgriculturePlatform.Tests.Scenario
         public async Task CreateOrUpdate()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, "SidduSDKTestRg", AzureLocation.EastUS);
-            string resourceName = Recording.GenerateAssetName("SidduAgriTest");
+            var rg = await CreateResourceGroup(subscription, "rg", AzureLocation.EastUS2);
+            resourceGroup = rg.Data.Name.ToString();
+            resourceName = Recording.GenerateAssetName("agmobo");
             var createResourceOperation = await rg.GetAgriServiceResources().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, GetAgriServiceResourceData());
             Assert.IsTrue(createResourceOperation.HasCompleted);
             Assert.IsTrue(createResourceOperation.HasValue);
         }
 
+        [TestCase]
+        public async Task Get()
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            var rg = await GetResourceGroup(subscription, resourceGroup);
+            var agMoboResource = await rg.GetAgriServiceResources().GetAsync(resourceName);
+            Assert.IsTrue(agMoboResource.HasValue);
+            Assert.IsTrue(agMoboResource.Value.Data.Name == resourceName);
+        }
+
         private AgriServiceResourceData GetAgriServiceResourceData()
         {
-            var data = new AgriServiceResourceData(AzureLocation.EastUS2);
+            var data = new AgriServiceResourceData("centraluseuap");
             data.Properties = GetAgriServiceResourceProperties();
             return data;
         }
 
         private AgriServiceResourceProperties GetAgriServiceResourceProperties()
         {
-            return new Models.AgriServiceResourceProperties()
-            {
-                DataConnectorCredentials = GetDataConnectorCredentials(),
-            };
+            return new Models.AgriServiceResourceProperties(null, null, null, GetDataConnectorCredentials(), [], null);
         }
 
         private List<DataConnectorCredentialMap> GetDataConnectorCredentials()
