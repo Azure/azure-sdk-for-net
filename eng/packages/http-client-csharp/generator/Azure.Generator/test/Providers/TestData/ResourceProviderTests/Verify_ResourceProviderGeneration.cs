@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -41,9 +42,7 @@ namespace Samples
             _responsetypeClientDiagnostics = new global::Azure.Core.Pipeline.ClientDiagnostics("Samples", ResourceType.Namespace, this.Diagnostics);
             this.TryGetApiVersion(ResourceType, out string responsetypeApiVersion);
             _responsetypeRestClient = new global::Samples.TestClient(this.Pipeline, this.Endpoint, responsetypeApiVersion);
-#if DEBUG
             global::Samples.ResponseTypeResource.ValidateResourceId(id);
-#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
@@ -62,6 +61,7 @@ namespace Samples
             }
         }
 
+        [global::System.Diagnostics.ConditionalAttribute("DEBUG")]
         internal static void ValidateResourceId(global::Azure.Core.ResourceIdentifier id)
         {
             if ((id != ResourceType))
