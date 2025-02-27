@@ -36,15 +36,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category);
-            if (Optional.IsDefined(CompositionSetting))
+            if (Optional.IsDefined(CompositionMode))
             {
                 writer.WritePropertyName("compositionSetting"u8);
-                writer.WriteStringValue(CompositionSetting.Value.ToString());
+                writer.WriteStringValue(CompositionMode.Value.ToString());
             }
-            if (Optional.IsDefined(List))
+            if (Optional.IsDefined(Entities))
             {
-                writer.WritePropertyName("list"u8);
-                writer.WriteObjectValue(List, options);
+                writer.WritePropertyName("entities"u8);
+                writer.WriteObjectValue(Entities, options);
             }
             if (Optional.IsCollectionDefined(Prebuilts))
             {
@@ -109,8 +109,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 return null;
             }
             string category = default;
-            CompositionSetting? compositionSetting = default;
-            ExportedEntityList list = default;
+            AnalyzeConversationAuthoringCompositionMode? compositionSetting = default;
+            ExportedEntityList entities = default;
             IList<ExportedPrebuiltEntity> prebuilts = default;
             ExportedEntityRegex regex = default;
             IList<string> requiredComponents = default;
@@ -129,16 +129,16 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     {
                         continue;
                     }
-                    compositionSetting = new CompositionSetting(property.Value.GetString());
+                    compositionSetting = new AnalyzeConversationAuthoringCompositionMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("list"u8))
+                if (property.NameEquals("entities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    list = ExportedEntityList.DeserializeExportedEntityList(property.Value, options);
+                    entities = ExportedEntityList.DeserializeExportedEntityList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("prebuilts"u8))
@@ -187,7 +187,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             return new ConversationExportedEntity(
                 category,
                 compositionSetting,
-                list,
+                entities,
                 prebuilts ?? new ChangeTrackingList<ExportedPrebuiltEntity>(),
                 regex,
                 requiredComponents ?? new ChangeTrackingList<string>(),

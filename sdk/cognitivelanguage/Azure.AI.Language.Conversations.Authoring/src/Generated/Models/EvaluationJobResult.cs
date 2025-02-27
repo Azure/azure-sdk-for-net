@@ -46,32 +46,32 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EvaluationJobResult"/>. </summary>
-        /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
+        /// <param name="evaluationDetails"> Represents the options used running the evaluation. </param>
         /// <param name="modelLabel"> Represents trained model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="percentComplete"> Represents progress percentage. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="evaluationOptions"/>, <paramref name="modelLabel"/> or <paramref name="trainingConfigVersion"/> is null. </exception>
-        internal EvaluationJobResult(EvaluationDetails evaluationOptions, string modelLabel, string trainingConfigVersion, int percentComplete)
+        /// <exception cref="ArgumentNullException"> <paramref name="evaluationDetails"/>, <paramref name="modelLabel"/> or <paramref name="trainingConfigVersion"/> is null. </exception>
+        internal EvaluationJobResult(EvaluationDetails evaluationDetails, string modelLabel, string trainingConfigVersion, int percentComplete)
         {
-            Argument.AssertNotNull(evaluationOptions, nameof(evaluationOptions));
+            Argument.AssertNotNull(evaluationDetails, nameof(evaluationDetails));
             Argument.AssertNotNull(modelLabel, nameof(modelLabel));
             Argument.AssertNotNull(trainingConfigVersion, nameof(trainingConfigVersion));
 
-            EvaluationOptions = evaluationOptions;
+            EvaluationDetails = evaluationDetails;
             ModelLabel = modelLabel;
             TrainingConfigVersion = trainingConfigVersion;
             PercentComplete = percentComplete;
         }
 
         /// <summary> Initializes a new instance of <see cref="EvaluationJobResult"/>. </summary>
-        /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
+        /// <param name="evaluationDetails"> Represents the options used running the evaluation. </param>
         /// <param name="modelLabel"> Represents trained model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="percentComplete"> Represents progress percentage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationJobResult(EvaluationDetails evaluationOptions, string modelLabel, string trainingConfigVersion, int percentComplete, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EvaluationJobResult(EvaluationDetails evaluationDetails, string modelLabel, string trainingConfigVersion, int percentComplete, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            EvaluationOptions = evaluationOptions;
+            EvaluationDetails = evaluationDetails;
             ModelLabel = modelLabel;
             TrainingConfigVersion = trainingConfigVersion;
             PercentComplete = percentComplete;
@@ -84,7 +84,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         }
 
         /// <summary> Represents the options used running the evaluation. </summary>
-        public EvaluationDetails EvaluationOptions { get; }
+        public EvaluationDetails EvaluationDetails { get; }
         /// <summary> Represents trained model label. </summary>
         public string ModelLabel { get; }
         /// <summary> Represents training config version. </summary>

@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
             writer.WritePropertyName("resourcesMetadata"u8);
             writer.WriteStartArray();
-            foreach (var item in ResourcesMetadata)
+            foreach (var item in Metadata)
             {
                 writer.WriteObjectValue(item, options);
             }

@@ -55,7 +55,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="trainingSplitPercentage"> Represents the training dataset split percentage. Only needed in case the evaluation kind is percentage. </param>
         /// <param name="testingSplitPercentage"> Represents the testing dataset split percentage. Only needed in case the evaluation kind is percentage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationDetails(EvaluationKind? kind, int? trainingSplitPercentage, int? testingSplitPercentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EvaluationDetails(AnalyzeConversationAuthoringEvaluationKind? kind, int? trainingSplitPercentage, int? testingSplitPercentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             TrainingSplitPercentage = trainingSplitPercentage;
@@ -64,7 +64,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         }
 
         /// <summary> Represents the evaluation kind. By default, the evaluation kind is set to percentage. </summary>
-        public EvaluationKind? Kind { get; set; }
+        public AnalyzeConversationAuthoringEvaluationKind? Kind { get; set; }
         /// <summary> Represents the training dataset split percentage. Only needed in case the evaluation kind is percentage. </summary>
         public int? TrainingSplitPercentage { get; set; }
         /// <summary> Represents the testing dataset split percentage. Only needed in case the evaluation kind is percentage. </summary>

@@ -25,9 +25,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             endpoint = TestEnvironment.Endpoint;
             credential = new(TestEnvironment.ApiKey);
 #endif
-            AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-            AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+            string projectName = "MyNewProject";
+            ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
             #endregion
         }
 
@@ -40,8 +41,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             endpoint = TestEnvironment.Endpoint;
 #endif
             DefaultAzureCredential credential = new DefaultAzureCredential();
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            string projectName = "MyNewProject";
+            ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
             #endregion
         }
 
@@ -50,24 +52,22 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:AuthoringClient_BadRequest
             try
             {
                 string invalidProjectName = "InvalidProject";
-
+                ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(invalidProjectName);
                 var projectData = new
                 {
-                    projectName = invalidProjectName,
                     language = "invalid-lang", // Invalid language code
                     projectKind = "Conversation",
                     description = "This is a test for invalid configuration."
                 };
 
                 using RequestContent content = RequestContent.Create(projectData);
-                Response response = authoringClient.CreateProject(invalidProjectName, content);
+                Response response = projectAuthoringClient.CreateProject(content);
             }
             catch (RequestFailedException ex)
             {

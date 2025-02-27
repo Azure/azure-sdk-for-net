@@ -53,7 +53,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="targetResourceId"> Represents the target Azure resource ID. </param>
         /// <param name="targetResourceRegion"> Represents the target Azure resource region. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetProjectName"/>, <paramref name="accessToken"/>, <paramref name="targetResourceId"/> or <paramref name="targetResourceRegion"/> is null. </exception>
-        public CopyProjectDetails(ProjectKind projectKind, string targetProjectName, string accessToken, DateTimeOffset expiresAt, string targetResourceId, string targetResourceRegion)
+        public CopyProjectDetails(AnalyzeConversationAuthoringProjectKind projectKind, string targetProjectName, string accessToken, DateTimeOffset expiresAt, string targetResourceId, string targetResourceRegion)
         {
             Argument.AssertNotNull(targetProjectName, nameof(targetProjectName));
             Argument.AssertNotNull(accessToken, nameof(accessToken));
@@ -76,7 +76,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="targetResourceId"> Represents the target Azure resource ID. </param>
         /// <param name="targetResourceRegion"> Represents the target Azure resource region. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CopyProjectDetails(ProjectKind projectKind, string targetProjectName, string accessToken, DateTimeOffset expiresAt, string targetResourceId, string targetResourceRegion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CopyProjectDetails(AnalyzeConversationAuthoringProjectKind projectKind, string targetProjectName, string accessToken, DateTimeOffset expiresAt, string targetResourceId, string targetResourceRegion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProjectKind = projectKind;
             TargetProjectName = targetProjectName;
@@ -93,7 +93,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         }
 
         /// <summary> Represents the project kind. </summary>
-        public ProjectKind ProjectKind { get; set; }
+        public AnalyzeConversationAuthoringProjectKind ProjectKind { get; set; }
         /// <summary> The project name to be copied-into. </summary>
         public string TargetProjectName { get; set; }
         /// <summary> The access token. </summary>

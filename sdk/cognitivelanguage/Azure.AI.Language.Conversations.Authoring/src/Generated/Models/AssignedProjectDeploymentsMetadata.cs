@@ -47,15 +47,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AssignedProjectDeploymentsMetadata"/>. </summary>
-        /// <param name="projectName"> Represents the project name. </param>
         /// <param name="deploymentsMetadata"> Represents the resource region. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentsMetadata"/> is null. </exception>
-        internal AssignedProjectDeploymentsMetadata(string projectName, IEnumerable<AssignedProjectDeploymentMetadata> deploymentsMetadata)
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentsMetadata"/> is null. </exception>
+        internal AssignedProjectDeploymentsMetadata(IEnumerable<AssignedProjectDeploymentMetadata> deploymentsMetadata)
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
             Argument.AssertNotNull(deploymentsMetadata, nameof(deploymentsMetadata));
 
-            ProjectName = projectName;
             DeploymentsMetadata = deploymentsMetadata.ToList();
         }
 

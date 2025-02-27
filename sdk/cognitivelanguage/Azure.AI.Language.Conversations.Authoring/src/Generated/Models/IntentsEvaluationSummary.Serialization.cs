@@ -35,7 +35,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
 
             writer.WritePropertyName("confusionMatrix"u8);
-            writer.WriteObjectValue(ConfusionMatrix, options);
+            writer.WriteStartObject();
+            foreach (var item in ConfusionMatrix)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value, options);
+            }
+            writer.WriteEndObject();
             writer.WritePropertyName("intents"u8);
             writer.WriteStartObject();
             foreach (var item in Intents)
@@ -93,7 +99,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             {
                 return null;
             }
-            ConfusionMatrix confusionMatrix = default;
+            IReadOnlyDictionary<string, AnalyzeConversationConfusionMatrixRow> confusionMatrix = default;
             IReadOnlyDictionary<string, IntentEvaluationSummary> intents = default;
             float microF1 = default;
             float microPrecision = default;
@@ -107,7 +113,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             {
                 if (property.NameEquals("confusionMatrix"u8))
                 {
-                    confusionMatrix = ConfusionMatrix.DeserializeConfusionMatrix(property.Value, options);
+                    Dictionary<string, AnalyzeConversationConfusionMatrixRow> dictionary = new Dictionary<string, AnalyzeConversationConfusionMatrixRow>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, AnalyzeConversationConfusionMatrixRow.DeserializeAnalyzeConversationConfusionMatrixRow(property0.Value, options));
+                    }
+                    confusionMatrix = dictionary;
                     continue;
                 }
                 if (property.NameEquals("intents"u8))

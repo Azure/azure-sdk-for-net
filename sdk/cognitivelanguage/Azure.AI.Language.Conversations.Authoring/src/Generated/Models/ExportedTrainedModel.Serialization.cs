@@ -42,11 +42,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             writer.WritePropertyName("modelId"u8);
             writer.WriteStringValue(ModelId);
             writer.WritePropertyName("lastTrainedDateTime"u8);
-            writer.WriteStringValue(LastTrainedDateTime, "O");
+            writer.WriteStringValue(LastTrainedOn, "O");
             writer.WritePropertyName("lastExportedModelDateTime"u8);
-            writer.WriteStringValue(LastExportedModelDateTime, "O");
+            writer.WriteStringValue(LastExportedModelOn, "O");
             writer.WritePropertyName("modelExpirationDate"u8);
-            writer.WriteStringValue(ModelExpirationDate, "D");
+            writer.WriteStringValue(ModelExpiredOn, "D");
             writer.WritePropertyName("modelTrainingConfigVersion"u8);
             writer.WriteStringValue(ModelTrainingConfigVersion);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
