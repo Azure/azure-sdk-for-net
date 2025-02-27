@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+Modify the deserialization method of BillingReservationData to correctly convert the int type received from the service to the enum type required by the SDK. Issue at https://github.com/Azure/azure-sdk-for-net/issues/48199.
+
 Added detection for empty string in the return value of createdByPrincipalTenantId in BillingRoleAssignmentProperties. Issue at https://github.com/Azure/azure-sdk-for-net/issues/47341.
 
 ### Other Changes
