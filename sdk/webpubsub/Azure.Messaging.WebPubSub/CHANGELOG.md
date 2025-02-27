@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0 (2025-03-11)
+## 1.5.0 (2025-02-27)
 
 ### Features Added
 - Added support for SocketIO when generating ClientAccessURI
