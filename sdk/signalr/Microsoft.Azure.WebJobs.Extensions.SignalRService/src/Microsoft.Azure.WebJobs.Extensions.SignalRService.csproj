@@ -17,8 +17,8 @@
     <PackageReference Include="Microsoft.Azure.SignalR" />
     <PackageReference Include="Microsoft.Azure.SignalR.Protocols" />
     <PackageReference Include="Microsoft.Azure.SignalR.Serverless.Protocols" />
-    <!--Pin the following version to avoid issue https://github.com/Azure/azure-functions-host/issues/10575 in the short term.-->
-    <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.7.5"/>
+    <!--According to https://github.com/Azure/azure-sdk-for-net/pull/48280#discussion_r1972339492, 1.8.0 is the latest safe version.-->
+    <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.8.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
   </ItemGroup>
 
