@@ -2879,6 +2879,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -2908,6 +2912,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -2946,6 +2954,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
@@ -2986,6 +2998,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
@@ -3027,6 +3043,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
@@ -3067,6 +3087,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
@@ -3117,6 +3141,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         internal async Task<Stream> OpenReadInternal(
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously

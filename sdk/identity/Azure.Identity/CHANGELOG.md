@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- Marked `UsernamePasswordCredential` as obsolete because Resource Owner Password Credentials (ROPC) token grant flow is incompatible with multifactor authentication (MFA), which Microsoft Entra ID requires for all tenants. See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement and migration guidance.
 
 ## 1.14.0-beta.1 (2025-02-11)
 

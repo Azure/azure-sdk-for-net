@@ -56,10 +56,6 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         public PipelineGroupData(AzureLocation location) : base(location)
         {
-            Receivers = new ChangeTrackingList<PipelineGroupReceiver>();
-            Processors = new ChangeTrackingList<PipelineGroupProcessor>();
-            Exporters = new ChangeTrackingList<PipelineGroupExporter>();
-            NetworkingConfigurations = new ChangeTrackingList<PipelineGroupNetworkingConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PipelineGroupData"/>. </summary>
@@ -69,25 +65,13 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location for given pipeline group. </param>
-        /// <param name="replicas"> Defines the amount of replicas of the pipeline group instance. </param>
-        /// <param name="receivers"> The receivers specified for a pipeline group instance. </param>
-        /// <param name="processors"> The processors specified for a pipeline group instance. </param>
-        /// <param name="exporters"> The exporters specified for a pipeline group instance. </param>
-        /// <param name="service"> The service section for a given pipeline group instance. </param>
-        /// <param name="networkingConfigurations"> Networking configurations for the pipeline group instance. </param>
-        /// <param name="provisioningState"> The provisioning state of a pipeline group instance. Set to Succeeded if everything is healthy. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The complex type of the extended location. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PipelineGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, int? replicas, IList<PipelineGroupReceiver> receivers, IList<PipelineGroupProcessor> processors, IList<PipelineGroupExporter> exporters, PipelineGroupService service, IList<PipelineGroupNetworkingConfiguration> networkingConfigurations, MonitorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PipelineGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PipelineGroupProperties properties, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             ExtendedLocation = extendedLocation;
-            Replicas = replicas;
-            Receivers = receivers;
-            Processors = processors;
-            Exporters = exporters;
-            Service = service;
-            NetworkingConfigurations = networkingConfigurations;
-            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -96,21 +80,9 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
-        /// <summary> The extended location for given pipeline group. </summary>
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public PipelineGroupProperties Properties { get; set; }
+        /// <summary> The complex type of the extended location. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> Defines the amount of replicas of the pipeline group instance. </summary>
-        public int? Replicas { get; set; }
-        /// <summary> The receivers specified for a pipeline group instance. </summary>
-        public IList<PipelineGroupReceiver> Receivers { get; }
-        /// <summary> The processors specified for a pipeline group instance. </summary>
-        public IList<PipelineGroupProcessor> Processors { get; }
-        /// <summary> The exporters specified for a pipeline group instance. </summary>
-        public IList<PipelineGroupExporter> Exporters { get; }
-        /// <summary> The service section for a given pipeline group instance. </summary>
-        public PipelineGroupService Service { get; set; }
-        /// <summary> Networking configurations for the pipeline group instance. </summary>
-        public IList<PipelineGroupNetworkingConfiguration> NetworkingConfigurations { get; }
-        /// <summary> The provisioning state of a pipeline group instance. Set to Succeeded if everything is healthy. </summary>
-        public MonitorProvisioningState? ProvisioningState { get; }
     }
 }

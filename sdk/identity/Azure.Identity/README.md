@@ -199,7 +199,7 @@ Not all credentials require this configuration. Credentials that authenticate th
 |[`DeviceCodeCredential`][ref_DeviceCodeCredential]|Interactively authenticates a user on devices with limited UI. | [Device code authentication](https://learn.microsoft.com/entra/identity-platform/v2-oauth2-device-code)|
 |[`InteractiveBrowserCredential`][ref_InteractiveBrowserCredential]|Interactively authenticates a user with the default system browser. | [OAuth2 authentication code](https://learn.microsoft.com/entra/identity-platform/v2-oauth2-auth-code-flow)|
 |[`OnBehalfOfCredential`][ref_OnBehalfOfCredential]|Propagates the delegated user identity and permissions through the request chain. | [On-behalf-of authentication](https://learn.microsoft.com/entra/identity-platform/v2-oauth2-on-behalf-of-flow)|
-|[`UsernamePasswordCredential`][ref_UsernamePasswordCredential]|Authenticates a user with a username and password. | [Username + password authentication](https://learn.microsoft.com/entra/identity-platform/v2-oauth-ropc)|
+|[`UsernamePasswordCredential`][ref_UsernamePasswordCredential]|**Deprecated** Authenticates a user with a username and password. | [Username + password authentication](https://learn.microsoft.com/entra/identity-platform/v2-oauth-ropc)|
 
 ### Authenticate via development tools
 
