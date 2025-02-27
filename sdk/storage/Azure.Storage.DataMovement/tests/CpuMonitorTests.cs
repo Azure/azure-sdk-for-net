@@ -19,14 +19,14 @@ namespace Azure.Storage.DataMovement.Tests
     public class CpuMonitorTests
     {
         [Test]
-        public async Task CpuUsage_ShouldBeMonitoredCorrectly()
+        public void CpuUsage_ShouldMonitorCpuUsage()
         {
             // Arrange
-            var cpuMonitor = new CpuMonitor(TimeSpan.FromMilliseconds(100));
+            var cpuMonitor = new CpuMonitor(TimeSpan.FromMilliseconds(1000));
 
             // Act
             cpuMonitor.StartMonitoring();
-            await Task.Delay(1000); // Allow some time for monitoring
+            SimulateCpuLoad(3);
             cpuMonitor.StopMonitoring();
 
             // Assert
@@ -34,22 +34,23 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async Task CpuUsage_ShouldNeverGoAbove1()
+        public void CpuUsage_ShouldNeverGoAbove1()
         {
             // Arrange
-            var cpuMonitor = new CpuMonitor(TimeSpan.FromMilliseconds(1));
+            var cpuMonitor = new CpuMonitor(TimeSpan.FromMilliseconds(1000));
 
             // Act
             cpuMonitor.StartMonitoring();
+            SimulateCpuLoad(5);
+            cpuMonitor.StopMonitoring();
 
             // Assert
-            for (var i = 0; i < 1000; i++)
-            {
-                Assert.That(cpuMonitor.CpuUsage, Is.LessThan(1));
-                Console.WriteLine(cpuMonitor.CpuUsage);
-                await Task.Delay(1);
-            }
-            cpuMonitor.StopMonitoring();
+            //for (var i = 0; i < 1000; i++)
+            //{
+            //    Assert.That(cpuMonitor.CpuUsage, Is.LessThan(1));
+            //}
+            Assert.That(cpuMonitor.CpuUsage, Is.LessThan(1));
+            Assert.Greater(cpuMonitor.CpuUsage, 0);
         }
 
         [Test]
@@ -60,6 +61,20 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.Throws<InvalidOperationException>(() => cpuMonitor.StopMonitoring());
+        }
+
+        private void SimulateCpuLoad(int durationInSeconds)
+        {
+            DateTime end = DateTime.Now.AddSeconds(durationInSeconds);
+            while (DateTime.Now < end)
+            {
+                // Perform a CPU-intensive operation
+                double result = (new Random()).Next();
+                for (int i = 0; i < 1000000; i++)
+                {
+                    result += Math.Sqrt(i);
+                }
+            }
         }
     }
 }

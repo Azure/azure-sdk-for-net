@@ -42,19 +42,13 @@ namespace Azure.Storage.DataMovement
         private double CurrentProcessorTime { get; set; }
         private TimeSpan MonitoringInterval { get; set; }
 
+        private int CoreCount { get; } = Environment.ProcessorCount;
+
         private Process CurrentProcess
         {
             get
             {
                 return Process.GetCurrentProcess();
-            }
-        }
-
-        private Process[] AllProcesses
-        {
-            get
-            {
-                return Process.GetProcesses();
             }
         }
 
@@ -215,20 +209,6 @@ namespace Azure.Storage.DataMovement
             while (!cancellationToken.IsCancellationRequested)
             {
                 await Task.Delay(MonitoringInterval, cancellationToken).ConfigureAwait(false);
-                // calculate the current time on teh processor
-                // calculate cpu
-                // set p
-
-                // Use processor directives here instead
-                // Oldest version we support is .NET Standard 2.0
-
-                //#if NET6_0_OR_GREATER
-                //    await MonitorCpuUsageNet6Plus(cancellationToken).ConfigureAwait(false);
-                //#elif NETCOREAPP3_0_OR_GREATER
-                //    await MonitorCpuUsageNetCore3(cancellationToken).ConfigureAwait(false);
-                //#else
-                //    await MonitorCpuUsageLegacy(cancellationToken).ConfigureAwait(false);
-                //#endif
                 MonitorCpuUsageLegacy();
             }
         }
@@ -256,8 +236,9 @@ namespace Azure.Storage.DataMovement
         {
             // using process would work on all old and new frameworks
             // https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.process.getcurrentprocess?view=net-9.0#system-diagnostics-process-getcurrentprocess
-            // This also has a GetAllProcesses() method
-            SetCurrentProcessorTime();
+            // Calling Refresh forces the Process object to update its cached information with current values from the OS.
+            CurrentProcess.Refresh();
+            CurrentProcessorTime = CurrentProcess.TotalProcessorTime.TotalMilliseconds;
             CpuUsage = CalculateCpuUsage();
             PreviousProcessorTime = CurrentProcessorTime;
         }
@@ -269,19 +250,7 @@ namespace Azure.Storage.DataMovement
             // Process.TotalProcessorTime.TotlMilliseconds returns the processing time across all processors
             // Environment.ProcessorCount returns then total number of cores (which includes physical cores plus hyper
             // threaded cores
-            return (float)(CurrentProcessorTime / (MonitoringInterval.TotalMilliseconds * GetCoreCount()));
-        }
-
-        private static int GetCoreCount()
-        {
-            return Environment.ProcessorCount;
-        }
-
-        private void SetCurrentProcessorTime()
-        {
-            // Calling Refresh forces the Process object to update its cached information with current values from the OS.
-            CurrentProcess.Refresh();
-            CurrentProcessorTime = CurrentProcess.TotalProcessorTime.TotalMilliseconds - PreviousProcessorTime;
+            return (float)((CurrentProcessorTime - PreviousProcessorTime) / (MonitoringInterval.TotalMilliseconds * CoreCount));
         }
     }
 }
