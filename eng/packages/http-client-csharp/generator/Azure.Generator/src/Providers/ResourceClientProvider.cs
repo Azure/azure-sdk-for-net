@@ -41,6 +41,7 @@ namespace Azure.Generator.Providers
         private FieldProvider _restClientField;
         private FieldProvider _resourcetypeField;
 
+        // TODO: simplify the input for Resource creation
         public ResourceClientProvider(IReadOnlyCollection<InputOperation> operationSet, InputClient inputClient, string requestPath, string specName, ModelProvider resourceData, string resrouceType)
         {
             _operationSet = operationSet;
