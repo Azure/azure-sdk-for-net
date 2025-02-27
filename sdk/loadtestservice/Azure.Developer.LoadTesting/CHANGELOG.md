@@ -1,14 +1,19 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Added Client Methods to work with `TestProfiles` and `TestProfileRuns`
+- Added capabilities to support all changes present in Azure Load Testing API Version 2024-05-01-preview
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Models have been added for types
 
 ## 1.0.2 (2025-01-20)
 
