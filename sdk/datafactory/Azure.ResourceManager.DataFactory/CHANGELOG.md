@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0 (2025-02-12)
+## 1.7.0 (2025-03-01)
 
 ### Features Added
 
@@ -9,8 +9,6 @@
 - Added support for Teradata connection properties and Teradata sink.
 - Added support for Oracle connection properties.
 - Added support for PostgreSQL Entra.
-
-### Breaking Changes
 
 ### Bugs Fixed
 
