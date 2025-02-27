@@ -48,7 +48,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Initializes a new instance of <see cref="LoadTestConfiguration"/>. </summary>
         public LoadTestConfiguration()
         {
-            RegionalLoadTestConfig = new ChangeTrackingList<RegionalConfiguration>();
+            RegionalLoadTestConfiguration = new ChangeTrackingList<RegionalConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadTestConfiguration"/>. </summary>
@@ -63,16 +63,16 @@ namespace Azure.Developer.LoadTesting.Models
         /// If true, optionalLoadTestConfig is required and JMX script for the load test is
         /// not required to upload.
         /// </param>
-        /// <param name="optionalLoadTestConfig"> Configuration for quick load test. </param>
-        /// <param name="regionalLoadTestConfig"> Region distribution configuration for the load test. </param>
+        /// <param name="optionalLoadTestConfiguration"> Configuration for quick load test. </param>
+        /// <param name="regionalLoadTestConfiguration"> Region distribution configuration for the load test. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestConfiguration(int? engineInstances, bool? splitAllCsvs, bool? quickStartTest, OptionalLoadTestConfiguration optionalLoadTestConfig, IList<RegionalConfiguration> regionalLoadTestConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LoadTestConfiguration(int? engineInstances, bool? splitAllCsvs, bool? quickStartTest, OptionalLoadTestConfiguration optionalLoadTestConfiguration, IList<RegionalConfiguration> regionalLoadTestConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EngineInstances = engineInstances;
             SplitAllCsvs = splitAllCsvs;
             QuickStartTest = quickStartTest;
-            OptionalLoadTestConfig = optionalLoadTestConfig;
-            RegionalLoadTestConfig = regionalLoadTestConfig;
+            OptionalLoadTestConfiguration = optionalLoadTestConfiguration;
+            RegionalLoadTestConfiguration = regionalLoadTestConfiguration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -91,8 +91,8 @@ namespace Azure.Developer.LoadTesting.Models
         /// </summary>
         public bool? QuickStartTest { get; set; }
         /// <summary> Configuration for quick load test. </summary>
-        public OptionalLoadTestConfiguration OptionalLoadTestConfig { get; set; }
+        public OptionalLoadTestConfiguration OptionalLoadTestConfiguration { get; set; }
         /// <summary> Region distribution configuration for the load test. </summary>
-        public IList<RegionalConfiguration> RegionalLoadTestConfig { get; }
+        public IList<RegionalConfiguration> RegionalLoadTestConfiguration { get; }
     }
 }

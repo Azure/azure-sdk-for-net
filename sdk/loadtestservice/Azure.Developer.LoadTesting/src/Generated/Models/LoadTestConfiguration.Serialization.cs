@@ -49,16 +49,16 @@ namespace Azure.Developer.LoadTesting.Models
                 writer.WritePropertyName("quickStartTest"u8);
                 writer.WriteBooleanValue(QuickStartTest.Value);
             }
-            if (Optional.IsDefined(OptionalLoadTestConfig))
+            if (Optional.IsDefined(OptionalLoadTestConfiguration))
             {
                 writer.WritePropertyName("optionalLoadTestConfig"u8);
-                writer.WriteObjectValue(OptionalLoadTestConfig, options);
+                writer.WriteObjectValue(OptionalLoadTestConfiguration, options);
             }
-            if (Optional.IsCollectionDefined(RegionalLoadTestConfig))
+            if (Optional.IsCollectionDefined(RegionalLoadTestConfiguration))
             {
                 writer.WritePropertyName("regionalLoadTestConfig"u8);
                 writer.WriteStartArray();
-                foreach (var item in RegionalLoadTestConfig)
+                foreach (var item in RegionalLoadTestConfiguration)
                 {
                     writer.WriteObjectValue(item, options);
                 }
