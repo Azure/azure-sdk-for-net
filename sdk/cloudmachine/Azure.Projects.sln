@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.ClientModel", "..\co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "Azure.Projects\samples\HelloWorld\HelloWorld.csproj", "{52E0B1EE-E707-7F9E-2DC1-7B1D79B8F40D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,12 +79,17 @@ Global
 		{CD107083-6815-4ECA-0260-31CA8E10A2E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD107083-6815-4ECA-0260-31CA8E10A2E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD107083-6815-4ECA-0260-31CA8E10A2E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52E0B1EE-E707-7F9E-2DC1-7B1D79B8F40D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52E0B1EE-E707-7F9E-2DC1-7B1D79B8F40D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52E0B1EE-E707-7F9E-2DC1-7B1D79B8F40D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52E0B1EE-E707-7F9E-2DC1-7B1D79B8F40D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{33E748FA-BE78-D215-0E66-A53440FDDDA6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{52E0B1EE-E707-7F9E-2DC1-7B1D79B8F40D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F9F41D8C-41B9-493A-91D4-20DDDB928B24}

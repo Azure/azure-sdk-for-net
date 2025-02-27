@@ -17,9 +17,9 @@
 	<ItemGroup>
 	</ItemGroup>
 	<ItemGroup>
+    <ProjectReference Include="..\..\src\Azure.Projects.csproj" />
+    <ProjectReference Include="..\..\..\Azure.Projects.Provisioning\src\Azure.Projects.Provisioning.csproj" />
 	  <ProjectReference Include="..\..\..\Azure.Projects.OpenAI\src\Azure.Projects.OpenAI.csproj" />
-	  <ProjectReference Include="..\..\..\Azure.Projects.Provisioning\src\Azure.Projects.Provisioning.csproj" />
 	  <ProjectReference Include="..\..\..\Azure.Projects.Web\src\Azure.Projects.Web.csproj" />
-	  <ProjectReference Include="..\..\src\Azure.Projects.csproj" />
 	</ItemGroup>
 </Project>
