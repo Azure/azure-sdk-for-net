@@ -1656,14 +1656,15 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
+        /// <param name="force"> If true, the server will delete the Job even if the corresponding nodes have not fully processed the deletion. The default value is false. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJobAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteJobAsync(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJobAsync(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteJobAsync(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -1671,7 +1672,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteJobRequest(jobId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateDeleteJobRequest(jobId, timeOutInSeconds, ocpdate, force, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1699,14 +1700,15 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
+        /// <param name="force"> If true, the server will delete the Job even if the corresponding nodes have not fully processed the deletion. The default value is false. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJob(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response DeleteJob(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJob(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
+        public virtual Response DeleteJob(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -1714,7 +1716,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteJobRequest(jobId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateDeleteJobRequest(jobId, timeOutInSeconds, ocpdate, force, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2379,6 +2381,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
+        /// <param name="force"> If true, the server will terminate the Job even if the corresponding nodes have not fully processed the termination. The default value is false. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -2391,14 +2394,14 @@ namespace Azure.Compute.Batch
         /// state, they will remain in the active state. Once a Job is terminated, new
         /// Tasks cannot be added and any remaining active Tasks will not be scheduled.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateJobAsync(string,BatchJobTerminateContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
-        public virtual async Task<Response> TerminateJobAsync(string jobId, BatchJobTerminateContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateJobAsync(string,BatchJobTerminateContent,int?,DateTimeOffset?,bool?,RequestConditions,CancellationToken)']/*" />
+        public virtual async Task<Response> TerminateJobAsync(string jobId, BatchJobTerminateContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using RequestContent content = parameters?.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await TerminateJobAsync(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
+            Response response = await TerminateJobAsync(jobId, content, timeOutInSeconds, ocpdate, force, requestConditions, context).ConfigureAwait(false);
             return response;
         }
 
@@ -2411,6 +2414,7 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
+        /// <param name="force"> If true, the server will terminate the Job even if the corresponding nodes have not fully processed the termination. The default value is false. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -2423,14 +2427,14 @@ namespace Azure.Compute.Batch
         /// state, they will remain in the active state. Once a Job is terminated, new
         /// Tasks cannot be added and any remaining active Tasks will not be scheduled.
         /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateJob(string,BatchJobTerminateContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
-        public virtual Response TerminateJob(string jobId, BatchJobTerminateContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateJob(string,BatchJobTerminateContent,int?,DateTimeOffset?,bool?,RequestConditions,CancellationToken)']/*" />
+        public virtual Response TerminateJob(string jobId, BatchJobTerminateContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using RequestContent content = parameters?.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = TerminateJob(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+            Response response = TerminateJob(jobId, content, timeOutInSeconds, ocpdate, force, requestConditions, context);
             return response;
         }
 
@@ -2444,7 +2448,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="TerminateJobAsync(string,BatchJobTerminateContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="TerminateJobAsync(string,BatchJobTerminateContent,int?,DateTimeOffset?,bool?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2457,14 +2461,15 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
+        /// <param name="force"> If true, the server will terminate the Job even if the corresponding nodes have not fully processed the termination. The default value is false. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> TerminateJobAsync(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateJobAsync(string,RequestContent,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> TerminateJobAsync(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -2472,7 +2477,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTerminateJobRequest(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateTerminateJobRequest(jobId, content, timeOutInSeconds, ocpdate, force, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2492,7 +2497,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="TerminateJob(string,BatchJobTerminateContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="TerminateJob(string,BatchJobTerminateContent,int?,DateTimeOffset?,bool?,RequestConditions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2505,14 +2510,15 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
+        /// <param name="force"> If true, the server will terminate the Job even if the corresponding nodes have not fully processed the termination. The default value is false. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response TerminateJob(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateJob(string,RequestContent,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
+        public virtual Response TerminateJob(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -2520,7 +2526,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTerminateJobRequest(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateTerminateJobRequest(jobId, content, timeOutInSeconds, ocpdate, force, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2848,14 +2854,15 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
+        /// <param name="force"> If true, the server will delete the JobSchedule even if the corresponding nodes have not fully processed the deletion. The default value is false. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJobScheduleAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJobScheduleAsync(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
@@ -2863,7 +2870,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateDeleteJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpdate, force, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2891,14 +2898,15 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
+        /// <param name="force"> If true, the server will delete the JobSchedule even if the corresponding nodes have not fully processed the deletion. The default value is false. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJobSchedule(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response DeleteJobSchedule(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJobSchedule(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
+        public virtual Response DeleteJobSchedule(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
@@ -2906,7 +2914,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateDeleteJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpdate, force, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3502,14 +3510,15 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
+        /// <param name="force"> If true, the server will terminate the JobSchedule even if the corresponding nodes have not fully processed the termination. The default value is false. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateJobScheduleAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> TerminateJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateJobScheduleAsync(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<Response> TerminateJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
@@ -3517,7 +3526,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTerminateJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateTerminateJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpdate, force, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3545,14 +3554,15 @@ namespace Azure.Compute.Batch
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
         /// </param>
+        /// <param name="force"> If true, the server will terminate the JobSchedule even if the corresponding nodes have not fully processed the termination. The default value is false. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateJobSchedule(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response TerminateJobSchedule(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='TerminateJobSchedule(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
+        public virtual Response TerminateJobSchedule(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
@@ -3560,7 +3570,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTerminateJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateTerminateJobScheduleRequest(jobScheduleId, timeOutInSeconds, ocpdate, force, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -5746,6 +5756,402 @@ namespace Azure.Compute.Batch
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Starts the specified Compute Node.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
+        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpdate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='StartNodeAsync(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> StartNodeAsync(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
+
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.StartNode");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateStartNodeRequest(poolId, nodeId, timeOutInSeconds, ocpdate, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Starts the specified Compute Node.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
+        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpdate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='StartNode(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response StartNode(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
+
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.StartNode");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateStartNodeRequest(poolId, nodeId, timeOutInSeconds, ocpdate, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Reinstalls the operating system on the specified Compute Node. </summary>
+        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
+        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
+        /// <param name="parameters"> The options to use for reimaging the Compute Node. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpdate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// You can reinstall the operating system on a Compute Node only if it is in an
+        /// idle or running state. This API can be invoked only on Pools created with the
+        /// cloud service configuration property.
+        /// </remarks>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReimageNodeAsync(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual async Task<Response> ReimageNodeAsync(string poolId, string nodeId, BatchNodeReimageContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
+
+            using RequestContent content = parameters?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await ReimageNodeAsync(poolId, nodeId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            return response;
+        }
+
+        /// <summary> Reinstalls the operating system on the specified Compute Node. </summary>
+        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
+        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
+        /// <param name="parameters"> The options to use for reimaging the Compute Node. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpdate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// You can reinstall the operating system on a Compute Node only if it is in an
+        /// idle or running state. This API can be invoked only on Pools created with the
+        /// cloud service configuration property.
+        /// </remarks>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReimageNode(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual Response ReimageNode(string poolId, string nodeId, BatchNodeReimageContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
+
+            using RequestContent content = parameters?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = ReimageNode(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+            return response;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Reinstalls the operating system on the specified Compute Node.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ReimageNodeAsync(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
+        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpdate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReimageNodeAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> ReimageNodeAsync(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
+
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.ReimageNode");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateReimageNodeRequest(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Reinstalls the operating system on the specified Compute Node.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ReimageNode(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
+        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpdate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReimageNode(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response ReimageNode(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
+
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.ReimageNode");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateReimageNodeRequest(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deallocates the specified Compute Node. </summary>
+        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
+        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
+        /// <param name="parameters"> The options to use for deallocating the Compute Node. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpdate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> You can deallocate a Compute Node only if it is in an idle or running state. </remarks>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeallocateNodeAsync(string,string,BatchNodeDeallocateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual async Task<Response> DeallocateNodeAsync(string poolId, string nodeId, BatchNodeDeallocateContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
+
+            using RequestContent content = parameters?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await DeallocateNodeAsync(poolId, nodeId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
+            return response;
+        }
+
+        /// <summary> Deallocates the specified Compute Node. </summary>
+        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
+        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
+        /// <param name="parameters"> The options to use for deallocating the Compute Node. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpdate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> You can deallocate a Compute Node only if it is in an idle or running state. </remarks>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeallocateNode(string,string,BatchNodeDeallocateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        public virtual Response DeallocateNode(string poolId, string nodeId, BatchNodeDeallocateContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
+
+            using RequestContent content = parameters?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = DeallocateNode(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+            return response;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deallocates the specified Compute Node.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeallocateNodeAsync(string,string,BatchNodeDeallocateContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
+        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpdate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeallocateNodeAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual async Task<Response> DeallocateNodeAsync(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
+
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeallocateNode");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeallocateNodeRequest(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deallocates the specified Compute Node.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeallocateNode(string,string,BatchNodeDeallocateContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
+        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpdate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeallocateNode(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        public virtual Response DeallocateNode(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
+
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeallocateNode");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeallocateNodeRequest(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Disables Task scheduling on the specified Compute Node. </summary>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node on which you want to disable Task scheduling. </param>
@@ -6003,9 +6409,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Before you can remotely login to a Compute Node using the remote login
-        /// settings, you must create a user Account on the Compute Node. This API can be
-        /// invoked only on Pools created with the virtual machine configuration property.
+        /// Before you can remotely login to a Compute Node using the remote login settings,
+        /// you must create a user Account on the Compute Node.
         /// </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettingsAsync(string,string,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response<BatchNodeRemoteLoginSettings>> GetNodeRemoteLoginSettingsAsync(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
@@ -6031,9 +6436,8 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Before you can remotely login to a Compute Node using the remote login
-        /// settings, you must create a user Account on the Compute Node. This API can be
-        /// invoked only on Pools created with the virtual machine configuration property.
+        /// Before you can remotely login to a Compute Node using the remote login settings,
+        /// you must create a user Account on the Compute Node.
         /// </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettings(string,string,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response<BatchNodeRemoteLoginSettings> GetNodeRemoteLoginSettings(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
@@ -7036,7 +7440,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-account-usage-metrics.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-account-usage-metrics.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks>
@@ -7082,7 +7486,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-account-usage-metrics.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-account-usage-metrics.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks>
@@ -7140,7 +7544,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-account-usage-metrics.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-account-usage-metrics.
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -7191,7 +7595,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-account-usage-metrics.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-account-usage-metrics.
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -7204,7 +7608,7 @@ namespace Azure.Compute.Batch
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetPoolUsageMetrics", "value", "odata.nextLink", context);
         }
 
-        /// <summary> Lists all of the Pools in the specified Account. </summary>
+        /// <summary> Lists all of the Pools which be mounted. </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
         /// <param name="ocpdate">
         /// The time the request was issued. Client libraries typically set this to the
@@ -7217,7 +7621,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-pools.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-pools.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -7231,7 +7635,7 @@ namespace Azure.Compute.Batch
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchPool.DeserializeBatchPool(e), ClientDiagnostics, _pipeline, "BatchClient.GetPools", "value", "odata.nextLink", context);
         }
 
-        /// <summary> Lists all of the Pools in the specified Account. </summary>
+        /// <summary> Lists all of the Pools which be mounted. </summary>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
         /// <param name="ocpdate">
         /// The time the request was issued. Client libraries typically set this to the
@@ -7244,7 +7648,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-pools.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-pools.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -7259,7 +7663,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary>
-        /// [Protocol Method] Lists all of the Pools in the specified Account.
+        /// [Protocol Method] Lists all of the Pools which be mounted.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -7285,7 +7689,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-pools.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-pools.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -7301,7 +7705,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary>
-        /// [Protocol Method] Lists all of the Pools in the specified Account.
+        /// [Protocol Method] Lists all of the Pools which be mounted.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -7327,7 +7731,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-pools.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-pools.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -7355,7 +7759,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-support-images.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSupportedImagesAsync(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
@@ -7380,7 +7784,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-support-images.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSupportedImages(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
@@ -7419,7 +7823,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-support-images.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -7459,7 +7863,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-support-images.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -7489,7 +7893,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-support-images.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolNodeCountsAsync(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
@@ -7518,7 +7922,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-support-images.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolNodeCounts(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
@@ -7559,7 +7963,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-support-images.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -7601,7 +8005,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-support-images.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -7627,7 +8031,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-jobs.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -7654,7 +8058,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-jobs.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -7695,7 +8099,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-jobs.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -7737,7 +8141,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-jobs.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -7766,7 +8170,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-jobs-in-a-job-schedule.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs-in-a-job-schedule.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -7798,7 +8202,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-jobs-in-a-job-schedule.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs-in-a-job-schedule.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -7844,7 +8248,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-jobs-in-a-job-schedule.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs-in-a-job-schedule.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -7891,7 +8295,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-jobs-in-a-job-schedule.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs-in-a-job-schedule.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -7927,7 +8331,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -7969,7 +8373,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -8023,7 +8427,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -8070,7 +8474,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -8101,7 +8505,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-job-schedules.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-schedules.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8128,7 +8532,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-job-schedules.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-schedules.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8169,7 +8573,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-job-schedules.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-schedules.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8211,7 +8615,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-job-schedules.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-schedules.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8240,7 +8644,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-tasks.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-tasks.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8277,7 +8681,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-tasks.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-tasks.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8328,7 +8732,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-tasks.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-tasks.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8375,7 +8779,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-tasks.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-tasks.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8549,7 +8953,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-task-files.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-task-files.
         /// </param>
         /// <param name="recursive">
         /// Whether to list children of the Task directory. This parameter can be used in
@@ -8585,7 +8989,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-task-files.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-task-files.
         /// </param>
         /// <param name="recursive">
         /// Whether to list children of the Task directory. This parameter can be used in
@@ -8635,7 +9039,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-task-files.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-task-files.
         /// </param>
         /// <param name="recursive">
         /// Whether to list children of the Task directory. This parameter can be used in
@@ -8686,7 +9090,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-task-files.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-task-files.
         /// </param>
         /// <param name="recursive">
         /// Whether to list children of the Task directory. This parameter can be used in
@@ -8722,7 +9126,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -8753,7 +9157,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -8798,7 +9202,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -8844,7 +9248,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -9023,7 +9427,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-compute-node-files.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-compute-node-files.
         /// </param>
         /// <param name="recursive"> Whether to list children of a directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -9056,7 +9460,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-compute-node-files.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-compute-node-files.
         /// </param>
         /// <param name="recursive"> Whether to list children of a directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -9103,7 +9507,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-compute-node-files.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-compute-node-files.
         /// </param>
         /// <param name="recursive"> Whether to list children of a directory. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -9151,7 +9555,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-compute-node-files.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-compute-node-files.
         /// </param>
         /// <param name="recursive"> Whether to list children of a directory. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -9727,7 +10131,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateDeleteJobRequest(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateDeleteJobRequest(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, bool? force, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -9740,6 +10144,10 @@ namespace Azure.Compute.Batch
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+            }
+            if (force != null)
+            {
+                uri.AppendQuery("force", force.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -9917,7 +10325,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateTerminateJobRequest(string jobId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateTerminateJobRequest(string jobId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, bool? force, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -9931,6 +10339,10 @@ namespace Azure.Compute.Batch
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+            }
+            if (force != null)
+            {
+                uri.AppendQuery("force", force.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -10150,7 +10562,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateDeleteJobScheduleRequest(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateDeleteJobScheduleRequest(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, bool? force, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -10163,6 +10575,10 @@ namespace Azure.Compute.Batch
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+            }
+            if (force != null)
+            {
+                uri.AppendQuery("force", force.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -10338,7 +10754,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateTerminateJobScheduleRequest(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateTerminateJobScheduleRequest(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, bool? force, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -10352,6 +10768,10 @@ namespace Azure.Compute.Batch
             if (timeOutInSeconds != null)
             {
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+            }
+            if (force != null)
+            {
+                uri.AppendQuery("force", force.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -11007,6 +11427,94 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/reboot", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (timeOutInSeconds != null)
+            {
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("client-request-id", message.Request.ClientRequestId);
+            request.Headers.Add("return-client-request-id", "true");
+            if (ocpdate != null)
+            {
+                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+            }
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateStartNodeRequest(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/pools/", false);
+            uri.AppendPath(poolId, true);
+            uri.AppendPath("/nodes/", false);
+            uri.AppendPath(nodeId, true);
+            uri.AppendPath("/start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (timeOutInSeconds != null)
+            {
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("client-request-id", message.Request.ClientRequestId);
+            request.Headers.Add("return-client-request-id", "true");
+            if (ocpdate != null)
+            {
+                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+            }
+            return message;
+        }
+
+        internal HttpMessage CreateReimageNodeRequest(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/pools/", false);
+            uri.AppendPath(poolId, true);
+            uri.AppendPath("/nodes/", false);
+            uri.AppendPath(nodeId, true);
+            uri.AppendPath("/reimage", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (timeOutInSeconds != null)
+            {
+                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("client-request-id", message.Request.ClientRequestId);
+            request.Headers.Add("return-client-request-id", "true");
+            if (ocpdate != null)
+            {
+                request.Headers.Add("ocp-date", ocpdate.Value, "R");
+            }
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeallocateNodeRequest(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/pools/", false);
+            uri.AppendPath(poolId, true);
+            uri.AppendPath("/nodes/", false);
+            uri.AppendPath(nodeId, true);
+            uri.AppendPath("/deallocate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {

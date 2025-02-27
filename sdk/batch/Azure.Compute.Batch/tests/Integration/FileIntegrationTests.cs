@@ -75,12 +75,11 @@ namespace Azure.Compute.Batch.Tests.Integration
                         Assert.AreEqual($"Hello World task-{index++}", line);
                     }
 
-                    // Currently broken
-                    //await foreach (BatchNodeFile item in client.GetTaskFilesAsync(jobId, t.Id))
-                    //{
-                    //    string url = item.Url;
-                    //    long contentLenght = item.Properties.ContentLength;
-                    //}
+                    await foreach (BatchNodeFile item in client.GetTaskFilesAsync(jobId, t.Id))
+                    {
+                        string url = item.Url;
+                        long contentLenght = item.Properties != null ? item.Properties.ContentLength : 0;
+                    }
                 }
             }
             finally
