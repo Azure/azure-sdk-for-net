@@ -122,28 +122,6 @@ jobs:
 
       # only use the project list override file if the service directory is not auto
       - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
-        - template: /eng/common/testproxy/test-proxy-tool.yml
-          parameters:
-            runProxy: false
-
-        - pwsh: |
-            $packageProperties = Get-ChildItem -Recurse '$(Build.ArtifactStagingDirectory)/PackageInfo' -Filter *.json `
-              | Foreach-Object { Get-Content -Raw -Path $_.FullName | ConvertFrom-Json }
-            $packageSet = "$ProjectNames" -split ","
-            $changedProjects = $packageProperties | Where-Object { $packageSet -contains $_.ArtifactName }
-
-            foreach ($proj in $changedProjects) {
-              $assets = Join-Path (Join-Path "$(Build.SourcesDirectory)" $proj.DirectoryPath) "assets.json"
-              if (Test-Path $assets) {
-                if ($IsWindows) {
-                  & "$(Build.BinariesDirectory)/test-proxy/test-proxy.exe" restore -a $assets
-                } else {
-                  & "$(Build.BinariesDirectory)/test-proxy/test-proxy" restore -a $assets
-                }
-              }
-            }
-          displayName: Restore Recordings
-
         - pwsh: |
             if (!"$(ProjectNames)") {
               Write-Host "No packages to build."
