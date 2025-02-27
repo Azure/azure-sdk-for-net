@@ -3,7 +3,6 @@
 
 using System.ClientModel.Internal;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
@@ -14,14 +13,7 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public static class ModelReaderWriter
 {
-    internal static readonly HashSet<Type> s_supportedCollectionTypes =
-    [
-        typeof(List<>),
-        typeof(Dictionary<,>)
-    ];
-
-    private delegate object ObjectActivator(Type typeToActivate);
-    private delegate IPersistableModel<object> PersistableModelActivator(Type typeToActivate);
+    private static readonly Lazy<ReflectionContext> s_reflectionContext = new(() => new());
 
     /// <summary>
     /// Converts the value of a model into a <see cref="BinaryData"/>.
@@ -42,17 +34,7 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        if (ShouldWriteAsJson(model, options, out IJsonModel<T>? jsonModel))
-        {
-            using (UnsafeBufferSequence.Reader reader = new ModelWriter<T>(jsonModel, options).ExtractReader())
-            {
-                return reader.ToBinaryData();
-            }
-        }
-        else
-        {
-            return model.Write(options);
-        }
+        return WritePersistable(model, options);
     }
 
     /// <summary>
@@ -73,28 +55,86 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        if (model is IPersistableModel<object> iModel)
+        return WritePersistableOrEnumerable(model, s_reflectionContext.Value, options);
+    }
+
+    /// <summary>
+    /// Converts the value of a model into a <see cref="BinaryData"/>.
+    /// </summary>
+    /// <typeparam name="T">The type of the value to write.</typeparam>
+    /// <param name="model">The model to convert.</param>
+    /// <param name="context"> The <see cref="ModelReaderWriterContext"/> to use.</param>
+    /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+    /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterOptions.Format"/> specified by the <paramref name="options"/>.</returns>
+    /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
+    public static BinaryData Write<T>(T model, ModelReaderWriterContext context, ModelReaderWriterOptions? options = default)
+    {
+        if (model is null)
         {
-            if (ShouldWriteAsJson(iModel, options, out IJsonModel<object>? jsonModel))
-            {
-                using (UnsafeBufferSequence.Reader reader = new ModelWriter(jsonModel, options).ExtractReader())
-                {
-                    return reader.ToBinaryData();
-                }
-            }
-            else
-            {
-                return iModel.Write(options);
-            }
+            throw new ArgumentNullException(nameof(model));
         }
-        else if (model is IEnumerable enumerable)
+
+        options ??= ModelReaderWriterOptions.Json;
+
+        return WritePersistableOrEnumerable(model, context, options);
+    }
+
+    /// <summary>
+    /// Converts the value of a model into a <see cref="BinaryData"/>.
+    /// </summary>
+    /// <param name="model">The model to convert.</param>
+    /// <param name="context"> The <see cref="ModelReaderWriterContext"/> to use.</param>
+    /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+    /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterOptions.Format"/> specified by the <paramref name="options"/>.</returns>
+    /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IPersistableModel{T}"/>.</exception>
+    /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
+    public static BinaryData Write(object model, ModelReaderWriterContext context, ModelReaderWriterOptions? options = default)
+    {
+        if (model is null)
         {
-            var collectionWriter = CollectionWriter.GetCollectionWriter(enumerable, options);
-            return collectionWriter.Write(enumerable, options);
+            throw new ArgumentNullException(nameof(model));
+        }
+
+        options ??= ModelReaderWriterOptions.Json;
+
+        return WritePersistableOrEnumerable(model, context, options);
+    }
+
+    private static BinaryData WritePersistableOrEnumerable<T>(T model, ModelReaderWriterContext context, ModelReaderWriterOptions options)
+    {
+        if (model is IPersistableModel<T> iModel)
+        {
+            return WritePersistable(iModel, options);
         }
         else
         {
-            throw new InvalidOperationException($"{model.GetType().FullName} must implement IEnumerable or IPersistableModel");
+            var enumerable = model as IEnumerable ?? context.GetModelInfoInternal(model!.GetType()).GetEnumerable(model);
+            if (enumerable is not null)
+            {
+                var collectionWriter = CollectionWriter.GetCollectionWriter(enumerable, options);
+                return collectionWriter.Write(enumerable, options);
+            }
+            else
+            {
+                throw new InvalidOperationException($"{model!.GetType().FullName} must implement IEnumerable or IPersistableModel");
+            }
+        }
+    }
+
+    private static BinaryData WritePersistable<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
+    {
+        if (ShouldWriteAsJson(model, options, out IJsonModel<T>? jsonModel))
+        {
+            using (UnsafeBufferSequence.Reader reader = new ModelWriter<T>(jsonModel, options).ExtractReader())
+            {
+                return reader.ToBinaryData();
+            }
+        }
+        else
+        {
+            return model.Write(options);
         }
     }
 
@@ -115,7 +155,7 @@ public static class ModelReaderWriter
     {
         return ReadInternal<T>(
             data,
-            new ReflectionContext(),
+            s_reflectionContext.Value,
             options);
     }
 
@@ -170,7 +210,7 @@ public static class ModelReaderWriter
         return ReadInternal(
             data,
             returnType,
-            new ReflectionContext(),
+            s_reflectionContext.Value,
             options);
     }
 

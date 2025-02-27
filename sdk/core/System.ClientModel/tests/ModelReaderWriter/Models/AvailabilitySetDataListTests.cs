@@ -41,6 +41,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             private Queue_AvailabilitySetData_Info? _queue_AvailabilitySetData_Info;
             private SortedSet_AvailabilitySetData_Info? _sortedSet_AvailabilitySetData_Info;
             private Stack_AvailabilitySetData_Info? _stack_AvailabilitySetData_Info;
+            private ReadOnlyMemory_AvailabilitySetData_Info? _readOnlyMemory_AvailabilitySetData_Info;
 
             public override ModelInfo? GetModelInfo(Type type)
             {
@@ -55,8 +56,37 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                     Type t when t == typeof(Queue<AvailabilitySetData>) => _queue_AvailabilitySetData_Info ??= new(),
                     Type t when t == typeof(SortedSet<AvailabilitySetData>) => _sortedSet_AvailabilitySetData_Info ??= new(),
                     Type t when t == typeof(Stack<AvailabilitySetData>) => _stack_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(ReadOnlyMemory<AvailabilitySetData>) => _readOnlyMemory_AvailabilitySetData_Info ??= new(),
                     _ => _LibraryContext.Value.GetModelInfo(type)
                 };
+            }
+
+            private class ReadOnlyMemory_AvailabilitySetData_Info : ModelInfo
+            {
+                public override object CreateObject() => new ReadOnlyMemory_AvailabilitySetData_Builder();
+
+                private class ReadOnlyMemory_AvailabilitySetData_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<List<AvailabilitySetData>> _instance = new(() => []);
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+
+                    protected override object ToObject() => new ReadOnlyMemory<AvailabilitySetData>([.. _instance.Value]);
+                }
+
+                public override IEnumerable? GetEnumerable(object obj)
+                {
+                    if (obj is ReadOnlyMemory<AvailabilitySetData> rom)
+                    {
+                        for (int i = 0; i < rom.Length; i++)
+                        {
+                            yield return rom.Span[i];
+                        }
+                    }
+                    yield break;
+                }
             }
 
             private class Stack_AvailabilitySetData_Info : ModelInfo
@@ -294,27 +324,37 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             RoundTripCollection(new List<AvailabilitySetData>(s_availabilitySets));
         }
 
-        private void RoundTripCollection(IEnumerable collection, bool reverse = false)
+        [Test]
+        public void RoundTrip_ReadOnlyMemory()
         {
-            BinaryData data = ModelReaderWriter.Write(collection);
+            RoundTripCollection(new ReadOnlyMemory<AvailabilitySetData>([.. s_availabilitySets]));
+        }
+
+        private void RoundTripCollection(object collection, bool reverse = false)
+        {
+            BinaryData data = ModelReaderWriter.Write(collection, s_readerWriterContext);
             Assert.IsNotNull(data);
             Assert.AreEqual(s_collapsedPayload, data.ToString());
 
-            var roundTripCollection = ModelReaderWriter.Read(data, collection.GetType(), s_readerWriterContext) as IEnumerable;
+            var collectionEumerable = GetEnumerable(collection);
+
+            var roundTripCollection = ModelReaderWriter.Read(data, collection.GetType(), s_readerWriterContext);
             Assert.IsNotNull(roundTripCollection);
+            var roundTripEnumerable = GetEnumerable(roundTripCollection!);
             if (reverse)
             {
                 Stack<AvailabilitySetData> newStack = new Stack<AvailabilitySetData>();
-                var reverseEnumerator = roundTripCollection!.GetEnumerator();
+                var reverseEnumerator = roundTripEnumerable.GetEnumerator();
                 while (reverseEnumerator.MoveNext())
                 {
                     newStack.Push((AvailabilitySetData)reverseEnumerator.Current);
                 }
                 roundTripCollection = newStack;
+                roundTripEnumerable = GetEnumerable(roundTripCollection);
             }
             Assert.AreEqual(collection.GetType(), roundTripCollection!.GetType());
-            var enumerator = collection.GetEnumerator();
-            var roundTripEnumerator = roundTripCollection.GetEnumerator();
+            var enumerator = collectionEumerable.GetEnumerator();
+            var roundTripEnumerator = roundTripEnumerable.GetEnumerator();
             var comparer = new AvailabilitySetDataComparer();
             while (enumerator.MoveNext())
             {
@@ -324,9 +364,31 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             //assert none left in round trip
             Assert.IsFalse(roundTripEnumerator.MoveNext(), "More items found in round trip collection");
 
-            BinaryData data2 = ModelReaderWriter.Write(roundTripCollection);
+            BinaryData data2 = ModelReaderWriter.Write(roundTripCollection, s_readerWriterContext);
             Assert.AreEqual(data.Length, data2.Length);
             Assert.IsTrue(data.ToMemory().Span.SequenceEqual(data2.ToMemory().Span));
+        }
+
+        private IEnumerable GetEnumerable(object collection)
+        {
+            if (collection is IEnumerable enumerable)
+            {
+                foreach (var item in enumerable)
+                {
+                    yield return item;
+                }
+                yield break;
+            }
+            else
+            {
+                //should be ReadOnlyMemory here for test data
+                var rom = (ReadOnlyMemory<AvailabilitySetData>)collection;
+                for (int i = 0; i < rom.Length; i++)
+                {
+                    yield return rom.Span[i];
+                }
+                yield break;
+            }
         }
 
         [Test]
