@@ -1,7 +1,0 @@
-name: cmbb6fd4658c1340c
-resourceGroup: cmbb6fd4658c1340c
-services:
-  cmbb6fd4658c1340c:
-    project: ./ # path to your web project
-    language: csharp # one of the supported languages
-    host: appservice # one of the supported Azure services
