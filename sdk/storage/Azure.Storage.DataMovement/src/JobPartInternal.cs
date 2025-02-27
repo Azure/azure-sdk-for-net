@@ -554,7 +554,7 @@ namespace Azure.Storage.DataMovement
             // block size * block count limit = max data length to upload
             // if stream length is longer than specified max block size allows, can't upload
             long minRequiredBlockSize = (long)Math.Ceiling((double)streamLength / maxBlockCount);
-            if (blockSize < minRequiredBlockSize)
+            if (blockSize < minRequiredBlockSize || maxBlockCount == 0)
             {
                 throw Errors.InsufficientStorageTransferOptions(streamLength, blockSize, minRequiredBlockSize);
             }
