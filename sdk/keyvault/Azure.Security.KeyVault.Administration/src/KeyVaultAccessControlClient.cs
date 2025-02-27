@@ -15,6 +15,7 @@ namespace Azure.Security.KeyVault.Administration
     /// The client supports creating, listing, updating, and deleting <see cref="KeyVaultRoleAssignment"/> and <see cref="KeyVaultRoleDefinition" />.
     /// </summary>
     [CodeGenModel("KeyVaultAccessControlRestClient")]
+    [CodeGenSuppress("Pipeline")]
     public partial class KeyVaultAccessControlClient
     {
         private readonly ClientDiagnostics _diagnostics;

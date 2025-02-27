@@ -15,13 +15,6 @@ namespace Azure.Security.KeyVault.Administration
         internal const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-administration";
 
         /// <summary>
-        /// The latest service version supported by this client library.
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
-        /// </summary>
-        internal const KeyVaultAdministrationClientOptions.ServiceVersion LatestVersion = KeyVaultAdministrationClientOptions.ServiceVersion.V7_6_Preview_1;
-
-        /// <summary>
         /// Gets the <see cref="KeyVaultAdministrationClientOptions.ServiceVersion"/> of the service API used when
         /// making requests. For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
@@ -69,7 +62,7 @@ namespace Azure.Security.KeyVault.Administration
             /// <summary>
             /// Service version "7.6-preview.1".
             /// </summary>
-            V7_6_Preview_1 = 5,
+            V7_6_Preview_2 = 5,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -86,8 +79,8 @@ namespace Azure.Security.KeyVault.Administration
                 ServiceVersion.V7_3 => "7.3",
                 ServiceVersion.V7_4 => "7.4",
                 ServiceVersion.V7_5 => "7.5",
-                ServiceVersion.V7_6_Preview_1 => "V7_6_Preview_1",
-                _ => throw new ArgumentException(Version.ToString())
+                ServiceVersion.V7_6_Preview_2 => "7.6-preview.2",
+                _ => throw new ArgumentOutOfRangeException(nameof(Version), Version, null)
             };
         }
     }

@@ -43,13 +43,16 @@ namespace Azure.Security.KeyVault.Administration
     }
     public partial class KeyVaultAdministrationClientOptions : Azure.Core.ClientOptions
     {
-        public KeyVaultAdministrationClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion.V7_6_Preview_1) { }
+        public KeyVaultAdministrationClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion.V7_6_Preview_2) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
-            V7_5 = 1,
-            V7_6_Preview_1 = 2,
+            V7_2 = 1,
+            V7_3 = 2,
+            V7_4 = 3,
+            V7_5 = 4,
+            V7_6_Preview_2 = 5,
         }
     }
     public static partial class KeyVaultAdministrationModelFactory
@@ -333,11 +336,5 @@ namespace Azure.Security.KeyVault.Administration
         private readonly int _dummyPrimitive;
         public bool AsBoolean() { throw null; }
         public override string ToString() { throw null; }
-    }
-}
-namespace Microsoft.Extensions.Azure
-{
-    public static partial class SecurityKeyVaultAdministrationClientBuilderExtensions
-    {
     }
 }

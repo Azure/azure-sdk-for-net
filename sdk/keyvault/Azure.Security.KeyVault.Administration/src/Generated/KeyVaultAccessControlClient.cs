@@ -28,9 +28,6 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
-
         /// <summary> Deletes a custom role definition. </summary>
         /// <param name="scope"> The scope of the role definition to delete. Managed HSM only supports '/'. </param>
         /// <param name="roleDefinitionName"> The name (GUID) of the role definition to delete. </param>
