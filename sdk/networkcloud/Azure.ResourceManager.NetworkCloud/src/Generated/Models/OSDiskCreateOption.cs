@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         private const string EphemeralValue = "Ephemeral";
+        private const string PersistentValue = "Persistent";
 
-        /// <summary> Ephemeral. </summary>
+        /// <summary> Utilize the local storage of the host machine. </summary>
         public static OSDiskCreateOption Ephemeral { get; } = new OSDiskCreateOption(EphemeralValue);
+        /// <summary> Utilize a storage appliance backed volume to host the disk. </summary>
+        public static OSDiskCreateOption Persistent { get; } = new OSDiskCreateOption(PersistentValue);
         /// <summary> Determines if two <see cref="OSDiskCreateOption"/> values are the same. </summary>
         public static bool operator ==(OSDiskCreateOption left, OSDiskCreateOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OSDiskCreateOption"/> values are not the same. </summary>
