@@ -50,7 +50,7 @@ public static class Azd
         {
             TargetScope = DeploymentScope.Subscription
         };
-        ModuleImport import = new("cm", $"cm.bicep")
+        ModuleImport import = new("project", $"project.bicep")
         {
             Name = "cm",
             Scope = new IdentifierExpression(rg.BicepIdentifier)
