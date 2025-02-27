@@ -373,7 +373,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             }
         }
 
-        // code comment
         private async Task CopyRemoteObjects_VerifyProperties(
             ShareClient sourceContainer,
             ShareClient destinationContainer,

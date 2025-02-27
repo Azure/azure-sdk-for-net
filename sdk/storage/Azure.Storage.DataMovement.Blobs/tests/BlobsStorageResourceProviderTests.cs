@@ -64,7 +64,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
         }
 
-        // this is a code comment
         private void AssertBlobStorageResourceType(
             StorageResource resource,
             BlobType blobType,
