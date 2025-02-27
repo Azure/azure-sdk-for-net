@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.Storage
-require: https://github.com/Azure/azure-rest-api-specs/blob/982bec06ab5076c1e91935640a09a15857761b66/specification/storage/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/42b311973cb0045bde1cbf942bdeb73b7b184398/specification/storage/resource-manager/readme.md
 #tag: package-2024-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
