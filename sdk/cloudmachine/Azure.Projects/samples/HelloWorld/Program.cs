@@ -10,5 +10,5 @@ if (infrastructure.TryExecuteCommand(args)) return;
 
 ProjectClient project = infrastructure.GetClient();
 ChatClient chat = project.GetOpenAIChatClient();
-Console.WriteLine(chat.CompleteChat("list all noble gasses."));
+Console.WriteLine(chat.CompleteChat("list all noble gasses.").AsText());
 
