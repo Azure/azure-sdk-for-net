@@ -57,8 +57,25 @@ public readonly struct ClientConnection
     /// </summary>
     /// <param name="id">The identifier for the connection.</param>
     /// <param name="locator">The endpoint or resource identifier.</param>
+    public ClientConnection(string id, string locator)
+    {
+        if (string.IsNullOrWhiteSpace(id))
+            throw new ArgumentException("Id cannot be null or empty.", nameof(id));
+        if (string.IsNullOrWhiteSpace(locator))
+            throw new ArgumentException("Locator cannot be null or empty.", nameof(locator));
+
+        Id = id;
+        Locator = locator;
+        Authentication = ClientAuthenticationMethod.NoAuth;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ClientConnection"/> struct with a with no authentication.
+    /// </summary>
+    /// <param name="id">The identifier for the connection.</param>
+    /// <param name="locator">The endpoint or resource identifier.</param>
     /// <param name="auth">authentication method</param>
-    public ClientConnection(string id, string locator, ClientAuthenticationMethod auth = ClientAuthenticationMethod.NoAuth)
+    public ClientConnection(string id, string locator, ClientAuthenticationMethod auth)
     {
         if (string.IsNullOrWhiteSpace(id))
             throw new ArgumentException("Id cannot be null or empty.", nameof(id));
