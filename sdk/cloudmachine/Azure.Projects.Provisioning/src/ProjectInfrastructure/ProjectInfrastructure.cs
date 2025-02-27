@@ -47,11 +47,7 @@ public partial class ProjectInfrastructure
 
     public ProjectInfrastructure(string? projectId = default)
     {
-        if (projectId == default)
-        {
-            projectId = ProjectClient.ReadOrCreateProjectId();
-        }
-        ProjectId = projectId;
+        ProjectId = projectId ?? ProjectClient.ReadOrCreateProjectId();
 
         // Always add a default location parameter.
         // azd assumes there will be a location parameter for every module.
