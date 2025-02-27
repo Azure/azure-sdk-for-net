@@ -123,7 +123,7 @@ jobs:
       # only use the project list override file if the service directory is not auto
       - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
         - template: /eng/common/testproxy/test-proxy-tool.yml
-          paramters:
+          parameters:
             runProxy: false
 
         - pwsh: |
