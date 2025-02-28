@@ -139,7 +139,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNotNull(exists);
         }
 
-        [RecordedTest]
+        [Test]
         public void Ctor_DevelopmentThrows()
         {
             var shareName = GetNewShareName();

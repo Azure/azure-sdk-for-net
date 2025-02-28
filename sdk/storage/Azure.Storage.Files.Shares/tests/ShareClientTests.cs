@@ -267,7 +267,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
         }
 
-        [RecordedTest]
+        [Test]
         public void Ctor_DevelopmentThrows()
         {
             var shareName = GetNewShareName();

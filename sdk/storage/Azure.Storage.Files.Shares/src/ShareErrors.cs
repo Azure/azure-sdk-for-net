@@ -37,7 +37,7 @@ namespace Azure.Storage.Files.Shares
         {
             if (conn.IsDevStoreAccount)
             {
-                throw new ArgumentException("Connection string for emulator is not valid for Azure File Shares", nameof(argumentName));
+                throw new ArgumentException("Connection string for emulator is not valid for Azure File Shares", argumentName);
             }
         }
     }

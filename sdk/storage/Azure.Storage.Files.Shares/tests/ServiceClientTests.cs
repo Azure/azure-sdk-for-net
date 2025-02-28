@@ -72,7 +72,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
-        [RecordedTest]
+        [Test]
         public void Ctor_DevelopmentThrows()
         {
             var ex = Assert.Throws<ArgumentException>(() => new ShareServiceClient("Development=true"));
