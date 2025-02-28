@@ -79,15 +79,13 @@ If you only need to encrypt data or verify signatures, you do not need to downlo
 in Key Vault you reduce risk of leaking secret information.
 
 ```C# Snippet:CertificatesSample4PublicKey
-            Response<KeyVaultCertificateWithPolicy> certificateResponse = client.GetCertificate(certificateName);
+Response<KeyVaultCertificateWithPolicy> certificateResponse = client.GetCertificate(certificateName);
 
-#pragma warning disable SYSLIB0057 // New APIs are not supported on all versions of .NET
-            using X509Certificate2 publicCertificate = new X509Certificate2(certificateResponse.Value.Cer);
-#pragma warning restore SYSLIB0057
-            using RSA publicKey = publicCertificate.GetRSAPublicKey();
+using X509Certificate2 publicCertificate = new X509Certificate2(certificateResponse.Value.Cer);
+using RSA publicKey = publicCertificate.GetRSAPublicKey();
 
-            bool verified = publicKey.VerifyHash(hash, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
-            Debug.WriteLine($"Signature verified: {verified}");
+bool verified = publicKey.VerifyHash(hash, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+Debug.WriteLine($"Signature verified: {verified}");
 ```
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

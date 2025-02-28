@@ -57,19 +57,19 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             byte[] signature = key.SignHash(hash, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
             Debug.WriteLine($"Signature: {Convert.ToBase64String(signature)}");
-        #endregion
-
-        #region Snippet:CertificatesSample4PublicKey
-            Response<KeyVaultCertificateWithPolicy> certificateResponse = client.GetCertificate(certificateName);
+            #endregion
 
 #pragma warning disable SYSLIB0057 // New APIs are not supported on all versions of .NET
+            #region Snippet:CertificatesSample4PublicKey
+            Response<KeyVaultCertificateWithPolicy> certificateResponse = client.GetCertificate(certificateName);
+
             using X509Certificate2 publicCertificate = new X509Certificate2(certificateResponse.Value.Cer);
-#pragma warning restore SYSLIB0057
             using RSA publicKey = publicCertificate.GetRSAPublicKey();
 
             bool verified = publicKey.VerifyHash(hash, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
             Debug.WriteLine($"Signature verified: {verified}");
-        #endregion
+            #endregion
+#pragma warning restore SYSLIB0057
 
             Assert.IsTrue(verified);
 
