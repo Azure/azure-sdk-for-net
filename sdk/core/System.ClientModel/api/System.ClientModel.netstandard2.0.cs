@@ -94,6 +94,7 @@ namespace System.ClientModel.Primitives
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ClientConnection(string id, string locator) { throw null; }
+        public ClientConnection(string id, string locator, System.ClientModel.Primitives.ClientAuthenticationMethod auth) { throw null; }
         public ClientConnection(string id, string locator, object credential) { throw null; }
         public ClientConnection(string id, string locator, string apiKey) { throw null; }
         public string? ApiKeyCredential { get { throw null; } }
