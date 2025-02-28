@@ -28,7 +28,6 @@ namespace Azure.Search.Documents.Models
             SemanticErrorReason? searchSemanticPartialResponseReason = default;
             SemanticSearchResultsType? searchSemanticPartialResponseType = default;
             SemanticQueryRewritesResultType? searchSemanticQueryRewritesResultType = default;
-            DebugInfo searchDebug = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.count"u8))
@@ -141,16 +140,6 @@ namespace Azure.Search.Documents.Models
                     searchSemanticQueryRewritesResultType = new SemanticQueryRewritesResultType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("@search.debug"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        searchDebug = null;
-                        continue;
-                    }
-                    searchDebug = DebugInfo.DeserializeDebugInfo(property.Value);
-                    continue;
-                }
             }
             return new SearchDocumentsResult(
                 odataCount,
@@ -162,8 +151,7 @@ namespace Azure.Search.Documents.Models
                 odataNextLink,
                 searchSemanticPartialResponseReason,
                 searchSemanticPartialResponseType,
-                searchSemanticQueryRewritesResultType,
-                searchDebug);
+                searchSemanticQueryRewritesResultType);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
