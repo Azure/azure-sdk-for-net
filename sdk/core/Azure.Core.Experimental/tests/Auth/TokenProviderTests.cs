@@ -4,6 +4,9 @@
 using System.ClientModel.Auth;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -18,7 +21,7 @@ public class TokenProviderTests
     public void SampleUsage()
     {
         // usage for TokenProvider2 abstract type
-        ITokenProvider provider = new ClientCredentialTokenProvider();
+        ITokenProvider provider = new ClientCredentialTokenProvider("myClientId", "myClientSecret");
         var client = new FooClient(new Uri("http://localhost"), provider);
         client.Get();
     }
@@ -93,14 +96,25 @@ public class TokenProviderTests
 
     public class ClientCredentialTokenProvider : TokenProvider<IClientCredentialsFlowToken>
     {
-        public override Token GetAccessToken(IClientCredentialsFlowToken context, CancellationToken cancellationToken)
+        private string _clientId;
+        private string _clientSecret;
+        private HttpClient _client;
+
+        public ClientCredentialTokenProvider(string clientId, string clientSecret)
         {
-            return new Token("token", "Bearer", DateTimeOffset.UtcNow.AddHours(1));
+            _clientId = clientId;
+            _clientSecret = clientSecret;
+            _client = new();
         }
 
-        public override ValueTask<Token> GetAccessTokenAsync(IClientCredentialsFlowToken context, CancellationToken cancellationToken)
+        public override Token GetAccessToken(IClientCredentialsFlowToken context, CancellationToken cancellationToken)
         {
-            return new ValueTask<Token>(new Token("token", "Bearer", DateTimeOffset.UtcNow.AddHours(1)));
+            return GetAccessTokenInternal(false, context, cancellationToken).GetAwaiter().GetResult();
+        }
+
+        public override async ValueTask<Token> GetAccessTokenAsync(IClientCredentialsFlowToken context, CancellationToken cancellationToken)
+        {
+            return await GetAccessTokenInternal(true, context, cancellationToken).ConfigureAwait(false);
         }
 
         public override IClientCredentialsFlowToken CreateContext(IReadOnlyDictionary<string, object> properties)
@@ -112,6 +126,45 @@ public class TokenProviderTests
                 return new ClientCredentialsContext(tokenUriValue, refreshUriValue, scopeArray);
             }
             return null;
+        }
+
+        internal async ValueTask<Token> GetAccessTokenInternal(bool async, IClientCredentialsFlowToken context, CancellationToken cancellationToken)
+        {
+            var tokenUrl = context.TokenUri.ToString();
+
+            // Create the request payload using System.Text.Json anonymous type serialization
+            var requestBody = new
+            {
+                client_id = _clientId,
+                client_secret = _clientSecret,
+                audience = context.Scopes[0],
+                grant_type = "client_credentials"
+            };
+
+            string jsonRequest = JsonSerializer.Serialize(requestBody);
+            using var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
+
+            using HttpResponseMessage response = async ?
+                await _client.PostAsync(tokenUrl, content) :
+                _client.PostAsync(tokenUrl, content).GetAwaiter().GetResult();
+
+            response.EnsureSuccessStatusCode();
+
+            // Deserialize the JSON response using System.Text.Json
+            using var responseStream = await response.Content.ReadAsStreamAsync();
+            using JsonDocument jsonDoc = await JsonDocument.ParseAsync(responseStream);
+            JsonElement root = jsonDoc.RootElement;
+
+            string accessToken = root.GetProperty("access_token").GetString();
+            string tokenType = root.GetProperty("token_type").GetString();
+            int expiresIn = root.GetProperty("expires_in").GetInt32();
+
+            // Calculate expiration and refresh times based on current UTC time
+            var now = DateTimeOffset.UtcNow;
+            DateTimeOffset expiresOn = now.AddSeconds(expiresIn);
+            DateTimeOffset refreshOn = now.AddSeconds(expiresIn * 0.85);
+
+            return new Token(accessToken, tokenType, expiresOn, refreshOn);
         }
     }
 
