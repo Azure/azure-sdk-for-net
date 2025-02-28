@@ -3,8 +3,8 @@
 
 using System;
 using System.Linq;
+
 using Microsoft.AspNetCore.Http;
-using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
@@ -21,15 +21,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// <summary>
         /// Adds security token validation parameters' configuration and SignalR connection's configuration.
         /// </summary>
-        /// <param name="builder">Azure function host builder</param>
+        /// <param name="services">The service collections to add default auth.</param>
         /// <param name="configureTokenValidationParameters">Token validation parameters to validate security token</param>
         /// <param name="configurer">SignalR connection configuration to be used in generating Azure SignalR service's access token</param>
-        /// <returns><see cref="IFunctionsHostBuilder"/>Azure function host builder</returns>
-        public static IFunctionsHostBuilder AddDefaultAuth(this IFunctionsHostBuilder builder, Action<TokenValidationParameters> configureTokenValidationParameters, SignalRConnectionInfoConfigureFunc configurer = null)
+        public static IServiceCollection AddDefaultAuth(this IServiceCollection services, Action<TokenValidationParameters> configureTokenValidationParameters, SignalRConnectionInfoConfigureFunc configurer = null)
         {
-            if (builder == null)
+            if (services == null)
             {
-                throw new ArgumentNullException(nameof(builder));
+                throw new ArgumentNullException(nameof(services));
             }
 
             if (configureTokenValidationParameters == null)
@@ -39,20 +38,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
             var internalSignalRConnectionInfoConfigurer = new InternalSignalRConnectionInfoConfigurer(configurer);
 
-            if (builder.Services.Any(d => d.ServiceType == typeof(ISecurityTokenValidator)))
+            if (services.Any(d => d.ServiceType == typeof(ISecurityTokenValidator)))
             {
                 throw new NotSupportedException($"{nameof(ISecurityTokenValidator)} already injected.");
             }
 
-            builder.Services
+            services
                 .AddSingleton<ISecurityTokenValidator>(s =>
                     new DefaultSecurityTokenValidator(configureTokenValidationParameters));
 
-            builder.Services.
+            services.
                 TryAddSingleton<ISignalRConnectionInfoConfigurer>(s =>
                     internalSignalRConnectionInfoConfigurer);
 
-            return builder;
+            return services;
         }
 
         private class InternalSignalRConnectionInfoConfigurer : ISignalRConnectionInfoConfigurer
