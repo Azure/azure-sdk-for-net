@@ -36,8 +36,9 @@ namespace Azure.Generator.Utilities
             // or null if none matched
             // NOTE that we are always using fuzzy match in the IsAncestorOf method, we need to block the ById operations - they literally can be anyone's ancestor when there is no better choice.
             // We will never want this
-            var scope = AzureClientPlugin.Instance.ScopeDetection.GetScopePath(requestPath);
-            IEnumerable<RequestPath> candidates = AzureClientPlugin.Instance.OutputLibrary.ResourceOperationSets.Value.Select(operationSet => operationSet.RequestPath)
+            var scopeDetection = new ScopeDetection();
+            var scope = scopeDetection.GetScopePath(requestPath);
+            IEnumerable<RequestPath> candidates = AzureClientPlugin.Instance.ResourceBuilder.ResourceOperationSets.Select(operationSet => operationSet.RequestPath)
                 .Concat(new List<RequestPath> { RequestPath.ResourceGroup, RequestPath.Subscription, RequestPath.ManagementGroup }) // When generating management group in management.json, the path is /providers/Microsoft.Management/managementGroups/{groupId} while RequestPath.ManagementGroup is /providers/Microsoft.Management/managementGroups/{managementGroupId}. We pick the first one.
                 //.Concat(Configuration.MgmtConfiguration.ParameterizedScopes)
                 .Where(r => r.IsAncestorOf(requestPath)).OrderByDescending(r => r.Count);

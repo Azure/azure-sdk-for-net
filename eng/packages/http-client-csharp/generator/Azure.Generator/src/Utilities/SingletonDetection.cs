@@ -15,31 +15,31 @@ namespace Azure.Generator.Utilities
     {
         private static HashSet<string> SingletonKeywords = new(){ "default", "latest", "current" };
 
-        private ConcurrentDictionary<IReadOnlyCollection<InputOperation>, SingletonResourceSuffix?> _singletonResourceCache;
+        private ConcurrentDictionary<InputClient, SingletonResourceSuffix?> _singletonResourceCache;
 
         public SingletonDetection()
         {
-            _singletonResourceCache = new ConcurrentDictionary<IReadOnlyCollection<InputOperation>, SingletonResourceSuffix?>();
+            _singletonResourceCache = new ConcurrentDictionary<InputClient, SingletonResourceSuffix?>();
         }
 
-        public bool IsSingletonResource(IReadOnlyCollection<InputOperation> operationSet, RequestPath requstPath)
+        public bool IsSingletonResource(InputClient client, RequestPath requstPath)
         {
-            return TryGetSingletonResourceSuffix(operationSet, requstPath, out _);
+            return TryGetSingletonResourceSuffix(client, requstPath, out _);
         }
 
-        private bool TryGetSingletonResourceSuffix(IReadOnlyCollection<InputOperation> operationSet, RequestPath requestPath, [MaybeNullWhen(false)] out SingletonResourceSuffix suffix)
+        private bool TryGetSingletonResourceSuffix(InputClient client, RequestPath requestPath, [MaybeNullWhen(false)] out SingletonResourceSuffix suffix)
         {
             suffix = null;
-            if (_singletonResourceCache.TryGetValue(operationSet, out suffix))
+            if (_singletonResourceCache.TryGetValue(client, out suffix))
                 return suffix != null;
 
-            bool result = IsSingleton(operationSet, requestPath, out var singletonIdSuffix);
-            suffix = ParseSingletonIdSuffix(operationSet, requestPath, singletonIdSuffix);
-            _singletonResourceCache.TryAdd(operationSet, suffix);
+            bool result = IsSingleton(client, requestPath, out var singletonIdSuffix);
+            suffix = ParseSingletonIdSuffix(client, requestPath, singletonIdSuffix);
+            _singletonResourceCache.TryAdd(client, suffix);
             return result;
         }
 
-        private static SingletonResourceSuffix? ParseSingletonIdSuffix(IReadOnlyCollection<InputOperation> operationSet, RequestPath requestPath, string? singletonIdSuffix)
+        private static SingletonResourceSuffix? ParseSingletonIdSuffix(InputClient inputClient, RequestPath requestPath, string? singletonIdSuffix)
         {
             if (singletonIdSuffix == null)
                 return null;
@@ -55,7 +55,7 @@ namespace Azure.Generator.Utilities
             return SingletonResourceSuffix.Parse(segments);
         }
 
-        private static bool IsSingleton(IReadOnlyCollection<InputOperation> operationSet, RequestPath requestPath, [MaybeNullWhen(false)] out string singletonIdSuffix)
+        private static bool IsSingleton(InputClient client, RequestPath requestPath, [MaybeNullWhen(false)] out string singletonIdSuffix)
         {
             singletonIdSuffix = null;
 
@@ -69,14 +69,15 @@ namespace Azure.Generator.Utilities
 
             // we cannot find the corresponding request path in the configuration, trying to deduce from the path
             // return false if this is not a resource
-            if (!AzureClientPlugin.Instance.ResourceDetection.IsResource(operationSet, requestPath))
+            if (!AzureClientPlugin.Instance.ResourceDetection.IsResource(client.Operations, requestPath))
                 return false;
 
             // get the request path
             var currentRequestPath = requestPath;
             // if we are a singleton resource,
             // we need to find the suffix which should be the difference between our path and our parent resource
-            var parentRequestPath = AzureClientPlugin.Instance.ParentDetection.GetParentRequestPath(currentRequestPath);
+            var parentDetection = new ParentDetection();
+            var parentRequestPath = parentDetection.GetParentRequestPath(currentRequestPath);
             var diff = parentRequestPath.TrimAncestorFrom(currentRequestPath);
             // if not all of the segment in difference are constant, we cannot be a singleton resource
             if (!diff.Any() || !diff.All(s => RequestPath.IsSegmentConstant(s)))

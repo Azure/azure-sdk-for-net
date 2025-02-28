@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Mgmt.Models;
 using Azure.Generator.Providers;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
@@ -9,7 +8,6 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Azure.Generator.Tests.Providers
@@ -18,8 +16,8 @@ namespace Azure.Generator.Tests.Providers
     {
         private class MockBaseResourceClientProvider : ResourceClientProvider
         {
-            public MockBaseResourceClientProvider(OperationSet operationSet, InputClient inputClient, string requestPath, string specName, ModelProvider resourceData, string resourceType)
-                : base(operationSet, inputClient, requestPath, specName, resourceData, resourceType)
+            public MockBaseResourceClientProvider(InputClient inputClient, string requestPath, string specName, ModelProvider resourceData, string resourceType, bool isSingleton)
+                : base(inputClient, requestPath, specName, resourceData, resourceType, isSingleton)
             {
             }
             protected override FieldProvider[] BuildFields() => [];
@@ -32,7 +30,7 @@ namespace Azure.Generator.Tests.Providers
         {
             var (client, models) = InputData.ClientWithResource();
             var plugin = MockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client],
-                createResourceCore: (operationSet, inputClient, requestPath, schemaName, resourceData, resourceType) => new MockValidateIdResourceClientProvider(operationSet, inputClient, requestPath, schemaName, resourceData, resourceType));
+                createResourceCore: (inputClient, requestPath, schemaName, resourceData, resourceType, isSingleton) => new MockValidateIdResourceClientProvider(inputClient, requestPath, schemaName, resourceData, resourceType, isSingleton));
 
             var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceClientProvider) as ResourceClientProvider;
             Assert.NotNull(resourceProvider);
@@ -46,8 +44,8 @@ namespace Azure.Generator.Tests.Providers
 
         private class MockValidateIdResourceClientProvider : MockBaseResourceClientProvider
         {
-            public MockValidateIdResourceClientProvider(OperationSet operationSet, InputClient inputClient, string requestPath, string specName, ModelProvider resourceData, string resourceType)
-                : base(operationSet, inputClient, requestPath, specName, resourceData, resourceType)
+            public MockValidateIdResourceClientProvider(InputClient inputClient, string requestPath, string specName, ModelProvider resourceData, string resourceType, bool isSingleton)
+                : base(inputClient, requestPath, specName, resourceData, resourceType, isSingleton)
             {
             }
 
@@ -59,7 +57,7 @@ namespace Azure.Generator.Tests.Providers
         {
             var (client, models) = InputData.ClientWithResource();
             var plugin = MockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client],
-                createResourceCore: (operationSet, inputClient, requestPath, schemaName, resourceData, resourceType) => new MockConstructorsResourceClientProvider(operationSet, inputClient, requestPath, schemaName, resourceData, resourceType));
+                createResourceCore: (inputClient, requestPath, schemaName, resourceData, resourceType, isSingleton) => new MockConstructorsResourceClientProvider(inputClient, requestPath, schemaName, resourceData, resourceType, isSingleton));
             var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceClientProvider) as ResourceClientProvider;
             Assert.NotNull(resourceProvider);
             var codeFile = new TypeProviderWriter(resourceProvider!).Write();
@@ -70,7 +68,8 @@ namespace Azure.Generator.Tests.Providers
 
         private class MockConstructorsResourceClientProvider : ResourceClientProvider
         {
-            public MockConstructorsResourceClientProvider(IReadOnlyCollection<InputOperation> operationSet, InputClient inputClient, string requestPath, string specName, ModelProvider resourceData, string resrouceType) : base(operationSet, inputClient, requestPath, specName, resourceData, resrouceType)
+            public MockConstructorsResourceClientProvider(InputClient inputClient, string requestPath, string specName, ModelProvider resourceData, string resrouceType, bool isSingleton)
+                : base(inputClient, requestPath, specName, resourceData, resrouceType, isSingleton)
             {
             }
 

@@ -36,7 +36,7 @@ namespace Azure.Generator.Tests.TestHelpers
             ClientResponseApi? clientResponseApi = null,
             ClientPipelineApi? clientPipelineApi = null,
             HttpMessageApi? httpMessageApi = null,
-            Func<OperationSet, InputClient, string, string, ModelProvider, string, ResourceClientProvider>? createResourceCore = null)
+            Func<InputClient, string, string, ModelProvider, string, bool, ResourceClientProvider>? createResourceCore = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
             IReadOnlyList<InputEnumType> inputNsEnums = inputEnums?.Invoke() ?? [];
@@ -79,16 +79,11 @@ namespace Azure.Generator.Tests.TestHelpers
             if (createResourceCore is not null)
             {
                 Mock<AzureOutputLibrary> mockOutputLibrary = new Mock<AzureOutputLibrary>() { CallBase = true };
-                mockOutputLibrary.Setup(p => p.CreateResourceCore(It.IsAny<OperationSet>(), It.IsAny<InputClient>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ModelProvider>(), It.IsAny<string>())).Returns(
-                    (OperationSet operationSet, InputClient inputClient, string requestPath, string schemaName, ModelProvider resourceData, string resourceType) =>
+                mockOutputLibrary.Setup(p => p.CreateResourceCore(It.IsAny<InputClient>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ModelProvider>(), It.IsAny<string>(), It.IsAny<bool>())).Returns(
+                    (InputClient inputClient, string requestPath, string schemaName, ModelProvider resourceData, string resourceType, bool isSingleton) =>
                     {
-                        return createResourceCore(operationSet, inputClient, requestPath, schemaName, resourceData, resourceType);
+                        return createResourceCore(inputClient, requestPath, schemaName, resourceData, resourceType, isSingleton);
                     });
-
-                //mockOutputLibrary.Setup(p => p.CreateResourceCore(It.IsAny<OperationSet>(), It.IsAny<string>(), It.IsAny<ModelProvider>(), It.IsAny<string>())).Returns((OperationSet operationSet, string schemaName, ModelProvider resourceData, string resourceType) =>
-                //{
-                //    return createResourceCore(operationSet, schemaName, resourceData, resourceType);
-                //});
                 mockPluginInstance.Setup(p => p.OutputLibrary).Returns(mockOutputLibrary.Object);
             }
 

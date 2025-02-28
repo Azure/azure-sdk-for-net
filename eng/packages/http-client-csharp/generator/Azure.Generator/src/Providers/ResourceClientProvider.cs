@@ -31,23 +31,24 @@ namespace Azure.Generator.Providers
     /// </summary>
     internal class ResourceClientProvider : TypeProvider
     {
-        private IReadOnlyCollection<InputOperation> _operationSet;
+        private IReadOnlyCollection<InputOperation> _resourceOperations;
         private string _requestPath;
         private ClientProvider _clientProvider;
         private readonly IReadOnlyList<string> _contextualParameters;
+        private bool _isSingleton;
 
         private FieldProvider _dataField;
         private FieldProvider _clientDiagonosticsField;
         private FieldProvider _restClientField;
         private FieldProvider _resourcetypeField;
 
-        // TODO: simplify the input for Resource creation
-        public ResourceClientProvider(IReadOnlyCollection<InputOperation> operationSet, InputClient inputClient, string requestPath, string specName, ModelProvider resourceData, string resrouceType)
+        public ResourceClientProvider(InputClient inputClient, string requestPath, string specName, ModelProvider resourceData, string resrouceType, bool isSingleton)
         {
-            _operationSet = operationSet;
+            _resourceOperations = inputClient.Operations.Where(operation => operation.GetHttpPath().SerializedPath.Equals(requestPath)).ToList();
             _requestPath = requestPath;
             SpecName = specName;
             ResourceData = resourceData;
+            _isSingleton = isSingleton;
             _clientProvider = AzureClientPlugin.Instance.TypeFactory.CreateClient(inputClient)!;
             _contextualParameters = GetContextualParameters(requestPath);
 
@@ -192,7 +193,7 @@ namespace Azure.Generator.Providers
         protected override MethodProvider[] BuildMethods()
         {
             var operationMethods = new List<MethodProvider>();
-            foreach (var operation in _operationSet)
+            foreach (var operation in _resourceOperations)
             {
                 var convenienceMethod = GetCorrespondingConvenienceMethod(operation, false);
                 // exclude the List operations for resource, they will be in ResourceCollection
@@ -202,7 +203,7 @@ namespace Azure.Generator.Providers
                 }
 
                 // only update for non-singleton resource
-                var isUpdateOnly = operation.HttpMethod == HttpMethod.Put.ToString() && !AzureClientPlugin.Instance.SingletonDetection.IsSingletonResource(_operationSet, new RequestPath(_requestPath));
+                var isUpdateOnly = operation.HttpMethod == HttpMethod.Put.ToString() && !_isSingleton;
                 operationMethods.Add(BuildOperationMethod(operation, convenienceMethod, false, isUpdateOnly));
                 var asyncConvenienceMethod = GetCorrespondingConvenienceMethod(operation, true);
                 operationMethods.Add(BuildOperationMethod(operation, asyncConvenienceMethod, true, isUpdateOnly));
