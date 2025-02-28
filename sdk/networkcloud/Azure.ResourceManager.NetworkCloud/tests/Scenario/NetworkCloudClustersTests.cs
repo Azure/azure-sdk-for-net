@@ -161,6 +161,22 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             var secretArchiveResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch3);
             Assert.IsNotNull(secretArchiveResult.Value);
 
+            // Patch VulnerabilityScanningContainerScan
+            try
+            {
+                NetworkCloudClusterPatch patch4 = new NetworkCloudClusterPatch()
+                {
+                    VulnerabilityScanningContainerScan = VulnerabilityScanningSettingsContainerScan.Enabled
+                };
+                var vulnerabilityScanResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch4);
+                Assert.IsNotNull(vulnerabilityScanResult.Value);
+            }
+            catch (Exception ex)
+            {
+                StringAssert.Contains("cluster conditions do not pass validation for cluster", ex.Message);
+                StringAssert.Contains("ClusterDeployedCondition is not True", ex.Message);
+            }
+
             // Cluster Update Version
             try
             {
