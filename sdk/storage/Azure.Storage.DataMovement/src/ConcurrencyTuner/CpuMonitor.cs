@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 
 namespace Azure.Storage.DataMovement
 {
@@ -36,6 +36,18 @@ namespace Azure.Storage.DataMovement
         public bool ContentionExists { get; private set; }
 
         private Task _monitoringWorker;
+        private TimeSpan _monitoringInterval;
+        private CancellationTokenSource _cancellationTokenSource;
+        public double MemoryUsage { get; private set; }
+
+        private Process CurrentProcess
+        {
+            get
+            {
+                Process.GetCurrentProcess().Refresh();
+                return Process.GetCurrentProcess();
+            }
+        }
 
         /// <summary>
         /// Initalizes the CPU monitor.
@@ -44,6 +56,11 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public CpuMonitor()
         {
+        }
+
+        public CpuMonitor(TimeSpan monitoringInterval)
+        {
+            _monitoringInterval = monitoringInterval;
         }
 
         /// <summary>
@@ -154,6 +171,45 @@ namespace Azure.Storage.DataMovement
                 TimeSpan excessTime = diffFromStart.Subtract(waitTime);
 
                 await durationWriter.WriteAsync(excessTime, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        public void StartMonitoring()
+        {
+            if (IsRunning)
+                return;
+
+            IsRunning = true;
+
+            _cancellationTokenSource = new CancellationTokenSource();
+            Task.Run(() => MonitorMemoryUsage(_cancellationTokenSource.Token));
+        }
+
+        public void StopMonitoring()
+        {
+            if (!IsRunning)
+                throw new InvalidOperationException();
+
+            IsRunning = false;
+            _cancellationTokenSource?.Cancel();
+        }
+
+        private async Task MonitorMemoryUsage(CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                await Task.Delay(_monitoringInterval, cancellationToken).ConfigureAwait(false);
+                // This is the memory that is shown in the task manager
+                //long currentMemoryUsage = CurrentProcess.WorkingSet64;
+                long currentMemoryUsage = CurrentProcess.PrivateMemorySize64;
+
+#if NETSTANDARD2_0_OR_GREATER
+                // This is wrong, but the workaround looks like it would be really long and difficult to implment....
+                long totalPhysicalMemory = CurrentProcess.WorkingSet64;
+#else
+                long totalPhysicalMemory = GC.GetGCMemoryInfo().TotalAvailableMemoryBytes;
+#endif
+                MemoryUsage = (double)currentMemoryUsage / (double)totalPhysicalMemory;
             }
         }
     }
