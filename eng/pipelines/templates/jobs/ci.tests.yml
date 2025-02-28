@@ -120,13 +120,6 @@ jobs:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
 
-      # this section is only included when invoking with a dynamic set of packages (EG net - pullrequest)
-      - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
-        - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
-          parameters:
-            PackageInfo: '$(Build.SourcesDirectory)/PackageInfo'
-            Restore: true
-
         - pwsh: |
             if ("$(ProjectNames)" -like "*storage*") {
               &"$(Build.SourcesDirectory)/eng/scripts/Install-Azurite.ps1" -AzuriteLocation "$(AzuriteLocation)" -AzuriteVersion "$(AzuriteVersion)"
@@ -137,6 +130,13 @@ jobs:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
           NuGetCacheKey: Test
+
+      # this section is only included when invoking with a dynamic set of packages (EG net - pullrequest)
+      - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
+        - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
+          parameters:
+            PackageInfo: '$(Build.SourcesDirectory)/PackageInfo'
+            Restore: true
 
       # ProjectListOverrideFile is set by the customization within dependency.tests.yml
       # OR it is set by the PR built to target a set of packages outside of a single target service directory.
