@@ -1136,6 +1136,45 @@ namespace Azure.Identity.Tests
             Assert.That(messages, Does.Contain(string.Format(AzureIdentityEventSource.ManagedIdentitySourceAttemptedMessage, "TokenExchangeManagedIdentitySource", true)));
         }
 
+        [NonParallelizable]
+        [Test]
+        public async Task VerifyImdsRequestWithCAEMockAsync([Values] bool isCaeEnabled)
+        {
+            string caeClaims = """{"access_token":{"nbf":{"essential":true, "value":"1724337680"}}}""";
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            var response = CreateMockResponse(200, ExpectedToken);
+            var mockTransport = new MockTransport(response);
+            var options = new TokenCredentialOptions { Transport = mockTransport };
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(
+                new ManagedIdentityClient(
+                    new ManagedIdentityClientOptions()
+                    {
+                        Pipeline = CredentialPipeline.GetInstance(options),
+                        ManagedIdentityId = ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(_expectedResourceId)),
+                        IsForceRefreshEnabled = true,
+                        Options = options
+                    })
+            ));
+
+            AccessToken actualToken = isCaeEnabled ?
+                await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isCaeEnabled: isCaeEnabled, claims: caeClaims)) :
+                await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.AreEqual(ExpectedToken, actualToken.Token);
+
+            MockRequest request = mockTransport.Requests[0];
+
+            string query = request.Uri.Query;
+
+            Assert.AreEqual(request.Uri.Host, "169.254.169.254");
+            Assert.AreEqual(request.Uri.Path, "/metadata/identity/oauth2/token");
+            Assert.IsTrue(query.Contains("api-version=2018-02-01"));
+            Assert.IsTrue(query.Contains($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
+            Assert.That(Uri.UnescapeDataString(query), Does.Contain($"{Constants.ManagedIdentityResourceId}={_expectedResourceId}"));
+        }
+
         private static IEnumerable<TestCaseData> ResourceAndClientIds()
         {
             yield return new TestCaseData(new object[] { null, false });
