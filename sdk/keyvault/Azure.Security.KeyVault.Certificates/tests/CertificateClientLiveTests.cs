@@ -536,7 +536,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             // Read the CA.
             byte[] caCertificateBytes = Convert.FromBase64String(CaPublicKeyBase64);
 #if NET9_0_OR_GREATER
-            X509Certificate2 caCertificate = X509CertificateLoader.LoadPkcs12(caCertificateBytes, CaPrivateKeyPem);
+
+            X509Certificate2 caCertificate = X509CertificateLoader.LoadCertificate(caCertificateBytes);
 #else
             X509Certificate2 caCertificate = new X509Certificate2(caCertificateBytes);
 #endif

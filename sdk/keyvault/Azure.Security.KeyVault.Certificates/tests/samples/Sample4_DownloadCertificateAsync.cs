@@ -53,11 +53,9 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             #endregion
 
             Response<KeyVaultCertificateWithPolicy> certificateResponse = await client.GetCertificateAsync(certificateName);
-#if NET9_0_OR_GREATER
-            using X509Certificate2 publicCertificate = X509CertificateLoader.LoadCertificate(certificateResponse.Value.Cer);
-#else
+#pragma warning disable SYSLIB0057 // New APIs are not supported on all versions of .NET
             using X509Certificate2 publicCertificate = new X509Certificate2(certificateResponse.Value.Cer);
-#endif
+#pragma warning restore SYSLIB0057
             using RSA publicKey = publicCertificate.GetRSAPublicKey();
 
             bool verified = publicKey.VerifyHash(hash, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
@@ -71,5 +69,5 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             client.PurgeDeletedCertificate(certificateName);
         }
 #endif
-        }
+    }
 }
