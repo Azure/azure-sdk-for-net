@@ -268,6 +268,14 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        public void Ctor_DevelopmentThrows()
+        {
+            var shareName = GetNewShareName();
+            var ex = Assert.Throws<ArgumentException>(() => new ShareClient("Development=true", shareName));
+            Assert.AreEqual("connectionString", ex.ParamName);
+        }
+
+        [RecordedTest]
         public void WithSnapshot()
         {
             var shareName = GetNewShareName();

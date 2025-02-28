@@ -160,6 +160,15 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        public void Ctor_DevelopmentThrows()
+        {
+            var shareName = GetNewShareName();
+            var path = GetNewDirectoryName();
+            var ex = Assert.Throws<ArgumentException>(() => new ShareDirectoryClient("Development=true", shareName, path));
+            Assert.AreEqual("connectionString", ex.ParamName);
+        }
+
+        [RecordedTest]
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange

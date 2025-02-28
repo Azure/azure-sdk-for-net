@@ -73,6 +73,13 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        public void Ctor_DevelopmentThrows()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => new ShareServiceClient("Development=true"));
+            Assert.AreEqual("connectionString", ex.ParamName);
+        }
+
+        [RecordedTest]
         public async Task GetPropertiesAsync()
         {
             // Arrange
