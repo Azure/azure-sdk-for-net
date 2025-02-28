@@ -1,8 +1,7 @@
-# Azure AI Projects client library for .NET
-Use the AI Projects client library to:
+# Azure AI Agents client library for .NET
+Use the AI Agents client library to:
 
 * **Develop Agents using the Azure AI Agent Service**, leveraging an extensive ecosystem of models, tools, and capabilities from OpenAI, Microsoft, and other LLM providers. The Azure AI Agent Service enables the building of Agents for a wide range of generative AI use cases. The package is currently in preview.
-* **Enumerate connections** in your Azure AI Foundry project and get connection properties. For example, get the inference endpoint URL and credentials associated with your Azure OpenAI connection.
 
 [Product documentation][product_doc]
 | [Samples][samples]
@@ -39,14 +38,14 @@ Use the AI Projects client library to:
 
 ### Prerequisites
 
-To use Azure AI Projects capabilities, you must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/). This will allow you to create an Azure AI resource and get a connection URL.
+To use Azure AI Agents capabilities, you must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/). This will allow you to create an Azure AI resource and get a connection URL.
 
 ### Install the package
 
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.AI.Projects --prerelease
+dotnet add package Azure.AI.Agents --prerelease
 ```
 
 ### Authenticate the client
@@ -61,14 +60,14 @@ dotnet add package Azure.Identity
 
 ### Create and authenticate the client
 
-To interact with Azure AI Projects, you’ll need to create an instance of `AIProjectClient`. Use the appropriate credential type from the Azure Identity library. For example, [DefaultAzureCredential][azure_identity_dac]:
+To interact with Azure AI Agents, you’ll need to create an instance of `AIProjectClient`. Use the appropriate credential type from the Azure Identity library. For example, [DefaultAzureCredential][azure_identity_dac]:
 
 ```C# Snippet:OverviewCreateClient
 var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 AIProjectClient projectClient = new AIProjectClient(connectionString, new DefaultAzureCredential());
 ```
 
-Once the `AIProjectClient` is created, you can call methods in the form of `GetXxxClient()` on this client to retrieve instances of specific sub-clients.
+Once the `AgentsClient` is created, you can call methods in the form of `GetXxxClient()` on this client to retrieve instances of specific sub-clients.
 
 ## Examples
 
