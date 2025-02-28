@@ -21,14 +21,14 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
         {
             #region Snippet:Azure_Analytics_Purview_Workflows_CreateClient
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("WORKFLOW_ENDPOINT"));
-            string clientId = Environment.GetEnvironmentVariable("ClientId");
-            string tenantId = Environment.GetEnvironmentVariable("TenantId");
-            string username = Environment.GetEnvironmentVariable("Username");
-            string password = Environment.GetEnvironmentVariable("Password");
+#if SNIPPET
+            TokenCredential credential = new DefaultAzureCredential();
+#else
+            TokenCredential credential = TestEnvironment.Credential;
+#endif
 
-            TokenCredential usernamePasswordCredential = new UsernamePasswordCredential(clientId,tenantId, username,password, null);
             var client = new WorkflowsClient(endpoint, usernamePasswordCredential);
-            #endregion
+#endregion
 
             //Perform an operation
             AsyncPageable<BinaryData> workflowList = client.GetWorkflowsAsync(new RequestContext());
