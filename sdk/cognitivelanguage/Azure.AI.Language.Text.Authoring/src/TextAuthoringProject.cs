@@ -114,6 +114,38 @@ namespace Azure.AI.Language.Text.Authoring
             return Response.FromValue(TextAuthoringProjectMetadata.FromResponse(response), response);
         }
 
+        /// <summary> Creates a new deployment or replaces an existing one. </summary>
+        /// <param name="details"> The new deployment info. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> CreateProjectAsync(
+            TextAuthoringCreateProjectDetails details,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            details.ProjectName = _projectName;
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await CreateProjectAsync(content, context).ConfigureAwait(false);
+        }
+
+        /// <summary> Creates a new deployment or replaces an existing one. </summary>
+        /// <param name="details"> The new deployment info. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response CreateProject(
+            TextAuthoringCreateProjectDetails details,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            details.ProjectName = _projectName;
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return CreateProject(content, context);
+        }
+
         /// <summary>
         /// [Protocol Method] Creates a new project or updates an existing one.
         /// </summary>

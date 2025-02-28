@@ -95,8 +95,6 @@ namespace Azure.AI.Language.Text.Authoring
         public string StorageInputContainerName { get; }
         /// <summary> The project settings. </summary>
         public TextAuthoringProjectSettings Settings { get; set; }
-        /// <summary> The new project name. </summary>
-        public string ProjectName { get; }
         /// <summary> Whether the project would be used for multiple languages or not. </summary>
         public bool? Multilingual { get; set; }
         /// <summary> The project description. </summary>
