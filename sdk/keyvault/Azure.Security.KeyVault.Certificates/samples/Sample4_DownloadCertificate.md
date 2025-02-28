@@ -80,7 +80,6 @@ in Key Vault you reduce risk of leaking secret information.
 
 ```C# Snippet:CertificatesSample4PublicKey
 Response<KeyVaultCertificateWithPolicy> certificateResponse = client.GetCertificate(certificateName);
-
 using X509Certificate2 publicCertificate = new X509Certificate2(certificateResponse.Value.Cer);
 using RSA publicKey = publicCertificate.GetRSAPublicKey();
 
