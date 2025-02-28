@@ -497,11 +497,13 @@ namespace Azure.Compute.Batch
     {
         public const string AccountIsDisabled = "AccountIsDisabled";
         public const string ActiveJobAndScheduleQuotaReached = "ActiveJobAndScheduleQuotaReached";
+        public const string AddTaskCollectionTerminated = "Addition of a task failed with unexpected status code.Details: {0}";
         public const string ApplicationNotFound = "ApplicationNotFound";
         public const string AuthenticationFailed = "AuthenticationFailed";
         public const string AutoScaleFormulaTooLong = "AutoScaleFormulaTooLong";
         public const string AutoScaleTooManyRequestsToEnable = "TooManyEnableAutoScaleRequests";
         public const string AutoScalingFormulaSyntaxError = "AutoScalingFormulaSyntaxError";
+        public const string CanOnlyBeRunOnceFailure = "{0} can only be run once.";
         public const string CertificateBeingDeleted = "CertificateBeingDeleted";
         public const string CertificateExists = "CertificateExists";
         public const string CertificateNotFound = "CertificateNotFound";
@@ -554,6 +556,7 @@ namespace Azure.Compute.Batch
         public const string MissingRequiredProperty = "MissingRequiredProperty";
         public const string MissingRequiredQueryParameter = "MissingRequiredQueryParameter";
         public const string MultipleConditionHeadersNotSupported = "MultipleConditionHeadersNotSupported";
+        public const string MultipleParallelRequestsHitUnexpectedErrors = "One or more requests to the Azure Batch service failed.";
         public const string NodeAlreadyInTargetSchedulingState = "NodeAlreadyInTargetSchedulingState";
         public const string NodeBeingCreated = "NodeBeingCreated";
         public const string NodeBeingRebooted = "NodeBeingRebooted";
