@@ -110,7 +110,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return Response.FromValue(ProjectMetadata.FromResponse(response), response);
         }
 
-        /// <summary> Creates a new deployment or replaces an existing one. </summary>
+        /// <summary> Creates a new project or replaces an existing one. </summary>
         /// <param name="details"> The new deployment info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> CreateProjectAsync(
@@ -126,7 +126,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return await CreateProjectAsync(content, context).ConfigureAwait(false);
         }
 
-        /// <summary> Creates a new deployment or replaces an existing one. </summary>
+        /// <summary> Creates a new project or replaces an existing one. </summary>
         /// <param name="details"> The new deployment info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response CreateProject(
