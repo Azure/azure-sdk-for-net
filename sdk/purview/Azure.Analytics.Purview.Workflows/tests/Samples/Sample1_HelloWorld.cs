@@ -47,13 +47,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
         public async Task CreateWorkflow()
         {
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("WORKFLOW_ENDPOINT"));
-            string clientId = Environment.GetEnvironmentVariable("ClientId");
-            string tenantId = Environment.GetEnvironmentVariable("TenantId");
-            string username = Environment.GetEnvironmentVariable("Username");
-            string password = Environment.GetEnvironmentVariable("Password");
-
-            TokenCredential usernamePasswordCredential = new UsernamePasswordCredential(clientId, tenantId, username, password, null);
-            var client = new WorkflowClient(endpoint, usernamePasswordCredential);
+            var client = new WorkflowClient(endpoint, TestEnvironment.Credential);
 
             #region Snippet:Azure_Analytics_Purview_Workflows_CreateWorkflow
             Guid workflowId = Guid.NewGuid();
@@ -74,13 +68,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
         public async Task GetWorkflow()
         {
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("WORKFLOW_ENDPOINT"));
-            string clientId = Environment.GetEnvironmentVariable("ClientId");
-            string tenantId = Environment.GetEnvironmentVariable("TenantId");
-            string username = Environment.GetEnvironmentVariable("Username");
-            string password = Environment.GetEnvironmentVariable("Password");
-
-            TokenCredential usernamePasswordCredential = new UsernamePasswordCredential(clientId, tenantId, username, password, null);
-            var client = new WorkflowClient(endpoint, usernamePasswordCredential);
+            var client = new WorkflowClient(endpoint, TestEnvironment.Credential);
 
             #region Snippet:Azure_Analytics_Purview_Workflows_GetWorkflow
             // This workflowId represents an existing workflow. The id can be obtained by calling CreateOrReplaceWorkflowAsync API or list workflows by calling GetWorkflowsAsync API.

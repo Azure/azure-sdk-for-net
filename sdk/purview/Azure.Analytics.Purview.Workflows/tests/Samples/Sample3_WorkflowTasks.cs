@@ -2,13 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Workflows.Tests.Samples
@@ -20,13 +16,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
         public async Task ApproveWorkflowTask()
         {
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("WORKFLOW_ENDPOINT"));
-            string clientId = Environment.GetEnvironmentVariable("ClientId");
-            string tenantId = Environment.GetEnvironmentVariable("TenantId");
-            string username = Environment.GetEnvironmentVariable("Username");
-            string password = Environment.GetEnvironmentVariable("Password");
-
-            TokenCredential usernamePasswordCredential = new UsernamePasswordCredential(clientId,tenantId, username,password, null);
-            var client = new ApprovalClient(endpoint, usernamePasswordCredential);
+            var client = new ApprovalClient(endpoint, TestEnvironment.Credential);
 
             #region Snippet:Azure_Analytics_Purview_Workflows_ApproveWorkflowTask
 
