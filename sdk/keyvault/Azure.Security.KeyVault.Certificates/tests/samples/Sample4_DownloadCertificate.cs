@@ -70,7 +70,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             bool verified = publicKey.VerifyHash(hash, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
             Debug.WriteLine($"Signature verified: {verified}");
-#endregion
+        #endregion
 
             Assert.IsTrue(verified);
 
