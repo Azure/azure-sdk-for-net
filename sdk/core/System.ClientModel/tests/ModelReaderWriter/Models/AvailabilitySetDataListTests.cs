@@ -6,6 +6,7 @@ using System.ClientModel.Tests.Client;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -42,6 +43,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             private SortedSet_AvailabilitySetData_Info? _sortedSet_AvailabilitySetData_Info;
             private Stack_AvailabilitySetData_Info? _stack_AvailabilitySetData_Info;
             private ReadOnlyMemory_AvailabilitySetData_Info? _readOnlyMemory_AvailabilitySetData_Info;
+            private ImmutableList_AvailabilitySetData_Info? _immutableList_AvailabilitySetData_Info;
 
             public override ModelInfo? GetModelInfo(Type type)
             {
@@ -57,8 +59,25 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                     Type t when t == typeof(SortedSet<AvailabilitySetData>) => _sortedSet_AvailabilitySetData_Info ??= new(),
                     Type t when t == typeof(Stack<AvailabilitySetData>) => _stack_AvailabilitySetData_Info ??= new(),
                     Type t when t == typeof(ReadOnlyMemory<AvailabilitySetData>) => _readOnlyMemory_AvailabilitySetData_Info ??= new(),
+                    Type t when t == typeof(ImmutableList<AvailabilitySetData>) => _immutableList_AvailabilitySetData_Info ??= new(),
                     _ => _LibraryContext.Value.GetModelInfo(type)
                 };
+            }
+
+            private class ImmutableList_AvailabilitySetData_Info : ModelInfo
+            {
+                public override object CreateObject() => new ImmutableList_AvailabilitySetData_Builder();
+
+                private class ImmutableList_AvailabilitySetData_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<ImmutableList<AvailabilitySetData>.Builder> _instance = new(() => ImmutableList<AvailabilitySetData>.Empty.ToBuilder());
+
+                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
+
+                    protected override object GetBuilder() => _instance.Value;
+
+                    protected override object ToObject() => _instance.Value.ToImmutable();
+                }
             }
 
             private class ReadOnlyMemory_AvailabilitySetData_Info : ModelInfo
@@ -328,6 +347,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         public void RoundTrip_ReadOnlyMemory()
         {
             RoundTripCollection(new ReadOnlyMemory<AvailabilitySetData>([.. s_availabilitySets]));
+        }
+
+        [Test]
+        public void RoundTrip_ImmutableList()
+        {
+            RoundTripCollection(s_availabilitySets.ToImmutableList());
         }
 
         private void RoundTripCollection(object collection, bool reverse = false)
