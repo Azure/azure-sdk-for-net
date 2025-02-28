@@ -12,12 +12,12 @@ namespace Azure.Compute.Batch
 {
     /// <summary>
     /// you can use to specify under what conditions an operation to
-    /// add multiple tasks to a job should retry, terminate or be considered successful.
+    /// add multiple tasks to a job should retry, mark as successful, failure, or terminate.
     /// </summary>
     /// <remarks>You do not need to specify this behavior explicitly; if you do not, a default behavior
-    /// is used.  This behavior uses the <see cref="DefaultTaskCollectionResultHandler"/>
+    /// is used.  This behavior uses the <see cref="DefaultCreateTaskResultHandler"/>
     /// criteria.</remarks>
-    public interface IBulkTaskCollectionResultHandler
+    public interface ICreateTaskResultHandler
     {
         /// <summary>
         /// Handles the result of a single AddTask operation.
@@ -25,6 +25,6 @@ namespace Azure.Compute.Batch
         /// <param name="addTaskResult"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>AddTaskResultStatus status</returns>
-        public CreateTaskResultStatus BulkCreateTaskCollectionResultHandler(CreateTaskResult addTaskResult, CancellationToken cancellationToken);
+        public CreateTaskResultStatus CreateTaskResultHandler(CreateTaskResult addTaskResult, CancellationToken cancellationToken);
     }
 }

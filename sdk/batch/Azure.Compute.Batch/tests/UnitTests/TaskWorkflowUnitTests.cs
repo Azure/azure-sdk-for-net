@@ -322,6 +322,123 @@ namespace Azure.Compute.Batch.Tests.UnitTests
         }
 
         [Test]
+        public async Task Tasks_10000_Cancelation()
+        {
+            // Arrange
+            int tasksCount = 10000;
+            int parrellelTasks = 1;
+
+            Mock<BatchClient> clientMock = new Mock<BatchClient>();
+
+            clientMock.Setup(c => c.CreateTaskCollectionAsync(
+               It.IsAny<string>(),
+               It.IsAny<BatchTaskGroup>(),
+               It.IsAny<int?>(),
+               It.IsAny<DateTimeOffset?>(),
+               It.IsAny<CancellationToken>())
+           )
+           .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
+           {
+               // The defaul size should be 100
+               Assert.AreEqual(100, taskCollection.Value.Count);
+
+               BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
+               return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
+           }
+           );
+
+            BatchClient batchClient = clientMock.Object;
+            var cts = new CancellationTokenSource();
+            BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
+            {
+                MaxDegreeOfParallelism = parrellelTasks
+            };
+
+            TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", parallelOptions, cancellationToken: cts.Token);
+
+            List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
+            for (int i = 0; i < tasksCount; i++)
+            {
+                tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
+            }
+
+            // Act
+            try
+            {
+                var asyncTask = addTasksWorkflowManager.AddTasksAsync(tasks, "jobId");
+
+                Thread.Sleep(1000);
+                cts.Cancel(); // Safely cancel worker.
+
+                CreateTasksResult result = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
+
+                // Assert
+                Assert.Fail("Expected OperationCanceledException");
+            }
+            catch (OperationCanceledException)
+            {
+                // Assert
+                Assert.Pass();
+            }
+        }
+
+        [Test]
+        public async Task Tasks_10000_TimeOutReached()
+        {
+            // Arrange
+            int tasksCount = 10000;
+            int parrellelTasks = 10;
+
+            Mock<BatchClient> clientMock = new Mock<BatchClient>();
+
+            clientMock.Setup(c => c.CreateTaskCollectionAsync(
+               It.IsAny<string>(),
+               It.IsAny<BatchTaskGroup>(),
+               It.IsAny<int?>(),
+               It.IsAny<DateTimeOffset?>(),
+               It.IsAny<CancellationToken>())
+           )
+           .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
+           {
+               // The defaul size should be 100
+               Assert.AreEqual(100, taskCollection.Value.Count);
+
+               BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
+               return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
+           }
+           );
+
+            BatchClient batchClient = clientMock.Object;
+            BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
+            {
+                MaxDegreeOfParallelism = parrellelTasks
+            };
+
+            TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", parallelOptions);
+
+            List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
+            for (int i = 0; i < tasksCount; i++)
+            {
+                tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
+            }
+
+            // Act
+            try
+            {
+                CreateTasksResult result = await addTasksWorkflowManager.AddTasksAsync(tasks, "jobId", timeOutInSeconds: TimeSpan.FromMilliseconds(100));
+
+                // Assert
+                Assert.Fail("Expected OperationCanceledException");
+            }
+            catch (ParallelOperationsException e)
+            {
+                Assert.NotNull(e.InnerExceptions);
+                // Assert
+                Assert.Pass();
+            }
+        }
+
+        [Test]
         public async Task Tasks_10000_Parrellel_100()
         {
             // Arrange
@@ -648,6 +765,49 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
             return BatchTaskAddCollectionResult.FromResponse(mockResponse.Object);
+        }
+
+        /// <summary>
+        ///  Custom TaskCollectionResultHandler to handle the result of a CreateTasksAsync operation.
+        /// </summary>
+        private class CustomTaskCollectionResultHandler : ICreateTaskResultHandler
+        {
+            /// <summary>
+            /// This handler treats and result without errors as Success, 'TaskExists' errors as failures, retries server errors (HTTP 5xx),
+            /// and throws for any other error.
+            /// <see cref="AddTaskCollectionTerminatedException"/> on client error (HTTP 4xx).
+            /// </summary>
+            /// <param name="addTaskResult">The result of a single Add Task operation.</param>
+            /// <param name="cancellationToken">The cancellation token associated with the AddTaskCollection operation.</param>
+            /// <returns>An <see cref="CreateTaskResultStatus"/> which indicates whether the <paramref name="addTaskResult"/>
+            /// is classified as a success or as requiring a retry.</returns>
+            public CreateTaskResultStatus CreateTaskResultHandler(CreateTaskResult addTaskResult, CancellationToken cancellationToken)
+            {
+                if (addTaskResult == null)
+                {
+                    throw new ArgumentNullException("addTaskResult");
+                }
+
+                CreateTaskResultStatus status = CreateTaskResultStatus.Success;
+                if (addTaskResult.BatchTaskResult.Error != null)
+                {
+                    //Check status code
+                    if (addTaskResult.BatchTaskResult.Status == BatchTaskAddStatus.ServerError)
+                    {
+                        status = CreateTaskResultStatus.Retry;
+                    }
+                    else if (addTaskResult.BatchTaskResult.Status == BatchTaskAddStatus.ClientError && addTaskResult.BatchTaskResult.Error.Code == BatchErrorCodeStrings.TaskExists)
+                    {
+                        status = CreateTaskResultStatus.Failure; //TaskExists mark as failure
+                    }
+                    else
+                    {
+                        //Anything else is a failure -- abort the work flow
+                        throw new AddTaskCollectionTerminatedException(addTaskResult);
+                    }
+                }
+                return status;
+            }
         }
     }
 }

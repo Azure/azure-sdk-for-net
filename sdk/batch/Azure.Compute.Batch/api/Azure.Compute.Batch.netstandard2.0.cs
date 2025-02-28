@@ -236,8 +236,8 @@ namespace Azure.Compute.Batch
         public virtual Azure.Response CreateTaskCollection(string jobId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Compute.Batch.BatchTaskAddCollectionResult>> CreateTaskCollectionAsync(string jobId, Azure.Compute.Batch.BatchTaskGroup taskCollection, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateTaskCollectionAsync(string jobId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Compute.Batch.CreateTasksResult CreateTasks(string jobId, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.BatchTaskCreateContent> tasksToAdd, Azure.Compute.Batch.BatchClientParallelOptions parallelOptions = null, System.TimeSpan? timeOutInSeconds = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Compute.Batch.CreateTasksResult> CreateTasksAsync(string jobId, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.BatchTaskCreateContent> tasksToAdd, Azure.Compute.Batch.BatchClientParallelOptions parallelOptions = null, System.TimeSpan? timeOutInSeconds = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Compute.Batch.CreateTasksResult CreateTasks(string jobId, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.BatchTaskCreateContent> tasksToAdd, Azure.Compute.Batch.BatchClientParallelOptions parallelOptions = null, Azure.Compute.Batch.ICreateTaskResultHandler createTaskResultHandler = null, System.TimeSpan? timeOutInSeconds = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Compute.Batch.CreateTasksResult> CreateTasksAsync(string jobId, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.BatchTaskCreateContent> tasksToAdd, Azure.Compute.Batch.BatchClientParallelOptions parallelOptions = null, Azure.Compute.Batch.ICreateTaskResultHandler createTaskResultHandler = null, System.TimeSpan? timeOutInSeconds = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeallocateNode(string poolId, string nodeId, Azure.Compute.Batch.BatchNodeDeallocateContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeallocateNode(string poolId, string nodeId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeallocateNodeAsync(string poolId, string nodeId, Azure.Compute.Batch.BatchNodeDeallocateContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -476,7 +476,6 @@ namespace Azure.Compute.Batch
     public partial class BatchClientParallelOptions
     {
         public BatchClientParallelOptions() { }
-        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public int MaxDegreeOfParallelism { get { throw null; } set { } }
         public int MaxTimeBetweenCallsInSeconds { get { throw null; } set { } }
     }
@@ -2652,10 +2651,10 @@ namespace Azure.Compute.Batch
         string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.DataDisk>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.DataDisk>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DefaultTaskCollectionResultHandler : Azure.Compute.Batch.IBulkTaskCollectionResultHandler
+    public partial class DefaultCreateTaskResultHandler : Azure.Compute.Batch.ICreateTaskResultHandler
     {
-        public DefaultTaskCollectionResultHandler() { }
-        public Azure.Compute.Batch.CreateTaskResultStatus BulkCreateTaskCollectionResultHandler(Azure.Compute.Batch.CreateTaskResult addTaskResult, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public DefaultCreateTaskResultHandler() { }
+        public Azure.Compute.Batch.CreateTaskResultStatus CreateTaskResultHandler(Azure.Compute.Batch.CreateTaskResult addTaskResult, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DependencyAction : System.IEquatable<Azure.Compute.Batch.DependencyAction>
@@ -2896,9 +2895,9 @@ namespace Azure.Compute.Batch
         string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.HttpHeader>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.HttpHeader>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial interface IBulkTaskCollectionResultHandler
+    public partial interface ICreateTaskResultHandler
     {
-        Azure.Compute.Batch.CreateTaskResultStatus BulkCreateTaskCollectionResultHandler(Azure.Compute.Batch.CreateTaskResult addTaskResult, System.Threading.CancellationToken cancellationToken);
+        Azure.Compute.Batch.CreateTaskResultStatus CreateTaskResultHandler(Azure.Compute.Batch.CreateTaskResult addTaskResult, System.Threading.CancellationToken cancellationToken);
     }
     public partial class ImageReference : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ImageReference>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ImageReference>
     {
@@ -3502,12 +3501,6 @@ namespace Azure.Compute.Batch
         public static implicit operator Azure.Compute.Batch.StorageAccountType (string value) { throw null; }
         public static bool operator !=(Azure.Compute.Batch.StorageAccountType left, Azure.Compute.Batch.StorageAccountType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class TasksWorkflowManager
-    {
-        public TasksWorkflowManager(Azure.Compute.Batch.BatchClient batchClient, string jobId, Azure.Compute.Batch.BatchClientParallelOptions parallelOptions = null, Azure.Compute.Batch.IBulkTaskCollectionResultHandler bulkTaskCollectionResultHandler = null) { }
-        public Azure.Compute.Batch.CreateTasksResult AddTasks(System.Collections.Generic.IEnumerable<Azure.Compute.Batch.BatchTaskCreateContent> tasksToAdd, string jobId, System.TimeSpan? timeOutInSeconds = default(System.TimeSpan?)) { throw null; }
-        public System.Threading.Tasks.Task<Azure.Compute.Batch.CreateTasksResult> AddTasksAsync(System.Collections.Generic.IEnumerable<Azure.Compute.Batch.BatchTaskCreateContent> tasksToAdd, string jobId, System.TimeSpan? timeOutInSeconds = default(System.TimeSpan?)) { throw null; }
     }
     public partial class UefiSettings : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.UefiSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.UefiSettings>
     {

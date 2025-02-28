@@ -55,12 +55,6 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary>
-        /// Gets or sets the <see cref=" System.Threading.CancellationToken"/> associated with this <see cref="BatchClientParallelOptions"/> instance.
-        /// The default is <see cref=" System.Threading.CancellationToken.None"/>.
-        /// </summary>
-        public CancellationToken CancellationToken { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="BatchClientParallelOptions"/> class.
         /// </summary>
         public BatchClientParallelOptions()

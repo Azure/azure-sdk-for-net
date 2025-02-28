@@ -19,7 +19,7 @@ namespace Azure.Compute.Batch
     /// <summary>
     /// Manages the workflow for adding tasks to a job in parallel.
     /// </summary>
-    public class TasksWorkflowManager
+    internal class TasksWorkflowManager
     {
         private readonly BatchClient _batchClient;
         private readonly string _jobId;
@@ -27,7 +27,7 @@ namespace Azure.Compute.Batch
         private readonly BatchClientParallelOptions _parallelOptions;
         private readonly ConcurrentQueue<TrackedBatchTask> _remainingTasksToAdd;
         private readonly List<Task> _pendingAsyncOperations;
-        private readonly IBulkTaskCollectionResultHandler _bulkTaskCollectionResultHandler;
+        private readonly ICreateTaskResultHandler _bulkTaskCollectionResultHandler;
         private int _hasRun; //Have to use an int because CompareExchange doesn't support bool
         private int _maxTasks;
         private TimeSpan _timeBetweenCalls;
@@ -38,8 +38,9 @@ namespace Azure.Compute.Batch
         private readonly ConcurrentBag<BatchTaskAddResult> _taskAddResults;
         private readonly object _createTasksResultLock = new object();
         private CreateTasksResult _createTasksResult;
+        private CancellationToken _cancellationToken;
 
-        private void increaseCreateTasksResultPass()
+        internal void increaseCreateTasksResultPass()
         {
             lock (_createTasksResultLock)
             {
@@ -47,7 +48,7 @@ namespace Azure.Compute.Batch
             }
         }
 
-        private void increaseCreateTasksResultFail()
+        internal void increaseCreateTasksResultFail()
         {
             lock (_createTasksResultLock)
             {
@@ -62,12 +63,13 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"></param>
         /// <param name="parallelOptions">The parallel options associated with this operation.  If this is null, the default is used.</param>
         /// <param name="bulkTaskCollectionResultHandler">The handler which processes the results of the AddTaskCollection request.  If this is null, the default is used.</param>
-        public TasksWorkflowManager(
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal TasksWorkflowManager(
             BatchClient batchClient,
             string jobId,
             BatchClientParallelOptions parallelOptions = null,
-            //ConcurrentBag<ConcurrentDictionary<Type, IFileStagingArtifact>> fileStagingArtifacts,
-            IBulkTaskCollectionResultHandler bulkTaskCollectionResultHandler = null
+            ICreateTaskResultHandler bulkTaskCollectionResultHandler = null,
+            CancellationToken cancellationToken = default(CancellationToken)
             )
         {
             //
@@ -80,11 +82,12 @@ namespace Azure.Compute.Batch
 
             if (bulkTaskCollectionResultHandler == null)
             {
-                bulkTaskCollectionResultHandler = new DefaultTaskCollectionResultHandler();
+                bulkTaskCollectionResultHandler = new DefaultCreateTaskResultHandler();
             }
 
             _batchClient = batchClient;
             _jobId = jobId;
+            _cancellationToken = cancellationToken;
             _remainingTasksToAdd = new ConcurrentQueue<TrackedBatchTask>();
             _taskAddResults = new ConcurrentBag<BatchTaskAddResult>();
             _createTasksResult = new CreateTasksResult(new List<BatchTaskAddResult>());
@@ -105,7 +108,7 @@ namespace Azure.Compute.Batch
         /// <param name="timeOutInSeconds"></param>
         /// <exception cref="RunOnceException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        public CreateTasksResult AddTasks(IEnumerable<BatchTaskCreateContent> tasksToAdd, string jobId, TimeSpan? timeOutInSeconds = null)
+        internal CreateTasksResult AddTasks(IEnumerable<BatchTaskCreateContent> tasksToAdd, string jobId, TimeSpan? timeOutInSeconds = null)
         {
 #pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
             Task<CreateTasksResult> task = AddTasksAsync(tasksToAdd, jobId, timeOutInSeconds);
@@ -123,7 +126,7 @@ namespace Azure.Compute.Batch
         /// <returns></returns>
         /// <exception cref="RunOnceException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        public async System.Threading.Tasks.Task<CreateTasksResult> AddTasksAsync(IEnumerable<BatchTaskCreateContent> tasksToAdd, string jobId, TimeSpan? timeOutInSeconds = null)
+        internal async System.Threading.Tasks.Task<CreateTasksResult> AddTasksAsync(IEnumerable<BatchTaskCreateContent> tasksToAdd, string jobId, TimeSpan? timeOutInSeconds = null)
         {
             //Ensure that this object has not already been used
             int original = Interlocked.CompareExchange(ref this._hasRun, HasRun, HasNotRun);
@@ -205,7 +208,7 @@ namespace Azure.Compute.Batch
         /// <param name="tasksToAdd">The set of tasks to add.</param>
         /// <param name="jobId"></param>
         /// <returns></returns>
-        private async Task AddTasks(
+        internal async Task AddTasks(
             Dictionary<string, TrackedBatchTask> tasksToAdd,
             string jobId)
         {
@@ -220,7 +223,7 @@ namespace Azure.Compute.Batch
                 var asyncTask = this._batchClient.CreateTaskCollectionAsync(
                     jobId: jobId,
                     taskCollection: taskGroup,
-                    cancellationToken: this._parallelOptions.CancellationToken);
+                    cancellationToken: _cancellationToken);
 
                 BatchTaskAddCollectionResult response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
                 //
@@ -272,7 +275,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="addTaskResults"></param>
         /// <param name="taskMap">Dictionary of task name to task object instance for the specific protocol response.</param>
-        private void ProcessAddTaskResults(
+        internal void ProcessAddTaskResults(
             BatchTaskAddCollectionResult addTaskResults,
             IReadOnlyDictionary<string, TrackedBatchTask> taskMap)
         {
@@ -287,7 +290,7 @@ namespace Azure.Compute.Batch
                 //at least once.
                 CreateTaskResultStatus status = CreateTaskResultStatus.Success; //The default is success to avoid infinite retry
 
-                status = _bulkTaskCollectionResultHandler.BulkCreateTaskCollectionResultHandler(omResult, this._parallelOptions.CancellationToken);
+                status = _bulkTaskCollectionResultHandler.CreateTaskResultHandler(omResult, _cancellationToken);
 
                 if (status == CreateTaskResultStatus.Retry)
                 {
@@ -314,12 +317,12 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary>
-        /// Checks for operation cancelation or timeout, and throws the corresponding exception.
+        /// Checks for operation cancellation or timeout, and throws the corresponding exception.
         /// </summary>
-        private void CheckForCancellationOrTimeoutAndThrow()
+        internal void CheckForCancellationOrTimeoutAndThrow()
         {
-            //We always throw when cancelation is requested
-            this._parallelOptions.CancellationToken.ThrowIfCancellationRequested();
+            //We always throw when cancellation is requested
+            _cancellationToken.ThrowIfCancellationRequested();
 
             DateTime currentTime = DateTime.UtcNow;
 
@@ -333,7 +336,7 @@ namespace Azure.Compute.Batch
         /// Waits for a pending operation to complete and throws if the operation failed.
         /// </summary>
         /// <returns></returns>
-        private async Task ProcessPendingOperationResults()
+        internal async Task ProcessPendingOperationResults()
         {
             //Wait for any task to complete
            Task completedTask = await Task.WhenAny(this._pendingAsyncOperations).ConfigureAwait(continueOnCapturedContext: false);
@@ -358,7 +361,7 @@ namespace Azure.Compute.Batch
         /// <param name="tasks"></param>
         /// <returns></returns>
         /// <exception cref="ParallelOperationsException"></exception>
-        private static async Task WaitForTasksAndThrowParallelOperationsExceptionAsync(List<Task> tasks)
+        internal static async Task WaitForTasksAndThrowParallelOperationsExceptionAsync(List<Task> tasks)
         {
             //We know that this will throw, but we want to catch the exception so that we can provide a better aggregate exception experience for users
             try
@@ -379,7 +382,7 @@ namespace Azure.Compute.Batch
         /// Determines if the workflow has finished or not.
         /// </summary>
         /// <returns>True if the workflow has successfully completed, false if it has not.</returns>
-        private bool IsWorkflowDone()
+        internal bool IsWorkflowDone()
         {
             return !(!this._remainingTasksToAdd.IsEmpty || this._pendingAsyncOperations.Count > 0);
         }
@@ -389,7 +392,7 @@ namespace Azure.Compute.Batch
         /// <summary>
         /// Internal task wrapper which tracks a tasks retry count and holds a reference to the BatchTaskCreateContent object.
         /// </summary>
-        private class TrackedBatchTask
+        internal class TrackedBatchTask
         {
             public string JobId { get; private set; }
             public BatchTaskCreateContent Task { get; private set; }

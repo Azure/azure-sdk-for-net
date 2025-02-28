@@ -10,7 +10,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Batch;
 using Azure.ResourceManager.Batch.Models;
 
-namespace Azure.Compute.Batch.Tests.Snippets
+namespace Azure.Compute.Batch.Tests.Samples
 {
     /// <summary>
     ///   Class is used as code base for Sample1_CreatePool_Job_Task

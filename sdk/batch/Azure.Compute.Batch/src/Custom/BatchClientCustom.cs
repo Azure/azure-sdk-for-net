@@ -609,6 +609,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to which the Task is to be created. </param>
         /// <param name="tasksToAdd"> A collection of Tasks to be created. </param>
         /// <param name="parallelOptions">The parallel options associated with this operation.  If this is null, the default is used.</param>
+        /// <param name="createTaskResultHandler">The handler which processes the results of the AddTaskCollection request.  If this is null, the default is used.</param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="tasksToAdd"/> is null. </exception>
@@ -619,7 +620,7 @@ namespace Azure.Compute.Batch
         /// the Batch service and left in whatever state it was in at that time.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<CreateTasksResult> CreateTasksAsync(string jobId, IEnumerable<BatchTaskCreateContent> tasksToAdd, BatchClientParallelOptions parallelOptions = null, TimeSpan? timeOutInSeconds = null, CancellationToken cancellationToken = default)
+        public virtual async Task<CreateTasksResult> CreateTasksAsync(string jobId, IEnumerable<BatchTaskCreateContent> tasksToAdd, BatchClientParallelOptions parallelOptions = null, ICreateTaskResultHandler createTaskResultHandler = null, TimeSpan ? timeOutInSeconds = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(tasksToAdd, nameof(tasksToAdd));
@@ -628,7 +629,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(this, jobId, parallelOptions);
+                TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(this, jobId, parallelOptions, cancellationToken: cancellationToken, bulkTaskCollectionResultHandler: createTaskResultHandler);
                 response = await addTasksWorkflowManager.AddTasksAsync(tasksToAdd,jobId, timeOutInSeconds).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -647,6 +648,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to which the Task is to be created. </param>
         /// <param name="tasksToAdd"> A collection of Tasks to be created </param>
         /// <param name="parallelOptions">The parallel options associated with this operation.  If this is null, the default is used.</param>
+        /// <param name="createTaskResultHandler">The handler which processes the results of the AddTaskCollection request.  If this is null, the default is used.</param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="tasksToAdd"/> is null. </exception>
@@ -656,7 +658,7 @@ namespace Azure.Compute.Batch
         /// Task has not completed within 180 days of being added it will be terminated by
         /// the Batch service and left in whatever state it was in at that time.
         /// </remarks>
-        public virtual CreateTasksResult CreateTasks(string jobId, IEnumerable<BatchTaskCreateContent> tasksToAdd, BatchClientParallelOptions parallelOptions = null, TimeSpan? timeOutInSeconds = null, CancellationToken cancellationToken = default)
+        public virtual CreateTasksResult CreateTasks(string jobId, IEnumerable<BatchTaskCreateContent> tasksToAdd, BatchClientParallelOptions parallelOptions = null, ICreateTaskResultHandler createTaskResultHandler = null, TimeSpan? timeOutInSeconds = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(tasksToAdd, nameof(tasksToAdd));
@@ -667,7 +669,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(this, jobId, parallelOptions);
+                TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(this, jobId, parallelOptions, cancellationToken: cancellationToken, bulkTaskCollectionResultHandler: createTaskResultHandler);
                 response = addTasksWorkflowManager.AddTasks(tasksToAdd, jobId, timeOutInSeconds);
             }
             catch (Exception e)
