@@ -125,6 +125,7 @@ jobs:
         - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
           parameters:
             PackageInfo: '$(Build.SourcesDirectory)/PackageInfo'
+            Restore: true
 
         - pwsh: |
             if ("$(ProjectNames)" -like "*storage*") {
