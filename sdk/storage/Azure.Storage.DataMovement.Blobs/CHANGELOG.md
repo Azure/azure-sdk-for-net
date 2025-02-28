@@ -1,6 +1,19 @@
 # Release History
 
-## 12.0.1 (Unreleased)
+## 12.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.1.0 (2025-02-27)
+
+### Features Added
+- Added support for anonymous access by adding a default constructor for `BlobsStorageResourceProvider`.
 
 ### Bugs Fixed
 - Fixed an issue that would prevent transfers of large files (>200 GiB) for certain destination resource types.

@@ -139,6 +139,7 @@ jobs:
               /p:ProjectListOverrideFile=$(ProjectListOverrideFile) `
               /p:IncludePerf=false `
               /p:IncludeStress=false `
+              /p:IncludeIntegrationTests=false `
               /p:EnableOverrideExclusions=true `
               $(DiagnosticArguments)
           displayName: "Build and Package for PR"
@@ -243,6 +244,8 @@ jobs:
                 - "/*"
                 - "!SessionRecords"
 
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
       - template: /eng/common/pipelines/templates/steps/cache-ps-modules.yml
 
       - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
@@ -268,8 +271,6 @@ jobs:
         inputs:
           versionSpec: 18.x
         displayName: 'Use Node 18.x'
-
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
       - task: DotNetCoreCLI@2
         displayName: 'Install Snippet Generator Tool'
@@ -328,6 +329,7 @@ jobs:
                 /p:PublicSign=false `
                 /p:Configuration=$(BuildConfiguration) `
                 /p:EnableSourceLink=false `
+                /p:ProjectListOverrideFile="" `
                 /p:BuildSnippets=true `
                 $(DiagnosticArguments)
             }

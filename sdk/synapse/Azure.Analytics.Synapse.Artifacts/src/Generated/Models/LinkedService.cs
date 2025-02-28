@@ -26,14 +26,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of <see cref="LinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal LinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties)
+        internal LinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties)
         {
             Type = type;
+            Version = version;
             ConnectVia = connectVia;
             Description = description;
             Parameters = parameters;
@@ -43,6 +45,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Type of linked service. </summary>
         internal string Type { get; set; }
+        /// <summary> Version of the linked service. </summary>
+        public string Version { get; set; }
         /// <summary> The integration runtime reference. </summary>
         public IntegrationRuntimeReference ConnectVia { get; set; }
         /// <summary> Linked service description. </summary>
