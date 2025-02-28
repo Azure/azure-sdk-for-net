@@ -22,29 +22,13 @@ public static class AzureAIProjectsExensions
     /// </summary>
     /// <param name="workspace"></param>
     /// <returns></returns>
-    public static AgentsClient GetOldAgentsClient(this ConnectionProvider workspace)
+    public static Azure.AI.Projects.AgentsClient GetAgentsClient(this ConnectionProvider workspace)
     {
-        AgentsClient agentsClient = workspace.Subclients.GetClient(() =>
+        Azure.AI.Projects.AgentsClient agentsClient = workspace.Subclients.GetClient(() =>
         {
             AIProjectClient aiClient = workspace.Subclients.GetClient(() => CreateAzureAIClient(workspace));
-            return aiClient.GetAgentsClient();
-        });
-
-        return agentsClient;
-    }
-
-    /// <summary>
-    /// Gets the agent client.BlobContainerClientBlobContainerClient
-    /// </summary>
-    /// <param name="workspace"></param>
-    /// <returns></returns>
-    public static Azure.AI.Agents.AgentsClient GetAgentsClient(this ConnectionProvider workspace)
-    {
-        Azure.AI.Agents.AgentsClient agentsClient = workspace.Subclients.GetClient(() =>
-        {
-            AIProjectClient aiClient = workspace.Subclients.GetClient(() => CreateAzureAIClient(workspace));
-            ClientConnection connection = workspace.GetConnection(typeof(Azure.AI.Agents.AgentsClient).FullName);
-            var agentsClient = new Azure.AI.Agents.AgentsClient(connection.Locator, (TokenCredential)connection.Credential);
+            ClientConnection connection = workspace.GetConnection(typeof(AgentsClient).FullName);
+            var agentsClient = new AgentsClient(connection.Locator, (TokenCredential)connection.Credential);
             return agentsClient;
         });
 

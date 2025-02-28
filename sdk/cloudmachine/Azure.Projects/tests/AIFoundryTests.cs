@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.Inference;
-using Azure.AI.Agents;
+using Azure.AI.Projects;
 using Azure.Projects.AIFoundry;
 using Azure.Projects.OpenAI;
 using Azure.Core.TestFramework;
