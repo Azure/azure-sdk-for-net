@@ -231,7 +231,6 @@
     <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="3.1.32" />
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.1.22" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
-    <PackageReference Update="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Functions.Worker.Extensions.Abstractions" Version="1.1.0" />
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.10.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
@@ -247,8 +246,8 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20250219.1" PrivateAssets="All" />
-    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20240813.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20250223.1" PrivateAssets="All" />
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20250227.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.2" PrivateAssets="All" />
@@ -262,7 +261,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
-    <PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" Version="1.0.0-alpha.20250211.5" />
+    <PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" Version="1.0.0-alpha.20250223.1" />
   </ItemGroup>
 
   <!--
@@ -318,6 +317,7 @@
     <PackageReference Update="Microsoft.Azure.Devices.Client" Version="1.41.3" />
     <PackageReference Update="Microsoft.Azure.EventHubs" Version="4.3.2" />
     <PackageReference Update="Microsoft.Azure.EventHubs.Processor" Version="4.3.2" />
+    <PackageReference Update="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Graph.RBAC" Version="2.2.2-preview" />
     <PackageReference Update="Microsoft.Azure.KeyVault" Version="3.0.5" />
     <PackageReference Update="Microsoft.Azure.KeyVault.Core" Version="3.0.5" />
@@ -422,7 +422,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TestProxyVersion>1.0.0-dev.20241213.1</TestProxyVersion>
+    <TestProxyVersion>1.0.0-dev.20250221.1</TestProxyVersion>
   </PropertyGroup>
 
 </Project>
