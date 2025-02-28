@@ -133,7 +133,7 @@ namespace Azure.Compute.Batch
 
             if (original != HasNotRun)
             {
-                throw new RunOnceException(string.Format(CultureInfo.InvariantCulture, BatchErrorMessages.CanOnlyBeRunOnceFailure, this.GetType().Name));
+                throw new RunOnceException(string.Format(CultureInfo.InvariantCulture, BatchErrorCodeStrings.CanOnlyBeRunOnceFailure, this.GetType().Name));
             }
 
             if (tasksToAdd == null)
@@ -374,7 +374,7 @@ namespace Azure.Compute.Batch
                 //Swallow the exception and throw a new one
 
                 IEnumerable<Exception> exceptions = tasks.Where(t => t.IsFaulted).SelectMany(t => t.Exception.InnerExceptions);
-                throw new ParallelOperationsException(BatchErrorMessages.MultipleParallelRequestsHitUnexpectedErrors, exceptions);
+                throw new ParallelOperationsException(BatchErrorCodeStrings.MultipleParallelRequestsHitUnexpectedErrors, exceptions);
             }
         }
 

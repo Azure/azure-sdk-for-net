@@ -586,5 +586,20 @@ namespace Azure.Compute.Batch
         /// One of the query parameters specified in the URL is not supported.
         /// </summary>
         public const string UnsupportedQueryParameter = "UnsupportedQueryParameter";
+
+        /// <summary>
+        /// Task failed to add
+        /// </summary>
+        public const string AddTaskCollectionTerminated = "Addition of a task failed with unexpected status code.Details: {0}";
+
+        /// <summary>
+        ///  Request to server failed in parallel scenario
+        /// </summary>
+        public const string MultipleParallelRequestsHitUnexpectedErrors = "One or more requests to the Azure Batch service failed.";
+
+        /// <summary>
+        /// Can only be run once
+        /// </summary>
+        public const string CanOnlyBeRunOnceFailure = "{0} can only be run once.";
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.Compute.Batch
 
         private static string GenerateMessageString(CreateTaskResult result)
         {
-            return string.Format(System.Globalization.CultureInfo.InvariantCulture, BatchErrorMessages.AddTaskCollectionTerminated, result);
+            return string.Format(System.Globalization.CultureInfo.InvariantCulture, BatchErrorCodeStrings.AddTaskCollectionTerminated, result);
         }
     }
 }
