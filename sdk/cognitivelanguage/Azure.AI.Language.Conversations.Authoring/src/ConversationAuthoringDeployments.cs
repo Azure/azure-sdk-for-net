@@ -11,14 +11,10 @@ using Autorest.CSharp.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    //[CodeGenSuppress("GetDeploymentAsync", typeof(string), typeof(string), typeof(CancellationToken))]
-    //[CodeGenSuppress("GetDeployment", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetDeploymentDeleteFromResourcesStatusAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetDeploymentDeleteFromResourcesStatus", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetDeploymentStatusAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetDeploymentStatus", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    //[CodeGenSuppress("GetDeploymentsAsync", typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
-    //[CodeGenSuppress("GetDeployments", typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
     [CodeGenSuppress("GetSwapDeploymentsStatusAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetSwapDeploymentsStatus", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("SwapDeploymentsAsync", typeof(WaitUntil), typeof(string), typeof(SwapDeploymentsDetails), typeof(CancellationToken))]
@@ -35,11 +31,33 @@ namespace Azure.AI.Language.Conversations.Authoring
     [CodeGenSuppress("AssignDeploymentResources", typeof(WaitUntil), typeof(string), typeof(AssignDeploymentResourcesDetails), typeof(CancellationToken))]
     [CodeGenSuppress("UnassignDeploymentResourcesAsync", typeof(WaitUntil), typeof(string), typeof(UnassignDeploymentResourcesDetails), typeof(CancellationToken))]
     [CodeGenSuppress("UnassignDeploymentResources", typeof(WaitUntil), typeof(string), typeof(UnassignDeploymentResourcesDetails), typeof(CancellationToken))]
-    //[CodeGenSuppress("GetAssignedResourceDeploymentsAsync", typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
-    //[CodeGenSuppress("GetAssignedResourceDeployments", typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
-    //[CodeGenSuppress("GetDeploymentResourcesAsync", typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
-    //[CodeGenSuppress("GetDeploymentResources", typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
-    public partial class ConversationAuthoringDeployments
+    [CodeGenSuppress("GetDeploymentAsync", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetDeployment", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteDeploymentAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("DeleteDeployment", typeof(WaitUntil), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetDeploymentAsync", typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetDeployment", typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetDeploymentDeleteFromResourcesStatusAsync", typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetDeploymentDeleteFromResourcesStatus", typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetDeploymentStatusAsync", typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetDeploymentStatus", typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetSwapDeploymentsStatusAsync", typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetSwapDeploymentsStatus", typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetAssignDeploymentResourcesStatusAsync", typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetAssignDeploymentResourcesStatus", typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetUnassignDeploymentResourcesStatusAsync", typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetUnassignDeploymentResourcesStatus", typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("SwapDeploymentsAsync", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("SwapDeployments", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("DeployProjectAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("DeployProject", typeof(WaitUntil), typeof(string), typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("DeleteDeploymentFromResourcesAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("DeleteDeploymentFromResources", typeof(WaitUntil), typeof(string), typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("AssignDeploymentResourcesAsync", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("AssignDeploymentResources", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("UnassignDeploymentResourcesAsync", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("UnassignDeploymentResources", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    public partial class ConversationAuthoringDeployment
     {
         /// <summary>
         /// Stores the project name associated with the client.
@@ -51,7 +69,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         public readonly string _deploymentName;
 
-        /// <summary> Initializes a new instance of ConversationAuthoringDeployments. </summary>
+        /// <summary> Initializes a new instance of ConversationAuthoringDeployment. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
@@ -60,7 +78,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="deploymentName"> Represents deployment name. </param>
-        internal ConversationAuthoringDeployments(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion, string projectName, string deploymentName)
+        internal ConversationAuthoringDeployment(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion, string projectName, string deploymentName)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -80,7 +98,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetDeploymentAsync(_projectName, _deploymentName, context).ConfigureAwait(false);
+            Response response = await GetDeploymentAsync(context).ConfigureAwait(false);
             return Response.FromValue(ProjectDeployment.FromResponse(response), response);
         }
 
@@ -92,8 +110,76 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetDeployment(_projectName, _deploymentName, context);
+            Response response = GetDeployment(context);
             return Response.FromValue(ProjectDeployment.FromResponse(response), response);
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes a project deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> DeleteDeploymentAsync(WaitUntil waitUntil, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.DeleteDeployment");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteDeploymentRequest(_projectName, _deploymentName, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeployment", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes a project deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation DeleteDeployment(WaitUntil waitUntil, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.DeleteDeployment");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteDeploymentRequest(_projectName, _deploymentName, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeployment", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Gets the status of an existing delete deployment from specific resources job. </summary>
@@ -107,7 +193,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetDeploymentDeleteFromResourcesStatusAsync(_projectName, _deploymentName, jobId, context).ConfigureAwait(false);
+            Response response = await GetDeploymentDeleteFromResourcesStatusAsync(jobId, context).ConfigureAwait(false);
             return Response.FromValue(DeploymentDeleteFromResourcesOperationState.FromResponse(response), response);
         }
 
@@ -122,7 +208,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetDeploymentDeleteFromResourcesStatus(_projectName, _deploymentName, jobId, context);
+            Response response = GetDeploymentDeleteFromResourcesStatus(jobId, context);
             return Response.FromValue(DeploymentDeleteFromResourcesOperationState.FromResponse(response), response);
         }
 
@@ -137,7 +223,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetDeploymentStatusAsync(_projectName, _deploymentName, jobId, context).ConfigureAwait(false);
+            Response response = await GetDeploymentStatusAsync(jobId, context).ConfigureAwait(false);
             return Response.FromValue(DeploymentOperationState.FromResponse(response), response);
         }
 
@@ -152,7 +238,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetDeploymentStatus(_projectName, _deploymentName, jobId, context);
+            Response response = GetDeploymentStatus(jobId, context);
             return Response.FromValue(DeploymentOperationState.FromResponse(response), response);
         }
 
@@ -165,7 +251,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetSwapDeploymentsStatusAsync(_projectName, jobId, context).ConfigureAwait(false);
+            Response response = await GetSwapDeploymentsStatusAsync(jobId, context).ConfigureAwait(false);
             return Response.FromValue(SwapDeploymentsOperationState.FromResponse(response), response);
         }
 
@@ -178,7 +264,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetSwapDeploymentsStatus(_projectName, jobId, context);
+            Response response = GetSwapDeploymentsStatus(jobId, context);
             return Response.FromValue(SwapDeploymentsOperationState.FromResponse(response), response);
         }
 
@@ -196,7 +282,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return await SwapDeploymentsAsync(waitUntil, _projectName, content, context).ConfigureAwait(false);
+            return await SwapDeploymentsAsync(waitUntil, content, context).ConfigureAwait(false);
         }
 
         /// <summary> Swaps two existing deployments with each other. </summary>
@@ -213,7 +299,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return SwapDeployments(waitUntil, _projectName, content, context);
+            return SwapDeployments(waitUntil, content, context);
         }
 
         /// <summary> Creates a new deployment or replaces an existing one. </summary>
@@ -231,7 +317,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return await DeployProjectAsync(waitUntil, _projectName, _deploymentName, content, context).ConfigureAwait(false);
+            return await DeployProjectAsync(waitUntil, content, context).ConfigureAwait(false);
         }
 
         /// <summary> Creates a new deployment or replaces an existing one. </summary>
@@ -249,7 +335,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return DeployProject(waitUntil, _projectName, _deploymentName, content, context);
+            return DeployProject(waitUntil,content, context);
         }
 
         /// <summary> Deletes a project deployment from the specified assigned resources. </summary>
@@ -267,7 +353,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return await DeleteDeploymentFromResourcesAsync(waitUntil, _projectName, _deploymentName, content, context).ConfigureAwait(false);
+            return await DeleteDeploymentFromResourcesAsync(waitUntil, content, context).ConfigureAwait(false);
         }
 
         /// <summary> Deletes a project deployment from the specified assigned resources. </summary>
@@ -285,7 +371,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return DeleteDeploymentFromResources(waitUntil, _projectName, _deploymentName, content, context);
+            return DeleteDeploymentFromResources(waitUntil, content, context);
         }
 
         /// <summary> Deletes a project deployment. </summary>
@@ -299,7 +385,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            return await DeleteDeploymentAsync(waitUntil, _projectName, _deploymentName, context).ConfigureAwait(false);
+            return await DeleteDeploymentAsync(waitUntil, context).ConfigureAwait(false);
         }
 
         /// <summary> Deletes a project deployment. </summary>
@@ -313,7 +399,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            return DeleteDeployment(waitUntil, _projectName, _deploymentName, context);
+            return DeleteDeployment(waitUntil, context);
         }
 
         /// <summary>
@@ -331,23 +417,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDeploymentAsync(string projectName, string deploymentName, RequestContext context)
+        public virtual async Task<Response> GetDeploymentAsync(RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployments.GetDeployment");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.GetDeployment");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDeploymentRequest(projectName, deploymentName, context);
+                using HttpMessage message = CreateGetDeploymentRequest(_projectName, _deploymentName, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -372,23 +454,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDeployment(string projectName, string deploymentName, RequestContext context)
+        public virtual Response GetDeployment(RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployments.GetDeployment");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.GetDeployment");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDeploymentRequest(projectName, deploymentName, context);
+                using HttpMessage message = CreateGetDeploymentRequest(_projectName, _deploymentName, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -413,25 +491,21 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDeploymentDeleteFromResourcesStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context)
+        public virtual async Task<Response> GetDeploymentDeleteFromResourcesStatusAsync(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployments.GetDeploymentDeleteFromResourcesStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.GetDeploymentDeleteFromResourcesStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDeploymentDeleteFromResourcesStatusRequest(projectName, deploymentName, jobId, context);
+                using HttpMessage message = CreateGetDeploymentDeleteFromResourcesStatusRequest(_projectName, _deploymentName, jobId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -456,25 +530,21 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDeploymentDeleteFromResourcesStatus(string projectName, string deploymentName, string jobId, RequestContext context)
+        public virtual Response GetDeploymentDeleteFromResourcesStatus(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployments.GetDeploymentDeleteFromResourcesStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.GetDeploymentDeleteFromResourcesStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDeploymentDeleteFromResourcesStatusRequest(projectName, deploymentName, jobId, context);
+                using HttpMessage message = CreateGetDeploymentDeleteFromResourcesStatusRequest(_projectName, _deploymentName, jobId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -499,25 +569,21 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDeploymentStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context)
+        public virtual async Task<Response> GetDeploymentStatusAsync(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployments.GetDeploymentStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.GetDeploymentStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDeploymentStatusRequest(projectName, deploymentName, jobId, context);
+                using HttpMessage message = CreateGetDeploymentStatusRequest(_projectName, _deploymentName, jobId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -542,25 +608,21 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDeploymentStatus(string projectName, string deploymentName, string jobId, RequestContext context)
+        public virtual Response GetDeploymentStatus(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployments.GetDeploymentStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.GetDeploymentStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDeploymentStatusRequest(projectName, deploymentName, jobId, context);
+                using HttpMessage message = CreateGetDeploymentStatusRequest(_projectName, _deploymentName, jobId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -585,23 +647,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The new project name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSwapDeploymentsStatusAsync(string projectName, string jobId, RequestContext context)
+        public virtual async Task<Response> GetSwapDeploymentsStatusAsync(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployments.GetSwapDeploymentsStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.GetSwapDeploymentsStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSwapDeploymentsStatusRequest(projectName, jobId, context);
+                using HttpMessage message = CreateGetSwapDeploymentsStatusRequest(_projectName, jobId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -626,23 +685,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The new project name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetSwapDeploymentsStatus(string projectName, string jobId, RequestContext context)
+        public virtual Response GetSwapDeploymentsStatus(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployments.GetSwapDeploymentsStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.GetSwapDeploymentsStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSwapDeploymentsStatusRequest(projectName, jobId, context);
+                using HttpMessage message = CreateGetSwapDeploymentsStatusRequest(_projectName, jobId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -668,24 +724,21 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual async Task<Operation> SwapDeploymentsAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation> SwapDeploymentsAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployments.SwapDeployments");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.SwapDeployments");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSwapDeploymentsRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployments.SwapDeployments", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateSwapDeploymentsRequest(_projectName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.SwapDeployments", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -710,24 +763,21 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual Operation SwapDeployments(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual Operation SwapDeployments(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployments.SwapDeployments");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.SwapDeployments");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSwapDeploymentsRequest(projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployments.SwapDeployments", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = CreateSwapDeploymentsRequest(_projectName, content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.SwapDeployments", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -752,26 +802,22 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual async Task<Operation> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation> DeployProjectAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployments.DeployProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.DeployProject");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployments.DeployProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateDeployProjectRequest(_projectName, _deploymentName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeployProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -796,26 +842,22 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual Operation DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
+        public virtual Operation DeployProject(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployments.DeployProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.DeployProject");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployments.DeployProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = CreateDeployProjectRequest(_projectName, _deploymentName, content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeployProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -840,26 +882,22 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual async Task<Operation> DeleteDeploymentFromResourcesAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation> DeleteDeploymentFromResourcesAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployments.DeleteDeploymentFromResources");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.DeleteDeploymentFromResources");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteDeploymentFromResourcesRequest(projectName, deploymentName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployments.DeleteDeploymentFromResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteDeploymentFromResourcesRequest(_projectName, _deploymentName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeploymentFromResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -884,26 +922,22 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual Operation DeleteDeploymentFromResources(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
+        public virtual Operation DeleteDeploymentFromResources(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployments.DeleteDeploymentFromResources");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.DeleteDeploymentFromResources");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteDeploymentFromResourcesRequest(projectName, deploymentName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployments.DeleteDeploymentFromResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = CreateDeleteDeploymentFromResourcesRequest(_projectName, _deploymentName, content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeploymentFromResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -923,7 +957,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAssignDeploymentResourcesStatusAsync(_projectName, jobId, context).ConfigureAwait(false);
+            Response response = await GetAssignDeploymentResourcesStatusAsync(jobId, context).ConfigureAwait(false);
             return Response.FromValue(DeploymentResourcesOperationState.FromResponse(response), response);
         }
 
@@ -938,7 +972,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAssignDeploymentResourcesStatus(_projectName, jobId, context);
+            Response response = GetAssignDeploymentResourcesStatus(jobId, context);
             return Response.FromValue(DeploymentResourcesOperationState.FromResponse(response), response);
         }
 
@@ -953,7 +987,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetUnassignDeploymentResourcesStatusAsync(_projectName, jobId, context).ConfigureAwait(false);
+            Response response = await GetUnassignDeploymentResourcesStatusAsync(jobId, context).ConfigureAwait(false);
             return Response.FromValue(DeploymentResourcesOperationState.FromResponse(response), response);
         }
 
@@ -968,7 +1002,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetUnassignDeploymentResourcesStatus(_projectName, jobId, context);
+            Response response = GetUnassignDeploymentResourcesStatus(jobId, context);
             return Response.FromValue(DeploymentResourcesOperationState.FromResponse(response), response);
         }
 
@@ -986,7 +1020,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return await AssignDeploymentResourcesAsync(waitUntil, _projectName, content, context).ConfigureAwait(false);
+            return await AssignDeploymentResourcesAsync(waitUntil, content, context).ConfigureAwait(false);
         }
 
         /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. </summary>
@@ -1003,7 +1037,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return AssignDeploymentResources(waitUntil, _projectName, content, context);
+            return AssignDeploymentResources(waitUntil, content, context);
         }
 
         /// <summary> Unassign resources from a project. This disallows deploying new deployments to these resources, and deletes existing deployments assigned to them. </summary>
@@ -1020,7 +1054,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return await UnassignDeploymentResourcesAsync(waitUntil, _projectName, content, context).ConfigureAwait(false);
+            return await UnassignDeploymentResourcesAsync(waitUntil, content, context).ConfigureAwait(false);
         }
 
         /// <summary> Unassign resources from a project. This disallows deploying new deployments to these resources, and deletes existing deployments assigned to them. </summary>
@@ -1037,7 +1071,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return UnassignDeploymentResources(waitUntil, _projectName, content, context);
+            return UnassignDeploymentResources(waitUntil, content, context);
         }
 
         /// <summary>
@@ -1055,23 +1089,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The new project name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAssignDeploymentResourcesStatusAsync(string projectName, string jobId, RequestContext context)
+        public virtual async Task<Response> GetAssignDeploymentResourcesStatusAsync(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.GetAssignDeploymentResourcesStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAssignDeploymentResourcesStatusRequest(projectName, jobId, context);
+                using HttpMessage message = CreateGetAssignDeploymentResourcesStatusRequest(_projectName, jobId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1096,23 +1127,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The new project name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetAssignDeploymentResourcesStatus(string projectName, string jobId, RequestContext context)
+        public virtual Response GetAssignDeploymentResourcesStatus(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.GetAssignDeploymentResourcesStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAssignDeploymentResourcesStatusRequest(projectName, jobId, context);
+                using HttpMessage message = CreateGetAssignDeploymentResourcesStatusRequest(_projectName, jobId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1137,23 +1165,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetUnassignDeploymentResourcesStatusAsync(string projectName, string jobId, RequestContext context)
+        public virtual async Task<Response> GetUnassignDeploymentResourcesStatusAsync(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.GetUnassignDeploymentResourcesStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUnassignDeploymentResourcesStatusRequest(projectName, jobId, context);
+                using HttpMessage message = CreateGetUnassignDeploymentResourcesStatusRequest(_projectName, jobId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1178,23 +1203,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetUnassignDeploymentResourcesStatus(string projectName, string jobId, RequestContext context)
+        public virtual Response GetUnassignDeploymentResourcesStatus(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.GetUnassignDeploymentResourcesStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUnassignDeploymentResourcesStatusRequest(projectName, jobId, context);
+                using HttpMessage message = CreateGetUnassignDeploymentResourcesStatusRequest(_projectName, jobId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1220,23 +1242,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual async Task<Operation> AssignDeploymentResourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation> AssignDeploymentResourcesAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.AssignDeploymentResources");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAssignDeploymentResourcesRequest(projectName, content, context);
+                using HttpMessage message = CreateAssignDeploymentResourcesRequest(_projectName, content, context);
                 return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeploymentResources.AssignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1262,23 +1281,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual Operation AssignDeploymentResources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual Operation AssignDeploymentResources(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.AssignDeploymentResources");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAssignDeploymentResourcesRequest(projectName, content, context);
+                using HttpMessage message = CreateAssignDeploymentResourcesRequest(_projectName, content, context);
                 return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeploymentResources.AssignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
@@ -1304,23 +1320,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual async Task<Operation> UnassignDeploymentResourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation> UnassignDeploymentResourcesAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.UnassignDeploymentResources");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUnassignDeploymentResourcesRequest(projectName, content, context);
+                using HttpMessage message = CreateUnassignDeploymentResourcesRequest(_projectName, content, context);
                 return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeploymentResources.UnassignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1346,23 +1359,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual Operation UnassignDeploymentResources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual Operation UnassignDeploymentResources(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.UnassignDeploymentResources");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUnassignDeploymentResourcesRequest(projectName, content, context);
+                using HttpMessage message = CreateUnassignDeploymentResourcesRequest(_projectName, content, context);
                 return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeploymentResources.UnassignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
