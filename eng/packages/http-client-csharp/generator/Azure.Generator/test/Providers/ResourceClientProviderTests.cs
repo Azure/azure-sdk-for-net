@@ -22,10 +22,6 @@ namespace Azure.Generator.Tests.Providers
                 : base(operationSet, inputClient, requestPath, specName, resourceData, resourceType)
             {
             }
-
-            protected virtual string MethodName => "";
-
-            protected override MethodProvider[] BuildMethods() => [.. base.BuildMethods().Where(m => m.Signature.Name == MethodName)];
             protected override FieldProvider[] BuildFields() => [];
             protected override PropertyProvider[] BuildProperties() => [];
             protected override ConstructorProvider[] BuildConstructors() => [];
@@ -55,7 +51,7 @@ namespace Azure.Generator.Tests.Providers
             {
             }
 
-            protected override string MethodName => "ValidateId";
+            protected override MethodProvider[] BuildMethods() => [.. base.BuildMethods().Where(m => m.Signature.Name == "ValidateResourceId")];
         }
 
         [TestCase]
