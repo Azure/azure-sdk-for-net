@@ -18,7 +18,6 @@ steps:
       useGlobalJson: true
       performMultiLevelLookup: true
   - task: UseDotNet@2 # We need .NET 8 for the .NET 8 tests
-    condition: and(succeeded(), ne(variables['Agent.OS'], 'Windows_NT')) # Windows supports MultiLevelLookup and doesn't need explicit framework installation
     displayName: 'Use .NET 8.0 SDK'
     retryCountOnTaskFailure: 3
     inputs:
