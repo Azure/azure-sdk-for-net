@@ -205,12 +205,45 @@ namespace Azure.Storage.DataMovement
 
 #if NETSTANDARD2_0_OR_GREATER
                 // This is wrong, but the workaround looks like it would be really long and difficult to implment....
-                long totalPhysicalMemory = CurrentProcess.WorkingSet64;
+                //long totalPhysicalMemory = CurrentProcess.WorkingSet64;
+                long totalPhysicalMemory = (long)CalculateMemoryNETStandard();
+
 #else
                 long totalPhysicalMemory = GC.GetGCMemoryInfo().TotalAvailableMemoryBytes;
+                // Assumption: Probably not MAC
+                // Use PInvoke here
+
 #endif
                 MemoryUsage = (double)currentMemoryUsage / (double)totalPhysicalMemory;
             }
+        }
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern bool GlobalMemoryStatusEx(ref MEMORYSTATUSEX lpBuffer);
+
+        private ulong CalculateMemoryNETStandard()
+        {
+            MEMORYSTATUSEX memStatus = new MEMORYSTATUSEX { dwLength = (uint)Marshal.SizeOf(typeof(MEMORYSTATUSEX)) };
+            if (GlobalMemoryStatusEx(ref memStatus))
+            {
+                return memStatus.ullTotalPhys;
+                //Console.WriteLine($"Available RAM: {memStatus.ullAvailPhys / 1024 / 1024} MB");
+            }
+            return 0;
+        }
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        internal struct MEMORYSTATUSEX
+        {
+            public uint dwLength;
+            public uint dwMemoryLoad;
+            public ulong ullTotalPhys;
+            public ulong ullAvailPhys;
+            public ulong ullTotalPageFile;
+            public ulong ullAvailPageFile;
+            public ulong ullTotalVirtual;
+            public ulong ullAvailVirtual;
+            public ulong ullAvailExtendedVirtual;
         }
     }
 }
