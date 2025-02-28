@@ -198,9 +198,10 @@
     <PackageReference Update="NUnit" Version="3.13.2" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(MSBuildProjectName.Contains('CloudMachine'))">
+  <ItemGroup Condition="$(MSBuildProjectName.Contains('Azure.Projects'))">
     <PackageReference Update="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0"/>
+    <PackageReference Update="Azure.Provisioning.Deployment" Version="1.0.0-beta.2"/>
   </ItemGroup>
 
   <!--
