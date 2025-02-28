@@ -24,6 +24,10 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions"/>
     <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1"/>
     <PackageReference Include="System.ClientModel" />
+<<<<<<< HEAD
+=======
+    <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1" />
+>>>>>>> 3cce23dc35f (pr feedback)
   </ItemGroup>
 
   <ItemGroup>
