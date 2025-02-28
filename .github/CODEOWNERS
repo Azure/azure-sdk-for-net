@@ -572,6 +572,7 @@
 
 # ServiceLabel: %IoT
 # ServiceOwners:                                                   @ethanann-ms @vighatke @timtay-microsoft @abhipsaMisra @digimaun @brycewang-microsoft @andyk-ms @tmahmood-microsoft
+
 # ServiceLabel: %IoT - CLI
 # ServiceOwners:                                                   @Azure/azure-iot-cli-triage
 
