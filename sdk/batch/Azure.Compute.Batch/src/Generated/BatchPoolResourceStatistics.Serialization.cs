@@ -49,9 +49,9 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("peakDiskGiB"u8);
             writer.WriteNumberValue(PeakDiskGiB);
             writer.WritePropertyName("diskReadIOps"u8);
-            writer.WriteNumberValue(DiskReadIOps);
+            writer.WriteStringValue(DiskReadIOps.ToString());
             writer.WritePropertyName("diskWriteIOps"u8);
-            writer.WriteNumberValue(DiskWriteIOps);
+            writer.WriteStringValue(DiskWriteIOps.ToString());
             writer.WritePropertyName("diskReadGiB"u8);
             writer.WriteNumberValue(DiskReadGiB);
             writer.WritePropertyName("diskWriteGiB"u8);
@@ -151,12 +151,12 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("diskReadIOps"u8))
                 {
-                    diskReadIOps = property.Value.GetInt64();
+                    diskReadIOps = long.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskWriteIOps"u8))
                 {
-                    diskWriteIOps = property.Value.GetInt64();
+                    diskWriteIOps = long.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskReadGiB"u8))
