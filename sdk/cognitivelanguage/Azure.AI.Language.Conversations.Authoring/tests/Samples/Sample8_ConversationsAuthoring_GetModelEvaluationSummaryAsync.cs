@@ -26,11 +26,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample8_ConversationsAuthoring_GetModelEvaluationSummaryAsync
             string projectName = "MyProject";
             string trainedModelLabel = "YourTrainedModelLabel";
-            ConversationAuthoringModels modelAuthoringClient = client.GetModels(projectName);
+            ConversationAuthoringTrainedModel modelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
-            Response<EvaluationSummary> evaluationSummaryResponse = await modelAuthoringClient.GetModelEvaluationSummaryAsync(
-                trainedModelLabel: trainedModelLabel
-            );
+            Response<EvaluationSummary> evaluationSummaryResponse = await modelAuthoringClient.GetModelEvaluationSummaryAsync();
 
             // Print entities evaluation summary
             var entitiesEval = evaluationSummaryResponse.Value.EntitiesEvaluation;

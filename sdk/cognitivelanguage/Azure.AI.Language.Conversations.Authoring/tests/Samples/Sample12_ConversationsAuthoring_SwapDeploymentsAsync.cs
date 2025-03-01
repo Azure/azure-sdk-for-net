@@ -22,14 +22,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
+            #region Snippet:Sample14_ConversationsAuthoring_SwapDeploymentsAsync
             string projectName = "SampleProject";
             var deploymentName1 = "deployment1";
             var deploymentName2 = "deployment2";
-            ConversationAuthoringDeployments deploymentAuthoringClient = client.GetDeployments(projectName, deploymentName1);
+            ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName1);
 
             var swapDetails = new SwapDeploymentsDetails(deploymentName1, deploymentName2);
 
-            #region Snippet:Sample14_ConversationsAuthoring_SwapDeploymentsAsync
             Operation operation = await deploymentAuthoringClient.SwapDeploymentsAsync(
                 waitUntil: WaitUntil.Completed,
                 details: swapDetails

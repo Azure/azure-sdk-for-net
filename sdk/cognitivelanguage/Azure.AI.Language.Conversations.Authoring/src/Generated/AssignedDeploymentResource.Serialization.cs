@@ -78,20 +78,20 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 return null;
             }
-            string azureResourceId = default;
-            string region = default;
+            ResourceIdentifier azureResourceId = default;
+            AzureLocation region = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureResourceId"u8))
                 {
-                    azureResourceId = property.Value.GetString();
+                    azureResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("region"u8))
                 {
-                    region = property.Value.GetString();
+                    region = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

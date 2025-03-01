@@ -25,7 +25,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample6_ConversationsAuthoring_TrainAsync
             string projectName = "MySampleProjectAsync";
-            ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
+            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
 
             var trainingJobDetails = new TrainingJobDetails(
                 modelLabel: "MyModel",

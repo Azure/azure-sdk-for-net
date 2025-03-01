@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample3_ConversationsAuthoring_Export
             string projectName = "MyExportedProject";
-            ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
+            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
 
             Operation operation = projectAuthoringClient.Export(
                 waitUntil: WaitUntil.Completed,

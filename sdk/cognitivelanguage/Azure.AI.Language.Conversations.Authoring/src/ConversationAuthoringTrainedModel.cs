@@ -26,6 +26,18 @@ namespace Azure.AI.Language.Conversations.Authoring
     [CodeGenSuppress("DeleteTrainedModel", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("LoadSnapshotAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("LoadSnapshot", typeof(WaitUntil), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetTrainedModelAsync", typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetTrainedModel", typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetEvaluationStatusAsync", typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetEvaluationStatus", typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetModelEvaluationSummaryAsync", typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetModelEvaluationSummary", typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetLoadSnapshotStatusAsync", typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetLoadSnapshotStatus", typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetModelEvaluationResultsAsync", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(RequestContext))]
+    [CodeGenSuppress("GetModelEvaluationResults", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(RequestContext))]
+    [CodeGenSuppress("EvaluateModelAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("EvaluateModel", typeof(WaitUntil), typeof(string), typeof(string), typeof(RequestContent), typeof(RequestContext))]
     public partial class ConversationAuthoringTrainedModel
     {
         /// <summary>
@@ -775,7 +787,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteTrainedModelAsync(RequestContext context = null)
+        public virtual async Task<Response> DeleteTrainedModelAsync(RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_trainedModelLabel, nameof(_trainedModelLabel));
@@ -808,7 +820,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteTrainedModel(RequestContext context = null)
+        public virtual Response DeleteTrainedModel(RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_trainedModelLabel, nameof(_trainedModelLabel));
@@ -842,7 +854,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual async Task<Operation> LoadSnapshotAsync(WaitUntil waitUntil, RequestContext context = null)
+        public virtual async Task<Operation> LoadSnapshotAsync(WaitUntil waitUntil, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_trainedModelLabel, nameof(_trainedModelLabel));
@@ -876,7 +888,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual Operation LoadSnapshot(WaitUntil waitUntil, RequestContext context = null)
+        public virtual Operation LoadSnapshot(WaitUntil waitUntil, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_trainedModelLabel, nameof(_trainedModelLabel));

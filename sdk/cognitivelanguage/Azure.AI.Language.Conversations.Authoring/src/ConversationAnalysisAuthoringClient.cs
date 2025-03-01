@@ -11,15 +11,18 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     [CodeGenClient("AuthoringClient")]
-    [CodeGenSuppress("GetConversationAuthoringDeploymentsClient", typeof(string))]
-    [CodeGenSuppress("GetConversationAuthoringProjectsClient", typeof(string))]
-    [CodeGenSuppress("GetConversationAuthoringModelsClient", typeof(string))]
-    [CodeGenSuppress("GetConversationAuthoringDeploymentsClient")]
-    [CodeGenSuppress("GetConversationAuthoringProjectsClient")]
-    [CodeGenSuppress("GetConversationAuthoringModelsClient")]
-    [CodeGenSuppress("_cachedConversationAuthoringDeployments")]
-    [CodeGenSuppress("_cachedConversationAuthoringProjects")]
-    [CodeGenSuppress("_cachedConversationAuthoringModels")]
+    [CodeGenSuppress("GetConversationAuthoringDeploymentClient", typeof(string))]
+    [CodeGenSuppress("GetConversationAuthoringProjectClient", typeof(string))]
+    [CodeGenSuppress("GetConversationAuthoringExportedModelClient", typeof(string))]
+    [CodeGenSuppress("GetConversationAuthoringTrainedModelClient", typeof(string))]
+    [CodeGenSuppress("GetConversationAuthoringDeploymentClient")]
+    [CodeGenSuppress("GetConversationAuthoringProjectClient")]
+    [CodeGenSuppress("GetConversationAuthoringExportedModelClient")]
+    [CodeGenSuppress("GetConversationAuthoringTrainedModelClient")]
+    [CodeGenSuppress("_cachedConversationAuthoringDeployment")]
+    [CodeGenSuppress("_cachedConversationAuthoringProject")]
+    [CodeGenSuppress("_cachedConversationAuthoringExportedModel")]
+    [CodeGenSuppress("_cachedConversationAuthoringTrainedModel")]
     public partial class ConversationAnalysisAuthoringClient
     {
         private readonly string _apiVersion;
@@ -42,34 +45,46 @@ namespace Azure.AI.Language.Conversations.Authoring
             _endpoint = endpoint;
         }
 
-        /// <summary> Initializes a new instance of ConversationAuthoringDeployments. </summary>
+        /// <summary> Initializes a new instance of ConversationAuthoringDeployment. </summary>
         /// <param name="projectName"> The project name to use for this subclient. </param>
         /// <param name="deploymentName"> Represents deployment name. </param>
-        public virtual ConversationAuthoringDeployments GetDeployments(string projectName, string deploymentName)
+        public virtual ConversationAuthoringDeployment GetDeployment(string projectName, string deploymentName)
         {
             var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new ConversationAuthoringDeployments(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName, deploymentName);
+            return new ConversationAuthoringDeployment(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName, deploymentName);
         }
 
-        /// <summary> Initializes a new instance of ConversationAuthoringProjects. </summary>
-        public virtual ConversationAuthoringProjects GetProjects(string projectName)
+        /// <summary> Initializes a new instance of ConversationAuthoringProject. </summary>
+        public virtual ConversationAuthoringProject GetProject(string projectName)
         {
             var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new ConversationAuthoringProjects(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
+            return new ConversationAuthoringProject(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
         }
 
         /// <summary> Initializes a new instance of ConversationAuthoringModels. </summary>
         /// <param name="projectName"> The project name to use for this subclient. </param>
-        public virtual ConversationAuthoringModels GetModels(string projectName)
+        /// <param name="exportedModelName"> The exported model name to use for this subclient. </param>
+        public virtual ConversationAuthoringExportedModel GetExportedModel(string projectName, string exportedModelName)
         {
             var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new ConversationAuthoringModels(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
+            return new ConversationAuthoringExportedModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName, exportedModelName);
+        }
+
+        /// <summary> Initializes a new instance of ConversationAuthoringModels. </summary>
+        /// <param name="projectName"> The project name to use for this subclient. </param>
+        /// <param name="trainedModelLabel"> The trained model label to use for this subclient. </param>
+        public virtual ConversationAuthoringTrainedModel GetTrainedModel(string projectName, string trainedModelLabel)
+        {
+            var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
+            Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
+
+            return new ConversationAuthoringTrainedModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName, trainedModelLabel);
         }
     }
 }

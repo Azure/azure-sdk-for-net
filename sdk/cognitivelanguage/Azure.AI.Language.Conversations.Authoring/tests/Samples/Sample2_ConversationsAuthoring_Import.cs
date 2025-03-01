@@ -26,11 +26,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample2_ConversationsAuthoring_Import
             string projectName = "MyImportedProject";
-            ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
+            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
 
             var projectMetadata = new CreateProjectDetails(
                 projectKind: "Conversation",
-                projectName: projectName,
                 language: "en"
             )
             {

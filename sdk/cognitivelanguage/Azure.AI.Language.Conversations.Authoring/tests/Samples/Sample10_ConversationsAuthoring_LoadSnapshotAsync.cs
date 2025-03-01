@@ -21,15 +21,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
+            #region Snippet:Sample10_ConversationsAuthoring_LoadSnapshotAsync
             string projectName = "SampleProject";
             string trainedModelLabel = "SampleModel";
-            ConversationAuthoringModels modelAuthoringClient = client.GetModels(projectName);
+            ConversationAuthoringTrainedModel modelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
-            #region Snippet:Sample10_ConversationsAuthoring_LoadSnapshotAsync
             Operation operation = await modelAuthoringClient.LoadSnapshotAsync(
-                waitUntil: WaitUntil.Completed,
-                trainedModelLabel: trainedModelLabel
-            );
+                waitUntil: WaitUntil.Completed);
 
              // Extract the operation-location header
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;

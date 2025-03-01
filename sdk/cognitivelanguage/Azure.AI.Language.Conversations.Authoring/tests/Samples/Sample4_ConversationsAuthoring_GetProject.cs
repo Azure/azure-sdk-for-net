@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample4_ConversationsAuthoring_GetProject
             string projectName = "MySampleProject";
-            ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
+            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
 
             Response<ProjectMetadata> response = projectAuthoringClient.GetProject();
             ProjectMetadata projectMetadata = response.Value;

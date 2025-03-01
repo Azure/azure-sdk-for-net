@@ -1017,35 +1017,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetExportedModels", "value", "nextLink", maxpagesize, context);
         }
 
-        private ConversationAuthoringDeployment _cachedConversationAuthoringDeployment;
-        private ConversationAuthoringProject _cachedConversationAuthoringProject;
-        private ConversationAuthoringExportedModel _cachedConversationAuthoringExportedModel;
-        private ConversationAuthoringTrainedModel _cachedConversationAuthoringTrainedModel;
-
-        /// <summary> Initializes a new instance of ConversationAuthoringDeployment. </summary>
-        public virtual ConversationAuthoringDeployment GetConversationAuthoringDeploymentClient()
-        {
-            return Volatile.Read(ref _cachedConversationAuthoringDeployment) ?? Interlocked.CompareExchange(ref _cachedConversationAuthoringDeployment, new ConversationAuthoringDeployment(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedConversationAuthoringDeployment;
-        }
-
-        /// <summary> Initializes a new instance of ConversationAuthoringProject. </summary>
-        public virtual ConversationAuthoringProject GetConversationAuthoringProjectClient()
-        {
-            return Volatile.Read(ref _cachedConversationAuthoringProject) ?? Interlocked.CompareExchange(ref _cachedConversationAuthoringProject, new ConversationAuthoringProject(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedConversationAuthoringProject;
-        }
-
-        /// <summary> Initializes a new instance of ConversationAuthoringExportedModel. </summary>
-        public virtual ConversationAuthoringExportedModel GetConversationAuthoringExportedModelClient()
-        {
-            return Volatile.Read(ref _cachedConversationAuthoringExportedModel) ?? Interlocked.CompareExchange(ref _cachedConversationAuthoringExportedModel, new ConversationAuthoringExportedModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedConversationAuthoringExportedModel;
-        }
-
-        /// <summary> Initializes a new instance of ConversationAuthoringTrainedModel. </summary>
-        public virtual ConversationAuthoringTrainedModel GetConversationAuthoringTrainedModelClient()
-        {
-            return Volatile.Read(ref _cachedConversationAuthoringTrainedModel) ?? Interlocked.CompareExchange(ref _cachedConversationAuthoringTrainedModel, new ConversationAuthoringTrainedModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedConversationAuthoringTrainedModel;
-        }
-
         internal HttpMessage CreateGetDeploymentsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);

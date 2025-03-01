@@ -28,7 +28,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
             string projectName = "MyNewProject";
-            ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
+            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
             #endregion
         }
 
@@ -43,7 +43,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             DefaultAzureCredential credential = new DefaultAzureCredential();
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
             string projectName = "MyNewProject";
-            ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
+            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
             #endregion
         }
 
@@ -58,7 +58,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             try
             {
                 string invalidProjectName = "InvalidProject";
-                ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(invalidProjectName);
+                ConversationAuthoringProject projectAuthoringClient = client.GetProject(invalidProjectName);
                 var projectData = new
                 {
                     language = "invalid-lang", // Invalid language code

@@ -22,11 +22,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
+            #region Snippet:Sample13_ConversationsAuthoring_DeleteDeploymentAsync
             string projectName = "SampleProject";
             string deploymentName = "SampleDeployment";
-            ConversationAuthoringDeployments deploymentAuthoringClient = client.GetDeployments(projectName, deploymentName);
+            ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName);
 
-            #region Snippet:Sample13_ConversationsAuthoring_DeleteDeploymentAsync
             Operation operation = await deploymentAuthoringClient.DeleteDeploymentAsync(
                 waitUntil: WaitUntil.Completed
             );

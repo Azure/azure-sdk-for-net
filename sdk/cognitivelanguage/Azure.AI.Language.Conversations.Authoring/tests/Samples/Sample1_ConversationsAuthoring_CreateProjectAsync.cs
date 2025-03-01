@@ -24,18 +24,17 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample1_ConversationsAuthoring_CreateProjectAsync
             string projectName = "MyNewProjectAsync";
-            ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
-            var projectData = new
+            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+            var projectData = new CreateProjectDetails(
+                  projectKind: "Conversation",
+                  language: "en-us"
+                )
             {
-                projectName = projectName,
-                language = "en",
-                projectKind = "Conversation",
-                description = "Project description",
-                multilingual = true
+                Multilingual = true,
+                Description = "Project description"
             };
 
-            using RequestContent content = RequestContent.Create(projectData);
-            Response response = await projectAuthoringClient.CreateProjectAsync(content);
+            Response response = await projectAuthoringClient.CreateProjectAsync(projectData);
 
             Console.WriteLine($"Project created with status: {response.Status}");
             #endregion

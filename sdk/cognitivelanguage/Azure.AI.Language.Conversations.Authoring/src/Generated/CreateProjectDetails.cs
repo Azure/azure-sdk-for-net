@@ -47,21 +47,6 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Initializes a new instance of <see cref="CreateProjectDetails"/>. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="language"/> is null. </exception>
-        public CreateProjectDetails(AnalyzeConversationAuthoringProjectKind projectKind, string projectName, string language)
-        {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(language, nameof(language));
-
-            ProjectKind = projectKind;
-            ProjectName = projectName;
-            Language = language;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CreateProjectDetails"/>. </summary>
-        /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="settings"> The project settings. </param>
         /// <param name="storageInputContainerName"> The storage container name in case of conversation summarization. </param>
         /// <param name="projectName"> The new project name. </param>

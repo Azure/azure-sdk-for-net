@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring.Models
 {
@@ -111,9 +112,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="resourceId"> The resource ID. </param>
         /// <param name="region"> The resource region. </param>
         /// <returns> A new <see cref="Authoring.AssignedDeploymentResource"/> instance for mocking. </returns>
-        public static Authoring.AssignedDeploymentResource AssignedDeploymentResource(string resourceId = null, string region = null)
+        public static AssignedDeploymentResource AssignedDeploymentResource(ResourceIdentifier resourceId = null, AzureLocation region = default)
         {
-            return new Authoring.AssignedDeploymentResource(resourceId, region, serializedAdditionalRawData: null);
+            return new AssignedDeploymentResource(resourceId, region, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Authoring.PrebuiltEntity"/>. </summary>

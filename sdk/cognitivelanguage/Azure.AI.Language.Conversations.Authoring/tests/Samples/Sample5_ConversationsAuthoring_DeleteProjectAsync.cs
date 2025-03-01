@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample5_ConversationsAuthoring_DeleteProjectAsync
             string projectName = "MySampleProjectAsync";
-            ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
+            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
 
             Operation operation = await projectAuthoringClient.DeleteProjectAsync(
                 waitUntil: WaitUntil.Completed
