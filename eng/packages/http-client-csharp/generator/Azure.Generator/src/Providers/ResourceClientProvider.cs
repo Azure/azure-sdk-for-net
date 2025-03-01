@@ -32,7 +32,6 @@ namespace Azure.Generator.Providers
     internal class ResourceClientProvider : TypeProvider
     {
         private IReadOnlyCollection<InputOperation> _resourceOperations;
-        private string _requestPath;
         private ClientProvider _clientProvider;
         private readonly IReadOnlyList<string> _contextualParameters;
         private bool _isSingleton;
@@ -45,7 +44,6 @@ namespace Azure.Generator.Providers
         public ResourceClientProvider(InputClient inputClient, string requestPath, string specName, ModelProvider resourceData, string resrouceType, bool isSingleton)
         {
             _resourceOperations = inputClient.Operations.Where(operation => operation.GetHttpPath().SerializedPath.Equals(requestPath)).ToList();
-            _requestPath = requestPath;
             SpecName = specName;
             ResourceData = resourceData;
             _isSingleton = isSingleton;
@@ -280,14 +278,32 @@ namespace Azure.Generator.Providers
         {
             var cancellationToken = convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(CancellationToken)));
             var tryStatement = new TryStatement();
-            var responseDeclaration = Declare("response", GetResponseType(convenienceMethod, isAsync), ((MemberExpression)_restClientField).Invoke(convenienceMethod.Signature.Name, PopulateArguments(convenienceMethod.Signature.Parameters, convenienceMethod), null, callAsAsync: isAsync, addConfigureAwaitFalse: isAsync), out var responseVariable);
-            tryStatement.Add(responseDeclaration);
+            var contextDeclaration = Declare("context", typeof(RequestContext), New.Instance(typeof(RequestContext), new Dictionary<ValueExpression, ValueExpression> { { Identifier(nameof(RequestContext.CancellationToken)), cancellationToken } }), out var contextVariable);
+            tryStatement.Add(contextDeclaration);
+            var requestMethod = GetCorrespondingRequestMethod(operation);
+            var messageDeclaration = Declare("message", typeof(HttpMessage), _restClientField.Invoke(requestMethod.Signature.Name, PopulateArguments(requestMethod.Signature.Parameters, convenienceMethod, contextVariable)), out var messageVariable);
+            tryStatement.Add(messageDeclaration);
+            var responseType = GetResponseType(convenienceMethod, isAsync);
+            VariableExpression responseVariable;
+            if (!responseType.Equals(typeof(Response)))
+            {
+                var resultDeclaration = Declare("result", typeof(Response), This.Property("Pipeline").Invoke(isAsync ? "ProcessMessageAsync" : "ProcessMessage", [messageVariable, contextVariable], null, isAsync), out var resultVariable);
+                tryStatement.Add(resultDeclaration);
+                var responseDeclaration = Declare("response", responseType, Static(typeof(Response)).Invoke(nameof(Response.FromValue), [resultVariable.CastTo(ResourceData.Type), resultVariable]), out responseVariable);
+                tryStatement.Add(responseDeclaration);
+            }
+            else
+            {
+                var responseDeclaration = Declare("response", typeof(Response), This.Property("Pipeline").Invoke(isAsync ? "ProcessMessageAsync" : "ProcessMessage", [messageVariable, contextVariable], null, isAsync), out responseVariable);
+                tryStatement.Add(responseDeclaration);
+            }
+
             if (isLongRunning)
             {
                 var armOperationType = !isGeneric ? AzureClientPlugin.Instance.OutputLibrary.ArmOperation.Type : AzureClientPlugin.Instance.OutputLibrary.GenericArmOperation.Type.MakeGenericType([Type]);
-                var requestMethod = GetCorrespondingRequestMethod(operation);
-                ValueExpression[] armOperationArguments = [_clientDiagonosticsField, This.Property("Pipeline"), _restClientField.Invoke(requestMethod.Signature.Name, PopulateArguments(requestMethod.Signature.Parameters, convenienceMethod)).Property("Request"), isGeneric ? responseVariable.Invoke("GetRawResponse") : responseVariable, Static(typeof(OperationFinalStateVia)).Property(((OperationFinalStateVia)operation.LongRunning!.FinalStateVia).ToString())];
+                ValueExpression[] armOperationArguments = [_clientDiagonosticsField, This.Property("Pipeline"), messageVariable.Property("Request"), isGeneric ? responseVariable.Invoke("GetRawResponse") : responseVariable, Static(typeof(OperationFinalStateVia)).Property(((OperationFinalStateVia)operation.LongRunning!.FinalStateVia).ToString())];
                 var operationDeclaration = Declare("operation", armOperationType, New.Instance(armOperationType, isGeneric ? [New.Instance(Source.Type, This.Property("Client")), .. armOperationArguments] : armOperationArguments), out var operationVariable);
+
                 tryStatement.Add(operationDeclaration);
                 tryStatement.Add(new IfStatement(KnownAzureParameters.WaitUntil.Equal(Static(typeof(WaitUntil)).Property(nameof(WaitUntil.Completed))))
                 {
@@ -310,7 +326,7 @@ namespace Azure.Generator.Providers
 
         private static CSharpType GetResponseType(MethodProvider convenienceMethod, bool isAsync) => isAsync ? convenienceMethod.Signature.ReturnType?.Arguments[0]! : convenienceMethod.Signature.ReturnType!;
 
-        private ValueExpression[] PopulateArguments(IReadOnlyList<ParameterProvider> parameters, MethodProvider convenienceMethod)
+        private ValueExpression[] PopulateArguments(IReadOnlyList<ParameterProvider> parameters, MethodProvider convenienceMethod, VariableExpression contextVariable)
         {
             var arguments = new List<ValueExpression>();
             foreach (var parameter in parameters)
@@ -336,7 +352,7 @@ namespace Azure.Generator.Providers
                 else if (parameter.Type.Equals(typeof(RequestContext)))
                 {
                     var cancellationToken = convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(CancellationToken)));
-                    arguments.Add(New.Instance(typeof(RequestContext), new Dictionary<ValueExpression, ValueExpression> { { Identifier(nameof(RequestContext.CancellationToken)), cancellationToken } }));
+                    arguments.Add(contextVariable);
                 }
                 else
                 {

@@ -83,16 +83,19 @@ namespace MgmtTypeSpec
             scope.Start();
             try
             {
-                Response<FooData> response = _fooRestClient.CreateOrUpdate(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resource, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                }
+                ;
+                HttpMessage message = _fooRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resource, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FooData> response = Response.FromValue((FooData)result, result);
                 MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
                     new FooOperationSource(Client),
                     _fooClientDiagnostics,
                     Pipeline,
-                    _fooRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resource, new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    }
-                    ).Request,
+                    message.Request,
                     response.GetRawResponse(),
                     OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -121,16 +124,19 @@ namespace MgmtTypeSpec
             scope.Start();
             try
             {
-                Response<FooData> response = await _fooRestClient.CreateOrUpdateAsync(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resource, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                }
+                ;
+                HttpMessage message = _fooRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resource, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FooData> response = Response.FromValue((FooData)result, result);
                 MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
                     new FooOperationSource(Client),
                     _fooClientDiagnostics,
                     Pipeline,
-                    _fooRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resource, new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    }
-                    ).Request,
+                    message.Request,
                     response.GetRawResponse(),
                     OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -154,7 +160,14 @@ namespace MgmtTypeSpec
             scope.Start();
             try
             {
-                Response<FooData> response = _fooRestClient.Get(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                }
+                ;
+                HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FooData> response = Response.FromValue((FooData)result, result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -176,7 +189,14 @@ namespace MgmtTypeSpec
             scope.Start();
             try
             {
-                Response<FooData> response = await _fooRestClient.GetAsync(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                }
+                ;
+                HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FooData> response = Response.FromValue((FooData)result, result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -199,12 +219,14 @@ namespace MgmtTypeSpec
             scope.Start();
             try
             {
-                Response response = _fooRestClient.Delete(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cancellationToken);
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_fooClientDiagnostics, Pipeline, _fooRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, new RequestContext
+                RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
                 }
-                ).Request, response, OperationFinalStateVia.Location);
+                ;
+                HttpMessage message = _fooRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_fooClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -227,12 +249,14 @@ namespace MgmtTypeSpec
             scope.Start();
             try
             {
-                Response response = await _fooRestClient.DeleteAsync(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_fooClientDiagnostics, Pipeline, _fooRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, new RequestContext
+                RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
                 }
-                ).Request, response, OperationFinalStateVia.Location);
+                ;
+                HttpMessage message = _fooRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_fooClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);

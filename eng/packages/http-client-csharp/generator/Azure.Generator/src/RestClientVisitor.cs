@@ -17,7 +17,8 @@ namespace Azure.Generator
         {
             if (type is not null && type is ClientProvider)
             {
-                type.Update(modifiers: TransfromPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForClient(type));
+                // omit methods for ClientProvider, MPG will implement its own client methods
+                type.Update(methods: [], modifiers: TransfromPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForClient(type));
             }
 
             if (type is RestClientProvider)

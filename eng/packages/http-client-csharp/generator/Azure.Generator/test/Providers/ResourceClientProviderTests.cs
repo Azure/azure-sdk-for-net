@@ -53,6 +53,54 @@ namespace Azure.Generator.Tests.Providers
         }
 
         [TestCase]
+        public void Verify_SyncOperationMethod()
+        {
+            var (client, models) = InputData.ClientWithResource();
+            var plugin = MockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client],
+                createResourceCore: (inputClient, requestPath, schemaName, resourceData, resourceType, isSingleton) => new MockSyncOperationResourceClientProvider(inputClient, requestPath, schemaName, resourceData, resourceType, isSingleton));
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceClientProvider) as ResourceClientProvider;
+            Assert.NotNull(resourceProvider);
+            var codeFile = new TypeProviderWriter(resourceProvider!).Write();
+            var result = codeFile.Content;
+            var exptected = Helpers.GetExpectedFromFile();
+            Assert.AreEqual(exptected, result);
+        }
+
+        private class MockSyncOperationResourceClientProvider : MockBaseResourceClientProvider
+        {
+            public MockSyncOperationResourceClientProvider(InputClient inputClient, string requestPath, string specName, ModelProvider resourceData, string resourceType, bool isSingleton)
+                : base(inputClient, requestPath, specName, resourceData, resourceType, isSingleton)
+            {
+            }
+
+            protected override MethodProvider[] BuildMethods() => [.. base.BuildMethods().Where(m => m.Signature.Name == "Get")];
+        }
+
+        [TestCase]
+        public void Verify_AsyncOperationMethod()
+        {
+            var (client, models) = InputData.ClientWithResource();
+            var plugin = MockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client],
+                createResourceCore: (inputClient, requestPath, schemaName, resourceData, resourceType, isSingleton) => new MockAsyncOperationResourceClientProvider(inputClient, requestPath, schemaName, resourceData, resourceType, isSingleton));
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceClientProvider) as ResourceClientProvider;
+            Assert.NotNull(resourceProvider);
+            var codeFile = new TypeProviderWriter(resourceProvider!).Write();
+            var result = codeFile.Content;
+            var exptected = Helpers.GetExpectedFromFile();
+            Assert.AreEqual(exptected, result);
+        }
+
+        private class MockAsyncOperationResourceClientProvider : MockBaseResourceClientProvider
+        {
+            public MockAsyncOperationResourceClientProvider(InputClient inputClient, string requestPath, string specName, ModelProvider resourceData, string resourceType, bool isSingleton)
+                : base(inputClient, requestPath, specName, resourceData, resourceType, isSingleton)
+            {
+            }
+
+            protected override MethodProvider[] BuildMethods() => [.. base.BuildMethods().Where(m => m.Signature.Name == "GetAsync")];
+        }
+
+        [TestCase]
         public void Verify_Constructors()
         {
             var (client, models) = InputData.ClientWithResource();
