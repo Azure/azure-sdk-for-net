@@ -4,15 +4,13 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Azure.Monitor.OpenTelemetry.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry.Trace;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
-using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 {
@@ -31,12 +29,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 
         public static async Task Main(string[] args)
         {
-            var azureMonitorOptions = new AzureMonitorOptions
+            var options = new AzureMonitorLiveMetricsOptions
             {
                 ConnectionString = ConnectionString
             };
 
-            var manager = new Manager(azureMonitorOptions, new DefaultPlatformDistro());
+            var manager = new LiveMetricsClientManager(options, new DefaultPlatformDistro());
 
             using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(ActivitySourceName)

@@ -6,11 +6,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering;
-    using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
+    using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering;
+    using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
     using Xunit;
-    using RequestTelemetry = Azure.Monitor.OpenTelemetry.AspNetCore.Models.Request;
-    using TelemetryType = Models.TelemetryType;
+    using RequestTelemetry = Azure.Monitor.OpenTelemetry.LiveMetrics.Models.Request;
+    using TelemetryType = OpenTelemetry.LiveMetrics.Models.TelemetryType;
 
     public class DerivedMetricTests
     {
