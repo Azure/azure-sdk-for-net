@@ -13,7 +13,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Interface for monitoring CPU usage.
     /// </summary>
-    public interface ICpuMonitor
+    public interface IResourceMonitor
     {
         /// <summary>
         /// Gets the current CPU usage.

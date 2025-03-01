@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement
     ///
     /// A lot of computations were taken from the azcopy cpuMonitor
     /// </summary>
-    internal class CpuMonitor : ICpuMonitor
+    internal class ResourceMonitor : IResourceMonitor
     {
         private Task _monitoringWorker;
         private CancellationTokenSource _cancellationTokenSource;
@@ -63,7 +63,7 @@ namespace Azure.Storage.DataMovement
         /// This should be called early on in the job transfers.
         /// </summary>
         ///
-        public CpuMonitor() { }
+        public ResourceMonitor() { }
 
         /// <summary>
         /// Initalizes the CPU monitor.
@@ -74,7 +74,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         ///
 
-        public CpuMonitor(TimeSpan monitoringInterval)
+        public ResourceMonitor(TimeSpan monitoringInterval)
         {
             _monitoringInterval = monitoringInterval;
         }

@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement.Tests
         public void CpuUsage_ShouldMonitorCpuUsage()
         {
             // Arrange
-            var cpuMonitor = new CpuMonitor(TimeSpan.FromMilliseconds(1000));
+            var cpuMonitor = new ResourceMonitor(TimeSpan.FromMilliseconds(1000));
 
             // Act
             cpuMonitor.StartMonitoring();
@@ -29,7 +29,7 @@ namespace Azure.Storage.DataMovement.Tests
         public void CpuUsage_ShouldNeverGoAbove1()
         {
             // Arrange
-            var cpuMonitor = new CpuMonitor(TimeSpan.FromMilliseconds(1000));
+            var cpuMonitor = new ResourceMonitor(TimeSpan.FromMilliseconds(1000));
 
             // Act
             cpuMonitor.StartMonitoring();
@@ -49,7 +49,7 @@ namespace Azure.Storage.DataMovement.Tests
         public void CpuUsage_TimeSpanUnder10MillisecondsShouldHaveZeroReadings()
         {
             // Arrange
-            var cpuMonitor = new CpuMonitor(TimeSpan.FromMilliseconds(10));
+            var cpuMonitor = new ResourceMonitor(TimeSpan.FromMilliseconds(10));
 
             // Act
             cpuMonitor.StartMonitoring();
@@ -68,7 +68,7 @@ namespace Azure.Storage.DataMovement.Tests
         public void CpuMonitor_ShouldThrowExceptionIfNotStarted()
         {
             // Arrange
-            var cpuMonitor = new CpuMonitor(TimeSpan.FromMilliseconds(100));
+            var cpuMonitor = new ResourceMonitor(TimeSpan.FromMilliseconds(100));
 
             // Assert
             Assert.Throws<InvalidOperationException>(() => cpuMonitor.StopMonitoring());
@@ -78,7 +78,7 @@ namespace Azure.Storage.DataMovement.Tests
         public void MemoryUsage_MemoryUsageShouldBeGreaterThan0()
         {
             // Arrange
-            CpuMonitor cpuMonitor = new CpuMonitor(TimeSpan.FromMilliseconds(1000));
+            ResourceMonitor cpuMonitor = new ResourceMonitor(TimeSpan.FromMilliseconds(1000));
 
             // Act
             cpuMonitor.StartMonitoring();
@@ -93,7 +93,7 @@ namespace Azure.Storage.DataMovement.Tests
         public void MemoryUsage_ShouldBeLessThan1()
         {
             // Arrange
-            CpuMonitor cpuMonitor = new CpuMonitor(TimeSpan.FromMilliseconds(1000));
+            ResourceMonitor cpuMonitor = new ResourceMonitor(TimeSpan.FromMilliseconds(1000));
 
             // Act
             cpuMonitor.StartMonitoring();
@@ -108,7 +108,7 @@ namespace Azure.Storage.DataMovement.Tests
         public void MemoryUsage_ShouldNotBeNull()
         {
             // Arrange
-            CpuMonitor cpuMonitor = new CpuMonitor(TimeSpan.FromMilliseconds(1000));
+            ResourceMonitor cpuMonitor = new ResourceMonitor(TimeSpan.FromMilliseconds(1000));
 
             // Act
             cpuMonitor.StartMonitoring();
