@@ -27,7 +27,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
             TokenCredential credential = TestEnvironment.Credential;
 #endif
 
-            var client = new WorkflowsClient(endpoint, usernamePasswordCredential);
+            var client = new WorkflowsClient(endpoint, credential);
 #endregion
 
             //Perform an operation
