@@ -45,6 +45,22 @@ namespace Azure.Storage.DataMovement.Blobs
 
         /// <summary>
         /// <para>
+        /// Constructs this provider to use no credentials when making a new Blob Storage
+        /// <see cref="StorageResource"/>.
+        /// </para>
+        /// <para>
+        /// This instance will NOT use any credential when constructing the underlying
+        /// Azure.Storage.Blobs client, e.g. <see cref="BlockBlobClient(Uri, BlobClientOptions)"/>.
+        /// This is for the purpose of either anonymous access when constructing the client.
+        /// </para>
+        /// </summary>
+        public BlobsStorageResourceProvider()
+        {
+            _credentialType = CredentialType.None;
+        }
+
+        /// <summary>
+        /// <para>
         /// Constructs this provider to use the given credential when making a new Blob Storage
         /// <see cref="StorageResource"/>.
         /// </para>

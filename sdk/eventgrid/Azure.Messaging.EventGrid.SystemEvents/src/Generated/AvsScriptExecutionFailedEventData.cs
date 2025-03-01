@@ -14,8 +14,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AvsScriptExecutionFailedEventData : AvsScriptExecutionEventData
     {
         /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionFailedEventData"/>. </summary>
-        internal AvsScriptExecutionFailedEventData()
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="cmdletId"/> is null. </exception>
+        internal AvsScriptExecutionFailedEventData(string operationId, string cmdletId) : base(operationId, cmdletId)
         {
+            Argument.AssertNotNull(operationId, nameof(operationId));
+            Argument.AssertNotNull(cmdletId, nameof(cmdletId));
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionFailedEventData"/>. </summary>
@@ -27,6 +32,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal AvsScriptExecutionFailedEventData(string operationId, string cmdletId, IReadOnlyList<string> output, IDictionary<string, BinaryData> serializedAdditionalRawData, string failureMessage) : base(operationId, cmdletId, output, serializedAdditionalRawData)
         {
             FailureMessage = failureMessage;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionFailedEventData"/> for deserialization. </summary>
+        internal AvsScriptExecutionFailedEventData()
+        {
         }
 
         /// <summary> Failure reason of an event. </summary>

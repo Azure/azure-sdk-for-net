@@ -14,8 +14,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AvsPrivateCloudFailedEventData : AvsPrivateCloudEventData
     {
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudFailedEventData"/>. </summary>
-        internal AvsPrivateCloudFailedEventData()
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        internal AvsPrivateCloudFailedEventData(string operationId) : base(operationId)
         {
+            Argument.AssertNotNull(operationId, nameof(operationId));
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudFailedEventData"/>. </summary>
@@ -25,6 +28,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal AvsPrivateCloudFailedEventData(string operationId, IDictionary<string, BinaryData> serializedAdditionalRawData, string failureMessage) : base(operationId, serializedAdditionalRawData)
         {
             FailureMessage = failureMessage;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudFailedEventData"/> for deserialization. </summary>
+        internal AvsPrivateCloudFailedEventData()
+        {
         }
 
         /// <summary> Failure reason of an event. </summary>

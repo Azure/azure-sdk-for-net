@@ -1,5 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "Server.Versions.NotVersioned",
-  "library-name": "Server.Versions.NotVersioned"
+  "package-name": "Server.Versions.NotVersioned"
 }

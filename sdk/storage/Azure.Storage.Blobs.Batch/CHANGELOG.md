@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an issue where batch subrequests would not authenticate properly if using `TokenCredential` authentication when the `BlobBatchClient` was created from `BlobContianerClient.GetBlobBatchClient`.
 
 ### Other Changes
 

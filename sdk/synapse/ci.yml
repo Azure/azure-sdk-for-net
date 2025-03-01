@@ -43,11 +43,21 @@ extends:
     Artifacts:
     - name: Azure.Analytics.Synapse.Spark
       safeName: AzureAnalyticsSynapseSpark
+      triggeringPaths:
+      - Azure.Analytics.Synapse.Shared
     - name: Azure.Analytics.Synapse.AccessControl
       safeName: AzureAnalyticsSynapseAccessControl
+      triggeringPaths:
+      - Azure.Analytics.Synapse.Shared
     - name: Azure.Analytics.Synapse.Artifacts
       safeName: AzureAnalyticsSynapseArtifacts
+      triggeringPaths:
+      - Azure.Analytics.Synapse.Shared
     - name: Azure.Analytics.Synapse.ManagedPrivateEndpoints
       safeName: AzureAnalyticsSynapseManagedPrivateEndpoints
+      triggeringPaths:
+      - Azure.Analytics.Synapse.Shared
     - name: Azure.Analytics.Synapse.Monitoring
       safeName: AzureAnalyticsSynapseMonitoring
+      triggeringPaths:
+      - Azure.Analytics.Synapse.Shared

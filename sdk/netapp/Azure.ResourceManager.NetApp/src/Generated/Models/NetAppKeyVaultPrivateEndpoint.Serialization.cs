@@ -81,20 +81,28 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string virtualNetworkId = default;
-            string privateEndpointId = default;
+            ResourceIdentifier virtualNetworkId = default;
+            ResourceIdentifier privateEndpointId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualNetworkId"u8))
                 {
-                    virtualNetworkId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    virtualNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("privateEndpointId"u8))
                 {
-                    privateEndpointId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateEndpointId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

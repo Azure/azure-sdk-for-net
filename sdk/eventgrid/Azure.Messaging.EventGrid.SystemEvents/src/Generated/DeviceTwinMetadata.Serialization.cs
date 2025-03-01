@@ -34,11 +34,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(DeviceTwinMetadata)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(LastUpdated))
-            {
-                writer.WritePropertyName("lastUpdated"u8);
-                writer.WriteStringValue(LastUpdated);
-            }
+            writer.WritePropertyName("lastUpdated"u8);
+            writer.WriteStringValue(LastUpdated);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

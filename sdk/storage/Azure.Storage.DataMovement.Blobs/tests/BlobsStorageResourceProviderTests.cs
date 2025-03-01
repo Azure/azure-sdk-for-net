@@ -21,6 +21,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
     {
         public enum CredType
         {
+            None,
             SharedKey,
             Token,
             Sas
@@ -52,6 +53,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     Assert.IsNull(clientConfig.SharedKeyCredential);
                     Assert.IsNull(clientConfig.TokenCredential);
                     Assert.IsNotNull(clientConfig.SasCredential);
+                    break;
+                case CredType.None:
+                    Assert.IsNull(clientConfig.SharedKeyCredential);
+                    Assert.IsNull(clientConfig.TokenCredential);
+                    Assert.IsNull(clientConfig.SasCredential);
                     break;
                 default:
                     throw new ArgumentException("No assertion support for cred type " + credType.ToString());
@@ -102,7 +108,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [Combinatorial]
         public async Task FromContainer(
             [Values(true, false)] bool withPrefix,
-            [Values(CredType.SharedKey, CredType.Token, CredType.Sas)] CredType credType)
+            [Values(CredType.SharedKey, CredType.Token, CredType.Sas, CredType.None)] CredType credType)
         {
             const string containerName = "mycontainer";
             const string prefix = "my/prefix";
@@ -114,6 +120,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 CredType.SharedKey => new(mockCreds.SharedKey.Object),
                 CredType.Token => new(mockCreds.Token.Object),
                 CredType.Sas => new(mockCreds.Sas.Object),
+                CredType.None => new(),
                 _ => throw new ArgumentException("Bad cred type"),
             };
             BlobStorageResourceContainer resource = await provider.FromContainerAsync(uri) as BlobStorageResourceContainer;
@@ -128,7 +135,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [Combinatorial]
         public async Task FromBlob(
             [Values(BlobType.Unspecified, BlobType.Block, BlobType.Page, BlobType.Append)] BlobType blobType,
-            [Values(CredType.SharedKey, CredType.Token, CredType.Sas)] CredType credType)
+            [Values(CredType.SharedKey, CredType.Token, CredType.Sas, CredType.None)] CredType credType)
         {
             const string containerName = "mycontainer";
             const string blobName = "my/blob.txt";
@@ -140,6 +147,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 CredType.SharedKey => new(mockCreds.SharedKey.Object),
                 CredType.Token => new(mockCreds.Token.Object),
                 CredType.Sas => new(mockCreds.Sas.Object),
+                CredType.None => new(),
                 _ => throw new ArgumentException("Bad cred type"),
             };
 

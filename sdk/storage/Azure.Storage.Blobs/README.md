@@ -158,6 +158,8 @@ await new BlobClient(new Uri("https://www.gutenberg.org/cache/epub/1533/pg1533.t
 All Blob service operations will throw a
 [RequestFailedException][RequestFailedException] on failure with
 helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
+If multiple failures occur, an [AggregateException][AggregateException] will be thrown,
+containing each failure instance.
 
 ```C# Snippet:SampleSnippetsBlob_Troubleshooting
 // Get a connection string to our Azure Storage account.
@@ -297,3 +299,4 @@ additional questions or comments.
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
+[AggregateException]: https://learn.microsoft.com/dotnet/api/system.aggregateexception?view=net-9.0

@@ -34,10 +34,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(StorageTaskCompletedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
-            writer.WritePropertyName("completedDateTime"u8);
-            writer.WriteStringValue(CompletedDateTime, "O");
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(CompletedDateTime))
+            {
+                writer.WritePropertyName("completedDateTime"u8);
+                writer.WriteStringValue(CompletedDateTime.Value, "O");
+            }
             if (Optional.IsDefined(TaskExecutionId))
             {
                 writer.WritePropertyName("taskExecutionId"u8);
@@ -87,8 +93,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            StorageTaskCompletedStatus status = default;
-            DateTimeOffset completedDateTime = default;
+            StorageTaskCompletedStatus? status = default;
+            DateTimeOffset? completedDateTime = default;
             string taskExecutionId = default;
             string taskName = default;
             Uri summaryReportBlobUrl = default;
@@ -98,11 +104,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("status"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     status = new StorageTaskCompletedStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("completedDateTime"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     completedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

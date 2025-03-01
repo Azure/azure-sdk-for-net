@@ -14,27 +14,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsMessageReceivedEventData : AcsMessageEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsMessageReceivedEventData"/>. </summary>
-        /// <param name="receivedTimestamp"> The time message was received. </param>
-        /// <param name="error"> The channel event error. </param>
-        /// <param name="channelKind"> The message channel type. </param>
-        /// <param name="mediaContent"> The received message media content. </param>
-        /// <param name="context"> The received message context. </param>
-        /// <param name="button"> The received message button content. </param>
-        /// <param name="interactiveContent"> The received message interactive content. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="error"/>, <paramref name="mediaContent"/>, <paramref name="context"/>, <paramref name="button"/> or <paramref name="interactiveContent"/> is null. </exception>
-        internal AcsMessageReceivedEventData(DateTimeOffset receivedTimestamp, AcsMessageChannelEventError error, AcsMessageChannelKind channelKind, AcsMessageMediaContent mediaContent, AcsMessageContext context, AcsMessageButtonContent button, AcsMessageInteractiveContent interactiveContent) : base(receivedTimestamp, error)
+        /// <param name="from"> The message sender. </param>
+        /// <param name="to"> The message recipient. </param>
+        /// <param name="messageType"> Required. Whatsapp message type. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="messageType"/> is null. </exception>
+        internal AcsMessageReceivedEventData(string @from, string to, string messageType) : base(@from, to)
         {
-            Argument.AssertNotNull(error, nameof(error));
-            Argument.AssertNotNull(mediaContent, nameof(mediaContent));
-            Argument.AssertNotNull(context, nameof(context));
-            Argument.AssertNotNull(button, nameof(button));
-            Argument.AssertNotNull(interactiveContent, nameof(interactiveContent));
+            Argument.AssertNotNull(@from, nameof(@from));
+            Argument.AssertNotNull(to, nameof(to));
+            Argument.AssertNotNull(messageType, nameof(messageType));
 
-            ChannelKind = channelKind;
-            MediaContent = mediaContent;
-            Context = context;
-            Button = button;
-            InteractiveContent = interactiveContent;
+            MessageType = messageType;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsMessageReceivedEventData"/>. </summary>
@@ -43,17 +33,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="receivedTimestamp"> The time message was received. </param>
         /// <param name="error"> The channel event error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="content"> The message content. </param>
-        /// <param name="channelKind"> The message channel type. </param>
-        /// <param name="mediaContent"> The received message media content. </param>
-        /// <param name="context"> The received message context. </param>
-        /// <param name="button"> The received message button content. </param>
-        /// <param name="interactiveContent"> The received message interactive content. </param>
-        internal AcsMessageReceivedEventData(string @from, string to, DateTimeOffset receivedTimestamp, AcsMessageChannelEventError error, IDictionary<string, BinaryData> serializedAdditionalRawData, string content, AcsMessageChannelKind channelKind, AcsMessageMediaContent mediaContent, AcsMessageContext context, AcsMessageButtonContent button, AcsMessageInteractiveContent interactiveContent) : base(@from, to, receivedTimestamp, error, serializedAdditionalRawData)
+        /// <param name="content"> Optional. The message content. </param>
+        /// <param name="messageId"> Optional. Message ID. Format is Guid as string. </param>
+        /// <param name="channelKind"> Required. The message channel type. </param>
+        /// <param name="messageType"> Required. Whatsapp message type. </param>
+        /// <param name="mediaContent"> Optional. The received message media content. </param>
+        /// <param name="reaction"> Optional. The received message reaction content. </param>
+        /// <param name="context"> Optional. The received message context. </param>
+        /// <param name="button"> Optional. The received message button content. </param>
+        /// <param name="interactiveContent"> Optional. The received message interactive content. </param>
+        internal AcsMessageReceivedEventData(string @from, string to, DateTimeOffset? receivedTimestamp, AcsMessageChannelEventError error, IDictionary<string, BinaryData> serializedAdditionalRawData, string content, string messageId, AcsMessageChannelKind? channelKind, string messageType, AcsMessageMediaContent mediaContent, AcsMessageReactionContent reaction, AcsMessageContext context, AcsMessageButtonContent button, AcsMessageInteractiveContent interactiveContent) : base(@from, to, receivedTimestamp, error, serializedAdditionalRawData)
         {
             Content = content;
+            MessageId = messageId;
             ChannelKind = channelKind;
+            MessageType = messageType;
             MediaContent = mediaContent;
+            Reaction = reaction;
             Context = context;
             Button = button;
             InteractiveContent = interactiveContent;
@@ -64,17 +60,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
         }
 
-        /// <summary> The message content. </summary>
+        /// <summary> Optional. The message content. </summary>
         public string Content { get; }
-        /// <summary> The message channel type. </summary>
-        public AcsMessageChannelKind ChannelKind { get; }
-        /// <summary> The received message media content. </summary>
+        /// <summary> Optional. Message ID. Format is Guid as string. </summary>
+        public string MessageId { get; }
+        /// <summary> Required. The message channel type. </summary>
+        public AcsMessageChannelKind? ChannelKind { get; }
+        /// <summary> Required. Whatsapp message type. </summary>
+        public string MessageType { get; }
+        /// <summary> Optional. The received message media content. </summary>
         public AcsMessageMediaContent MediaContent { get; }
-        /// <summary> The received message context. </summary>
+        /// <summary> Optional. The received message reaction content. </summary>
+        public AcsMessageReactionContent Reaction { get; }
+        /// <summary> Optional. The received message context. </summary>
         public AcsMessageContext Context { get; }
-        /// <summary> The received message button content. </summary>
+        /// <summary> Optional. The received message button content. </summary>
         public AcsMessageButtonContent Button { get; }
-        /// <summary> The received message interactive content. </summary>
+        /// <summary> Optional. The received message interactive content. </summary>
         public AcsMessageInteractiveContent InteractiveContent { get; }
     }
 }

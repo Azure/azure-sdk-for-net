@@ -34,48 +34,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(DeviceTwinInfo)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(AuthenticationType))
-            {
-                writer.WritePropertyName("authenticationType"u8);
-                writer.WriteStringValue(AuthenticationType);
-            }
+            writer.WritePropertyName("authenticationType"u8);
+            writer.WriteStringValue(AuthenticationType);
             if (Optional.IsDefined(CloudToDeviceMessageCount))
             {
                 writer.WritePropertyName("cloudToDeviceMessageCount"u8);
                 writer.WriteNumberValue(CloudToDeviceMessageCount.Value);
             }
-            if (Optional.IsDefined(ConnectionState))
-            {
-                writer.WritePropertyName("connectionState"u8);
-                writer.WriteStringValue(ConnectionState);
-            }
-            if (Optional.IsDefined(DeviceId))
-            {
-                writer.WritePropertyName("deviceId"u8);
-                writer.WriteStringValue(DeviceId);
-            }
-            if (Optional.IsDefined(Etag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(Etag);
-            }
-            if (Optional.IsDefined(LastActivityTime))
-            {
-                writer.WritePropertyName("lastActivityTime"u8);
-                writer.WriteStringValue(LastActivityTime);
-            }
+            writer.WritePropertyName("connectionState"u8);
+            writer.WriteStringValue(ConnectionState);
+            writer.WritePropertyName("deviceId"u8);
+            writer.WriteStringValue(DeviceId);
+            writer.WritePropertyName("etag"u8);
+            writer.WriteStringValue(Etag);
+            writer.WritePropertyName("lastActivityTime"u8);
+            writer.WriteStringValue(LastActivityTime);
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
-            }
-            if (Optional.IsDefined(StatusUpdateTime))
-            {
-                writer.WritePropertyName("statusUpdateTime"u8);
-                writer.WriteStringValue(StatusUpdateTime);
-            }
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status);
+            writer.WritePropertyName("statusUpdateTime"u8);
+            writer.WriteStringValue(StatusUpdateTime);
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);

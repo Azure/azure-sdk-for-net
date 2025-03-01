@@ -230,7 +230,7 @@ namespace Azure.Storage.DataMovement
                 // If we cannot copy in one shot, queue the rest of the chunks
                 if (await CreateDestinationResource(length, blockSize).ConfigureAwait(false))
                 {
-                    IEnumerable<(long Offset, long Length)> ranges = GetRanges(length, blockSize);
+                    IEnumerable<(long Offset, long Length)> ranges = GetRanges(length, blockSize, _destinationResource.MaxSupportedChunkCount);
                     if (_destinationResource.TransferType == TransferOrder.Unordered)
                     {
                         await QueueStageBlockRequests(ranges, length, sourceProperties).ConfigureAwait(false);

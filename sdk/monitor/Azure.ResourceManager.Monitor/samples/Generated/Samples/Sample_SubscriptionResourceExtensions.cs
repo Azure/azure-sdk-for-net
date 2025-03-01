@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetPipelineGroups_ListPipelineGroupsBySubscription()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/PipelineGroupListBySubscription.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/PipelineGroups/preview/2024-10-01-preview/examples/PipelineGroupListBySubscription.json
             // this example is just showing the usage of "PipelineGroups_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

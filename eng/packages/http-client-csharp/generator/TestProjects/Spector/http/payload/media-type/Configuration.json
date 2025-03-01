@@ -1,5 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "Payload.MediaType",
-  "library-name": "Payload.MediaType"
+  "package-name": "Payload.MediaType"
 }

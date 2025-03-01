@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Microsoft Fabric LakeHouse Files read settings. </summary>
+    /// <summary> Microsoft Fabric Lakehouse Files read settings. </summary>
     public partial class LakeHouseReadSettings : StoreReadSettings
     {
         /// <summary> Initializes a new instance of <see cref="LakeHouseReadSettings"/>. </summary>
@@ -23,8 +23,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="recursive"> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="wildcardFolderPath"> Microsoft Fabric LakeHouse Files wildcardFolderPath. Type: string (or Expression with resultType string). </param>
-        /// <param name="wildcardFileName"> Microsoft Fabric LakeHouse Files wildcardFileName. Type: string (or Expression with resultType string). </param>
+        /// <param name="wildcardFolderPath"> Microsoft Fabric Lakehouse Files wildcardFolderPath. Type: string (or Expression with resultType string). </param>
+        /// <param name="wildcardFileName"> Microsoft Fabric Lakehouse Files wildcardFileName. Type: string (or Expression with resultType string). </param>
         /// <param name="fileListPath"> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </param>
         /// <param name="enablePartitionDiscovery"> Indicates whether to enable partition discovery. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="partitionRootPath"> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </param>
@@ -47,9 +47,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
         public object Recursive { get; set; }
-        /// <summary> Microsoft Fabric LakeHouse Files wildcardFolderPath. Type: string (or Expression with resultType string). </summary>
+        /// <summary> Microsoft Fabric Lakehouse Files wildcardFolderPath. Type: string (or Expression with resultType string). </summary>
         public object WildcardFolderPath { get; set; }
-        /// <summary> Microsoft Fabric LakeHouse Files wildcardFileName. Type: string (or Expression with resultType string). </summary>
+        /// <summary> Microsoft Fabric Lakehouse Files wildcardFileName. Type: string (or Expression with resultType string). </summary>
         public object WildcardFileName { get; set; }
         /// <summary> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </summary>
         public object FileListPath { get; set; }

@@ -39,12 +39,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("scheduleTime"u8);
                 writer.WriteStringValue(ScheduleTime);
             }
+            writer.WritePropertyName("policyRunSummary"u8);
+            writer.WriteObjectValue(PolicyRunSummary, options);
             writer.WritePropertyName("deleteSummary"u8);
             writer.WriteObjectValue(DeleteSummary, options);
             writer.WritePropertyName("tierToCoolSummary"u8);
             writer.WriteObjectValue(TierToCoolSummary, options);
             writer.WritePropertyName("tierToArchiveSummary"u8);
             writer.WriteObjectValue(TierToArchiveSummary, options);
+            writer.WritePropertyName("tierToColdSummary"u8);
+            writer.WriteObjectValue(TierToColdSummary, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,9 +87,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             string scheduleTime = default;
+            StorageLifecyclePolicyRunSummary policyRunSummary = default;
             StorageLifecyclePolicyActionSummaryDetail deleteSummary = default;
             StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary = default;
             StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary = default;
+            StorageLifecyclePolicyActionSummaryDetail tierToColdSummary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,6 +99,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 if (property.NameEquals("scheduleTime"u8))
                 {
                     scheduleTime = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("policyRunSummary"u8))
+                {
+                    policyRunSummary = StorageLifecyclePolicyRunSummary.DeserializeStorageLifecyclePolicyRunSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deleteSummary"u8))
@@ -110,13 +121,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     tierToArchiveSummary = StorageLifecyclePolicyActionSummaryDetail.DeserializeStorageLifecyclePolicyActionSummaryDetail(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("tierToColdSummary"u8))
+                {
+                    tierToColdSummary = StorageLifecyclePolicyActionSummaryDetail.DeserializeStorageLifecyclePolicyActionSummaryDetail(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StorageLifecyclePolicyCompletedEventData(scheduleTime, deleteSummary, tierToCoolSummary, tierToArchiveSummary, serializedAdditionalRawData);
+            return new StorageLifecyclePolicyCompletedEventData(
+                scheduleTime,
+                policyRunSummary,
+                deleteSummary,
+                tierToCoolSummary,
+                tierToArchiveSummary,
+                tierToColdSummary,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageLifecyclePolicyCompletedEventData>.Write(ModelReaderWriterOptions options)

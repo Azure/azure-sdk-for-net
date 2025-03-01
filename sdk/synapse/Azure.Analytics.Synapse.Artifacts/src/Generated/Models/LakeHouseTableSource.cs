@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> A copy activity source for Microsoft Fabric LakeHouse Table. </summary>
+    /// <summary> A copy activity source for Microsoft Fabric Lakehouse Table. </summary>
     public partial class LakeHouseTableSource : CopySource
     {
         /// <summary> Initializes a new instance of <see cref="LakeHouseTableSource"/>. </summary>

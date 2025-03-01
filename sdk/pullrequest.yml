@@ -11,7 +11,7 @@ pr:
     - "*"
 
     exclude:
-    - eng/packages/http-client-csharp
+    - eng/packages/http-client-csharp/
 
 parameters:
   - name: Service

@@ -1,5 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "SpecialWords",
-  "library-name": "SpecialWords"
+  "package-name": "SpecialWords"
 }

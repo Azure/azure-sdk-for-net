@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             string id = default;
-            DateTimeOffset timestamp = default;
+            DateTimeOffset? timestamp = default;
             string action = default;
             string location = default;
             ContainerRegistryArtifactEventTarget target = default;
@@ -74,6 +74,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("timestamp"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -94,6 +98,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("connectedRegistry"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     connectedRegistry = ContainerRegistryEventConnectedRegistry.DeserializeContainerRegistryEventConnectedRegistry(property.Value, options);
                     continue;
                 }

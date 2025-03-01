@@ -59,12 +59,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="endpoint"> TCP endpoint definition. Example: 0.0.0.0:&lt;port&gt;. </param>
         /// <param name="encoding"> The encoding of the stream being received. </param>
         /// <param name="readQueueLength"> Max read queue length. </param>
+        /// <param name="jsonArrayMapper"> Json array mapper - allows this udp receiver to parse a value from a given source field as a json array, match a key to each parsed value and output the key-value map to a given output field. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UdpReceiver(string endpoint, StreamEncodingType? encoding, int? readQueueLength, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UdpReceiver(string endpoint, StreamEncodingType? encoding, int? readQueueLength, PipelineGroupJsonArrayMapper jsonArrayMapper, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Endpoint = endpoint;
             Encoding = encoding;
             ReadQueueLength = readQueueLength;
+            JsonArrayMapper = jsonArrayMapper;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -79,5 +81,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public StreamEncodingType? Encoding { get; set; }
         /// <summary> Max read queue length. </summary>
         public int? ReadQueueLength { get; set; }
+        /// <summary> Json array mapper - allows this udp receiver to parse a value from a given source field as a json array, match a key to each parsed value and output the key-value map to a given output field. </summary>
+        public PipelineGroupJsonArrayMapper JsonArrayMapper { get; set; }
     }
 }

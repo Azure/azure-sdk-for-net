@@ -15,13 +15,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventBaseProperties"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
-        /// <param name="createTime"> The original creation time of the thread. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recipientCommunicationIdentifier"/> is null. </exception>
-        internal AcsChatThreadEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier, DateTimeOffset createTime) : base(recipientCommunicationIdentifier)
+        internal AcsChatThreadEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier) : base(recipientCommunicationIdentifier)
         {
             Argument.AssertNotNull(recipientCommunicationIdentifier, nameof(recipientCommunicationIdentifier));
-
-            CreateTime = createTime;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventBaseProperties"/>. </summary>
@@ -31,7 +28,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
-        internal AcsChatThreadEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset createTime, long? version) : base(recipientCommunicationIdentifier, transactionId, threadId, serializedAdditionalRawData)
+        internal AcsChatThreadEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? createTime, long? version) : base(recipientCommunicationIdentifier, transactionId, threadId, serializedAdditionalRawData)
         {
             CreateTime = createTime;
             Version = version;
@@ -43,7 +40,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
 
         /// <summary> The original creation time of the thread. </summary>
-        public DateTimeOffset CreateTime { get; }
+        public DateTimeOffset? CreateTime { get; }
         /// <summary> The version of the thread. </summary>
         public long? Version { get; }
     }

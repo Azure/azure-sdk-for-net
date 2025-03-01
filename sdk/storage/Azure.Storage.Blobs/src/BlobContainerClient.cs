@@ -415,6 +415,22 @@ namespace Azure.Storage.Blobs
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
         }
 
+        internal BlobContainerClient(
+            Uri containerUri,
+            BlobClientConfiguration clientConfiguration,
+            HttpPipelinePolicy authentication,
+            ClientSideEncryptionOptions clientSideEncryption)
+        {
+            _uri = containerUri;
+            _clientConfiguration = clientConfiguration;
+            _authenticationPolicy = authentication;
+            _clientSideEncryption = clientSideEncryption?.Clone();
+            _containerRestClient = BuildContainerRestClient(containerUri);
+
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>
         /// class with Blob Container URI, <see cref="BlobClientOptions"/>, and <see cref="HttpPipeline"/>.
@@ -3374,6 +3390,7 @@ namespace Azure.Storage.Blobs
                     BlobContainerClient destContainerClient = new BlobContainerClient(
                         uriBuilder.ToUri(),
                         ClientConfiguration,
+                        AuthenticationPolicy,
                         ClientSideEncryption);
 
                     ResponseWithHeaders<ContainerRenameHeaders> response;

@@ -13,13 +13,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Client options for SystemEventsClient. </summary>
     internal partial class SystemEventsClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_01_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2018_01_01;
 
         /// <summary> The version of the service to use. </summary>
         internal enum ServiceVersion
         {
-            /// <summary> Service version "2024-01-01". </summary>
-            V2024_01_01 = 1,
+            /// <summary> Service version "2018-01-01". </summary>
+            V2018_01_01 = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             Version = version switch
             {
-                ServiceVersion.V2024_01_01 => "2024-01-01",
+                ServiceVersion.V2018_01_01 => "2018-01-01",
                 _ => throw new NotSupportedException()
             };
         }

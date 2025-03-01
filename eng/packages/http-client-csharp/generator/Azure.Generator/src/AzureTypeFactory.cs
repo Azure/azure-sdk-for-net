@@ -123,30 +123,6 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
-        protected override IReadOnlyList<TypeProvider> CreateSerializationsCore(InputType inputType, TypeProvider typeProvider)
-        {
-            if (inputType is InputModelType inputModel
-                && typeProvider is ModelProvider modelProvider
-                && AzureClientPlugin.Instance.OutputLibrary.IsResource(inputType.Name)
-                && inputModel.Usage.HasFlag(InputModelTypeUsage.Json))
-            {
-                return [new ResourceDataSerializationProvider(inputModel, modelProvider)];
-            }
-
-            return base.CreateSerializationsCore(inputType, typeProvider);
-        }
-
-        /// <inheritdoc/>
-        protected override ModelProvider? CreateModelCore(InputModelType model)
-        {
-            if (AzureClientPlugin.Instance.OutputLibrary.IsResource(model.Name))
-            {
-                return new ResourceDataProvider(model);
-            }
-            return base.CreateModelCore(model);
-        }
-
-        /// <inheritdoc/>
         public override NewProjectScaffolding CreateNewProjectScaffolding()
         {
             return new NewAzureProjectScaffolding();

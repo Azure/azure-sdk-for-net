@@ -34,16 +34,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(AcsMessageMediaContent)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(MimeType))
-            {
-                writer.WritePropertyName("mimeType"u8);
-                writer.WriteStringValue(MimeType);
-            }
-            if (Optional.IsDefined(MediaId))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(MediaId);
-            }
+            writer.WritePropertyName("mimeType"u8);
+            writer.WriteStringValue(MimeType);
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(MediaId);
             if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
@@ -53,6 +47,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 writer.WritePropertyName("caption"u8);
                 writer.WriteStringValue(Caption);
+            }
+            if (Optional.IsDefined(Animated))
+            {
+                writer.WritePropertyName("animated"u8);
+                writer.WriteBooleanValue(Animated.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,6 +94,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string id = default;
             string fileName = default;
             string caption = default;
+            bool? animated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,13 +119,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     caption = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("animated"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    animated = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AcsMessageMediaContent(mimeType, id, fileName, caption, serializedAdditionalRawData);
+            return new AcsMessageMediaContent(
+                mimeType,
+                id,
+                fileName,
+                caption,
+                animated,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcsMessageMediaContent>.Write(ModelReaderWriterOptions options)

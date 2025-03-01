@@ -528,7 +528,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.RunStepDeltaCodeInterpreterLogOutput RunStepDeltaCodeInterpreterLogOutput(int index = 0, string logs = null) { throw null; }
         public static Azure.AI.Projects.RunStepDeltaCodeInterpreterOutput RunStepDeltaCodeInterpreterOutput(int index = 0, string type = null) { throw null; }
         public static Azure.AI.Projects.RunStepDeltaCodeInterpreterToolCall RunStepDeltaCodeInterpreterToolCall(int index = 0, string id = null, Azure.AI.Projects.RunStepDeltaCodeInterpreterDetailItemObject codeInterpreter = null) { throw null; }
-        public static Azure.AI.Projects.RunStepDeltaFileSearchToolCall RunStepDeltaFileSearchToolCall(int index = 0, string id = null, System.Collections.Generic.IReadOnlyDictionary<string, string> fileSearch = null) { throw null; }
+        public static Azure.AI.Projects.RunStepDeltaFileSearchToolCall RunStepDeltaFileSearchToolCall(int index = 0, string id = null, Azure.AI.Projects.RunStepFileSearchToolCallResults fileSearch = null) { throw null; }
         public static Azure.AI.Projects.RunStepDeltaFunction RunStepDeltaFunction(string name = null, string arguments = null, string output = null) { throw null; }
         public static Azure.AI.Projects.RunStepDeltaFunctionToolCall RunStepDeltaFunctionToolCall(int index = 0, string id = null, Azure.AI.Projects.RunStepDeltaFunction function = null) { throw null; }
         public static Azure.AI.Projects.RunStepDeltaMessageCreation RunStepDeltaMessageCreation(Azure.AI.Projects.RunStepDeltaMessageCreationObject messageCreation = null) { throw null; }
@@ -2070,7 +2070,7 @@ namespace Azure.AI.Projects
     public partial class RunStepDeltaFileSearchToolCall : Azure.AI.Projects.RunStepDeltaToolCall, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.RunStepDeltaFileSearchToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.RunStepDeltaFileSearchToolCall>
     {
         internal RunStepDeltaFileSearchToolCall() : base (default(int), default(string)) { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> FileSearch { get { throw null; } }
+        public Azure.AI.Projects.RunStepFileSearchToolCallResults FileSearch { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Projects.RunStepDeltaFileSearchToolCall System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.RunStepDeltaFileSearchToolCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.RunStepDeltaFileSearchToolCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

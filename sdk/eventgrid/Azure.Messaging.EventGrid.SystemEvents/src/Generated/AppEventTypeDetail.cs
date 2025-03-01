@@ -46,27 +46,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppEventTypeDetail"/>. </summary>
-        /// <param name="action"> Type of action of the operation. </param>
-        internal AppEventTypeDetail(AppAction action)
+        internal AppEventTypeDetail()
         {
-            Action = action;
         }
 
         /// <summary> Initializes a new instance of <see cref="AppEventTypeDetail"/>. </summary>
         /// <param name="action"> Type of action of the operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppEventTypeDetail(AppAction action, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppEventTypeDetail(AppAction? action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Action = action;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppEventTypeDetail"/> for deserialization. </summary>
-        internal AppEventTypeDetail()
-        {
-        }
-
         /// <summary> Type of action of the operation. </summary>
-        public AppAction Action { get; }
+        public AppAction? Action { get; }
     }
 }

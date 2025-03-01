@@ -46,8 +46,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeviceTwinMetadata"/>. </summary>
-        internal DeviceTwinMetadata()
+        /// <param name="lastUpdated"> The ISO8601 timestamp of the last time the properties were updated. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="lastUpdated"/> is null. </exception>
+        internal DeviceTwinMetadata(string lastUpdated)
         {
+            Argument.AssertNotNull(lastUpdated, nameof(lastUpdated));
+
+            LastUpdated = lastUpdated;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeviceTwinMetadata"/>. </summary>
@@ -57,6 +62,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             LastUpdated = lastUpdated;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceTwinMetadata"/> for deserialization. </summary>
+        internal DeviceTwinMetadata()
+        {
         }
 
         /// <summary> The ISO8601 timestamp of the last time the properties were updated. </summary>

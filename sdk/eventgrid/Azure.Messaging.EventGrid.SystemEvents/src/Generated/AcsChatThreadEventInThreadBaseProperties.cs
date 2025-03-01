@@ -14,10 +14,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatThreadEventInThreadBaseProperties : AcsChatEventInThreadBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventInThreadBaseProperties"/>. </summary>
-        /// <param name="createTime"> The original creation time of the thread. </param>
-        internal AcsChatThreadEventInThreadBaseProperties(DateTimeOffset createTime)
+        internal AcsChatThreadEventInThreadBaseProperties()
         {
-            CreateTime = createTime;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventInThreadBaseProperties"/>. </summary>
@@ -26,19 +24,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
-        internal AcsChatThreadEventInThreadBaseProperties(string transactionId, string threadId, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset createTime, long? version) : base(transactionId, threadId, serializedAdditionalRawData)
+        internal AcsChatThreadEventInThreadBaseProperties(string transactionId, string threadId, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? createTime, long? version) : base(transactionId, threadId, serializedAdditionalRawData)
         {
             CreateTime = createTime;
             Version = version;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventInThreadBaseProperties"/> for deserialization. </summary>
-        internal AcsChatThreadEventInThreadBaseProperties()
-        {
-        }
-
         /// <summary> The original creation time of the thread. </summary>
-        public DateTimeOffset CreateTime { get; }
+        public DateTimeOffset? CreateTime { get; }
         /// <summary> The version of the thread. </summary>
         public long? Version { get; }
     }

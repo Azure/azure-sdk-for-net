@@ -46,12 +46,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EventHubCaptureFileCreatedEventData"/>. </summary>
-        /// <param name="firstEnqueueTime"> The first time from the queue. </param>
-        /// <param name="lastEnqueueTime"> The last time from the queue. </param>
-        internal EventHubCaptureFileCreatedEventData(DateTimeOffset firstEnqueueTime, DateTimeOffset lastEnqueueTime)
+        internal EventHubCaptureFileCreatedEventData()
         {
-            FirstEnqueueTime = firstEnqueueTime;
-            LastEnqueueTime = lastEnqueueTime;
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubCaptureFileCreatedEventData"/>. </summary>
@@ -65,7 +61,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="firstEnqueueTime"> The first time from the queue. </param>
         /// <param name="lastEnqueueTime"> The last time from the queue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubCaptureFileCreatedEventData(string fileurl, string fileType, string partitionId, int? sizeInBytes, int? eventCount, int? firstSequenceNumber, int? lastSequenceNumber, DateTimeOffset firstEnqueueTime, DateTimeOffset lastEnqueueTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EventHubCaptureFileCreatedEventData(string fileurl, string fileType, string partitionId, int? sizeInBytes, int? eventCount, int? firstSequenceNumber, int? lastSequenceNumber, DateTimeOffset? firstEnqueueTime, DateTimeOffset? lastEnqueueTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Fileurl = fileurl;
             FileType = fileType;
@@ -77,11 +73,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             FirstEnqueueTime = firstEnqueueTime;
             LastEnqueueTime = lastEnqueueTime;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EventHubCaptureFileCreatedEventData"/> for deserialization. </summary>
-        internal EventHubCaptureFileCreatedEventData()
-        {
         }
 
         /// <summary> The path to the capture file. </summary>
@@ -99,8 +90,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The last sequence number from the queue. </summary>
         public int? LastSequenceNumber { get; }
         /// <summary> The first time from the queue. </summary>
-        public DateTimeOffset FirstEnqueueTime { get; }
+        public DateTimeOffset? FirstEnqueueTime { get; }
         /// <summary> The last time from the queue. </summary>
-        public DateTimeOffset LastEnqueueTime { get; }
+        public DateTimeOffset? LastEnqueueTime { get; }
     }
 }

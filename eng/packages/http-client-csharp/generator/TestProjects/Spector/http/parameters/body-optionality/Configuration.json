@@ -1,5 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "Parameters.BodyOptionality",
-  "library-name": "Parameters.BodyOptionality"
+  "package-name": "Parameters.BodyOptionality"
 }

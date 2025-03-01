@@ -1591,22 +1591,12 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location for given pipeline group. </param>
-        /// <param name="replicas"> Defines the amount of replicas of the pipeline group instance. </param>
-        /// <param name="receivers"> The receivers specified for a pipeline group instance. </param>
-        /// <param name="processors"> The processors specified for a pipeline group instance. </param>
-        /// <param name="exporters"> The exporters specified for a pipeline group instance. </param>
-        /// <param name="service"> The service section for a given pipeline group instance. </param>
-        /// <param name="networkingConfigurations"> Networking configurations for the pipeline group instance. </param>
-        /// <param name="provisioningState"> The provisioning state of a pipeline group instance. Set to Succeeded if everything is healthy. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The complex type of the extended location. </param>
         /// <returns> A new <see cref="Monitor.PipelineGroupData"/> instance for mocking. </returns>
-        public static PipelineGroupData PipelineGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, int? replicas = null, IEnumerable<PipelineGroupReceiver> receivers = null, IEnumerable<PipelineGroupProcessor> processors = null, IEnumerable<PipelineGroupExporter> exporters = null, PipelineGroupService service = null, IEnumerable<PipelineGroupNetworkingConfiguration> networkingConfigurations = null, MonitorProvisioningState? provisioningState = null)
+        public static PipelineGroupData PipelineGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PipelineGroupProperties properties = null, ExtendedLocation extendedLocation = null)
         {
             tags ??= new Dictionary<string, string>();
-            receivers ??= new List<PipelineGroupReceiver>();
-            processors ??= new List<PipelineGroupProcessor>();
-            exporters ??= new List<PipelineGroupExporter>();
-            networkingConfigurations ??= new List<PipelineGroupNetworkingConfiguration>();
 
             return new PipelineGroupData(
                 id,
@@ -1615,7 +1605,28 @@ namespace Azure.ResourceManager.Monitor.Models
                 systemData,
                 tags,
                 location,
+                properties,
                 extendedLocation,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PipelineGroupProperties"/>. </summary>
+        /// <param name="replicas"> Defines the amount of replicas of the pipeline group instance. </param>
+        /// <param name="receivers"> The receivers specified for a pipeline group instance. </param>
+        /// <param name="processors"> The processors specified for a pipeline group instance. </param>
+        /// <param name="exporters"> The exporters specified for a pipeline group instance. </param>
+        /// <param name="service"> The service section for a given pipeline group instance. </param>
+        /// <param name="networkingConfigurations"> Networking configurations for the pipeline group instance. </param>
+        /// <param name="provisioningState"> The provisioning state of a pipeline group instance. Set to Succeeded if everything is healthy. </param>
+        /// <returns> A new <see cref="Models.PipelineGroupProperties"/> instance for mocking. </returns>
+        public static PipelineGroupProperties PipelineGroupProperties(int? replicas = null, IEnumerable<PipelineGroupReceiver> receivers = null, IEnumerable<PipelineGroupProcessor> processors = null, IEnumerable<PipelineGroupExporter> exporters = null, PipelineGroupService service = null, IEnumerable<PipelineGroupNetworkingConfiguration> networkingConfigurations = null, MonitorProvisioningState? provisioningState = null)
+        {
+            receivers ??= new List<PipelineGroupReceiver>();
+            processors ??= new List<PipelineGroupProcessor>();
+            exporters ??= new List<PipelineGroupExporter>();
+            networkingConfigurations ??= new List<PipelineGroupNetworkingConfiguration>();
+
+            return new PipelineGroupProperties(
                 replicas,
                 receivers?.ToList(),
                 processors?.ToList(),
@@ -1623,6 +1634,28 @@ namespace Azure.ResourceManager.Monitor.Models
                 service,
                 networkingConfigurations?.ToList(),
                 provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PipelineGroupPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.PipelineGroupPatch"/> instance for mocking. </returns>
+        public static PipelineGroupPatch PipelineGroupPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PipelineGroupPropertiesUpdate properties = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new PipelineGroupPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                tags,
                 serializedAdditionalRawData: null);
         }
 

@@ -34,11 +34,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(AvsClusterEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(OperationId))
-            {
-                writer.WritePropertyName("operationId"u8);
-                writer.WriteStringValue(OperationId);
-            }
+            writer.WritePropertyName("operationId"u8);
+            writer.WriteStringValue(OperationId);
             if (Optional.IsCollectionDefined(AddedHostNames))
             {
                 writer.WritePropertyName("addedHostNames"u8);
