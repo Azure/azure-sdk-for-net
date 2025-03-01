@@ -13,6 +13,7 @@ using Azure.Core.TestFramework;
 using Azure.Identity;
 using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 using Azure.Compute.Batch;
+using System.Threading;
 
 namespace Azure.Compute.Batch.Tests.Infrastructure
 {
@@ -40,6 +41,12 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
         public bool IsPlayBack()
         {
             return this.Mode == RecordedTestMode.Playback;
+        }
+
+        public void TestSleep(int milliseconds)
+        {
+            if (!IsPlayBack())
+            { Thread.Sleep(TimeSpan.FromSeconds(milliseconds)); }
         }
 
         /// <summary>
