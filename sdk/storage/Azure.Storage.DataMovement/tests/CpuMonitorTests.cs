@@ -1,16 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-#define TESTING
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
-using Moq;
-using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -80,6 +72,51 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.Throws<InvalidOperationException>(() => cpuMonitor.StopMonitoring());
+        }
+
+        [Test]
+        public void MemoryUsage_MemoryUsageShouldBeGreaterThan0()
+        {
+            // Arrange
+            CpuMonitor cpuMonitor = new CpuMonitor(TimeSpan.FromMilliseconds(1000));
+
+            // Act
+            cpuMonitor.StartMonitoring();
+            SimulateCpuLoad(1);
+            cpuMonitor.StopMonitoring();
+
+            // Assert
+            Assert.Greater(cpuMonitor.MemoryUsage, 0);
+        }
+
+        [Test]
+        public void MemoryUsage_ShouldBeLessThan1()
+        {
+            // Arrange
+            CpuMonitor cpuMonitor = new CpuMonitor(TimeSpan.FromMilliseconds(1000));
+
+            // Act
+            cpuMonitor.StartMonitoring();
+            SimulateCpuLoad(1);
+            cpuMonitor.StopMonitoring();
+
+            // Assert
+            Assert.Less(cpuMonitor.MemoryUsage, 1);
+        }
+
+        [Test]
+        public void MemoryUsage_ShouldNotBeNull()
+        {
+            // Arrange
+            CpuMonitor cpuMonitor = new CpuMonitor(TimeSpan.FromMilliseconds(1000));
+
+            // Act
+            cpuMonitor.StartMonitoring();
+            SimulateCpuLoad(1);
+            cpuMonitor.StopMonitoring();
+
+            // Assert
+            Assert.NotNull(cpuMonitor.MemoryUsage);
         }
 
         private void SimulateCpuLoad(int durationInSeconds)

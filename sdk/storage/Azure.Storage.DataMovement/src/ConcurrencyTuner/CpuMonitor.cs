@@ -4,12 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Tracing;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 
 namespace Azure.Storage.DataMovement
 {
@@ -33,15 +32,12 @@ namespace Azure.Storage.DataMovement
     {
         private Task _monitoringWorker;
         private CancellationTokenSource _cancellationTokenSource;
+        private TimeSpan _monitoringInterval;
 
         public float CpuUsage { get; private set; }
-
         public bool IsRunning { get; private set; }
-
         private double PreviousProcessorTime { get; set; } = 0;
         private double CurrentProcessorTime { get; set; }
-        private TimeSpan MonitoringInterval { get; set; }
-
         private int CoreCount { get; } = Environment.ProcessorCount;
 
         private Process CurrentProcess
@@ -59,6 +55,8 @@ namespace Azure.Storage.DataMovement
 
         public bool ContentionExists { get; private set; }
 
+        public double MemoryUsage { get; private set; }
+
         /// <summary>
         /// Initalizes the CPU monitor.
         ///
@@ -75,9 +73,10 @@ namespace Azure.Storage.DataMovement
         /// Monitoring intervals should be above 1000 Milliseconds to be able to get readings
         /// </summary>
         ///
+
         public CpuMonitor(TimeSpan monitoringInterval)
         {
-            MonitoringInterval = monitoringInterval;
+            _monitoringInterval = monitoringInterval;
         }
 
         /// <summary>
@@ -174,9 +173,19 @@ namespace Azure.Storage.DataMovement
                 return;
 
             IsRunning = true;
-
+            // One cancellation token so that each thread is cancelled
             _cancellationTokenSource = new CancellationTokenSource();
+
+            // Running each monitor on its own thread because they are not dependent on each other.
+            // If they were dependent on each other, then I could run it like this:
+            // Task.Run(async () =>
+            //{
+            //    await MonitorCpuUsage(_cancellationTokenSource.Token).ConfigureAwait(false);
+            //    await MonitorMemoryUsage(_cancellationTokenSource.Token).ConfigureAwait(false);
+            //});
+
             Task.Run(() => MonitorCpuUsage(_cancellationTokenSource.Token));
+            Task.Run(() => MonitorMemoryUsage(_cancellationTokenSource.Token));
         }
 
         public void StopMonitoring()
@@ -215,27 +224,8 @@ namespace Azure.Storage.DataMovement
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                await Task.Delay(MonitoringInterval, cancellationToken).ConfigureAwait(false);
+                await Task.Delay(_monitoringInterval, cancellationToken).ConfigureAwait(false);
                 MonitorCpuUsageLegacy();
-            }
-        }
-
-        private async Task MonitorCpuUsageNet6Plus(CancellationToken cancellationToken)
-        {
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                // Implement the actual code from this:
-                // https://learn.microsoft.com/en-us/dotnet/core/diagnostics/diagnostic-resource-monitoring
-                await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
-            }
-        }
-
-        private async Task MonitorCpuUsageNetCore3(CancellationToken cancellationToken)
-        {
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                // It looks like we might be able to use this for 3.1Plus https://learn.microsoft.com/en-us/dotnet/core/diagnostics/event-counter-perf
-                await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -257,7 +247,59 @@ namespace Azure.Storage.DataMovement
             // Process.TotalProcessorTime.TotlMilliseconds returns the processing time across all processors
             // Environment.ProcessorCount returns then total number of cores (which includes physical cores plus hyper
             // threaded cores
-            return (float)((CurrentProcessorTime - PreviousProcessorTime) / (MonitoringInterval.TotalMilliseconds * CoreCount));
+            return (float)(CurrentProcessorTime - PreviousProcessorTime) / (float)(_monitoringInterval.TotalMilliseconds * CoreCount);
+        }
+
+        private async Task MonitorMemoryUsage(CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                await Task.Delay(_monitoringInterval, cancellationToken).ConfigureAwait(false);
+                // This is the memory that is shown in the task manager
+                //long currentMemoryUsage = CurrentProcess.WorkingSet64;
+                long currentMemoryUsage = CurrentProcess.PrivateMemorySize64;
+
+#if NETSTANDARD2_0_OR_GREATER
+                // This is wrong, but the workaround looks like it would be really long and difficult to implment....
+                //long totalPhysicalMemory = CurrentProcess.WorkingSet64;
+                long totalPhysicalMemory = (long)CalculateMemoryNETStandard();
+
+#else
+                long totalPhysicalMemory = GC.GetGCMemoryInfo().TotalAvailableMemoryBytes;
+                // Assumption: Probably not MAC
+                // Use PInvoke here
+
+#endif
+                MemoryUsage = (double)currentMemoryUsage / (double)totalPhysicalMemory;
+            }
+        }
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern bool GlobalMemoryStatusEx(ref MEMORYSTATUSEX lpBuffer);
+
+        private ulong CalculateMemoryNETStandard()
+        {
+            MEMORYSTATUSEX memStatus = new MEMORYSTATUSEX { dwLength = (uint)Marshal.SizeOf(typeof(MEMORYSTATUSEX)) };
+            if (GlobalMemoryStatusEx(ref memStatus))
+            {
+                return memStatus.ullTotalPhys;
+                //Console.WriteLine($"Available RAM: {memStatus.ullAvailPhys / 1024 / 1024} MB");
+            }
+            return 0;
+        }
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        internal struct MEMORYSTATUSEX
+        {
+            public uint dwLength;
+            public uint dwMemoryLoad;
+            public ulong ullTotalPhys;
+            public ulong ullAvailPhys;
+            public ulong ullTotalPageFile;
+            public ulong ullAvailPageFile;
+            public ulong ullTotalVirtual;
+            public ulong ullAvailVirtual;
+            public ulong ullAvailExtendedVirtual;
         }
     }
 }
