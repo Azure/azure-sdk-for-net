@@ -57,18 +57,18 @@ To use the AnalyzeConversationAuthoring client, include the following namespace 
 using Azure.AI.Language.Conversations.Authoring;
 ```
 
-With your endpoint and API key, you can instantiate an AuthoringClient and create a AnalyzeConversationAuthoring client using specific service options:
+With your endpoint and API key, you can instantiate a `ConversationAnalysisAuthoringClient` using specific service options:
 
-```C#
+```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your-api-key");
-AuthoringClient client = new AuthoringClient(endpoint, credential);
-AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+AzureKeyCredential credential = new("your apikey");
+ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 #### Create a client using Azure Active Directory authentication
 
-You can also create a `AnalyzeConversationAuthoring` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
+You can also create a `ConversationAnalysisAuthoringClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
 Using the [DefaultAzureCredential] you can authenticate a service using Managed Identity or a service principal, authenticate as a developer working on an application, and more, all without changing code.
 
 Before you can use the `DefaultAzureCredential`, or any credential type from [Azure.Identity][azure_identity], you'll first need to [install the Azure.Identity package][azure_identity_install].
@@ -120,7 +120,7 @@ If you do not select an api version we will default to the latest version availa
 
 ### AnalyzeConversationAuthoring
 
-The [`AnalyzeConversationAuthoring`][AnalyzeConversationAuthoring_class] is the primary interface for developers using the Azure AI Conversation Authoring client library. It provides both synchronous and asynchronous operations to access a specific use of conversation authoring, such as creating and managing conversation projects.
+The [`ConversationAuthoringProject`][`ConversationAuthoringDeployment`][`ConversationAuthoringExportedModel`][`ConversationAuthoringTrainedModel`] are the primary clientlets for developers using the Azure AI Conversation Authoring client library. It provides both synchronous and asynchronous operations to access a specific use of conversation authoring, such as creating and managing conversation projects.
 
 ### Thread safety
 
@@ -167,6 +167,8 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 * [Swap Deployments (Async)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample12_ConversationsAuthoring_SwapDeploymentsAsync.md)
 * [Delete a Deployment (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample13_ConversationsAuthoring_DeleteDeployment.md)
 * [Delete a Deployment (Async)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample13_ConversationsAuthoring_DeleteDeploymentAsync.md)
+* [Deploy a Project (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample14_ConversationsAuthoring_DeployProject.md)
+* [Delete a Project (Async)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample14_ConversationsAuthoring_DeployProjectAsync.md)
 
 ## Troubleshooting
 
