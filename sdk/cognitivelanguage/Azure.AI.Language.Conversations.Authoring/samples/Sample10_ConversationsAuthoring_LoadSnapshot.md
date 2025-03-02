@@ -2,9 +2,9 @@
 
 This sample demonstrates how to load a snapshot for a trained model using the `Azure.AI.Language.Conversations.Authoring` SDK.
 
-## Create an `AuthoringClient`
+## Create a `ConversationAnalysisAuthoringClient`
 
-To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
+To create a `ConversationAnalysisAuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing a `ConversationAnalysisAuthoringClientOptions` instance.
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
@@ -17,7 +17,7 @@ ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projec
 
 ## Load a Snapshot
 
-To load a snapshot for a specific trained model, call LoadSnapshot on the AnalyzeConversationAuthoring client.
+To load a snapshot for a specific trained model, call LoadSnapshot on the `ConversationAuthoringTrainedModel` client. This method initiates the snapshot loading process and provides an operation response that includes the status and metadata about the operation.
 
 ```C# Snippet:Sample10_ConversationsAuthoring_LoadSnapshot
 Operation operation = modelAuthoringClient.LoadSnapshot(
@@ -31,5 +31,3 @@ Console.WriteLine($"Operation Location: {operationLocation}");
 
 Console.WriteLine($"Snapshot loaded with operation status: {operation.GetRawResponse().Status}");
 ```
-
-To load a snapshot, call LoadSnapshot on the AnalyzeConversationAuthoring client. This method initiates the snapshot loading process and provides an operation response that includes the status and metadata about the operation.

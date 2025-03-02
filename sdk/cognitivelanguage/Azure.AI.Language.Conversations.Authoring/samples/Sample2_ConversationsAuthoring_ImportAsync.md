@@ -2,9 +2,9 @@
 
 This sample demonstrates how to import a project using the `Azure.AI.Language.Conversations.Authoring` SDK. You can define the project's metadata and assets to import it into the system.
 
-## Create an `AuthoringClient`
+## Create a `ConversationAnalysisAuthoringClient`
 
-To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
+To create a `ConversationAnalysisAuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing a `ConversationAnalysisAuthoringClientOptions` instance.
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
@@ -19,7 +19,7 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 
 ## Import a Project
 
-To import a project, call ImportAsync on the AnalyzeConversationAuthoring client.
+To import a project, call ImportAsync on the ConversationAuthoringProject client, which returns an Operation object that tracks the progress and completion of the import operation..
 
 ```C# Snippet:Sample2_ConversationsAuthoring_ImportAsync
 string projectName = "MyImportedProjectAsync";
@@ -88,5 +88,3 @@ Console.WriteLine($"Operation Location: {operationLocation}");
 
 Console.WriteLine($"Project import completed with status: {operation.GetRawResponse().Status}");
 ```
-
-To import a project, call ImportAsync on the AnalyzeConversationAuthoring client, which returns an Operation object that tracks the progress and completion of the import operation.

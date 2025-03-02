@@ -2,9 +2,9 @@
 
 This sample demonstrates how to swap two deployments using the `Azure.AI.Language.Conversations.Authoring` SDK.
 
-## Create an `AuthoringClient`
+## Create a `ConversationAnalysisAuthoringClient`
 
-To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
+To create a `ConversationAnalysisAuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing a `ConversationAnalysisAuthoringClientOptions` instance.
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
@@ -17,7 +17,7 @@ ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projec
 
 ## Swap Deployments
 
-To swap two deployments, call SwapDeployments on the AnalyzeConversationAuthoring client.
+To swap two deployments, call SwapDeployments on the `ConversationAuthoringDeployment` client. Swapping deployments allows you to interchange the roles of two deployment environments (e.g., production and staging) to facilitate smooth transitions and testing in production-like environments.
 
 ```C# Snippet:Sample14_ConversationsAuthoring_SwapDeployments
 Operation operation = deploymentAuthoringClient.SwapDeployments(
@@ -30,5 +30,3 @@ string operationLocation = operation.GetRawResponse().Headers.TryGetValue("opera
 Console.WriteLine($"Swap operation-location: {operationLocation}");
 Console.WriteLine($"Swap operation completed with status: {operation.GetRawResponse().Status}");
 ```
-
-Swapping deployments allows you to interchange the roles of two deployment environments (e.g., production and staging) to facilitate smooth transitions and testing in production-like environments.

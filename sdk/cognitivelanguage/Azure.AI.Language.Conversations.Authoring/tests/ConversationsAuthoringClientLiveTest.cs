@@ -461,5 +461,26 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             //string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
             //Assert.IsNotNull(operationLocation, "Expected operation-location header to be present.");
         }
+
+        [RecordedTest]
+        public async Task DeployProjectAsync(){
+            // Arrange
+            string projectName = "Test-data-labels";
+            var deploymentName = "staging";
+
+            ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName);
+
+            CreateDeploymentDetails trainedModeDetails = new CreateDeploymentDetails("m1");
+            // Act
+            Operation operation = await deploymentAuthoringClient.DeployProjectAsync(
+                waitUntil: WaitUntil.Completed,
+                trainedModeDetails
+            );
+
+            // Assert
+            Assert.IsNotNull(operation, "The operation should not be null.");
+            //Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected status to be 200 (OK).");
+            Console.WriteLine($"Project created with status: {operation.GetRawResponse().Status}");
+        }
     }
 }

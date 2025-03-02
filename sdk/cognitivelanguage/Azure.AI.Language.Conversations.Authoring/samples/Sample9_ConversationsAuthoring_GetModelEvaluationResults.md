@@ -2,9 +2,9 @@
 
 This sample demonstrates how to retrieve model evaluation results, including intents and entities, for a specific trained model using the `Azure.AI.Language.Conversations.Authoring` SDK.
 
-## Create an `AuthoringClient`
+## Create a `ConversationAnalysisAuthoringClient`
 
-To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
+To create a `ConversationAnalysisAuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing a `ConversationAnalysisAuthoringClientOptions` instance.
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
@@ -19,7 +19,7 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 
 ## Get Model Evaluation Results
 
-To retrieve model evaluation results, call GetModelEvaluationResults on the AnalyzeConversationAuthoring client.
+To retrieve model evaluation results, call GetModelEvaluationResults on the `ConversationAuthoringTrainedModel` client, which provides evaluation metrics for intents and entities for each utterance in the dataset.
 
 ```C# Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResults
 Pageable<UtteranceEvaluationResult> results = modelAuthoringClient.GetModelEvaluationResults(
@@ -52,5 +52,3 @@ foreach (UtteranceEvaluationResult result in results)
     Console.WriteLine();
 }
 ```
-
-To retrieve model evaluation results, call GetModelEvaluationResults on the AnalyzeConversationAuthoring client, which provides evaluation metrics for intents and entities for each utterance in the dataset.

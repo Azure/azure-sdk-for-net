@@ -2,9 +2,9 @@
 
 This sample demonstrates how to delete a project asynchronously using the `Azure.AI.Language.Conversations.Authoring` SDK.
 
-## Create an `AuthoringClient`
+## Create a `ConversationAnalysisAuthoringClient`
 
-To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
+To create a `ConversationAnalysisAuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing a `ConversationAnalysisAuthoringClientOptions` instance.
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
@@ -19,7 +19,7 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 
 ## Delete a Project Asynchronously
 
-To delete a project, call DeleteProjectAsync on the AnalyzeConversationAuthoring client.
+To delete a project, call DeleteProjectAsync on the `ConversationAuthoringProject` client. The method returns an Operation object containing the status of the deletion request, and the operation-location header can be used to track the deletion process.
 
 ```C# Snippet:Sample5_ConversationsAuthoring_DeleteProjectAsync
 string projectName = "MySampleProjectAsync";
@@ -35,5 +35,3 @@ Console.WriteLine($"Operation Location: {operationLocation}");
 
 Console.WriteLine($"Project deletion completed with status: {operation.GetRawResponse().Status}");
 ```
-
-To delete a project, call DeleteProjectAsync on the AnalyzeConversationAuthoring client. The method returns an Operation object containing the status of the deletion request, and the operation-location header can be used to track the deletion process.

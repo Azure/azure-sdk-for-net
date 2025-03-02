@@ -2,9 +2,9 @@
 
 This sample demonstrates how to asynchronously swap two deployments using the `Azure.AI.Language.Conversations.Authoring` SDK.
 
-## Create an `AuthoringClient`
+## Create a `ConversationAnalysisAuthoringClient`
 
-To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
+To create a `ConversationAnalysisAuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing a `ConversationAnalysisAuthoringClientOptions` instance.
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
@@ -17,7 +17,7 @@ ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projec
 
 ## Swap Deployments Asynchronously
 
-To swap two deployments asynchronously, call SwapDeploymentsAsync on the AnalyzeConversationAuthoring client.
+To swap two deployments asynchronously, call SwapDeploymentsAsync on the `ConversationAuthoringDeployment` client. Asynchronously swapping deployments allows for a seamless interchange of roles between deployment environments (e.g., production and staging), enabling smooth transitions and minimizing downtime during deployment updates.
 
 ```C# Snippet:Sample14_ConversationsAuthoring_SwapDeploymentsAsync
 Operation operation = await deploymentAuthoringClient.SwapDeploymentsAsync(
@@ -30,5 +30,3 @@ string operationLocation = operation.GetRawResponse().Headers.TryGetValue("opera
 Console.WriteLine($"Swap operation-location: {operationLocation}");
 Console.WriteLine($"Swap operation completed with status: {operation.GetRawResponse().Status}");
 ```
-
-Asynchronously swapping deployments allows for a seamless interchange of roles between deployment environments (e.g., production and staging), enabling smooth transitions and minimizing downtime during deployment updates.

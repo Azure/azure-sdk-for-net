@@ -2,9 +2,9 @@
 
 This sample demonstrates how to train a model asynchronously using the `Azure.AI.Language.Conversations.Authoring` SDK.
 
-## Create an `AuthoringClient`
+## Create a `ConversationAnalysisAuthoringClient`
 
-To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
+To create a `ConversationAnalysisAuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing a `ConversationAnalysisAuthoringClientOptions` instance.
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
@@ -19,7 +19,7 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 
 ## Train a Model Asynchronously
 
-To train a model asynchronously, call TrainAsync on the AnalyzeConversationAuthoring client.
+To train a model asynchronously, call TrainAsync on the `ConversationAuthoringProject` client. The method returns an Operation<TrainingJobResult> object containing the status of the training job, and the operation-location header can be used to track the training process.
 
 ```C# Snippet:Sample6_ConversationsAuthoring_TrainAsync
 string projectName = "MySampleProjectAsync";
@@ -50,5 +50,3 @@ Console.WriteLine($"Operation Location: {operationLocation}");
 
 Console.WriteLine($"Training completed with status: {operation.GetRawResponse().Status}");
 ```
-
-To train a model asynchronously, call TrainAsync on the AnalyzeConversationAuthoring client. The method returns an Operation<TrainingJobResult> object containing the status of the training job, and the operation-location header can be used to track the training process.

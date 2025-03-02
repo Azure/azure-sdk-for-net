@@ -2,11 +2,11 @@
 
 This sample demonstrates how to import a project synchronously using the `Azure.AI.Language.Conversations.Authoring` SDK. You can define the project's metadata and assets before importing it into the service.
 
-## Create an `AuthoringClient`
+## Create a `ConversationAnalysisAuthoringClient`
 
-To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
+To create a `ConversationAnalysisAuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing a `ConversationAnalysisAuthoringClientOptions` instance.
 
-```C#
+```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your-api-key");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
@@ -18,11 +18,11 @@ The values of the endpoint and apiKey variables can be retrieved from: Environme
 
 ## Import a New Project
 
-To import a project synchronously, call Import on the AnalyzeConversationAuthoring client.
+To import a project synchronously, call Import on the ConversationAuthoringProject client. The method returns an Operation object, which you can use to track the status of the operation. The operation-location header contains the location of the operation for further tracking.
 
 ```C# Snippet:Sample2_ConversationsAuthoring_Import
 string projectName = "MyImportedProject";
-ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
+ConversationAuthoringProject projectAuthoringClient = client.GetProjects(projectName);
 
 var projectMetadata = new CreateProjectDetails(
     projectKind: "Conversation",
@@ -87,5 +87,3 @@ Console.WriteLine($"Operation Location: {operationLocation}");
 
 Console.WriteLine($"Project import completed with status: {operation.GetRawResponse().Status}");
 ```
-
-To import a project, call Import on the AnalyzeConversationAuthoring client. The method returns an Operation object, which you can use to track the status of the operation. The operation-location header contains the location of the operation for further tracking.

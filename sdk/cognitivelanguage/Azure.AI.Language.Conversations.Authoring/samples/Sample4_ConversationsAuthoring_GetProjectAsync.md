@@ -2,9 +2,9 @@
 
 This sample demonstrates how to retrieve metadata of a project asynchronously using the `Azure.AI.Language.Conversations.Authoring` SDK.
 
-## Create an `AuthoringClient`
+## Create a `ConversationAnalysisAuthoringClient`
 
-To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
+To create a `ConversationAnalysisAuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing a `ConversationAnalysisAuthoringClientOptions` instance.
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
@@ -19,7 +19,7 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 
 ## Retrieve Project Metadata Asynchronously
 
-To retrieve metadata of a project, call GetProjectAsync on the AnalyzeConversationAuthoring client.
+To retrieve metadata of a project, call GetProjectAsync on the `ConversationAuthoringProject` client. The method returns a ProjectMetadata object that contains detailed information about the project, such as its creation date, last modification date, description, and more.
 
 ```C# Snippet:Sample4_ConversationsAuthoring_GetProjectAsync
 string projectName = "MySampleProjectAsync";
@@ -38,5 +38,3 @@ Console.WriteLine($"Multilingual: {projectMetadata.Multilingual}");
 Console.WriteLine($"Description: {projectMetadata.Description}");
 Console.WriteLine($"Language: {projectMetadata.Language}");
 ```
-
-To retrieve project metadata asynchronously, call GetProjectAsync on the AnalyzeConversationAuthoring client. The method returns a ProjectMetadata object that contains detailed information about the project, such as its creation date, last modification date, description, and more.

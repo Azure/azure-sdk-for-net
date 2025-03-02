@@ -2,9 +2,9 @@
 
 This sample demonstrates how to cancel a training job using the `Azure.AI.Language.Conversations.Authoring` SDK.
 
-## Create an `AuthoringClient`
+## Create a `ConversationAnalysisAuthoringClient`
 
-To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
+To create a `ConversationAnalysisAuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing a `ConversationAnalysisAuthoringClientOptions` instance.
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
@@ -19,7 +19,7 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 
 ## Cancel a Training Job
 
-To cancel a training job, call CancelTrainingJob on the AnalyzeConversationAuthoring client.
+To cancel a training job, call CancelTrainingJob on the `ConversationAuthoringProject` client. The method returns an Operation<TrainingJobResult> object, which contains the cancellation status, and the operation-location header can be used to track the cancellation process.
 
 ```C# Snippet:Sample7_ConversationsAuthoring_CancelTrainingJob
 string projectName = "MyProject";
@@ -37,5 +37,3 @@ Console.WriteLine($"Operation Location: {operationLocation}");
 
 Console.WriteLine($"Training job cancellation completed with status: {cancelOperation.GetRawResponse().Status}");
 ```
-
-To cancel a training job, call CancelTrainingJob on the AnalyzeConversationAuthoring client. The method returns an Operation<TrainingJobResult> object, which contains the cancellation status, and the operation-location header can be used to track the cancellation process.
