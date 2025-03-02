@@ -11,8 +11,6 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
-string projectName = "MyNewProject";
-ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 ```
 
 ## Retrieve Model Evaluation Results Asynchronously
@@ -20,8 +18,12 @@ ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projec
 To retrieve model evaluation results for a project asynchronously, call GetModelEvaluationResultsAsync on the `ConversationAuthoringTrainedModel` client. This returns an AsyncPageable<UtteranceEvaluationResult> that allows you to iterate through and analyze the results.
 
 ```C# Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResultsAsync
+string projectName = "SampleProject";
+string trainedModelLabel = "SampleModel";
+ConversationAuthoringTrainedModel modelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
+StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
+
 AsyncPageable<UtteranceEvaluationResult> results = modelAuthoringClient.GetModelEvaluationResultsAsync(
-    trainedModelLabel: trainedModelLabel,
     stringIndexType: stringIndexType
 );
 

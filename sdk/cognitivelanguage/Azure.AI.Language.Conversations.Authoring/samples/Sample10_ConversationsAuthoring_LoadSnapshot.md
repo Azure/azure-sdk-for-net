@@ -11,8 +11,6 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
-string projectName = "MyNewProject";
-ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 ```
 
 ## Load a Snapshot
@@ -20,10 +18,13 @@ ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projec
 To load a snapshot for a specific trained model, call LoadSnapshot on the `ConversationAuthoringTrainedModel` client. This method initiates the snapshot loading process and provides an operation response that includes the status and metadata about the operation.
 
 ```C# Snippet:Sample10_ConversationsAuthoring_LoadSnapshot
+string projectName = "SampleProject";
+string trainedModelLabel = "SampleModel";
+ConversationAuthoringTrainedModel modelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
+
 Operation operation = modelAuthoringClient.LoadSnapshot(
-    waitUntil: WaitUntil.Completed,
-    trainedModelLabel: trainedModelLabel
-);
+    waitUntil: WaitUntil.Completed
+    );
 
  // Extract the operation-location header
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;

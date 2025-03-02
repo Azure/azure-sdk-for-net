@@ -7,16 +7,17 @@ This sample demonstrates how to deploy a project using the `Azure.AI.Language.Co
 To create a `ConversationAnalysisAuthoringClient`, you will need the service endpoint and credentials of your Language resource.
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
-Uri endpoint = TestEnvironment.Endpoint;
-AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+AzureKeyCredential credential = new("your apikey");
+ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 ## Deploy a Project
 
 To deploy a project, call `DeployProject` on the `ConversationAuthoringDeployment` client. Deploying a project ensures that the trained model is available for use.
 
-```C# Sample14_ConversationsAuthoring_DeployProject
+```C# Snippet:Sample14_ConversationsAuthoring_DeployProject
 string projectName = "Test-data-labels";
 var deploymentName = "staging";
 
@@ -31,6 +32,6 @@ Operation operation = deploymentAuthoringClient.DeployProject(
 
 // Extract operation-location from response headers
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : "Not found";
-Console.WriteLine($"Deploy operation-location: {operationLocation}");
-Console.WriteLine($"Deploy operation completed with status: {operation.GetRawResponse().Status}");
+Console.WriteLine($"Delete operation-location: {operationLocation}");
+Console.WriteLine($"Delete operation completed with status: {operation.GetRawResponse().Status}");
 ```

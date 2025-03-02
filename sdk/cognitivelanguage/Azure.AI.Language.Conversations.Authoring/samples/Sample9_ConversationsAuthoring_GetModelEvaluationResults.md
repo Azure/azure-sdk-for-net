@@ -11,8 +11,6 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
-string projectName = "MyNewProject";
-ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
@@ -22,8 +20,12 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 To retrieve model evaluation results, call GetModelEvaluationResults on the `ConversationAuthoringTrainedModel` client, which provides evaluation metrics for intents and entities for each utterance in the dataset.
 
 ```C# Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResults
+string projectName = "SampleProject";
+string trainedModelLabel = "SampleModel";
+
+ConversationAuthoringTrainedModel modelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
+StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
 Pageable<UtteranceEvaluationResult> results = modelAuthoringClient.GetModelEvaluationResults(
-    trainedModelLabel: trainedModelLabel,
     stringIndexType: stringIndexType
 );
 

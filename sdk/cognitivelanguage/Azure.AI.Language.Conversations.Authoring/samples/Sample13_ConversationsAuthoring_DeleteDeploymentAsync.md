@@ -11,8 +11,6 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
-string projectName = "MyNewProject";
-ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 ```
 
 ## Delete a Deployment Asynchronously
@@ -20,6 +18,10 @@ ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projec
 To delete a deployment, call DeleteDeploymentAsync on the `ConversationAuthoringDeployment` client. Deleting a deployment asynchronously allows for non-blocking operations and ensures resources associated with the deployment are released efficiently.
 
 ```C# Snippet:Sample13_ConversationsAuthoring_DeleteDeploymentAsync
+string projectName = "SampleProject";
+string deploymentName = "SampleDeployment";
+ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName);
+
 Operation operation = await deploymentAuthoringClient.DeleteDeploymentAsync(
     waitUntil: WaitUntil.Completed
 );

@@ -11,8 +11,6 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
-string projectName = "MyNewProject";
-ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
@@ -23,11 +21,10 @@ To export a project asynchronously, call ExportAsync on the ConversationAuthorin
 
 ```C# Snippet:Sample3_ConversationsAuthoring_ExportAsync
 string projectName = "MyExportedProjectAsync";
-ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
+ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
 
 Operation operation = await projectAuthoringClient.ExportAsync(
     waitUntil: WaitUntil.Completed,
-    projectName: projectName,
     stringIndexType: StringIndexType.Utf16CodeUnit,
     exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation
 );

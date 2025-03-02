@@ -11,8 +11,6 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
-string projectName = "MyNewProject";
-ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
@@ -24,11 +22,9 @@ To asynchronously retrieve a model evaluation summary, call GetModelEvaluationSu
 ```C# Snippet:Sample8_ConversationsAuthoring_GetModelEvaluationSummaryAsync
 string projectName = "MyProject";
 string trainedModelLabel = "YourTrainedModelLabel";
-ConversationAuthoringModels modelAuthoringClient = client.GetModels(projectName);
+ConversationAuthoringTrainedModel modelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
-Response<EvaluationSummary> evaluationSummaryResponse = await modelAuthoringClient.GetModelEvaluationSummaryAsync(
-    trainedModelLabel: trainedModelLabel
-);
+Response<EvaluationSummary> evaluationSummaryResponse = await modelAuthoringClient.GetModelEvaluationSummaryAsync();
 
 // Print entities evaluation summary
 var entitiesEval = evaluationSummaryResponse.Value.EntitiesEvaluation;

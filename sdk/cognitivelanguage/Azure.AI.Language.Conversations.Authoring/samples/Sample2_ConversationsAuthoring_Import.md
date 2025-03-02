@@ -8,10 +8,9 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your-api-key");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+AzureKeyCredential credential = new("your apikey");
+ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from: Environment variables, configuration settings, or any other secure approach that works for your application.
@@ -22,11 +21,10 @@ To import a project synchronously, call Import on the ConversationAuthoringProje
 
 ```C# Snippet:Sample2_ConversationsAuthoring_Import
 string projectName = "MyImportedProject";
-ConversationAuthoringProject projectAuthoringClient = client.GetProjects(projectName);
+ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
 
 var projectMetadata = new CreateProjectDetails(
     projectKind: "Conversation",
-    projectName: projectName,
     language: "en"
 )
 {

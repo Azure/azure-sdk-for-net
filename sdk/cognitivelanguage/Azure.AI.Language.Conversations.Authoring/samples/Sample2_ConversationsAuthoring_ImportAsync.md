@@ -11,8 +11,6 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
-string projectName = "MyNewProject";
-ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
@@ -23,11 +21,10 @@ To import a project, call ImportAsync on the ConversationAuthoringProject client
 
 ```C# Snippet:Sample2_ConversationsAuthoring_ImportAsync
 string projectName = "MyImportedProjectAsync";
-ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
+ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
 
 var projectMetadata = new CreateProjectDetails(
     projectKind: "Conversation",
-    projectName: projectName,
     language: "en"
 )
 {

@@ -89,8 +89,6 @@ Then you can create an instance of `DefaultAzureCredential` and pass it to a new
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
-string projectName = "MyNewProject";
-ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 ```
 
 Note that regional endpoints do not support AAD authentication. Instead, create a [custom domain][custom_domain] name for your resource to use AAD authentication.
@@ -110,8 +108,6 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
-string projectName = "MyNewProject";
-ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 ```
 
 When selecting an API version, it's important to verify that there are no breaking changes compared to the latest API version. If there are significant differences, API calls may fail due to incompatibility.
@@ -184,7 +180,7 @@ For example, if you attempt to create a project with an invalid configuration, a
 try
 {
     string invalidProjectName = "InvalidProject";
-    ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(invalidProjectName);
+    ConversationAuthoringProject projectAuthoringClient = client.GetProject(invalidProjectName);
     var projectData = new
     {
         language = "invalid-lang", // Invalid language code

@@ -11,8 +11,6 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
-string projectName = "MyNewProject";
-ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 ```
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from: Environment variables, configuration settings, or any other secure approach that works for your application.
@@ -23,18 +21,17 @@ To create a new project, call `CreateProjectAsync` on the `ConversationAuthoring
 
 ```C# Snippet:Sample1_ConversationsAuthoring_CreateProjectAsync
 string projectName = "MyNewProjectAsync";
-ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
-var projectData = new
+ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+var projectData = new CreateProjectDetails(
+      projectKind: "Conversation",
+      language: "en-us"
+    )
 {
-    projectName = projectName,
-    language = "en",
-    projectKind = "Conversation",
-    description = "Project description",
-    multilingual = true
+    Multilingual = true,
+    Description = "Project description"
 };
 
-using RequestContent content = RequestContent.Create(projectData);
-Response response = await projectAuthoringClient.CreateProjectAsync(content);
+Response response = await projectAuthoringClient.CreateProjectAsync(projectData);
 
 Console.WriteLine($"Project created with status: {response.Status}");
 ```

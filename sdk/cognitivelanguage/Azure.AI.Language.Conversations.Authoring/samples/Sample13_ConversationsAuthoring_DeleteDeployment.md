@@ -11,8 +11,6 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
-string projectName = "MyNewProject";
-ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 ```
 
 ## Delete a Deployment
@@ -20,6 +18,10 @@ ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projec
 To delete a deployment, call DeleteDeployment on the `ConversationAuthoringDeployment` client. Deleting a deployment removes it from the specified project and ensures that resources associated with the deployment are released.
 
 ```C# Snippet:Sample13_ConversationsAuthoring_DeleteDeployment
+string projectName = "SampleProject";
+string deploymentName = "SampleDeployment";
+ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName);
+
 Operation operation = deploymentAuthoringClient.DeleteDeployment(
     waitUntil: WaitUntil.Completed
 );

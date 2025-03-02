@@ -11,8 +11,6 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
-string projectName = "MyNewProject";
-ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 ```
 
 ## Swap Deployments
@@ -20,6 +18,11 @@ ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projec
 To swap two deployments, call SwapDeployments on the `ConversationAuthoringDeployment` client. Swapping deployments allows you to interchange the roles of two deployment environments (e.g., production and staging) to facilitate smooth transitions and testing in production-like environments.
 
 ```C# Snippet:Sample14_ConversationsAuthoring_SwapDeployments
+string projectName = "SampleProject";
+var deploymentName1 = "deployment1";
+var deploymentName2 = "deployment2";
+var swapDetails = new SwapDeploymentsDetails(deploymentName1, deploymentName2);
+ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName1);
 Operation operation = deploymentAuthoringClient.SwapDeployments(
     waitUntil: WaitUntil.Completed,
     details: swapDetails
