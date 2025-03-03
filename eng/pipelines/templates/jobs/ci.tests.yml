@@ -157,25 +157,44 @@ jobs:
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
 
-      - script: >-
-          dotnet test eng/service.proj
-          --filter "(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"
-          --framework $(TestTargetFramework)
-          --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
-          --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TestTimeoutInMinutes}}minutes
-          /p:SDKType=${{ parameters.SDKType }}
-          /p:ServiceDirectory=$(ServiceDirectory)
-          /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeIntegrationTests=false
-          /p:RunApiCompat=false /p:InheritDocEnabled=false
-          /p:Configuration=$(BuildConfiguration)
-          /p:CollectCoverage=$(CollectCoverage)
-          /p:EnableSourceLink=false
-          /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
-          /p:EnableOverrideExclusions=true
-          /p:RemoveTrack1Projects=true
-          $(AdditionalTestArguments)
-          $(DiagnosticArguments)
-        displayName: "Build & Test ($(TestTargetFramework))"
+      - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+        - script: >-
+            dotnet test eng/service.proj
+            --filter "(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"
+            --framework $(TestTargetFramework)
+            --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
+            --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TestTimeoutInMinutes}}minutes
+            /p:SDKType=${{ parameters.SDKType }}
+            /p:ServiceDirectory=$(ServiceDirectory)
+            /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeIntegrationTests=false
+            /p:RunApiCompat=false /p:InheritDocEnabled=false
+            /p:Configuration=$(BuildConfiguration)
+            /p:CollectCoverage=$(CollectCoverage)
+            /p:EnableSourceLink=false
+            /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
+            /p:EnableOverrideExclusions=true
+            /p:RemoveTrack1Projects="$(RemoveTrack1)"
+            $(AdditionalTestArguments)
+            $(DiagnosticArguments)
+        displayName: "Build & Test ($(TestTargetFramework)) for PR"
+      - ${{ else }}:
+        - script: >-
+            dotnet test eng/service.proj
+            --filter "(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"
+            --framework $(TestTargetFramework)
+            --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
+            --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TestTimeoutInMinutes}}minutes
+            /p:SDKType=${{ parameters.SDKType }}
+            /p:ServiceDirectory=$(ServiceDirectory)
+            /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeIntegrationTests=false
+            /p:RunApiCompat=false /p:InheritDocEnabled=false
+            /p:Configuration=$(BuildConfiguration)
+            /p:CollectCoverage=$(CollectCoverage)
+            /p:EnableSourceLink=false
+            /p:ProjectListOverrideFile=""
+            $(AdditionalTestArguments)
+            $(DiagnosticArguments)
+          displayName: "Build & Test ($(TestTargetFramework))"
 
       - task: PublishTestResults@2
         condition: always()

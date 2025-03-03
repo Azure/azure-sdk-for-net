@@ -27,6 +27,17 @@ $projectsForGeneration = ($changedProjects | ForEach-Object { "`$(RepoRoot)$_" }
 $projectGroups = @()
 $projectGroups += ,$projectsForGeneration
 
+# if we have any track 1 projects in the list, we need to set RemoveTrack1Projects to false
+# if there are not, we need to set it to true. We just want the scoping mechanism of the generate project list to not accidentally
+# include track 1 projects in the generated project list
+$track1Projects = $projectsForGeneration | Where-Object { $_.IsNewSdk -eq $false }
+if ($track1Projects) {
+    Write-Host "##vso[task.setvariable variable=RemoveTrack1;]false"
+}
+else {
+    Write-Host "##vso[task.setvariable variable=RemoveTrack1;]true"
+}
+
 # todo: refactor write-test-dependency-group to take in a list of project files only and generate a single project file
 $outputFile = (Write-Test-Dependency-Group-To-Files -ProjectFileConfigName "packages" -ProjectGroups $projectGroups -MatrixOutputFolder $OutputPath)[0]
 
