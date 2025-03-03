@@ -16,6 +16,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         protected override string WirePayload => File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData-Collapsed.json")).TrimEnd();
 
+        protected override ModelReaderWriterContext Context => new TestClientModelReaderWriterContext();
+
         protected override void CompareModels(ResourceProviderData model, ResourceProviderData model2, string format)
         {
             Assert.AreEqual(model.Id, model2.Id);

@@ -49,10 +49,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(null!, s_readerWriterContext));
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(null!, typeof(BaseWithNoUnknown), s_readerWriterContext));
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(BinaryData.Empty, null!, s_readerWriterContext));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write<BaseWithNoUnknown>(null!, s_readerWriterContext));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write(null!, s_readerWriterContext));
 
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(null!, s_readerWriterContext, s_wireOptions));
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(null!, typeof(BaseWithNoUnknown), s_readerWriterContext, s_wireOptions));
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(BinaryData.Empty, null!, s_readerWriterContext, s_wireOptions));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write<BaseWithNoUnknown>(null!, s_readerWriterContext, s_wireOptions));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write(null!, s_readerWriterContext, s_wireOptions));
         }
 
         [TestCaseSource(typeof(ReaderWriterTestSource), "InvalidOperationBinaryData")]
@@ -514,7 +518,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         private class LocalContext : ModelReaderWriterContext
         {
-            private Lazy<TestModelReaderWriterContext> _LibraryContext = new Lazy<TestModelReaderWriterContext>(() => new TestModelReaderWriterContext());
+            private Lazy<TestClientModelReaderWriterContext> _LibraryContext = new Lazy<TestClientModelReaderWriterContext>(() => new TestClientModelReaderWriterContext());
             private Dictionary_String_SubType_Info? _dictionary_String_SubType_Info;
             private List_List_SubType_Info? _list_List_SubType_Info;
             private List_SubType_Info? _list_SubType_Info;

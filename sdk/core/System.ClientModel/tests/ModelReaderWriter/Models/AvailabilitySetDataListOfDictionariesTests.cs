@@ -28,7 +28,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         private class LocalContext : ModelReaderWriterContext
         {
-            private static readonly Lazy<TestModelReaderWriterContext> _LibraryContext = new(() => new());
+            private static readonly Lazy<TestClientModelReaderWriterContext> _LibraryContext = new(() => new());
             private List_Dictionary_String_AvailabilitySetData_Info? _list_Dictionary_String_AvailabilitySetData_Info;
             private Dictionary_String_AvailabilitySetData_Info? _dictionary_String_AvailabilitySetData_Info;
 

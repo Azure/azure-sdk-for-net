@@ -32,16 +32,27 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         protected abstract void CompareModels(T model, T model2, string format);
         protected abstract string JsonPayload { get; }
         protected abstract string WirePayload { get; }
+        protected abstract ModelReaderWriterContext Context { get; }
 
         [TestCase("J")]
         [TestCase("W")]
         public void RoundTripWithModelReaderWriter(string format)
-            => RoundTripTest(format, new ModelReaderWriterStrategy<T>());
+            => RoundTripTest(format, new ModelReaderWriterStrategy<T>(null));
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void RoundTripWithModelReaderWriter_WithContext(string format)
+            => RoundTripTest(format, new ModelReaderWriterStrategy<T>(Context));
 
         [TestCase("J")]
         [TestCase("W")]
         public void RoundTripWithModelReaderWriterNonGeneric(string format)
-            => RoundTripTest(format, new ModelReaderWriterNonGenericStrategy<T>());
+            => RoundTripTest(format, new ModelReaderWriterNonGenericStrategy<T>(null));
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void RoundTripWithModelReaderWriterNonGeneric_WithContext(string format)
+            => RoundTripTest(format, new ModelReaderWriterNonGenericStrategy<T>(Context));
 
         [TestCase("J")]
         [TestCase("W")]
