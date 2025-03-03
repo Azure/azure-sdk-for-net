@@ -1,4 +1,4 @@
-name: Add comments to Pull Requests after APIview run
+name: Follow up on DevOps run
 
 on :
   check_run:
