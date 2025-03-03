@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 extern alias DMBlob;
+extern alias DMShare;
 extern alias BaseShares;
 
 using System;
@@ -16,7 +17,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
-using Azure.Storage.DataMovement.Files.Shares;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
 using Azure.Storage.DataMovement.Tests;
 using BaseShares::Azure.Storage.Files.Shares;
 using BaseShares::Azure.Storage.Files.Shares.Models;

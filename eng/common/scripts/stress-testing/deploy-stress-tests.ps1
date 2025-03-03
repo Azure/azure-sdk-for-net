@@ -1,3 +1,5 @@
+#! /bin/env pwsh
+
 # Not defining a default parameter set makes SkipLogin/Subscription required all the time.
 [CmdletBinding(DefaultParameterSetName = 'Default')]
 param(
