@@ -32,14 +32,14 @@ namespace Azure.Communication.Identity
     }
     public partial class CommunicationIdentityClientOptions : Azure.Core.ClientOptions
     {
-        public CommunicationIdentityClientOptions(Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion version = Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion.V2025_04_01_PREVIEW) { }
+        public CommunicationIdentityClientOptions(Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion version = Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion.V2025_03_02_PREVIEW) { }
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
             V2022_06_01 = 2,
             V2022_10_01 = 3,
             V2023_10_01 = 4,
-            V2025_04_01_PREVIEW = 5,
+            V2025_03_02_PREVIEW = 5,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -67,6 +67,7 @@ namespace Azure.Communication.Identity
     {
         internal CommunicationUserIdentifierAndToken() { }
         public Azure.Core.AccessToken AccessToken { get { throw null; } }
+        public System.DateTimeOffset? LastTokenIssuedAt { get { throw null; } }
         public Azure.Communication.CommunicationUserIdentifier User { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void Deconstruct(out Azure.Communication.CommunicationUserIdentifier user, out Azure.Core.AccessToken accessToken) { throw null; }
@@ -85,6 +86,7 @@ namespace Azure.Communication.Identity.Models
     {
         public static Azure.Communication.Identity.Models.CommunicationIdentityResult CommunicationIdentityResult(string id = null, string externalId = null, System.DateTimeOffset? lastTokenIssuedAt = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Communication.Identity.CommunicationUserIdentifierAndToken CommunicationUserIdentifierAndToken(Azure.Communication.CommunicationUserIdentifier user, Azure.Core.AccessToken accessToken) { throw null; }
+        public static Azure.Communication.Identity.CommunicationUserIdentifierAndToken CommunicationUserIdentifierAndToken(Azure.Communication.CommunicationUserIdentifier user, Azure.Core.AccessToken accessToken, System.DateTimeOffset? lastTokenIssuedAt) { throw null; }
     }
     public partial class CommunicationIdentityResult
     {

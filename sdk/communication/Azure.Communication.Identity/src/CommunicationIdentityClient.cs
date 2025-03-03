@@ -116,7 +116,7 @@ namespace Azure.Communication.Identity
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<CommunicationIdentityResult>> GetUserAsync(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(GetUserAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(GetUser)}");
             scope.Start();
             try
             {
@@ -135,7 +135,7 @@ namespace Azure.Communication.Identity
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response<CommunicationUserIdentifier> CreateOrGetUser(string externalId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUser)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateOrGetUser)}");
             scope.Start();
             try
             {
@@ -174,7 +174,7 @@ namespace Azure.Communication.Identity
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<CommunicationUserIdentifier>> CreateOrGetUserAsync(string externalId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUser)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateOrGetUser)}");
             scope.Start();
             try
             {
@@ -193,7 +193,19 @@ namespace Azure.Communication.Identity
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<CommunicationUserIdentifier>> CreateUserAsync(CancellationToken cancellationToken = default)
         {
-            return await CreateOrGetUserAsync(default, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUser)}");
+            scope.Start();
+            try
+            {
+                Response<CommunicationUserIdentifierAndToken> response = await RestClient.CreateAsync(default, Array.Empty<CommunicationTokenScope>(), cancellationToken: cancellationToken).ConfigureAwait(false);
+                var id = response.Value.Identity.Id;
+                return Response.FromValue(new CommunicationUserIdentifier(id), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
@@ -203,7 +215,7 @@ namespace Azure.Communication.Identity
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response<CommunicationUserIdentifierAndToken> CreateOrGetUserAndToken(string externalId, IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresIn, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUserAndToken)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateOrGetUserAndToken)}");
             scope.Start();
             try
             {
@@ -242,7 +254,7 @@ namespace Azure.Communication.Identity
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<CommunicationUserIdentifierAndToken>> CreateOrGetUserAndTokenAsync(string externalId, IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresIn, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUserAndToken)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateOrGetUserAndToken)}");
             scope.Start();
             try
             {
@@ -263,7 +275,19 @@ namespace Azure.Communication.Identity
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<CommunicationUserIdentifierAndToken>> CreateUserAndTokenAsync(IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresIn, CancellationToken cancellationToken = default)
         {
-            return await CreateOrGetUserAndTokenAsync(default, scopes, default, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUserAndToken)}");
+            scope.Start();
+            try
+            {
+                int? expiresIn = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
+
+                return await RestClient.CreateAsync(default, scopes, expiresIn, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>Asynchronously creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
