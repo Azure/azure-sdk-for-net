@@ -76,7 +76,7 @@ var exportedProject = new ExportedProject(
 Operation operation = projectAuthoringClient.Import(
     waitUntil: WaitUntil.Completed,
     exportedProject: exportedProject,
-    exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation
+    exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
 );
 
  // Extract the operation-location header
