@@ -543,7 +543,7 @@ Invoke-GenerateAndBuildSDK -readmeAbsolutePath <path-to-readme> -sdkRootPath <pa
 
 #>
 
-$DotNetSupportChannelLink = "https://aka.ms/azsdk/donet-teams-channel"
+$DotNetSupportChannelLink = "https://aka.ms/azsdk/dotnet-teams-channel"
 function Invoke-GenerateAndBuildSDK () {
     param(
         [string]$readmeAbsolutePath,
