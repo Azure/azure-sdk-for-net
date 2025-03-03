@@ -8,8 +8,8 @@ namespace Azure.Template
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response GetSecret(string secretName, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSecretAsync(string secretName, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.Template.Models.SecretBundle> GetSecretValue(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Template.Models.SecretBundle>> GetSecretValueAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Template.Models.SecretBundleTest> GetSecretValue(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Template.Models.SecretBundleTest>> GetSecretValueAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TemplateClientOptions : Azure.Core.ClientOptions
     {
@@ -22,11 +22,11 @@ namespace Azure.Template
 }
 namespace Azure.Template.Models
 {
-    public partial class SecretBundle
+    public partial class SecretBundleTest
     {
-        internal SecretBundle() { }
+        internal SecretBundleTest() { }
         public string ContentType { get { throw null; } }
-        public string Identification { get { throw null; } }
+        public string Id { get { throw null; } }
         public string Kid { get { throw null; } }
         public bool? Managed { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
