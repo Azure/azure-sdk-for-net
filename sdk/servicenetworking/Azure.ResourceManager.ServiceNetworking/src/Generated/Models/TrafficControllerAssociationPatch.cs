@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="associationType"> Association Type. </param>
         /// <param name="subnet"> Association Subnet. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficControllerAssociationPatch(IDictionary<string, string> tags, TrafficControllerAssociationType? associationType, SubResource subnet, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrafficControllerAssociationPatch(IDictionary<string, string> tags, TrafficControllerAssociationType? associationType, WritableSubResource subnet, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             AssociationType = associationType;
@@ -71,11 +71,17 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <summary> Association Type. </summary>
         public TrafficControllerAssociationType? AssociationType { get; set; }
         /// <summary> Association Subnet. </summary>
-        internal SubResource Subnet { get; set; }
-        /// <summary> Gets Id. </summary>
+        internal WritableSubResource Subnet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SubnetId
         {
             get => Subnet is null ? default : Subnet.Id;
+            set
+            {
+                if (Subnet is null)
+                    Subnet = new WritableSubResource();
+                Subnet.Id = value;
+            }
         }
     }
 }

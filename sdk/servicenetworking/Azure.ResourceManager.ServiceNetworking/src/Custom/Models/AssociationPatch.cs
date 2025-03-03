@@ -77,8 +77,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         internal TrafficControllerAssociationPatch ToTrafficControllerAssociationPatch()
         {
-            // The subnet code is incorrect, issue https://github.com/Azure/autorest.csharp/issues/5243 opened to track this
-            return new TrafficControllerAssociationPatch(Tags, AssociationType.ToString(), new SubResource(), _serializedAdditionalRawData);
+            return new TrafficControllerAssociationPatch(Tags, AssociationType.ToString(), Subnet, _serializedAdditionalRawData);
         }
 
         /// <summary> Resource tags. </summary>

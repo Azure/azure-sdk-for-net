@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             }
             IDictionary<string, string> tags = default;
             TrafficControllerAssociationType? associationType = default;
-            SubResource subnet = default;
+            WritableSubResource subnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                             {
                                 continue;
                             }
-                            subnet = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                     }
