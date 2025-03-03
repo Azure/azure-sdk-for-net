@@ -1,4 +1,4 @@
-name: Add comments to Pull Requests after APIview run
+name: Run actions workflow after DevOps check run completion
 
 on :
   check_run:

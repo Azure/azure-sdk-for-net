@@ -26,7 +26,7 @@ namespace Azure.Template.Models
     {
         internal SecretBundle() { }
         public string ContentType { get { throw null; } }
-        public string Id { get { throw null; } }
+        public string Identification { get { throw null; } }
         public string Kid { get { throw null; } }
         public bool? Managed { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
