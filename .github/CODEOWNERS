@@ -1015,6 +1015,12 @@
 # ServiceLabel: %HybridConnectivity %Mgmt
 # ServiceOwners:                                                   @alexmahonic @PriyankaHariharan @apmehrotra
 
+# PRLabel: %Impact Reporting
+/sdk/impactreporting/Azure.ResourceManager.*/                      @adityareddy305
+
+# ServiceLabel: %Impact Reporting %Mgmt
+# ServiceOwners:                                                   @adityareddy305
+
 # PRLabel: %Large Instance
 /sdk/azurelargeinstance/Azure.ResourceManager.*/                   @8Gitbrix @archerzz @ArcturusZhang @ArthurMa1978
 
@@ -1115,5 +1121,4 @@
 #PRLabel: %CodeGen %Client
 /eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire
 
-# PRLabel: %Impact Reporting
-/sdk/impactreporting/Azure.ResourceManager.*/                @adityareddy305
+
