@@ -19,7 +19,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         AIProjectClient client = new AIProjectClient(connectionString);
-        var chatClient = client.GetChatCompletionsClient();
+        ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
 
         var requestOptions = new ChatCompletionsOptions()
         {
@@ -41,7 +41,8 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
 
-        EmbeddingsClient embeddingsClient = new AIProjectClient(connectionString, new DefaultAzureCredential()).GetEmbeddingsClient();
+        AIProjectClient client = new AIProjectClient(connectionString);
+        EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
 
         var input = new List<string> { "first phrase", "second phrase", "third phrase" };
         var requestOptions = new EmbeddingsOptions(input)
