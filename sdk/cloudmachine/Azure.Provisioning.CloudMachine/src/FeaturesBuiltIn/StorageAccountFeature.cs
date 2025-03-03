@@ -1,16 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.CloudMachine.Core;
+using System.Collections.Generic;
+using Azure.Projects.Core;
 using Azure.Core;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 
-namespace Azure.CloudMachine.Storage;
+namespace Azure.Projects.Storage;
 
-internal class StorageAccountFeature : CloudMachineFeature
+internal class StorageAccountFeature : AzureProjectFeature
 {
     private readonly StorageSkuName _skuName;
     public string Name { get; }
@@ -21,7 +22,7 @@ internal class StorageAccountFeature : CloudMachineFeature
         Name = accountName;
     }
 
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
         var storage = new StorageAccount("cm_storage", StorageAccount.ResourceVersions.V2023_01_01)
         {
@@ -30,6 +31,7 @@ internal class StorageAccountFeature : CloudMachineFeature
             Sku = new StorageSku { Name = _skuName },
             IsHnsEnabled = true,
             AllowBlobPublicAccess = false,
+            AllowSharedKeyAccess = false,
             Identity = new()
             {
                 ManagedServiceIdentityType = ManagedServiceIdentityType.UserAssigned,
@@ -48,18 +50,18 @@ internal class StorageAccountFeature : CloudMachineFeature
     }
 }
 
-internal class BlobContainerFeature : CloudMachineFeature
+internal class BlobContainerFeature : AzureProjectFeature
 {
     public string ContainerName { get; }
     public BlobServiceFeature Parent { get; }
 
     public BlobContainerFeature(BlobServiceFeature parent, string? containerName = default)
     {
-        if (containerName == default) containerName = CloudMachineConnections.DefaultBlobContainerName;
+        if (containerName == default) containerName = ProjectConnections.DefaultBlobContainerName;
         ContainerName = containerName;
         Parent = parent;
     }
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure cm)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
     {
         BlobContainer container = new($"cm_storage_blobs_container_{ContainerName}", "2023-01-01")
         {
@@ -70,7 +72,7 @@ internal class BlobContainerFeature : CloudMachineFeature
         return container;
     }
 
-    protected internal override void EmitConnections(ConnectionCollection connections, string cmId)
+    protected internal override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
     {
         ClientConnection connection = new(
             $"Azure.Storage.Blobs.BlobContainerClient@{ContainerName}",
@@ -80,7 +82,7 @@ internal class BlobContainerFeature : CloudMachineFeature
     }
 }
 
-internal class BlobServiceFeature : CloudMachineFeature
+internal class BlobServiceFeature : AzureProjectFeature
 {
     public StorageAccountFeature Account { get; }
 
@@ -88,7 +90,7 @@ internal class BlobServiceFeature : CloudMachineFeature
     {
         Account = account;
     }
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure cm)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
     {
         BlobService blobs = new("cm_storage_blobs")
         {

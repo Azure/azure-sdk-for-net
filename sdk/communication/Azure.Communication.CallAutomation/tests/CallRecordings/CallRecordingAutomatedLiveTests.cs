@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using Microsoft.AspNetCore.Http;
@@ -16,11 +18,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         {
         }
 
-        [Ignore(reason: "Recording is currently broken with error Removing modality controller as this conversation has ended. Waiting on fix for this")]
         [RecordedTest]
         public async Task RecordingOperationsTest()
         {
-            // create caller and receiver
+             // create caller and receiver
             var target = await CreateIdentityUserAsync().ConfigureAwait(false);
             var user = await CreateIdentityUserAsync().ConfigureAwait(false);
 
@@ -113,7 +114,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             }
         }
 
-        [Ignore(reason: "Recording is currently broken with error Removing modality controller as this conversation has ended. Waiting on fix for this")]
         [RecordedTest]
         public async Task CreateACSCallAndUnmixedAudioTest()
         {
@@ -211,7 +211,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             }
         }
 
-        [Ignore(reason: "Recording is currently broken with error Removing modality controller as this conversation has ended. Waiting on fix for this")]
         [RecordedTest]
         public async Task CreateACSCallUnmixedAudioAffinityTest()
         {
@@ -312,7 +311,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         }
 
         [RecordedTest]
-        public async Task GetRecordingTest()
+        public async Task StartRecordingWithCallConnectionIdTest()
         {
             // create caller and receiver
             var target = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -323,7 +322,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             bool stopRecording = false;
 
             // setup service bus
-            string uniqueId = await ServiceBusWithNewCall(user, target);
+            var uniqueId = await ServiceBusWithNewCall(user, target);
 
             // create call and assert response
             var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
@@ -353,9 +352,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             var serverCallId = properties.Value.ServerCallId;
 
             CallRecording callRecording = client.GetCallRecording();
-            StartRecordingOptions recordingOptions = new StartRecordingOptions(new ServerCallLocator(serverCallId))
+            StartRecordingOptions recordingOptions = new StartRecordingOptions(callConnectionId)
             {
-                RecordingStateCallbackUri = new Uri(TestEnvironment.DispatcherCallback),
+                RecordingStateCallbackUri = new Uri(TestEnvironment.DispatcherCallback)
             };
             var recordingResponse = await callRecording.StartAsync(recordingOptions).ConfigureAwait(false);
             Assert.NotNull(recordingResponse.Value);
@@ -386,11 +385,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             await callRecording.StopAsync(recordingId);
             await WaitForOperationCompletion().ConfigureAwait(false);
             stopRecording = true;
-
-            var recordingResult = await callRecording.GetRecordingAsync(recordingId).ConfigureAwait(false);
-            Assert.NotNull(recordingResult.Value);
-            Assert.NotNull(recordingResult.Value.RecordingDurationMs);
-            Assert.AreEqual(recordingResult.Value.RecordingId, recordingId);
 
             try
             {

@@ -24,6 +24,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("SOQLQuery"u8);
                 writer.WriteObjectValue<object>(SoqlQuery);
             }
+            if (Optional.IsDefined(Query))
+            {
+                writer.WritePropertyName("query"u8);
+                writer.WriteObjectValue<object>(Query);
+            }
             if (Optional.IsDefined(IncludeDeletedObjects))
             {
                 writer.WritePropertyName("includeDeletedObjects"u8);
@@ -66,6 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             object soqlQuery = default;
+            object query = default;
             object includeDeletedObjects = default;
             object additionalColumns = default;
             string type = default;
@@ -83,6 +89,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     soqlQuery = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("query"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    query = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("includeDeletedObjects"u8))
@@ -145,6 +160,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 maxConcurrentConnections,
                 additionalProperties,
                 soqlQuery,
+                query,
                 includeDeletedObjects,
                 additionalColumns);
         }

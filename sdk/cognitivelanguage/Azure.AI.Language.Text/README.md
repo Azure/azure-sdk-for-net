@@ -29,6 +29,7 @@ dotnet add package Azure.AI.Language.Text --prerelease
 |SDK version  |Supported API version of service
 |-------------|-----------------------------------------------------
 |1.0.0-beta.1 | 2022-05-01, 2023-04-01, 2023-11-15-preview (default)
+|1.0.0-beta.2 | 2022-05-01, 2023-04-01, 2024-11-01, 2024-11-15-preview (default)
 
 ### Prerequisites
 
@@ -274,4 +275,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_portal]: https://portal.azure.com
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/cognitivelanguage/Azure.AI.Language.Text/README.png)

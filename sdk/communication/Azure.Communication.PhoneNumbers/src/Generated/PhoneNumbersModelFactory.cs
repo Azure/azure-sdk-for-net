@@ -157,8 +157,8 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Initializes a new instance of <see cref="PhoneNumbers.OperatorDetails"/>. </summary>
         /// <param name="name"> Name of the phone operator. </param>
-        /// <param name="mobileNetworkCode"> Mobile Network Code. </param>
-        /// <param name="mobileCountryCode"> Mobile Country Code. </param>
+        /// <param name="mobileNetworkCode"> Mobile Network Code, 2 or 3 decimal digits that identify mobile networks within a country/region. </param>
+        /// <param name="mobileCountryCode"> Mobile Country Code, 3 decimal digits that identify a country/region. </param>
         /// <returns> A new <see cref="PhoneNumbers.OperatorDetails"/> instance for mocking. </returns>
         public static OperatorDetails OperatorDetails(string name = null, string mobileNetworkCode = null, string mobileCountryCode = null)
         {

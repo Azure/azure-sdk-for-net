@@ -8,12 +8,8 @@ using static Azure.Storage.DataMovement.Tests.CheckpointerTesting;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    public class JobPlanHeaderTests : DataMovementTestBase
+    public class JobPlanHeaderTests
     {
-        public JobPlanHeaderTests(bool async) : base(async, default)
-        {
-        }
-
         private JobPlanHeader CreateJobPlanHeader()
         {
             return new JobPlanHeader(
@@ -28,8 +24,8 @@ namespace Azure.Storage.DataMovement.Tests
                 DefaultJobStatus,
                 DefaultSourcePath,
                 DefaultDestinationPath,
-                MockResourceCheckpointData.DefaultInstance,
-                MockResourceCheckpointData.DefaultInstance);
+                MockResourceCheckpointDetails.DefaultInstance,
+                MockResourceCheckpointDetails.DefaultInstance);
         }
 
         [Test]
@@ -54,7 +50,7 @@ namespace Azure.Storage.DataMovement.Tests
         public void Serialize()
         {
             JobPlanHeader header = CreateJobPlanHeader();
-            string samplePath = Path.Combine("Resources", "SampleJobPlanFile.b1.ndm");
+            string samplePath = Path.Combine("Resources", "SampleJobPlanFile.1.ndm");
 
             using (MemoryStream headerStream = new MemoryStream(DataMovementConstants.JobPlanFile.VariableLengthStartIndex))
             using (FileStream fileStream = File.OpenRead(samplePath))
@@ -82,16 +78,16 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public void Deserialize_File_Version_b1()
+        public void Deserialize_File_Version_1()
         {
-            string samplePath = Path.Combine("Resources", "SampleJobPlanFile.b1.ndm");
+            string samplePath = Path.Combine("Resources", "SampleJobPlanFile.1.ndm");
             using (FileStream stream = File.OpenRead(samplePath))
             {
-                DeserializeAndVerify(stream, DataMovementConstants.JobPlanFile.SchemaVersion_b1);
+                DeserializeAndVerify(stream, DataMovementConstants.JobPlanFile.SchemaVersion_1);
             }
         }
 
-        private void DeserializeAndVerify(Stream stream, string version)
+        private void DeserializeAndVerify(Stream stream, int version)
         {
             JobPlanHeader deserialized = JobPlanHeader.Deserialize(stream);
             Assert.AreEqual(version, deserialized.Version);
@@ -105,8 +101,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DefaultJobStatus, deserialized.JobStatus);
             Assert.AreEqual(DefaultSourcePath, deserialized.ParentSourcePath);
             Assert.AreEqual(DefaultDestinationPath, deserialized.ParentDestinationPath);
-            CollectionAssert.AreEqual(MockResourceCheckpointData.DefaultInstance.Bytes, deserialized.SourceCheckpointData);
-            CollectionAssert.AreEqual(MockResourceCheckpointData.DefaultInstance.Bytes, deserialized.DestinationCheckpointData);
+            CollectionAssert.AreEqual(MockResourceCheckpointDetails.DefaultInstance.Bytes, deserialized.SourceCheckpointDetails);
+            CollectionAssert.AreEqual(MockResourceCheckpointDetails.DefaultInstance.Bytes, deserialized.DestinationCheckpointDetails);
         }
     }
 }

@@ -3,7 +3,6 @@
 
 using System.Diagnostics;
 using System.Globalization;
-using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
@@ -33,6 +32,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     break;
                 case OperationType.Messaging:
                     SetMessagingDependencyProperties(activity, ref activityTagsProcessor.MappedTags);
+                    break;
+                default:
+                    Target = activityTagsProcessor.MappedTags.GetTargetUsingServerAddressAndPort();
                     break;
             }
 

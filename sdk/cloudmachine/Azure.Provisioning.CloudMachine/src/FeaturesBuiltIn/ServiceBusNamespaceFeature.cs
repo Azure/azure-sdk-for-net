@@ -1,16 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.CloudMachine.Core;
+using System.Collections.Generic;
+using Azure.Projects.Core;
 using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ServiceBus;
 
-namespace Azure.CloudMachine.ServiceBus;
+namespace Azure.Projects.ServiceBus;
 
-internal class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = ServiceBusSkuName.Standard, ServiceBusSkuTier tier = ServiceBusSkuTier.Standard) : CloudMachineFeature
+internal class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = ServiceBusSkuName.Standard, ServiceBusSkuTier tier = ServiceBusSkuTier.Standard) : AzureProjectFeature
 {
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
         var _serviceBusNamespace = new ServiceBusNamespace("cm_servicebus")
         {
@@ -39,6 +40,6 @@ internal class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = S
         return _serviceBusNamespace;
     }
 
-    protected internal override void EmitConnections(ConnectionCollection connections, string cmId)
-        => connections.Add(CloudMachineConnections.CreateDefaultServiceBusConnection(cmId));
+    protected internal override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
+        => connections.Add(ProjectConnections.CreateDefaultServiceBusConnection(cmId));
 }

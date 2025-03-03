@@ -1,6 +1,6 @@
 # Release History
 
-## 1.10.0-beta.1 (Unreleased)
+## 1.11.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,7 +8,14 @@
 
 ### Bugs Fixed
 
+- Fixed an issue when creating clients from configuration using the ASP.NET Core integration testing library, `Microsoft.AspNetCore.Mvc.Testing`.  Due to a difference in how an section value is represented, logic was interpreting a setting with a child object as an empty connection string value.  The child object is now properly parsed and applied for client construction.  ([#48368](https://github.com/Azure/azure-sdk-for-net/issues/48368))
+
 ### Other Changes
+
+## 1.10.0 (2025-02-11)
+
+### Other Changes
+- Updated dependencies to ensure they are up-to-date with the latest targets and trimming from built-in dependencies.
 
 ## 1.9.0 (2024-11-26)
 

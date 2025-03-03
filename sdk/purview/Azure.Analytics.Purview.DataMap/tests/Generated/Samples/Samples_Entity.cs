@@ -291,16 +291,22 @@ info = "Example Owner Info",
                     Version = 0L,
                     Contacts =
 {
-["Expert"] = {new ContactInfo
+["Expert"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Expert Info",
-}},
-["Owner"] = {new ContactInfo
+}
+},
+["Owner"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Owner Info",
-}}
+}
+}
 },
                 },
             };
@@ -337,16 +343,22 @@ Info = "Example Owner Info",
                     Version = 0L,
                     Contacts =
 {
-["Expert"] = {new ContactInfo
+["Expert"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Expert Info",
-}},
-["Owner"] = {new ContactInfo
+}
+},
+["Owner"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Owner Info",
-}}
+}
+}
 },
                 },
             };
@@ -643,16 +655,22 @@ info = "Example Owner Info",
                     Version = 0L,
                     Contacts =
 {
-["Expert"] = {new ContactInfo
+["Expert"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Expert Info",
-}},
-["Owner"] = {new ContactInfo
+}
+},
+["Owner"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Owner Info",
-}}
+}
+}
 },
                 },
             };
@@ -689,16 +707,22 @@ Info = "Example Owner Info",
                     Version = 0L,
                     Contacts =
 {
-["Expert"] = {new ContactInfo
+["Expert"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Expert Info",
-}},
-["Owner"] = {new ContactInfo
+}
+},
+["Owner"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Owner Info",
-}}
+}
+}
 },
                 },
             };
@@ -969,16 +993,22 @@ UpdatedBy = "ExampleUpdator",
 Version = 0L,
 Contacts =
 {
-["Expert"] = {new ContactInfo
+["Expert"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Expert Info",
-}},
-["Owner"] = {new ContactInfo
+}
+},
+["Owner"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Owner Info",
-}}
+}
+}
 },
 }, new AtlasEntity
 {
@@ -999,16 +1029,22 @@ UpdatedBy = "ExampleUpdator",
 Version = 0L,
 Contacts =
 {
-["Expert"] = {new ContactInfo
+["Expert"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Expert Info",
-}},
-["Owner"] = {new ContactInfo
+}
+},
+["Owner"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Owner Info",
-}}
+}
+}
 },
 }},
             };
@@ -1045,16 +1081,22 @@ UpdatedBy = "ExampleUpdator",
 Version = 0L,
 Contacts =
 {
-["Expert"] = {new ContactInfo
+["Expert"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Expert Info",
-}},
-["Owner"] = {new ContactInfo
+}
+},
+["Owner"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Owner Info",
-}}
+}
+}
 },
 }, new AtlasEntity
 {
@@ -1075,16 +1117,22 @@ UpdatedBy = "ExampleUpdator",
 Version = 0L,
 Contacts =
 {
-["Expert"] = {new ContactInfo
+["Expert"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Expert Info",
-}},
-["Owner"] = {new ContactInfo
+}
+},
+["Owner"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Owner Info",
-}}
+}
+}
 },
 }},
             };

@@ -17,20 +17,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobReceivedEventData"/>. </summary>
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
-        /// <param name="jobStatus"> Router Job Received Job Status. </param>
         /// <param name="requestedWorkerSelectors"> Router Job Received Requested Worker Selectors. </param>
-        /// <param name="scheduledOn"> Router Job Received Scheduled Time in UTC. </param>
         /// <param name="unavailableForMatching"> Unavailable For Matching for Router Job Received. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="labels"/>, <paramref name="tags"/> or <paramref name="requestedWorkerSelectors"/> is null. </exception>
-        internal AcsRouterJobReceivedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterJobStatus jobStatus, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors, DateTimeOffset scheduledOn, bool unavailableForMatching) : base(labels, tags)
+        internal AcsRouterJobReceivedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors, bool unavailableForMatching) : base(labels, tags)
         {
             Argument.AssertNotNull(labels, nameof(labels));
             Argument.AssertNotNull(tags, nameof(tags));
             Argument.AssertNotNull(requestedWorkerSelectors, nameof(requestedWorkerSelectors));
 
-            JobStatus = jobStatus;
             RequestedWorkerSelectors = requestedWorkerSelectors.ToList();
-            ScheduledOn = scheduledOn;
             UnavailableForMatching = unavailableForMatching;
         }
 
@@ -48,7 +44,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="requestedWorkerSelectors"> Router Job Received Requested Worker Selectors. </param>
         /// <param name="scheduledOn"> Router Job Received Scheduled Time in UTC. </param>
         /// <param name="unavailableForMatching"> Unavailable For Matching for Router Job Received. </param>
-        internal AcsRouterJobReceivedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterJobStatus jobStatus, string classificationPolicyId, int? priority, IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors, DateTimeOffset scheduledOn, bool unavailableForMatching) : base(jobId, channelReference, channelId, serializedAdditionalRawData, queueId, labels, tags)
+        internal AcsRouterJobReceivedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterJobStatus? jobStatus, string classificationPolicyId, int? priority, IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors, DateTimeOffset? scheduledOn, bool unavailableForMatching) : base(jobId, channelReference, channelId, serializedAdditionalRawData, queueId, labels, tags)
         {
             JobStatus = jobStatus;
             ClassificationPolicyId = classificationPolicyId;
@@ -64,7 +60,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
 
         /// <summary> Router Job Received Job Status. </summary>
-        public AcsRouterJobStatus JobStatus { get; }
+        public AcsRouterJobStatus? JobStatus { get; }
         /// <summary> Router Job Classification Policy Id. </summary>
         public string ClassificationPolicyId { get; }
         /// <summary> Router Job Priority. </summary>
@@ -72,7 +68,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Router Job Received Requested Worker Selectors. </summary>
         public IReadOnlyList<AcsRouterWorkerSelector> RequestedWorkerSelectors { get; }
         /// <summary> Router Job Received Scheduled Time in UTC. </summary>
-        public DateTimeOffset ScheduledOn { get; }
+        public DateTimeOffset? ScheduledOn { get; }
         /// <summary> Unavailable For Matching for Router Job Received. </summary>
         public bool UnavailableForMatching { get; }
     }

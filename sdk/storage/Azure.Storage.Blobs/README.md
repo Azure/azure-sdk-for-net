@@ -158,6 +158,8 @@ await new BlobClient(new Uri("https://www.gutenberg.org/cache/epub/1533/pg1533.t
 All Blob service operations will throw a
 [RequestFailedException][RequestFailedException] on failure with
 helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
+If multiple failures occur, an [AggregateException][AggregateException] will be thrown,
+containing each failure instance.
 
 ```C# Snippet:SampleSnippetsBlob_Troubleshooting
 // Get a connection string to our Azure Storage account.
@@ -188,6 +190,76 @@ Get started with our [Blob samples][samples]:
 1. [Hello World](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs/samples/Sample01a_HelloWorld.cs): Upload, download, and list blobs (or [asynchronously](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs/samples/Sample01b_HelloWorldAsync.cs))
 2. [Auth](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs/samples/Sample02_Auth.cs): Authenticate with connection strings, public access, shared keys, shared access signatures, and Azure Active Directory.
 
+## Advanced Scenarios using Azure.DataMovement.Blobs
+
+For more advanced scenarios like transferring blob virtual directories, we recommend looking into our [Azure.Storage.DataMovement](https://www.nuget.org/packages/Azure.Storage.DataMovement) and [Azure.Storage.DataMovement.Blob](https://www.nuget.org/packages/Azure.Storage.DataMovement.Blobs) packages. Get started with our [DataMovement Blob Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement.Blobs/samples/Sample01b_HelloWorldAsync.cs).
+
+Upload a local directory to the root of the `BlobContainerClient`.
+```C# Snippet:ExtensionMethodSimpleUploadToRoot
+TransferOperation transfer = await container.UploadDirectoryAsync(WaitUntil.Started, localPath);
+
+await transfer.WaitForCompletionAsync();
+```
+
+Upload a local directory to a virtual blob directory in the `BlobContainerClient` by specifying a directory prefix
+```C# Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
+TransferOperation transfer = await container.UploadDirectoryAsync(WaitUntil.Started, localPath, blobDirectoryPrefix);
+
+await transfer.WaitForCompletionAsync();
+```
+
+Upload a local directory to a virtual blob directory in the `BlobContainerClient` specifying more advanced options
+```C# Snippet:ExtensionMethodSimpleUploadWithOptions
+BlobContainerClientTransferOptions options = new BlobContainerClientTransferOptions
+{
+    BlobContainerOptions = new BlobStorageResourceContainerOptions
+    {
+        BlobPrefix = blobDirectoryPrefix
+    },
+    TransferOptions = new TransferOptions()
+    {
+        CreationMode = StorageResourceCreationMode.OverwriteIfExists,
+    }
+};
+
+TransferOperation transfer = await container.UploadDirectoryAsync(WaitUntil.Started, localPath, options);
+
+await transfer.WaitForCompletionAsync();
+```
+
+Download the entire `BlobContainerClient` to a local directory
+```C# Snippet:ExtensionMethodSimpleDownloadContainer
+TransferOperation transfer = await container.DownloadToDirectoryAsync(WaitUntil.Started, localDirectoryPath);
+
+await transfer.WaitForCompletionAsync();
+```
+
+Download a virtual blob directory in the `BlobContainerClient` by specifying a directory prefix
+```C# Snippet:ExtensionMethodSimpleDownloadContainerDirectory
+TransferOperation transfer = await container.DownloadToDirectoryAsync(WaitUntil.Started, localDirectoryPath2, blobDirectoryPrefix);
+
+await transfer.WaitForCompletionAsync();
+```
+
+Download from the `BlobContainerClient` specifying more advanced options
+```C# Snippet:ExtensionMethodSimpleDownloadContainerDirectoryWithOptions
+BlobContainerClientTransferOptions options = new BlobContainerClientTransferOptions
+{
+    BlobContainerOptions = new BlobStorageResourceContainerOptions
+    {
+        BlobPrefix = blobDirectoryPrefix
+    },
+    TransferOptions = new TransferOptions()
+    {
+        CreationMode = StorageResourceCreationMode.OverwriteIfExists,
+    }
+};
+
+TransferOperation transfer = await container.DownloadToDirectoryAsync(WaitUntil.Started, localDirectoryPath2, options);
+
+await transfer.WaitForCompletionAsync();
+```
+
 ## Contributing
 
 See the [Storage CONTRIBUTING.md][storage_contrib] for details on building,
@@ -202,8 +274,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc].
 For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Blobs%2FREADME.png)
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Blobs/src
@@ -229,3 +299,4 @@ additional questions or comments.
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
+[AggregateException]: https://learn.microsoft.com/dotnet/api/system.aggregateexception?view=net-9.0

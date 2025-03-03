@@ -1,14 +1,18 @@
 # Release History
 
-## 1.16.0-beta.1 (Unreleased)
+## 2.0.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+* Modify `AddDefaultAuth` method in `SignalRFunctionsHostBuilderExtensions.cs` to use `IServiceCollection` instead of `IFunctionsHostBuilder` to remove the dependency for legacy package `Microsoft.Azure.Functions.Extensions`.
 
 ### Bugs Fixed
+* Correctly support returning result for SignalR invocation in MessagePack protocol from isolated-worker process.
 
 ### Other Changes
+* Update `MessagePack` to 2.5.192
+* Update `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` to 1.29.0
 
 ## 1.15.0 (2024-10-14)
 
@@ -29,7 +33,7 @@
 
 ## 1.12.0 (2023-11-07)
 ### Features Added
-* Added `RetryOptions` to `SignalROptions` to configure retry policy for SignalR Service REST API calls. For more infomation about cutomize retry options, see samples.
+* Added `RetryOptions` to `SignalROptions` to configure retry policy for SignalR Service REST API calls. For more infomation about customize retry options, see samples.
 * Added `HttpClientTimeout` to `SignalROptions` to configure HTTP client timeout for SignalR Service REST API calls. The default value is 100 seconds. User can also set "AzureSignalRHttpClientTimeout" in the app settings to override the default value.
 
 ### Bugs Fixed
@@ -80,7 +84,7 @@
 
 ### Bugs Fixed
 * Fixed the message order problem.
-* Fixed the ackable message timeout problem when multiple SignalR endpoints exist.
+* Fixed the ack-able message timeout problem when multiple SignalR endpoints exist.
 
 ## 1.7.0 (2022-02-22)
 **Following are the all changes in 1.7.0-beta.2 and 1.7.0-beta.1 versions.**

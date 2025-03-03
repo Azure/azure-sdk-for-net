@@ -69,10 +69,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("lastSequenceNumber"u8);
                 writer.WriteNumberValue(LastSequenceNumber.Value);
             }
-            writer.WritePropertyName("firstEnqueueTime"u8);
-            writer.WriteStringValue(FirstEnqueueTime, "O");
-            writer.WritePropertyName("lastEnqueueTime"u8);
-            writer.WriteStringValue(LastEnqueueTime, "O");
+            if (Optional.IsDefined(FirstEnqueueTime))
+            {
+                writer.WritePropertyName("firstEnqueueTime"u8);
+                writer.WriteStringValue(FirstEnqueueTime.Value, "O");
+            }
+            if (Optional.IsDefined(LastEnqueueTime))
+            {
+                writer.WritePropertyName("lastEnqueueTime"u8);
+                writer.WriteStringValue(LastEnqueueTime.Value, "O");
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -117,8 +123,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             int? eventCount = default;
             int? firstSequenceNumber = default;
             int? lastSequenceNumber = default;
-            DateTimeOffset firstEnqueueTime = default;
-            DateTimeOffset lastEnqueueTime = default;
+            DateTimeOffset? firstEnqueueTime = default;
+            DateTimeOffset? lastEnqueueTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,11 +182,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("firstEnqueueTime"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     firstEnqueueTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastEnqueueTime"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     lastEnqueueTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
