@@ -80,6 +80,7 @@ Make sure you use the right namespace for DefaultAzureCredential at the top of y
 ```C# Snippet:TextAuthoring_Identity_Namespace
 using Azure.Identity;
 using Azure.Core;
+using Microsoft.Extensions.Options;
 ```
 
 Then you can create an instance of DefaultAzureCredential and pass it to a new instance of your client:
@@ -87,8 +88,7 @@ Then you can create an instance of DefaultAzureCredential and pass it to a new i
 ```C# Snippet:TextAnalysisAuthoring_CreateWithDefaultAzureCredential
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 DefaultAzureCredential credential = new DefaultAzureCredential();
-AuthoringClient client = new AuthoringClient(endpoint, credential);
-TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 ```
 
 Note that regional endpoints do not support AAD authentication. Instead, create a [custom domain][custom_domain] name for your resource to use AAD authentication.
@@ -179,17 +179,17 @@ For example, if you attempt to create a project with an invalid configuration, a
 try
 {
     string invalidProjectName = "InvalidProject";
-
-    var projectData = new
+    TextAuthoringProject projectClient = client.GetProject(invalidProjectName);
+    var projectData = new TextAuthoringCreateProjectDetails(
+        projectKind: "Text",
+        storageInputContainerName: "e2e0test0data",
+        language: "invalid-lang" // Invalid language code
+    )
     {
-        projectName = invalidProjectName,
-        language = "invalid-lang", // Invalid language code
-        projectKind = "Text",
-        description = "This is a test for invalid configuration."
+        Description = "This is a test for invalid configuration."
     };
 
-    using RequestContent content = RequestContent.Create(projectData);
-    Response response = authoringClient.CreateProject(invalidProjectName, content);
+    Response response = projectClient.CreateProject(projectData);
 }
 catch (RequestFailedException ex)
 {
