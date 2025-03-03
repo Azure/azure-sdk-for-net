@@ -44,6 +44,13 @@
       <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\hdinsight\Microsoft.Azure.HDInsight.Job\**\*.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <BridgeProjects Include="$(MSBuildThisFileDirectory)..\sdk\**\Microsoft.Azure.Extensions.WebJobs.*\**\*.csproj" />
+    <BridgeProjects Include="$(MSBuildThisFileDirectory)..\sdk\**\Microsoft.Azure.Data.SchemaRegistry.ApacheAvro\**\*.csproj" />
+    <BridgeProjects Include="$(MSBuildThisFileDirectory)..\sdk\**\Microsoft.Azure.Core.NewtonsoftJson\**\*.csproj" />
+    <BridgeProjects Include="$(MSBuildThisFileDirectory)..\sdk\**\Microsoft.Azure.Core.Spatial.NewtonsoftJson\**\*.csproj" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(ProjectListOverrideFile)' == '' ">
     <TestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\tests\**\*.csproj" />
     <SamplesProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\samples\**\*.csproj;..\sdk\$(ServiceDirectory)\samples\**\*.csproj" />
@@ -64,10 +71,7 @@
 
   <ItemGroup Condition="'$(ProjectListOverrideFile)' != '' and '$(RemoveTrack1Projects)' == 'true'">
     <!-- Remove all track1 SDKs from Regen -->
-    <Track1ProjectsToRemove Include="$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.*.Management.*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*mgmt*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.Azure.*\**\*.csproj" Exclude="@(ProjectsToIncludeBySDKType)"/>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(ProjectListOverrideFile)' != '' and '$(RemoveTrack1Projects)' == 'true'">
+    <Track1ProjectsToRemove Exclude="@(BridgeProjects)" Include="$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.*.Management.*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*mgmt*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.Azure.*\**\*.csproj" Exclude="@(ProjectsToIncludeBySDKType)"/>
     <ProjectReference Remove="@(Track1ProjectsToRemove)" />
   </ItemGroup>
 
