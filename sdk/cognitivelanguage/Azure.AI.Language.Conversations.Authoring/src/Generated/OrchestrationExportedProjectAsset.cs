@@ -16,7 +16,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Initializes a new instance of <see cref="OrchestrationExportedProjectAsset"/>. </summary>
         public OrchestrationExportedProjectAsset()
         {
-            ProjectKind = AnalyzeConversationAuthoringProjectKind.Orchestration;
+            ProjectKind = ConversationAuthoringProjectKind.Orchestration;
             Intents = new ChangeTrackingList<OrchestrationExportedIntent>();
             Utterances = new ChangeTrackingList<OrchestrationExportedUtterance>();
         }
@@ -26,7 +26,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="intents"> Represents the intents of the project. </param>
         /// <param name="utterances"> Represents the utterances of the project. </param>
-        internal OrchestrationExportedProjectAsset(AnalyzeConversationAuthoringProjectKind projectKind, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<OrchestrationExportedIntent> intents, IList<OrchestrationExportedUtterance> utterances) : base(projectKind, serializedAdditionalRawData)
+        internal OrchestrationExportedProjectAsset(ConversationAuthoringProjectKind projectKind, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<OrchestrationExportedIntent> intents, IList<OrchestrationExportedUtterance> utterances) : base(projectKind, serializedAdditionalRawData)
         {
             Intents = intents;
             Utterances = utterances;

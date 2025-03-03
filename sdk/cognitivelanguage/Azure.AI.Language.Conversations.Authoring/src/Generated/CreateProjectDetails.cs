@@ -54,7 +54,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="description"> The project description. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateProjectDetails(AnalyzeConversationAuthoringProjectKind projectKind, ProjectSettings settings, string storageInputContainerName, string projectName, bool? multilingual, string description, string language, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateProjectDetails(ConversationAuthoringProjectKind projectKind, ProjectSettings settings, string storageInputContainerName, string projectName, bool? multilingual, string description, string language, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProjectKind = projectKind;
             Settings = settings;
@@ -72,7 +72,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Represents the project kind. </summary>
-        public AnalyzeConversationAuthoringProjectKind ProjectKind { get; }
+        public ConversationAuthoringProjectKind ProjectKind { get; }
         /// <summary> The project settings. </summary>
         public ProjectSettings Settings { get; set; }
         /// <summary> The storage container name in case of conversation summarization. </summary>

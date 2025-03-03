@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Operation operation = await projectAuthoringClient.ExportAsync(
                 waitUntil: WaitUntil.Completed,
                 stringIndexType: StringIndexType.Utf16CodeUnit,
-                exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation
+                exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );
 
              // Extract the operation-location header

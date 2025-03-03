@@ -83,7 +83,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 return null;
             }
-            AnalyzeConversationAuthoringProjectKind projectKind = default;
+            ConversationAuthoringProjectKind projectKind = default;
             string storageInputContainerName = default;
             bool? allowOverwrite = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -92,7 +92,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 if (property.NameEquals("projectKind"u8))
                 {
-                    projectKind = new AnalyzeConversationAuthoringProjectKind(property.Value.GetString());
+                    projectKind = new ConversationAuthoringProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageInputContainerName"u8))

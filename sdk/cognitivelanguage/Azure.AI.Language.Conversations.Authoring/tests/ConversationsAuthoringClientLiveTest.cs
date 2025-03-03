@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
 
             var entity = new ConversationExportedEntity(category: "product")
             {
-                CompositionMode = AnalyzeConversationAuthoringCompositionMode.CombineComponents
+                CompositionMode = ConversationAuthoringCompositionMode.CombineComponents
             };
             projectAssets.Entities.Add(entity);
 
@@ -130,7 +130,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             Operation operation = await projectAuthoringClient.ImportAsync(
                 waitUntil: WaitUntil.Completed,
                 exportedProject: exportedProject,
-                exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation
+                exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );
 
             // Assert the operation and response
@@ -154,7 +154,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             Operation operation = await projectAuthoringClient.ExportAsync(
                 waitUntil: WaitUntil.Completed,
                 stringIndexType: StringIndexType.Utf16CodeUnit,
-                exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation
+                exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );
 
             // Assert
@@ -217,13 +217,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
 
             var trainingJobDetails = new TrainingJobDetails(
                 modelLabel: "MyModel",
-                trainingMode: AnalyzeConversationAuthoringTrainingMode.Standard
+                trainingMode: ConversationAuthoringTrainingMode.Standard
             )
             {
                 TrainingConfigVersion = "2023-04-15",
                 EvaluationOptions = new EvaluationDetails
                 {
-                    Kind = AnalyzeConversationAuthoringEvaluationKind.Percentage,
+                    Kind = ConversationAuthoringEvaluationKind.Percentage,
                     TestingSplitPercentage = 20,
                     TrainingSplitPercentage = 80
                 }

@@ -27,13 +27,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
             var trainingJobDetails = new TrainingJobDetails(
                 modelLabel: "MyModel",
-                trainingMode: AnalyzeConversationAuthoringTrainingMode.Standard
+                trainingMode: ConversationAuthoringTrainingMode.Standard
             )
             {
                 TrainingConfigVersion = "1.0",
                 EvaluationOptions = new EvaluationDetails
                 {
-                    Kind = AnalyzeConversationAuthoringEvaluationKind.Percentage,
+                    Kind = ConversationAuthoringEvaluationKind.Percentage,
                     TestingSplitPercentage = 20,
                     TrainingSplitPercentage = 80
                 }

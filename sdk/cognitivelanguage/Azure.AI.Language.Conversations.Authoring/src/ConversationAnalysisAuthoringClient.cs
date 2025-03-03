@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Conversations.Authoring
     {
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of AnalyzeConversationAuthoringClient. </summary>
+        /// <summary> Initializes a new instance of ConversationAnalysisAuthoringClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>

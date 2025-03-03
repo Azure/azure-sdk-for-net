@@ -65,7 +65,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="regex"> The regex component of the entity. </param>
         /// <param name="requiredComponents"> The required components. Allowed values are 'learned', 'list', 'prebuilts' and 'regex'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationExportedEntity(string category, AnalyzeConversationAuthoringCompositionMode? compositionMode, ExportedEntityList entities, IList<ExportedPrebuiltEntity> prebuilts, ExportedEntityRegex regex, IList<string> requiredComponents, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationExportedEntity(string category, ConversationAuthoringCompositionMode? compositionMode, ExportedEntityList entities, IList<ExportedPrebuiltEntity> prebuilts, ExportedEntityRegex regex, IList<string> requiredComponents, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             CompositionMode = compositionMode;
@@ -84,7 +84,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> The category of the entity. </summary>
         public string Category { get; }
         /// <summary> The behavior to follow when the entity's components overlap with each other. </summary>
-        public AnalyzeConversationAuthoringCompositionMode? CompositionMode { get; set; }
+        public ConversationAuthoringCompositionMode? CompositionMode { get; set; }
         /// <summary> The list component of the entity. </summary>
         public ExportedEntityList Entities { get; set; }
         /// <summary> The prebuilt entities components. </summary>

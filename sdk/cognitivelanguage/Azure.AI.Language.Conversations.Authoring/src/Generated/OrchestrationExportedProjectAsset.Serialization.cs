@@ -79,7 +79,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             IList<OrchestrationExportedIntent> intents = default;
             IList<OrchestrationExportedUtterance> utterances = default;
-            AnalyzeConversationAuthoringProjectKind projectKind = default;
+            ConversationAuthoringProjectKind projectKind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (property.NameEquals("projectKind"u8))
                 {
-                    projectKind = new AnalyzeConversationAuthoringProjectKind(property.Value.GetString());
+                    projectKind = new ConversationAuthoringProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

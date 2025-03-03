@@ -61,7 +61,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="description"> The project description. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <returns> A new <see cref="Authoring.ProjectMetadata"/> instance for mocking. </returns>
-        public static ProjectMetadata ProjectMetadata(DateTimeOffset createdOn = default, DateTimeOffset lastModifiedOn = default, DateTimeOffset? lastTrainedOn = null, DateTimeOffset? lastDeployedOn = null, AnalyzeConversationAuthoringProjectKind projectKind = default, ProjectSettings settings = null, string storageInputContainerName = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
+        public static ProjectMetadata ProjectMetadata(DateTimeOffset createdOn = default, DateTimeOffset lastModifiedOn = default, DateTimeOffset? lastTrainedOn = null, DateTimeOffset? lastDeployedOn = null, ConversationAuthoringProjectKind projectKind = default, ProjectSettings settings = null, string storageInputContainerName = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
         {
             return new ProjectMetadata(
                 createdOn,
@@ -171,7 +171,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="evaluationStatus"> Represents model evaluation status. </param>
         /// <param name="estimatedEndOn"> Represents the estimated end date time for training and evaluation. </param>
         /// <returns> A new <see cref="Authoring.TrainingJobResult"/> instance for mocking. </returns>
-        public static TrainingJobResult TrainingJobResult(string modelLabel = null, string trainingConfigVersion = null, AnalyzeConversationAuthoringTrainingMode? trainingMode = null, SubTrainingOperationState trainingStatus = null, SubTrainingOperationState evaluationStatus = null, DateTimeOffset? estimatedEndOn = null)
+        public static TrainingJobResult TrainingJobResult(string modelLabel = null, string trainingConfigVersion = null, ConversationAuthoringTrainingMode? trainingMode = null, SubTrainingOperationState trainingStatus = null, SubTrainingOperationState evaluationStatus = null, DateTimeOffset? estimatedEndOn = null)
         {
             return new TrainingJobResult(
                 modelLabel,
@@ -502,7 +502,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="description"> The project description. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <returns> A new <see cref="Authoring.CreateProjectDetails"/> instance for mocking. </returns>
-        public static CreateProjectDetails CreateProjectDetails(AnalyzeConversationAuthoringProjectKind projectKind = default, ProjectSettings settings = null, string storageInputContainerName = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
+        public static CreateProjectDetails CreateProjectDetails(ConversationAuthoringProjectKind projectKind = default, ProjectSettings settings = null, string storageInputContainerName = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
         {
             return new CreateProjectDetails(
                 projectKind,
@@ -590,7 +590,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="regex"> The regex component of the entity. </param>
         /// <param name="requiredComponents"> The required components. Allowed values are 'learned', 'list', 'prebuilts' and 'regex'. </param>
         /// <returns> A new <see cref="Authoring.ConversationExportedEntity"/> instance for mocking. </returns>
-        public static ConversationExportedEntity ConversationExportedEntity(string category = null, AnalyzeConversationAuthoringCompositionMode? compositionMode = null, ExportedEntityList entities = null, IEnumerable<ExportedPrebuiltEntity> prebuilts = null, ExportedEntityRegex regex = null, IEnumerable<string> requiredComponents = null)
+        public static ConversationExportedEntity ConversationExportedEntity(string category = null, ConversationAuthoringCompositionMode? compositionMode = null, ExportedEntityList entities = null, IEnumerable<ExportedPrebuiltEntity> prebuilts = null, ExportedEntityRegex regex = null, IEnumerable<string> requiredComponents = null)
         {
             prebuilts ??= new List<ExportedPrebuiltEntity>();
             requiredComponents ??= new List<string>();
@@ -739,7 +739,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="trainingMode"> Represents the mode of the training operation. </param>
         /// <param name="evaluationOptions"> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </param>
         /// <returns> A new <see cref="Authoring.TrainingJobDetails"/> instance for mocking. </returns>
-        public static TrainingJobDetails TrainingJobDetails(string modelLabel = null, string trainingConfigVersion = null, AnalyzeConversationAuthoringTrainingMode trainingMode = default, EvaluationDetails evaluationOptions = null)
+        public static TrainingJobDetails TrainingJobDetails(string modelLabel = null, string trainingConfigVersion = null, ConversationAuthoringTrainingMode trainingMode = default, EvaluationDetails evaluationOptions = null)
         {
             return new TrainingJobDetails(modelLabel, trainingConfigVersion, trainingMode, evaluationOptions, serializedAdditionalRawData: null);
         }

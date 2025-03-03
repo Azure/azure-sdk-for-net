@@ -57,13 +57,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Initializes a new instance of <see cref="ExportedProjectAsset"/>. </summary>
         /// <param name="projectKind"> The type of project containing the assets. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedProjectAsset(AnalyzeConversationAuthoringProjectKind projectKind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExportedProjectAsset(ConversationAuthoringProjectKind projectKind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProjectKind = projectKind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of project containing the assets. </summary>
-        internal AnalyzeConversationAuthoringProjectKind ProjectKind { get; set; }
+        internal ConversationAuthoringProjectKind ProjectKind { get; set; }
     }
 }

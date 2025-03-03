@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="evaluationStatus"> Represents model evaluation status. </param>
         /// <param name="estimatedEndOn"> Represents the estimated end date time for training and evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrainingJobResult(string modelLabel, string trainingConfigVersion, AnalyzeConversationAuthoringTrainingMode? trainingMode, SubTrainingOperationState trainingStatus, SubTrainingOperationState evaluationStatus, DateTimeOffset? estimatedEndOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrainingJobResult(string modelLabel, string trainingConfigVersion, ConversationAuthoringTrainingMode? trainingMode, SubTrainingOperationState trainingStatus, SubTrainingOperationState evaluationStatus, DateTimeOffset? estimatedEndOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelLabel = modelLabel;
             TrainingConfigVersion = trainingConfigVersion;
@@ -90,7 +90,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Represents training config version. </summary>
         public string TrainingConfigVersion { get; }
         /// <summary> Represents the mode of the training operation. </summary>
-        public AnalyzeConversationAuthoringTrainingMode? TrainingMode { get; }
+        public ConversationAuthoringTrainingMode? TrainingMode { get; }
         /// <summary> Represents the model training status. </summary>
         public SubTrainingOperationState TrainingStatus { get; }
         /// <summary> Represents model evaluation status. </summary>

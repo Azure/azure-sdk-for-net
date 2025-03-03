@@ -24,18 +24,18 @@ namespace Azure.AI.Language.Conversations.Authoring
     [CodeGenSuppress("GetImportStatus", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetImportStatusAsync", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("GetImportStatus", typeof(string), typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("AuthorizeProjectCopyAsync", typeof(string), typeof(AnalyzeConversationAuthoringProjectKind), typeof(string), typeof(bool?), typeof(CancellationToken))]
-    [CodeGenSuppress("AuthorizeProjectCopy", typeof(string), typeof(AnalyzeConversationAuthoringProjectKind), typeof(string), typeof(bool?), typeof(CancellationToken))]
-    [CodeGenSuppress("AuthorizeProjectCopyAsync", typeof(string), typeof(AnalyzeConversationAuthoringProjectKind), typeof(string), typeof(bool?), typeof(RequestContext))]
-    [CodeGenSuppress("AuthorizeProjectCopy", typeof(string), typeof(AnalyzeConversationAuthoringProjectKind), typeof(string), typeof(bool?), typeof(RequestContext))]
+    [CodeGenSuppress("AuthorizeProjectCopyAsync", typeof(string), typeof(ConversationAuthoringProjectKind), typeof(string), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("AuthorizeProjectCopy", typeof(string), typeof(ConversationAuthoringProjectKind), typeof(string), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("AuthorizeProjectCopyAsync", typeof(string), typeof(ConversationAuthoringProjectKind), typeof(string), typeof(bool?), typeof(RequestContext))]
+    [CodeGenSuppress("AuthorizeProjectCopy", typeof(string), typeof(ConversationAuthoringProjectKind), typeof(string), typeof(bool?), typeof(RequestContext))]
     [CodeGenSuppress("GetCopyProjectStatusAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetCopyProjectStatus", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetCopyProjectStatusAsync", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("GetCopyProjectStatus", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("DeleteProjectAsync", typeof(WaitUntil), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("DeleteProject", typeof(WaitUntil), typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("ImportAsync", typeof(WaitUntil), typeof(string), typeof(ExportedProject), typeof(AnalyzeConversationAuthoringExportedProjectFormat?), typeof(CancellationToken))]
-    [CodeGenSuppress("Import", typeof(WaitUntil), typeof(string), typeof(ExportedProject), typeof(AnalyzeConversationAuthoringExportedProjectFormat?), typeof(CancellationToken))]
+    [CodeGenSuppress("ImportAsync", typeof(WaitUntil), typeof(string), typeof(ExportedProject), typeof(ConversationAuthoringExportedProjectFormat?), typeof(CancellationToken))]
+    [CodeGenSuppress("Import", typeof(WaitUntil), typeof(string), typeof(ExportedProject), typeof(ConversationAuthoringExportedProjectFormat?), typeof(CancellationToken))]
     [CodeGenSuppress("ImportAsync", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("Import", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("CopyProjectAsync", typeof(WaitUntil), typeof(string), typeof(CopyProjectDetails), typeof(CancellationToken))]
@@ -48,10 +48,10 @@ namespace Azure.AI.Language.Conversations.Authoring
     [CodeGenSuppress("Train", typeof(WaitUntil), typeof(string), typeof(TrainingJobDetails), typeof(CancellationToken))]
     [CodeGenSuppress("CancelTrainingJobAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("CancelTrainingJob", typeof(WaitUntil), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetTrainingConfigVersionsAsync", typeof(AnalyzeConversationAuthoringProjectKind), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetTrainingConfigVersions", typeof(AnalyzeConversationAuthoringProjectKind), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("ExportAsync", typeof(WaitUntil), typeof(string), typeof(StringIndexType), typeof(AnalyzeConversationAuthoringExportedProjectFormat?), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("Export", typeof(WaitUntil), typeof(string), typeof(StringIndexType), typeof(AnalyzeConversationAuthoringExportedProjectFormat?), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetTrainingConfigVersionsAsync", typeof(ConversationAuthoringProjectKind), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetTrainingConfigVersions", typeof(ConversationAuthoringProjectKind), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("ExportAsync", typeof(WaitUntil), typeof(string), typeof(StringIndexType), typeof(ConversationAuthoringExportedProjectFormat?), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("Export", typeof(WaitUntil), typeof(string), typeof(StringIndexType), typeof(ConversationAuthoringExportedProjectFormat?), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("ExportAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("Export", typeof(WaitUntil), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("AuthorizeProjectCopyAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
@@ -227,7 +227,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="exportedProject"> The project data to import. </param>
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, ExportedProject exportedProject, AnalyzeConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, ExportedProject exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(exportedProject, nameof(exportedProject));
@@ -242,7 +242,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="exportedProject"> The project data to import. </param>
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Operation Import(WaitUntil waitUntil, ExportedProject exportedProject, AnalyzeConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
+        public virtual Operation Import(WaitUntil waitUntil, ExportedProject exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(exportedProject, nameof(exportedProject));
@@ -262,7 +262,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ImportAsync(WaitUntil,ExportedProject,AnalyzeConversationAuthoringExportedProjectFormat?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ImportAsync(WaitUntil,ExportedProject,ConversationAuthoringExportedProjectFormat?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -302,7 +302,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Import(WaitUntil,ExportedProject,AnalyzeConversationAuthoringExportedProjectFormat?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Import(WaitUntil,ExportedProject,ConversationAuthoringExportedProjectFormat?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -365,7 +365,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="storageInputContainerName"> The name of the storage container. </param>
         /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CopyProjectDetails>> AuthorizeProjectCopyAsync(AnalyzeConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CopyProjectDetails>> AuthorizeProjectCopyAsync(ConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
         {
             CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -378,7 +378,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="storageInputContainerName"> The name of the storage container. </param>
         /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CopyProjectDetails> AuthorizeProjectCopy(AnalyzeConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
+        public virtual Response<CopyProjectDetails> AuthorizeProjectCopy(ConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
         {
             CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -479,7 +479,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="assetKind"> Kind of asset to export. </param>
         /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Operation> ExportAsync(WaitUntil waitUntil, StringIndexType stringIndexType, AnalyzeConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, string assetKind = null, string trainedModelLabel = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> ExportAsync(WaitUntil waitUntil, StringIndexType stringIndexType, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, string assetKind = null, string trainedModelLabel = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
 
@@ -494,7 +494,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="assetKind"> Kind of asset to export. </param>
         /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Operation Export(WaitUntil waitUntil, StringIndexType stringIndexType, AnalyzeConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, string assetKind = null, string trainedModelLabel = null, CancellationToken cancellationToken = default)
+        public virtual Operation Export(WaitUntil waitUntil, StringIndexType stringIndexType, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, string assetKind = null, string trainedModelLabel = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
 
@@ -512,7 +512,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ExportAsync(WaitUntil,StringIndexType,AnalyzeConversationAuthoringExportedProjectFormat?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ExportAsync(WaitUntil,StringIndexType,ConversationAuthoringExportedProjectFormat?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -554,7 +554,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Export(WaitUntil,StringIndexType,AnalyzeConversationAuthoringExportedProjectFormat?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Export(WaitUntil,StringIndexType,ConversationAuthoringExportedProjectFormat?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1177,7 +1177,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AuthorizeProjectCopyAsync(AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AuthorizeProjectCopyAsync(ConversationAuthoringProjectKind,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1215,7 +1215,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AuthorizeProjectCopy(AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AuthorizeProjectCopy(ConversationAuthoringProjectKind,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

@@ -83,7 +83,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 return null;
             }
-            AnalyzeConversationAuthoringProjectKind projectKind = default;
+            ConversationAuthoringProjectKind projectKind = default;
             string targetProjectName = default;
             string accessToken = default;
             DateTimeOffset expiresAt = default;
@@ -95,7 +95,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 if (property.NameEquals("projectKind"u8))
                 {
-                    projectKind = new AnalyzeConversationAuthoringProjectKind(property.Value.GetString());
+                    projectKind = new ConversationAuthoringProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetProjectName"u8))
