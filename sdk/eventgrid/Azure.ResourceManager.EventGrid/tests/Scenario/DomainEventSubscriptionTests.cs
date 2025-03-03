@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
-        // For live tests, replace "SANITIZED_FUNCTION_KEY" with the actual function key 
+        // For live tests, replace "SANITIZED_FUNCTION_KEY" with the actual function key
         // from the Azure Portal for the function "EventGridTrigger1" in "devexpfuncappdestination".
         private const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=SANITIZED_FUNCTION_KEY";
         private EventGridDomainCollection DomainCollection { get; set; }
