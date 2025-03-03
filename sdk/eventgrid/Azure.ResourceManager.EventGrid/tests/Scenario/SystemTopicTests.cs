@@ -27,7 +27,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
         private async Task SetCollection()
         {
-            // this assumes that resource group TestRG exists under your subscription and storage accounts are setup under this resource groups
+            // This test relies on the existence of the 'TestRG' resource group within the subscription, ensuring that system topics and related resources (such as Key Vault) are deployed within the same resource group for validation
+            // Subscription: 5b4b650e-28b9-4790-b3ab-ddbd88d727c4 (Azure Event Grid SDK Subscription)
             ResourceGroup = await GetResourceGroupAsync(DefaultSubscription, "TestRG");
             SystemTopicCollection = ResourceGroup.GetSystemTopics();
             NamespaceCollection = ResourceGroup.GetEventGridNamespaces();
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                          ["tag2"] = "value2",
                      },
             };
-            data.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/b6a8bef9-9220-454a-a229-f360b6e9f0f6/resourcegroups/TestRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdktestuseridentity"), userAssignedIdentity);
+            data.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/TestRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdktestuseridentity"), userAssignedIdentity);
             var createSystemTopicResponse = (await SystemTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, systemTopicName, data)).Value;
             Assert.NotNull(createSystemTopicResponse);
             Assert.AreEqual(createSystemTopicResponse.Data.ProvisioningState, EventGridResourceProvisioningState.Succeeded);
@@ -197,11 +198,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Identity = new EventSubscriptionIdentity()
                 {
                     IdentityType = EventSubscriptionIdentityType.UserAssigned,
-                    UserAssignedIdentity = "/subscriptions/b6a8bef9-9220-454a-a229-f360b6e9f0f6/resourcegroups/TestRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdktestuseridentity",
+                    UserAssignedIdentity = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/TestRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdktestuseridentity",
                 },
                 Destination = new NamespaceTopicEventSubscriptionDestination()
                 {
-                    ResourceId = new ResourceIdentifier("/subscriptions/b6a8bef9-9220-454a-a229-f360b6e9f0f6/resourceGroups/TestRG/providers/Microsoft.EventGrid/namespaces/testnamespace/topics/testtopic"),
+                    ResourceId = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/TestRG/providers/Microsoft.EventGrid/namespaces/testnamespace/topics/testtopic"),
                 }
             };
 

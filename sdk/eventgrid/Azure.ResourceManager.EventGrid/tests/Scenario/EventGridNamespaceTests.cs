@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
-            AzureLocation location = new AzureLocation("centraluseuap", "centraluseuap");
+            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
             UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity();
             var nameSpace = new EventGridNamespaceData(location)
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 },
                 Sku = namespaceSku,
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned),
-                IsZoneRedundant = false
+                IsZoneRedundant = true
             };
             nameSpace.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_centraleaup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"), userAssignedIdentity);
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(getNamespaceResponse.Data.Tags["originalTag2"], "originalValue2");
             Assert.AreEqual(getNamespaceResponse.Data.Sku.Name.Value.ToString(), namespaceSkuName);
             Assert.AreEqual(getNamespaceResponse.Data.Sku.Capacity.Value, 1);
-            Assert.IsFalse(getNamespaceResponse.Data.IsZoneRedundant.Value);
+            Assert.IsTrue(getNamespaceResponse.Data.IsZoneRedundant.Value);
 
             // update the tags and capacity
             namespaceSku = new NamespaceSku()
@@ -919,19 +919,20 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // create subscriptions
             var subscriptionsCollection = namespaceTopicsResponse1.GetNamespaceTopicEventSubscriptions();
 
-            DeliveryConfiguration deliveryConfiguration = new DeliveryConfiguration()
+            DeliveryConfiguration deliveryConfiguration = new DeliveryConfiguration
             {
-                DeliveryMode = DeliveryMode.Push.ToString(),
-                Push = new PushInfo()
+                DeliveryMode = DeliveryMode.Push,
+                Push = new PushInfo
                 {
-                    //replace HIDDEN with actual value
-                    Destination = new WebHookEventSubscriptionDestination()
+                    // For the webhook endpoint, replace "SANITIZED_FUNCTION_KEY" with the function key
+                    // from the Logic App "mylogicappkish2" in the East US region under the
+                    // "Azure Event Grid SDK" subscription.
+                    Destination = new WebHookEventSubscriptionDestination
                     {
-                        Endpoint = new Uri("https://prod-29.eastus.logic.azure.com:443/workflows/e3b43dc73eb244b78a1cd55996703378/triggers/request/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=Sanitized&sig=Sanitized"),
-                    },
+                        Endpoint = new Uri("https://prod-71.eastus.logic.azure.com:443/workflows/b60c5432896846608c05de3a96be6de2/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=SANITIZED_FUNCTION_KEY"),
+                    }
                 }
             };
-
             NamespaceTopicEventSubscriptionData subscriptionData = new NamespaceTopicEventSubscriptionData()
             {
                 DeliveryConfiguration = deliveryConfiguration,

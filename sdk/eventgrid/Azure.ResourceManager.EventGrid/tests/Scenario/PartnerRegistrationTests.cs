@@ -81,6 +81,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsFalse(flag);
         }
 
+        [Ignore("28/02/2025: This test is failing in the pipeline, because of API Issue, enable it in RECORD mode once the api is fixed")]
         [TestCase(null)]
         [TestCase(false)]
         [TestCase(true)]
