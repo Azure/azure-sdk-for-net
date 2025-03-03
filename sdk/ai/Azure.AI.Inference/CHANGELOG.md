@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added extension methods to get `ChatCompletionsClient` and `EmbeddingsClient` using [AIProjectClient]("https://learn.microsoft.com/dotnet/api/azure.ai.projects.aiprojectclient?view=azure-dotnet-preview").
+- Added extension methods to get `ChatCompletionsClient` and `EmbeddingsClient` using [AIProjectClient](https://learn.microsoft.com/dotnet/api/azure.ai.projects.aiprojectclient?view=azure-dotnet-preview).
 
 ### Breaking Changes
 
