@@ -1,8 +1,7 @@
-# Azure AI Projects client library for .NET
-Use the AI Projects client library to:
+# Azure AI Agents client library for .NET
+Use the AI Agents client library to:
 
 * **Develop Agents using the Azure AI Agent Service**, leveraging an extensive ecosystem of models, tools, and capabilities from OpenAI, Microsoft, and other LLM providers. The Azure AI Agent Service enables the building of Agents for a wide range of generative AI use cases. The package is currently in preview.
-* **Enumerate connections** in your Azure AI Foundry project and get connection properties. For example, get the inference endpoint URL and credentials associated with your Azure OpenAI connection.
 
 [Product documentation][product_doc]
 | [Samples][samples]
@@ -39,14 +38,14 @@ Use the AI Projects client library to:
 
 ### Prerequisites
 
-To use Azure AI Projects capabilities, you must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/). This will allow you to create an Azure AI resource and get a connection URL.
+To use Azure AI Agents capabilities, you must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/). This will allow you to create an Azure AI resource and get a connection URL.
 
 ### Install the package
 
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.AI.Projects --prerelease
+dotnet add package Azure.AI.Agents --prerelease
 ```
 
 ### Authenticate the client
@@ -61,14 +60,14 @@ dotnet add package Azure.Identity
 
 ### Create and authenticate the client
 
-To interact with Azure AI Projects, you’ll need to create an instance of `AIProjectClient`. Use the appropriate credential type from the Azure Identity library. For example, [DefaultAzureCredential][azure_identity_dac]:
+To interact with Azure AI Agents, you’ll need to create an instance of `AIProjectClient`. Use the appropriate credential type from the Azure Identity library. For example, [DefaultAzureCredential][azure_identity_dac]:
 
 ```C# Snippet:OverviewCreateClient
 var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 AIProjectClient projectClient = new AIProjectClient(connectionString, new DefaultAzureCredential());
 ```
 
-Once the `AIProjectClient` is created, you can call methods in the form of `GetXxxClient()` on this client to retrieve instances of specific sub-clients.
+Once the `AgentsClient` is created, you can call methods in the form of `GetXxxClient()` on this client to retrieve instances of specific sub-clients.
 
 ## Examples
 
@@ -81,13 +80,14 @@ Agents in the Azure AI Projects client library are designed to facilitate variou
 First, you need to create an `AgentsClient`
 ```C# Snippet:OverviewCreateAgentClient
 var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
-AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+AIProjectClient projectClient = new(connectionString, new DefaultAzureCredential());
+AgentsClient client = projectClient.GetAgentsClient();
 ```
 
 With an authenticated client, an agent can be created:
 ```C# Snippet:OverviewCreateAgent
 Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: "gpt-4-1106-preview",
+    model: modelName,
     name: "Math Tutor",
     instructions: "You are a personal math tutor. Write and run code to answer math questions.",
     tools: new List<ToolDefinition> { new CodeInterpreterToolDefinition() });
@@ -201,7 +201,7 @@ fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
 // Create an agent with toolResources and process assistant run
 Response<Agent> agentResponse = await client.CreateAgentAsync(
-        model: "gpt-4-1106-preview",
+        model: modelName,
         name: "SDK Test Agent - Retrieval",
         instructions: "You are a helpful agent that can help fetch data from files you know about.",
         tools: new List<ToolDefinition> { new FileSearchToolDefinition() },
@@ -269,7 +269,8 @@ To attach a file with the context to the message, use the `MessageAttachment` cl
 Here is an example to pass `CodeInterpreterTool` as tool:
 
 ```C# Snippet:CreateAgentWithInterpreterTool
-AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+AIProjectClient projectClient = new(connectionString, new DefaultAzureCredential());
+AgentsClient client = projectClient.GetAgentsClient();
 
 List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
 Response<Agent> agentResponse = await client.CreateAgentAsync(
@@ -584,7 +585,7 @@ AzureFunctionToolDefinition azureFnTool = new(
 Note that in this scenario we are asking agent to supply storage queue URI to the azure function whenever it is called.
 ```C# Snippet:AzureFunctionsCreateAgentWithFunctionTools
 Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: "gpt-4",
+    model: modelName,
     name: "azure-function-agent-foo",
         instructions: "You are a helpful support agent. Use the provided function any "
         + "time the prompt contains the string 'What would foo say?'. When you invoke "
@@ -732,7 +733,7 @@ OpenApiToolDefinition openapiTool = new(
 );
 
 Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: "gpt-4",
+    model: modelName,
     name: "azure-function-agent-foo",
     instructions: "You are a helpful assistant.",
     tools: new List<ToolDefinition> { openapiTool }

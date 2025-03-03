@@ -73,16 +73,6 @@ namespace Azure.AI.Projects
             _projectName = projectName;
         }
 
-        /// <summary> Initializes a new instance of AgentsClient. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual AgentsClient GetAgentsClient(string apiVersion = "2024-07-01-preview")
-        {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new AgentsClient(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
-        }
-
         /// <summary> Initializes a new instance of ConnectionsClient. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
