@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Memory.Data" VersionOverride="8.0.0" />
+    <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1" />
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 

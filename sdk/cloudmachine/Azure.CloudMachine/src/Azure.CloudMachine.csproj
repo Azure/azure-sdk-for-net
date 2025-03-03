@@ -22,7 +22,7 @@
     <PackageReference Include="Azure.AI.OpenAI" />
     <PackageReference Include="Azure.Search.Documents" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions"/>
-    <PackageReference Include="System.Memory.Data" VersionOverride="8.0.0"/>
+    <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1"/>
   </ItemGroup>
 
 </Project>

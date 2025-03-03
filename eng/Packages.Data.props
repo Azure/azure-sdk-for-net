@@ -89,7 +89,7 @@
     <PackageReference Update="System.ClientModel" Version="1.2.1" />
     <PackageReference Update="System.IO.Hashing" Version="6.0.0" />
     <PackageReference Update="System.Memory" Version="4.5.5" />
-    <PackageReference Update="System.Memory.Data" Version="6.0.0" />
+    <PackageReference Update="System.Memory.Data" Version="6.0.1" />
     <PackageReference Update="System.Numerics.Vectors" Version="4.5.0" />
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="6.0.1" />
@@ -98,8 +98,8 @@
     <PackageReference Update="System.Security.Cryptography.Cose" Version="7.0.0" />
     <PackageReference Update="System.Threading.Channels" Version="6.0.0" />
     <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.5.4" />
-    <PackageReference Update="System.Text.Json" Version="6.0.10" />
-    <PackageReference Update="System.Text.Encodings.Web" Version="6.0.0" />
+    <PackageReference Update="System.Text.Json" Version="6.0.11" />
+    <PackageReference Update="System.Text.Encodings.Web" Version="6.0.1" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
@@ -383,7 +383,7 @@
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
     <PackageReference Update="System.IO.Pipelines" Version="4.5.1" />
     <PackageReference Update="System.Linq.Async" Version="5.0.0" />
-    <PackageReference Update="System.Memory.Data" Version="6.0.0" />
+    <PackageReference Update="System.Memory.Data" Version="6.0.1" />
     <PackageReference Update="System.Net.WebSockets.Client" Version="4.3.2" />
     <PackageReference Update="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Update="System.Runtime.InteropServices" Version="4.3.0" />
@@ -411,9 +411,11 @@
     <PackageReference Update="System.ServiceModel.Primitives" Version="6.2.0" />
     <PackageReference Update="Azure.Storage.Files.Shares" Version="12.21.0" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.21.0" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.1" />
     <PackageReference Update="Microsoft.Extensions.Http" Version="8.0.0" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="8.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="8.0.1" />
+    <PackageReference Update="System.Formats.Asn1" Version="6.0.1" />
+    <PackageReference Update="System.Security.Cryptography.Pkcs" Version="6.0.5" />
   </ItemGroup>
   <ItemGroup Condition="('$(IsWcfLibrary)' == 'true') AND ($(TargetFramework.StartsWith('net4')))">
     <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="2.1.1" />
@@ -424,5 +426,4 @@
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250221.1</TestProxyVersion>
   </PropertyGroup>
-
 </Project>

@@ -19,7 +19,7 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
     <PackageReference Include="Microsoft.Bcl.Numerics" />
-    <PackageReference Include="System.Memory.Data" VersionOverride="8.0.0"/>
+    <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1"/>
   </ItemGroup>
 
 </Project>
