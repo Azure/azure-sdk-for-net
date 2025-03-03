@@ -154,10 +154,16 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [RecordedTest]
-        [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         public async Task CreateVolumeWithBackupPolicy()
         {
             Console.WriteLine($"{DateTime.Now.ToLongTimeString()} CreateVolumeWithBackupPolicyTest ");
+            //Create backup vault
+            NetAppBackupVaultCollection _backupVaultCollection = _netAppAccount.GetNetAppBackupVaults();
+            NetAppBackupVaultData backupVaultData = new NetAppBackupVaultData(DefaultLocation);
+            string backupVaultName = Recording.GenerateAssetName("backupVault-");
+            ArmOperation<NetAppBackupVaultResource> lro = await _backupVaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, backupVaultName, backupVaultData);
+            NetAppBackupVaultResource _backupVaultResource = lro.Value;
+
             //create CapacityPool
             var backupPolicyName = Recording.GenerateAssetName("backupPolicy-");
             NetAppBackupPolicyResource backupPolicyResource1 = await CreateBackupPolicy(DefaultLocation, backupPolicyName);
@@ -168,7 +174,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _volumeCollection = _capacityPool.GetNetAppVolumes();
             //Create volume
             var volumeName = Recording.GenerateAssetName("volumeName-");
-            NetAppVolumeBackupConfiguration backupPolicyProperties = new() { BackupPolicyId = backupPolicyResource1.Id, IsPolicyEnforced = false, IsBackupEnabled = true };
+            NetAppVolumeBackupConfiguration backupPolicyProperties = new() { BackupPolicyId = backupPolicyResource1.Id, IsPolicyEnforced = false,  BackupVaultId = _backupVaultResource.Id };
             NetAppVolumeDataProtection dataProtectionProperties = new() { Backup = backupPolicyProperties};
             //create vnet for volume
             await CreateVirtualNetwork(location: DefaultLocation);
@@ -182,7 +188,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(backupPolicyProperties.BackupPolicyId, backupVolumeResource.Data.DataProtection.Backup.BackupPolicyId);
 
             //Disable backupPolicy to avoid server side issue
-            backupPolicyProperties = new() { BackupPolicyId = null, IsPolicyEnforced = false, IsBackupEnabled = false };
+            backupPolicyProperties = new() { BackupPolicyId = null, IsPolicyEnforced = false};
             NetAppVolumePatch parameters = new(DefaultLocation);
             NetAppVolumePatchDataProtection patchDataProtection = new() { Backup = backupPolicyProperties };
             parameters.DataProtection = patchDataProtection;
@@ -191,6 +197,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             await volumeResource1.DeleteAsync(WaitUntil.Completed);
             await WaitForVolumeDeleted(_volumeCollection, volumeResource1);
             await _capacityPool.DeleteAsync(WaitUntil.Completed);
+            await _backupVaultResource.DeleteAsync(WaitUntil.Completed);
         }
 
         protected async Task<NetAppBackupPolicyResource> CreateBackupPolicy(string location, string name = "")
@@ -223,7 +230,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                     count++;
                     bool exists = await volumeCollection.ExistsAsync(volumeResource.Id.Name);
                     Console.WriteLine($"{DateTime.Now.ToLongTimeString()} Check if volume {volumeResource.Id.Name} exists {exists} ");
-                    if (exists)
+                    if (!exists)
                     {
                         return true;
                     }

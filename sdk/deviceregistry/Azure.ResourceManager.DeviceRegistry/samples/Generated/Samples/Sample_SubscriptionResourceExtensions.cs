@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDeviceRegistryAssets_ListAssetsSubscription()
         {
-            // Generated from example definition: 2024-09-01-preview/List_Assets_Subscription.json
+            // Generated from example definition: 2024-11-01/List_Assets_Subscription.json
             // this example is just showing the usage of "Asset_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDeviceRegistryAssetEndpointProfiles_ListAssetEndpointProfilesSubscription()
         {
-            // Generated from example definition: 2024-09-01-preview/List_AssetEndpointProfiles_Subscription.json
+            // Generated from example definition: 2024-11-01/List_AssetEndpointProfiles_Subscription.json
             // this example is just showing the usage of "AssetEndpointProfile_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -71,99 +71,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
                 DeviceRegistryAssetEndpointProfileData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetDeviceRegistryDiscoveredAssets_ListDiscoveredAssetsSubscription()
-        {
-            // Generated from example definition: 2024-09-01-preview/List_DiscoveredAssets_Subscription.json
-            // this example is just showing the usage of "DiscoveredAsset_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (DeviceRegistryDiscoveredAssetResource item in subscriptionResource.GetDeviceRegistryDiscoveredAssetsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DeviceRegistryDiscoveredAssetData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetDeviceRegistryDiscoveredAssetEndpointProfiles_ListDiscoveredAssetEndpointProfilesSubscription()
-        {
-            // Generated from example definition: 2024-09-01-preview/List_DiscoveredAssetEndpointProfiles_Subscription.json
-            // this example is just showing the usage of "DiscoveredAssetEndpointProfile_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (DeviceRegistryDiscoveredAssetEndpointProfileResource item in subscriptionResource.GetDeviceRegistryDiscoveredAssetEndpointProfilesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DeviceRegistryDiscoveredAssetEndpointProfileData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetDeviceRegistrySchemaRegistries_ListSchemaRegistriesSubscription()
-        {
-            // Generated from example definition: 2024-09-01-preview/List_SchemaRegistries_Subscription.json
-            // this example is just showing the usage of "SchemaRegistry_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (DeviceRegistrySchemaRegistryResource item in subscriptionResource.GetDeviceRegistrySchemaRegistriesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DeviceRegistrySchemaRegistryData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

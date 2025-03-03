@@ -42,7 +42,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string objectName = null,
             Stream contents = null,
             CancellationToken cancellationToken = default)
-            => CreateBlockBlobAsync(container, objectName, contents, cancellationToken);
+            => CreateBlockBlobAsync(container, objectLength, objectName, contents, cancellationToken);
 
         protected override Task CreateObjectInSourceAsync(
             BlobContainerClient container,
