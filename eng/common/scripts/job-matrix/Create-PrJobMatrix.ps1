@@ -148,7 +148,7 @@ function GeneratePRMatrixForBatch {
       # if we are doing a PR Batch, we need to just add the matrix items directly to the OverallResult
       # as the users have explicitly disabled PR batching for this matrix.
       if (!$matrixConfig.PRBatch) {
-        Write-Host "The matrix config $($matrixConfig.Path) has PRBatch set to false, the matrix members will be directly added without batching by $PRMatrixSetting."
+        Write-Host "The matrix config $($matrixConfig.Path) with name $($matrixConfig.Name) has PRBatch set to false, the matrix members will be directly added without batching by $PRMatrixSetting."
         $OverallResult += $matrixResults
         continue
       }
