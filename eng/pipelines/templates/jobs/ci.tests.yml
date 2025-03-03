@@ -172,7 +172,6 @@ jobs:
           /p:EnableSourceLink=false
           /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
           /p:EnableOverrideExclusions=true
-          /p:RemoveTrack1Projects=true
           $(AdditionalTestArguments)
           $(DiagnosticArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
