@@ -13,8 +13,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsMessageEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsMessageEventData"/>. </summary>
-        internal AcsMessageEventData()
+        /// <param name="from"> The message sender. </param>
+        /// <param name="to"> The message recipient. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="from"/> or <paramref name="to"/> is null. </exception>
+        internal AcsMessageEventData(string @from, string to)
         {
+            Argument.AssertNotNull(@from, nameof(@from));
+            Argument.AssertNotNull(to, nameof(to));
+
+            From = @from;
+            To = to;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsMessageEventData"/>. </summary>

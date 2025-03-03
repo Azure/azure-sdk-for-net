@@ -937,8 +937,7 @@ namespace Azure.Storage.Files.DataLake
         #region Delete
         /// <summary>
         /// The <see cref="Delete"/> operation marks the specified path
-        /// deletion. The path is later deleted during
-        /// garbage collection which could take several minutes.
+        /// deletion.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -987,8 +986,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified path
-        /// deletion. The path is later deleted during
-        /// garbage collection which could take several minutes.
+        /// deletion.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -1040,8 +1038,7 @@ namespace Azure.Storage.Files.DataLake
         #region Delete If Exists
         /// <summary>
         /// The <see cref="DeleteIfExists"/> operation marks the specified file
-        /// for deletion, if the file exists. The file is later deleted during
-        /// garbage collection which could take several minutes.
+        /// for deletion, if the file exists.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -1090,8 +1087,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified file
-        /// for deletion, if the file exists. The file is later deleted during
-        /// garbage collection which could take several minutes.
+        /// for deletion, if the file exists.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -5396,6 +5392,8 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -5436,6 +5434,8 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -5470,7 +5470,7 @@ namespace Azure.Storage.Files.DataLake
         /// Defaults to the beginning of the file.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 1 MB.
         /// </param>
         /// <param name="conditions">
@@ -5485,6 +5485,8 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
@@ -5527,7 +5529,7 @@ namespace Azure.Storage.Files.DataLake
         /// Defaults to the beginning of the file.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 1 MB.
         /// </param>
         /// <param name="cancellationToken">
@@ -5538,6 +5540,8 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
@@ -5577,7 +5581,7 @@ namespace Azure.Storage.Files.DataLake
         /// Defaults to the beginning of the file.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 1 MB.
         /// </param>
         /// <param name="conditions">
@@ -5592,6 +5596,10 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
@@ -5634,7 +5642,7 @@ namespace Azure.Storage.Files.DataLake
         /// Defaults to the beginning of the file.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 1 MB.
         /// </param>
         /// <param name="cancellationToken">
@@ -5645,6 +5653,8 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(

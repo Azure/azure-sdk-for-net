@@ -14,11 +14,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class MapsGeofenceExitedEventData : MapsGeofenceEventProperties
     {
         /// <summary> Initializes a new instance of <see cref="MapsGeofenceExitedEventData"/>. </summary>
+        /// <param name="expiredGeofenceGeometryId"> Lists of the geometry ID of the geofence which is expired relative to the user time in the request. </param>
         /// <param name="geometries"> Lists the fence geometries that either fully contain the coordinate position or have an overlap with the searchBuffer around the fence. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="geometries"/> is null. </exception>
-        internal MapsGeofenceExitedEventData(IEnumerable<MapsGeofenceGeometry> geometries) : base(geometries)
+        /// <param name="invalidPeriodGeofenceGeometryId"> Lists of the geometry ID of the geofence which is in invalid period relative to the user time in the request. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="expiredGeofenceGeometryId"/>, <paramref name="geometries"/> or <paramref name="invalidPeriodGeofenceGeometryId"/> is null. </exception>
+        internal MapsGeofenceExitedEventData(IEnumerable<string> expiredGeofenceGeometryId, IEnumerable<MapsGeofenceGeometry> geometries, IEnumerable<string> invalidPeriodGeofenceGeometryId) : base(expiredGeofenceGeometryId, geometries, invalidPeriodGeofenceGeometryId)
         {
+            Argument.AssertNotNull(expiredGeofenceGeometryId, nameof(expiredGeofenceGeometryId));
             Argument.AssertNotNull(geometries, nameof(geometries));
+            Argument.AssertNotNull(invalidPeriodGeofenceGeometryId, nameof(invalidPeriodGeofenceGeometryId));
         }
 
         /// <summary> Initializes a new instance of <see cref="MapsGeofenceExitedEventData"/>. </summary>

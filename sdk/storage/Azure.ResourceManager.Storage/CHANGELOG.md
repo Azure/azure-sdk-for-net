@@ -1,16 +1,26 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2025-02-18)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-05' to 'package-2024-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/982bec06ab5076c1e91935640a09a15857761b66/specification/storage/resource-manager/readme.md.
+    - Supported new Storage Account Sku: "StandardV2_LRS", "StandardV2_GRS", "StandardV2_ZRS", "StandardV2_GZRS", "PremiumV2_LRS", "PremiumV2_ZRS".
+    - Supported Get File Service Usage on Files Provisioned v2 account type.
+    - Supported new File Share properties on Files Provisioned v2 account type: editable properties: "provisionedIops", "provisionedBandwidthMibps"; readonly properties: "includedBurstIops", "maxBurstCreditsForIops","nextAllowedQuotaDowngradeTime", "nextAllowedProvisionedIopsDowngradeTime", "nextAllowedProvisionedBandwidthDowngradeTime".
+    - Supported new File Share properties on Files Provisioned v1 SSD account type: "fileSharePaidBursting", which include child properties "paidBurstingMaxIops", "paidBurstingMaxIops", "paidBurstingMaxBandwidthMibps".
+    - Supported new ObjectReplicationPolicy Properties: "metrics.enabled".
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.3.0 (2024-06-28)
 

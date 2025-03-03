@@ -125,10 +125,11 @@ jobs:
         - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
           parameters:
             PackageInfo: '$(Build.SourcesDirectory)/PackageInfo'
+            Restore: true
 
         - pwsh: |
             if ("$(ProjectNames)" -like "*storage*") {
-              &"$(Build.SourcesDirectory)/eng/scripts/install_azurite.ps1" -AzuriteLocation "$(AzuriteLocation)" -AzuriteVersion "$(AzuriteVersion)"
+              &"$(Build.SourcesDirectory)/eng/scripts/Install-Azurite.ps1" -AzuriteLocation "$(AzuriteLocation)" -AzuriteVersion "$(AzuriteVersion)"
             }
           displayName: Install Azurite If Necessary
           condition: ne(variables['ProjectNames'], '')
@@ -164,13 +165,14 @@ jobs:
           --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TestTimeoutInMinutes}}minutes
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=$(ServiceDirectory)
-          /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
+          /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeIntegrationTests=false
           /p:RunApiCompat=false /p:InheritDocEnabled=false
           /p:Configuration=$(BuildConfiguration)
           /p:CollectCoverage=$(CollectCoverage)
           /p:EnableSourceLink=false
           /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
           /p:EnableOverrideExclusions=true
+          /p:RemoveTrack1Projects=true
           $(AdditionalTestArguments)
           $(DiagnosticArguments)
         displayName: "Build & Test ($(TestTargetFramework))"

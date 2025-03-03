@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Generator.CSharp.Input;
+using Microsoft.TypeSpec.Generator.Input;
 
 namespace Azure.Generator.Tests.Common
 {
@@ -121,10 +121,12 @@ namespace Azure.Generator.Tests.Common
             string access = "public",
             InputModelTypeUsage usage = InputModelTypeUsage.Output | InputModelTypeUsage.Input,
             IEnumerable<InputEnumTypeValue>? values = null,
-            bool isExtensible = false)
+            bool isExtensible = false,
+            string clientNamespace = "Sample.Models")
         {
             return new InputEnumType(
                 name,
+                clientNamespace,
                 name,
                 access,
                 null,
@@ -148,17 +150,18 @@ namespace Azure.Generator.Tests.Common
         {
             return new InputModelProperty(
                 name,
-                wireName ?? name,
                 summary,
                 description ?? $"Description for {name}",
                 type,
                 isRequired,
                 isReadOnly,
-                isDiscriminator);
+                isDiscriminator,
+                new(json: new(wireName ?? name)));
         }
 
         public static InputModelType Model(
             string name,
+            string clientNamespace = "Sample.Models",
             string access = "public",
             InputModelTypeUsage usage = InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
             IEnumerable<InputModelProperty>? properties = null,
@@ -172,6 +175,7 @@ namespace Azure.Generator.Tests.Common
             IEnumerable<InputModelProperty> propertiesList = properties ?? [Property("StringProperty", InputPrimitiveType.String)];
             return new InputModelType(
                 name,
+                clientNamespace,
                 name,
                 access,
                 null,
@@ -185,7 +189,8 @@ namespace Azure.Generator.Tests.Common
                 propertiesList.FirstOrDefault(p => p.IsDiscriminator),
                 discriminatedModels is null ? new Dictionary<string, InputModelType>() : discriminatedModels.AsReadOnly(),
                 additionalProperties,
-                modelAsStruct);
+                modelAsStruct,
+                new());
         }
 
         public static InputType Array(InputType elementType)
@@ -244,12 +249,13 @@ namespace Azure.Generator.Tests.Common
                 ["application/json"]);
         }
 
-        public static InputClient Client(string name, IEnumerable<InputOperation>? operations = null, IEnumerable<InputParameter>? parameters = null, string? parent = null)
+        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputOperation>? operations = null, IEnumerable<InputParameter>? parameters = null, string? parent = null)
         {
             return new InputClient(
                 name,
-                null,
-                $"{name} description",
+                clientNamespace,
+                string.Empty,
+                doc ?? $"{name} description",
                 operations is null ? [] : [.. operations],
                 parameters is null ? [] : [.. parameters],
                 parent);
