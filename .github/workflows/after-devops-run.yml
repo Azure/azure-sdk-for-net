@@ -2,11 +2,12 @@ name: Follow up on DevOps run
 
 on :
   check_run:
-    types: [completed]
+    types: [created, completed]
 
 jobs:
   apiview_commenting:
     runs-on: ubuntu-latest
+
     steps:
       - name: Output Check Run Information
         run: |
