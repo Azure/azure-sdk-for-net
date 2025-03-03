@@ -72,7 +72,7 @@
 
   <ItemGroup Condition="'$(ProjectListOverrideFile)' != '' and '$(RemoveTrack1Projects)' == 'true'">
     <!-- Remove all track1 SDKs from Regen -->
-    <Track1ProjectsToRemove Exclude="@(BridgeProjects)" Include="$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.*.Management.*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*mgmt*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.Azure.*\**\*.csproj" Exclude="@(ProjectsToIncludeBySDKType)"/>
+    <Track1ProjectsToRemove Exclude="@(BridgeProjects)" Include="$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.*.Management.*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*mgmt*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.Azure.*\**\*.csproj" />
     <ProjectReference Remove="@(Track1ProjectsToRemove)" />
   </ItemGroup>
 
