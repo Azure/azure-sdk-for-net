@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Text.Authoring;
-using Azure.AI.Language.Text.Authoring.Models;
 using Azure.AI.Language.Text.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -18,7 +17,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
 {
     public class TextAuthoringClientLiveTest : TextAuthoringTestBase
     {
-        public TextAuthoringClientLiveTest(bool isAsync, AuthoringClientOptions.ServiceVersion serviceVersion)
+        public TextAuthoringClientLiveTest(bool isAsync, TextAnalysisAuthoringClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
         }
@@ -28,22 +27,22 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         {
             // Arrange
             string projectName = "MyTextProject";
-
+            TextAuthoringProject projectClient = client.GetProject(projectName);
             // Act
-            Response<ProjectMetadata> response = await client.GetProjectAsync(projectName);
-            ProjectMetadata projectMetadata = response.Value;
+            Response<TextAuthoringProjectMetadata> response = await projectClient.GetProjectAsync();
+            TextAuthoringProjectMetadata projectMetadata = response.Value;
 
             // Assert
             Assert.IsNotNull(projectMetadata);
             Assert.AreEqual(projectName, projectMetadata.ProjectName);
             Assert.IsNotNull(projectMetadata.Language);
-            Assert.IsNotNull(projectMetadata.CreatedDateTime);
-            Assert.IsNotNull(projectMetadata.LastModifiedDateTime);
+            Assert.IsNotNull(projectMetadata.CreatedOn);
+            Assert.IsNotNull(projectMetadata.LastModifiedOn);
 
             Console.WriteLine($"Project Name: {projectMetadata.ProjectName}");
             Console.WriteLine($"Language: {projectMetadata.Language}");
-            Console.WriteLine($"Created DateTime: {projectMetadata.CreatedDateTime}");
-            Console.WriteLine($"Last Modified DateTime: {projectMetadata.LastModifiedDateTime}");
+            Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");
+            Console.WriteLine($"Last Modified DateTime: {projectMetadata.LastModifiedOn}");
             Console.WriteLine($"Description: {projectMetadata.Description}");
         }
 
@@ -53,16 +52,15 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             // Arrange
             string projectName = "MyImportTextProject";
 
-            var projectMetadata = new CreateProjectDetails(
+            var projectMetadata = new TextAuthoringCreateProjectDetails(
                 projectKind: "CustomSingleLabelClassification",
                 storageInputContainerName: "test-data",
-                projectName: projectName,
                 language: "en"
             )
             {
                 Description = "This is a sample dataset provided by the Azure Language service team to help users get started with Custom named entity recognition. The provided sample dataset contains 20 loan agreements drawn up between two entities.",
                 Multilingual = false,
-                Settings = new ProjectSettings()
+                Settings = new TextAuthoringProjectSettings()
             };
 
             var projectAssets = new ExportedCustomSingleLabelClassificationProjectAssets
