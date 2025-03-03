@@ -100,11 +100,28 @@ public class TokenProviderTests
         private string _clientSecret;
         private HttpClient _client;
 
+        // Create a mock token response
+        private HttpResponseMessage mockResponse = new HttpResponseMessage(Net.HttpStatusCode.OK)
+        {
+            Content = new StringContent(
+                """
+{
+    "access_token": "mock_token",
+    "token_type": "Bearer",
+    "expires_in": 3600
+}
+""", Encoding.UTF8, "application/json")
+        };
+
         public ClientCredentialTokenProvider(string clientId, string clientSecret)
         {
             _clientId = clientId;
             _clientSecret = clientSecret;
-            _client = new();
+            // Create a mock handler that returns the predefined response
+            var mockHandler = new MockHttpMessageHandler(_ => mockResponse);
+
+            // Create an HttpClient with the mock handler
+            _client = new HttpClient(mockHandler);
         }
 
         public override Token GetAccessToken(IClientCredentialsFlowToken context, CancellationToken cancellationToken)
@@ -200,6 +217,26 @@ public class TokenProviderTests
             TokenType = token.TokenType;
             ExpiresOn = token.ExpiresOn;
             RefreshOn = token.RefreshOn;
+        }
+    }
+
+    public class MockHttpMessageHandler : HttpMessageHandler
+    {
+        private readonly Func<HttpRequestMessage, HttpResponseMessage> _responseFactory;
+
+        public MockHttpMessageHandler(Func<HttpRequestMessage, HttpResponseMessage> responseFactory)
+        {
+            _responseFactory = responseFactory;
+        }
+
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(_responseFactory(request));
+        }
+
+        protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            return _responseFactory(request);
         }
     }
 }
