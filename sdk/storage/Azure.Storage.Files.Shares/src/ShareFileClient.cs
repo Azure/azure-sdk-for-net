@@ -2731,7 +2731,7 @@ namespace Azure.Storage.Files.Shares
         /// Defaults to the beginning of the file.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 1 MB.
         /// </param>
         /// <param name="conditions">
@@ -2781,7 +2781,7 @@ namespace Azure.Storage.Files.Shares
         /// Defaults to the beginning of the file.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 1 MB.
         /// </param>
         /// <param name="cancellationToken">
@@ -2824,7 +2824,7 @@ namespace Azure.Storage.Files.Shares
         /// Defaults to the beginning of the file.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 1 MB.
         /// </param>
         /// <param name="conditions">
@@ -2874,7 +2874,7 @@ namespace Azure.Storage.Files.Shares
         /// Defaults to the beginning of the file.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 1 MB.
         /// </param>
         /// <param name="cancellationToken">
@@ -2917,7 +2917,7 @@ namespace Azure.Storage.Files.Shares
         /// Defaults to the beginning of the file.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 1 MB.
         /// </param>
         /// <param name="conditions">

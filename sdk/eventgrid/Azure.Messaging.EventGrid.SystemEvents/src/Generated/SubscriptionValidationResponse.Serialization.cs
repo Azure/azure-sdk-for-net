@@ -34,11 +34,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(SubscriptionValidationResponse)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(ValidationResponse))
-            {
-                writer.WritePropertyName("validationResponse"u8);
-                writer.WriteStringValue(ValidationResponse);
-            }
+            writer.WritePropertyName("validationResponse"u8);
+            writer.WriteStringValue(ValidationResponse);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

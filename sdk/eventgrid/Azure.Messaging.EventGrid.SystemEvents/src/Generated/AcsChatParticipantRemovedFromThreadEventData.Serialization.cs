@@ -35,8 +35,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("time"u8);
-            writer.WriteStringValue(Time, "O");
+            if (Optional.IsDefined(Time))
+            {
+                writer.WritePropertyName("time"u8);
+                writer.WriteStringValue(Time.Value, "O");
+            }
             writer.WritePropertyName("removedByCommunicationIdentifier"u8);
             writer.WriteObjectValue(RemovedByCommunicationIdentifier, options);
             writer.WritePropertyName("participantRemoved"u8);
@@ -68,7 +71,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            DateTimeOffset time = default;
+            DateTimeOffset? time = default;
             CommunicationIdentifierModel removedByCommunicationIdentifier = default;
             AcsChatThreadParticipantProperties participantRemoved = default;
             long? version = default;
@@ -80,6 +83,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("time"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     time = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

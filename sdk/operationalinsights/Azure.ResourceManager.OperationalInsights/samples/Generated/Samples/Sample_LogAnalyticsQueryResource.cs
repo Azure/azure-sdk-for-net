@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
                 },
                 Tags =
 {
-["my-label"] = {"label1"},
-["my-other-label"] = {"label2"}
+["my-label"] = new string[]{"label1"},
+["my-other-label"] = new string[]{"label2"}
 },
             };
             LogAnalyticsQueryResource result = await logAnalyticsQuery.UpdateAsync(data);

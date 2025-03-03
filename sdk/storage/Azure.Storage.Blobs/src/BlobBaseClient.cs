@@ -2925,6 +2925,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -2954,6 +2958,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -2977,7 +2985,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Defaults to the beginning of the blob.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the blob.  Defaults to 1 MB.
         /// </param>
         /// <param name="conditions">
@@ -2992,6 +3000,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
@@ -3021,7 +3033,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Defaults to the beginning of the blob.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the blob.  Defaults to 1 MB.
         /// </param>
         /// <param name="cancellationToken">
@@ -3032,6 +3044,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
@@ -3058,7 +3074,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Defaults to the beginning of the blob.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the blob.  Defaults to 1 MB.
         /// </param>
         /// <param name="conditions">
@@ -3073,6 +3089,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
@@ -3102,7 +3122,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Defaults to the beginning of the blob.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the blob.  Defaults to 1 MB.
         /// </param>
         /// <param name="cancellationToken">
@@ -3113,6 +3133,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
@@ -3139,7 +3163,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Defaults to the beginning of the blob.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the blob.  Defaults to 1 MB.
         /// </param>
         /// <param name="conditions">
@@ -3163,6 +3187,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         internal async Task<Stream> OpenReadInternal(
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -4240,8 +4268,7 @@ namespace Azure.Storage.Blobs.Specialized
         #region Delete
         /// <summary>
         /// The <see cref="Delete"/> operation marks the specified blob
-        /// or snapshot for  deletion. The blob is later deleted during
-        /// garbage collection which could take several minutes.
+        /// or snapshot for deletion.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -4282,8 +4309,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified blob
-        /// or snapshot for  deletion. The blob is later deleted during
-        /// garbage collection which could take several minutes.
+        /// or snapshot for deletion.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -4324,8 +4350,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="DeleteIfExists"/> operation marks the specified blob
-        /// or snapshot for deletion, if the blob exists. The blob is later deleted
-        /// during garbage collection which could take several minutes.
+        /// or snapshot for deletion, if the blob exists.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -4367,8 +4392,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified blob
-        /// or snapshot for deletion, if the blob exists. The blob is later deleted
-        /// during garbage collection which could take several minutes.
+        /// or snapshot for deletion, if the blob exists.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -4410,8 +4434,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="DeleteIfExistsInternal"/> operation marks the specified blob
-        /// or snapshot for deletion, if the blob exists. The blob is later deleted
-        /// during garbage collection which could take several minutes.
+        /// or snapshot for deletion, if the blob exists.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -4491,8 +4514,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="DeleteInternal"/> operation marks the specified blob
-        /// or snapshot for  deletion. The blob is later deleted during
-        /// garbage collection which could take several minutes.
+        /// or snapshot for deletion.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using

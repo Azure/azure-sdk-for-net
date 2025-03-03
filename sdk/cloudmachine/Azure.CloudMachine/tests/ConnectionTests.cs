@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 [assembly: NonParallelizable]
 
-namespace Azure.CloudMachine.Tests;
+namespace Azure.Projects.Tests;
 
 public class ConnectionTests
 {
@@ -62,7 +62,7 @@ public class ConnectionTests
         ProjectInfrastructure infra = new();
 
         IConfiguration configuration = new ConfigurationBuilder()
-            .AddCloudMachineConfiguration(infra)
+            .AddProjectClientConfiguration(infra)
             .Build();
 
         ProjectClient client = new(configuration);
@@ -78,13 +78,13 @@ public class ConnectionTests
             auth: ClientAuthenticationMethod.EntraId));
 
         IConfiguration configuration = new ConfigurationBuilder()
-            .AddCloudMachineConnections(connections)
-            .AddCloudMachineId("aaaa-bbbb-cccc-dddd")
+            .AddAzureProjectConnections(connections)
+            .AddProjectId("aaaa-bbbb-cccc-dddd")
             .Build();
 
-        var locator = configuration["CloudMachine:Connections:Azure.AI.OpenAI.AzureOpenAIClient:Locator"];
+        var locator = configuration["AzureProject:Connections:Azure.AI.OpenAI.AzureOpenAIClient:Locator"];
         Assert.AreEqual("https://cm2c54b6e4637f4b1.openai.azure.com", locator);
-        var id = configuration["CloudMachine:Id"];
+        var id = configuration["AzureProject:Id"];
         Assert.AreEqual("aaaa-bbbb-cccc-dddd", id);
 
         ProjectClient client = new(configuration);

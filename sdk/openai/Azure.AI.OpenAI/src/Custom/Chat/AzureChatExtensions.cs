@@ -42,6 +42,7 @@ public static partial class AzureChatExtensions
         if (newPropertyEnabled)
         {
             // Blocking serialization of max_tokens via dictionary acts as a signal to skip pre-serialization fixup
+            options.SerializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             AdditionalPropertyHelpers.SetEmptySentinelValue(options.SerializedAdditionalRawData, "max_tokens");
         }
         else
