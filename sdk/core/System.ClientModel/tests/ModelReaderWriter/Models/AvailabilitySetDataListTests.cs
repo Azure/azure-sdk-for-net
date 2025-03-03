@@ -277,7 +277,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void ReadList()
         {
-            var asetList = ModelReaderWriter.Read(s_data, typeof(List<AvailabilitySetData>), new TestModelReaderWriterContext());
+            var asetList = ModelReaderWriter.Read(s_data, typeof(List<AvailabilitySetData>), s_readerWriterContext);
             Assert.IsNotNull(asetList);
 
             List<AvailabilitySetData>? asetList2 = asetList! as List<AvailabilitySetData>;
@@ -438,6 +438,22 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(s_availabilitySets, ModelReaderWriterOptions.Xml));
             Assert.IsNotNull(ex);
             Assert.AreEqual("Format 'X' is not supported only 'J' or 'W' format can be written as collections", ex!.Message);
+        }
+
+        [Test]
+        public void ReadListNoContextShouldFail()
+        {
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(s_data, typeof(List<AvailabilitySetData>)));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("List`1 does not implement IPersistableModel", ex!.Message);
+        }
+
+        [Test]
+        public void WriteListNoContextShouldFail()
+        {
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(s_availabilitySets));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("List`1 does not implement IPersistableModel", ex!.Message);
         }
     }
 }

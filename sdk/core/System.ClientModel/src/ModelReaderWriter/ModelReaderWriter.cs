@@ -55,7 +55,16 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        return WritePersistableOrEnumerable(model, s_reflectionContext.Value, options);
+        //temp blocking this for symetry of functionality on read/write with no context.
+        //will be allowed after https://github.com/Azure/azure-sdk-for-net/issues/48294
+        if (model is IPersistableModel<object> iModel)
+        {
+            return WritePersistable(iModel, options);
+        }
+        else
+        {
+            throw new InvalidOperationException($"{model.GetType().Name} does not implement IPersistableModel");
+        }
     }
 
     /// <summary>
@@ -181,15 +190,6 @@ public static class ModelReaderWriter
             options);
     }
 
-    private static T? ReadInternal<T>(
-        BinaryData data,
-        ModelReaderWriterContext context,
-        ModelReaderWriterOptions? options = default)
-    {
-        var obj = ReadInternal(data, typeof(T), context, options);
-        return obj is null ? (T?)obj : (T)obj;
-    }
-
     /// <summary>
     /// Converts the <see cref="BinaryData"/> into a <paramref name="returnType"/>.
     /// </summary>
@@ -238,6 +238,15 @@ public static class ModelReaderWriter
             returnType,
             context,
             options);
+    }
+
+    private static T? ReadInternal<T>(
+    BinaryData data,
+    ModelReaderWriterContext context,
+    ModelReaderWriterOptions? options = default)
+    {
+        var obj = ReadInternal(data, typeof(T), context, options);
+        return obj is null ? (T?)obj : (T)obj;
     }
 
     private static object? ReadInternal(
