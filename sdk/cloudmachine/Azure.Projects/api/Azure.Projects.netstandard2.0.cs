@@ -1,10 +1,5 @@
 namespace Azure.Core
 {
-    public partial class ClientCache
-    {
-        public ClientCache() { }
-        public T Get<T>(System.Func<T> value, string id = null) where T : class { throw null; }
-    }
     public static partial class ProjectClientConfiguration
     {
         public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddAzureProjectConnections(this Microsoft.Extensions.Configuration.IConfigurationBuilder builder, System.ClientModel.Primitives.ConnectionCollection connections) { throw null; }
