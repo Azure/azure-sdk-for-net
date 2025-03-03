@@ -45,7 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <BridgeProjects Include="$(MSBuildThisFileDirectory)..\sdk\**\Microsoft.Azure.Extensions.WebJobs.*\**\*.csproj" />
+    <BridgeProjects Include="$(MSBuildThisFileDirectory)..\sdk\**\Microsoft.Azure.WebJobs.Extensions.*\**\*.csproj" />
     <BridgeProjects Include="$(MSBuildThisFileDirectory)..\sdk\**\Microsoft.Azure.Data.SchemaRegistry.ApacheAvro\**\*.csproj" />
     <BridgeProjects Include="$(MSBuildThisFileDirectory)..\sdk\**\Microsoft.Azure.Core.NewtonsoftJson\**\*.csproj" />
     <BridgeProjects Include="$(MSBuildThisFileDirectory)..\sdk\**\Microsoft.Azure.Core.Spatial\**\*.csproj" />
