@@ -9,7 +9,7 @@ namespace System.ClientModel;
 /// <summary>
 /// Represents a provider that can provide a token.
 /// </summary>
-public interface IScopedFlowToken : ITokenContext
+public interface IScopedFlowContext : ITokenContext
 {
     /// <summary>
     /// Gets the scopes required to authenticate.

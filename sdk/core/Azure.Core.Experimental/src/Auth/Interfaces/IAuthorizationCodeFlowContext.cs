@@ -6,12 +6,17 @@ namespace System.ClientModel;
 /// <summary>
 /// Represents a provider that can provide a token.
 /// </summary>
-public interface IImplicitFlowToken : IScopedFlowToken
+public interface IAuthorizationCodeFlowContext : IScopedFlowContext
 {
     /// <summary>
     /// Gets the authorization endpoint URI.
     /// </summary>
     Uri AuthorizationUri { get; }
+
+    /// <summary>
+    /// Gets the token endpoint URI.
+    /// </summary>
+    Uri TokenUri { get; }
 
     /// <summary>
     /// Gets the refresh token endpoint URI.

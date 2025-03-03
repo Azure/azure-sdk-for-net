@@ -16,7 +16,7 @@ namespace System.ClientModel.Auth;
 public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
 {
     private readonly ITokenProvider _tokenProvider;
-    private readonly IScopedFlowToken _flowContext;
+    private readonly IScopedFlowContext _flowContext;
 
     /// <param name="tokenProvider"></param>
     /// <param name="contexts"></param>
@@ -30,7 +30,7 @@ public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         Token token;
-        if (message.TryGetProperty(typeof(IScopedFlowToken), out var rawContext) && rawContext is IScopedFlowToken scopesContext)
+        if (message.TryGetProperty(typeof(IScopedFlowContext), out var rawContext) && rawContext is IScopedFlowContext scopesContext)
         {
             var context = _flowContext.CloneWithAdditionalScopes(scopesContext.Scopes);
             token = _tokenProvider.GetAccessToken(context, message.CancellationToken);
@@ -51,16 +51,16 @@ public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
         return ProcessNextAsync(message, pipeline, currentIndex);
     }
 
-    internal static IScopedFlowToken GetContext(IEnumerable<IReadOnlyDictionary<string, object>> contexts, ITokenProvider tokenProvider)
+    internal static IScopedFlowContext GetContext(IEnumerable<IReadOnlyDictionary<string, object>> contexts, ITokenProvider tokenProvider)
     {
         var type = tokenProvider.GetType();
         // This assumes that a credential provider will only implement one flow type.
         var credentialFlowType = type switch
         {
-            var t when typeof(TokenProvider<IClientCredentialsFlowToken>).IsAssignableFrom(t) => typeof(IClientCredentialsFlowToken),
-            var t when typeof(TokenProvider<IAuthorizationCodeFlowToken>).IsAssignableFrom(t) => typeof(IAuthorizationCodeFlowToken),
-            var t when typeof(TokenProvider<IPasswordFlowToken>).IsAssignableFrom(t) => typeof(IPasswordFlowToken),
-            var t when typeof(TokenProvider<IImplicitFlowToken>).IsAssignableFrom(t) => typeof(IImplicitFlowToken),
+            var t when typeof(TokenProvider<IClientCredentialsFlowContext>).IsAssignableFrom(t) => typeof(IClientCredentialsFlowContext),
+            var t when typeof(TokenProvider<IAuthorizationCodeFlowContext>).IsAssignableFrom(t) => typeof(IAuthorizationCodeFlowContext),
+            var t when typeof(TokenProvider<IPasswordFlowContext>).IsAssignableFrom(t) => typeof(IPasswordFlowContext),
+            var t when typeof(TokenProvider<IImplicitFlowContext>).IsAssignableFrom(t) => typeof(IImplicitFlowContext),
             _ => throw new InvalidOperationException("Supplied credential does not implement any supported auth flow.")
         };
         foreach (var context in contexts)
@@ -68,7 +68,7 @@ public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
             var createdContext = tokenProvider.CreateContext(context);
             if (createdContext != null && credentialFlowType.IsInstanceOfType(createdContext))
             {
-                return (IScopedFlowToken)createdContext;
+                return (IScopedFlowContext)createdContext;
             }
         }
         throw new InvalidOperationException($"The service does not support the flow implemented by the supplied token provider {type.FullName}.");

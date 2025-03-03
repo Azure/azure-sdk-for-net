@@ -122,32 +122,28 @@ namespace Azure.Core
 }
 namespace System.ClientModel
 {
-    public partial interface IAuthorizationCodeFlowToken : System.ClientModel.IScopedFlowToken, System.ClientModel.ITokenContext
+    public partial interface IAuthorizationCodeFlowContext : System.ClientModel.IScopedFlowContext, System.ClientModel.ITokenContext
     {
         System.Uri AuthorizationUri { get; }
         System.Uri RefreshUri { get; }
         System.Uri TokenUri { get; }
     }
-    public partial interface IClaimsToken : System.ClientModel.IScopedFlowToken, System.ClientModel.ITokenContext
-    {
-        string Claims { get; }
-    }
-    public partial interface IClientCredentialsFlowToken : System.ClientModel.IScopedFlowToken, System.ClientModel.ITokenContext
+    public partial interface IClientCredentialsFlowContext : System.ClientModel.IScopedFlowContext, System.ClientModel.ITokenContext
     {
         System.Uri RefreshUri { get; }
         System.Uri TokenUri { get; }
     }
-    public partial interface IImplicitFlowToken : System.ClientModel.IScopedFlowToken, System.ClientModel.ITokenContext
+    public partial interface IImplicitFlowContext : System.ClientModel.IScopedFlowContext, System.ClientModel.ITokenContext
     {
         System.Uri AuthorizationUri { get; }
         System.Uri RefreshUri { get; }
     }
-    public partial interface IPasswordFlowToken : System.ClientModel.IScopedFlowToken, System.ClientModel.ITokenContext
+    public partial interface IPasswordFlowContext : System.ClientModel.IScopedFlowContext, System.ClientModel.ITokenContext
     {
         System.Uri RefreshUri { get; }
         System.Uri TokenUri { get; }
     }
-    public partial interface IScopedFlowToken : System.ClientModel.ITokenContext
+    public partial interface IScopedFlowContext : System.ClientModel.ITokenContext
     {
         string[] Scopes { get; }
         object CloneWithAdditionalScopes(string[] additionalScopes);

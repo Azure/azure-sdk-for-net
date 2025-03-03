@@ -69,7 +69,7 @@ public class TokenProviderTests
         {
             var message = _pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
-            message.SetProperty(typeof(IScopedFlowToken), new ScopedContext(["read"]));
+            message.SetProperty(typeof(IScopedFlowContext), new ScopedContext(["read"]));
 
             PipelineRequest request = message.Request;
             request.Method = "GET";
@@ -79,7 +79,7 @@ public class TokenProviderTests
         }
     }
 
-    internal struct ScopedContext : IScopedFlowToken
+    internal struct ScopedContext : IScopedFlowContext
     {
         public string[] Scopes { get; }
 
@@ -94,7 +94,7 @@ public class TokenProviderTests
         }
     }
 
-    public class ClientCredentialTokenProvider : TokenProvider<IClientCredentialsFlowToken>
+    public class ClientCredentialTokenProvider : TokenProvider<IClientCredentialsFlowContext>
     {
         private string _clientId;
         private string _clientSecret;
@@ -124,17 +124,17 @@ public class TokenProviderTests
             _client = new HttpClient(mockHandler);
         }
 
-        public override Token GetAccessToken(IClientCredentialsFlowToken context, CancellationToken cancellationToken)
+        public override Token GetAccessToken(IClientCredentialsFlowContext context, CancellationToken cancellationToken)
         {
             return GetAccessTokenInternal(false, context, cancellationToken).GetAwaiter().GetResult();
         }
 
-        public override async ValueTask<Token> GetAccessTokenAsync(IClientCredentialsFlowToken context, CancellationToken cancellationToken)
+        public override async ValueTask<Token> GetAccessTokenAsync(IClientCredentialsFlowContext context, CancellationToken cancellationToken)
         {
             return await GetAccessTokenInternal(true, context, cancellationToken).ConfigureAwait(false);
         }
 
-        public override IClientCredentialsFlowToken CreateContext(IReadOnlyDictionary<string, object> properties)
+        public override IClientCredentialsFlowContext CreateContext(IReadOnlyDictionary<string, object> properties)
         {
             if (properties.TryGetValue("scopes", out var scopes) && scopes is string[] scopeArray &&
                 properties.TryGetValue("tokenUrl", out var tokenUri) && tokenUri is Uri tokenUriValue &&
@@ -145,7 +145,7 @@ public class TokenProviderTests
             return null;
         }
 
-        internal async ValueTask<Token> GetAccessTokenInternal(bool async, IClientCredentialsFlowToken context, CancellationToken cancellationToken)
+        internal async ValueTask<Token> GetAccessTokenInternal(bool async, IClientCredentialsFlowContext context, CancellationToken cancellationToken)
         {
             var tokenUrl = context.TokenUri.ToString();
 
@@ -185,7 +185,7 @@ public class TokenProviderTests
         }
     }
 
-    public struct ClientCredentialsContext(Uri tokenUri, Uri refreshUri, string[] scopes) : IClientCredentialsFlowToken
+    public struct ClientCredentialsContext(Uri tokenUri, Uri refreshUri, string[] scopes) : IClientCredentialsFlowContext
     {
         public string[] Scopes { get; } = scopes;
 
@@ -201,10 +201,10 @@ public class TokenProviderTests
 
     public class ClientCredentialToken : RefreshableToken
     {
-        private TokenProvider<IClientCredentialsFlowToken> _provider;
-        private IClientCredentialsFlowToken _context;
+        private TokenProvider<IClientCredentialsFlowContext> _provider;
+        private IClientCredentialsFlowContext _context;
 
-        public ClientCredentialToken(TokenProvider<IClientCredentialsFlowToken> provider, IClientCredentialsFlowToken context, string tokenValue, string tokenType, DateTimeOffset expiresOn, DateTimeOffset? refreshOn = null)
+        public ClientCredentialToken(TokenProvider<IClientCredentialsFlowContext> provider, IClientCredentialsFlowContext context, string tokenValue, string tokenType, DateTimeOffset expiresOn, DateTimeOffset? refreshOn = null)
             : base(tokenValue, tokenType, expiresOn, refreshOn)
         {
             _provider = provider;
@@ -233,10 +233,11 @@ public class TokenProviderTests
         {
             return Task.FromResult(_responseFactory(request));
         }
-
+#if !NETFRAMEWORK
         protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             return _responseFactory(request);
         }
+#endif
     }
 }
