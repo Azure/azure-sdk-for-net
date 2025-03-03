@@ -1341,7 +1341,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual async Task<Operation> DeleteDeploymentAsync(WaitUntil waitUntil, RequestContext context = null)
+        public virtual async Task<Operation> DeleteDeploymentAsync(WaitUntil waitUntil, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
@@ -1375,7 +1375,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual Operation DeleteDeployment(WaitUntil waitUntil, RequestContext context = null)
+        public virtual Operation DeleteDeployment(WaitUntil waitUntil, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
