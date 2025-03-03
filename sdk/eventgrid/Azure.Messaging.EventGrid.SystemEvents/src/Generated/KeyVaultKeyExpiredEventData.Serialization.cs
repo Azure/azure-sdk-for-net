@@ -34,31 +34,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(KeyVaultKeyExpiredEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("Id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(VaultName))
-            {
-                writer.WritePropertyName("VaultName"u8);
-                writer.WriteStringValue(VaultName);
-            }
-            if (Optional.IsDefined(ObjectType))
-            {
-                writer.WritePropertyName("ObjectType"u8);
-                writer.WriteStringValue(ObjectType);
-            }
-            if (Optional.IsDefined(ObjectName))
-            {
-                writer.WritePropertyName("ObjectName"u8);
-                writer.WriteStringValue(ObjectName);
-            }
-            if (Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("Version"u8);
-                writer.WriteStringValue(Version);
-            }
+            writer.WritePropertyName("Id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("VaultName"u8);
+            writer.WriteStringValue(VaultName);
+            writer.WritePropertyName("ObjectType"u8);
+            writer.WriteStringValue(ObjectType);
+            writer.WritePropertyName("ObjectName"u8);
+            writer.WriteStringValue(ObjectName);
+            writer.WritePropertyName("Version"u8);
+            writer.WriteStringValue(Version);
             if (Optional.IsDefined(NBF))
             {
                 writer.WritePropertyName("NBF"u8);

@@ -1840,8 +1840,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// this by specifying whether to commit a block from the committed
         /// block list or from the uncommitted block list, or to commit the
         /// most recently uploaded version of the block, whichever list it
-        /// may belong to.  Any blocks not specified in the block list and
+        /// may belong to.  Any blocks not specified in the block list are
         /// permanently deleted.
+        ///
+        /// Note: Uncommitted blocks will expire and be permanently deleted after 7 days.
+        /// Blocks that are committed to a blob do not expire.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list">
@@ -1897,8 +1900,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// this by specifying whether to commit a block from the committed
         /// block list or from the uncommitted block list, or to commit the
         /// most recently uploaded version of the block, whichever list it
-        /// may belong to.  Any blocks not specified in the block list and
+        /// may belong to.  Any blocks not specified in the block list are
         /// permanently deleted.
+        ///
+        /// Note: Uncommitted blocks will expire and be permanently deleted after 7 days.
+        /// Blocks that are committed to a blob do not expire.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list">
@@ -1970,8 +1976,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// this by specifying whether to commit a block from the committed
         /// block list or from the uncommitted block list, or to commit the
         /// most recently uploaded version of the block, whichever list it
-        /// may belong to.  Any blocks not specified in the block list and
+        /// may belong to.  Any blocks not specified in the block list are
         /// permanently deleted.
+        ///
+        /// Note: Uncommitted blocks will expire and be permanently deleted after 7 days.
+        /// Blocks that are committed to a blob do not expire.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list">
@@ -2027,8 +2036,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// this by specifying whether to commit a block from the committed
         /// block list or from the uncommitted block list, or to commit the
         /// most recently uploaded version of the block, whichever list it
-        /// may belong to.  Any blocks not specified in the block list and
+        /// may belong to.  Any blocks not specified in the block list are
         /// permanently deleted.
+        ///
+        /// Note: Uncommitted blocks will expire and be permanently deleted after 7 days.
+        /// Blocks that are committed to a blob do not expire.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list">
@@ -2100,8 +2112,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// this by specifying whether to commit a block from the committed
         /// block list or from the uncommitted block list, or to commit the
         /// most recently uploaded version of the block, whichever list it
-        /// may belong to.  Any blocks not specified in the block list and
+        /// may belong to.  Any blocks not specified in the block list are
         /// permanently deleted.
+        ///
+        /// Note: Uncommitted blocks will expire and be permanently deleted after 7 days.
+        /// Blocks that are committed to a blob do not expire.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list">

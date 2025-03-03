@@ -5,11 +5,11 @@ using Azure.Provisioning.Expressions;
 using Azure.Provisioning.AppService;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
-using Azure.CloudMachine.Core;
+using Azure.Projects.Core;
 
-namespace Azure.CloudMachine.AppService;
+namespace Azure.Projects.AppService;
 
-public class AppServiceFeature : CloudMachineFeature
+public class AppServiceFeature : AzureProjectFeature
 {
     public AppServiceSkuDescription Sku { get; set; }
 
@@ -20,7 +20,7 @@ public class AppServiceFeature : CloudMachineFeature
 
     protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
-        //Add a App Service to the CloudMachine infrastructure.
+        //Add a App Service to the infrastructure.
         AppServicePlan hostingPlan = new("cm_hosting_plan")
         {
             Name = infrastructure.Id,
@@ -49,8 +49,8 @@ public class AppServiceFeature : CloudMachineFeature
                 IsWebSocketsEnabled = true,
                 AppSettings =
                 [
-                    // This is used by the CloudMachineWorkspace to detect that it is running in a deployed App Service.
-                    // The ClientId is used to create a ManagedIdentityCredential so that it wires up to our CloudMachine user-assigned identity.
+                    // This is used by the ClientWorkspace to detect that it is running in a deployed App Service.
+                    // The ClientId is used to create a ManagedIdentityCredential so that it wires up to our project user-assigned identity.
                     new AppServiceNameValuePair
                     {
                         Name = "CLOUDMACHINE_MANAGED_IDENTITY_CLIENT_ID",

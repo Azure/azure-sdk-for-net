@@ -15,27 +15,27 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace sample.namespace
+namespace Samples
 {
-    internal partial class ArmOperation<T> : global::Azure.ResourceManager.ArmOperation<T>
+    internal partial class SamplesArmOperation<T> : global::Azure.ResourceManager.ArmOperation<T>
     {
         private readonly global::Azure.Core.OperationInternal<T> _operation;
         private readonly global::Azure.Core.RehydrationToken? _completeRehydrationToken;
         private readonly global::Azure.Core.NextLinkOperationImplementation _nextLinkOperation;
         private readonly string _operationId;
 
-        protected ArmOperation()
+        protected SamplesArmOperation()
         {
         }
 
-        internal ArmOperation(global::Azure.Response<T> response, global::Azure.Core.RehydrationToken? rehydrationToken = null)
+        internal SamplesArmOperation(global::Azure.Response<T> response, global::Azure.Core.RehydrationToken? rehydrationToken = null)
         {
             _operation = global::Azure.Core.OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
             _completeRehydrationToken = rehydrationToken;
             _operationId = this.GetOperationId(rehydrationToken);
         }
 
-        internal ArmOperation(global::Azure.Core.IOperationSource<T> source, global::Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics, global::Azure.Core.Pipeline.HttpPipeline pipeline, global::Azure.Core.Request request, global::Azure.Response response, global::Azure.Core.OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
+        internal SamplesArmOperation(global::Azure.Core.IOperationSource<T> source, global::Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics, global::Azure.Core.Pipeline.HttpPipeline pipeline, global::Azure.Core.Request request, global::Azure.Response response, global::Azure.Core.OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
             global::Azure.Core.IOperation nextLinkOperation = global::Azure.Core.NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
             if ((nextLinkOperation is global::Azure.Core.NextLinkOperationImplementation nextLinkOperationImplementation))
@@ -52,7 +52,7 @@ namespace sample.namespace
                 global::Azure.Core.NextLinkOperationImplementation.Create(source, nextLinkOperation),
                 clientDiagnostics,
                 response,
-                "ArmOperation",
+                "SamplesArmOperation",
                 null,
                 new global::Azure.Core.SequentialDelayStrategy());
         }

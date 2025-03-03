@@ -370,6 +370,7 @@ namespace Azure.Communication.CallAutomation
     public partial class CallIntelligenceOptions
     {
         public CallIntelligenceOptions() { }
+        public System.Uri BackupCognitiveServicesEndpoint { get { throw null; } set { } }
         public System.Uri CognitiveServicesEndpoint { get { throw null; } set { } }
     }
     public partial class CallInvite

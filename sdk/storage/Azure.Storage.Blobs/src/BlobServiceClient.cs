@@ -574,6 +574,7 @@ namespace Azure.Storage.Blobs
             new BlobContainerClient(
                 Uri.AppendToPath(blobContainerName),
                 ClientConfiguration,
+                AuthenticationPolicy,
                 ClientSideEncryption);
 
         #region protected static accessors for Azure.Storage.Blobs.Batch
@@ -1446,6 +1447,10 @@ namespace Azure.Storage.Blobs
         /// <param name="startsOn">
         /// Start time for the key's validity, with null indicating an
         /// immediate start.  The time should be specified in UTC.
+        ///
+        /// Note: If you set the start time to the current time, failures
+        /// might occur intermittently for the first few minutes. This is due to different
+        /// machines having slightly different current times (known as clock skew).
         /// </param>
         /// <param name="expiresOn">
         /// Expiration of the key's validity.  The time should be specified
@@ -1483,6 +1488,10 @@ namespace Azure.Storage.Blobs
         /// <param name="startsOn">
         /// Start time for the key's validity, with null indicating an
         /// immediate start.  The time should be specified in UTC.
+        ///
+        /// Note: If you set the start time to the current time, failures
+        /// might occur intermittently for the first few minutes. This is due to different
+        /// machines having slightly different current times (known as clock skew).
         /// </param>
         /// <param name="expiresOn">
         /// Expiration of the key's validity.  The time should be specified
@@ -1520,6 +1529,10 @@ namespace Azure.Storage.Blobs
         /// <param name="startsOn">
         /// Start time for the key's validity, with null indicating an
         /// immediate start.  The time should be specified in UTC.
+        ///
+        /// Note: If you set the start time to the current time, failures
+        /// might occur intermittently for the first few minutes. This is due to different
+        /// machines having slightly different current times (known as clock skew).
         /// </param>
         /// <param name="expiresOn">
         /// Expiration of the key's validity.  The time should be specified
@@ -1713,9 +1726,7 @@ namespace Azure.Storage.Blobs
         #region DeleteBlobContainer
         /// <summary>
         /// The <see cref="DeleteBlobContainer"/> operation marks the
-        /// specified blob container for deletion. The container and any blobs
-        /// contained within it are later deleted during garbage collection
-        /// which could take several minutes.
+        /// specified blob container for deletion.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1751,9 +1762,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="DeleteBlobContainerAsync"/> operation marks the
-        /// specified container for deletion. The container and any blobs
-        /// contained within it are later deleted during garbage collection
-        /// which could take several minutes.
+        /// specified container for deletion.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">

@@ -46,8 +46,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultSecretExpiredEventData"/>. </summary>
-        internal KeyVaultSecretExpiredEventData()
+        /// <param name="id"> The id of the object that triggered this event. </param>
+        /// <param name="vaultName"> Key vault name of the object that triggered this event. </param>
+        /// <param name="objectType"> The type of the object that triggered this event. </param>
+        /// <param name="objectName"> The name of the object that triggered this event. </param>
+        /// <param name="version"> The version of the object that triggered this event. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="vaultName"/>, <paramref name="objectType"/>, <paramref name="objectName"/> or <paramref name="version"/> is null. </exception>
+        internal KeyVaultSecretExpiredEventData(string id, string vaultName, string objectType, string objectName, string version)
         {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(vaultName, nameof(vaultName));
+            Argument.AssertNotNull(objectType, nameof(objectType));
+            Argument.AssertNotNull(objectName, nameof(objectName));
+            Argument.AssertNotNull(version, nameof(version));
+
+            Id = id;
+            VaultName = vaultName;
+            ObjectType = objectType;
+            ObjectName = objectName;
+            Version = version;
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultSecretExpiredEventData"/>. </summary>
@@ -69,6 +86,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             NBF = nbf;
             EXP = exp;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretExpiredEventData"/> for deserialization. </summary>
+        internal KeyVaultSecretExpiredEventData()
+        {
         }
 
         /// <summary> The id of the object that triggered this event. </summary>
