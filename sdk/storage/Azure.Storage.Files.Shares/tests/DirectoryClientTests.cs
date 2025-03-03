@@ -162,7 +162,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [Test]
         public void Ctor_DevelopmentThrows()
         {
-            var ex = Assert.Throws<ArgumentException>(() => new ShareDirectoryClient("Development=true", "share", "dir"));
+            var ex = Assert.Throws<ArgumentException>(() => new ShareDirectoryClient("UseDevelopmentStorage=true", "share", "dir"));
             Assert.AreEqual("connectionString", ex.ParamName);
         }
 
