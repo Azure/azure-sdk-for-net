@@ -21,14 +21,14 @@ To swap deployments, call SwapDeployments on the TextAnalysisAuthoring client.
 string projectName = "LoanAgreements";
 string firstDeploymentName = "DeploymentA";
 string secondDeploymentName = "DeploymentB";
-TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, firstDeploymentName);
+TextAuthoringProject porjectClient = client.GetProject(projectName);
 
 var swapDetails = new TextAuthoringSwapDeploymentsDetails(
     firstDeploymentName: firstDeploymentName,
     secondDeploymentName: secondDeploymentName
     );
 
-Operation operation = deploymentClient.SwapDeployments(
+Operation operation = porjectClient.SwapDeployments(
     waitUntil: WaitUntil.Completed,
     details: swapDetails
 );

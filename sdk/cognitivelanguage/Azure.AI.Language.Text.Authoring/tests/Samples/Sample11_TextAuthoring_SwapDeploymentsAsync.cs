@@ -26,7 +26,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             string projectName = "LoanAgreements";
             string firstDeploymentName = "DeploymentA";
             string secondDeploymentName = "DeploymentB";
-            TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, firstDeploymentName);
+            TextAuthoringProject projectClient = client.GetProject(projectName);
 
             var swapDetails = new TextAuthoringSwapDeploymentsDetails
             (
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
                 secondDeploymentName: secondDeploymentName
                 );
 
-            Operation operation = await deploymentClient.SwapDeploymentsAsync(
+            Operation operation = await projectClient.SwapDeploymentsAsync(
                 waitUntil: WaitUntil.Completed,
                 details: swapDetails
             );

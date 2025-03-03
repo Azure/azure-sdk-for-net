@@ -375,11 +375,10 @@ namespace Azure.AI.Language.Text.Authoring.Tests
                 firstDeploymentName: "deployment1",
                 secondDeploymentName: "deployment2"
             );
-            string deploymentName = "MyDeployment";
-            TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+            TextAuthoringProject projectClient = client.GetProject(projectName);
 
             // Act
-            Operation operation = await deploymentClient.SwapDeploymentsAsync(
+            Operation operation = await projectClient.SwapDeploymentsAsync(
                 waitUntil: WaitUntil.Completed,
                 details: swapDetails
             );
