@@ -69,7 +69,7 @@ namespace Azure.Generator.Utilities
 
             // we cannot find the corresponding request path in the configuration, trying to deduce from the path
             // return false if this is not a resource
-            if (!AzureClientPlugin.Instance.ResourceDetection.IsResource(client.Operations, requestPath))
+            if (!AzureClientPlugin.Instance.ResourceDetection.IsResource(requestPath))
                 return false;
 
             // get the request path

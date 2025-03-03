@@ -38,7 +38,7 @@ namespace Azure.Generator.Utilities
             // We will never want this
             var scopeDetection = new ScopeDetection();
             var scope = scopeDetection.GetScopePath(requestPath);
-            IEnumerable<RequestPath> candidates = AzureClientPlugin.Instance.ResourceBuilder.ResourceOperationSets.Select(operationSet => operationSet.RequestPath)
+            IEnumerable<RequestPath> candidates = AzureClientPlugin.Instance.ResourceBuilder.ResourcePaths
                 .Concat(new List<RequestPath> { RequestPath.ResourceGroup, RequestPath.Subscription, RequestPath.ManagementGroup }) // When generating management group in management.json, the path is /providers/Microsoft.Management/managementGroups/{groupId} while RequestPath.ManagementGroup is /providers/Microsoft.Management/managementGroups/{managementGroupId}. We pick the first one.
                 //.Concat(Configuration.MgmtConfiguration.ParameterizedScopes)
                 .Where(r => r.IsAncestorOf(requestPath)).OrderByDescending(r => r.Count);

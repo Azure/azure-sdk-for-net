@@ -5,7 +5,6 @@ using Azure.Core;
 using Azure.Generator.Mgmt.Models;
 using Microsoft.TypeSpec.Generator.Input;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -19,9 +18,9 @@ namespace Azure.Generator.Utilities
         private const string SubscriptionScopePrefix = "/subscriptions";
         private const string TenantScopePrefix = "/tenants";
 
-        private ConcurrentDictionary<RequestPath, (string Name, InputModelType? InputModel)?> _resourceDataSchemaCache = new ConcurrentDictionary<RequestPath, (string Name, InputModelType? InputModel)?>();
+        private Dictionary<RequestPath, (string Name, InputModelType? InputModel)?> _resourceDataSchemaCache = new Dictionary<RequestPath, (string Name, InputModelType? InputModel)?>();
 
-        public bool IsResource(IReadOnlyCollection<InputOperation> set, RequestPath requestPath) => TryGetResourceDataSchema(set, requestPath, out _, out _);
+        public bool IsResource(RequestPath requestPath) => _resourceDataSchemaCache.ContainsKey(requestPath);
 
         public static string GetResourceTypeFromPath(RequestPath requestPath)
         {

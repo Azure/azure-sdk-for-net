@@ -11,76 +11,61 @@ namespace Azure.Generator
 {
     internal class ResourceBuilder
     {
-        private Dictionary<string, HashSet<OperationSet>> _specNameToResourceOperationSetMap;
+        private Dictionary<string, (RequestPath, InputClient)> _specNameToResourceClientMap;
 
-        public bool IsResource(string name) => _specNameToResourceOperationSetMap.ContainsKey(name);
+        public bool IsResource(string name) => _specNameToResourceClientMap.ContainsKey(name);
 
-        private IEnumerable<OperationSet>? _resourceOperationSets;
-        public IEnumerable<OperationSet> ResourceOperationSets => _resourceOperationSets ??= _specNameToResourceOperationSetMap.Values.SelectMany(x => x);
+        private IEnumerable<RequestPath>? _resourcePaths;
+        public IEnumerable<RequestPath> ResourcePaths => _resourcePaths ??= _specNameToResourceClientMap.Values.Select(x => x.Item1);
 
         public ResourceBuilder()
         {
-            _specNameToResourceOperationSetMap = EnsureOperationsetMap();
+            _specNameToResourceClientMap = EnsureOperationsetMap();
         }
 
         public IReadOnlyList<(InputClient ResourceClient, string RequestPath, bool IsSingleton, string RequestType, string SpecName)> BuildResourceClients()
         {
             var result = new List<(InputClient ResourceClient, string RequestPath, bool IsSingleton, string RequestType, string SpecName)>();
             var singletonDetection = new SingletonDetection();
-            foreach ((var schemaName, var operationSets) in _specNameToResourceOperationSetMap)
+            foreach ((string schemaName, (RequestPath requestPath, InputClient client)) in _specNameToResourceClientMap)
             {
-                foreach (var operationSet in operationSets)
-                {
-                    var requestPath = operationSet.RequestPath;
-                    var resourceType = ResourceDetection.GetResourceTypeFromPath(requestPath);
-                    var isSingleton = singletonDetection.IsSingletonResource(operationSet.InputClient, requestPath);
-                    var requestType = ResourceDetection.GetResourceTypeFromPath(requestPath); ;
-                    result.Add((operationSet.InputClient, operationSet.RequestPath, isSingleton, requestType, schemaName));
-                }
+                var resourceType = ResourceDetection.GetResourceTypeFromPath(requestPath);
+                var isSingleton = singletonDetection.IsSingletonResource(client, requestPath);
+                result.Add((client, requestPath, isSingleton, resourceType, schemaName));
             }
             return result;
         }
 
-        private Dictionary<string, HashSet<OperationSet>> EnsureOperationsetMap()
+        private Dictionary<string, (RequestPath ResourcePath, InputClient Client)> EnsureOperationsetMap()
         {
             var pathToOperationSetMap = CategorizeClients();
-            var result = new Dictionary<string, HashSet<OperationSet>>();
-            foreach (var operationSet in pathToOperationSetMap.Values)
+            var result = new Dictionary<string, (RequestPath, InputClient)>();
+            foreach (var (requestPath, client) in pathToOperationSetMap)
             {
-                if (AzureClientPlugin.Instance.ResourceDetection.TryGetResourceDataSchema(operationSet, operationSet.RequestPath, out var resourceSpecName, out var resourceSchema))
+                if (AzureClientPlugin.Instance.ResourceDetection.TryGetResourceDataSchema(client.Operations, requestPath, out var resourceSpecName, out var resourceSchema))
                 {
                     // if this operation set corresponds to a SDK resource, we add it to the map
-                    if (!result.TryGetValue(resourceSpecName!, out HashSet<OperationSet>? value))
+                    if (!result.ContainsKey(resourceSpecName))
                     {
-                        value = new HashSet<OperationSet>();
-                        result.Add(resourceSpecName!, value);
+                        result.Add(resourceSpecName, (requestPath, client));
                     }
-                    value.Add(operationSet);
                 }
             }
 
             return result;
         }
 
-        private Dictionary<RequestPath, OperationSet> CategorizeClients()
+        private Dictionary<RequestPath, InputClient> CategorizeClients()
         {
-            var result = new Dictionary<RequestPath, OperationSet>();
+            var result = new Dictionary<RequestPath, InputClient>();
             foreach (var inputClient in AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients)
             {
                 foreach (var operation in inputClient.Operations)
                 {
                     var path = operation.GetHttpPath();
-                    if (result.TryGetValue(path, out var operationSet))
+                    if (!result.ContainsKey(path))
                     {
-                        operationSet.Add(operation);
-                    }
-                    else
-                    {
-                        operationSet = new OperationSet(path, inputClient)
-                        {
-                            operation
-                        };
-                        result.Add(path, operationSet);
+                        result.Add(path, inputClient);
                     }
                 }
             }
