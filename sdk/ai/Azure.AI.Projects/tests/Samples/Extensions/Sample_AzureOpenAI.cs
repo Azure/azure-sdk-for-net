@@ -18,7 +18,7 @@ public class Sample_AzureOpenAI : SamplesBase<AIProjectsTestEnvironment>
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         AIProjectClient client = new AIProjectClient(connectionString);
-        ChatClient chatClient = client.GetOpenAIChatClient("gpt-4o-mini");
+        ChatClient chatClient = client.GetAzureOpenAIChatClient("gpt-4o-mini");
 
         ChatCompletion result = chatClient.CompleteChat("List all the rainbow colors");
         Console.WriteLine(result.Content[0].Text);

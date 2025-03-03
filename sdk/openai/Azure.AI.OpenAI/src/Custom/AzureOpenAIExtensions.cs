@@ -20,7 +20,7 @@ public static class AzureOpenAIExtensions
     /// <param name="provider"></param>
     /// <param name="deploymentName"></param>
     /// <returns></returns>
-    public static ChatClient GetOpenAIChatClient(this ConnectionProvider provider, string? deploymentName = null)
+    public static ChatClient GetAzureOpenAIChatClient(this ConnectionProvider provider, string? deploymentName = null)
     {
         string name = deploymentName ?? "default";
 
@@ -39,7 +39,7 @@ public static class AzureOpenAIExtensions
     /// <param name="provider"></param>
     /// <param name="deploymentName"></param>
     /// <returns></returns>
-    public static EmbeddingClient GetOpenAIEmbeddingsClient(this ConnectionProvider provider, string? deploymentName = null)
+    public static EmbeddingClient GetAzureOpenAIEmbeddingsClient(this ConnectionProvider provider, string? deploymentName = null)
     {
         string name = deploymentName ?? "default";
 
