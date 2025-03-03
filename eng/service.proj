@@ -59,7 +59,7 @@
     <ProjectReference Include="@(SrcProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSrc)' == 'true'" />
   </ItemGroup>
 
-  <Import Project="..\sdk\$(ServiceDirectory)\*.projects" Condition="'$(ProjectListOverrideFile)' == '' "/>
+  <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
   <Import Project="$(RepoRoot)$(ProjectListOverrideFile)" Condition="'$(ProjectListOverrideFile)' != '' " />
 
   <ItemGroup Condition="'$(ProjectListOverrideFile)' != '' and '$(EnableOverrideExclusions)' != ''">
