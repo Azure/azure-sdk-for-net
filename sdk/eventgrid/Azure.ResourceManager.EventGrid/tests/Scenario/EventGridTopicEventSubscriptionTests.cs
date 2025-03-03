@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         private ResourceGroupResource _resourceGroup;
         private EventGridTopicResource _eventGridTopic;
         private TopicEventSubscriptionCollection _topicEventSubscriptionCollection;
-        private const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=PASSWORDCODE";
+        private const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=SANITIZED_FUNCTION_KEY\r\n ";
 
         public EventGridTopicEventSubscriptionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)

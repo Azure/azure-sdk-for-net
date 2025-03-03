@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var tenant = tenants.FirstOrDefault();
             _verifiedPartnerCollection = tenant.GetVerifiedPartners();
         }
-
-        [Ignore("ToDo (6/21/2023): currently verfied partner is not available for this API version, re-enable when its available")]
         [Test]
         public async Task Exists()
         {
@@ -38,15 +36,12 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsTrue(flag);
         }
 
-        [Ignore("ToDo (6/21/2023): currently verfied partner is not available for this API version, re-enable when its available")]
         [Test]
         public async Task Get()
         {
             var verifiedPartner = await _verifiedPartnerCollection.GetAsync(_existPartnerName);
             ValidateVerifiedPartner(verifiedPartner);
         }
-
-        [Ignore("ToDo (6/21/2023): currently verfied partner is not available for this API version, re-enable when its available")]
         [Test]
         public async Task GetAll()
         {

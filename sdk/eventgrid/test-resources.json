@@ -51,7 +51,7 @@
         "capacity": 1
       },
       "properties": {
-        "isZoneRedundant": true,
+        "isZoneRedundant": false,
         "publicNetworkAccess": "Enabled"
       }
     },

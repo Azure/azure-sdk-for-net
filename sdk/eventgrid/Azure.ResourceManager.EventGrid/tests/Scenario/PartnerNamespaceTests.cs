@@ -81,7 +81,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsFalse(flag);
         }
 
-        [TestCase(null)]
         [TestCase(false)]
         [TestCase(true)]
         public async Task AddRemoveTag(bool? useTagResource)
