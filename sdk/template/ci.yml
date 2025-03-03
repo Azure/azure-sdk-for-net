@@ -20,6 +20,7 @@ pr:
   branches:
     include:
     - main
+    - apiview/PRComments
     - feature/*
     - hotfix/*
     - release/*
