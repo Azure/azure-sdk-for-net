@@ -126,14 +126,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.Empty, typeof(DoesNotImplementInterface)));
             Assert.IsTrue(ex?.Message.Contains("does not implement"));
             ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(new DoesNotImplementInterface()));
-            Assert.AreEqual("System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+DoesNotImplementInterface must implement IEnumerable or IPersistableModel", ex!.Message);
+            Assert.AreEqual("DoesNotImplementInterface does not implement IPersistableModel", ex!.Message);
         }
 
         [Test]
         public void EmptyEnumerableOfNoInterface()
         {
             List<DoesNotImplementInterface> list = [];
-            BinaryData data = ModelReaderWriter.Write(list);
+            BinaryData data = ModelReaderWriter.Write(list, s_readerWriterContext);
             Assert.AreEqual("[]", data.ToString());
         }
 
@@ -141,7 +141,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void EmptyEnumerableOfNonJson()
         {
             List<SubType> list = [];
-            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, new ModelReaderWriterOptions("X")));
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, s_readerWriterContext, new ModelReaderWriterOptions("X")));
             Assert.IsNotNull(ex);
             Assert.AreEqual("Format 'X' is not supported only 'J' or 'W' format can be written as collections", ex!.Message);
         }
@@ -169,7 +169,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [TestCaseSource(nameof(s_emptyCollections))]
         public void WriteEmptyCollection(object collection)
         {
-            BinaryData data = ModelReaderWriter.Write(collection);
+            BinaryData data = ModelReaderWriter.Write(collection, s_readerWriterContext);
             Assert.IsNotNull(data);
             Assert.AreEqual("[]", data.ToString());
         }
@@ -181,7 +181,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             {
                 { "key", new SubType() },
             };
-            BinaryData data = ModelReaderWriter.Write(dict);
+            BinaryData data = ModelReaderWriter.Write(dict, s_readerWriterContext);
             Assert.IsNotNull(data);
             Assert.AreEqual("{\"key\":{}}", data.ToString());
         }
@@ -192,15 +192,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             BinaryData data = ModelReaderWriter.Write(new SubType(), null);
             Assert.IsNotNull(data);
             Assert.AreEqual("{}", data.ToString());
-        }
-
-        [Test]
-        public void ReadListOfNonPersistableFails()
-        {
-            var json = "[{\"x\":1},{\"y\":2}]";
-            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<DoesNotImplementInterface>>(BinaryData.FromString(json), s_readerWriterContext));
-            Assert.IsNotNull(ex);
-            Assert.AreEqual("Element type System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+DoesNotImplementInterface must implement IJsonModel or CollectionBuilder", ex!.Message);
         }
 
         [Test]
@@ -270,18 +261,18 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void WriteListNonJWire()
         {
             var list = new List<NonJWire>() { new NonJWire() };
-            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, new ModelReaderWriterOptions("W")));
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, s_readerWriterContext, new ModelReaderWriterOptions("W")));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+NonJWire has a wire format of 'X' it must be 'J' to be written as a collection", ex!.Message);
+            Assert.AreEqual("NonJWire has a wire format of 'X' it must be 'J' to be written as a collection", ex!.Message);
         }
 
         [Test]
         public void WriteListOfListNonJWire()
         {
             var list = new List<List<NonJWire>>() { new List<NonJWire>() { new NonJWire() } };
-            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, new ModelReaderWriterOptions("W")));
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, s_readerWriterContext, new ModelReaderWriterOptions("W")));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+NonJWire has a wire format of 'X' it must be 'J' to be written as a collection", ex!.Message);
+            Assert.AreEqual("NonJWire has a wire format of 'X' it must be 'J' to be written as a collection", ex!.Message);
         }
 
         [TestCase("J")]
@@ -289,11 +280,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void WriteListPersistableModel(string format)
         {
             var list = new List<PersistableModel>() { new PersistableModel() };
-            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, new ModelReaderWriterOptions(format)));
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, s_readerWriterContext, new ModelReaderWriterOptions(format)));
             Assert.IsNotNull(ex);
             var expectedMessage = format == "J"
-                ? "System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+PersistableModel does not implement IJsonModel or IEnumerable<IJsonModel>"
-                : "System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+PersistableModel has a wire format of 'X' it must be 'J' to be written as a collection";
+                ? "PersistableModel does not implement IJsonModel or IEnumerable<IJsonModel>"
+                : "PersistableModel has a wire format of 'X' it must be 'J' to be written as a collection";
             Assert.AreEqual(expectedMessage, ex!.Message);
         }
 
@@ -302,11 +293,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void WriteListOfListPersistableModel(string format)
         {
             var list = new List<List<PersistableModel>>() { new List<PersistableModel>() { new PersistableModel() } };
-            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, new ModelReaderWriterOptions(format)));
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, s_readerWriterContext, new ModelReaderWriterOptions(format)));
             Assert.IsNotNull(ex);
             var expectedMessage = format == "J"
-                ? "System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+PersistableModel does not implement IJsonModel or IEnumerable<IJsonModel>"
-                : "System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+PersistableModel has a wire format of 'X' it must be 'J' to be written as a collection";
+                ? "PersistableModel does not implement IJsonModel or IEnumerable<IJsonModel>"
+                : "PersistableModel has a wire format of 'X' it must be 'J' to be written as a collection";
             Assert.AreEqual(expectedMessage, ex!.Message);
         }
 
@@ -318,8 +309,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<PersistableModel>>(BinaryData.FromString(json), s_readerWriterContext, new ModelReaderWriterOptions(format)));
             Assert.IsNotNull(ex);
             var expectedMessage = format == "J"
-                ? "Element type System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+PersistableModel must implement IJsonModel or CollectionBuilder"
-                : "System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+PersistableModel has a wire format of 'X' it must be 'J' to be read as a collection";
+                ? "Element type PersistableModel must implement IJsonModel or CollectionBuilder"
+                : "PersistableModel has a wire format of 'X' it must be 'J' to be read as a collection";
             Assert.AreEqual(expectedMessage, ex!.Message);
         }
 
@@ -331,8 +322,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<List<PersistableModel>>>(BinaryData.FromString(json), s_readerWriterContext, new ModelReaderWriterOptions(format)));
             Assert.IsNotNull(ex);
             var expectedMessage = format == "J"
-                ? "Element type System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+PersistableModel must implement IJsonModel or CollectionBuilder"
-                : "System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+PersistableModel has a wire format of 'X' it must be 'J' to be read as a collection";
+                ? "Element type PersistableModel must implement IJsonModel or CollectionBuilder"
+                : "PersistableModel has a wire format of 'X' it must be 'J' to be read as a collection";
             Assert.AreEqual(expectedMessage, ex!.Message);
         }
 
@@ -342,7 +333,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "[{},{}]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<NonJWire>>(BinaryData.FromString(json), s_readerWriterContext, new ModelReaderWriterOptions("W")));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+NonJWire has a wire format of 'X' it must be 'J' to be read as a collection", ex!.Message);
+            Assert.AreEqual("NonJWire has a wire format of 'X' it must be 'J' to be read as a collection", ex!.Message);
         }
 
         [Test]
@@ -351,7 +342,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "[[{},{}]]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<List<NonJWire>>>(BinaryData.FromString(json), s_readerWriterContext, new ModelReaderWriterOptions("W")));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("System.ClientModel.Tests.ModelReaderWriterTests.ModelReaderWriterTests+NonJWire has a wire format of 'X' it must be 'J' to be read as a collection", ex!.Message);
+            Assert.AreEqual("NonJWire has a wire format of 'X' it must be 'J' to be read as a collection", ex!.Message);
         }
 
         [Test]
@@ -528,7 +519,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             private List_List_SubType_Info? _list_List_SubType_Info;
             private List_SubType_Info? _list_SubType_Info;
             private List_Dictionary_String_SubType_Info? _list_Dictionary_String_SubType_Info;
-            private List_DoesNotImplementInterface_Info? _list_DoesNotImplementInterface_Info;
             private SubType_Info? _subType_Info;
             private DoesNotImplementInterface_Info? _doesNotImplementInterface_Info;
             private NonJWire_Info? _nonJWire_Info;
@@ -546,7 +536,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                     Type t when t == typeof(List<List<SubType>>) => _list_List_SubType_Info ??= new(),
                     Type t when t == typeof(List<SubType>) => _list_SubType_Info ??= new(),
                     Type t when t == typeof(List<Dictionary<string, SubType>>) => _list_Dictionary_String_SubType_Info ??= new(),
-                    Type t when t == typeof(List<DoesNotImplementInterface>) => _list_DoesNotImplementInterface_Info ??= new(),
                     Type t when t == typeof(SubType) => _subType_Info ??= new(),
                     Type t when t == typeof(DoesNotImplementInterface) => _doesNotImplementInterface_Info ??= new(),
                     Type t when t == typeof(NonJWire) => _nonJWire_Info ??= new(),
@@ -567,9 +556,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 {
                     private readonly Lazy<List<List<NonJWire>>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<List<NonJWire>>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<List<NonJWire>>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object GetElement() => new NonJWire();
                 }
             }
 
@@ -581,9 +572,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 {
                     private readonly Lazy<List<NonJWire>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<NonJWire>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<NonJWire>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object GetElement() => new NonJWire();
                 }
             }
 
@@ -595,9 +588,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 {
                     private readonly Lazy<List<List<PersistableModel>>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<List<PersistableModel>>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<List<PersistableModel>>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object GetElement() => new PersistableModel();
                 }
             }
 
@@ -609,9 +604,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 {
                     private readonly Lazy<List<PersistableModel>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<PersistableModel>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<PersistableModel>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object GetElement() => new PersistableModel();
                 }
             }
 
@@ -635,20 +632,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 public override object CreateObject() => new SubType();
             }
 
-            private class List_DoesNotImplementInterface_Info : ModelInfo
-            {
-                public override object CreateObject() => new List_DoesNotImplementInterface_Builder();
-
-                private class List_DoesNotImplementInterface_Builder : CollectionBuilder
-                {
-                    private readonly Lazy<List<DoesNotImplementInterface>> _instance = new(() => []);
-
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<DoesNotImplementInterface>(item));
-
-                    protected override object GetBuilder() => _instance.Value;
-                }
-            }
-
             private class List_Dictionary_String_SubType_Info : ModelInfo
             {
                 public override object CreateObject() => new List_Dictionary_String_SubType_Builder();
@@ -657,9 +640,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 {
                     private readonly Lazy<List<Dictionary<string, SubType>>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<Dictionary<string, SubType>>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<Dictionary<string, SubType>>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object GetElement() => new SubType();
                 }
             }
 
@@ -671,9 +656,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 {
                     private readonly Lazy<List<SubType>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<SubType>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<SubType>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object GetElement() => new SubType();
                 }
             }
 
@@ -685,9 +672,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 {
                     private readonly Lazy<List<List<SubType>>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<List<SubType>>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<List<SubType>>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object GetElement() => new SubType();
                 }
             }
 
@@ -699,9 +688,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 {
                     private readonly Lazy<Dictionary<string, SubType>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertKey(key), AssertItem<SubType>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertKey(key), AssertItem<SubType>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object GetElement() => new SubType();
                 }
             }
         }

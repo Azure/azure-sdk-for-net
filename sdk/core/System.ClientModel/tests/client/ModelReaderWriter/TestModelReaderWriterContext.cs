@@ -36,6 +36,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 }
 
                 protected override object GetBuilder() => _instance.Value;
+
+                protected override object GetElement() => new AvailabilitySetData();
             }
         }
 

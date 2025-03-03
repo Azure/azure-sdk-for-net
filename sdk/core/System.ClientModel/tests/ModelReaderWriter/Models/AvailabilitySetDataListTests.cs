@@ -32,7 +32,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         private class LocalContext : ModelReaderWriterContext
         {
-            private readonly Lazy<TestModelReaderWriterContext> _LibraryContext = new(() => new());
+            private static readonly Lazy<TestModelReaderWriterContext> s_LibraryContext = new(() => new());
             private Dictionary_String_AvailabilitySetData_Info? _dictionary_String_AvailabilitySetData_Info;
             private HashSet_AvailabilitySetData_Info? _hashSet_AvailabilitySetData_Info;
             private Array_AvailabilitySetData_Info? _array_AvailabilitySetData_Info;
@@ -60,7 +60,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                     Type t when t == typeof(Stack<AvailabilitySetData>) => _stack_AvailabilitySetData_Info ??= new(),
                     Type t when t == typeof(ReadOnlyMemory<AvailabilitySetData>) => _readOnlyMemory_AvailabilitySetData_Info ??= new(),
                     Type t when t == typeof(ImmutableList<AvailabilitySetData>) => _immutableList_AvailabilitySetData_Info ??= new(),
-                    _ => _LibraryContext.Value.GetModelInfo(type)
+                    _ => s_LibraryContext.Value.GetModelInfo(type)
                 };
             }
 
@@ -72,11 +72,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 {
                     private readonly Lazy<ImmutableList<AvailabilitySetData>.Builder> _instance = new(() => ImmutableList<AvailabilitySetData>.Empty.ToBuilder());
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
 
-                    protected override object ToObject() => _instance.Value.ToImmutable();
+                    protected internal override object ToObject() => _instance.Value.ToImmutable();
+
+                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -88,11 +90,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 {
                     private readonly Lazy<List<AvailabilitySetData>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
 
-                    protected override object ToObject() => new ReadOnlyMemory<AvailabilitySetData>([.. _instance.Value]);
+                    protected internal override object ToObject() => new ReadOnlyMemory<AvailabilitySetData>([.. _instance.Value]);
+
+                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
 
                 public override IEnumerable? GetEnumerable(object obj)
@@ -116,9 +120,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 {
                     private readonly Lazy<Stack<AvailabilitySetData>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Push(AssertItem<AvailabilitySetData>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Push(AssertItem<AvailabilitySetData>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -130,9 +136,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 {
                     private readonly Lazy<SortedSet<AvailabilitySetData>> _instance = new(() => new(new AvailabilitySetDataComparer()));
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -144,9 +152,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 {
                     private readonly Lazy<Queue<AvailabilitySetData>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Enqueue(AssertItem<AvailabilitySetData>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Enqueue(AssertItem<AvailabilitySetData>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -158,9 +168,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 {
                     private readonly Lazy<ObservableCollection<AvailabilitySetData>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -172,9 +184,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 {
                     private readonly Lazy<LinkedList<AvailabilitySetData>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.AddLast(AssertItem<AvailabilitySetData>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.AddLast(AssertItem<AvailabilitySetData>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -186,9 +200,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 {
                     private readonly Lazy<Collection<AvailabilitySetData>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -200,11 +216,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 {
                     private readonly Lazy<List<AvailabilitySetData>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
 
-                    protected override object ToObject() => _instance.Value.ToArray();
+                    protected internal override object ToObject() => _instance.Value.ToArray();
+
+                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -216,9 +234,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 {
                     private readonly Lazy<HashSet<AvailabilitySetData>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -228,12 +248,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 {
                     private readonly Lazy<Dictionary<string, AvailabilitySetData>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null)
+                    protected internal override void AddItem(object item, string? key = null)
                     {
                         _instance.Value.Add(AssertKey(key), AssertItem<AvailabilitySetData>(item));
                     }
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
 
                 public override object CreateObject() => new Dictionary_String_AvailabilitySetData_Builder();
@@ -437,7 +459,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(s_availabilitySets, ModelReaderWriterOptions.Xml));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("Format 'X' is not supported only 'J' or 'W' format can be written as collections", ex!.Message);
+            Assert.AreEqual("List`1 does not implement IPersistableModel", ex!.Message);
         }
 
         [Test]

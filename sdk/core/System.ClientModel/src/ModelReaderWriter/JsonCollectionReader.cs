@@ -68,7 +68,7 @@ internal class JsonCollectionReader : CollectionReader
         }
         else
         {
-            throw new InvalidOperationException($"Element type {elementType.FullName} must implement IJsonModel or CollectionBuilder");
+            throw new InvalidOperationException($"Element type {elementType.Name} must implement IJsonModel or CollectionBuilder");
         }
 
         while (reader.Read())

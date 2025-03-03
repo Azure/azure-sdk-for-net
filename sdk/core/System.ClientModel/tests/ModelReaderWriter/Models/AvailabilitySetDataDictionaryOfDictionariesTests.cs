@@ -28,7 +28,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         private class LocalContext : ModelReaderWriterContext
         {
-            private readonly Lazy<TestModelReaderWriterContext> _LibraryContext = new(() => new());
+            private static readonly Lazy<TestModelReaderWriterContext> _LibraryContext = new(() => new());
             private Dictionary_String_Dictionary_String_AvailabilitySetData_Info? _dictionary_String_Dictionary_String_AvailabilitySetData_Info;
             private Dictionary_String_AvailabilitySetData_Info? _dictionary_String_AvailabilitySetData_Info;
 
@@ -50,9 +50,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 {
                     private readonly Lazy<Dictionary<string, AvailabilitySetData>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertKey(key), AssertItem<AvailabilitySetData>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertKey(key), AssertItem<AvailabilitySetData>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object? GetElement() => _LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -64,9 +66,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 {
                     private readonly Lazy<Dictionary<string, Dictionary<string, AvailabilitySetData>>> _instance = new(() => []);
 
-                    protected override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertKey(key), AssertItem<Dictionary<string, AvailabilitySetData>>(item));
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertKey(key), AssertItem<Dictionary<string, AvailabilitySetData>>(item));
 
-                    protected override object GetBuilder() => _instance.Value;
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object? GetElement() => _LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
         }
@@ -127,9 +131,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void WriteDictionary()
         {
-            BinaryData data = ModelReaderWriter.Write(s_availabilitySets);
-            Assert.IsNotNull(data);
-            Assert.AreEqual(s_collapsedPayload, data.ToString());
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(s_availabilitySets));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("Dictionary`2 does not implement IPersistableModel", ex!.Message);
         }
     }
 }

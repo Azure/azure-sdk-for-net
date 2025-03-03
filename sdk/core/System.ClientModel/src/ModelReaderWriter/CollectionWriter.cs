@@ -26,7 +26,7 @@ internal abstract class CollectionWriter
             {
                 return new JsonCollectionWriter();
             }
-            throw new InvalidOperationException($"{persistableModel.GetType().FullName} has a wire format of '{wireFormat}' it must be 'J' to be written as a collection");
+            throw new InvalidOperationException($"{persistableModel.GetType().Name} has a wire format of '{wireFormat}' it must be 'J' to be written as a collection");
         }
     }
 
@@ -47,7 +47,7 @@ internal abstract class CollectionWriter
             }
             else
             {
-                throw new InvalidOperationException($"Unable to write {enumerable.GetType().FullName} can only write collections of IPersistableModel");
+                throw new InvalidOperationException($"Unable to write {enumerable.GetType().Name} can only write collections of IPersistableModel");
             }
         }
         else

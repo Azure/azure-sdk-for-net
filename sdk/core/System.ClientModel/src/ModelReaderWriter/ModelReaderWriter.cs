@@ -270,7 +270,7 @@ public static class ModelReaderWriter
         var returnObj = context.GetModelInfoInternal(returnType).CreateObject();
         if (returnObj is CollectionBuilder builder)
         {
-            var collectionReader = CollectionReader.GetCollectionReader(returnType, data, context, options);
+            var collectionReader = CollectionReader.GetCollectionReader(builder, options);
             return collectionReader.Read(returnType, data, context, options);
         }
         else if (returnObj is IPersistableModel<object> persistableModel)
@@ -281,16 +281,6 @@ public static class ModelReaderWriter
         {
             throw new InvalidOperationException($"{returnType.Name} does not implement CollectionBuilder or IPersistableModel");
         }
-    }
-
-    internal static IPersistableModel<object> GetInstance(Type returnType, ModelReaderWriterContext context)
-    {
-        var model = context.GetModelInfoInternal(returnType).CreateObject() as IPersistableModel<object>;
-        if (model is null)
-        {
-            throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IPersistableModel<object>)}");
-        }
-        return model;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -309,10 +299,6 @@ public static class ModelReaderWriter
         jsonModel = default;
         return false;
     }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static bool ShouldWriteAsJson(IPersistableModel<object> model, ModelReaderWriterOptions options, [MaybeNullWhen(false)] out IJsonModel<object> jsonModel)
-        => ShouldWriteAsJson<object>(model, options, out jsonModel);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool IsJsonFormatRequested<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
