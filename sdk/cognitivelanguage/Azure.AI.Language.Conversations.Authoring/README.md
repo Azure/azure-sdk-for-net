@@ -37,7 +37,7 @@ dotnet add package Azure.AI.Language.Conversations.Authoring --prerelease
 
 ### Authenticate the client
 
-In order to interact with the Conversations Authoring service, you'll need to create an instance of the [`AnalyzeConversationAuthoring`][conversationalAnalysisAuthoring_class] class. You will need an **endpoint**, and an **API key** to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
+In order to interact with the Conversations Authoring service, you'll need to create an instance of the [`ConversationAnalysisAuthoringClient`][ConversationAnalysisAuthoringClient_class] class. You will need an **endpoint**, and an **API key** to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
 #### Get an API key
 
@@ -118,9 +118,9 @@ If you do not select an api version we will default to the latest version availa
 
 ## Key concepts
 
-### AnalyzeConversationAuthoring
+### ConversationAuthoringClientlet
 
-The [`ConversationAuthoringProject`][`ConversationAuthoringDeployment`][`ConversationAuthoringExportedModel`][`ConversationAuthoringTrainedModel`] are the primary clientlets for developers using the Azure AI Conversation Authoring client library. It provides both synchronous and asynchronous operations to access a specific use of conversation authoring, such as creating and managing conversation projects.
+The [ConversationAuthoringProject][ConversationAuthoringProject_class], [ConversationAuthoringDeployment][ConversationAuthoringDeployment_class], [ConversationAuthoringExportedModel][ConversationAuthoringExportedModel_class] and [ConversationAuthoringTrainedModel][ConversationAuthoringTrainedModel_class] are the clientlets for developers using the Azure AI Conversation Authoring client library. It provides both synchronous and asynchronous operations to access a specific use of conversation authoring, such as creating and managing conversation projects.
 
 ### Thread safety
 
@@ -269,7 +269,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [text_refdocs]: https://learn.microsoft.com/dotnet/
 [text_docs]: https://learn.microsoft.com/azure/ai-services/language-service/conversational-language-understanding/overview
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
-[conversationalAnalysisAuthoring_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationAnalysisAuthoringClient.cs
+[ConversationAnalysisAuthoringClient_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationAnalysisAuthoringClient.cs
+[ConversationAuthoringProject_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/ConversationAuthoringProject.cs
+[ConversationAuthoringDeployment_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/ConversationAuthoringDeployment.cs
+[ConversationAuthoringExportedModel_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/ConversationAuthoringExportedModel.cs
+[ConversationAuthoringTrainedModel_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/ConversationAuthoringTrainedModel.cs
 [cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication/
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_portal]: https://portal.azure.com
