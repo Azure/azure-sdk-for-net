@@ -175,7 +175,7 @@ jobs:
           /p:RemoveTrack1Projects="$(RemoveTrack1)"
           $(AdditionalTestArguments)
           $(DiagnosticArguments)
-        displayName: "Build & Test ($(TestTargetFramework)) for PR"
+        displayName: "Build & Test ($(TestTargetFramework))"
 
       - task: PublishTestResults@2
         condition: always()
