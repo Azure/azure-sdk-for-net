@@ -4,6 +4,7 @@
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace System.ClientModel.Auth;
 
@@ -29,11 +30,27 @@ public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
     /// <inheritdoc />
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
+        ProcessAsync(message, pipeline, currentIndex, false).EnsureCompleted();
+    }
+
+    /// <inheritdoc />
+    public override ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    {
+        return ProcessAsync(message, pipeline, currentIndex, true);
+    }
+
+    private async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
+    {
+        if (message.Request.Uri!.Scheme != Uri.UriSchemeHttps)
+        {
+            throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
+        }
         Token token;
         if (message.TryGetProperty(typeof(IScopedFlowContext), out var rawContext) && rawContext is IScopedFlowContext scopesContext)
         {
             var context = _flowContext.CloneWithAdditionalScopes(scopesContext.Scopes);
-            token = _tokenProvider.GetAccessToken(context, message.CancellationToken);
+            token = async ? await _tokenProvider.GetAccessTokenAsync(context, message.CancellationToken).ConfigureAwait(false) :
+            _tokenProvider.GetAccessToken(context, message.CancellationToken);
         }
         else
         {
@@ -41,14 +58,14 @@ public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
         }
         message.Request.Headers.Set("Authorization", $"Bearer {token.TokenValue}");
 
-        ProcessNext(message, pipeline, currentIndex);
-        return;
-    }
-
-    /// <inheritdoc />
-    public override ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        return ProcessNextAsync(message, pipeline, currentIndex);
+        if (async)
+        {
+            await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
+        }
+        else
+        {
+            ProcessNext(message, pipeline, currentIndex);
+        }
     }
 
     internal static IScopedFlowContext GetContext(IEnumerable<IReadOnlyDictionary<string, object>> contexts, ITokenProvider tokenProvider)

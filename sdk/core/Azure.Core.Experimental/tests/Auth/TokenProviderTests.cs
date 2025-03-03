@@ -5,6 +5,7 @@ using System.ClientModel.Auth;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -73,7 +74,7 @@ public class TokenProviderTests
 
             PipelineRequest request = message.Request;
             request.Method = "GET";
-            request.Uri = new Uri("http://localhost/foo");
+            request.Uri = new Uri("https://localhost/foo");
             _pipeline.Send(message);
             return ClientResult.FromResponse(message.Response);
         }
@@ -147,23 +148,25 @@ public class TokenProviderTests
 
         internal async ValueTask<Token> GetAccessTokenInternal(bool async, IClientCredentialsFlowContext context, CancellationToken cancellationToken)
         {
-            var tokenUrl = context.TokenUri.ToString();
+            var request = new HttpRequestMessage(HttpMethod.Post, context.TokenUri);
 
-            // Create the request payload using System.Text.Json anonymous type serialization
-            var requestBody = new
+            // Add Basic Authentication header
+            var authBytes = System.Text.Encoding.ASCII.GetBytes($"{_clientId}:{_clientSecret}");
+            var authHeader = Convert.ToBase64String(authBytes);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Basic", authHeader);
+
+            // Create form content
+            var formContent = new FormUrlEncodedContent(new[]
             {
-                client_id = _clientId,
-                client_secret = _clientSecret,
-                audience = context.Scopes[0],
-                grant_type = "client_credentials"
-            };
+                new KeyValuePair<string, string>("grant_type", "client_credentials"),
+                new KeyValuePair<string, string>("scope", context.Scopes[0])
+            });
 
-            string jsonRequest = JsonSerializer.Serialize(requestBody);
-            using var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
+            request.Content = formContent;
 
             using HttpResponseMessage response = async ?
-                await _client.PostAsync(tokenUrl, content) :
-                _client.PostAsync(tokenUrl, content).GetAwaiter().GetResult();
+                await _client.SendAsync(request) :
+                _client.SendAsync(request).GetAwaiter().GetResult();
 
             response.EnsureSuccessStatusCode();
 
