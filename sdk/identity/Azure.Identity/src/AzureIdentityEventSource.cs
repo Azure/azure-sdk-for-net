@@ -52,7 +52,7 @@ namespace Azure.Identity
         internal const string UserAssignedManagedIdentityNotSupportedMessage = "User assigned managed identities are not supported in the {0} environment.";
         internal const string ServiceFabricManagedIdentityRuntimeConfigurationNotSupportedMessage = "Service Fabric user assigned managed identity ClientId or ResourceId is not configurable at runtime.";
         internal const string ManagedIdentitySourceAttemptedMessage = "ManagedIdentitySource {0} was attempted. IsSelected={1}.";
-        internal const string ManagedIdentityCredentialSelectedMessage = "Managed Identity credential selected: {0} with ID: {1}";
+        internal const string ManagedIdentityCredentialSelectedMessage = "Managed Identity source selected: {0} with ID: {1}";
 
         private AzureIdentityEventSource() : base(EventSourceName) { }
 
