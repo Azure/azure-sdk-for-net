@@ -20,6 +20,10 @@ stages:
           os: windows
 
         templateContext:
+          sdl:
+            credscan:
+              suppressionsFile: ''
+
           outputs:
             - output: pipelineArtifact
               displayName: 'Store signed packages in ${{parameters.ArtifactName}}-signed artifact'
@@ -32,9 +36,6 @@ stages:
           - download: current
             artifact: ${{parameters.ArtifactName}}
             timeoutInMinutes: 5
-          - template: /eng/pipelines/templates/steps/copy-credscan-suppressions.yml
-            parameters:
-              ArtifactPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}
           - template: pipelines/steps/net-signing.yml@azure-sdk-build-tools
             parameters:
               PackagesPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}
@@ -122,10 +123,6 @@ stages:
                   runOnce:
                     deploy:
                       steps:
-                        - template: /eng/pipelines/templates/steps/copy-credscan-suppressions.yml
-                          parameters:
-                            ArtifactPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed
-
                         - task: 1ES.PublishNuget@1
                           displayName: Publish ${{artifact.name}} package to NuGet.org
                           inputs:
