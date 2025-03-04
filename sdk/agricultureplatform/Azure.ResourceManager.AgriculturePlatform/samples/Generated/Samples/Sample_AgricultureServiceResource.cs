@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.AgriculturePlatform.Samples
 {
-    public partial class Sample_AgriServiceResource
+    public partial class Sample_AgricultureServiceResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -29,20 +29,20 @@ namespace Azure.ResourceManager.AgriculturePlatform.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AgriServiceResource created on azure
-            // for more information of creating AgriServiceResource, please refer to the document of AgriServiceResource
+            // this example assumes you already have this AgricultureServiceResource created on azure
+            // for more information of creating AgricultureServiceResource, please refer to the document of AgricultureServiceResource
             string subscriptionId = "83D293F5-DEFD-4D48-B120-1DC713BE338A";
             string resourceGroupName = "rgopenapi";
             string agriServiceResourceName = "abc123";
-            ResourceIdentifier agriServiceResourceId = AgriServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, agriServiceResourceName);
-            AgriServiceResource agriServiceResource = client.GetAgriServiceResource(agriServiceResourceId);
+            ResourceIdentifier agricultureServiceResourceId = AgricultureServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, agriServiceResourceName);
+            AgricultureServiceResource agricultureService = client.GetAgricultureServiceResource(agricultureServiceResourceId);
 
             // invoke the operation
-            AgriServiceResource result = await agriServiceResource.GetAsync();
+            AgricultureServiceResource result = await agricultureService.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AgriServiceResourceData resourceData = result.Data;
+            AgricultureServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.AgriculturePlatform.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AgriServiceResource created on azure
-            // for more information of creating AgriServiceResource, please refer to the document of AgriServiceResource
+            // this example assumes you already have this AgricultureServiceResource created on azure
+            // for more information of creating AgricultureServiceResource, please refer to the document of AgricultureServiceResource
             string subscriptionId = "83D293F5-DEFD-4D48-B120-1DC713BE338A";
             string resourceGroupName = "rgopenapi";
             string agriServiceResourceName = "abc123";
-            ResourceIdentifier agriServiceResourceId = AgriServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, agriServiceResourceName);
-            AgriServiceResource agriServiceResource = client.GetAgriServiceResource(agriServiceResourceId);
+            ResourceIdentifier agricultureServiceResourceId = AgricultureServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, agriServiceResourceName);
+            AgricultureServiceResource agricultureService = client.GetAgricultureServiceResource(agricultureServiceResourceId);
 
             // invoke the operation
-            await agriServiceResource.DeleteAsync(WaitUntil.Completed);
+            await agricultureService.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -85,16 +85,16 @@ namespace Azure.ResourceManager.AgriculturePlatform.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AgriServiceResource created on azure
-            // for more information of creating AgriServiceResource, please refer to the document of AgriServiceResource
+            // this example assumes you already have this AgricultureServiceResource created on azure
+            // for more information of creating AgricultureServiceResource, please refer to the document of AgricultureServiceResource
             string subscriptionId = "83D293F5-DEFD-4D48-B120-1DC713BE338A";
             string resourceGroupName = "rgopenapi";
             string agriServiceResourceName = "abc123";
-            ResourceIdentifier agriServiceResourceId = AgriServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, agriServiceResourceName);
-            AgriServiceResource agriServiceResource = client.GetAgriServiceResource(agriServiceResourceId);
+            ResourceIdentifier agricultureServiceResourceId = AgricultureServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, agriServiceResourceName);
+            AgricultureServiceResource agricultureService = client.GetAgricultureServiceResource(agricultureServiceResourceId);
 
             // invoke the operation
-            AgriServiceResourcePatch patch = new AgriServiceResourcePatch
+            AgricultureServicePatch patch = new AgricultureServicePatch
             {
                 Identity = new ManagedServiceIdentity("None")
                 {
@@ -116,23 +116,23 @@ namespace Azure.ResourceManager.AgriculturePlatform.Samples
 },
                 Properties = new AgriServiceResourceUpdateProperties
                 {
-                    Config = new AgriServiceConfig(),
+                    Config = new AgricultureServiceConfig(),
                     DataConnectorCredentials = {new DataConnectorCredentialMap("BackendAADApplicationCredentials", new DataConnectorCredentials
 {
 ClientId = "dce298a8-1eec-481a-a8f9-a3cd5a8257b2",
 })},
-                    InstalledSolutions = {new InstalledSolutionMap("bayerAgPowered.cwum", new Solution
+                    InstalledSolutions = {new InstalledSolutionMap("bayerAgPowered.cwum", new AgricultureSolution
 {
 ApplicationName = "bayerAgPowered.cwum",
 })},
                 },
             };
-            ArmOperation<AgriServiceResource> lro = await agriServiceResource.UpdateAsync(WaitUntil.Completed, patch);
-            AgriServiceResource result = lro.Value;
+            ArmOperation<AgricultureServiceResource> lro = await agricultureService.UpdateAsync(WaitUntil.Completed, patch);
+            AgricultureServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AgriServiceResourceData resourceData = result.Data;
+            AgricultureServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -149,16 +149,16 @@ ApplicationName = "bayerAgPowered.cwum",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AgriServiceResource created on azure
-            // for more information of creating AgriServiceResource, please refer to the document of AgriServiceResource
+            // this example assumes you already have this AgricultureServiceResource created on azure
+            // for more information of creating AgricultureServiceResource, please refer to the document of AgricultureServiceResource
             string subscriptionId = "83D293F5-DEFD-4D48-B120-1DC713BE338A";
             string resourceGroupName = "rgopenapi";
             string agriServiceResourceName = "abc123";
-            ResourceIdentifier agriServiceResourceId = AgriServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, agriServiceResourceName);
-            AgriServiceResource agriServiceResource = client.GetAgriServiceResource(agriServiceResourceId);
+            ResourceIdentifier agricultureServiceResourceId = AgricultureServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, agriServiceResourceName);
+            AgricultureServiceResource agricultureService = client.GetAgricultureServiceResource(agricultureServiceResourceId);
 
             // invoke the operation
-            AvailableAgriSolutionListResult result = await agriServiceResource.GetAvailableSolutionsAsync();
+            AvailableAgriSolutionListResult result = await agricultureService.GetAvailableSolutionsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AgriculturePlatform.Models
 {
     /// <summary> Config of the AgriService resource instance. </summary>
-    public partial class AgriServiceConfig
+    public partial class AgricultureServiceConfig
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +46,26 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AgriServiceConfig"/>. </summary>
-        public AgriServiceConfig()
+        /// <summary> Initializes a new instance of <see cref="AgricultureServiceConfig"/>. </summary>
+        public AgricultureServiceConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgriServiceConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgricultureServiceConfig"/>. </summary>
         /// <param name="instanceUri"> Instance URI of the AgriService instance. </param>
         /// <param name="version"> Version of AgriService instance. </param>
         /// <param name="appServiceResourceId"> App service resource Id. </param>
-        /// <param name="cosmosDbResourceId"> Cosmos Db resource Id. </param>
+        /// <param name="cosmosDBResourceId"> Cosmos Db resource Id. </param>
         /// <param name="storageAccountResourceId"> Storage account resource Id. </param>
         /// <param name="keyVaultResourceId"> Key vault resource Id. </param>
         /// <param name="redisCacheResourceId"> Redis cache resource Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgriServiceConfig(string instanceUri, string version, string appServiceResourceId, string cosmosDbResourceId, string storageAccountResourceId, string keyVaultResourceId, string redisCacheResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AgricultureServiceConfig(string instanceUri, string version, ResourceIdentifier appServiceResourceId, ResourceIdentifier cosmosDBResourceId, ResourceIdentifier storageAccountResourceId, ResourceIdentifier keyVaultResourceId, ResourceIdentifier redisCacheResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceUri = instanceUri;
             Version = version;
             AppServiceResourceId = appServiceResourceId;
-            CosmosDbResourceId = cosmosDbResourceId;
+            CosmosDBResourceId = cosmosDBResourceId;
             StorageAccountResourceId = storageAccountResourceId;
             KeyVaultResourceId = keyVaultResourceId;
             RedisCacheResourceId = redisCacheResourceId;
@@ -76,14 +77,14 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <summary> Version of AgriService instance. </summary>
         public string Version { get; }
         /// <summary> App service resource Id. </summary>
-        public string AppServiceResourceId { get; }
+        public ResourceIdentifier AppServiceResourceId { get; }
         /// <summary> Cosmos Db resource Id. </summary>
-        public string CosmosDbResourceId { get; }
+        public ResourceIdentifier CosmosDBResourceId { get; }
         /// <summary> Storage account resource Id. </summary>
-        public string StorageAccountResourceId { get; }
+        public ResourceIdentifier StorageAccountResourceId { get; }
         /// <summary> Key vault resource Id. </summary>
-        public string KeyVaultResourceId { get; }
+        public ResourceIdentifier KeyVaultResourceId { get; }
         /// <summary> Redis cache resource Id. </summary>
-        public string RedisCacheResourceId { get; }
+        public ResourceIdentifier RedisCacheResourceId { get; }
     }
 }

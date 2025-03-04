@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             {
                 return null;
             }
-            IReadOnlyList<AgriServiceResourceData> value = default;
+            IReadOnlyList<AgricultureServiceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<AgriServiceResourceData> array = new List<AgriServiceResourceData>();
+                    List<AgricultureServiceData> array = new List<AgricultureServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgriServiceResourceData.DeserializeAgriServiceResourceData(item, options));
+                        array.Add(AgricultureServiceData.DeserializeAgricultureServiceData(item, options));
                     }
                     value = array;
                     continue;

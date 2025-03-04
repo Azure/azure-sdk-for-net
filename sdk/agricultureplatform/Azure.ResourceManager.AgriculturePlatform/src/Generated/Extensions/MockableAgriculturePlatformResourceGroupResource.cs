@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AgriServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AgriServiceResources and their operations over a AgriServiceResource. </returns>
-        public virtual AgriServiceResourceCollection GetAgriServiceResources()
+        /// <summary> Gets a collection of AgricultureServiceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of AgricultureServiceResources and their operations over a AgricultureServiceResource. </returns>
+        public virtual AgricultureServiceCollection GetAgricultureServices()
         {
-            return GetCachedClient(client => new AgriServiceResourceCollection(client, Id));
+            return GetCachedClient(client => new AgricultureServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AgriServiceResource"/></description>
+        /// <description><see cref="AgricultureServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="agriServiceResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agriServiceResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AgriServiceResource>> GetAgriServiceResourceAsync(string agriServiceResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AgricultureServiceResource>> GetAgricultureServiceAsync(string agriServiceResourceName, CancellationToken cancellationToken = default)
         {
-            return await GetAgriServiceResources().GetAsync(agriServiceResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetAgricultureServices().GetAsync(agriServiceResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AgriServiceResource"/></description>
+        /// <description><see cref="AgricultureServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="agriServiceResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agriServiceResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AgriServiceResource> GetAgriServiceResource(string agriServiceResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<AgricultureServiceResource> GetAgricultureService(string agriServiceResourceName, CancellationToken cancellationToken = default)
         {
-            return GetAgriServiceResources().Get(agriServiceResourceName, cancellationToken);
+            return GetAgricultureServices().Get(agriServiceResourceName, cancellationToken);
         }
     }
 }

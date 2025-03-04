@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AgriServiceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AgriServiceResource.CreateResourceIdentifier" /> to create an <see cref="AgriServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AgricultureServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AgricultureServiceResource.CreateResourceIdentifier" /> to create an <see cref="AgricultureServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AgriServiceResource"/> object. </returns>
-        public virtual AgriServiceResource GetAgriServiceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AgricultureServiceResource"/> object. </returns>
+        public virtual AgricultureServiceResource GetAgricultureServiceResource(ResourceIdentifier id)
         {
-            AgriServiceResource.ValidateResourceId(id);
-            return new AgriServiceResource(Client, id);
+            AgricultureServiceResource.ValidateResourceId(id);
+            return new AgricultureServiceResource(Client, id);
         }
     }
 }

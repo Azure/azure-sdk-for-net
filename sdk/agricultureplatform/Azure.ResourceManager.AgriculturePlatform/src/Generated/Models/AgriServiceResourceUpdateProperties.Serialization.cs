@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             {
                 return null;
             }
-            AgriServiceConfig config = default;
+            AgricultureServiceConfig config = default;
             IList<DataConnectorCredentialMap> dataConnectorCredentials = default;
             IList<InstalledSolutionMap> installedSolutions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                     {
                         continue;
                     }
-                    config = AgriServiceConfig.DeserializeAgriServiceConfig(property.Value, options);
+                    config = AgricultureServiceConfig.DeserializeAgricultureServiceConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataConnectorCredentials"u8))

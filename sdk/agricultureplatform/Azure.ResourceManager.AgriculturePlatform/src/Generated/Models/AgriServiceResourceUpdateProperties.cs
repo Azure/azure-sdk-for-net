@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="dataConnectorCredentials"> Data connector credentials of AgriService instance. </param>
         /// <param name="installedSolutions"> AgriService installed solutions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgriServiceResourceUpdateProperties(AgriServiceConfig config, IList<DataConnectorCredentialMap> dataConnectorCredentials, IList<InstalledSolutionMap> installedSolutions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AgriServiceResourceUpdateProperties(AgricultureServiceConfig config, IList<DataConnectorCredentialMap> dataConnectorCredentials, IList<InstalledSolutionMap> installedSolutions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Config = config;
             DataConnectorCredentials = dataConnectorCredentials;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         }
 
         /// <summary> Config of the AgriService instance. </summary>
-        public AgriServiceConfig Config { get; set; }
+        public AgricultureServiceConfig Config { get; set; }
         /// <summary> Data connector credentials of AgriService instance. </summary>
         public IList<DataConnectorCredentialMap> DataConnectorCredentials { get; }
         /// <summary> AgriService installed solutions. </summary>

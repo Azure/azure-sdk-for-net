@@ -33,39 +33,39 @@ namespace Azure.ResourceManager.AgriculturePlatform
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AgriServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AgriServiceResource.CreateResourceIdentifier" /> to create an <see cref="AgriServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AgricultureServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AgricultureServiceResource.CreateResourceIdentifier" /> to create an <see cref="AgricultureServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAgriculturePlatformArmClient.GetAgriServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAgriculturePlatformArmClient.GetAgricultureServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AgriServiceResource"/> object. </returns>
-        public static AgriServiceResource GetAgriServiceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AgricultureServiceResource"/> object. </returns>
+        public static AgricultureServiceResource GetAgricultureServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAgriculturePlatformArmClient(client).GetAgriServiceResource(id);
+            return GetMockableAgriculturePlatformArmClient(client).GetAgricultureServiceResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of AgriServiceResources in the ResourceGroupResource.
+        /// Gets a collection of AgricultureServiceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAgriculturePlatformResourceGroupResource.GetAgriServiceResources()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAgriculturePlatformResourceGroupResource.GetAgricultureServices()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of AgriServiceResources and their operations over a AgriServiceResource. </returns>
-        public static AgriServiceResourceCollection GetAgriServiceResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of AgricultureServiceResources and their operations over a AgricultureServiceResource. </returns>
+        public static AgricultureServiceCollection GetAgricultureServices(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAgriculturePlatformResourceGroupResource(resourceGroupResource).GetAgriServiceResources();
+            return GetMockableAgriculturePlatformResourceGroupResource(resourceGroupResource).GetAgricultureServices();
         }
 
         /// <summary>
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AgriServiceResource"/></description>
+        /// <description><see cref="AgricultureServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAgriculturePlatformResourceGroupResource.GetAgriServiceResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAgriculturePlatformResourceGroupResource.GetAgricultureServiceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="agriServiceResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agriServiceResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AgriServiceResource>> GetAgriServiceResourceAsync(this ResourceGroupResource resourceGroupResource, string agriServiceResourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AgricultureServiceResource>> GetAgricultureServiceAsync(this ResourceGroupResource resourceGroupResource, string agriServiceResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAgriculturePlatformResourceGroupResource(resourceGroupResource).GetAgriServiceResourceAsync(agriServiceResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAgriculturePlatformResourceGroupResource(resourceGroupResource).GetAgricultureServiceAsync(agriServiceResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AgriServiceResource"/></description>
+        /// <description><see cref="AgricultureServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAgriculturePlatformResourceGroupResource.GetAgriServiceResource(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAgriculturePlatformResourceGroupResource.GetAgricultureService(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="agriServiceResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agriServiceResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<AgriServiceResource> GetAgriServiceResource(this ResourceGroupResource resourceGroupResource, string agriServiceResourceName, CancellationToken cancellationToken = default)
+        public static Response<AgricultureServiceResource> GetAgricultureService(this ResourceGroupResource resourceGroupResource, string agriServiceResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAgriculturePlatformResourceGroupResource(resourceGroupResource).GetAgriServiceResource(agriServiceResourceName, cancellationToken);
+            return GetMockableAgriculturePlatformResourceGroupResource(resourceGroupResource).GetAgricultureService(agriServiceResourceName, cancellationToken);
         }
 
         /// <summary>
@@ -161,23 +161,23 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AgriServiceResource"/></description>
+        /// <description><see cref="AgricultureServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAgriculturePlatformSubscriptionResource.GetAgriServiceResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAgriculturePlatformSubscriptionResource.GetAgricultureServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AgriServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AgriServiceResource> GetAgriServiceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AgricultureServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AgricultureServiceResource> GetAgricultureServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAgriculturePlatformSubscriptionResource(subscriptionResource).GetAgriServiceResourcesAsync(cancellationToken);
+            return GetMockableAgriculturePlatformSubscriptionResource(subscriptionResource).GetAgricultureServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -197,23 +197,23 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AgriServiceResource"/></description>
+        /// <description><see cref="AgricultureServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAgriculturePlatformSubscriptionResource.GetAgriServiceResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAgriculturePlatformSubscriptionResource.GetAgricultureServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AgriServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AgriServiceResource> GetAgriServiceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AgricultureServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AgricultureServiceResource> GetAgricultureServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAgriculturePlatformSubscriptionResource(subscriptionResource).GetAgriServiceResources(cancellationToken);
+            return GetMockableAgriculturePlatformSubscriptionResource(subscriptionResource).GetAgricultureServices(cancellationToken);
         }
     }
 }

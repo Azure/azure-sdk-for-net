@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AgriculturePlatform.Models
 {
     /// <summary> The type used for update operations of the AgriServiceResource. </summary>
-    public partial class AgriServiceResourcePatch
+    public partial class AgricultureServicePatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,19 +46,19 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AgriServiceResourcePatch"/>. </summary>
-        public AgriServiceResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="AgricultureServicePatch"/>. </summary>
+        public AgricultureServicePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgriServiceResourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgricultureServicePatch"/>. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgriServiceResourcePatch(ManagedServiceIdentity identity, AgriculturePlatformSku sku, IDictionary<string, string> tags, AgriServiceResourceUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AgricultureServicePatch(ManagedServiceIdentity identity, AgriculturePlatformSku sku, IDictionary<string, string> tags, AgriServiceResourceUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             Sku = sku;

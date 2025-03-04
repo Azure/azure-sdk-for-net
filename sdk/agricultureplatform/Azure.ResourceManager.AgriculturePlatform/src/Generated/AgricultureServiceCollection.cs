@@ -19,28 +19,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AgriculturePlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AgriServiceResource"/> and their operations.
-    /// Each <see cref="AgriServiceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="AgriServiceResourceCollection"/> instance call the GetAgriServiceResources method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="AgricultureServiceResource"/> and their operations.
+    /// Each <see cref="AgricultureServiceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="AgricultureServiceCollection"/> instance call the GetAgricultureServices method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class AgriServiceResourceCollection : ArmCollection, IEnumerable<AgriServiceResource>, IAsyncEnumerable<AgriServiceResource>
+    public partial class AgricultureServiceCollection : ArmCollection, IEnumerable<AgricultureServiceResource>, IAsyncEnumerable<AgricultureServiceResource>
     {
-        private readonly ClientDiagnostics _agriServiceResourceAgriServiceClientDiagnostics;
-        private readonly AgriServiceRestOperations _agriServiceResourceAgriServiceRestClient;
+        private readonly ClientDiagnostics _agricultureServiceAgriServiceClientDiagnostics;
+        private readonly AgriServiceRestOperations _agricultureServiceAgriServiceRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AgriServiceResourceCollection"/> class for mocking. </summary>
-        protected AgriServiceResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="AgricultureServiceCollection"/> class for mocking. </summary>
+        protected AgricultureServiceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AgriServiceResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AgricultureServiceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal AgriServiceResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AgricultureServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _agriServiceResourceAgriServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AgriculturePlatform", AgriServiceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AgriServiceResource.ResourceType, out string agriServiceResourceAgriServiceApiVersion);
-            _agriServiceResourceAgriServiceRestClient = new AgriServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, agriServiceResourceAgriServiceApiVersion);
+            _agricultureServiceAgriServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AgriculturePlatform", AgricultureServiceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AgricultureServiceResource.ResourceType, out string agricultureServiceAgriServiceApiVersion);
+            _agricultureServiceAgriServiceRestClient = new AgriServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, agricultureServiceAgriServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AgriServiceResource"/></description>
+        /// <description><see cref="AgricultureServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agriServiceResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agriServiceResourceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AgriServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string agriServiceResourceName, AgriServiceResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AgricultureServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string agriServiceResourceName, AgricultureServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agriServiceResourceName, nameof(agriServiceResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _agriServiceResourceAgriServiceClientDiagnostics.CreateScope("AgriServiceResourceCollection.CreateOrUpdate");
+            using var scope = _agricultureServiceAgriServiceClientDiagnostics.CreateScope("AgricultureServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _agriServiceResourceAgriServiceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AgriculturePlatformArmOperation<AgriServiceResource>(new AgriServiceResourceOperationSource(Client), _agriServiceResourceAgriServiceClientDiagnostics, Pipeline, _agriServiceResourceAgriServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _agricultureServiceAgriServiceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AgriculturePlatformArmOperation<AgricultureServiceResource>(new AgricultureServiceOperationSource(Client), _agricultureServiceAgriServiceClientDiagnostics, Pipeline, _agricultureServiceAgriServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AgriServiceResource"/></description>
+        /// <description><see cref="AgricultureServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,17 +128,17 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agriServiceResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agriServiceResourceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AgriServiceResource> CreateOrUpdate(WaitUntil waitUntil, string agriServiceResourceName, AgriServiceResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AgricultureServiceResource> CreateOrUpdate(WaitUntil waitUntil, string agriServiceResourceName, AgricultureServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agriServiceResourceName, nameof(agriServiceResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _agriServiceResourceAgriServiceClientDiagnostics.CreateScope("AgriServiceResourceCollection.CreateOrUpdate");
+            using var scope = _agricultureServiceAgriServiceClientDiagnostics.CreateScope("AgricultureServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _agriServiceResourceAgriServiceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, data, cancellationToken);
-                var operation = new AgriculturePlatformArmOperation<AgriServiceResource>(new AgriServiceResourceOperationSource(Client), _agriServiceResourceAgriServiceClientDiagnostics, Pipeline, _agriServiceResourceAgriServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _agricultureServiceAgriServiceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, data, cancellationToken);
+                var operation = new AgriculturePlatformArmOperation<AgricultureServiceResource>(new AgricultureServiceOperationSource(Client), _agricultureServiceAgriServiceClientDiagnostics, Pipeline, _agricultureServiceAgriServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AgriServiceResource"/></description>
+        /// <description><see cref="AgricultureServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -175,18 +175,18 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agriServiceResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agriServiceResourceName"/> is null. </exception>
-        public virtual async Task<Response<AgriServiceResource>> GetAsync(string agriServiceResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AgricultureServiceResource>> GetAsync(string agriServiceResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agriServiceResourceName, nameof(agriServiceResourceName));
 
-            using var scope = _agriServiceResourceAgriServiceClientDiagnostics.CreateScope("AgriServiceResourceCollection.Get");
+            using var scope = _agricultureServiceAgriServiceClientDiagnostics.CreateScope("AgricultureServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _agriServiceResourceAgriServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, cancellationToken).ConfigureAwait(false);
+                var response = await _agricultureServiceAgriServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AgriServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AgricultureServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AgriServiceResource"/></description>
+        /// <description><see cref="AgricultureServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,18 +220,18 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agriServiceResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agriServiceResourceName"/> is null. </exception>
-        public virtual Response<AgriServiceResource> Get(string agriServiceResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<AgricultureServiceResource> Get(string agriServiceResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agriServiceResourceName, nameof(agriServiceResourceName));
 
-            using var scope = _agriServiceResourceAgriServiceClientDiagnostics.CreateScope("AgriServiceResourceCollection.Get");
+            using var scope = _agricultureServiceAgriServiceClientDiagnostics.CreateScope("AgricultureServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = _agriServiceResourceAgriServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, cancellationToken);
+                var response = _agricultureServiceAgriServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AgriServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AgricultureServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -257,17 +257,17 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AgriServiceResource"/></description>
+        /// <description><see cref="AgricultureServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AgriServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AgriServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AgricultureServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AgricultureServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _agriServiceResourceAgriServiceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _agriServiceResourceAgriServiceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AgriServiceResource(Client, AgriServiceResourceData.DeserializeAgriServiceResourceData(e)), _agriServiceResourceAgriServiceClientDiagnostics, Pipeline, "AgriServiceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _agricultureServiceAgriServiceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _agricultureServiceAgriServiceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AgricultureServiceResource(Client, AgricultureServiceData.DeserializeAgricultureServiceData(e)), _agricultureServiceAgriServiceClientDiagnostics, Pipeline, "AgricultureServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -287,17 +287,17 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AgriServiceResource"/></description>
+        /// <description><see cref="AgricultureServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AgriServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AgriServiceResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AgricultureServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AgricultureServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _agriServiceResourceAgriServiceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _agriServiceResourceAgriServiceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AgriServiceResource(Client, AgriServiceResourceData.DeserializeAgriServiceResourceData(e)), _agriServiceResourceAgriServiceClientDiagnostics, Pipeline, "AgriServiceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _agricultureServiceAgriServiceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _agricultureServiceAgriServiceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AgricultureServiceResource(Client, AgricultureServiceData.DeserializeAgricultureServiceData(e)), _agricultureServiceAgriServiceClientDiagnostics, Pipeline, "AgricultureServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AgriServiceResource"/></description>
+        /// <description><see cref="AgricultureServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,11 +329,11 @@ namespace Azure.ResourceManager.AgriculturePlatform
         {
             Argument.AssertNotNullOrEmpty(agriServiceResourceName, nameof(agriServiceResourceName));
 
-            using var scope = _agriServiceResourceAgriServiceClientDiagnostics.CreateScope("AgriServiceResourceCollection.Exists");
+            using var scope = _agricultureServiceAgriServiceClientDiagnostics.CreateScope("AgricultureServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _agriServiceResourceAgriServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _agricultureServiceAgriServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AgriServiceResource"/></description>
+        /// <description><see cref="AgricultureServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,11 +372,11 @@ namespace Azure.ResourceManager.AgriculturePlatform
         {
             Argument.AssertNotNullOrEmpty(agriServiceResourceName, nameof(agriServiceResourceName));
 
-            using var scope = _agriServiceResourceAgriServiceClientDiagnostics.CreateScope("AgriServiceResourceCollection.Exists");
+            using var scope = _agricultureServiceAgriServiceClientDiagnostics.CreateScope("AgricultureServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _agriServiceResourceAgriServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, cancellationToken: cancellationToken);
+                var response = _agricultureServiceAgriServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AgriServiceResource"/></description>
+        /// <description><see cref="AgricultureServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -411,18 +411,18 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agriServiceResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agriServiceResourceName"/> is null. </exception>
-        public virtual async Task<NullableResponse<AgriServiceResource>> GetIfExistsAsync(string agriServiceResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<AgricultureServiceResource>> GetIfExistsAsync(string agriServiceResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agriServiceResourceName, nameof(agriServiceResourceName));
 
-            using var scope = _agriServiceResourceAgriServiceClientDiagnostics.CreateScope("AgriServiceResourceCollection.GetIfExists");
+            using var scope = _agricultureServiceAgriServiceClientDiagnostics.CreateScope("AgricultureServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _agriServiceResourceAgriServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _agricultureServiceAgriServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<AgriServiceResource>(response.GetRawResponse());
-                return Response.FromValue(new AgriServiceResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<AgricultureServiceResource>(response.GetRawResponse());
+                return Response.FromValue(new AgricultureServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AgriServiceResource"/></description>
+        /// <description><see cref="AgricultureServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -456,18 +456,18 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agriServiceResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agriServiceResourceName"/> is null. </exception>
-        public virtual NullableResponse<AgriServiceResource> GetIfExists(string agriServiceResourceName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<AgricultureServiceResource> GetIfExists(string agriServiceResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agriServiceResourceName, nameof(agriServiceResourceName));
 
-            using var scope = _agriServiceResourceAgriServiceClientDiagnostics.CreateScope("AgriServiceResourceCollection.GetIfExists");
+            using var scope = _agricultureServiceAgriServiceClientDiagnostics.CreateScope("AgricultureServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _agriServiceResourceAgriServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, cancellationToken: cancellationToken);
+                var response = _agricultureServiceAgriServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, agriServiceResourceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<AgriServiceResource>(response.GetRawResponse());
-                return Response.FromValue(new AgriServiceResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<AgricultureServiceResource>(response.GetRawResponse());
+                return Response.FromValue(new AgricultureServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
             }
         }
 
-        IEnumerator<AgriServiceResource> IEnumerable<AgriServiceResource>.GetEnumerator()
+        IEnumerator<AgricultureServiceResource> IEnumerable<AgricultureServiceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AgriServiceResource> IAsyncEnumerable<AgriServiceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AgricultureServiceResource> IAsyncEnumerable<AgricultureServiceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

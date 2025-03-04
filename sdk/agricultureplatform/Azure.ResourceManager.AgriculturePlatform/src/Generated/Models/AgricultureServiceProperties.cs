@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.AgriculturePlatform.Models
 {
     /// <summary> Details of the Agriculture AgriDataManager. </summary>
-    public partial class AgriServiceResourceProperties
+    public partial class AgricultureServiceProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,21 +46,21 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AgriServiceResourceProperties"/>. </summary>
-        public AgriServiceResourceProperties()
+        /// <summary> Initializes a new instance of <see cref="AgricultureServiceProperties"/>. </summary>
+        public AgricultureServiceProperties()
         {
             DataConnectorCredentials = new ChangeTrackingList<DataConnectorCredentialMap>();
             InstalledSolutions = new ChangeTrackingList<InstalledSolutionMap>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgriServiceResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgricultureServiceProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="config"> Config of the AgriService instance. </param>
         /// <param name="managedOnBehalfOfConfiguration"> Managed On Behalf Of Configuration. </param>
         /// <param name="dataConnectorCredentials"> Data connector credentials of AgriService instance. </param>
         /// <param name="installedSolutions"> AgriService installed solutions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgriServiceResourceProperties(ProvisioningState? provisioningState, AgriServiceConfig config, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, IList<DataConnectorCredentialMap> dataConnectorCredentials, IList<InstalledSolutionMap> installedSolutions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AgricultureServiceProperties(AgriculturePlatformProvisioningState? provisioningState, AgricultureServiceConfig config, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, IList<DataConnectorCredentialMap> dataConnectorCredentials, IList<InstalledSolutionMap> installedSolutions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Config = config;
@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public AgriculturePlatformProvisioningState? ProvisioningState { get; }
         /// <summary> Config of the AgriService instance. </summary>
-        public AgriServiceConfig Config { get; set; }
+        public AgricultureServiceConfig Config { get; set; }
         /// <summary> Managed On Behalf Of Configuration. </summary>
         internal ManagedOnBehalfOfConfiguration ManagedOnBehalfOfConfiguration { get; }
         /// <summary> Associated MoboBrokerResources. </summary>

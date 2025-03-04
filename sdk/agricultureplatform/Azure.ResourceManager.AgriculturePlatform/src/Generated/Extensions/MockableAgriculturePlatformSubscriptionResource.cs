@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableAgriculturePlatformSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _agriServiceResourceAgriServiceClientDiagnostics;
-        private AgriServiceRestOperations _agriServiceResourceAgriServiceRestClient;
+        private ClientDiagnostics _agricultureServiceAgriServiceClientDiagnostics;
+        private AgriServiceRestOperations _agricultureServiceAgriServiceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableAgriculturePlatformSubscriptionResource"/> class for mocking. </summary>
         protected MockableAgriculturePlatformSubscriptionResource()
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
         {
         }
 
-        private ClientDiagnostics AgriServiceResourceAgriServiceClientDiagnostics => _agriServiceResourceAgriServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AgriculturePlatform", AgriServiceResource.ResourceType.Namespace, Diagnostics);
-        private AgriServiceRestOperations AgriServiceResourceAgriServiceRestClient => _agriServiceResourceAgriServiceRestClient ??= new AgriServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AgriServiceResource.ResourceType));
+        private ClientDiagnostics AgricultureServiceAgriServiceClientDiagnostics => _agricultureServiceAgriServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AgriculturePlatform", AgricultureServiceResource.ResourceType.Namespace, Diagnostics);
+        private AgriServiceRestOperations AgricultureServiceAgriServiceRestClient => _agricultureServiceAgriServiceRestClient ??= new AgriServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AgricultureServiceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AgriServiceResource"/></description>
+        /// <description><see cref="AgricultureServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AgriServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AgriServiceResource> GetAgriServiceResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AgricultureServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AgricultureServiceResource> GetAgricultureServicesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AgriServiceResourceAgriServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AgriServiceResourceAgriServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AgriServiceResource(Client, AgriServiceResourceData.DeserializeAgriServiceResourceData(e)), AgriServiceResourceAgriServiceClientDiagnostics, Pipeline, "MockableAgriculturePlatformSubscriptionResource.GetAgriServiceResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AgricultureServiceAgriServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AgricultureServiceAgriServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AgricultureServiceResource(Client, AgricultureServiceData.DeserializeAgricultureServiceData(e)), AgricultureServiceAgriServiceClientDiagnostics, Pipeline, "MockableAgriculturePlatformSubscriptionResource.GetAgricultureServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AgriServiceResource"/></description>
+        /// <description><see cref="AgricultureServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AgriServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AgriServiceResource> GetAgriServiceResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AgricultureServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AgricultureServiceResource> GetAgricultureServices(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AgriServiceResourceAgriServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AgriServiceResourceAgriServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AgriServiceResource(Client, AgriServiceResourceData.DeserializeAgriServiceResourceData(e)), AgriServiceResourceAgriServiceClientDiagnostics, Pipeline, "MockableAgriculturePlatformSubscriptionResource.GetAgriServiceResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AgricultureServiceAgriServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AgricultureServiceAgriServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AgricultureServiceResource(Client, AgricultureServiceData.DeserializeAgricultureServiceData(e)), AgricultureServiceAgriServiceClientDiagnostics, Pipeline, "MockableAgriculturePlatformSubscriptionResource.GetAgricultureServices", "value", "nextLink", cancellationToken);
         }
     }
 }

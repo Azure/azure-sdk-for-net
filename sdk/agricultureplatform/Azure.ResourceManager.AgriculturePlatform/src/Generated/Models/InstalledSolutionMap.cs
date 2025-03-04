@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="key"> The key representing the installed solution. </param>
         /// <param name="value"> The installed solution value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public InstalledSolutionMap(string key, Solution value)
+        public InstalledSolutionMap(string key, AgricultureSolution value)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="key"> The key representing the installed solution. </param>
         /// <param name="value"> The installed solution value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstalledSolutionMap(string key, Solution value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InstalledSolutionMap(string key, AgricultureSolution value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             Value = value;
@@ -77,6 +77,6 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <summary> The key representing the installed solution. </summary>
         public string Key { get; set; }
         /// <summary> The installed solution value. </summary>
-        public Solution Value { get; set; }
+        public AgricultureSolution Value { get; set; }
     }
 }

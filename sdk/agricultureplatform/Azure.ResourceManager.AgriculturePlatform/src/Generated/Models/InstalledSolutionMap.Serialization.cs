@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 return null;
             }
             string key = default;
-            Solution value = default;
+            AgricultureSolution value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 }
                 if (property.NameEquals("value"u8))
                 {
-                    value = Solution.DeserializeSolution(property.Value, options);
+                    value = AgricultureSolution.DeserializeAgricultureSolution(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

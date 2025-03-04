@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AgriculturePlatform
 {
     /// <summary>
-    /// A class representing the AgriServiceResource data model.
+    /// A class representing the AgricultureService data model.
     /// Schema of the AgriService resource from Microsoft.AgriculturePlatform resource provider.
     /// </summary>
-    public partial class AgriServiceResourceData : TrackedResourceData
+    public partial class AgricultureServiceData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AgriServiceResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgricultureServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public AgriServiceResourceData(AzureLocation location) : base(location)
+        public AgricultureServiceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgriServiceResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgricultureServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgriServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AgriServiceResourceProperties properties, ManagedServiceIdentity identity, AgriculturePlatformSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AgricultureServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AgricultureServiceProperties properties, ManagedServiceIdentity identity, AgriculturePlatformSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.AgriculturePlatform
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgriServiceResourceData"/> for deserialization. </summary>
-        internal AgriServiceResourceData()
+        /// <summary> Initializes a new instance of <see cref="AgricultureServiceData"/> for deserialization. </summary>
+        internal AgricultureServiceData()
         {
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public AgriServiceResourceProperties Properties { get; set; }
+        public AgricultureServiceProperties Properties { get; set; }
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>

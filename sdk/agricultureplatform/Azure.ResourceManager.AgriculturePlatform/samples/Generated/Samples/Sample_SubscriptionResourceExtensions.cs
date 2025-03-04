@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAgriServiceResources_AgriServiceListBySubscription()
+        public async Task GetAgricultureServices_AgriServiceListBySubscription()
         {
             // Generated from example definition: 2024-06-01-preview/AgriService_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "AgriServiceResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.AgriculturePlatform.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AgriServiceResource item in subscriptionResource.GetAgriServiceResourcesAsync())
+            await foreach (AgricultureServiceResource item in subscriptionResource.GetAgricultureServicesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AgriServiceResourceData resourceData = item.Data;
+                AgricultureServiceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

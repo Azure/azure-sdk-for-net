@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AgriculturePlatform.Models
 {
     /// <summary> Installed data manager for Agriculture solution detail. </summary>
-    public partial class Solution
+    public partial class AgricultureSolution
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Solution"/>. </summary>
-        public Solution()
+        /// <summary> Initializes a new instance of <see cref="AgricultureSolution"/>. </summary>
+        public AgricultureSolution()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Solution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgricultureSolution"/>. </summary>
         /// <param name="applicationName"> Application name of the solution. </param>
         /// <param name="partnerId"> Partner Id. </param>
         /// <param name="marketPlacePublisherId"> Marketplace publisher Id. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="saasSubscriptionName"> Saas subscription name. </param>
         /// <param name="planId"> Plan Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Solution(string applicationName, string partnerId, string marketPlacePublisherId, string saasSubscriptionId, string saasSubscriptionName, string planId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AgricultureSolution(string applicationName, string partnerId, string marketPlacePublisherId, string saasSubscriptionId, string saasSubscriptionName, string planId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApplicationName = applicationName;
             PartnerId = partnerId;

@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.AgriculturePlatform.Samples
 {
-    public partial class Sample_AgriServiceResourceCollection
+    public partial class Sample_AgricultureServiceCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -37,21 +37,21 @@ namespace Azure.ResourceManager.AgriculturePlatform.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AgriServiceResource
-            AgriServiceResourceCollection collection = resourceGroupResource.GetAgriServiceResources();
+            // get the collection of this AgricultureServiceResource
+            AgricultureServiceCollection collection = resourceGroupResource.GetAgricultureServices();
 
             // invoke the operation
             string agriServiceResourceName = "abc123";
-            AgriServiceResourceData data = new AgriServiceResourceData(new AzureLocation("pkneuknooprpqirnugzwbkiie"))
+            AgricultureServiceData data = new AgricultureServiceData(new AzureLocation("pkneuknooprpqirnugzwbkiie"))
             {
-                Properties = new AgriServiceResourceProperties
+                Properties = new AgricultureServiceProperties
                 {
-                    Config = new AgriServiceConfig(),
+                    Config = new AgricultureServiceConfig(),
                     DataConnectorCredentials = {new DataConnectorCredentialMap("BackendAADApplicationCredentials", new DataConnectorCredentials
 {
 ClientId = "dce298a8-1eec-481a-a8f9-a3cd5a8257b2",
 })},
-                    InstalledSolutions = {new InstalledSolutionMap("bayerAgPowered.cwum", new Solution
+                    InstalledSolutions = {new InstalledSolutionMap("bayerAgPowered.cwum", new AgricultureSolution
 {
 ApplicationName = "bayerAgPowered.cwum",
 })},
@@ -75,12 +75,12 @@ ApplicationName = "bayerAgPowered.cwum",
 ["key137"] = "oxwansfetzzgdwl"
 },
             };
-            ArmOperation<AgriServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agriServiceResourceName, data);
-            AgriServiceResource result = lro.Value;
+            ArmOperation<AgricultureServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agriServiceResourceName, data);
+            AgricultureServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AgriServiceResourceData resourceData = result.Data;
+            AgricultureServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -104,16 +104,16 @@ ApplicationName = "bayerAgPowered.cwum",
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AgriServiceResource
-            AgriServiceResourceCollection collection = resourceGroupResource.GetAgriServiceResources();
+            // get the collection of this AgricultureServiceResource
+            AgricultureServiceCollection collection = resourceGroupResource.GetAgricultureServices();
 
             // invoke the operation
             string agriServiceResourceName = "abc123";
-            AgriServiceResource result = await collection.GetAsync(agriServiceResourceName);
+            AgricultureServiceResource result = await collection.GetAsync(agriServiceResourceName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AgriServiceResourceData resourceData = result.Data;
+            AgricultureServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -137,15 +137,15 @@ ApplicationName = "bayerAgPowered.cwum",
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AgriServiceResource
-            AgriServiceResourceCollection collection = resourceGroupResource.GetAgriServiceResources();
+            // get the collection of this AgricultureServiceResource
+            AgricultureServiceCollection collection = resourceGroupResource.GetAgricultureServices();
 
             // invoke the operation and iterate over the result
-            await foreach (AgriServiceResource item in collection.GetAllAsync())
+            await foreach (AgricultureServiceResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AgriServiceResourceData resourceData = item.Data;
+                AgricultureServiceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -172,8 +172,8 @@ ApplicationName = "bayerAgPowered.cwum",
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AgriServiceResource
-            AgriServiceResourceCollection collection = resourceGroupResource.GetAgriServiceResources();
+            // get the collection of this AgricultureServiceResource
+            AgricultureServiceCollection collection = resourceGroupResource.GetAgricultureServices();
 
             // invoke the operation
             string agriServiceResourceName = "abc123";
@@ -201,13 +201,13 @@ ApplicationName = "bayerAgPowered.cwum",
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AgriServiceResource
-            AgriServiceResourceCollection collection = resourceGroupResource.GetAgriServiceResources();
+            // get the collection of this AgricultureServiceResource
+            AgricultureServiceCollection collection = resourceGroupResource.GetAgricultureServices();
 
             // invoke the operation
             string agriServiceResourceName = "abc123";
-            NullableResponse<AgriServiceResource> response = await collection.GetIfExistsAsync(agriServiceResourceName);
-            AgriServiceResource result = response.HasValue ? response.Value : null;
+            NullableResponse<AgricultureServiceResource> response = await collection.GetIfExistsAsync(agriServiceResourceName);
+            AgricultureServiceResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -217,7 +217,7 @@ ApplicationName = "bayerAgPowered.cwum",
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AgriServiceResourceData resourceData = result.Data;
+                AgricultureServiceData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
