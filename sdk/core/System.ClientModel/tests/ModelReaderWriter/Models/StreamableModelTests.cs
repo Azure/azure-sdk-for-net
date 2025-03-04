@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
-    internal abstract class StreamableModelTests<T> : ModelTests<T> where T : IPersistableStreamModel<T>
+    internal abstract class StreamableModelTests<T> : ModelTests<T> where T : IStreamModel<T>
     {
         [TestCase("J")]
         [TestCase("W")]

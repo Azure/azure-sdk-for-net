@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
-    public class ModelWithPersistableStream : IPersistableStreamModel<ModelWithPersistableStream>
+    public class ModelWithPersistableStream : IStreamModel<ModelWithPersistableStream>
     {
         private readonly Dictionary<string, BinaryData> _rawData;
 

@@ -10,7 +10,7 @@ namespace System.ClientModel.Primitives;
 /// The format is determined by the implementer.
 /// </summary>
 /// <typeparam name="T">The type the model can be converted into.</typeparam>
-public interface IPersistableStreamModel<out T> : IPersistableModel<T>
+public interface IStreamModel<out T> : IPersistableModel<T>
 {
     /// <summary>
     /// Writes the model into the provided <see cref="Stream"/>.

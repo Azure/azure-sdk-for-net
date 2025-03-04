@@ -103,7 +103,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
     }
 
-    public class ModelReaderWriterStreamableStrategy<T> : RoundTripStrategy<T> where T : IPersistableStreamModel<T>
+    public class ModelReaderWriterStreamableStrategy<T> : RoundTripStrategy<T> where T : IStreamModel<T>
     {
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
@@ -124,7 +124,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
     }
 
-    public class ModelReaderWriterStreamableNonGenericStrategy<T> : RoundTripStrategy<T> where T : IPersistableStreamModel<T>
+    public class ModelReaderWriterStreamableNonGenericStrategy<T> : RoundTripStrategy<T> where T : IStreamModel<T>
     {
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
@@ -146,7 +146,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
     }
 
-    public class ModelInterfaceStreamableStrategy<T> : RoundTripStrategy<T> where T : IPersistableStreamModel<T>
+    public class ModelInterfaceStreamableStrategy<T> : RoundTripStrategy<T> where T : IStreamModel<T>
     {
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
@@ -168,7 +168,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
     }
 
-    public class ModelInterfaceAsObjectStreamableStrategy<T> : RoundTripStrategy<T> where T : IPersistableStreamModel<T>
+    public class ModelInterfaceAsObjectStreamableStrategy<T> : RoundTripStrategy<T> where T : IStreamModel<T>
     {
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
@@ -186,7 +186,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         public override void Write(Stream stream, T model, ModelReaderWriterOptions options)
         {
-            ((IPersistableStreamModel<object>)model).Write(stream, options);
+            ((IStreamModel<object>)model).Write(stream, options);
         }
     }
 

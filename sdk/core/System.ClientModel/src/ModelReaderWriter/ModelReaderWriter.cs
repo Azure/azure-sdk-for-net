@@ -22,7 +22,7 @@ public static class ModelReaderWriter
     /// <param name="options"></param>
     /// <exception cref="ArgumentNullException"></exception>
     public static void Write<T>(T model, Stream stream, ModelReaderWriterOptions? options = default)
-        where T : IPersistableStreamModel<T>
+        where T : IStreamModel<T>
     {
         if (model is null)
         {
@@ -56,10 +56,10 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        var iModel = model as IPersistableStreamModel<object>;
+        var iModel = model as IStreamModel<object>;
         if (iModel is null)
         {
-            throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IPersistableStreamModel<object>)}");
+            throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IStreamModel<object>)}");
         }
 
         iModel.Write(stream, options);
