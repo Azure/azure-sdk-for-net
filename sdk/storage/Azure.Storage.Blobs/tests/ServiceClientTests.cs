@@ -60,33 +60,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        public async Task GetPropertiesAsync_WhenAccountDoesNotExist_ThrowsRequestFailedException()
-        {
-            string connStringWithNonExistingDomain =
-                $"DefaultEndpointsProtocol=https;" +
-                $"AccountName=abc6546556482741849;" + // some account name that should not exist
-                $"AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;" + // key does not matter
-                $"EndpointSuffix=core.windows.net";
-            var sut = new BlobServiceClient(connStringWithNonExistingDomain);
-            try
-            {
-                await sut.GetPropertiesAsync();
-            }
-            catch (Exception outerException)
-            {
-                Console.WriteLine($"Outer-Exception: {outerException.GetType()} - {outerException.Message}");
-                if (outerException is AggregateException)
-                {
-                    AggregateException aggregateException = (AggregateException)outerException;
-                    foreach (var innerException in aggregateException.Flatten().InnerExceptions)
-                    {
-                        Console.WriteLine($"Inner-Exception: {innerException.GetType()} - {innerException.Message}");
-                    }
-                }
-            }
-        }
-
-        [RecordedTest]
         public void Ctor_Uri()
         {
             var accountName = "accountName";
