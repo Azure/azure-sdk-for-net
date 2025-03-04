@@ -16,17 +16,21 @@ using Azure.Monitor.OpenTelemetry.AspNetCore;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
 {
-#if ASP_NET_CORE_DISTRO
 #pragma warning disable SA1649 // File name should match first type name
+#if ASP_NET_CORE_DISTRO
     internal class DefaultPlatformDistro : IPlatform
-#pragma warning restore SA1649 // File name should match first type name
+#elif LIVE_METRICS_PROJECT
+    internal class DefaultPlatformLiveMetrics : IPlatform
 #else
     internal class DefaultPlatform : IPlatform
 #endif
+#pragma warning restore SA1649 // File name should match first type name
     {
         internal static readonly IPlatform Instance
 #if ASP_NET_CORE_DISTRO
             = new DefaultPlatformDistro();
+#elif LIVE_METRICS_PROJECT
+            = new DefaultPlatformLiveMetrics();
 #else
             = new DefaultPlatform();
 #endif
@@ -35,6 +39,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
 
 #if ASP_NET_CORE_DISTRO
         public DefaultPlatformDistro()
+#elif LIVE_METRICS_PROJECT
+        public DefaultPlatformLiveMetrics()
 #else
         public DefaultPlatform()
 #endif

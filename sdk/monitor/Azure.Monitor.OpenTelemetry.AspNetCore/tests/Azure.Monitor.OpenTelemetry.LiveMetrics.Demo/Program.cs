@@ -4,13 +4,12 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using OpenTelemetry.Trace;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
+using Microsoft.Extensions.Logging;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
+using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 {
@@ -22,7 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 
         private const string ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
 
-        private static Random _random = new();
+        private static readonly Random _random = new();
 
         private const int chunkSizeMB = 100;
         private static long totalMemoryAllocated = 0;
@@ -34,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                 ConnectionString = ConnectionString
             };
 
-            var manager = new LiveMetricsClientManager(options, new DefaultPlatformDistro());
+            var manager = new LiveMetricsClientManager(options, new DefaultPlatformLiveMetrics());
 
             using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(ActivitySourceName)
