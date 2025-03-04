@@ -21,9 +21,9 @@ To delete a project, call DeleteProjectAsync on the `ConversationAuthoringProjec
 
 ```C# Snippet:Sample5_ConversationsAuthoring_DeleteProjectAsync
 string projectName = "MySampleProjectAsync";
-ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-Operation operation = await projectAuthoringClient.DeleteProjectAsync(
+Operation operation = await projectClient.DeleteProjectAsync(
     waitUntil: WaitUntil.Completed
 );
 

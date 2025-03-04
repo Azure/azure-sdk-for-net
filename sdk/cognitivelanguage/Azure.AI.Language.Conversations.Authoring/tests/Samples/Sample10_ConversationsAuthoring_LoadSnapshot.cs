@@ -23,9 +23,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample10_ConversationsAuthoring_LoadSnapshot
             string projectName = "SampleProject";
             string trainedModelLabel = "SampleModel";
-            ConversationAuthoringTrainedModel modelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
+            ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
-            Operation operation = modelAuthoringClient.LoadSnapshot(
+            Operation operation = trainedModelClient.LoadSnapshot(
                 waitUntil: WaitUntil.Completed
             );
 

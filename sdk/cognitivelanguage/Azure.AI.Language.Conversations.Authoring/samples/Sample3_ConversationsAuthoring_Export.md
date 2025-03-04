@@ -21,9 +21,9 @@ To export a project, call Export on the ConversationAuthoringProject client, whi
 
 ```C# Snippet:Sample3_ConversationsAuthoring_Export
 string projectName = "MyExportedProject";
-ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-Operation operation = projectAuthoringClient.Export(
+Operation operation = projectClient.Export(
     waitUntil: WaitUntil.Completed,
     stringIndexType: StringIndexType.Utf16CodeUnit,
     exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation

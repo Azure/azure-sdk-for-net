@@ -24,9 +24,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample10_ConversationsAuthoring_LoadSnapshotAsync
             string projectName = "SampleProject";
             string trainedModelLabel = "SampleModel";
-            ConversationAuthoringTrainedModel modelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
+            ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
-            Operation operation = await modelAuthoringClient.LoadSnapshotAsync(
+            Operation operation = await trainedModelClient.LoadSnapshotAsync(
                 waitUntil: WaitUntil.Completed);
 
              // Extract the operation-location header

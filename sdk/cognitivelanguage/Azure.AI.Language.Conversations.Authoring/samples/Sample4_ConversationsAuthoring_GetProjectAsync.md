@@ -21,9 +21,9 @@ To retrieve metadata of a project, call GetProjectAsync on the `ConversationAuth
 
 ```C# Snippet:Sample4_ConversationsAuthoring_GetProjectAsync
 string projectName = "MySampleProjectAsync";
-ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-Response<ProjectMetadata> response = await projectAuthoringClient.GetProjectAsync();
+Response<ProjectMetadata> response = await projectClient.GetProjectAsync();
 ProjectMetadata projectMetadata = response.Value;
 
 Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");

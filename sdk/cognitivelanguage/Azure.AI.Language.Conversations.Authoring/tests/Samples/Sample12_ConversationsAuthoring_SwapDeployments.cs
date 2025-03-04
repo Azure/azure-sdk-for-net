@@ -26,8 +26,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             string deploymentName1 = "deployment1";
             string deploymentName2 = "deployment2";
             SwapDeploymentsDetails swapDetails = new SwapDeploymentsDetails(deploymentName1, deploymentName2);
-            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
-            Operation operation = projectAuthoringClient.SwapDeployments(
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+            Operation operation = projectClient.SwapDeployments(
                 waitUntil: WaitUntil.Completed,
                 details: swapDetails
             );

@@ -21,11 +21,11 @@ To deploy a project, call `DeployProject` on the `ConversationAuthoringDeploymen
 string projectName = "Test-data-labels";
 string deploymentName = "staging";
 
-ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName);
+ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
 CreateDeploymentDetails trainedModeDetails = new CreateDeploymentDetails("m1");
 
-Operation operation = deploymentAuthoringClient.DeployProject(
+Operation operation = deploymentClient.DeployProject(
     waitUntil: WaitUntil.Completed,
     trainedModeDetails
 );

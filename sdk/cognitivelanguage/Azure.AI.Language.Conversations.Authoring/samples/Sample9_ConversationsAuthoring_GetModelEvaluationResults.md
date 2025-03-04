@@ -23,9 +23,9 @@ To retrieve model evaluation results, call GetModelEvaluationResults on the `Con
 string projectName = "SampleProject";
 string trainedModelLabel = "SampleModel";
 
-ConversationAuthoringTrainedModel modelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
+ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
-Pageable<UtteranceEvaluationResult> results = modelAuthoringClient.GetModelEvaluationResults(
+Pageable<UtteranceEvaluationResult> results = trainedModelClient.GetModelEvaluationResults(
     stringIndexType: stringIndexType
 );
 

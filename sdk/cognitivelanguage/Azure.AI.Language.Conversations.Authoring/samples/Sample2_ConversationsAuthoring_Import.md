@@ -21,7 +21,7 @@ To import a project synchronously, call Import on the ConversationAuthoringProje
 
 ```C# Snippet:Sample2_ConversationsAuthoring_Import
 string projectName = "MyImportedProject";
-ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
 CreateProjectDetails projectMetadata = new CreateProjectDetails(
     projectKind: "Conversation",
@@ -73,7 +73,7 @@ ExportedProject exportedProject = new ExportedProject(
     Assets = projectAssets
 };
 
-Operation operation = projectAuthoringClient.Import(
+Operation operation = projectClient.Import(
     waitUntil: WaitUntil.Completed,
     exportedProject: exportedProject,
     exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation

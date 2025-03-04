@@ -26,11 +26,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             string projectName = "Test-data-labels";
             string deploymentName = "staging";
 
-            ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName);
+            ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
             CreateDeploymentDetails trainedModeDetails = new CreateDeploymentDetails("m1");
 
-            Operation operation = await deploymentAuthoringClient.DeployProjectAsync(
+            Operation operation = await deploymentClient.DeployProjectAsync(
                 waitUntil: WaitUntil.Completed,
                 trainedModeDetails
             );

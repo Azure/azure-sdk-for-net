@@ -54,7 +54,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             try
             {
                 string invalidProjectName = "InvalidProject";
-                ConversationAuthoringProject projectAuthoringClient = client.GetProject(invalidProjectName);
+                ConversationAuthoringProject projectClient = client.GetProject(invalidProjectName);
                 CreateProjectDetails projectData = new CreateProjectDetails(
                   projectKind: "Conversation",
                   language: "invalid-lang"
@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                     Description = "This is a test for invalid configuration."
                 };
                 using RequestContent content = RequestContent.Create(projectData);
-                Response response = projectAuthoringClient.CreateProject(content);
+                Response response = projectClient.CreateProject(content);
             }
             catch (RequestFailedException ex)
             {

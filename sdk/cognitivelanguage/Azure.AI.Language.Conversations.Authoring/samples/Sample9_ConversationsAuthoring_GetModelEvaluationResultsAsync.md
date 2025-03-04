@@ -20,10 +20,10 @@ To retrieve model evaluation results for a project asynchronously, call GetModel
 ```C# Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResultsAsync
 string projectName = "SampleProject";
 string trainedModelLabel = "SampleModel";
-ConversationAuthoringTrainedModel modelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
+ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
 
-AsyncPageable<UtteranceEvaluationResult> results = modelAuthoringClient.GetModelEvaluationResultsAsync(
+AsyncPageable<UtteranceEvaluationResult> results = trainedModelClient.GetModelEvaluationResultsAsync(
     stringIndexType: stringIndexType
 );
 

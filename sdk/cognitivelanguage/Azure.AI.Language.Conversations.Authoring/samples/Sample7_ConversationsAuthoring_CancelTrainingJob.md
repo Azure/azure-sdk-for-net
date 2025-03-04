@@ -22,9 +22,9 @@ To cancel a training job, call CancelTrainingJob on the `ConversationAuthoringPr
 ```C# Snippet:Sample7_ConversationsAuthoring_CancelTrainingJob
 string projectName = "MyProject";
 string jobId = "YourTrainingJobId";
-ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-Operation<TrainingJobResult> cancelOperation = projectAuthoringClient.CancelTrainingJob(
+Operation<TrainingJobResult> cancelOperation = projectClient.CancelTrainingJob(
     waitUntil: WaitUntil.Completed,
     jobId: jobId
 );

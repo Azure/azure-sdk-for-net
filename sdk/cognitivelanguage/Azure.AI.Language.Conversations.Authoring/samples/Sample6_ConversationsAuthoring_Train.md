@@ -21,7 +21,7 @@ To train a model, call Train on the `ConversationAuthoringProject` client. The m
 
 ```C# Snippet:Sample6_ConversationsAuthoring_Train
 string projectName = "MySampleProject";
-ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
 TrainingJobDetails trainingJobDetails = new TrainingJobDetails(
     modelLabel: "MyModel",
     trainingMode: ConversationAuthoringTrainingMode.Standard
@@ -36,7 +36,7 @@ TrainingJobDetails trainingJobDetails = new TrainingJobDetails(
     }
 };
 
-Operation<TrainingJobResult> operation = projectAuthoringClient.Train(
+Operation<TrainingJobResult> operation = projectClient.Train(
     waitUntil: WaitUntil.Completed,
     details: trainingJobDetails
 );

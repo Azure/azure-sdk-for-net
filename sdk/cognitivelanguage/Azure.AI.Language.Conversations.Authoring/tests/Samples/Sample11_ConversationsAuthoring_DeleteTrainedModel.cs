@@ -23,9 +23,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample11_ConversationsAuthoring_DeleteTrainedModel
             string projectName = "SampleProject";
             string trainedModelLabel = "SampleModel";
-            ConversationAuthoringTrainedModel modelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
+            ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
-            Response response = modelAuthoringClient.DeleteTrainedModel();
+            Response response = trainedModelClient.DeleteTrainedModel();
 
             Console.WriteLine($"Delete Trained Model Response Status: {response.Status}");
             #endregion

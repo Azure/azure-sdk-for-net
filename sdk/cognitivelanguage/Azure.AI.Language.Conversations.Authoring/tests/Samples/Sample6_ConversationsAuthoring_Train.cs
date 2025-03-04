@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample6_ConversationsAuthoring_Train
             string projectName = "MySampleProject";
-            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
             TrainingJobDetails trainingJobDetails = new TrainingJobDetails(
                 modelLabel: "MyModel",
                 trainingMode: ConversationAuthoringTrainingMode.Standard
@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 }
             };
 
-            Operation<TrainingJobResult> operation = projectAuthoringClient.Train(
+            Operation<TrainingJobResult> operation = projectClient.Train(
                 waitUntil: WaitUntil.Completed,
                 details: trainingJobDetails
             );

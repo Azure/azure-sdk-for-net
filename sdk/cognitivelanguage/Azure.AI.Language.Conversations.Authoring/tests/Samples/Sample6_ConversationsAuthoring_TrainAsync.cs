@@ -25,7 +25,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample6_ConversationsAuthoring_TrainAsync
             string projectName = "MySampleProjectAsync";
-            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
             TrainingJobDetails trainingJobDetails = new TrainingJobDetails(
                 modelLabel: "MyModel",
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 }
             };
 
-            Operation<TrainingJobResult> operation = await projectAuthoringClient.TrainAsync(
+            Operation<TrainingJobResult> operation = await projectClient.TrainAsync(
                 waitUntil: WaitUntil.Completed,
                 details: trainingJobDetails
             );

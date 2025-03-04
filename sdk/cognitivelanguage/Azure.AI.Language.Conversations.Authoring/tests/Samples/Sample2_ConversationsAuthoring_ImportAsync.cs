@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample2_ConversationsAuthoring_ImportAsync
             string projectName = "MyImportedProjectAsync";
-            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
             CreateProjectDetails projectMetadata = new CreateProjectDetails(
                 projectKind: "Conversation",
@@ -79,7 +79,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 Assets = projectAssets
             };
 
-            Operation operation = await projectAuthoringClient.ImportAsync(
+            Operation operation = await projectClient.ImportAsync(
                 waitUntil: WaitUntil.Completed,
                 exportedProject: exportedProject,
                 exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation

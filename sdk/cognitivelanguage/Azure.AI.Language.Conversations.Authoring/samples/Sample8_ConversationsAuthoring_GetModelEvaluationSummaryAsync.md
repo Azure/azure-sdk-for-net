@@ -22,9 +22,9 @@ To asynchronously retrieve a model evaluation summary, call GetModelEvaluationSu
 ```C# Snippet:Sample8_ConversationsAuthoring_GetModelEvaluationSummaryAsync
 string projectName = "MyProject";
 string trainedModelLabel = "YourTrainedModelLabel";
-ConversationAuthoringTrainedModel modelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
+ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
-Response<EvaluationSummary> evaluationSummaryResponse = await modelAuthoringClient.GetModelEvaluationSummaryAsync();
+Response<EvaluationSummary> evaluationSummaryResponse = await trainedModelClient.GetModelEvaluationSummaryAsync();
 
 // Print entities evaluation summary
 EntitiesEvaluationSummary entitiesEval = evaluationSummaryResponse.Value.EntitiesEvaluation;

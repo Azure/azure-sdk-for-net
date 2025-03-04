@@ -22,9 +22,9 @@ To cancel a training job asynchronously, call CancelTrainingJobAsync on the `Con
 ```C# Snippet:Sample7_ConversationsAuthoring_CancelTrainingJobAsync
 string projectName = "MyProject";
 string jobId = "YourTrainingJobId";
-ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-Operation<TrainingJobResult> cancelOperation = await projectAuthoringClient.CancelTrainingJobAsync(
+Operation<TrainingJobResult> cancelOperation = await projectClient.CancelTrainingJobAsync(
     waitUntil: WaitUntil.Completed,
     jobId: jobId
 );

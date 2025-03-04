@@ -25,9 +25,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample4_ConversationsAuthoring_GetProjectAsync
             string projectName = "MySampleProjectAsync";
-            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-            Response<ProjectMetadata> response = await projectAuthoringClient.GetProjectAsync();
+            Response<ProjectMetadata> response = await projectClient.GetProjectAsync();
             ProjectMetadata projectMetadata = response.Value;
 
             Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");

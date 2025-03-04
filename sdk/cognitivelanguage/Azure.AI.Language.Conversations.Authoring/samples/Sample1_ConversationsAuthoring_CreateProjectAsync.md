@@ -21,7 +21,7 @@ To create a new project, call `CreateProjectAsync` on the `ConversationAuthoring
 
 ```C# Snippet:Sample1_ConversationsAuthoring_CreateProjectAsync
 string projectName = "MyNewProjectAsync";
-ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
 CreateProjectDetails projectData = new CreateProjectDetails(
       projectKind: "Conversation",
       language: "en-us"
@@ -31,7 +31,7 @@ CreateProjectDetails projectData = new CreateProjectDetails(
     Description = "Project description"
 };
 
-Response response = await projectAuthoringClient.CreateProjectAsync(projectData);
+Response response = await projectClient.CreateProjectAsync(projectData);
 
 Console.WriteLine($"Project created with status: {response.Status}");
 ```

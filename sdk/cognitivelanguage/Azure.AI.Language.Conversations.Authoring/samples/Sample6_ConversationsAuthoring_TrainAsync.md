@@ -21,7 +21,7 @@ To train a model asynchronously, call TrainAsync on the `ConversationAuthoringPr
 
 ```C# Snippet:Sample6_ConversationsAuthoring_TrainAsync
 string projectName = "MySampleProjectAsync";
-ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
 TrainingJobDetails trainingJobDetails = new TrainingJobDetails(
     modelLabel: "MyModel",
@@ -37,7 +37,7 @@ TrainingJobDetails trainingJobDetails = new TrainingJobDetails(
     }
 };
 
-Operation<TrainingJobResult> operation = await projectAuthoringClient.TrainAsync(
+Operation<TrainingJobResult> operation = await projectClient.TrainAsync(
     waitUntil: WaitUntil.Completed,
     details: trainingJobDetails
 );
