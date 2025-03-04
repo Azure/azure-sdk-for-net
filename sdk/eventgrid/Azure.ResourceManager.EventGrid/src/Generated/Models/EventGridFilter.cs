@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
     /// This is the base type that represents a filter. To configure a filter, do not directly instantiate an object of this class. Instead, instantiate
-    /// an object of a derived class such as BoolEqualsFilter, NumberInFilter, StringEqualsFilter etc depending on the type of the key based on
+    /// an object of a derived class such as BoolEqualsFilter, NumberInFilter etc depending on the type of the key based on
     /// which you want to filter.
     /// Please note <see cref="EventGridFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BoolEqualsFilter"/>, <see cref="IsNotNullFilter"/>, <see cref="IsNullOrUndefinedFilter"/>, <see cref="NumberGreaterThanFilter"/>, <see cref="NumberGreaterThanOrEqualsFilter"/>, <see cref="NumberInFilter"/>, <see cref="NumberInRangeFilter"/>, <see cref="NumberLessThanFilter"/>, <see cref="NumberLessThanOrEqualsFilter"/>, <see cref="NumberNotInFilter"/>, <see cref="NumberNotInRangeFilter"/>, <see cref="StringBeginsWithFilter"/>, <see cref="StringContainsFilter"/>, <see cref="StringEndsWithFilter"/>, <see cref="StringInFilter"/>, <see cref="StringNotBeginsWithFilter"/>, <see cref="StringNotContainsFilter"/>, <see cref="StringNotEndsWithFilter"/> and <see cref="StringNotInFilter"/>.
