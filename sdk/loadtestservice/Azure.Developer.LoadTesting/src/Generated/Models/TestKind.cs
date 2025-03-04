@@ -22,14 +22,14 @@ namespace Azure.Developer.LoadTesting.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string URLValue = "URL";
-        private const string JMXValue = "JMX";
+        private const string UrlValue = "URL";
+        private const string JmxValue = "JMX";
         private const string LocustValue = "Locust";
 
         /// <summary> URL Test. </summary>
-        public static TestKind URL { get; } = new TestKind(URLValue);
+        public static TestKind Url { get; } = new TestKind(UrlValue);
         /// <summary> JMX Test. </summary>
-        public static TestKind JMX { get; } = new TestKind(JMXValue);
+        public static TestKind Jmx { get; } = new TestKind(JmxValue);
         /// <summary> Locust Test. </summary>
         public static TestKind Locust { get; } = new TestKind(LocustValue);
         /// <summary> Determines if two <see cref="TestKind"/> values are the same. </summary>

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class Secret : IUtf8JsonSerializable, IJsonModel<Secret>
+    public partial class TestSecret : IUtf8JsonSerializable, IJsonModel<TestSecret>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Secret>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TestSecret>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Secret>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TestSecret>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Secret>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TestSecret>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Secret)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TestSecret)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Value))
@@ -61,19 +61,19 @@ namespace Azure.Developer.LoadTesting.Models
             }
         }
 
-        Secret IJsonModel<Secret>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TestSecret IJsonModel<TestSecret>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Secret>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TestSecret>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Secret)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TestSecret)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSecret(document.RootElement, options);
+            return DeserializeTestSecret(document.RootElement, options);
         }
 
-        internal static Secret DeserializeSecret(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TestSecret DeserializeTestSecret(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -107,46 +107,46 @@ namespace Azure.Developer.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Secret(value, type, serializedAdditionalRawData);
+            return new TestSecret(value, type, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Secret>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TestSecret>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Secret>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TestSecret>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Secret)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TestSecret)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Secret IPersistableModel<Secret>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TestSecret IPersistableModel<TestSecret>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Secret>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TestSecret>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSecret(document.RootElement, options);
+                        return DeserializeTestSecret(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Secret)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TestSecret)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Secret>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TestSecret>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Secret FromResponse(Response response)
+        internal static TestSecret FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeSecret(document.RootElement);
+            return DeserializeTestSecret(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

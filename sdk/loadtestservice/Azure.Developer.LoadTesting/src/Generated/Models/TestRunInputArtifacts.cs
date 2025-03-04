@@ -54,16 +54,16 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Initializes a new instance of <see cref="TestRunInputArtifacts"/>. </summary>
         /// <param name="configFileInfo"> The load test YAML file that contains the the test configuration. </param>
         /// <param name="testScriptFileInfo"> The test script file for the test run. </param>
-        /// <param name="userPropFileInfo"> The user properties file. </param>
+        /// <param name="userPropertyFileInfo"> The user properties file. </param>
         /// <param name="inputArtifactsZipFileInfo"> The zip file for all input artifacts. </param>
         /// <param name="urlTestConfigFileInfo"> The config json file for url based test. </param>
         /// <param name="additionalFileInfo"> Additional supported files for the test run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestRunInputArtifacts(TestRunFileInfo configFileInfo, TestRunFileInfo testScriptFileInfo, TestRunFileInfo userPropFileInfo, TestRunFileInfo inputArtifactsZipFileInfo, TestRunFileInfo urlTestConfigFileInfo, IReadOnlyList<TestRunFileInfo> additionalFileInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TestRunInputArtifacts(TestRunFileInfo configFileInfo, TestRunFileInfo testScriptFileInfo, TestRunFileInfo userPropertyFileInfo, TestRunFileInfo inputArtifactsZipFileInfo, TestRunFileInfo urlTestConfigFileInfo, IReadOnlyList<TestRunFileInfo> additionalFileInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConfigFileInfo = configFileInfo;
             TestScriptFileInfo = testScriptFileInfo;
-            UserPropFileInfo = userPropFileInfo;
+            UserPropertyFileInfo = userPropertyFileInfo;
             InputArtifactsZipFileInfo = inputArtifactsZipFileInfo;
             UrlTestConfigFileInfo = urlTestConfigFileInfo;
             AdditionalFileInfo = additionalFileInfo;
@@ -75,7 +75,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> The test script file for the test run. </summary>
         public TestRunFileInfo TestScriptFileInfo { get; }
         /// <summary> The user properties file. </summary>
-        public TestRunFileInfo UserPropFileInfo { get; }
+        public TestRunFileInfo UserPropertyFileInfo { get; }
         /// <summary> The zip file for all input artifacts. </summary>
         public TestRunFileInfo InputArtifactsZipFileInfo { get; }
         /// <summary> The config json file for url based test. </summary>

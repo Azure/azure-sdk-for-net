@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Secret. </summary>
-    public partial class Secret
+    public partial class TestSecret
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.Developer.LoadTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Secret"/>. </summary>
-        public Secret()
+        /// <summary> Initializes a new instance of <see cref="TestSecret"/>. </summary>
+        public TestSecret()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Secret"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestSecret"/>. </summary>
         /// <param name="value"> The value of the secret for the respective type. </param>
         /// <param name="secretKind"> Type of secret. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Secret(string value, SecretType? secretKind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TestSecret(string value, SecretType? secretKind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             SecretKind = secretKind;

@@ -210,7 +210,7 @@ namespace Azure.Developer.LoadTesting.Models
             }
             PassFailCriteria passFailCriteria = default;
             AutoStopCriteria autoStopCriteria = default;
-            IDictionary<string, Secret> secrets = default;
+            IDictionary<string, TestSecret> secrets = default;
             CertificateMetadata certificate = default;
             IDictionary<string, string> environmentVariables = default;
             LoadTestConfiguration loadTestConfiguration = default;
@@ -224,9 +224,9 @@ namespace Azure.Developer.LoadTesting.Models
             bool? publicIPDisabled = default;
             string keyvaultReferenceIdentityType = default;
             string keyvaultReferenceIdentityId = default;
-            ManagedIdentityType? metricsReferenceIdentityType = default;
+            LoadTestingManagedIdentityType? metricsReferenceIdentityType = default;
             string metricsReferenceIdentityId = default;
-            ManagedIdentityType? engineBuiltInIdentityType = default;
+            LoadTestingManagedIdentityType? engineBuiltInIdentityType = default;
             IList<string> engineBuiltInIdentityIds = default;
             DateTimeOffset? createdDateTime = default;
             string createdBy = default;
@@ -260,10 +260,10 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    Dictionary<string, Secret> dictionary = new Dictionary<string, Secret>();
+                    Dictionary<string, TestSecret> dictionary = new Dictionary<string, TestSecret>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, Secret.DeserializeSecret(property0.Value, options));
+                        dictionary.Add(property0.Name, TestSecret.DeserializeTestSecret(property0.Value, options));
                     }
                     secrets = dictionary;
                     continue;
@@ -368,7 +368,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    metricsReferenceIdentityType = new ManagedIdentityType(property.Value.GetString());
+                    metricsReferenceIdentityType = new LoadTestingManagedIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("metricsReferenceIdentityId"u8))
@@ -382,7 +382,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    engineBuiltInIdentityType = new ManagedIdentityType(property.Value.GetString());
+                    engineBuiltInIdentityType = new LoadTestingManagedIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("engineBuiltInIdentityIds"u8))
@@ -436,7 +436,7 @@ namespace Azure.Developer.LoadTesting.Models
             return new Test(
                 passFailCriteria,
                 autoStopCriteria,
-                secrets ?? new ChangeTrackingDictionary<string, Secret>(),
+                secrets ?? new ChangeTrackingDictionary<string, TestSecret>(),
                 certificate,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
                 loadTestConfiguration,

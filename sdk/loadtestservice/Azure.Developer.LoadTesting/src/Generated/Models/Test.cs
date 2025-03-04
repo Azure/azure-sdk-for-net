@@ -48,7 +48,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Initializes a new instance of <see cref="Test"/>. </summary>
         public Test()
         {
-            Secrets = new ChangeTrackingDictionary<string, Secret>();
+            Secrets = new ChangeTrackingDictionary<string, TestSecret>();
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
             EngineBuiltInIdentityIds = new ChangeTrackingList<string>();
         }
@@ -85,7 +85,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Test(PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, Secret> secrets, CertificateMetadata certificate, IDictionary<string, string> environmentVariables, LoadTestConfiguration loadTestConfiguration, string baselineTestRunId, TestInputArtifacts inputArtifacts, string testId, string description, string displayName, string subnetId, TestKind? kind, bool? publicIpDisabled, string keyvaultReferenceIdentityType, string keyvaultReferenceIdentityId, ManagedIdentityType? metricsReferenceIdentityType, string metricsReferenceIdentityId, ManagedIdentityType? engineBuiltInIdentityType, IList<string> engineBuiltInIdentityIds, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Test(PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, CertificateMetadata certificate, IDictionary<string, string> environmentVariables, LoadTestConfiguration loadTestConfiguration, string baselineTestRunId, TestInputArtifacts inputArtifacts, string testId, string description, string displayName, string subnetId, TestKind? kind, bool? publicIpDisabled, string keyvaultReferenceIdentityType, string keyvaultReferenceIdentityId, LoadTestingManagedIdentityType? metricsReferenceIdentityType, string metricsReferenceIdentityId, LoadTestingManagedIdentityType? engineBuiltInIdentityType, IList<string> engineBuiltInIdentityIds, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PassFailCriteria = passFailCriteria;
             AutoStopCriteria = autoStopCriteria;
@@ -125,7 +125,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// elsewhere, the secret value should be provided directly and the type should be
         /// SECRET_VALUE.
         /// </summary>
-        public IDictionary<string, Secret> Secrets { get; }
+        public IDictionary<string, TestSecret> Secrets { get; }
         /// <summary> Certificates metadata. </summary>
         public CertificateMetadata Certificate { get; set; }
         /// <summary> Environment variables which are defined as a set of &lt;name,value&gt; pairs. </summary>
@@ -153,11 +153,11 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Resource Id of the managed identity referencing the Key vault. </summary>
         public string KeyvaultReferenceIdentityId { get; set; }
         /// <summary> Type of the managed identity referencing the metrics. </summary>
-        public ManagedIdentityType? MetricsReferenceIdentityType { get; set; }
+        public LoadTestingManagedIdentityType? MetricsReferenceIdentityType { get; set; }
         /// <summary> Resource Id of the managed identity referencing the metrics. </summary>
         public string MetricsReferenceIdentityId { get; set; }
         /// <summary> Type of the managed identity built in load test engines. </summary>
-        public ManagedIdentityType? EngineBuiltInIdentityType { get; set; }
+        public LoadTestingManagedIdentityType? EngineBuiltInIdentityType { get; set; }
         /// <summary> Resource Ids of the managed identity built in to load test engines. Required if engineBuiltInIdentityType is UserAssigned. </summary>
         public IList<string> EngineBuiltInIdentityIds { get; }
         /// <summary> The creation datetime(RFC 3339 literal format). </summary>

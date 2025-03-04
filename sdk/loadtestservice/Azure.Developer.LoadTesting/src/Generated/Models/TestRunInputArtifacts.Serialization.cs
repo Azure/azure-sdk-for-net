@@ -44,10 +44,10 @@ namespace Azure.Developer.LoadTesting.Models
                 writer.WritePropertyName("testScriptFileInfo"u8);
                 writer.WriteObjectValue(TestScriptFileInfo, options);
             }
-            if (Optional.IsDefined(UserPropFileInfo))
+            if (Optional.IsDefined(UserPropertyFileInfo))
             {
                 writer.WritePropertyName("userPropFileInfo"u8);
-                writer.WriteObjectValue(UserPropFileInfo, options);
+                writer.WriteObjectValue(UserPropertyFileInfo, options);
             }
             if (Optional.IsDefined(InputArtifactsZipFileInfo))
             {

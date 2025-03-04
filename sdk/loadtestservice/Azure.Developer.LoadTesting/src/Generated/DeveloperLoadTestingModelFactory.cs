@@ -47,9 +47,9 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="Models.Test"/> instance for mocking. </returns>
-        public static Test Test(PassFailCriteria passFailCriteria = null, AutoStopCriteria autoStopCriteria = null, IDictionary<string, Secret> secrets = null, CertificateMetadata certificate = null, IDictionary<string, string> environmentVariables = null, LoadTestConfiguration loadTestConfiguration = null, string baselineTestRunId = null, TestInputArtifacts inputArtifacts = null, string testId = null, string description = null, string displayName = null, string subnetId = null, TestKind? kind = null, bool? publicIpDisabled = null, string keyvaultReferenceIdentityType = null, string keyvaultReferenceIdentityId = null, ManagedIdentityType? metricsReferenceIdentityType = null, string metricsReferenceIdentityId = null, ManagedIdentityType? engineBuiltInIdentityType = null, IEnumerable<string> engineBuiltInIdentityIds = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
+        public static Test Test(PassFailCriteria passFailCriteria = null, AutoStopCriteria autoStopCriteria = null, IDictionary<string, TestSecret> secrets = null, CertificateMetadata certificate = null, IDictionary<string, string> environmentVariables = null, LoadTestConfiguration loadTestConfiguration = null, string baselineTestRunId = null, TestInputArtifacts inputArtifacts = null, string testId = null, string description = null, string displayName = null, string subnetId = null, TestKind? kind = null, bool? publicIpDisabled = null, string keyvaultReferenceIdentityType = null, string keyvaultReferenceIdentityId = null, LoadTestingManagedIdentityType? metricsReferenceIdentityType = null, string metricsReferenceIdentityId = null, LoadTestingManagedIdentityType? engineBuiltInIdentityType = null, IEnumerable<string> engineBuiltInIdentityIds = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
         {
-            secrets ??= new Dictionary<string, Secret>();
+            secrets ??= new Dictionary<string, TestSecret>();
             environmentVariables ??= new Dictionary<string, string>();
             engineBuiltInIdentityIds ??= new List<string>();
 
@@ -142,19 +142,19 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Initializes a new instance of <see cref="Models.TestInputArtifacts"/>. </summary>
         /// <param name="configFileInfo"> The load test YAML file that contains the the test configuration. </param>
         /// <param name="testScriptFileInfo"> The test script file for the test run. </param>
-        /// <param name="userPropFileInfo"> The user properties file. </param>
+        /// <param name="userPropertyFileInfo"> The user properties file. </param>
         /// <param name="inputArtifactsZipFileInfo"> The zip file with all input artifacts. </param>
         /// <param name="urlTestConfigFileInfo"> The config json file for url based test. </param>
         /// <param name="additionalFileInfo"> Additional supported files for the test run. </param>
         /// <returns> A new <see cref="Models.TestInputArtifacts"/> instance for mocking. </returns>
-        public static TestInputArtifacts TestInputArtifacts(TestFileInfo configFileInfo = null, TestFileInfo testScriptFileInfo = null, TestFileInfo userPropFileInfo = null, TestFileInfo inputArtifactsZipFileInfo = null, TestFileInfo urlTestConfigFileInfo = null, IEnumerable<TestFileInfo> additionalFileInfo = null)
+        public static TestInputArtifacts TestInputArtifacts(TestFileInfo configFileInfo = null, TestFileInfo testScriptFileInfo = null, TestFileInfo userPropertyFileInfo = null, TestFileInfo inputArtifactsZipFileInfo = null, TestFileInfo urlTestConfigFileInfo = null, IEnumerable<TestFileInfo> additionalFileInfo = null)
         {
             additionalFileInfo ??= new List<TestFileInfo>();
 
             return new TestInputArtifacts(
                 configFileInfo,
                 testScriptFileInfo,
-                userPropFileInfo,
+                userPropertyFileInfo,
                 inputArtifactsZipFileInfo,
                 urlTestConfigFileInfo,
                 additionalFileInfo?.ToList(),
@@ -360,9 +360,9 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="Models.TestRun"/> instance for mocking. </returns>
-        public static TestRun TestRun(string testRunId = null, PassFailCriteria passFailCriteria = null, AutoStopCriteria autoStopCriteria = null, IDictionary<string, Secret> secrets = null, CertificateMetadata certificate = null, IDictionary<string, string> environmentVariables = null, IEnumerable<ErrorDetails> errorDetails = null, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = null, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = null, LoadTestConfiguration loadTestConfiguration = null, TestRunArtifacts testArtifacts = null, PassFailTestResult? testResult = null, int? virtualUsers = null, string displayName = null, string testId = null, string description = null, TestRunStatus? status = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, DateTimeOffset? executedDateTime = null, Uri portalUri = null, long? duration = null, double? virtualUserHours = null, string subnetId = null, TestKind? kind = null, RequestDataLevel? requestDataLevel = null, bool? debugLogsEnabled = null, bool? publicIpDisabled = null, CreatedByType? createdByType = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
+        public static TestRun TestRun(string testRunId = null, PassFailCriteria passFailCriteria = null, AutoStopCriteria autoStopCriteria = null, IDictionary<string, TestSecret> secrets = null, CertificateMetadata certificate = null, IDictionary<string, string> environmentVariables = null, IEnumerable<ErrorDetails> errorDetails = null, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = null, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = null, LoadTestConfiguration loadTestConfiguration = null, TestRunArtifacts testArtifacts = null, PassFailTestResult? testResult = null, int? virtualUsers = null, string displayName = null, string testId = null, string description = null, TestRunStatus? status = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, DateTimeOffset? executedDateTime = null, Uri portalUri = null, long? duration = null, double? virtualUserHours = null, string subnetId = null, TestKind? kind = null, RequestDataLevel? requestDataLevel = null, bool? debugLogsEnabled = null, bool? publicIpDisabled = null, CreatedByType? createdByType = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
         {
-            secrets ??= new Dictionary<string, Secret>();
+            secrets ??= new Dictionary<string, TestSecret>();
             environmentVariables ??= new Dictionary<string, string>();
             errorDetails ??= new List<ErrorDetails>();
             testRunStatistics ??= new Dictionary<string, TestRunStatistics>();
@@ -473,19 +473,19 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Initializes a new instance of <see cref="Models.TestRunInputArtifacts"/>. </summary>
         /// <param name="configFileInfo"> The load test YAML file that contains the the test configuration. </param>
         /// <param name="testScriptFileInfo"> The test script file for the test run. </param>
-        /// <param name="userPropFileInfo"> The user properties file. </param>
+        /// <param name="userPropertyFileInfo"> The user properties file. </param>
         /// <param name="inputArtifactsZipFileInfo"> The zip file for all input artifacts. </param>
         /// <param name="urlTestConfigFileInfo"> The config json file for url based test. </param>
         /// <param name="additionalFileInfo"> Additional supported files for the test run. </param>
         /// <returns> A new <see cref="Models.TestRunInputArtifacts"/> instance for mocking. </returns>
-        public static TestRunInputArtifacts TestRunInputArtifacts(TestRunFileInfo configFileInfo = null, TestRunFileInfo testScriptFileInfo = null, TestRunFileInfo userPropFileInfo = null, TestRunFileInfo inputArtifactsZipFileInfo = null, TestRunFileInfo urlTestConfigFileInfo = null, IEnumerable<TestRunFileInfo> additionalFileInfo = null)
+        public static TestRunInputArtifacts TestRunInputArtifacts(TestRunFileInfo configFileInfo = null, TestRunFileInfo testScriptFileInfo = null, TestRunFileInfo userPropertyFileInfo = null, TestRunFileInfo inputArtifactsZipFileInfo = null, TestRunFileInfo urlTestConfigFileInfo = null, IEnumerable<TestRunFileInfo> additionalFileInfo = null)
         {
             additionalFileInfo ??= new List<TestRunFileInfo>();
 
             return new TestRunInputArtifacts(
                 configFileInfo,
                 testScriptFileInfo,
-                userPropFileInfo,
+                userPropertyFileInfo,
                 inputArtifactsZipFileInfo,
                 urlTestConfigFileInfo,
                 additionalFileInfo?.ToList(),

@@ -268,7 +268,7 @@ namespace Azure.Developer.LoadTesting.Models
             string testRunId = default;
             PassFailCriteria passFailCriteria = default;
             AutoStopCriteria autoStopCriteria = default;
-            IDictionary<string, Secret> secrets = default;
+            IDictionary<string, TestSecret> secrets = default;
             CertificateMetadata certificate = default;
             IDictionary<string, string> environmentVariables = default;
             IReadOnlyList<ErrorDetails> errorDetails = default;
@@ -331,10 +331,10 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    Dictionary<string, Secret> dictionary = new Dictionary<string, Secret>();
+                    Dictionary<string, TestSecret> dictionary = new Dictionary<string, TestSecret>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, Secret.DeserializeSecret(property0.Value, options));
+                        dictionary.Add(property0.Name, TestSecret.DeserializeTestSecret(property0.Value, options));
                     }
                     secrets = dictionary;
                     continue;
@@ -606,7 +606,7 @@ namespace Azure.Developer.LoadTesting.Models
                 testRunId,
                 passFailCriteria,
                 autoStopCriteria,
-                secrets ?? new ChangeTrackingDictionary<string, Secret>(),
+                secrets ?? new ChangeTrackingDictionary<string, TestSecret>(),
                 certificate,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
                 errorDetails ?? new ChangeTrackingList<ErrorDetails>(),
