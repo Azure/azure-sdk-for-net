@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryFabricListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SiteRecoveryFabricListResult.DeserializeSiteRecoveryFabricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryFabricListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SiteRecoveryFabricListResult.DeserializeSiteRecoveryFabricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryFabricData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SiteRecoveryFabricData.DeserializeSiteRecoveryFabricData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryFabricData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SiteRecoveryFabricData.DeserializeSiteRecoveryFabricData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -964,7 +964,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryFabricListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SiteRecoveryFabricListResult.DeserializeSiteRecoveryFabricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -995,7 +995,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryFabricListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SiteRecoveryFabricListResult.DeserializeSiteRecoveryFabricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
