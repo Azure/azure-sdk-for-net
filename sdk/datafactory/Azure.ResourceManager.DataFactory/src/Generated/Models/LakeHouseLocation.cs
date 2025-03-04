@@ -11,7 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The location of Microsoft Fabric LakeHouse Files dataset. </summary>
+    /// <summary> The location of Microsoft Fabric Lakehouse Files dataset. </summary>
     public partial class LakeHouseLocation : DatasetLocation
     {
         /// <summary> Initializes a new instance of <see cref="LakeHouseLocation"/>. </summary>
