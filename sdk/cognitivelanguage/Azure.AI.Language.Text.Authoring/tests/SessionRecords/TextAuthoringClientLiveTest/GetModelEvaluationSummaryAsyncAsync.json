@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyTextProject/models/model1/evaluation/summary-result?api-version=2024-11-15-preview",
+      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/test001/models/m1/evaluation/summary-result?api-version=2024-11-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20241201.1 (.NET 8.0.11; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250302.1 (.NET Framework 4.8.9290.0; Microsoft Windows 10.0.26100 )",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -14,14 +14,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "789ee80b-82a9-4d8b-8321-a127d9d77702",
+        "apim-request-id": "864d56d4-85c5-41a5-8371-96bf95a6c88b",
         "Content-Length": "1492",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 02 Dec 2024 04:13:47 GMT",
-        "request-id": "789ee80b-82a9-4d8b-8321-a127d9d77702",
+        "Date": "Mon, 03 Mar 2025 07:19:50 GMT",
+        "request-id": "864d56d4-85c5-41a5-8371-96bf95a6c88b",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "58",
+        "x-envoy-upstream-service-time": "55",
         "x-ms-region": "East US"
       },
       "ResponseBody": {
@@ -116,8 +116,8 @@
     }
   ],
   "Variables": {
-    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com",
+    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com/",
     "AZURE_TEXT_AUTHORING_KEY": "Sanitized",
-    "RandomSeed": "105639143"
+    "RandomSeed": "2069598225"
   }
 }
