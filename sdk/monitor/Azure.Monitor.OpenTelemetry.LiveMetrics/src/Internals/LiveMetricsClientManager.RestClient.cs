@@ -60,7 +60,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             }
             catch (System.Exception ex)
             {
+#if ASP_NET_CORE_DISTRO
+                AspNetCore.AzureMonitorAspNetCoreEventSource.Log.PingFailedWithUnknownException(ex);
+#else
                 AzureMonitorLiveMetricsEventSource.Log.PingFailedWithUnknownException(ex);
+#endif
                 Debug.WriteLine(ex);
             }
         }
@@ -118,7 +122,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             }
             catch (System.Exception ex)
             {
+#if ASP_NET_CORE_DISTRO
+                AspNetCore.AzureMonitorAspNetCoreEventSource.Log.PostFailedWithUnknownException(ex);
+#else
                 AzureMonitorLiveMetricsEventSource.Log.PostFailedWithUnknownException(ex);
+#endif
                 Debug.WriteLine(ex);
             }
         }

@@ -70,7 +70,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     || _pingPeriodFromService.Value.TotalMilliseconds != milliseconds)
                 {
                     _pingPeriodFromService = TimeSpan.FromMilliseconds(Convert.ToDouble(milliseconds));
+#if ASP_NET_CORE_DISTRO
+                    AspNetCore.AzureMonitorAspNetCoreEventSource.Log.LiveMetricsPolingIntervalReceived(milliseconds.Value);
+#else
                     AzureMonitorLiveMetricsEventSource.Log.LiveMetricsPolingIntervalReceived(milliseconds.Value);
+#endif
                 }
             }
             else
@@ -169,7 +173,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             }
             catch (Exception ex)
             {
+#if ASP_NET_CORE_DISTRO
+                AspNetCore.AzureMonitorAspNetCoreEventSource.Log.StateMachineFailedWithUnknownException(ex);
+#else
                 AzureMonitorLiveMetricsEventSource.Log.StateMachineFailedWithUnknownException(ex);
+#endif
                 Debug.WriteLine(ex);
             }
         }

@@ -7,6 +7,7 @@
     <IsShippingLibrary>false</IsShippingLibrary>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <Nullable>enable</Nullable>
+    <DefineConstants>$(DefineConstants);LIVE_METRICS_PROJECT;</DefineConstants>
   </PropertyGroup>
 
 

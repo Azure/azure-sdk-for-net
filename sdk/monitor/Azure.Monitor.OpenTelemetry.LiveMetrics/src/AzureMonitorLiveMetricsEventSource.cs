@@ -8,6 +8,7 @@ using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 {
+#if LIVE_METRICS_PROJECT
     /// <summary>
     /// EventSource for the AzureMonitor LiveMetrics Client.
     /// EventSource Guid at Runtime: TODO.
@@ -16,13 +17,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
     /// <remarks>
     /// PerfView Instructions:
     /// <list type="bullet">
-    /// <item>To collect all events: <code>PerfView.exe collect -MaxCollectSec:300 -NoGui /onlyProviders=*OpenTelemetry-AzureMonitor-AspNetCore</code></item>
-    /// <item>To collect events based on LogLevel: <code>PerfView.exe collect -MaxCollectSec:300 -NoGui /onlyProviders:OpenTelemetry-AzureMonitor-AspNetCore::Verbose</code></item>
+    /// <item>To collect all events: <code>PerfView.exe collect -MaxCollectSec:300 -NoGui /onlyProviders=*OpenTelemetry-AzureMonitor-LiveMetrics</code></item>
+    /// <item>To collect events based on LogLevel: <code>PerfView.exe collect -MaxCollectSec:300 -NoGui /onlyProviders:OpenTelemetry-AzureMonitor-LiveMetrics::Verbose</code></item>
     /// </list>
     /// Dotnet-Trace Instructions:
     /// <list type="bullet">
-    /// <item>To collect all events: <code>dotnet-trace collect --process-id PID --providers OpenTelemetry-AzureMonitor-AspNetCore</code></item>
-    /// <item>To collect events based on LogLevel: <code>dotnet-trace collect --process-id PID --providers OpenTelemetry-AzureMonitor-AspNetCore::Verbose</code></item>
+    /// <item>To collect all events: <code>dotnet-trace collect --process-id PID --providers OpenTelemetry-AzureMonitor-LiveMetrics</code></item>
+    /// <item>To collect events based on LogLevel: <code>dotnet-trace collect --process-id PID --providers OpenTelemetry-AzureMonitor-LiveMetrics::Verbose</code></item>
     /// </list>
     /// Logman Instructions:
     /// <list type="number">
@@ -34,7 +35,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
     [EventSource(Name = EventSourceName)]
     internal sealed class AzureMonitorLiveMetricsEventSource : EventSource
     {
-        internal const string EventSourceName = "OpenTelemetry-AzureMonitor-AspNetCore";
+        internal const string EventSourceName = "OpenTelemetry-AzureMonitor-LiveMetrics";
 
         internal static readonly AzureMonitorLiveMetricsEventSource Log = new AzureMonitorLiveMetricsEventSource();
 
@@ -258,4 +259,5 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
         [Event(25, Message = "Polling Interval received from LiveMetrics service: {0}", Level = EventLevel.Informational)]
         public void LiveMetricsPolingIntervalReceived(int pollingInterval) => WriteEvent(25, pollingInterval);
     }
+#endif
 }
