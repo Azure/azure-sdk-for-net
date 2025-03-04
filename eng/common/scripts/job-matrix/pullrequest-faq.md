@@ -1,6 +1,6 @@
 # Pull Request FAQ
 
-The `pullrequest` pipeline is a single public definition that handles all `pull request` changes to an `azure-sdk-for-X` repository. This document is intended for users who want to understand the process.
+The `pullrequest` pipeline is a single public definition that handles all `pull request` changes to an `azure-sdk-for-X` repository. This document is intended to answer some common questions that users may have about the `pullrequest` definition.
 
 ## Can I get a bit more context first?
 
@@ -48,7 +48,7 @@ Only repos that appear in the above list are enabled with a single unified `pull
 
 ## What is a `direct` vs `indirect` change?
 
-- A `direct`ly changed package is one whos actual package code has changed.
+- A `direct`ly changed package is one whose actual package code has changed.
 - An `indirect` changed package is a package that has been added for verification of code that is not directly within the package itself.
   - For example, in `java`, when the `eng/` package is changed, we trigger `azure-core` indirectly.
 
