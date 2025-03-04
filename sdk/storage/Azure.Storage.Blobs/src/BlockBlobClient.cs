@@ -996,6 +996,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
+        /// The <see cref="Stream"/> must be seekable.
         /// </param>
         /// <param name="transactionalContentHash">
         /// An optional MD5 hash of the block <paramref name="content"/>.
@@ -1068,6 +1069,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
+        /// The <see cref="Stream"/> must be seekable.
         /// </param>
         /// <param name="transactionalContentHash">
         /// An optional MD5 hash of the block <paramref name="content"/>.
@@ -1140,6 +1142,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
+        /// The <see cref="Stream"/> must be seekable.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -1191,6 +1194,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
+        /// The <see cref="Stream"/> must be seekable.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -1242,6 +1246,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
+        /// The <see cref="Stream"/> must be seekable.
         /// </param>
         /// <param name="conditions">
         /// Access conditions for staging the block.
