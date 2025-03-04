@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
+using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
@@ -11,6 +12,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         protected override string JsonPayload => WirePayload;
 
         protected override string WirePayload => "{\"id\":5,\"extra\":\"stuff\"}";
+
+        protected override ModelReaderWriterContext Context => new TestClientModelReaderWriterContext();
 
         protected override void CompareModels(ModelAsStruct model, ModelAsStruct model2, string format)
         {

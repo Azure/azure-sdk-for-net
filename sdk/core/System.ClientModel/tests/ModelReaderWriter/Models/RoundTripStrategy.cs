@@ -11,6 +11,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
     public abstract class RoundTripStrategy<T>
     {
+        protected ModelReaderWriterContext? _context;
+
+        public RoundTripStrategy(ModelReaderWriterContext? context)
+        {
+            _context = context;
+        }
+
         public abstract object Read(string payload, object model, ModelReaderWriterOptions options);
         public abstract BinaryData Write(T model, ModelReaderWriterOptions options);
         public abstract bool IsExplicitJsonWrite { get; }
@@ -33,14 +40,37 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
     }
 
-    public class ModelReaderWriterStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
+    public class ModelReaderWriterStrategy_WithContext<T> : RoundTripStrategy<T>
     {
+        public ModelReaderWriterStrategy_WithContext(ModelReaderWriterContext context) : base(context)
+        {
+        }
+
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            return ModelReaderWriter.Write(model, options);
+            return ModelReaderWriter.Write<T>(model, _context!, options);
+        }
+        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        {
+            return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), _context!, options) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
+        }
+    }
+
+    public class ModelReaderWriterStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
+    {
+        public ModelReaderWriterStrategy() : base(null)
+        {
+        }
+
+        public override bool IsExplicitJsonWrite => false;
+        public override bool IsExplicitJsonRead => false;
+
+        public override BinaryData Write(T model, ModelReaderWriterOptions options)
+        {
+            return ModelReaderWriter.Write<T>(model, options);
         }
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
@@ -48,14 +78,38 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
     }
 
-    public class ModelReaderWriterNonGenericStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
+    public class ModelReaderWriterNonGenericStrategy_WithContext<T> : RoundTripStrategy<T>
     {
+        public ModelReaderWriterNonGenericStrategy_WithContext(ModelReaderWriterContext context) : base(context)
+        {
+        }
+
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            return ModelReaderWriter.Write((object)model, options);
+            return ModelReaderWriter.Write((object)model!, _context!, options);
+        }
+
+        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        {
+            return ModelReaderWriter.Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), typeof(T), _context!, options) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
+        }
+    }
+
+    public class ModelReaderWriterNonGenericStrategy<T> : RoundTripStrategy<T>
+    {
+        public ModelReaderWriterNonGenericStrategy() : base(null)
+        {
+        }
+
+        public override bool IsExplicitJsonWrite => false;
+        public override bool IsExplicitJsonRead => false;
+
+        public override BinaryData Write(T model, ModelReaderWriterOptions options)
+        {
+            return ModelReaderWriter.Write((object)model!, options);
         }
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
@@ -66,6 +120,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
     public class ModelInterfaceStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
     {
+        public ModelInterfaceStrategy() : base(null)
+        {
+        }
+
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
 
@@ -82,6 +140,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
     public class ModelInterfaceAsObjectStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
     {
+        public ModelInterfaceAsObjectStrategy() : base(null)
+        {
+        }
+
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
 
@@ -98,6 +160,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
     public class JsonInterfaceStrategy<T> : RoundTripStrategy<T> where T : IJsonModel<T>
     {
+        public JsonInterfaceStrategy() : base(null)
+        {
+        }
+
         public override bool IsExplicitJsonWrite => true;
         public override bool IsExplicitJsonRead => false;
 
@@ -114,6 +180,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
     public class JsonInterfaceAsObjectStrategy<T> : RoundTripStrategy<T> where T : IJsonModel<T>
     {
+        public JsonInterfaceAsObjectStrategy() : base(null)
+        {
+        }
+
         public override bool IsExplicitJsonWrite => true;
         public override bool IsExplicitJsonRead => false;
 
@@ -130,6 +200,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
     public class JsonInterfaceUtf8ReaderStrategy<T> : RoundTripStrategy<T> where T : IJsonModel<T>
     {
+        public JsonInterfaceUtf8ReaderStrategy() : base(null)
+        {
+        }
+
         public override bool IsExplicitJsonWrite => true;
         public override bool IsExplicitJsonRead => true;
 
@@ -147,6 +221,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
     public class JsonInterfaceUtf8ReaderAsObjectStrategy<T> : RoundTripStrategy<T> where T : IJsonModel<T>
     {
+        public JsonInterfaceUtf8ReaderAsObjectStrategy() : base(null)
+        {
+        }
+
         public override bool IsExplicitJsonWrite => true;
         public override bool IsExplicitJsonRead => true;
 

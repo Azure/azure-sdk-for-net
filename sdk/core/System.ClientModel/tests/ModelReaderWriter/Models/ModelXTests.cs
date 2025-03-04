@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System.IO;
 using System.ClientModel.Tests.Client;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+using System.ClientModel.Primitives;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
@@ -13,6 +14,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         protected override string JsonPayload => WirePayload;
 
         protected override string WirePayload => File.ReadAllText(TestData.GetLocation("ModelX/ModelXWireFormat.json")).TrimEnd();
+
+        protected override ModelReaderWriterContext Context => new TestClientModelReaderWriterContext();
 
         protected override void CompareModels(ModelX model, ModelX model2, string format)
         {

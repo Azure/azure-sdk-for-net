@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.ClientModel.Tests.Client;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
+using System.ClientModel.Primitives;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
@@ -14,6 +15,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         protected override string WirePayload => File.ReadAllText(TestData.GetLocation("AvailabilitySetData/AvailabilitySetDataWireFormat.json")).TrimEnd();
 
         protected override string JsonPayload => WirePayload;
+
+        protected override ModelReaderWriterContext Context => new TestClientModelReaderWriterContext();
 
         protected override string GetExpectedResult(string format)
         {
@@ -45,6 +48,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
 
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)
+            => CompareAvailabilitySetData(model, model2, format);
+
+        internal static void CompareAvailabilitySetData(AvailabilitySetData model, AvailabilitySetData model2, string format)
         {
             Assert.AreEqual(format == "W" ? null : model.Id, model2.Id);
             Assert.AreEqual(model.Location, model2.Location);
