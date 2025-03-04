@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudExadataInfrastructureListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudExadataInfrastructureListResult.DeserializeCloudExadataInfrastructureListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudExadataInfrastructureListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudExadataInfrastructureListResult.DeserializeCloudExadataInfrastructureListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudExadataInfrastructureListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudExadataInfrastructureListResult.DeserializeCloudExadataInfrastructureListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudExadataInfrastructureListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudExadataInfrastructureListResult.DeserializeCloudExadataInfrastructureListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudExadataInfrastructureData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudExadataInfrastructureData.DeserializeCloudExadataInfrastructureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudExadataInfrastructureData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudExadataInfrastructureData.DeserializeCloudExadataInfrastructureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudExadataInfrastructureListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudExadataInfrastructureListResult.DeserializeCloudExadataInfrastructureListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudExadataInfrastructureListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudExadataInfrastructureListResult.DeserializeCloudExadataInfrastructureListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudExadataInfrastructureListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudExadataInfrastructureListResult.DeserializeCloudExadataInfrastructureListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudExadataInfrastructureListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudExadataInfrastructureListResult.DeserializeCloudExadataInfrastructureListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

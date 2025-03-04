@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.EnergyServices
     {
         DataPartitionAddOrRemoveContent IOperationSource<DataPartitionAddOrRemoveContent>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return DataPartitionAddOrRemoveContent.DeserializeDataPartitionAddOrRemoveContent(document.RootElement);
         }
 
         async ValueTask<DataPartitionAddOrRemoveContent> IOperationSource<DataPartitionAddOrRemoveContent>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return DataPartitionAddOrRemoveContent.DeserializeDataPartitionAddOrRemoveContent(document.RootElement);
         }
     }

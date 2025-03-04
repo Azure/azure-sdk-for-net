@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxDeploymentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NginxDeploymentData.DeserializeNginxDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxDeploymentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NginxDeploymentData.DeserializeNginxDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxDeploymentListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NginxDeploymentListResponse.DeserializeNginxDeploymentListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxDeploymentListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NginxDeploymentListResponse.DeserializeNginxDeploymentListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxDeploymentListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NginxDeploymentListResponse.DeserializeNginxDeploymentListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxDeploymentListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NginxDeploymentListResponse.DeserializeNginxDeploymentListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxDeploymentListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NginxDeploymentListResponse.DeserializeNginxDeploymentListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxDeploymentListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NginxDeploymentListResponse.DeserializeNginxDeploymentListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxDeploymentListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NginxDeploymentListResponse.DeserializeNginxDeploymentListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxDeploymentListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NginxDeploymentListResponse.DeserializeNginxDeploymentListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         L2NetworkList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = L2NetworkList.DeserializeL2NetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         L2NetworkList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = L2NetworkList.DeserializeL2NetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         L2NetworkList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = L2NetworkList.DeserializeL2NetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         L2NetworkList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = L2NetworkList.DeserializeL2NetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         NetworkCloudL2NetworkData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         NetworkCloudL2NetworkData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         NetworkCloudL2NetworkData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         NetworkCloudL2NetworkData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         L2NetworkList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = L2NetworkList.DeserializeL2NetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         L2NetworkList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = L2NetworkList.DeserializeL2NetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         L2NetworkList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = L2NetworkList.DeserializeL2NetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         L2NetworkList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = L2NetworkList.DeserializeL2NetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
