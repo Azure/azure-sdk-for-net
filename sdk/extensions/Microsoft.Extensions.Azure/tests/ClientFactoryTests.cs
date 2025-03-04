@@ -334,16 +334,12 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreEqual("SomeServiceConnectionId", pipelinesCredential.ServiceConnectionId);
             Assert.AreEqual("SomeSystemAccessToken", pipelinesCredential.SystemAccessToken);
 
-            var actualTenants = typeof(AzurePipelinesCredential)
-                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
-                .GetValue(pipelinesCredential);
-
             var expectedTenants = additionalTenants.Split(';')
                 .Select(t => t.Trim())
                 .Where(t => !string.IsNullOrWhiteSpace(t))
                 .ToList();
 
-            Assert.AreEqual(expectedTenants, actualTenants);
+            Assert.AreEqual(expectedTenants, pipelinesCredential.AdditionallyAllowedTenantIds);
         }
 
         [Test]
@@ -655,6 +651,44 @@ namespace Azure.Core.Extensions.Tests
             );
 
             Assert.Throws<ArgumentException>(() => ClientFactory.CreateCredential(configuration));
+        }
+
+        [Test]
+        [TestCase("*")]
+        [TestCase("tenantId1;tenantId2;tenantId3")]
+        [TestCase("tenantId1;tenantId2;;tenantId3")]
+        [TestCase("tenantId1;tenantId2; ;tenantId3")]
+        [TestCase("tenantId1; tenantId2; tenantId3")]
+        public void CreatesWorkloadIdentityCredential_AdditionalTenants(string additionalTenants)
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "workloadidentity"),
+                new KeyValuePair<string, string>("additionallyAllowedTenants", additionalTenants)
+            );
+
+            using var envVariables = new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURE_TENANT_ID", "EnvTenantId" },
+                { "AZURE_CLIENT_ID", "EnvClientId" },
+                { "AZURE_FEDERATED_TOKEN_FILE", "EnvTokenFilePath" },
+            });
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<WorkloadIdentityCredential>(credential);
+            var workloadIdentityCredential = (WorkloadIdentityCredential)credential;
+
+            var credentialAssertion = (ClientAssertionCredential)typeof(WorkloadIdentityCredential).GetField("_clientAssertionCredential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential);
+
+            Assert.AreEqual("EnvTenantId", credentialAssertion.TenantId);
+            Assert.AreEqual("EnvClientId", credentialAssertion.ClientId);
+
+            var expectedTenants = additionalTenants.Split(';')
+                .Select(t => t.Trim())
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .ToList();
+
+            Assert.AreEqual(expectedTenants, workloadIdentityCredential.AdditionallyAllowedTenantIds);
         }
 
         [Test]

@@ -186,7 +186,7 @@ namespace Microsoft.Extensions.Azure
                     string.IsNullOrEmpty(serviceConnectionId) ||
                     string.IsNullOrWhiteSpace(systemAccessToken))
                 {
-                    throw new ArgumentException("For Azure pipelines, 'tenantId', 'clientId', 'serviceConnectionId', and 'systemAccessToken' must be specified via the configuration.");
+                    throw new ArgumentException("For Azure Pipelines, 'tenantId', 'clientId', 'serviceConnectionId', and 'systemAccessToken' must be specified via the configuration.");
                 }
 
                 var options = new AzurePipelinesCredentialOptions();
