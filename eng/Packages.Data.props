@@ -224,7 +224,7 @@
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Rpc" Version="3.0.37" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Host.Storage" Version="5.0.0" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
-    <PackageReference Update="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Update="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <!-- Packages intended for Extensions libraries only -->
@@ -233,7 +233,7 @@
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.1.22" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
     <PackageReference Update="Microsoft.Azure.Functions.Worker.Extensions.Abstractions" Version="1.1.0" />
-    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.10.0" />
+    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.8.0" /> <!-- Latest confirmed as compatible by the Functions team. DO NOT BUMP-->
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
