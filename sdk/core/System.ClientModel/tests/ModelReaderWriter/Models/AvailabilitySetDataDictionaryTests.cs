@@ -52,7 +52,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => _LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => _LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
         }

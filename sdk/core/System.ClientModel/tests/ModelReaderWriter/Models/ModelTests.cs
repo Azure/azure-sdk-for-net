@@ -10,16 +10,13 @@ using System.Text.Json;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
-    public abstract class ModelTests<T> where T : IPersistableModel<T>
+    public abstract class ModelTests<T> : MrwTestBase<T> where T : IPersistableModel<T>
     {
         private static readonly ModelReaderWriterOptions _wireOptions = new ModelReaderWriterOptions("W");
 
-        private T? _modelInstance;
-        private T ModelInstance => _modelInstance ??= GetModelInstance();
-
         private bool IsXmlWireFormat => WirePayload.StartsWith("<", StringComparison.Ordinal);
 
-        protected virtual T GetModelInstance()
+        protected override T GetModelInstance()
         {
             var modelInstance = Activator.CreateInstance(typeof(T), true);
             if (modelInstance is null)
@@ -30,29 +27,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         protected abstract string GetExpectedResult(string format);
         protected abstract void VerifyModel(T model, string format);
         protected abstract void CompareModels(T model, T model2, string format);
-        protected abstract string JsonPayload { get; }
-        protected abstract string WirePayload { get; }
-        protected abstract ModelReaderWriterContext Context { get; }
 
         [TestCase("J")]
         [TestCase("W")]
         public void RoundTripWithModelReaderWriter(string format)
-            => RoundTripTest(format, new ModelReaderWriterStrategy<T>(null));
-
-        [TestCase("J")]
-        [TestCase("W")]
-        public void RoundTripWithModelReaderWriter_WithContext(string format)
-            => RoundTripTest(format, new ModelReaderWriterStrategy<T>(Context));
-
-        [TestCase("J")]
-        [TestCase("W")]
-        public void RoundTripWithModelReaderWriterNonGeneric(string format)
-            => RoundTripTest(format, new ModelReaderWriterNonGenericStrategy<T>(null));
-
-        [TestCase("J")]
-        [TestCase("W")]
-        public void RoundTripWithModelReaderWriterNonGeneric_WithContext(string format)
-            => RoundTripTest(format, new ModelReaderWriterNonGenericStrategy<T>(Context));
+            => RoundTripTest(format, new ModelReaderWriterStrategy<T>());
 
         [TestCase("J")]
         [TestCase("W")]
@@ -64,7 +43,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         public void RoundTripWithModelInterfaceNonGeneric(string format)
             => RoundTripTest(format, new ModelInterfaceAsObjectStrategy<T>());
 
-        protected void RoundTripTest(string format, RoundTripStrategy<T> strategy)
+        protected override void RoundTripTest(string format, RoundTripStrategy<T> strategy)
         {
             string serviceResponse = format == "J" ? JsonPayload : WirePayload;
 
@@ -76,7 +55,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             if (AssertFailures(strategy, format, serviceResponse, options))
                 return;
 
-            T model = (T)strategy.Read(serviceResponse, ModelInstance, options);
+            T model = (T)strategy.Read(serviceResponse, Instance, options);
 
             VerifyModel(model, format);
             var data = strategy.Write(model, options);
@@ -84,7 +63,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
-            T model2 = (T)strategy.Read(roundTrip, ModelInstance, options);
+            T model2 = (T)strategy.Read(roundTrip, Instance, options);
             CompareModels(model, model2, format);
         }
 
@@ -98,26 +77,26 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                     if (strategy.GetType().Name.StartsWith("ModelJsonConverterStrategy"))
                     {
                         //we never get to the interface implementation because JsonSerializer errors before that
-                        Assert.Throws<JsonException>(() => { T model = (T)strategy.Read(serviceResponse, ModelInstance, options); });
+                        Assert.Throws<JsonException>(() => { T model = (T)strategy.Read(serviceResponse, Instance, options); });
                         result = true;
                     }
                     else
                     {
-                        Assert.Throws<InvalidOperationException>(() => { T model = (T)strategy.Read(serviceResponse, ModelInstance, options); });
+                        Assert.Throws<InvalidOperationException>(() => { T model = (T)strategy.Read(serviceResponse, Instance, options); });
                         result = true;
                     }
                 }
 
                 if (strategy.IsExplicitJsonWrite)
                 {
-                    Assert.Throws<InvalidOperationException>(() => { var data = strategy.Write(ModelInstance, options); });
+                    Assert.Throws<InvalidOperationException>(() => { var data = strategy.Write(Instance, options); });
                     result = true;
                 }
             }
-            else if (ModelInstance is not IJsonModel<T> && format == "J")
+            else if (Instance is not IJsonModel<T> && format == "J")
             {
-                Assert.Throws<FormatException>(() => { T model = (T)strategy.Read(serviceResponse, ModelInstance, options); });
-                Assert.Throws<FormatException>(() => { var data = strategy.Write(ModelInstance, options); });
+                Assert.Throws<FormatException>(() => { T model = (T)strategy.Read(serviceResponse, Instance, options); });
+                Assert.Throws<FormatException>(() => { var data = strategy.Write(Instance, options); });
                 result = true;
             }
             return result;
@@ -138,12 +117,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         public void ThrowsIfUnknownFormat()
         {
             ModelReaderWriterOptions options = new ModelReaderWriterOptions("x");
-            Assert.Throws<FormatException>(() => ModelReaderWriter.Write(ModelInstance, options));
+            Assert.Throws<FormatException>(() => ModelReaderWriter.Write(Instance, options));
             Assert.Throws<FormatException>(() => ModelReaderWriter.Read<T>(new BinaryData("x"), options));
 
-            Assert.Throws<FormatException>(() => ModelReaderWriter.Write((IPersistableModel<object>)ModelInstance, options));
+            Assert.Throws<FormatException>(() => ModelReaderWriter.Write((IPersistableModel<object>)Instance, options));
             Assert.Throws<FormatException>(() => ModelReaderWriter.Read(new BinaryData("x"), typeof(T), options));
-            if (ModelInstance is IJsonModel<T> jsonModel)
+            if (Instance is IJsonModel<T> jsonModel)
             {
                 Assert.Throws<FormatException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), options));
                 Assert.Throws<FormatException>(() => ((IJsonModel<object>)jsonModel).Write(new Utf8JsonWriter(new MemoryStream()), options));
@@ -182,7 +161,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void ThrowsIfWireIsNotJson()
         {
-            if (ModelInstance is IJsonModel<T> jsonModel && IsXmlWireFormat)
+            if (Instance is IJsonModel<T> jsonModel && IsXmlWireFormat)
             {
                 Assert.Throws<InvalidOperationException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), _wireOptions));
                 Utf8JsonReader reader = new Utf8JsonReader(new byte[] { });

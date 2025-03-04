@@ -48,6 +48,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
 
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)
+            => CompareAvailabilitySetData(model, model2, format);
+
+        internal static void CompareAvailabilitySetData(AvailabilitySetData model, AvailabilitySetData model2, string format)
         {
             Assert.AreEqual(format == "W" ? null : model.Id, model2.Id);
             Assert.AreEqual(model.Location, model2.Location);

@@ -29,9 +29,9 @@ public abstract class CollectionBuilder
     protected internal abstract void AddItem(object item, string? key = default);
 
     /// <summary>
-    /// Gets an instance of an element of the inner most collection.
+    /// Creates an instance of an element of the inner most collection.
     /// </summary>
-    protected internal abstract object? GetElement();
+    protected internal abstract object? CreateElement();
 
     /// <summary>
     /// Asserts the item is the desired type <typeparamref name="T"/>.

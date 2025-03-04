@@ -18,7 +18,7 @@ internal abstract class CollectionReader
         }
         else // W format
         {
-            var element = builder.GetElement();
+            var element = builder.CreateElement();
             if (element is not IPersistableModel<object> persistableModel)
             {
                 throw new InvalidOperationException($"'{element?.GetType().Name}' must implement IPersistableModel");

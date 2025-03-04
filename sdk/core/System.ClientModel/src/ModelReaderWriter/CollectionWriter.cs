@@ -32,28 +32,43 @@ internal abstract class CollectionWriter
 
     private static IPersistableModel<object> GetIPersistableModel(IEnumerable enumerable)
     {
-        var enumerator = enumerable.GetEnumerator();
-        if (enumerator.MoveNext())
+        object first = GetFirstObject(enumerable);
+        if (first is IEnumerable nextEnumerable)
         {
-            object first = enumerable is IDictionary dictionary ? dictionary[enumerator.Current]! : enumerator.Current;
-
-            if (first is IEnumerable nextEnumerable)
-            {
-                return GetIPersistableModel(nextEnumerable);
-            }
-            else if (first is IPersistableModel<object> persistableModel)
-            {
-                return persistableModel;
-            }
-            else
-            {
-                throw new InvalidOperationException($"Unable to write {enumerable.GetType().Name} can only write collections of IPersistableModel");
-            }
+            return GetIPersistableModel(nextEnumerable);
+        }
+        else if (first is IPersistableModel<object> persistableModel)
+        {
+            return persistableModel;
         }
         else
         {
+            throw new InvalidOperationException($"Unable to write {enumerable.GetType().Name} can only write collections of IPersistableModel");
+        }
+    }
+
+    private static object GetFirstObject(IEnumerable enumerable)
+    {
+        if (enumerable is IDictionary dictionary)
+        {
+            foreach (var key in dictionary.Keys)
+            {
+                var value = dictionary[key];
+                if (value is not null)
+                {
+                    return value;
+                }
+            }
             throw new InvalidOperationException($"Can't use format 'W' format on an empty collection please specify a concrete format");
         }
+
+        var enumerator = enumerable.GetEnumerator();
+        if (enumerator.MoveNext())
+        {
+            return enumerator.Current;
+        }
+
+        throw new InvalidOperationException($"Can't use format 'W' format on an empty collection please specify a concrete format");
     }
 
     internal abstract BinaryData Write(IEnumerable enumerable, ModelReaderWriterOptions options);

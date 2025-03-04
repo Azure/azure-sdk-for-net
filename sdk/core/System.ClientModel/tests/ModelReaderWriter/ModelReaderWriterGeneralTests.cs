@@ -2,16 +2,19 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.ClientModel.Tests.Client;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Text.Json;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
 {
-    public class ModelReaderWriterTests
+    public class ModelReaderWriterGeneralTests
     {
         private static readonly ModelReaderWriterOptions s_wireOptions = new("W");
         private static readonly LocalContext s_readerWriterContext = new();
@@ -142,12 +145,40 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void EmptyEnumerableOfNonJson()
+        public void Write_EmptyEnumerableOfNonJson()
         {
             List<SubType> list = [];
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, s_readerWriterContext, new ModelReaderWriterOptions("X")));
             Assert.IsNotNull(ex);
             Assert.AreEqual("Format 'X' is not supported only 'J' or 'W' format can be written as collections", ex!.Message);
+        }
+
+        [Test]
+        public void Read_EmptyEnumerableOfNonJson()
+        {
+            var json = "[]";
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(List<SubType>), s_readerWriterContext, new ModelReaderWriterOptions("X")));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("Format 'X' is not supported only 'J' or 'W' format can be read as collections", ex!.Message);
+        }
+
+        [Test]
+        public void ReadDictionaryWhenList()
+        {
+            var data = BinaryData.FromString(File.ReadAllText(TestData.GetLocation("AvailabilitySetData/AvailabilitySetDataList.json")).TrimEnd());
+            var ex = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<Dictionary<string, AvailabilitySetData>>(data, s_readerWriterContext));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("Expected start of dictionary.", ex!.Message);
+        }
+
+        [Test]
+        public void ReadUnsupportedCollectionGeneric()
+        {
+            //make sure SortedDictionary is not in s_readerWriterContext
+            var data = BinaryData.FromString(File.ReadAllText(TestData.GetLocation("AvailabilitySetData/AvailabilitySetDataList.json")).TrimEnd());
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<SortedDictionary<string, AvailabilitySetData>>(data, s_readerWriterContext));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("No model info found for SortedDictionary`2.", ex!.Message);
         }
 
         [Test]
@@ -376,6 +407,50 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("No model info found for List`1.", ex!.Message);
         }
 
+        [Test]
+        public void Read_NullReturn_Generic()
+        {
+            var json = "{}";
+            var result = ModelReaderWriter.Read<ReadReturnsNull>(BinaryData.FromString(json));
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void Read_NullReturn_NonGeneric()
+        {
+            var json = "{}";
+            var result = ModelReaderWriter.Read(BinaryData.FromString(json), typeof(ReadReturnsNull));
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void Read_NullReturn_Generic_WithContext()
+        {
+            var json = "{}";
+            var result = ModelReaderWriter.Read<ReadReturnsNull>(BinaryData.FromString(json), s_readerWriterContext);
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void Read_NullReturn_NonGeneric_WithContext()
+        {
+            var json = "{}";
+            var result = ModelReaderWriter.Read(BinaryData.FromString(json), typeof(ReadReturnsNull), s_readerWriterContext);
+            Assert.IsNull(result);
+        }
+
+        private class ReadReturnsNull : IPersistableModel<ReadReturnsNull>
+        {
+            public ReadReturnsNull Create(BinaryData data, ModelReaderWriterOptions options)
+            {
+                return null!;
+            }
+
+            public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+            public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+        }
+
         private class DoesNotImplementInterface { }
 
         private class NoActivator : IPersistableModel<NoActivator>
@@ -518,7 +593,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         private class LocalContext : ModelReaderWriterContext
         {
-            private Lazy<TestClientModelReaderWriterContext> _LibraryContext = new Lazy<TestClientModelReaderWriterContext>(() => new TestClientModelReaderWriterContext());
+            private static readonly Lazy<TestClientModelReaderWriterContext> _LibraryContext = new(() => new());
             private Dictionary_String_SubType_Info? _dictionary_String_SubType_Info;
             private List_List_SubType_Info? _list_List_SubType_Info;
             private List_SubType_Info? _list_SubType_Info;
@@ -531,6 +606,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             private List_List_PersistableModel_Info? _list_List_PersistableModel_Info;
             private List_NonJWire_Info? _list_NonJWire_Info;
             private List_List_NonJWire_Info? _list_List_NonJWire_Info;
+            private ReadReturnsNull_Info? _readReturnsNull_Info;
+            private Dictionary_String_AvailabilitySetData_Info? _dictionary_String_AvailabilitySetData_Info;
 
             public override ModelInfo? GetModelInfo(Type type)
             {
@@ -548,8 +625,31 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                     Type t when t == typeof(List<List<PersistableModel>>) => _list_List_PersistableModel_Info ??= new(),
                     Type t when t == typeof(List<NonJWire>) => _list_NonJWire_Info ??= new(),
                     Type t when t == typeof(List<List<NonJWire>>) => _list_List_NonJWire_Info ??= new(),
+                    Type t when t == typeof(ReadReturnsNull) => _readReturnsNull_Info ??= new(),
+                    Type t when t == typeof(Dictionary<string, AvailabilitySetData>) => _dictionary_String_AvailabilitySetData_Info ??= new(),
                     _ => _LibraryContext.Value.GetModelInfo(type)
                 };
+            }
+
+            private class Dictionary_String_AvailabilitySetData_Info : ModelInfo
+            {
+                public override object CreateObject() => new Dictionary_String_AvailabilitySetData_Builder();
+
+                private class Dictionary_String_AvailabilitySetData_Builder : CollectionBuilder
+                {
+                    private readonly Lazy<Dictionary<string, AvailabilitySetData>> _instance = new(() => []);
+
+                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertKey(key), AssertItem<AvailabilitySetData>(item));
+
+                    protected internal override object GetBuilder() => _instance.Value;
+
+                    protected internal override object CreateElement() => _LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))!.CreateObject();
+                }
+            }
+
+            private class ReadReturnsNull_Info : ModelInfo
+            {
+                public override object CreateObject() => new ReadReturnsNull();
             }
 
             private class List_List_NonJWire_Info : ModelInfo
@@ -564,7 +664,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object GetElement() => new NonJWire();
+                    protected internal override object CreateElement() => new NonJWire();
                 }
             }
 
@@ -580,7 +680,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object GetElement() => new NonJWire();
+                    protected internal override object CreateElement() => new NonJWire();
                 }
             }
 
@@ -596,7 +696,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object GetElement() => new PersistableModel();
+                    protected internal override object CreateElement() => new PersistableModel();
                 }
             }
 
@@ -612,7 +712,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object GetElement() => new PersistableModel();
+                    protected internal override object CreateElement() => new PersistableModel();
                 }
             }
 
@@ -648,7 +748,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object GetElement() => new SubType();
+                    protected internal override object CreateElement() => new SubType();
                 }
             }
 
@@ -664,7 +764,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object GetElement() => new SubType();
+                    protected internal override object CreateElement() => new SubType();
                 }
             }
 
@@ -680,7 +780,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object GetElement() => new SubType();
+                    protected internal override object CreateElement() => new SubType();
                 }
             }
 
@@ -696,7 +796,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object GetElement() => new SubType();
+                    protected internal override object CreateElement() => new SubType();
                 }
             }
         }

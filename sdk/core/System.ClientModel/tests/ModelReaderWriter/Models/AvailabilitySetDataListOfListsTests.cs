@@ -101,7 +101,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -117,7 +117,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -133,7 +133,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -149,7 +149,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -165,7 +165,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -181,7 +181,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -197,7 +197,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -213,7 +213,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -229,7 +229,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -261,7 +261,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                         return multiArray;
                     }
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -277,7 +277,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -293,7 +293,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -309,7 +309,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -325,7 +325,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -341,7 +341,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -357,7 +357,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -373,7 +373,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -389,7 +389,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -405,7 +405,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -421,7 +421,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -439,7 +439,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object ToObject() => _instance.Value.ToArray();
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -457,7 +457,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object ToObject() => _instance.Value.ToArray();
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -475,7 +475,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object ToObject() => _instance.Value.ToArray();
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -491,7 +491,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
 
@@ -507,7 +507,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
                     protected internal override object GetBuilder() => _instance.Value;
 
-                    protected internal override object? GetElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
+                    protected internal override object? CreateElement() => s_LibraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
                 }
             }
         }

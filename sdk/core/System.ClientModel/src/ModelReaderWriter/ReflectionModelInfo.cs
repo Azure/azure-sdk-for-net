@@ -24,6 +24,13 @@ internal class ReflectionModelInfo : ModelInfo
 
     private static IPersistableModel<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
     {
+        //arrays will cause Activator.CreateInstance to throw MissingMethodException which is not
+        //consistent behavior with all other collection error messages so we do this extra check
+        if (returnType.IsArray)
+        {
+            throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IPersistableModel<object>)}");
+        }
+
         var model = GetObjectInstance(returnType) as IPersistableModel<object>;
         if (model is null)
         {

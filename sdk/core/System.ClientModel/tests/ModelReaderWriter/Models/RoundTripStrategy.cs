@@ -40,9 +40,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
     }
 
-    public class ModelReaderWriterStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
+    public class ModelReaderWriterStrategy_WithContext<T> : RoundTripStrategy<T>
     {
-        public ModelReaderWriterStrategy(ModelReaderWriterContext? context) : base(context)
+        public ModelReaderWriterStrategy_WithContext(ModelReaderWriterContext context) : base(context)
         {
         }
 
@@ -51,31 +51,17 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            if (_context is null)
-            {
-                return ModelReaderWriter.Write(model, options);
-            }
-            else
-            {
-                return ModelReaderWriter.Write(model, _context, options);
-            }
+            return ModelReaderWriter.Write<T>(model, _context!, options);
         }
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            if (_context is null)
-            {
-                return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
-            }
-            else
-            {
-                return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), _context, options) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
-            }
+            return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), _context!, options) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
         }
     }
 
-    public class ModelReaderWriterNonGenericStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
+    public class ModelReaderWriterStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
     {
-        public ModelReaderWriterNonGenericStrategy(ModelReaderWriterContext? context) : base(context)
+        public ModelReaderWriterStrategy() : base(null)
         {
         }
 
@@ -84,26 +70,51 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            if (_context is null)
-            {
-                return ModelReaderWriter.Write((object)model, options);
-            }
-            else
-            {
-                return ModelReaderWriter.Write((object)model, _context, options);
-            }
+            return ModelReaderWriter.Write<T>(model, options);
+        }
+        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        {
+            return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
+        }
+    }
+
+    public class ModelReaderWriterNonGenericStrategy_WithContext<T> : RoundTripStrategy<T>
+    {
+        public ModelReaderWriterNonGenericStrategy_WithContext(ModelReaderWriterContext context) : base(context)
+        {
+        }
+
+        public override bool IsExplicitJsonWrite => false;
+        public override bool IsExplicitJsonRead => false;
+
+        public override BinaryData Write(T model, ModelReaderWriterOptions options)
+        {
+            return ModelReaderWriter.Write((object)model!, _context!, options);
         }
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            if (_context is null)
-            {
-                return ModelReaderWriter.Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), typeof(T), options) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
-            }
-            else
-            {
-                return ModelReaderWriter.Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), typeof(T), _context, options) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
-            }
+            return ModelReaderWriter.Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), typeof(T), _context!, options) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
+        }
+    }
+
+    public class ModelReaderWriterNonGenericStrategy<T> : RoundTripStrategy<T>
+    {
+        public ModelReaderWriterNonGenericStrategy() : base(null)
+        {
+        }
+
+        public override bool IsExplicitJsonWrite => false;
+        public override bool IsExplicitJsonRead => false;
+
+        public override BinaryData Write(T model, ModelReaderWriterOptions options)
+        {
+            return ModelReaderWriter.Write((object)model!, options);
+        }
+
+        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        {
+            return ModelReaderWriter.Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), typeof(T), options) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
         }
     }
 
