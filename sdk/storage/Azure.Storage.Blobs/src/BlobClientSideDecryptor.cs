@@ -187,7 +187,7 @@ namespace Azure.Storage.Blobs
 
             // did we request the last block?
             // end is inclusive/0-index, so end = n and size = n+1 means we requested the last block
-            if (contentRange.Value.Size - contentRange.Value.End == 1)
+            if (contentRange.Value.TotalResourceLength - contentRange.Value.End == 1)
             {
                 return false;
             }
