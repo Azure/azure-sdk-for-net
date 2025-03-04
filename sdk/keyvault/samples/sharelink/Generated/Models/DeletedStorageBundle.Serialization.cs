@@ -124,7 +124,7 @@ namespace Azure.Security.KeyVault.Storage.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new DeletedStorageBundle FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDeletedStorageBundle(document.RootElement);
         }
     }

@@ -97,7 +97,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static V2AnalyzeResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeV2AnalyzeResult(document.RootElement);
         }
     }
