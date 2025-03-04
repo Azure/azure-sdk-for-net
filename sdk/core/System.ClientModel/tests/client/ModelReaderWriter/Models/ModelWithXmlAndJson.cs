@@ -144,6 +144,64 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             }
         }
 
+        protected virtual void PersistableModelWriteCoreCommon(ModelReaderWriterOptions options, out BinaryData? data, Stream? stream = null)
+        {
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
+            string format = options.Format == "W" ? ((IPersistableModel<ModelWithXmlAndJson>)this).GetFormatFromOptions(options) : options.Format;
+            data = null;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        if (stream != null)
+                        {
+                            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+                            // TO-DO: Replace this with ModelReaderWriter.Write when it supports writing to a stream
+                            writer.WriteStartObject();
+                            JsonModelWriteCore(writer, options);
+                            writer.WriteEndObject();
+                            writer.Flush();
+                        }
+                        else
+                        {
+                            // TO-DO: Replace this with ModelReaderWriter.Write when it supports writing to a stream
+                            data = ModelReaderWriter.Write(this, options);
+                        }
+                        return;
+                    }
+                case "X":
+                    {
+                        if (stream != null)
+                        {
+                            // TO-DO: Replace this with ModelReaderWriter.Write when it supports writing to a stream
+                            using XmlWriter writer = XmlWriter.Create(stream);
+                            SerializeAsXml(writer, options, null);
+                            writer.Flush();
+                        }
+                        else
+                        {
+                            // TO-DO: Replace this with ModelReaderWriter.Write when it supports writing to a stream
+                            using MemoryStream memoryStream = new MemoryStream();
+                            using XmlWriter writer = XmlWriter.Create(memoryStream);
+                            SerializeAsXml(writer, options, null);
+                            writer.Flush();
+                            if (memoryStream.Position > int.MaxValue)
+                            {
+                                data = BinaryData.FromStream(memoryStream);
+                            }
+                            else
+                            {
+                                data = new BinaryData(memoryStream.GetBuffer().AsMemory(0, (int)memoryStream.Position));
+                            }
+                        }
+                        return;
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ModelWithXmlAndJson)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         ModelWithXmlAndJson IPersistableModel<ModelWithXmlAndJson>.Create(BinaryData data, ModelReaderWriterOptions options)
             => PersistableModelCreateCore(data, options);
 
