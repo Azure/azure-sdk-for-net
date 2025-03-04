@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBackupRecoveryPointData(document.RootElement, options);
                     }
                 default:

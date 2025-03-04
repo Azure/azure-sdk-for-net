@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         ServerInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServerInstanceListResult.DeserializeServerInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         ServerInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServerInstanceListResult.DeserializeServerInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         SapDiscoveryServerInstanceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapDiscoveryServerInstanceData.DeserializeSapDiscoveryServerInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         SapDiscoveryServerInstanceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapDiscoveryServerInstanceData.DeserializeSapDiscoveryServerInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         SapDiscoveryServerInstanceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapDiscoveryServerInstanceData.DeserializeSapDiscoveryServerInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         SapDiscoveryServerInstanceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapDiscoveryServerInstanceData.DeserializeSapDiscoveryServerInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         ServerInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServerInstanceListResult.DeserializeServerInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         ServerInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServerInstanceListResult.DeserializeServerInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

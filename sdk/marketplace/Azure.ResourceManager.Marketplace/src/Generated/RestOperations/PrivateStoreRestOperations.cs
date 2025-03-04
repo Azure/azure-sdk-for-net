@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateStoreList.DeserializePrivateStoreList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateStoreList.DeserializePrivateStoreList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateStoreData.DeserializePrivateStoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateStoreData.DeserializePrivateStoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         AnyExistingOffersInTheCollectionsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnyExistingOffersInTheCollectionsResult.DeserializeAnyExistingOffersInTheCollectionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         AnyExistingOffersInTheCollectionsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnyExistingOffersInTheCollectionsResult.DeserializeAnyExistingOffersInTheCollectionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         QueryOffers value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = Models.QueryOffers.DeserializeQueryOffers(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         QueryOffers value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = Models.QueryOffers.DeserializeQueryOffers(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         QueryOffers value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = Models.QueryOffers.DeserializeQueryOffers(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         QueryOffers value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = Models.QueryOffers.DeserializeQueryOffers(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreBillingAccountsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateStoreBillingAccountsResult.DeserializePrivateStoreBillingAccountsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreBillingAccountsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateStoreBillingAccountsResult.DeserializePrivateStoreBillingAccountsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         CollectionsToSubscriptionsMappingResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CollectionsToSubscriptionsMappingResult.DeserializeCollectionsToSubscriptionsMappingResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         CollectionsToSubscriptionsMappingResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CollectionsToSubscriptionsMappingResult.DeserializeCollectionsToSubscriptionsMappingResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         QueryApprovedPlansResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QueryApprovedPlansResult.DeserializeQueryApprovedPlansResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         QueryApprovedPlansResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QueryApprovedPlansResult.DeserializeQueryApprovedPlansResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         BulkCollectionsActionResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BulkCollectionsActionResult.DeserializeBulkCollectionsActionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -829,7 +829,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         BulkCollectionsActionResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BulkCollectionsActionResult.DeserializeBulkCollectionsActionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         RequestApprovalsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RequestApprovalsList.DeserializeRequestApprovalsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         RequestApprovalsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RequestApprovalsList.DeserializeRequestApprovalsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -955,7 +955,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         MarketplaceApprovalRequestData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MarketplaceApprovalRequestData.DeserializeMarketplaceApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         MarketplaceApprovalRequestData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MarketplaceApprovalRequestData.DeserializeMarketplaceApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1047,7 +1047,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         MarketplaceApprovalRequestData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MarketplaceApprovalRequestData.DeserializeMarketplaceApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1075,7 +1075,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         MarketplaceApprovalRequestData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MarketplaceApprovalRequestData.DeserializeMarketplaceApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1141,7 +1141,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         QueryApprovalRequestResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QueryApprovalRequestResult.DeserializeQueryApprovalRequestResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1168,7 +1168,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         QueryApprovalRequestResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QueryApprovalRequestResult.DeserializeQueryApprovalRequestResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1217,7 +1217,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         MarketplaceAdminApprovalRequestList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MarketplaceAdminApprovalRequestList.DeserializeMarketplaceAdminApprovalRequestList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         MarketplaceAdminApprovalRequestList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MarketplaceAdminApprovalRequestList.DeserializeMarketplaceAdminApprovalRequestList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1298,7 +1298,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         MarketplaceAdminApprovalRequestData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1328,7 +1328,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         MarketplaceAdminApprovalRequestData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1392,7 +1392,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         MarketplaceAdminApprovalRequestData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1420,7 +1420,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         MarketplaceAdminApprovalRequestData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1469,7 +1469,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreNotificationsState value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateStoreNotificationsState.DeserializePrivateStoreNotificationsState(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1490,7 +1490,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreNotificationsState value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateStoreNotificationsState.DeserializePrivateStoreNotificationsState(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1710,7 +1710,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         SubscriptionsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SubscriptionsResponse.DeserializeSubscriptionsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1732,7 +1732,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         SubscriptionsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SubscriptionsResponse.DeserializeSubscriptionsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1781,7 +1781,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         NewPlanNotificationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewPlanNotificationListResult.DeserializeNewPlanNotificationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1802,7 +1802,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         NewPlanNotificationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewPlanNotificationListResult.DeserializeNewPlanNotificationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1859,7 +1859,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         StopSellOffersPlansNotificationsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StopSellOffersPlansNotificationsList.DeserializeStopSellOffersPlansNotificationsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1881,7 +1881,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         StopSellOffersPlansNotificationsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StopSellOffersPlansNotificationsList.DeserializeStopSellOffersPlansNotificationsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1930,7 +1930,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         SubscriptionsContextList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SubscriptionsContextList.DeserializeSubscriptionsContextList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1951,7 +1951,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         SubscriptionsContextList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SubscriptionsContextList.DeserializeSubscriptionsContextList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1998,7 +1998,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateStoreList.DeserializePrivateStoreList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2023,7 +2023,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateStoreList.DeserializePrivateStoreList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

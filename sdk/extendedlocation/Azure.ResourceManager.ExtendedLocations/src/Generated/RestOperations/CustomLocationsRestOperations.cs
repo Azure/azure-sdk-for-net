@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 case 200:
                     {
                         CustomLocationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomLocationListResult.DeserializeCustomLocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 case 200:
                     {
                         CustomLocationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomLocationListResult.DeserializeCustomLocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 case 200:
                     {
                         CustomLocationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomLocationListResult.DeserializeCustomLocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 case 200:
                     {
                         CustomLocationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomLocationListResult.DeserializeCustomLocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 case 200:
                     {
                         CustomLocationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomLocationData.DeserializeCustomLocationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 case 200:
                     {
                         CustomLocationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomLocationData.DeserializeCustomLocationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 case 200:
                     {
                         CustomLocationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomLocationData.DeserializeCustomLocationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 case 200:
                     {
                         CustomLocationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomLocationData.DeserializeCustomLocationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 case 200:
                     {
                         CustomLocationEnabledResourceTypesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomLocationEnabledResourceTypesResult.DeserializeCustomLocationEnabledResourceTypesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 case 200:
                     {
                         CustomLocationEnabledResourceTypesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomLocationEnabledResourceTypesResult.DeserializeCustomLocationEnabledResourceTypesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 case 200:
                     {
                         CustomLocationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomLocationListResult.DeserializeCustomLocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 case 200:
                     {
                         CustomLocationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomLocationListResult.DeserializeCustomLocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 case 200:
                     {
                         CustomLocationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomLocationListResult.DeserializeCustomLocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -813,7 +813,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 case 200:
                     {
                         CustomLocationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomLocationListResult.DeserializeCustomLocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 case 200:
                     {
                         CustomLocationEnabledResourceTypesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomLocationEnabledResourceTypesResult.DeserializeCustomLocationEnabledResourceTypesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 case 200:
                     {
                         CustomLocationEnabledResourceTypesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomLocationEnabledResourceTypesResult.DeserializeCustomLocationEnabledResourceTypesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

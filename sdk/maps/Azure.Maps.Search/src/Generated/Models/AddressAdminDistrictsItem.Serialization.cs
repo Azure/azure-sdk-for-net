@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -39,7 +40,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AddressAdminDistrictsItem FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAddressAdminDistrictsItem(document.RootElement);
         }
     }

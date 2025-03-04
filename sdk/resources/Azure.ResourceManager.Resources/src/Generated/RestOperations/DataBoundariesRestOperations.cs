@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Resources
                 case 201:
                     {
                         DataBoundaryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoundaryData.DeserializeDataBoundaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Resources
                 case 201:
                     {
                         DataBoundaryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoundaryData.DeserializeDataBoundaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         DataBoundaryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoundaryData.DeserializeDataBoundaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         DataBoundaryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoundaryData.DeserializeDataBoundaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         DataBoundaryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoundaryData.DeserializeDataBoundaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         DataBoundaryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoundaryData.DeserializeDataBoundaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

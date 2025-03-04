@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMongoClusterPrivateEndpointConnection(document.RootElement, options);
                     }
                 default:

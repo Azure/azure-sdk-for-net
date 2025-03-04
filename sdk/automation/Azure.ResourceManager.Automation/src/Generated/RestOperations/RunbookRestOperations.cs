@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationRunbookData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationRunbookData.DeserializeAutomationRunbookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationRunbookData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationRunbookData.DeserializeAutomationRunbookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Automation
                 case 201:
                     {
                         AutomationRunbookData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationRunbookData.DeserializeAutomationRunbookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Automation
                 case 201:
                     {
                         AutomationRunbookData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationRunbookData.DeserializeAutomationRunbookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationRunbookData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationRunbookData.DeserializeAutomationRunbookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationRunbookData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationRunbookData.DeserializeAutomationRunbookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationRunbookListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationRunbookListResult.DeserializeAutomationRunbookListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationRunbookListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationRunbookListResult.DeserializeAutomationRunbookListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationRunbookListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationRunbookListResult.DeserializeAutomationRunbookListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationRunbookListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationRunbookListResult.DeserializeAutomationRunbookListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

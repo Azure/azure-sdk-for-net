@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricClusterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceFabricClusterData.DeserializeServiceFabricClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricClusterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceFabricClusterData.DeserializeServiceFabricClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceFabricClusterListResult.DeserializeServiceFabricClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceFabricClusterListResult.DeserializeServiceFabricClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceFabricClusterListResult.DeserializeServiceFabricClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceFabricClusterListResult.DeserializeServiceFabricClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         UpgradableVersionPathResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UpgradableVersionPathResult.DeserializeUpgradableVersionPathResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         UpgradableVersionPathResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UpgradableVersionPathResult.DeserializeUpgradableVersionPathResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceFabricClusterListResult.DeserializeServiceFabricClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceFabricClusterListResult.DeserializeServiceFabricClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceFabricClusterListResult.DeserializeServiceFabricClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceFabricClusterListResult.DeserializeServiceFabricClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

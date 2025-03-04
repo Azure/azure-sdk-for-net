@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCustomLocationData(document.RootElement, options);
                     }
                 default:

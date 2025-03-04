@@ -113,7 +113,7 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSpeedResolution(document.RootElement, options);
                     }
                 default:
@@ -127,7 +127,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new SpeedResolution FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSpeedResolution(document.RootElement);
         }
 

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeRegistrationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeRegistrationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeRegistrationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeRegistrationListResult.DeserializeResourceTypeRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeRegistrationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeRegistrationListResult.DeserializeResourceTypeRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeRegistrationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeRegistrationListResult.DeserializeResourceTypeRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeRegistrationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeRegistrationListResult.DeserializeResourceTypeRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedVirtualMachines value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PagedVirtualMachines.DeserializePagedVirtualMachines(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedVirtualMachines value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PagedVirtualMachines.DeserializePagedVirtualMachines(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         LabVirtualMachineData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LabVirtualMachineData.DeserializeLabVirtualMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         LabVirtualMachineData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LabVirtualMachineData.DeserializeLabVirtualMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedVirtualMachines value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PagedVirtualMachines.DeserializePagedVirtualMachines(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedVirtualMachines value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PagedVirtualMachines.DeserializePagedVirtualMachines(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

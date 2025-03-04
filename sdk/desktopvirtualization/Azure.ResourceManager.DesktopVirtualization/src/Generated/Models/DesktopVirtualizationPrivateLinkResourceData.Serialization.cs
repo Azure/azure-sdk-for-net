@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDesktopVirtualizationPrivateLinkResourceData(document.RootElement, options);
                     }
                 default:

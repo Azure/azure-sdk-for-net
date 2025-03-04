@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MongoCluster
                 case 200:
                     {
                         MongoClusterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MongoClusterData.DeserializeMongoClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MongoCluster
                 case 200:
                     {
                         MongoClusterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MongoClusterData.DeserializeMongoClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.MongoCluster
                 case 200:
                     {
                         MongoClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MongoClusterListResult.DeserializeMongoClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.MongoCluster
                 case 200:
                     {
                         MongoClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MongoClusterListResult.DeserializeMongoClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.MongoCluster
                 case 200:
                     {
                         MongoClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MongoClusterListResult.DeserializeMongoClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.MongoCluster
                 case 200:
                     {
                         MongoClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MongoClusterListResult.DeserializeMongoClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.MongoCluster
                 case 200:
                     {
                         MongoClusterConnectionStringsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MongoClusterConnectionStringsResult.DeserializeMongoClusterConnectionStringsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.MongoCluster
                 case 200:
                     {
                         MongoClusterConnectionStringsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MongoClusterConnectionStringsResult.DeserializeMongoClusterConnectionStringsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.MongoCluster
                 case 200:
                     {
                         MongoClusterNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MongoClusterNameAvailabilityResult.DeserializeMongoClusterNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.MongoCluster
                 case 200:
                     {
                         MongoClusterNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MongoClusterNameAvailabilityResult.DeserializeMongoClusterNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.MongoCluster
                 case 200:
                     {
                         MongoClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MongoClusterListResult.DeserializeMongoClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -913,7 +913,7 @@ namespace Azure.ResourceManager.MongoCluster
                 case 200:
                     {
                         MongoClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MongoClusterListResult.DeserializeMongoClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.MongoCluster
                 case 200:
                     {
                         MongoClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MongoClusterListResult.DeserializeMongoClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -989,7 +989,7 @@ namespace Azure.ResourceManager.MongoCluster
                 case 200:
                     {
                         MongoClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MongoClusterListResult.DeserializeMongoClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

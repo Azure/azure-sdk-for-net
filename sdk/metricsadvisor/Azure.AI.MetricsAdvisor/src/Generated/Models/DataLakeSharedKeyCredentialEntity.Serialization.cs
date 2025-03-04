@@ -76,7 +76,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new DataLakeSharedKeyCredentialEntity FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDataLakeSharedKeyCredentialEntity(document.RootElement);
         }
 
