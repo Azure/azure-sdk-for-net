@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRoleManagementPolicyExpirationRule(document.RootElement, options);
                     }
                 default:

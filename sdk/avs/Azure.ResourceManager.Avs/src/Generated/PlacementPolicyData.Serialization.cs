@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Avs
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePlacementPolicyData(document.RootElement, options);
                     }
                 default:

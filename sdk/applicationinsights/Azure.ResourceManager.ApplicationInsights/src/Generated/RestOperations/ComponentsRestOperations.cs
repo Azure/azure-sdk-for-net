@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationInsightsComponentListResult.DeserializeApplicationInsightsComponentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationInsightsComponentListResult.DeserializeApplicationInsightsComponentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationInsightsComponentListResult.DeserializeApplicationInsightsComponentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationInsightsComponentListResult.DeserializeApplicationInsightsComponentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 202:
                     {
                         ComponentPurgeResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ComponentPurgeResult.DeserializeComponentPurgeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 202:
                     {
                         ComponentPurgeResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ComponentPurgeResult.DeserializeComponentPurgeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ComponentPurgeStatusResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ComponentPurgeStatusResult.DeserializeComponentPurgeStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ComponentPurgeStatusResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ComponentPurgeStatusResult.DeserializeComponentPurgeStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationInsightsComponentListResult.DeserializeApplicationInsightsComponentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -859,7 +859,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationInsightsComponentListResult.DeserializeApplicationInsightsComponentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -910,7 +910,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationInsightsComponentListResult.DeserializeApplicationInsightsComponentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -939,7 +939,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationInsightsComponentListResult.DeserializeApplicationInsightsComponentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

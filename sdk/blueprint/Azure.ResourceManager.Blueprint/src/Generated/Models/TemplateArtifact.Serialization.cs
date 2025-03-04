@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Blueprint.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Template);
 #else
-            using (JsonDocument document = JsonDocument.Parse(Template))
+            using (JsonDocument document = JsonDocument.Parse(Template, ModelSerializationExtensions.JsonDocumentOptions))
             {
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTemplateArtifact(document.RootElement, options);
                     }
                 default:

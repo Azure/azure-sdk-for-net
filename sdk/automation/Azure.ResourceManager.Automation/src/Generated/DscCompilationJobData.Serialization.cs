@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Automation
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDscCompilationJobData(document.RootElement, options);
                     }
                 default:

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         PolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyListResult.DeserializePolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         PolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyListResult.DeserializePolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         PolicyContractData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyContractData.DeserializePolicyContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         PolicyContractData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyContractData.DeserializePolicyContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 201:
                     {
                         PolicyContractData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyContractData.DeserializePolicyContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 201:
                     {
                         PolicyContractData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyContractData.DeserializePolicyContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         PolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyListResult.DeserializePolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         PolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyListResult.DeserializePolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

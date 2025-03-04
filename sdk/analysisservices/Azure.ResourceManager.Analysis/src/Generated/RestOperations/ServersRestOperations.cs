@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Analysis
                 case 200:
                     {
                         AnalysisServerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalysisServerData.DeserializeAnalysisServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Analysis
                 case 200:
                     {
                         AnalysisServerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalysisServerData.DeserializeAnalysisServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.Analysis
                 case 200:
                     {
                         AnalysisServers value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalysisServers.DeserializeAnalysisServers(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Analysis
                 case 200:
                     {
                         AnalysisServers value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalysisServers.DeserializeAnalysisServers(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.Analysis
                 case 200:
                     {
                         AnalysisServers value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalysisServers.DeserializeAnalysisServers(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.Analysis
                 case 200:
                     {
                         AnalysisServers value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalysisServers.DeserializeAnalysisServers(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.Analysis
                 case 200:
                     {
                         NewResourceResultSkuEnumeration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewResourceResultSkuEnumeration.DeserializeNewResourceResultSkuEnumeration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.Analysis
                 case 200:
                     {
                         NewResourceResultSkuEnumeration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewResourceResultSkuEnumeration.DeserializeNewResourceResultSkuEnumeration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.Analysis
                 case 200:
                     {
                         ExistingResourceResultSkuEnumeration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExistingResourceResultSkuEnumeration.DeserializeExistingResourceResultSkuEnumeration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.Analysis
                 case 200:
                     {
                         ExistingResourceResultSkuEnumeration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExistingResourceResultSkuEnumeration.DeserializeExistingResourceResultSkuEnumeration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -968,7 +968,7 @@ namespace Azure.ResourceManager.Analysis
                 case 200:
                     {
                         AnalysisGatewayStatus value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalysisGatewayStatus.DeserializeAnalysisGatewayStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.Analysis
                 case 200:
                     {
                         AnalysisGatewayStatus value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalysisGatewayStatus.DeserializeAnalysisGatewayStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1145,7 +1145,7 @@ namespace Azure.ResourceManager.Analysis
                 case 200:
                     {
                         AnalysisServerNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalysisServerNameAvailabilityResult.DeserializeAnalysisServerNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1173,7 +1173,7 @@ namespace Azure.ResourceManager.Analysis
                 case 200:
                     {
                         AnalysisServerNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalysisServerNameAvailabilityResult.DeserializeAnalysisServerNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

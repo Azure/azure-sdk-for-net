@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Automanage
                 case 201:
                     {
                         AutomanageConfigurationProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Automanage
                 case 201:
                     {
                         AutomanageConfigurationProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Automanage
                 case 200:
                     {
                         AutomanageConfigurationProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Automanage
                 case 200:
                     {
                         AutomanageConfigurationProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Automanage
                 case 200:
                     {
                         AutomanageConfigurationProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Automanage
                 case 200:
                     {
                         AutomanageConfigurationProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Automanage
                 case 200:
                     {
                         ConfigurationProfileList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfigurationProfileList.DeserializeConfigurationProfileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Automanage
                 case 200:
                     {
                         ConfigurationProfileList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfigurationProfileList.DeserializeConfigurationProfileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Automanage
                 case 200:
                     {
                         ConfigurationProfileList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfigurationProfileList.DeserializeConfigurationProfileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Automanage
                 case 200:
                     {
                         ConfigurationProfileList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfigurationProfileList.DeserializeConfigurationProfileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

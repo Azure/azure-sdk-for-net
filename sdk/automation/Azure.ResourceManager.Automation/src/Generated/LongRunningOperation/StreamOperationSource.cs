@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Automation
     {
         Stream IOperationSource<Stream>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return BinaryData.FromString(document.RootElement.GetRawText()).ToStream();
         }
 
         async ValueTask<Stream> IOperationSource<Stream>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return BinaryData.FromString(document.RootElement.GetRawText()).ToStream();
         }
     }
