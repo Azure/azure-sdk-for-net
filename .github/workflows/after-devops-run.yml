@@ -1,4 +1,4 @@
-name: Follow up on DevOps run
+name: Follow up on DevOps run test
 
 on:
   check_suite:
@@ -17,6 +17,7 @@ jobs:
     name: Handle ${{ github.event_name }} ${{ github.event.action }} event
     runs-on: ubuntu-latest # This image is intentionally set to "latest", and not to a specific version
     steps:
-      - uses: azure/azure-sdk-actions@main
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Dump check_suite payload
+        run: |
+          echo "Event payload:"
+          echo "${{ toJson(github.event) }}"
