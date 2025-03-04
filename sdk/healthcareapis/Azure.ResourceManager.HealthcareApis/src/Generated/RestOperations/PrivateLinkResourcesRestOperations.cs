@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         PrivateLinkResourceListResultDescription value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateLinkResourceListResultDescription.DeserializePrivateLinkResourceListResultDescription(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         PrivateLinkResourceListResultDescription value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateLinkResourceListResultDescription.DeserializePrivateLinkResourceListResultDescription(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         HealthcareApisPrivateLinkResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthcareApisPrivateLinkResourceData.DeserializeHealthcareApisPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         HealthcareApisPrivateLinkResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthcareApisPrivateLinkResourceData.DeserializeHealthcareApisPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

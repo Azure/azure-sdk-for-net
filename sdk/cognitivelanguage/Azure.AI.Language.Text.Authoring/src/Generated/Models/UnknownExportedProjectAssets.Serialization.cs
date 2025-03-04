@@ -97,7 +97,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeExportedProjectAssets(document.RootElement, options);
                     }
                 default:
@@ -111,7 +111,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new UnknownExportedProjectAssets FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeUnknownExportedProjectAssets(document.RootElement);
         }
 

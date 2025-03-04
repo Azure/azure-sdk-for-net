@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHybridContainerServiceVirtualNetworkData(document.RootElement, options);
                     }
                 default:

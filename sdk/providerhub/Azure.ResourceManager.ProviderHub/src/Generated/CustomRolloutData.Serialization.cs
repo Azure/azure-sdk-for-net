@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCustomRolloutData(document.RootElement, options);
                     }
                 default:

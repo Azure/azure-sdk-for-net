@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceAccountCredentialsInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DynatraceAccountCredentialsInfo.DeserializeDynatraceAccountCredentialsInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceAccountCredentialsInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DynatraceAccountCredentialsInfo.DeserializeDynatraceAccountCredentialsInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         MonitoredResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitoredResourceListResponse.DeserializeMonitoredResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         MonitoredResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitoredResourceListResponse.DeserializeMonitoredResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceVmExtensionPayload value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DynatraceVmExtensionPayload.DeserializeDynatraceVmExtensionPayload(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceVmExtensionPayload value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DynatraceVmExtensionPayload.DeserializeDynatraceVmExtensionPayload(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceMonitorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DynatraceMonitorData.DeserializeDynatraceMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceMonitorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DynatraceMonitorData.DeserializeDynatraceMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceMonitorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DynatraceMonitorData.DeserializeDynatraceMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceMonitorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DynatraceMonitorData.DeserializeDynatraceMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         MonitorResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitorResourceListResult.DeserializeMonitorResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -761,7 +761,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         MonitorResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitorResourceListResult.DeserializeMonitorResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         MonitorResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitorResourceListResult.DeserializeMonitorResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         MonitorResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitorResourceListResult.DeserializeMonitorResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -912,7 +912,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         VmHostsListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VmHostsListResponse.DeserializeVmHostsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -941,7 +941,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         VmHostsListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VmHostsListResponse.DeserializeVmHostsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1006,7 +1006,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         AppServiceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceListResponse.DeserializeAppServiceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1035,7 +1035,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         AppServiceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceListResponse.DeserializeAppServiceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1108,7 +1108,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceSsoDetailsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DynatraceSsoDetailsResult.DeserializeDynatraceSsoDetailsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1138,7 +1138,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceSsoDetailsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DynatraceSsoDetailsResult.DeserializeDynatraceSsoDetailsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1209,7 +1209,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         LinkableEnvironmentListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LinkableEnvironmentListResponse.DeserializeLinkableEnvironmentListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1240,7 +1240,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         LinkableEnvironmentListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LinkableEnvironmentListResponse.DeserializeLinkableEnvironmentListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1293,7 +1293,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         MonitoredResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitoredResourceListResponse.DeserializeMonitoredResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1324,7 +1324,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         MonitoredResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitoredResourceListResponse.DeserializeMonitoredResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1373,7 +1373,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         MonitorResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitorResourceListResult.DeserializeMonitorResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1400,7 +1400,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         MonitorResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitorResourceListResult.DeserializeMonitorResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1451,7 +1451,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         MonitorResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitorResourceListResult.DeserializeMonitorResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1480,7 +1480,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         MonitorResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitorResourceListResult.DeserializeMonitorResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1533,7 +1533,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         VmHostsListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VmHostsListResponse.DeserializeVmHostsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1564,7 +1564,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         VmHostsListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VmHostsListResponse.DeserializeVmHostsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1617,7 +1617,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         AppServiceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceListResponse.DeserializeAppServiceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1648,7 +1648,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         AppServiceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceListResponse.DeserializeAppServiceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1703,7 +1703,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         LinkableEnvironmentListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LinkableEnvironmentListResponse.DeserializeLinkableEnvironmentListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1736,7 +1736,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         LinkableEnvironmentListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LinkableEnvironmentListResponse.DeserializeLinkableEnvironmentListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

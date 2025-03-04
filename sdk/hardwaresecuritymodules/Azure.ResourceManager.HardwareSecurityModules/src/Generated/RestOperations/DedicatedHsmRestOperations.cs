@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 case 200:
                     {
                         DedicatedHsmData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DedicatedHsmData.DeserializeDedicatedHsmData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 case 200:
                     {
                         DedicatedHsmData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DedicatedHsmData.DeserializeDedicatedHsmData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 case 200:
                     {
                         DedicatedHsmListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DedicatedHsmListResult.DeserializeDedicatedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 case 200:
                     {
                         DedicatedHsmListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DedicatedHsmListResult.DeserializeDedicatedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 case 200:
                     {
                         DedicatedHsmListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DedicatedHsmListResult.DeserializeDedicatedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 case 200:
                     {
                         DedicatedHsmListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DedicatedHsmListResult.DeserializeDedicatedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 case 200:
                     {
                         DedicatedHsmEgressEndpointListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DedicatedHsmEgressEndpointListResult.DeserializeDedicatedHsmEgressEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 case 200:
                     {
                         DedicatedHsmEgressEndpointListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DedicatedHsmEgressEndpointListResult.DeserializeDedicatedHsmEgressEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 case 200:
                     {
                         DedicatedHsmListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DedicatedHsmListResult.DeserializeDedicatedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 case 200:
                     {
                         DedicatedHsmListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DedicatedHsmListResult.DeserializeDedicatedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 case 200:
                     {
                         DedicatedHsmListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DedicatedHsmListResult.DeserializeDedicatedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -829,7 +829,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 case 200:
                     {
                         DedicatedHsmListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DedicatedHsmListResult.DeserializeDedicatedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -882,7 +882,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 case 200:
                     {
                         DedicatedHsmEgressEndpointListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DedicatedHsmEgressEndpointListResult.DeserializeDedicatedHsmEgressEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -913,7 +913,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 case 200:
                     {
                         DedicatedHsmEgressEndpointListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DedicatedHsmEgressEndpointListResult.DeserializeDedicatedHsmEgressEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

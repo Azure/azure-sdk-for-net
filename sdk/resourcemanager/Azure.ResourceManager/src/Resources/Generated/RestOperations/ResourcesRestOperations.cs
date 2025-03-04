@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         GenericResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GenericResourceData.DeserializeGenericResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         GenericResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GenericResourceData.DeserializeGenericResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

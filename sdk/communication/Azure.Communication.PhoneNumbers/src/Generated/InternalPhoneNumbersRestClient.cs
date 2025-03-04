@@ -283,7 +283,7 @@ namespace Azure.Communication.PhoneNumbers
                 case 200:
                     {
                         PhoneNumberSearchResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PhoneNumberSearchResult.DeserializePhoneNumberSearchResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -310,7 +310,7 @@ namespace Azure.Communication.PhoneNumbers
                 case 200:
                     {
                         PhoneNumberSearchResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PhoneNumberSearchResult.DeserializePhoneNumberSearchResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -483,7 +483,7 @@ namespace Azure.Communication.PhoneNumbers
                 case 200:
                     {
                         PurchasedPhoneNumber value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PurchasedPhoneNumber.DeserializePurchasedPhoneNumber(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -510,7 +510,7 @@ namespace Azure.Communication.PhoneNumbers
                 case 200:
                     {
                         PurchasedPhoneNumber value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PurchasedPhoneNumber.DeserializePurchasedPhoneNumber(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -643,7 +643,7 @@ namespace Azure.Communication.PhoneNumbers
                 case 200:
                     {
                         OperatorInformationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OperatorInformationResult.DeserializeOperatorInformationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -671,7 +671,7 @@ namespace Azure.Communication.PhoneNumbers
                 case 200:
                     {
                         OperatorInformationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OperatorInformationResult.DeserializeOperatorInformationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
