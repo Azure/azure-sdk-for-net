@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             ManagedServiceIdentity identity = default;
             AgriculturePlatformSku sku = default;
             IDictionary<string, string> tags = default;
-            AgriServiceResourceUpdateProperties properties = default;
+            AgricultureServicePatchProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                     {
                         continue;
                     }
-                    properties = AgriServiceResourceUpdateProperties.DeserializeAgriServiceResourceUpdateProperties(property.Value, options);
+                    properties = AgricultureServicePatchProperties.DeserializeAgricultureServicePatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

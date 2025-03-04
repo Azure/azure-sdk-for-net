@@ -186,6 +186,12 @@
       ]
     },
     {
+      "filename": "**/sdk/agricultureplatform/**/*.cs",
+      "words": [
+        "Mobo"
+      ]
+    },
+    {
       "filename": "**/sdk/ai/**/*.cs",
       "words": [
         "Ubinary"
@@ -1647,14 +1653,6 @@
         "Sasl",
         "Acks",
         "acks"
-      ]
-    },
-    {
-      "filename": "**/sdk/agricultureplatform/**/*.cs",
-      "words": [
-        "Agri",
-        "agri",
-        "Mobo"
       ]
     }
   ],

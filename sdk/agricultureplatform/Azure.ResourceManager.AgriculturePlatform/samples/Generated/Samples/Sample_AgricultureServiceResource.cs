@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Samples
 {
 ["key9006"] = "kuzlwpujbql"
 },
-                Properties = new AgriServiceResourceUpdateProperties
+                Properties = new AgricultureServicePatchProperties
                 {
                     Config = new AgricultureServiceConfig(),
                     DataConnectorCredentials = {new DataConnectorCredentialMap("BackendAADApplicationCredentials", new DataConnectorCredentials

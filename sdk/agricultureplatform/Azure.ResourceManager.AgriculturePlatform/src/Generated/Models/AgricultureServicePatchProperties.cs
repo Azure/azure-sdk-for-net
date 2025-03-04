@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AgriculturePlatform.Models
 {
     /// <summary> The updatable properties of the AgriServiceResource. </summary>
-    public partial class AgriServiceResourceUpdateProperties
+    public partial class AgricultureServicePatchProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AgriServiceResourceUpdateProperties"/>. </summary>
-        public AgriServiceResourceUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="AgricultureServicePatchProperties"/>. </summary>
+        public AgricultureServicePatchProperties()
         {
             DataConnectorCredentials = new ChangeTrackingList<DataConnectorCredentialMap>();
             InstalledSolutions = new ChangeTrackingList<InstalledSolutionMap>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgriServiceResourceUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgricultureServicePatchProperties"/>. </summary>
         /// <param name="config"> Config of the AgriService instance. </param>
         /// <param name="dataConnectorCredentials"> Data connector credentials of AgriService instance. </param>
         /// <param name="installedSolutions"> AgriService installed solutions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgriServiceResourceUpdateProperties(AgricultureServiceConfig config, IList<DataConnectorCredentialMap> dataConnectorCredentials, IList<InstalledSolutionMap> installedSolutions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AgricultureServicePatchProperties(AgricultureServiceConfig config, IList<DataConnectorCredentialMap> dataConnectorCredentials, IList<InstalledSolutionMap> installedSolutions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Config = config;
             DataConnectorCredentials = dataConnectorCredentials;

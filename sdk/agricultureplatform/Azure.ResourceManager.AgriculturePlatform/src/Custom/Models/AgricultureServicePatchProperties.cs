@@ -10,6 +10,6 @@ using Azure.Core;
 namespace Azure.ResourceManager.AgriculturePlatform.Models
 {
     /// <summary> The updatable properties of the AgriServiceResource. </summary>
-    [CodeGenModel("AgricultureServicePatchProperties")]
-    public partial class AgriServiceResourceUpdateProperties { }
+    [CodeGenModel("AgriServiceResourceUpdateProperties")]
+    public partial class AgricultureServicePatchProperties { }
 }
