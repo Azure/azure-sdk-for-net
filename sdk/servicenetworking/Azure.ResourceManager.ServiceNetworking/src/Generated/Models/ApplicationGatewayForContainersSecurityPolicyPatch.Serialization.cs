@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
@@ -46,14 +45,11 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(WafPolicy))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("wafPolicy"u8);
-                JsonSerializer.Serialize(writer, WafPolicy);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -92,7 +88,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            WritableSubResource wafPolicy = default;
+            SecurityPolicyUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,21 +111,9 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("wafPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            wafPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
-                            continue;
-                        }
-                    }
+                    properties = SecurityPolicyUpdateProperties.DeserializeSecurityPolicyUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -138,7 +122,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ApplicationGatewayForContainersSecurityPolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), wafPolicy, serializedAdditionalRawData);
+            return new ApplicationGatewayForContainersSecurityPolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayForContainersSecurityPolicyPatch>.Write(ModelReaderWriterOptions options)

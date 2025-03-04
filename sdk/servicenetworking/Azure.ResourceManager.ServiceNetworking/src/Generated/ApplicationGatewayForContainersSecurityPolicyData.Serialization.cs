@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.ServiceNetworking
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Models.PolicyType? policyType = default;
+            ApplicationGatewayForContainersSecurityPolicyType? policyType = default;
             WritableSubResource wafPolicy = default;
-            ProvisioningState? provisioningState = default;
+            ServiceNetworkingProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                             {
                                 continue;
                             }
-                            policyType = new Models.PolicyType(property0.Value.GetString());
+                            policyType = new ApplicationGatewayForContainersSecurityPolicyType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("wafPolicy"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new ServiceNetworkingProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
