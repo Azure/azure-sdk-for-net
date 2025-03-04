@@ -162,6 +162,16 @@ namespace System.ClientModel.Primitives
         protected virtual void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
         protected virtual System.Threading.Tasks.Task WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
+    public abstract partial class CollectionBuilder
+    {
+        protected CollectionBuilder() { }
+        protected internal abstract void AddItem(object item, string? key = null);
+        protected static T AssertItem<T>(object item) { throw null; }
+        protected static string AssertKey(string? key) { throw null; }
+        protected internal abstract object? CreateElement();
+        protected internal abstract object GetBuilder();
+        protected internal virtual object ToObject() { throw null; }
+    }
     public abstract partial class CollectionResult
     {
         protected CollectionResult() { }
@@ -210,6 +220,7 @@ namespace System.ClientModel.Primitives
     public partial class JsonModelConverter : System.Text.Json.Serialization.JsonConverter<System.ClientModel.Primitives.IJsonModel<object>>
     {
         public JsonModelConverter() { }
+        public JsonModelConverter(System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { }
         public JsonModelConverter(System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
         public override System.ClientModel.Primitives.IJsonModel<object> Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
@@ -222,12 +233,27 @@ namespace System.ClientModel.Primitives
         public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
+    public abstract partial class ModelInfo
+    {
+        protected ModelInfo() { }
+        public abstract object CreateObject();
+        public virtual System.Collections.IEnumerable? GetEnumerable(object obj) { throw null; }
+    }
     public static partial class ModelReaderWriter
     {
+        public static object? Read(System.BinaryData data, System.Type returnType, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
         public static object? Read(System.BinaryData data, System.Type returnType, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
-        public static T? Read<T>(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
+        public static T? Read<T>(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
+        public static T? Read<T>(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
+        public static System.BinaryData Write(object model, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
         public static System.BinaryData Write(object model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
+        public static System.BinaryData Write<T>(T model, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
         public static System.BinaryData Write<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
+    }
+    public abstract partial class ModelReaderWriterContext
+    {
+        protected ModelReaderWriterContext() { }
+        public abstract System.ClientModel.Primitives.ModelInfo? GetModelInfo(System.Type type);
     }
     public partial class ModelReaderWriterOptions
     {
