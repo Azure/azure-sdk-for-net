@@ -188,7 +188,8 @@
     {
       "filename": "**/sdk/agricultureplatform/**/*.cs",
       "words": [
-        "Mobo"
+        "agri",
+        "mobo"
       ]
     },
     {
