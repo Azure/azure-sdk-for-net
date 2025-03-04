@@ -9,6 +9,8 @@
 ### Bugs Fixed
 
 ### Other Changes
+- Updated Microsoft.Identity.Client dependency to version 4.69.1.
+- ManagedIdentityCredential now properly supports CAE.
 
 ## 1.14.0-beta.1 (2025-02-11)
 
