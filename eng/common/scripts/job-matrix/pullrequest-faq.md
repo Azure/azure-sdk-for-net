@@ -72,3 +72,18 @@ Notice that packages are grouped initially by _the matrix associated with their 
 `indirect` batching works the same way, but doesn't use the _full_ test matrix by default. It instead deterministically selects a single item from the resolved test matrix and assigns the batch of packages to it.
 
 The suffixes `b1` or `ib1` or are added automatically as needed by the job pull request [matrix creation.](../../../common/scripts/job-matrix/Create-JobMatrix.ps1).
+
+## Can I disable this matrix batching?
+
+Yes! Users can entirely disable the batching for a specific matrix by setting `PRBatching` to false in the matrix configuration.
+
+Example:
+
+```yml
+MatrixConfigs:
+  - Name: version_overrides_tests
+    Path: sdk/core/version-overrides-matrix.json
+    Selection: all
+    PRBatching: false # the new key
+    GenerateVMJobs: true
+```
