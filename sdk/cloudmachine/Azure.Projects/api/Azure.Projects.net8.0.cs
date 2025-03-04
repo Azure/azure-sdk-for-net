@@ -130,6 +130,10 @@ namespace Azure.Projects
 }
 namespace Azure.Projects.KeyVault
 {
+    public static partial class AppConfigurationExtensions
+    {
+        public static Azure.Data.AppConfiguration.ConfigurationClient GetConfigurationClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
+    }
     public static partial class KeyVaultExtensions
     {
         public static Azure.Security.KeyVault.Secrets.SecretClient GetKeyVaultSecretsClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }

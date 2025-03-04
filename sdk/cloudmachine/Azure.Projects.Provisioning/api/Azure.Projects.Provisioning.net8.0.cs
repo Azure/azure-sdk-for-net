@@ -124,6 +124,12 @@ namespace Azure.Projects.Core
 }
 namespace Azure.Projects.KeyVault
 {
+    public partial class AppConfigurationFeature : Azure.Projects.Core.AzureProjectFeature
+    {
+        public AppConfigurationFeature() { }
+        protected internal override void EmitConnections(System.Collections.Generic.ICollection<System.ClientModel.Primitives.ClientConnection> connections, string cmId) { }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.Projects.ProjectInfrastructure infrastructure) { throw null; }
+    }
     public partial class KeyVaultFeature : Azure.Projects.Core.AzureProjectFeature
     {
         public KeyVaultFeature(Azure.Provisioning.KeyVault.KeyVaultSku? sku = null) { }
