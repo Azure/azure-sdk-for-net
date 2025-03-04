@@ -59,7 +59,7 @@ namespace Azure.Core.Tests
         {
             Uri startRequestUri = new Uri(startRequestUriStr);
             NextLinkOperationImplementation.TryGetApiVersion(startRequestUri, out ReadOnlySpan<char> apiVersion);
-            string resultUri = NextLinkOperationImplementation.AppendOrReplaceApiVersion(uriToProcess, apiVersion == null ? null : apiVersion.ToString());
+            string resultUri = NextLinkOperationImplementation.AppendOrReplaceApiVersion(uriToProcess, apiVersion.IsEmpty ? null : apiVersion.ToString());
             Assert.AreEqual(resultUri, expectedUri);
         }
     }
