@@ -25,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 ResponseObject? responseObj;
 
-#if NET6_0_OR_GREATER
+#if NET
                 responseObj = JsonSerializer.Deserialize<ResponseObject>(responseContent, SourceGenerationContext.Default.ResponseObject);
 #else
                 responseObj = JsonSerializer.Deserialize<ResponseObject>(responseContent);
