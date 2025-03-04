@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Generator.CSharp;
+using Microsoft.TypeSpec.Generator;
 using System.ComponentModel.Composition;
 
 namespace Azure.Generator.StubLibrary

@@ -13,6 +13,8 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="System.ServiceModel.Primitives" />
+    <PackageReference Include="System.Formats.Asn1" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" />
 	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.WCF.Azure.StorageQueues\src\Microsoft.WCF.Azure.StorageQueues.csproj" />

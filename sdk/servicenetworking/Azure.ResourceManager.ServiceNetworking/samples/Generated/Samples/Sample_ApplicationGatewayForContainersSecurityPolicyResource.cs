@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSecurityPolicy()
         {
-            // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2025-01-01/examples/SecurityPolicyGet.json
-            // this example is just showing the usage of "SecurityPoliciesInterface_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/SecurityPolicyGet.json
+            // this example is just showing the usage of "SecurityPolicy_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteSecurityPolicy()
         {
-            // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2025-01-01/examples/SecurityPolicyDelete.json
-            // this example is just showing the usage of "SecurityPoliciesInterface_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/SecurityPolicyDelete.json
+            // this example is just showing the usage of "SecurityPolicy_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateSecurityPolicy()
         {
-            // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2025-01-01/examples/SecurityPolicyPatch.json
-            // this example is just showing the usage of "SecurityPoliciesInterface_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/SecurityPolicyPatch.json
+            // this example is just showing the usage of "SecurityPolicy_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

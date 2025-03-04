@@ -34,16 +34,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(DeviceTwinInfoX509Thumbprint)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(PrimaryThumbprint))
-            {
-                writer.WritePropertyName("primaryThumbprint"u8);
-                writer.WriteStringValue(PrimaryThumbprint);
-            }
-            if (Optional.IsDefined(SecondaryThumbprint))
-            {
-                writer.WritePropertyName("secondaryThumbprint"u8);
-                writer.WriteStringValue(SecondaryThumbprint);
-            }
+            writer.WritePropertyName("primaryThumbprint"u8);
+            writer.WriteStringValue(PrimaryThumbprint);
+            writer.WritePropertyName("secondaryThumbprint"u8);
+            writer.WriteStringValue(SecondaryThumbprint);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

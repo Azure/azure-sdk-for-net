@@ -15,8 +15,8 @@ param baseName string
 param location string = resourceGroup().location
 
 @description('The location of the resource. By default, this is the same as the resource group.')
-param deidLocation string = 'eastus2euap'
-param deidLocationShort string = 'eup'
+param deidLocation string = 'eastus2'
+param deidLocationShort string = 'eus2'
 
 param deploymentTime string = utcNow('u')
 
@@ -26,7 +26,10 @@ var storageBlobDataContributor = 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
 
 var blobStorageName = take(toLower(replace('blob-${baseName}', '-', '')), 24)
 var blobContainerName = 'container-${baseName}'
-var deidServiceName = 'deid-${baseName}-${deidLocationShort}'
+
+var maxBaseNameLength = 24 - 5 - length(deidLocationShort) // 5 characters for 'deid-' and 1 for '-'
+var truncatedBaseName = take(baseName, maxBaseNameLength)
+var deidServiceName = 'deid-${truncatedBaseName}-${deidLocationShort}'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
   name: blobStorageName

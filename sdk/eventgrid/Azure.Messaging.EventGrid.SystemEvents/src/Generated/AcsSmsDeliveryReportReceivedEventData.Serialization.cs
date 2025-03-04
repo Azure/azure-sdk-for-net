@@ -52,8 +52,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("receivedTimestamp"u8);
-            writer.WriteStringValue(ReceivedTimestamp, "O");
+            if (Optional.IsDefined(ReceivedTimestamp))
+            {
+                writer.WritePropertyName("receivedTimestamp"u8);
+                writer.WriteStringValue(ReceivedTimestamp.Value, "O");
+            }
             if (Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
@@ -84,7 +87,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string deliveryStatus = default;
             string deliveryStatusDetails = default;
             IReadOnlyList<AcsSmsDeliveryAttemptProperties> deliveryAttempts = default;
-            DateTimeOffset receivedTimestamp = default;
+            DateTimeOffset? receivedTimestamp = default;
             string tag = default;
             string messageId = default;
             string @from = default;
@@ -115,6 +118,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("receivedTimestamp"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     receivedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

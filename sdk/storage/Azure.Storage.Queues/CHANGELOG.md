@@ -1,5 +1,16 @@
 # Release History
 
+## 12.22.0-beta.2 (Unreleased)
+
+### Features Added
+- Added the following Client Builders: `AddQueueServiceClient(Uri, Azure.SasCredential)`, `AddQueueServiceClient(Uri, TokenCredential)`
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 12.22.0-beta.1 (2025-02-11)
 
 ### Features Added

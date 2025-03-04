@@ -34,11 +34,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(ContainerRegistryEventTarget)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(MediaType))
-            {
-                writer.WritePropertyName("mediaType"u8);
-                writer.WriteStringValue(MediaType);
-            }
+            writer.WritePropertyName("mediaType"u8);
+            writer.WriteStringValue(MediaType);
             if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
@@ -54,11 +51,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("length"u8);
                 writer.WriteNumberValue(Length.Value);
             }
-            if (Optional.IsDefined(Repository))
-            {
-                writer.WritePropertyName("repository"u8);
-                writer.WriteStringValue(Repository);
-            }
+            writer.WritePropertyName("repository"u8);
+            writer.WriteStringValue(Repository);
             if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);

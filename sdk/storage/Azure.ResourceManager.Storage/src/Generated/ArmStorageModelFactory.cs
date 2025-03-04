@@ -320,6 +320,114 @@ namespace Azure.ResourceManager.Storage.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Storage.FileServiceUsageData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> File service usage in storage account including account limits, file share limits and constants used in recommendations and bursting formula. </param>
+        /// <returns> A new <see cref="Storage.FileServiceUsageData"/> instance for mocking. </returns>
+        public static FileServiceUsageData FileServiceUsageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FileServiceUsageProperties properties = null)
+        {
+            return new FileServiceUsageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FileServiceUsageProperties"/>. </summary>
+        /// <param name="storageAccountLimits"> Maximum provisioned storage, IOPS, bandwidth and number of file shares limits for the storage account. </param>
+        /// <param name="fileShareLimits"> Minimum and maximum provisioned storage, IOPS and bandwidth limits for a file share in the storage account. </param>
+        /// <param name="fileShareRecommendations"> Constants used for calculating recommended provisioned IOPS and bandwidth for a file share in the storage account. </param>
+        /// <param name="burstingConstants"> Constants used for calculating included burst IOPS and maximum burst credits for IOPS for a file share in the storage account. </param>
+        /// <param name="storageAccountUsage"> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares and soft-deleted shares in the account. </param>
+        /// <returns> A new <see cref="Models.FileServiceUsageProperties"/> instance for mocking. </returns>
+        public static FileServiceUsageProperties FileServiceUsageProperties(FileServiceAccountLimits storageAccountLimits = null, FileShareLimits fileShareLimits = null, FileShareRecommendations fileShareRecommendations = null, BurstingConstants burstingConstants = null, FileServiceAccountUsage storageAccountUsage = null)
+        {
+            return new FileServiceUsageProperties(
+                storageAccountLimits,
+                fileShareLimits,
+                fileShareRecommendations,
+                burstingConstants,
+                storageAccountUsage,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FileServiceAccountLimits"/>. </summary>
+        /// <param name="maxFileShares"> The maximum number of file shares limit for the storage account. </param>
+        /// <param name="maxProvisionedStorageGiB"> The maximum provisioned storage quota limit in gibibytes for the storage account. </param>
+        /// <param name="maxProvisionedIops"> The maximum provisioned IOPS limit for the storage account. </param>
+        /// <param name="maxProvisionedBandwidthMiBPerSec"> The maximum provisioned bandwidth limit in mebibytes per second for the storage account. </param>
+        /// <returns> A new <see cref="Models.FileServiceAccountLimits"/> instance for mocking. </returns>
+        public static FileServiceAccountLimits FileServiceAccountLimits(int? maxFileShares = null, int? maxProvisionedStorageGiB = null, int? maxProvisionedIops = null, int? maxProvisionedBandwidthMiBPerSec = null)
+        {
+            return new FileServiceAccountLimits(maxFileShares, maxProvisionedStorageGiB, maxProvisionedIops, maxProvisionedBandwidthMiBPerSec, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FileShareLimits"/>. </summary>
+        /// <param name="minProvisionedStorageGiB"> The minimum provisioned storage quota limit in gibibytes for a file share in the storage account. </param>
+        /// <param name="maxProvisionedStorageGiB"> The maximum provisioned storage quota limit in gibibytes for a file share in the storage account. </param>
+        /// <param name="minProvisionedIops"> The minimum provisioned IOPS limit for a file share in the storage account. </param>
+        /// <param name="maxProvisionedIops"> The maximum provisioned IOPS limit for a file share in the storage account. </param>
+        /// <param name="minProvisionedBandwidthMiBPerSec"> The minimum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </param>
+        /// <param name="maxProvisionedBandwidthMiBPerSec"> The maximum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </param>
+        /// <returns> A new <see cref="Models.FileShareLimits"/> instance for mocking. </returns>
+        public static FileShareLimits FileShareLimits(int? minProvisionedStorageGiB = null, int? maxProvisionedStorageGiB = null, int? minProvisionedIops = null, int? maxProvisionedIops = null, int? minProvisionedBandwidthMiBPerSec = null, int? maxProvisionedBandwidthMiBPerSec = null)
+        {
+            return new FileShareLimits(
+                minProvisionedStorageGiB,
+                maxProvisionedStorageGiB,
+                minProvisionedIops,
+                maxProvisionedIops,
+                minProvisionedBandwidthMiBPerSec,
+                maxProvisionedBandwidthMiBPerSec,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FileShareRecommendations"/>. </summary>
+        /// <param name="baseIops"> The base IOPS in the file share provisioned IOPS recommendation formula. </param>
+        /// <param name="ioScalar"> The scalar for IO in the file share provisioned IOPS recommendation formula. </param>
+        /// <param name="baseBandwidthMiBPerSec"> The base bandwidth in the file share provisioned bandwidth recommendation formula. </param>
+        /// <param name="bandwidthScalar"> The scalar for bandwidth in the file share provisioned bandwidth recommendation formula. </param>
+        /// <returns> A new <see cref="Models.FileShareRecommendations"/> instance for mocking. </returns>
+        public static FileShareRecommendations FileShareRecommendations(int? baseIops = null, double? ioScalar = null, int? baseBandwidthMiBPerSec = null, double? bandwidthScalar = null)
+        {
+            return new FileShareRecommendations(baseIops, ioScalar, baseBandwidthMiBPerSec, bandwidthScalar, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BurstingConstants"/>. </summary>
+        /// <param name="burstFloorIops"> The guaranteed floor of burst IOPS for small file shares. </param>
+        /// <param name="burstIOScalar"> The scalar against provisioned IOPS in the file share included burst IOPS formula. </param>
+        /// <param name="burstTimeframeSeconds"> The time frame for bursting in seconds in the file share maximum burst credits for IOPS formula. </param>
+        /// <returns> A new <see cref="Models.BurstingConstants"/> instance for mocking. </returns>
+        public static BurstingConstants BurstingConstants(int? burstFloorIops = null, double? burstIOScalar = null, int? burstTimeframeSeconds = null)
+        {
+            return new BurstingConstants(burstFloorIops, burstIOScalar, burstTimeframeSeconds, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FileServiceAccountUsage"/>. </summary>
+        /// <param name="liveShares"> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares or soft-deleted shares in the account. </param>
+        /// <param name="softDeletedShares"> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares or soft-deleted shares in the account. </param>
+        /// <returns> A new <see cref="Models.FileServiceAccountUsage"/> instance for mocking. </returns>
+        public static FileServiceAccountUsage FileServiceAccountUsage(FileServiceAccountUsageElements liveShares = null, FileServiceAccountUsageElements softDeletedShares = null)
+        {
+            return new FileServiceAccountUsage(liveShares, softDeletedShares, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FileServiceAccountUsageElements"/>. </summary>
+        /// <param name="fileShareCount"> The total number of file shares. </param>
+        /// <param name="provisionedStorageGiB"> The total provisioned storage quota in gibibytes. </param>
+        /// <param name="provisionedIops"> The total provisioned IOPS. </param>
+        /// <param name="provisionedBandwidthMiBPerSec"> The total provisioned bandwidth in mebibytes per second. </param>
+        /// <returns> A new <see cref="Models.FileServiceAccountUsageElements"/> instance for mocking. </returns>
+        public static FileServiceAccountUsageElements FileServiceAccountUsageElements(int? fileShareCount = null, int? provisionedStorageGiB = null, int? provisionedIops = null, int? provisionedBandwidthMiBPerSec = null)
+        {
+            return new FileServiceAccountUsageElements(fileShareCount, provisionedStorageGiB, provisionedIops, provisionedBandwidthMiBPerSec, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Storage.FileShareData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -327,7 +435,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="lastModifiedOn"> Returns the date and time the share was last modified. </param>
         /// <param name="metadata"> A name-value pair to associate with the share as metadata. </param>
-        /// <param name="shareQuota"> The maximum size of the share, in gigabytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. </param>
+        /// <param name="shareQuota"> The provisioned size of the share, in gibibytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. For file shares created under Files Provisioned v2 account type, please refer to the GetFileServiceUsage API response for the minimum and maximum allowed provisioned storage size. </param>
+        /// <param name="provisionedIops"> The provisioned IOPS of the share. This property is only for file shares created under Files Provisioned v2 account type. Please refer to the GetFileServiceUsage API response for the minimum and maximum allowed value for provisioned IOPS. </param>
+        /// <param name="provisionedBandwidthMibps"> The provisioned bandwidth of the share, in mebibytes per second. This property is only for file shares created under Files Provisioned v2 account type. Please refer to the GetFileServiceUsage API response for the minimum and maximum allowed value for provisioned bandwidth. </param>
+        /// <param name="includedBurstIops"> The calculated burst IOPS of the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
+        /// <param name="maxBurstCreditsForIops"> The calculated maximum burst credits for the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
+        /// <param name="nextAllowedQuotaDowngradeOn"> Returns the next allowed provisioned storage size downgrade time for the share. This property is only for file shares created under Files Provisioned v1 SSD and Files Provisioned v2 account type. </param>
+        /// <param name="nextAllowedProvisionedIopsDowngradeOn"> Returns the next allowed provisioned IOPS downgrade time for the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
+        /// <param name="nextAllowedProvisionedBandwidthDowngradeOn"> Returns the next allowed provisioned bandwidth downgrade time for the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
         /// <param name="enabledProtocol"> The authentication protocol that is used for the file share. Can only be specified when creating a share. </param>
         /// <param name="rootSquash"> The property is for NFS share only. The default is NoRootSquash. </param>
         /// <param name="version"> The version of the share. </param>
@@ -343,9 +458,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="leaseDuration"> Specifies whether the lease on a share is of infinite or fixed duration, only when the share is leased. </param>
         /// <param name="signedIdentifiers"> List of stored access policies specified on the share. </param>
         /// <param name="snapshotOn"> Creation time of share snapshot returned in the response of list shares with expand param "snapshots". </param>
+        /// <param name="fileSharePaidBursting"> File Share Paid Bursting properties. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <returns> A new <see cref="Storage.FileShareData"/> instance for mocking. </returns>
-        public static FileShareData FileShareData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? lastModifiedOn = null, IDictionary<string, string> metadata = null, int? shareQuota = null, FileShareEnabledProtocol? enabledProtocol = null, RootSquashType? rootSquash = null, string version = null, bool? isDeleted = null, DateTimeOffset? deletedOn = null, int? remainingRetentionDays = null, FileShareAccessTier? accessTier = null, DateTimeOffset? accessTierChangeOn = null, string accessTierStatus = null, long? shareUsageBytes = null, StorageLeaseStatus? leaseStatus = null, StorageLeaseState? leaseState = null, StorageLeaseDurationType? leaseDuration = null, IEnumerable<StorageSignedIdentifier> signedIdentifiers = null, DateTimeOffset? snapshotOn = null, ETag? etag = null)
+        public static FileShareData FileShareData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? lastModifiedOn = null, IDictionary<string, string> metadata = null, int? shareQuota = null, int? provisionedIops = null, int? provisionedBandwidthMibps = null, int? includedBurstIops = null, long? maxBurstCreditsForIops = null, DateTimeOffset? nextAllowedQuotaDowngradeOn = null, DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn = null, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn = null, FileShareEnabledProtocol? enabledProtocol = null, RootSquashType? rootSquash = null, string version = null, bool? isDeleted = null, DateTimeOffset? deletedOn = null, int? remainingRetentionDays = null, FileShareAccessTier? accessTier = null, DateTimeOffset? accessTierChangeOn = null, string accessTierStatus = null, long? shareUsageBytes = null, StorageLeaseStatus? leaseStatus = null, StorageLeaseState? leaseState = null, StorageLeaseDurationType? leaseDuration = null, IEnumerable<StorageSignedIdentifier> signedIdentifiers = null, DateTimeOffset? snapshotOn = null, FileSharePropertiesFileSharePaidBursting fileSharePaidBursting = null, ETag? etag = null)
         {
             metadata ??= new Dictionary<string, string>();
             signedIdentifiers ??= new List<StorageSignedIdentifier>();
@@ -358,6 +474,13 @@ namespace Azure.ResourceManager.Storage.Models
                 lastModifiedOn,
                 metadata,
                 shareQuota,
+                provisionedIops,
+                provisionedBandwidthMibps,
+                includedBurstIops,
+                maxBurstCreditsForIops,
+                nextAllowedQuotaDowngradeOn,
+                nextAllowedProvisionedIopsDowngradeOn,
+                nextAllowedProvisionedBandwidthDowngradeOn,
                 enabledProtocol,
                 rootSquash,
                 version,
@@ -373,6 +496,7 @@ namespace Azure.ResourceManager.Storage.Models
                 leaseDuration,
                 signedIdentifiers?.ToList(),
                 snapshotOn,
+                fileSharePaidBursting,
                 etag,
                 serializedAdditionalRawData: null);
         }
@@ -1106,8 +1230,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="sourceAccount"> Required. Source account name. It should be full resource id if allowCrossTenantReplication set to false. </param>
         /// <param name="destinationAccount"> Required. Destination account name. It should be full resource id if allowCrossTenantReplication set to false. </param>
         /// <param name="rules"> The storage account object replication rules. </param>
+        /// <param name="isMetricsEnabled"> Optional. The object replication policy metrics feature options. </param>
         /// <returns> A new <see cref="Storage.ObjectReplicationPolicyData"/> instance for mocking. </returns>
-        public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string policyId = null, DateTimeOffset? enabledOn = null, string sourceAccount = null, string destinationAccount = null, IEnumerable<ObjectReplicationPolicyRule> rules = null)
+        public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string policyId = null, DateTimeOffset? enabledOn = null, string sourceAccount = null, string destinationAccount = null, IEnumerable<ObjectReplicationPolicyRule> rules = null, bool? isMetricsEnabled = null)
         {
             rules ??= new List<ObjectReplicationPolicyRule>();
 
@@ -1121,6 +1246,7 @@ namespace Azure.ResourceManager.Storage.Models
                 sourceAccount,
                 destinationAccount,
                 rules?.ToList(),
+                isMetricsEnabled != null ? new ObjectReplicationPolicyPropertiesMetrics(isMetricsEnabled, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
         }
 
@@ -1500,6 +1626,54 @@ namespace Azure.ResourceManager.Storage.Models
                 systemData,
                 properties,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Storage.FileShareData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="lastModifiedOn"> Returns the date and time the share was last modified. </param>
+        /// <param name="metadata"> A name-value pair to associate with the share as metadata. </param>
+        /// <param name="shareQuota"> The maximum size of the share, in gigabytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. </param>
+        /// <param name="enabledProtocol"> The authentication protocol that is used for the file share. Can only be specified when creating a share. </param>
+        /// <param name="rootSquash"> The property is for NFS share only. The default is NoRootSquash. </param>
+        /// <param name="version"> The version of the share. </param>
+        /// <param name="isDeleted"> Indicates whether the share was deleted. </param>
+        /// <param name="deletedOn"> The deleted time if the share was deleted. </param>
+        /// <param name="remainingRetentionDays"> Remaining retention days for share that was soft deleted. </param>
+        /// <param name="accessTier"> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. </param>
+        /// <param name="accessTierChangeOn"> Indicates the last modification time for share access tier. </param>
+        /// <param name="accessTierStatus"> Indicates if there is a pending transition for access tier. </param>
+        /// <param name="shareUsageBytes"> The approximate size of the data stored on the share. Note that this value may not include all recently created or recently resized files. </param>
+        /// <param name="leaseStatus"> The lease status of the share. </param>
+        /// <param name="leaseState"> Lease state of the share. </param>
+        /// <param name="leaseDuration"> Specifies whether the lease on a share is of infinite or fixed duration, only when the share is leased. </param>
+        /// <param name="signedIdentifiers"> List of stored access policies specified on the share. </param>
+        /// <param name="snapshotOn"> Creation time of share snapshot returned in the response of list shares with expand param "snapshots". </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Storage.FileShareData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FileShareData FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IEnumerable<StorageSignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, ETag? etag)
+        {
+            return FileShareData(id: id, name: name, resourceType: resourceType, systemData: systemData, lastModifiedOn: lastModifiedOn, metadata: metadata, shareQuota: shareQuota, provisionedIops: default, provisionedBandwidthMibps: default, includedBurstIops: default, maxBurstCreditsForIops: default, nextAllowedQuotaDowngradeOn: default, nextAllowedProvisionedIopsDowngradeOn: default, nextAllowedProvisionedBandwidthDowngradeOn: default, enabledProtocol: enabledProtocol, rootSquash: rootSquash, version: version, isDeleted: isDeleted, deletedOn: deletedOn, remainingRetentionDays: remainingRetentionDays, accessTier: accessTier, accessTierChangeOn: accessTierChangeOn, accessTierStatus: accessTierStatus, shareUsageBytes: shareUsageBytes, leaseStatus: leaseStatus, leaseState: leaseState, leaseDuration: leaseDuration, signedIdentifiers: signedIdentifiers, snapshotOn: snapshotOn, fileSharePaidBursting: default, etag: etag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Storage.ObjectReplicationPolicyData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="policyId"> A unique id for object replication policy. </param>
+        /// <param name="enabledOn"> Indicates when the policy is enabled on the source account. </param>
+        /// <param name="sourceAccount"> Required. Source account name. It should be full resource id if allowCrossTenantReplication set to false. </param>
+        /// <param name="destinationAccount"> Required. Destination account name. It should be full resource id if allowCrossTenantReplication set to false. </param>
+        /// <param name="rules"> The storage account object replication rules. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Storage.ObjectReplicationPolicyData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IEnumerable<ObjectReplicationPolicyRule> rules)
+        {
+            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Storage.Models.StorageAccountCreateOrUpdateContent" />. </summary>

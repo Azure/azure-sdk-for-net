@@ -4,13 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
-using Azure.AI.Language.Text.Authoring;
-using Azure.AI.Language.Text.Authoring.Models;
-using Azure.AI.Language.Text.Authoring.Tests;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 {
@@ -22,21 +19,20 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample7_TextAuthoring_GetSingleLabelClassificationEvaluationSummaryAsync
-
             string projectName = "LoanAgreements";
             string trainedModelLabel = "model2";
+            TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
             // Get the evaluation summary for the trained model
-            Response<EvaluationSummary> evaluationSummaryResponse = await authoringClient.GetModelEvaluationSummaryAsync(projectName, trainedModelLabel);
+            Response<TextAuthoringEvalSummary> evaluationSummaryResponse = await trainedModelClient.GetModelEvaluationSummaryAsync();
 
-            EvaluationSummary evaluationSummary = evaluationSummaryResponse.Value;
+            TextAuthoringEvalSummary evaluationSummary = evaluationSummaryResponse.Value;
 
             // Cast to the specific evaluation summary type for custom single label classification
-            if (evaluationSummary is CustomSingleLabelClassificationEvaluationSummary singleLabelSummary)
+            if (evaluationSummary is CustomSingleLabelClassificationEvalSummary singleLabelSummary)
             {
                 Console.WriteLine($"Project Kind: CustomSingleLabelClassification");
                 Console.WriteLine($"Evaluation Options: ");
@@ -53,14 +49,21 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 
                 // Print confusion matrix
                 Console.WriteLine("Confusion Matrix:");
-                foreach (var row in singleLabelSummary.CustomSingleLabelClassificationEvaluation.ConfusionMatrix.AdditionalProperties)
+                foreach (var row in singleLabelSummary.CustomSingleLabelClassificationEvaluation.ConfusionMatrix)
                 {
                     Console.WriteLine($"Row: {row.Key}");
-                    var columnData = row.Value.ToObjectFromJson<Dictionary<string, BinaryData>>();
-                    foreach (var col in columnData)
+                    foreach (var col in row.Value.AdditionalProperties)
                     {
-                        var values = col.Value.ToObjectFromJson<Dictionary<string, float>>();
-                        Console.WriteLine($"    Column: {col.Key}, Normalized Value: {values["normalizedValue"]}, Raw Value: {values["rawValue"]}");
+                        try
+                        {
+                            // Deserialize BinaryData properly
+                            var cell = col.Value.ToObject<TextAuthoringConfusionMatrixCell>(new JsonObjectSerializer());
+                            Console.WriteLine($"    Column: {col.Key}, Normalized Value: {cell.NormalizedValue}, Raw Value: {cell.RawValue}");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"    Error deserializing column {col.Key}: {ex.Message}");
+                        }
                     }
                 }
 

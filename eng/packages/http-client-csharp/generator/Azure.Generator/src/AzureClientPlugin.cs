@@ -3,9 +3,8 @@
 
 using Azure.Generator.Utilities;
 using Microsoft.CodeAnalysis;
-using Microsoft.Generator.CSharp;
-using Microsoft.Generator.CSharp.ClientModel;
-using Microsoft.Generator.CSharp.Input;
+using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.ClientModel;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -18,7 +17,7 @@ namespace Azure.Generator;
 /// </summary>
 [Export(typeof(CodeModelPlugin))]
 [ExportMetadata("PluginName", nameof(AzureClientPlugin))]
-public class AzureClientPlugin : ClientModelPlugin
+public class AzureClientPlugin : ScmCodeModelPlugin
 {
     private static AzureClientPlugin? _instance;
     internal static AzureClientPlugin Instance => _instance ?? throw new InvalidOperationException("AzureClientPlugin is not loaded.");
@@ -53,9 +52,11 @@ public class AzureClientPlugin : ClientModelPlugin
         AddMetadataReference(MetadataReference.CreateFromFile(typeof(Response).Assembly.Location));
         var sharedSourceDirectory = Path.Combine(Path.GetDirectoryName(typeof(AzureClientPlugin).Assembly.Location)!, "Shared", "Core");
         AddSharedSourceDirectory(sharedSourceDirectory);
+        AddVisitor(new NamespaceVisitor());
         if (IsAzureArm.Value)
         {
-            AddVisitor(new AzureArmVisitor());
+            AddVisitor(new RestClientVisitor());
+            AddVisitor(new ResourceVisitor());
         }
     }
 

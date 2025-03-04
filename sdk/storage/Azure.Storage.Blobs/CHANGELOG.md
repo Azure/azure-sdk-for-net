@@ -1,5 +1,16 @@
 # Release History
 
+## 12.24.0-beta.2 (Unreleased)
+
+### Features Added
+- Added the following Client Builders: `AddBlobServiceClient(Uri, Azure.SasCredential)`, `AddBlobServiceClient(Uri, TokenCredential)`
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 12.24.0-beta.1 (2025-02-11)
 
 ### Features Added
