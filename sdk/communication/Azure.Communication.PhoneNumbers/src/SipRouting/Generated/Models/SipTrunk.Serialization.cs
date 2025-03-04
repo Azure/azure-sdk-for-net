@@ -15,23 +15,119 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sipSignalingPort");
+            writer.WritePropertyName("sipSignalingPort"u8);
             writer.WriteNumberValue(SipSignalingPort);
+            if (Optional.IsDefined(Enabled))
+            {
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(Enabled.Value);
+            }
+            if (Optional.IsDefined(DirectTransfer))
+            {
+                writer.WritePropertyName("directTransfer"u8);
+                writer.WriteBooleanValue(DirectTransfer.Value);
+            }
+            if (Optional.IsDefined(PrivacyHeader))
+            {
+                writer.WritePropertyName("privacyHeader"u8);
+                writer.WriteStringValue(PrivacyHeader.Value.ToString());
+            }
+            if (Optional.IsDefined(IpAddressVersion))
+            {
+                writer.WritePropertyName("ipAddressVersion"u8);
+                writer.WriteStringValue(IpAddressVersion.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
         internal static SipTrunk DeserializeSipTrunk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int sipSignalingPort = default;
+            bool? enabled = default;
+            SipHealth health = default;
+            bool? directTransfer = default;
+            PrivacyHeader? privacyHeader = default;
+            IpAddressVersion? ipAddressVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sipSignalingPort"))
+                if (property.NameEquals("sipSignalingPort"u8))
                 {
                     sipSignalingPort = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("enabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("health"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    health = SipHealth.DeserializeSipHealth(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("directTransfer"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    directTransfer = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("privacyHeader"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privacyHeader = new PrivacyHeader(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("ipAddressVersion"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipAddressVersion = new IpAddressVersion(property.Value.GetString());
+                    continue;
+                }
             }
-            return new SipTrunk(sipSignalingPort);
+            return new SipTrunk(
+                sipSignalingPort,
+                enabled,
+                health,
+                directTransfer,
+                privacyHeader,
+                ipAddressVersion);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SipTrunk FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSipTrunk(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }
