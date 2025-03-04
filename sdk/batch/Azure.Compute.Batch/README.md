@@ -645,13 +645,50 @@ batchClient.TerminateJobSchedule("jobScheduleId");
 
 A task is a unit of computation that is associated with a job. It runs on a node. Tasks are assigned to a node for execution, or are queued until a node becomes free. Put simply, a task runs one or more programs or scripts on a compute node to perform the work you need done. For more information see [Jobs and tasks in Azure Batch](https://learn.microsoft.com/azure/batch/jobs-and-tasks).
 
-Use the `CreateTask` method with a `BatchTaskCreateContent` instance to create a `BatchTask`. 
+With `Azure.Compute.Batch` there are three ways to add a task to a job.
 
+You can call `CreateTask` with a parameter of type `BatchTaskCreateContent` to create a single task
 ```C# Snippet:Batch_Readme_TaskCreation
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
 batchClient.CreateTask("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
+```
+
+You can call `CreateTaskCollection` with a `BatchTaskGroup` param to create up to 100 tasks.  This method represents the /jobs/{jobId}/addtaskcollection api
+```C# Snippet:Batch_Migration_CreateTaskCollection
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+BatchTaskGroup taskCollection = new BatchTaskGroup(
+    new BatchTaskCreateContent[]
+    {
+        new BatchTaskCreateContent("task1", "cmd / c echo Hello World"),
+        new BatchTaskCreateContent("task2", "cmd / c echo Hello World")
+    });
+
+BatchTaskAddCollectionResult batchTaskAddCollectionResult = batchClient.CreateTaskCollection("jobID", taskCollection);
+```
+Lastly you can call `CreateTasks` which is the replacement for the utility method found in `Microsoft.Azure.Batch`.  This method will package up the list of `BatchTaskCreateContent` tasks passed in and repeatly call the `batchClient.CreateTaskCollection()` with groups of tasks bundled into `BatchTaskGroup` objects.  This utility method allowed the user
+to select the number of parallel calls to `batchClient.CreateTaskCollection()`. See [Creating multiple Task](https://github.com/Azure/azure-sdk-for-net/blob/50a965255278aa2ca604daef81e26632f5b668f3/sdk/batch/Azure.Compute.Batch/samples/Sample2_Creating_Multiple_Tasks.md)
+
+```C# Snippet:Batch_Sample02_CreateTasks_Default
+int tasksCount = 1000;
+List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
+for (int i = 0; i < tasksCount; i++)
+{
+    tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
+}
+
+// Create 1000 tasks in a single request using the default settings
+CreateTasksResult result = await batchClient.CreateTasksAsync("jobId", tasks);
+
+// Print the status of each task creation
+foreach (BatchTaskAddResult t in result.BatchTaskAddResults)
+{
+    Console.WriteLine("Task {0} created with status  {1}. ",
+        t.TaskId, t.Status);
+}
 ```
 
 ### Retrieve a task

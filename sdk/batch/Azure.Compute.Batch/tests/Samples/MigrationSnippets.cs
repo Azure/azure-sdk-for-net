@@ -452,11 +452,12 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
-{
-    new BatchTaskCreateContent("task1", "cmd / c echo Hello World"),
-    new BatchTaskCreateContent("task2", "cmd / c echo Hello World")
-});
+            BatchTaskGroup taskCollection = new BatchTaskGroup(
+                new BatchTaskCreateContent[]
+                {
+                    new BatchTaskCreateContent("task1", "cmd / c echo Hello World"),
+                    new BatchTaskCreateContent("task2", "cmd / c echo Hello World")
+                });
 
             BatchTaskAddCollectionResult batchTaskAddCollectionResult = batchClient.CreateTaskCollection("jobID", taskCollection);
             #endregion

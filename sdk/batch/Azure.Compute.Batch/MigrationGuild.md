@@ -1166,23 +1166,26 @@ batchClient.JobOperations.AddTask("jobId", tasksToAdd);
 With `Azure.Compute.Batch` there are three ways to add a task to a job.
 
 You can call `CreateTask` with a parameter of type `BatchTaskCreateContent` to create a single task
-``` C# #region Snippet:Batch_Readme_TaskCreation
- BatchTaskCreateContent taskCreateContent = new BatchTaskCreateContent("taskID", commandLine);
- batchClient.CreateTask("jobID", taskCreateContent);
+```C# Snippet:Batch_Readme_TaskCreation
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+batchClient.CreateTask("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
 ```
 
 You can call `CreateTaskCollection` with a `BatchTaskGroup` param to create up to 100 tasks.  This method represents the /jobs/{jobId}/addtaskcollection api
 ```C# Snippet:Batch_Migration_CreateTaskCollection
-            BatchClient batchClient = new BatchClient(
-            new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
-{
-    new BatchTaskCreateContent("task1", "cmd / c echo Hello World"),
-    new BatchTaskCreateContent("task2", "cmd / c echo Hello World")
-});
+BatchTaskGroup taskCollection = new BatchTaskGroup(
+    new BatchTaskCreateContent[]
+    {
+        new BatchTaskCreateContent("task1", "cmd / c echo Hello World"),
+        new BatchTaskCreateContent("task2", "cmd / c echo Hello World")
+    });
 
-            BatchTaskAddCollectionResult batchTaskAddCollectionResult = batchClient.CreateTaskCollection("jobID", taskCollection);
+BatchTaskAddCollectionResult batchTaskAddCollectionResult = batchClient.CreateTaskCollection("jobID", taskCollection);
 ```
 Lastly you can call `CreateTasks` which is the replacement for the utility method found in `Microsoft.Azure.Batch`.  This method will package up the list of `BatchTaskCreateContent` tasks passed in and repeatly call the `batchClient.CreateTaskCollection()` with groups of tasks bundled into `BatchTaskGroup` objects.  This utility method allowed the user
 to select the number of parallel calls to `batchClient.CreateTaskCollection()`. See [Creating multiple Task](https://github.com/Azure/azure-sdk-for-net/blob/50a965255278aa2ca604daef81e26632f5b668f3/sdk/batch/Azure.Compute.Batch/samples/Sample2_Creating_Multiple_Tasks.md)
