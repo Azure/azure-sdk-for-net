@@ -292,7 +292,7 @@ namespace Azure.Core.Tests
 
              await ExecuteRequest(request, transport);
 
-             Assert.AreEqual(headerValue, string.Join(",", httpHeaderValues));
+             Assert.AreEqual(headerValue, string.Join(",", (string[])httpHeaderValues));
          }
 
          [TestCaseSource(nameof(HeadersWithValues))]
@@ -480,7 +480,7 @@ namespace Azure.Core.Tests
 
             await ExecuteRequest(request, transport);
 
-            Assert.AreEqual(headerValue, string.Join(",", httpHeaderValues));
+            Assert.AreEqual(headerValue, string.Join(",", (string[])httpHeaderValues));
         }
 
         [Test]
@@ -938,7 +938,11 @@ namespace Azure.Core.Tests
                 async context =>
                 {
                     // read part of the request
+#if NET6_0_OR_GREATER
+                    await context.Request.Body.ReadExactlyAsync(buffer, 0, 100);
+#else
                     await context.Request.Body.ReadAsync(buffer, 0, 100);
+#endif
                     tcs.SetResult(null);
                     await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
                 }, https);
@@ -1005,8 +1009,10 @@ namespace Azure.Core.Tests
         [Test]
         public async Task ServerCertificateCustomValidationCallbackIsHonored([Values(true, false)] bool setCertCallback, [Values(true, false)] bool isValidCert)
         {
+#if NETFRAMEWORK // ServicePointManager is obsolete and doesn't affect HttpClient
             // This test assumes ServicePointManager.ServerCertificateValidationCallback will be unset.
             ServicePointManager.ServerCertificateValidationCallback = null;
+#endif
 
             using (TestServer testServer = new TestServer(
                 async context =>
@@ -1079,9 +1085,18 @@ namespace Azure.Core.Tests
         [Test]
         public async Task ClientCertificateIsHonored([Values(true, false)] bool setClientCertificate)
         {
+#if NETFRAMEWORK // ServicePointManager is obsolete and doesn't affect HttpClient
             // This test assumes ServicePointManager.ServerCertificateValidationCallback will be unset.
             ServicePointManager.ServerCertificateValidationCallback = null;
-            var clientCert = new X509Certificate2(Convert.FromBase64String(Pfx));
+#endif
+            byte[] cer = Convert.FromBase64String(Pfx);
+            X509Certificate2 clientCert;
+
+#if NET9_0_OR_GREATER
+            clientCert = X509CertificateLoader.LoadPkcs12(cer, null);
+#else
+            clientCert = new X509Certificate2(cer);
+#endif
 
             using (TestServer testServer = new TestServer(
                 async context =>

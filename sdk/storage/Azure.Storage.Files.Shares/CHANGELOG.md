@@ -3,7 +3,8 @@
 ## 12.22.0-beta.2 (Unreleased)
 
 ### Features Added
-
+- Added the following Client Builders: `AddShareServiceClient(Uri, Azure.SasCredential)`, `AddShareServiceClient(Uri, TokenCredential)`
+- 
 ### Breaking Changes
 
 ### Bugs Fixed

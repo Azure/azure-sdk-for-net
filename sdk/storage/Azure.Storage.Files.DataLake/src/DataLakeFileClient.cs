@@ -5392,6 +5392,8 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -5432,6 +5434,8 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -5481,6 +5485,8 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
@@ -5534,6 +5540,8 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
@@ -5588,6 +5596,10 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
@@ -5641,6 +5653,8 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(

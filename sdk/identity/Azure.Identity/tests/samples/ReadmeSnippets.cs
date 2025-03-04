@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core;
-using Azure.Security.KeyVault.Secrets;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
 
@@ -11,17 +10,6 @@ namespace Azure.Identity.Samples
 {
     public class ReadmeSnippets
     {
-        [Test]
-        public void AuthenticatingWithDefaultAzureCredential()
-        {
-            #region Snippet:AuthenticatingWithDefaultAzureCredential
-
-            // Create a secret client using the DefaultAzureCredential
-            var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), new DefaultAzureCredential());
-
-            #endregion
-        }
-
         [Test]
         public void UserAssignedManagedIdentityWithClientId()
         {
@@ -71,57 +59,6 @@ namespace Azure.Identity.Samples
                 {
                     AuthorityHost = AzureAuthorityHosts.AzureGovernment
                 });
-            #endregion
-        }
-
-        [Test]
-        public void AuthenticatingWithManagedIdentityCredentialUserAssigned()
-        {
-            #region Snippet:AuthenticatingWithManagedIdentityCredentialUserAssigned
-            string userAssignedClientId = "some client ID";
-
-            var credential = new ManagedIdentityCredential(
-                ManagedIdentityId.FromUserAssignedClientId(userAssignedClientId));
-            var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
-
-            #endregion
-        }
-
-        [Test]
-        public void AuthenticatingWithManagedIdentityCredentialUserAssignedResourceId()
-        {
-            #region Snippet:AuthenticatingWithManagedIdentityCredentialUserAssignedResourceId
-            ResourceIdentifier userAssignedResourceId = new ResourceIdentifier(
-                "/subscriptions/<subscriptionID>/resourcegroups/<resource group>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<MI name>");
-
-            var credential = new ManagedIdentityCredential(
-                ManagedIdentityId.FromUserAssignedResourceId(userAssignedResourceId));
-            var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
-
-            #endregion
-        }
-
-        [Test]
-        public void AuthenticatingWithManagedIdentityCredentialUserAssignedObjectId()
-        {
-            #region Snippet:AuthenticatingWithManagedIdentityCredentialUserAssignedObjectId
-            string userAssignedObjectId = "some object ID";
-
-            var credential = new ManagedIdentityCredential(
-                ManagedIdentityId.FromUserAssignedObjectId(userAssignedObjectId));
-            var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
-
-            #endregion
-        }
-
-        [Test]
-        public void AuthenticatingWithManagedIdentityCredentialSystemAssigned()
-        {
-            #region Snippet:AuthenticatingWithManagedIdentityCredentialSystemAssigned
-
-            var credential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
-            var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
-
             #endregion
         }
     }

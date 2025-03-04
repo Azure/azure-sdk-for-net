@@ -574,6 +574,7 @@ namespace Azure.Storage.Blobs
             new BlobContainerClient(
                 Uri.AppendToPath(blobContainerName),
                 ClientConfiguration,
+                AuthenticationPolicy,
                 ClientSideEncryption);
 
         #region protected static accessors for Azure.Storage.Blobs.Batch

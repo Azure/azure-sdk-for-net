@@ -41,7 +41,9 @@ namespace Azure.Core.TestFramework.Tests
                     { "CORE_TENANT_ID", "7" }
                 };
                 byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(envFile, typeof(Dictionary<string, string>));
+#pragma warning disable CA1416 // Platform is checked in if statement
                 bytes = ProtectedData.Protect(bytes, null, DataProtectionScope.CurrentUser);
+#pragma warning restore CA1416
                 stream.Write(bytes, 0, bytes.Length);
             }
         }

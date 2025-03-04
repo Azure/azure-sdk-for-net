@@ -46,16 +46,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentCompletedEventData"/>. </summary>
-        /// <param name="status"> The status for a storage task. </param>
-        /// <param name="completedOn"> The time at which a storage task was completed. </param>
         /// <param name="summaryReportBlobUri"> The summary report blob url for a storage task. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="summaryReportBlobUri"/> is null. </exception>
-        internal StorageTaskAssignmentCompletedEventData(StorageTaskAssignmentCompletedStatus status, DateTimeOffset completedOn, Uri summaryReportBlobUri)
+        internal StorageTaskAssignmentCompletedEventData(Uri summaryReportBlobUri)
         {
             Argument.AssertNotNull(summaryReportBlobUri, nameof(summaryReportBlobUri));
 
-            Status = status;
-            CompletedOn = completedOn;
             SummaryReportBlobUri = summaryReportBlobUri;
         }
 
@@ -66,7 +62,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="taskName"> The task name for a storage task. </param>
         /// <param name="summaryReportBlobUri"> The summary report blob url for a storage task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskAssignmentCompletedEventData(StorageTaskAssignmentCompletedStatus status, DateTimeOffset completedOn, string taskExecutionId, string taskName, Uri summaryReportBlobUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTaskAssignmentCompletedEventData(StorageTaskAssignmentCompletedStatus? status, DateTimeOffset? completedOn, string taskExecutionId, string taskName, Uri summaryReportBlobUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             CompletedOn = completedOn;
@@ -82,9 +78,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
 
         /// <summary> The status for a storage task. </summary>
-        public StorageTaskAssignmentCompletedStatus Status { get; }
+        public StorageTaskAssignmentCompletedStatus? Status { get; }
         /// <summary> The time at which a storage task was completed. </summary>
-        public DateTimeOffset CompletedOn { get; }
+        public DateTimeOffset? CompletedOn { get; }
         /// <summary> The execution id for a storage task. </summary>
         public string TaskExecutionId { get; }
         /// <summary> The task name for a storage task. </summary>
