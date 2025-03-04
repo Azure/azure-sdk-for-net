@@ -19,7 +19,7 @@ To deploy a project, call `DeployProject` on the `ConversationAuthoringDeploymen
 
 ```C# Snippet:Sample14_ConversationsAuthoring_DeployProject
 string projectName = "Test-data-labels";
-var deploymentName = "staging";
+string deploymentName = "staging";
 
 ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName);
 
@@ -31,7 +31,7 @@ Operation operation = deploymentAuthoringClient.DeployProject(
 );
 
 // Extract operation-location from response headers
-string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : "Not found";
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : "Not found";
 Console.WriteLine($"Delete operation-location: {operationLocation}");
 Console.WriteLine($"Delete operation completed with status: {operation.GetRawResponse().Status}");
 ```

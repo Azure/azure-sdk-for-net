@@ -24,11 +24,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample14_ConversationsAuthoring_SwapDeploymentsAsync
             string projectName = "SampleProject";
-            var deploymentName1 = "deployment1";
-            var deploymentName2 = "deployment2";
+            string deploymentName1 = "deployment1";
+            string deploymentName2 = "deployment2";
             ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
 
-            var swapDetails = new SwapDeploymentsDetails(deploymentName1, deploymentName2);
+            SwapDeploymentsDetails swapDetails = new SwapDeploymentsDetails(deploymentName1, deploymentName2);
 
             Operation operation = await projectAuthoringClient.SwapDeploymentsAsync(
                 waitUntil: WaitUntil.Completed,
@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             );
 
             // Extract operation-location from response headers
-            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : "Not found";
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : "Not found";
             Console.WriteLine($"Swap operation-location: {operationLocation}");
             Console.WriteLine($"Swap operation completed with status: {operation.GetRawResponse().Status}");
             #endregion

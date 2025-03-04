@@ -40,13 +40,13 @@ foreach (UtteranceEvaluationResult result in results)
 
     // Print entities result
     Console.WriteLine("Expected Entities:");
-    foreach (var entity in result.EntitiesResult.ExpectedEntities)
+    foreach (UtteranceEntityEvaluationResult entity in result.EntitiesResult.ExpectedEntities)
     {
         Console.WriteLine($" - Category: {entity.Category}, Offset: {entity.Offset}, Length: {entity.Length}");
     }
 
     Console.WriteLine("Predicted Entities:");
-    foreach (var entity in result.EntitiesResult.PredictedEntities)
+    foreach (UtteranceEntityEvaluationResult entity in result.EntitiesResult.PredictedEntities)
     {
         Console.WriteLine($" - Category: {entity.Category}, Offset: {entity.Offset}, Length: {entity.Length}");
     }

@@ -26,7 +26,7 @@ Operation operation = await modelAuthoringClient.LoadSnapshotAsync(
     waitUntil: WaitUntil.Completed);
 
  // Extract the operation-location header
-string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
 Console.WriteLine($"Operation Location: {operationLocation}");
 
 Console.WriteLine($"Snapshot loaded with operation status: {operation.GetRawResponse().Status}");

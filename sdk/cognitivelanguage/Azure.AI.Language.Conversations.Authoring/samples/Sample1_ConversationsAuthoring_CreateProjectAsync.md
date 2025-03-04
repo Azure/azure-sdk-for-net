@@ -22,7 +22,7 @@ To create a new project, call `CreateProjectAsync` on the `ConversationAuthoring
 ```C# Snippet:Sample1_ConversationsAuthoring_CreateProjectAsync
 string projectName = "MyNewProjectAsync";
 ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
-var projectData = new CreateProjectDetails(
+CreateProjectDetails projectData = new CreateProjectDetails(
       projectKind: "Conversation",
       language: "en-us"
     )

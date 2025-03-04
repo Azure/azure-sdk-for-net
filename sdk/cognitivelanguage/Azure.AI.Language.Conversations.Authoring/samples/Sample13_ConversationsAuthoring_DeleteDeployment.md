@@ -27,7 +27,7 @@ Operation operation = deploymentAuthoringClient.DeleteDeployment(
 );
 
 // Extract operation-location from response headers
-string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : "Not found";
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : "Not found";
 Console.WriteLine($"Delete operation-location: {operationLocation}");
 Console.WriteLine($"Delete operation completed with status: {operation.GetRawResponse().Status}");
 ```

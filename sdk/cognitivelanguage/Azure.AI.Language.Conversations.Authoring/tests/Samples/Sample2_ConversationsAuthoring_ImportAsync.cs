@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             string projectName = "MyImportedProjectAsync";
             ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
 
-            var projectMetadata = new CreateProjectDetails(
+            CreateProjectDetails projectMetadata = new CreateProjectDetails(
                 projectKind: "Conversation",
                 language: "en"
             )
@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 Description = "Trying out CLU with assets"
             };
 
-            var projectAssets = new ConversationExportedProjectAsset();
+            ConversationExportedProjectAsset projectAssets = new ConversationExportedProjectAsset();
 
             projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent1" ));
             projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent2" ));
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 Dataset = "dataset1"
             });
 
-            var exportedProject = new ExportedProject(
+            ExportedProject exportedProject = new ExportedProject(
                 projectFileVersion: "2023-10-01",
                 stringIndexType: StringIndexType.Utf16CodeUnit,
                 metadata: projectMetadata
@@ -86,7 +86,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             );
 
              // Extract the operation-location header
-            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 
             Console.WriteLine($"Project import completed with status: {operation.GetRawResponse().Status}");

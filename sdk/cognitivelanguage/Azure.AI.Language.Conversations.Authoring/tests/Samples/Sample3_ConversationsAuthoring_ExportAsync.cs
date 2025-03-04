@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             );
 
              // Extract the operation-location header
-            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 
             Console.WriteLine($"Project export completed with status: {operation.GetRawResponse().Status}");

@@ -19,9 +19,9 @@ To swap two deployments, call SwapDeployments on the `ConversationAuthoringDeplo
 
 ```C# Snippet:Sample14_ConversationsAuthoring_SwapDeployments
 string projectName = "SampleProject";
-var deploymentName1 = "deployment1";
-var deploymentName2 = "deployment2";
-var swapDetails = new SwapDeploymentsDetails(deploymentName1, deploymentName2);
+string deploymentName1 = "deployment1";
+string deploymentName2 = "deployment2";
+SwapDeploymentsDetails swapDetails = new SwapDeploymentsDetails(deploymentName1, deploymentName2);
 ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
 Operation operation = projectAuthoringClient.SwapDeployments(
     waitUntil: WaitUntil.Completed,
@@ -29,7 +29,7 @@ Operation operation = projectAuthoringClient.SwapDeployments(
 );
 
 // Extract operation-location from response headers
-string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : "Not found";
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : "Not found";
 Console.WriteLine($"Swap operation-location: {operationLocation}");
 Console.WriteLine($"Swap operation completed with status: {operation.GetRawResponse().Status}");
 ```

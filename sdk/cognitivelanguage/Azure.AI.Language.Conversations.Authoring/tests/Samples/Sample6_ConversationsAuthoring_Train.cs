@@ -25,7 +25,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample6_ConversationsAuthoring_Train
             string projectName = "MySampleProject";
             ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
-            var trainingJobDetails = new TrainingJobDetails(
+            TrainingJobDetails trainingJobDetails = new TrainingJobDetails(
                 modelLabel: "MyModel",
                 trainingMode: ConversationAuthoringTrainingMode.Standard
             )
@@ -45,7 +45,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             );
 
              // Extract the operation-location header
-            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 
             Console.WriteLine($"Training completed with status: {operation.GetRawResponse().Status}");

@@ -27,12 +27,12 @@ ConversationAuthoringTrainedModel modelAuthoringClient = client.GetTrainedModel(
 Response<EvaluationSummary> evaluationSummaryResponse = modelAuthoringClient.GetModelEvaluationSummary();
 
 // Print entities evaluation summary
-var entitiesEval = evaluationSummaryResponse.Value.EntitiesEvaluation;
+EntitiesEvaluationSummary entitiesEval = evaluationSummaryResponse.Value.EntitiesEvaluation;
 Console.WriteLine($"Entities - Micro F1: {entitiesEval.MicroF1}, Micro Precision: {entitiesEval.MicroPrecision}, Micro Recall: {entitiesEval.MicroRecall}");
 Console.WriteLine($"Entities - Macro F1: {entitiesEval.MacroF1}, Macro Precision: {entitiesEval.MacroPrecision}, Macro Recall: {entitiesEval.MacroRecall}");
 
 // Print detailed metrics per entity
-foreach (var entity in entitiesEval.Entities)
+foreach (KeyValuePair<string, EntityEvaluationSummary> entity in entitiesEval.Entities)
 {
     Console.WriteLine($"Entity '{entity.Key}': F1 = {entity.Value.F1}, Precision = {entity.Value.Precision}, Recall = {entity.Value.Recall}");
     Console.WriteLine($"  True Positives: {entity.Value.TruePositiveCount}, True Negatives: {entity.Value.TrueNegativeCount}");
@@ -40,12 +40,12 @@ foreach (var entity in entitiesEval.Entities)
 }
 
 // Print intents evaluation summary
-var intentsEval = evaluationSummaryResponse.Value.IntentsEvaluation;
+IntentsEvaluationSummary intentsEval = evaluationSummaryResponse.Value.IntentsEvaluation;
 Console.WriteLine($"Intents - Micro F1: {intentsEval.MicroF1}, Micro Precision: {intentsEval.MicroPrecision}, Micro Recall: {intentsEval.MicroRecall}");
 Console.WriteLine($"Intents - Macro F1: {intentsEval.MacroF1}, Macro Precision: {intentsEval.MacroPrecision}, Macro Recall: {intentsEval.MacroRecall}");
 
 // Print detailed metrics per intent
-foreach (var intent in intentsEval.Intents)
+foreach (KeyValuePair<string, IntentEvaluationSummary> intent in intentsEval.Intents)
 {
     Console.WriteLine($"Intent '{intent.Key}': F1 = {intent.Value.F1}, Precision = {intent.Value.Precision}, Recall = {intent.Value.Recall}");
     Console.WriteLine($"  True Positives: {intent.Value.TruePositiveCount}, True Negatives: {intent.Value.TrueNegativeCount}");

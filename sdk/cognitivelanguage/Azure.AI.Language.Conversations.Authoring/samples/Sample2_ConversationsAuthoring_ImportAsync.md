@@ -23,7 +23,7 @@ To import a project, call ImportAsync on the ConversationAuthoringProject client
 string projectName = "MyImportedProjectAsync";
 ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
 
-var projectMetadata = new CreateProjectDetails(
+CreateProjectDetails projectMetadata = new CreateProjectDetails(
     projectKind: "Conversation",
     language: "en"
 )
@@ -33,7 +33,7 @@ var projectMetadata = new CreateProjectDetails(
     Description = "Trying out CLU with assets"
 };
 
-var projectAssets = new ConversationExportedProjectAsset();
+ConversationExportedProjectAsset projectAssets = new ConversationExportedProjectAsset();
 
 projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent1" ));
 projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent2" ));
@@ -64,7 +64,7 @@ projectAssets.Utterances.Add(new ConversationExportedUtterance(
     Dataset = "dataset1"
 });
 
-var exportedProject = new ExportedProject(
+ExportedProject exportedProject = new ExportedProject(
     projectFileVersion: "2023-10-01",
     stringIndexType: StringIndexType.Utf16CodeUnit,
     metadata: projectMetadata
@@ -80,7 +80,7 @@ Operation operation = await projectAuthoringClient.ImportAsync(
 );
 
  // Extract the operation-location header
-string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
 Console.WriteLine($"Operation Location: {operationLocation}");
 
 Console.WriteLine($"Project import completed with status: {operation.GetRawResponse().Status}");

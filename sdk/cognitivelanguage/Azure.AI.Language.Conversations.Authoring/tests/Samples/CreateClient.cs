@@ -55,13 +55,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             {
                 string invalidProjectName = "InvalidProject";
                 ConversationAuthoringProject projectAuthoringClient = client.GetProject(invalidProjectName);
-                var projectData = new
+                CreateProjectDetails projectData = new CreateProjectDetails(
+                  projectKind: "Conversation",
+                  language: "invalid-lang"
+                )
                 {
-                    language = "invalid-lang", // Invalid language code
-                    projectKind = "Conversation",
-                    description = "This is a test for invalid configuration."
+                    Description = "This is a test for invalid configuration."
                 };
-
                 using RequestContent content = RequestContent.Create(projectData);
                 Response response = projectAuthoringClient.CreateProject(content);
             }
