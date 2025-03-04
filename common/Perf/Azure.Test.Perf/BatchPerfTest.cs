@@ -48,9 +48,10 @@ namespace Azure.Test.Perf
                 }
                 else
                 {
+#if NETFRAMEWORK
                     // Assume _transport is HttpWebRequestTransport (currently internal class)
                     ServicePointManager.ServerCertificateValidationCallback = (message, cert, chain, errors) => true;
-
+#endif
                     _insecureTransport = transport;
                 }
             }
