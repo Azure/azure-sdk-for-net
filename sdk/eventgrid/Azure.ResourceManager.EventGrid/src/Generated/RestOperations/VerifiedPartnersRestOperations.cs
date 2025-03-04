@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.EventGrid
                 case 200:
                     {
                         VerifiedPartnerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VerifiedPartnerData.DeserializeVerifiedPartnerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EventGrid
                 case 200:
                     {
                         VerifiedPartnerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VerifiedPartnerData.DeserializeVerifiedPartnerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.EventGrid
                 case 200:
                     {
                         VerifiedPartnersListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VerifiedPartnersListResult.DeserializeVerifiedPartnersListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.EventGrid
                 case 200:
                     {
                         VerifiedPartnersListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VerifiedPartnersListResult.DeserializeVerifiedPartnersListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.EventGrid
                 case 200:
                     {
                         VerifiedPartnersListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VerifiedPartnersListResult.DeserializeVerifiedPartnersListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.EventGrid
                 case 200:
                     {
                         VerifiedPartnersListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VerifiedPartnersListResult.DeserializeVerifiedPartnersListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

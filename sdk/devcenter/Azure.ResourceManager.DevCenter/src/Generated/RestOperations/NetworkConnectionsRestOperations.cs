@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         NetworkConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkConnectionListResult.DeserializeNetworkConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         NetworkConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkConnectionListResult.DeserializeNetworkConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         NetworkConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkConnectionListResult.DeserializeNetworkConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         NetworkConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkConnectionListResult.DeserializeNetworkConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         DevCenterNetworkConnectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         DevCenterNetworkConnectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         HealthCheckStatusDetailsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthCheckStatusDetailsListResult.DeserializeHealthCheckStatusDetailsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         HealthCheckStatusDetailsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthCheckStatusDetailsListResult.DeserializeHealthCheckStatusDetailsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         HealthCheckStatusDetailData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthCheckStatusDetailData.DeserializeHealthCheckStatusDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         HealthCheckStatusDetailData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthCheckStatusDetailData.DeserializeHealthCheckStatusDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -939,7 +939,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         OutboundEnvironmentEndpointCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -969,7 +969,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         OutboundEnvironmentEndpointCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         NetworkConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkConnectionListResult.DeserializeNetworkConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1047,7 +1047,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         NetworkConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkConnectionListResult.DeserializeNetworkConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1099,7 +1099,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         NetworkConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkConnectionListResult.DeserializeNetworkConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1129,7 +1129,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         NetworkConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkConnectionListResult.DeserializeNetworkConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1183,7 +1183,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         HealthCheckStatusDetailsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthCheckStatusDetailsListResult.DeserializeHealthCheckStatusDetailsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1215,7 +1215,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         HealthCheckStatusDetailsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthCheckStatusDetailsListResult.DeserializeHealthCheckStatusDetailsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1269,7 +1269,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         OutboundEnvironmentEndpointCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1301,7 +1301,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         OutboundEnvironmentEndpointCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         DeviceProvisioningServicesCertificateData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         DeviceProvisioningServicesCertificateData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         DeviceProvisioningServicesCertificateData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         DeviceProvisioningServicesCertificateData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         CertificateListDescription value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CertificateListDescription.DeserializeCertificateListDescription(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         CertificateListDescription value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CertificateListDescription.DeserializeCertificateListDescription(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         CertificateVerificationCodeResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CertificateVerificationCodeResult.DeserializeCertificateVerificationCodeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         CertificateVerificationCodeResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CertificateVerificationCodeResult.DeserializeCertificateVerificationCodeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         DeviceProvisioningServicesCertificateData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case 200:
                     {
                         DeviceProvisioningServicesCertificateData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
