@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontDoorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FrontDoorListResult.DeserializeFrontDoorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontDoorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FrontDoorListResult.DeserializeFrontDoorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontDoorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FrontDoorListResult.DeserializeFrontDoorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontDoorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FrontDoorListResult.DeserializeFrontDoorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontDoorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FrontDoorData.DeserializeFrontDoorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontDoorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FrontDoorData.DeserializeFrontDoorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontDoorValidateCustomDomainResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FrontDoorValidateCustomDomainResult.DeserializeFrontDoorValidateCustomDomainResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontDoorValidateCustomDomainResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FrontDoorValidateCustomDomainResult.DeserializeFrontDoorValidateCustomDomainResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontDoorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FrontDoorListResult.DeserializeFrontDoorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontDoorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FrontDoorListResult.DeserializeFrontDoorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontDoorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FrontDoorListResult.DeserializeFrontDoorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontDoorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FrontDoorListResult.DeserializeFrontDoorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

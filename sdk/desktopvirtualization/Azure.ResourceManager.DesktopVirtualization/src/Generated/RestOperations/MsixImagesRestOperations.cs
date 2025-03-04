@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         ExpandMsixImageList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExpandMsixImageList.DeserializeExpandMsixImageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         ExpandMsixImageList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExpandMsixImageList.DeserializeExpandMsixImageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         ExpandMsixImageList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExpandMsixImageList.DeserializeExpandMsixImageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         ExpandMsixImageList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExpandMsixImageList.DeserializeExpandMsixImageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DevTestLabEvaluatePoliciesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevTestLabEvaluatePoliciesResult.DeserializeDevTestLabEvaluatePoliciesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DevTestLabEvaluatePoliciesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevTestLabEvaluatePoliciesResult.DeserializeDevTestLabEvaluatePoliciesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

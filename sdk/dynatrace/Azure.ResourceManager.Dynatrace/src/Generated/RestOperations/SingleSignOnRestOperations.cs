@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceSingleSignOnData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DynatraceSingleSignOnData.DeserializeDynatraceSingleSignOnData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceSingleSignOnData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DynatraceSingleSignOnData.DeserializeDynatraceSingleSignOnData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceSingleSignOnResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DynatraceSingleSignOnResourceListResult.DeserializeDynatraceSingleSignOnResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceSingleSignOnResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DynatraceSingleSignOnResourceListResult.DeserializeDynatraceSingleSignOnResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceSingleSignOnResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DynatraceSingleSignOnResourceListResult.DeserializeDynatraceSingleSignOnResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceSingleSignOnResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DynatraceSingleSignOnResourceListResult.DeserializeDynatraceSingleSignOnResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

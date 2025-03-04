@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         AccountList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccountList.DeserializeAccountList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         AccountList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccountList.DeserializeAccountList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataShareAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataShareAccountData.DeserializeDataShareAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataShareAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataShareAccountData.DeserializeDataShareAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataShareAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataShareAccountData.DeserializeDataShareAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataShareAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataShareAccountData.DeserializeDataShareAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         AccountList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccountList.DeserializeAccountList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         AccountList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccountList.DeserializeAccountList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         AccountList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccountList.DeserializeAccountList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         AccountList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccountList.DeserializeAccountList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         AccountList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccountList.DeserializeAccountList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         AccountList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccountList.DeserializeAccountList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeElasticMonitorData(document.RootElement, options);
                     }
                 default:
