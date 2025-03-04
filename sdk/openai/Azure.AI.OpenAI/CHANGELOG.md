@@ -6,12 +6,6 @@
 
 - Added extension methods to get `ChatClient` and `EmbeddingClient` using [AIProjectClient](https://learn.microsoft.com/dotnet/api/azure.ai.projects.aiprojectclient?view=azure-dotnet-preview).
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 2.2.0-beta.2 (2025-02-18)
 
 ### Bugs fixed
