@@ -6,7 +6,7 @@ using System.ClientModel.Primitives;
 using Azure.Core;
 using Azure.Data.AppConfiguration;
 
-namespace Azure.Projects.KeyVault;
+namespace Azure.Projects.AppConfiguration;
 
 /// <summary>
 /// AppConfiguration extensions.

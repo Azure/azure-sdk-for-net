@@ -6,6 +6,7 @@
 using Azure.Data.AppConfiguration;
 using Azure.Projects.AIFoundry;
 using Azure.Projects.KeyVault;
+using Azure.Projects.AppConfiguration;
 using Azure.Projects.OpenAI;
 using NUnit.Framework;
 using OpenAI.Chat;
