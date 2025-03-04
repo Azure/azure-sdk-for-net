@@ -1078,8 +1078,6 @@ namespace Azure.Storage.Files.Shares
         #region DeleteShare
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
-        /// The share or share snapshot and any files contained within it are later deleted during garbage collection
-        /// which could take several minutes.
         ///
         /// Currently, this method will always delete snapshots.
         /// There's no way to specify a separate value for x-ms-delete-snapshots.
@@ -1120,8 +1118,6 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
-        /// The share or share snapshot and any files contained within it are later deleted during garbage collection
-        /// which could take several minutes.
         ///
         /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
         ///
@@ -1162,8 +1158,6 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
-        /// The share or share snapshot and any files contained within it are later deleted during garbage collection
-        /// which could take several minutes.
         ///
         /// Currently, this method will always delete snapshots.
         /// There's no way to specify a separate value for x-ms-delete-snapshots.
@@ -1206,8 +1200,6 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
-        /// The share or share snapshot and any files contained within it are later deleted during garbage collection
-        /// which could take several minutes.
         ///
         /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
         ///

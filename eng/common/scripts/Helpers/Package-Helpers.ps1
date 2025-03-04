@@ -155,7 +155,7 @@ function GetValueSafelyFrom-Yaml {
   )
   $current = $YamlContentAsHashtable
   foreach ($key in $Keys) {
-    if ($current.ContainsKey($key) -or $current[$key]) {
+    if ($current -is [HashTable] -and ($current.ContainsKey($key) -or $current[$key])) {
       $current = $current[$key]
     }
     else {
