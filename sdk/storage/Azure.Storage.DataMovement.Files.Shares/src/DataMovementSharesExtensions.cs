@@ -366,7 +366,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ContentRange contentRange = !string.IsNullOrWhiteSpace(info?.Details?.ContentRange) ? ContentRange.Parse(info.Details.ContentRange) : default;
             if (contentRange != default)
             {
-                size = contentRange.TotalResourceLength;
+                size = contentRange.Size;
             }
 
             return new StorageResourceReadStreamResult(
@@ -374,7 +374,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 range: ContentRange.ToHttpRange(contentRange),
                 new StorageResourceItemProperties()
                 {
-                    ResourceLength = contentRange.TotalResourceLength,
+                    ResourceLength = contentRange.Size,
                     ETag = info.Details.ETag,
                     LastModifiedTime = info.Details.LastModified,
                     RawProperties = properties

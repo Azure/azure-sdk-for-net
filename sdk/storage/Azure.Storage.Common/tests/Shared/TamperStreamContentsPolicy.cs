@@ -14,7 +14,7 @@ namespace Azure.Storage.Test.Shared
         /// <summary>
         /// Default tampering that changes the first byte of the stream.
         /// </summary>
-        private static Func<Stream, Stream> GetTamperByteStreamTransform(long position) => stream =>
+        private static readonly Func<Stream, Stream> _defaultStreamTransform = stream =>
         {
             if (stream is not MemoryStream)
             {
@@ -23,10 +23,10 @@ namespace Azure.Storage.Test.Shared
                 stream = buffer;
             }
 
-            stream.Position = position;
+            stream.Position = 0;
             var firstByte = stream.ReadByte();
 
-            stream.Position = position;
+            stream.Position = 0;
             stream.WriteByte((byte)((firstByte + 1) % byte.MaxValue));
 
             stream.Position = 0;
@@ -37,11 +37,8 @@ namespace Azure.Storage.Test.Shared
 
         public TamperStreamContentsPolicy(Func<Stream, Stream> streamTransform = default)
         {
-            _streamTransform = streamTransform ?? GetTamperByteStreamTransform(0);
+            _streamTransform = streamTransform ?? _defaultStreamTransform;
         }
-
-        public static TamperStreamContentsPolicy TamperByteAt(long position)
-            => new(GetTamperByteStreamTransform(position));
 
         public bool TransformRequestBody { get; set; }
 
