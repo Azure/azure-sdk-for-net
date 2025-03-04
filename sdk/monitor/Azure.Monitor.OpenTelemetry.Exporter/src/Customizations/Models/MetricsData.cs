@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using OpenTelemetry.Metrics;
 
@@ -31,7 +30,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 {
                     // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
 
-                    Properties.Add(new KeyValuePair<string, string>(tag.Key, tag.Value.ToString().Truncate(SchemaConstants.MetricsData_Properties_MaxValueLength) ?? "null"));
+                    if (tag.Value is Array array)
+                    {
+                        Properties.Add(new KeyValuePair<string, string>(tag.Key, array.ToCommaDelimitedString()));
+                    }
+                    else
+                    {
+                        Properties.Add(new KeyValuePair<string, string>(tag.Key, tag.Value.ToString().Truncate(SchemaConstants.MetricsData_Properties_MaxValueLength) ?? "null"));
+                    }
                 }
             }
         }

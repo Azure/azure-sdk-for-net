@@ -4,8 +4,8 @@
 using Azure.Generator.Mgmt.Models;
 using Azure.Generator.Providers;
 using Azure.Generator.Utilities;
-using Microsoft.Generator.CSharp.ClientModel;
-using Microsoft.Generator.CSharp.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
 
 namespace Azure.Generator
@@ -29,7 +29,7 @@ namespace Azure.Generator
             var result = new Dictionary<string, HashSet<OperationSet>>();
             foreach (var operationSet in _pathToOperationSetMap.Values)
             {
-                if (operationSet.TryGetResourceDataSchema(out var resourceSpecName, out var resourceSchema))
+                if (AzureClientPlugin.Instance.ResourceDetection.TryGetResourceDataSchema(operationSet, out var resourceSpecName, out var resourceSchema))
                 {
                     // if this operation set corresponds to a SDK resource, we add it to the map
                     if (!result.TryGetValue(resourceSpecName!, out HashSet<OperationSet>? value))
@@ -76,7 +76,20 @@ namespace Azure.Generator
 
         /// <inheritdoc/>
         // TODO: generate resources and collections
-        protected override TypeProvider[] BuildTypeProviders() => [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
+        protected override TypeProvider[] BuildTypeProviders()
+        {
+            if (AzureClientPlugin.Instance.IsAzureArm.Value == true)
+            {
+                var armOperation = new MgmtLongRunningOperationProvider(false);
+                var genericArmOperation = new MgmtLongRunningOperationProvider(true);
+
+                // TODO: remove them once they are referenced in Resource operation implementation
+                AzureClientPlugin.Instance.AddTypeToKeep(armOperation.Name);
+                AzureClientPlugin.Instance.AddTypeToKeep(genericArmOperation.Name);
+                return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition(), armOperation, genericArmOperation];
+            }
+            return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
+        }
 
         internal bool IsResource(string name) => _resourceDataBySpecNameMap.ContainsKey(name);
     }

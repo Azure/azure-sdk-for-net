@@ -130,8 +130,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             TestProgressHandler progressHandler = new TestProgressHandler();
             transferOptions ??= new TransferOptions();
-            transferOptions.ProgressHandlerOptions = new ProgressHandlerOptions(progressHandler, trackBytes);
-            transferOptions.CreationPreference = createMode;
+            transferOptions.ProgressHandlerOptions = new()
+            {
+                ProgressHandler = progressHandler,
+                TrackBytesTransferred = trackBytes
+            }
+                ;
+            transferOptions.CreationMode = createMode;
 
             TransferOperation transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTime));
@@ -296,7 +301,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 10 /* fileCount */,
                 transferManagerOptions: transferManagerOptions,
                 transferOptions: transferOptions,
-                waitTime: 30);
+                waitTime: 90);
         }
 
         [LiveOnly]
@@ -312,25 +317,28 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await PopulateTestContainer(source.Container);
 
             BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
-            LocalFilesStorageResourceProvider localProvider = new();
 
             TransferManagerOptions transferManagerOptions = new()
             {
-                ResumeProviders = [blobProvider, localProvider]
+                ProvidersForResuming = [blobProvider]
             };
             TransferManager transferManager = new(transferManagerOptions);
 
             TestProgressHandler progressHandler = new();
             TransferOptions transferOptions = new()
             {
-                ProgressHandlerOptions = new ProgressHandlerOptions(progressHandler, true)
+                ProgressHandlerOptions = new()
+                {
+                    ProgressHandler = progressHandler,
+                    TrackBytesTransferred = true
+                }
             };
             TestEventsRaised testEventsRaised = new(transferOptions);
 
             // Act - Start transfer
             TransferOperation transfer = await transferManager.StartTransferAsync(
-                blobProvider.FromContainer(source.Container.Uri),
-                localProvider.FromDirectory(destination.DirectoryPath),
+                await blobProvider.FromContainerAsync(source.Container.Uri),
+                LocalFilesStorageResourceProvider.FromDirectory(destination.DirectoryPath),
                 transferOptions);
 
             // TODO: This can likely be replaced with something better once mocking is in place

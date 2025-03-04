@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using Azure.AI.OpenAI.Internal;
-using OpenAI.Chat;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Data.SqlTypes;
-using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 #pragma warning disable AOAI001
 #pragma warning disable AZC0112
@@ -35,7 +33,7 @@ internal partial class AzureChatClient : ChatClient
 
         _deploymentName = deploymentName;
         _endpoint = endpoint;
-        _apiVersion = options.Version;
+        _apiVersion = options.GetRawServiceApiValueForClient(this);
     }
 
     protected AzureChatClient()
@@ -89,14 +87,15 @@ internal partial class AzureChatClient : ChatClient
     private static void PostfixClearStreamOptions(IEnumerable<ChatMessage> messages, ref ChatCompletionOptions options)
     {
         if (AdditionalPropertyHelpers
-                .GetAdditionalListProperty<ChatDataSource>(options?.SerializedAdditionalRawData, "data_sources")?.Count > 0
+                .GetAdditionalPropertyAsListOfChatDataSource(options?.SerializedAdditionalRawData, "data_sources")?.Count > 0
             || messages?.Any(
                 message => message?.Content?.Any(
                     contentPart => contentPart?.Kind == ChatMessageContentPartKind.Image) == true)
                 == true)
         {
             options ??= new();
-            options.StreamOptions = null;
+            options.SerializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
+            AdditionalPropertyHelpers.SetEmptySentinelValue(options.SerializedAdditionalRawData, "stream_options");
         }
     }
 
@@ -123,7 +122,22 @@ internal partial class AzureChatClient : ChatClient
             {
                 options.SerializedAdditionalRawData ??= new ChangeTrackingDictionary<string, BinaryData>();
                 AdditionalPropertyHelpers.SetEmptySentinelValue(options.SerializedAdditionalRawData, "max_completion_tokens");
-                options.SerializedAdditionalRawData["max_tokens"] = BinaryData.FromObjectAsJson(options.MaxOutputTokenCount);
+
+                using MemoryStream stream = new();
+                using Utf8JsonWriter writer = new(stream);
+
+                if (options.MaxOutputTokenCount != null)
+                {
+                    writer.WriteNumberValue(options.MaxOutputTokenCount.Value);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
+
+                writer.Flush();
+
+                options.SerializedAdditionalRawData["max_tokens"] = BinaryData.FromBytes(stream.ToArray());
             }
             else
             {

@@ -380,15 +380,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         blobSequenceNumber: default),
                     new MockResponse(201))));
 
-            PageBlobStorageResourceOptions resourceOptions = new()
-            {
-                CacheControl = new(true),
-                ContentDisposition = new(true),
-                ContentLanguage = new(true),
-                ContentEncoding = new(true),
-                ContentType = new(true),
-                Metadata = new(true)
-            };
+            PageBlobStorageResourceOptions resourceOptions = new();
             PageBlobStorageResource destinationResource = new PageBlobStorageResource(mock.Object, resourceOptions);
 
             // Act
@@ -485,12 +477,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             PageBlobStorageResourceOptions resourceOptions = new()
             {
-                CacheControl = new(false),
-                ContentDisposition = new(false),
-                ContentLanguage = new(false),
-                ContentEncoding = new(false),
-                ContentType = new(false),
-                Metadata = new(false)
+                CacheControl = default,
+                ContentDisposition = default,
+                ContentLanguage = default,
+                ContentEncoding = default,
+                ContentType = default,
+                Metadata = default
             };
             PageBlobStorageResource destinationResource = new PageBlobStorageResource(mock.Object, resourceOptions);
 
@@ -813,15 +805,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         encryptionScope: default,
                         blobSequenceNumber: default),
                     new MockResponse(201))));
-            PageBlobStorageResourceOptions resourceOptions = new()
-            {
-                CacheControl = new(true),
-                ContentDisposition = new(true),
-                ContentLanguage = new(true),
-                ContentEncoding = new(true),
-                ContentType = new(true),
-                Metadata = new(true)
-            };
+            PageBlobStorageResourceOptions resourceOptions = new();
             PageBlobStorageResource destinationResource = new PageBlobStorageResource(mockDestination.Object, resourceOptions);
 
             // Act
@@ -926,12 +910,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     new MockResponse(201))));
             PageBlobStorageResourceOptions resourceOptions = new()
             {
-                CacheControl = new(false),
-                ContentDisposition = new(false),
-                ContentLanguage = new(false),
-                ContentEncoding = new(false),
-                ContentType = new(false),
-                Metadata = new(false)
+                CacheControl = default,
+                ContentDisposition = default,
+                ContentLanguage = default,
+                ContentEncoding = default,
+                ContentType = default,
+                Metadata = default
             };
             PageBlobStorageResource destinationResource = new PageBlobStorageResource(mockDestination.Object, resourceOptions);
 
@@ -1345,15 +1329,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         encryptionScope: default,
                         blobSequenceNumber: default),
                     new MockResponse(201))));
-            PageBlobStorageResourceOptions resourceOptions = new()
-            {
-                CacheControl = new(true),
-                ContentDisposition = new(true),
-                ContentLanguage = new(true),
-                ContentEncoding = new(true),
-                ContentType = new(true),
-                Metadata = new(true)
-            };
+            PageBlobStorageResourceOptions resourceOptions = new();
             PageBlobStorageResource destinationResource = new PageBlobStorageResource(mockDestination.Object, resourceOptions);
 
             // Act
@@ -1459,12 +1435,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     new MockResponse(201))));
             PageBlobStorageResourceOptions resourceOptions = new()
             {
-                CacheControl = new(false),
-                ContentDisposition = new(false),
-                ContentLanguage = new(false),
-                ContentEncoding = new(false),
-                ContentType = new(false),
-                Metadata = new(false)
+                CacheControl = default,
+                ContentDisposition = default,
+                ContentLanguage = default,
+                ContentEncoding = default,
+                ContentType = default,
+                Metadata = default
             };
             PageBlobStorageResource destinationResource = new PageBlobStorageResource(mockDestination.Object, resourceOptions);
 

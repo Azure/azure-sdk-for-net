@@ -15,7 +15,6 @@ using Azure.Storage.DataMovement.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
-using NUnit.Framework.Interfaces;
 
 namespace Azure.Storage.DataMovement.Tests;
 
@@ -191,7 +190,7 @@ public class TransferManagerTests
         foreach ((Mock<StorageResourceItem> srcResource, Mock<StorageResourceItem> dstResource) in resources)
         {
             srcResource.VerifySourceResourceOnPartProcess();
-            dstResource.VerifyDestinationResourceOnPartProcess();
+            dstResource.VerifyDestinationResourceOnPartProcess(chunked: chunksPerPart > 1);
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
@@ -571,6 +570,39 @@ public class TransferManagerTests
         Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(numJobs), "Error during initial Job queueing.");
     }
 
+    [Test]
+    public async Task BasicTransfer_NoOptions()
+    {
+        Uri srcUri = new("file:///foo/bar");
+        Uri dstUri = new("https://example.com/fizz/buzz");
+
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+        MemoryTransferCheckpointer checkpointer = new();
+
+        await using TransferManager transferManager = new(
+            jobsProcessor,
+            partsProcessor,
+            chunksProcessor,
+            jobBuilder,
+            checkpointer,
+            default);
+
+        int numFiles = 3;
+        Mock<StorageResourceContainer> srcResource = new(MockBehavior.Strict);
+        Mock<StorageResourceContainer> dstResource = new(MockBehavior.Strict);
+        (srcResource, dstResource).BasicSetup(srcUri, dstUri, numFiles);
+
+        // Don't pass options to test default options
+        TransferOperation transfer = await transferManager.StartTransferAsync(srcResource.Object, dstResource.Object);
+
+        Assert.That(await jobsProcessor.StepAll(), Is.EqualTo(1), "Failed to step through jobs queue.");
+        Assert.That(await partsProcessor.StepAll(), Is.EqualTo(numFiles), "Failed to step through parts queue.");
+        await ProcessChunksAssert(chunksProcessor, 1, numFiles, numFiles);
+
+        Assert.That(transfer.Status.HasCompletedSuccessfully);
+    }
+
     /// <summary>
     /// <see cref="TransferStatus"/> is stateful across transfer. This makes it difficult to verify mocks, as verifications
     /// are lazily performed. This captures deep copies of statuses for custom assertion.
@@ -613,6 +645,7 @@ internal static partial class MockExtensions
         items.Destination.SetupGet(r => r.TransferType).Returns(default(TransferOrder));
         items.Destination.SetupGet(r => r.MaxSupportedSingleTransferSize).Returns(Constants.GB);
         items.Destination.SetupGet(r => r.MaxSupportedChunkSize).Returns(Constants.GB);
+        items.Destination.SetupGet(r => r.MaxSupportedChunkCount).Returns(int.MaxValue);
 
         items.Source.Setup(r => r.GetPropertiesAsync(It.IsAny<CancellationToken>()))
             .Returns((CancellationToken cancellationToken) =>
@@ -781,9 +814,13 @@ internal static partial class MockExtensions
         srcResource.Verify(r => r.ReadStreamAsync(It.IsAny<long>(), It.IsAny<long?>(), It.IsAny<CancellationToken>()), Times.AtMostOnce);
     }
 
-    public static void VerifyDestinationResourceOnPartProcess(this Mock<StorageResourceItem> dstResource)
+    public static void VerifyDestinationResourceOnPartProcess(this Mock<StorageResourceItem> dstResource, bool chunked)
     {
         dstResource.VerifyGet(r => r.TransferType, Times.AtMost(9999));
+        if (chunked)
+        {
+            dstResource.VerifyGet(r => r.MaxSupportedChunkCount, Times.Once);
+        }
         // TODO: a bug in multipart uploading can result in the first chunk being uploaded at part process
         // verify at most once to ensure there are no more than this bug.
         dstResource.Verify(r => r.CopyFromStreamAsync(

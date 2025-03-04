@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 return null;
             }
-            IReadOnlyList<FrontendData> value = default;
+            IReadOnlyList<TrafficControllerFrontendData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<FrontendData> array = new List<FrontendData>();
+                    List<TrafficControllerFrontendData> array = new List<TrafficControllerFrontendData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontendData.DeserializeFrontendData(item, options));
+                        array.Add(TrafficControllerFrontendData.DeserializeTrafficControllerFrontendData(item, options));
                     }
                     value = array;
                     continue;

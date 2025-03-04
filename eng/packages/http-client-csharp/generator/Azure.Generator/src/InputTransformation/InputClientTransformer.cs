@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Generator.CSharp.Input;
+using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Collections.Generic;
 
@@ -9,7 +9,7 @@ namespace Azure.Generator.InputTransformation
 {
     internal static class InputClientTransformer
     {
-        public static InputClient TransformInputClient(InputClient client)
+        public static InputClient? TransformInputClient(InputClient client)
         {
             var operationsToKeep = new List<InputOperation>();
             foreach (var operation in client.Operations)
@@ -21,7 +21,12 @@ namespace Azure.Generator.InputTransformation
                     operationsToKeep.Add(transformedOperation);
                 }
             }
-            return new InputClient(client.Name, client.Summary, client.Doc, operationsToKeep, client.Parameters, client.Parent);
+
+            // We removed the list operation above, we should skip the empty client afterwards
+            // There is no need to check sub-clients or custom code since it is specific to handle the above removing
+            if (operationsToKeep.Count == 0) return null;
+
+            return new InputClient(client.Name, client.Namespace, client.Summary, client.Doc, operationsToKeep, client.Parameters, client.Parent);
         }
 
         private static IReadOnlyList<InputParameter> TransformInputOperationParameters(InputOperation operation)

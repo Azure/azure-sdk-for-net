@@ -38,7 +38,7 @@ namespace BasicTypeSpec.Models
             {
                 throw new FormatException($"The model {nameof(ModelWithRequiredNullableProperties)} does not support writing '{format}' format.");
             }
-            if (RequiredNullablePrimitive != null)
+            if (Optional.IsDefined(RequiredNullablePrimitive))
             {
                 writer.WritePropertyName("requiredNullablePrimitive"u8);
                 writer.WriteNumberValue(RequiredNullablePrimitive.Value);
@@ -47,7 +47,7 @@ namespace BasicTypeSpec.Models
             {
                 writer.WriteNull("requiredNullablePrimitive"u8);
             }
-            if (RequiredExtensibleEnum != null)
+            if (Optional.IsDefined(RequiredExtensibleEnum))
             {
                 writer.WritePropertyName("requiredExtensibleEnum"u8);
                 writer.WriteStringValue(RequiredExtensibleEnum.Value.ToString());
@@ -56,7 +56,7 @@ namespace BasicTypeSpec.Models
             {
                 writer.WriteNull("requiredExtensibleEnum"u8);
             }
-            if (RequiredFixedEnum != null)
+            if (Optional.IsDefined(RequiredFixedEnum))
             {
                 writer.WritePropertyName("requiredFixedEnum"u8);
                 writer.WriteStringValue(RequiredFixedEnum.Value.ToSerialString());
