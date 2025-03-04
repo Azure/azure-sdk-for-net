@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.ResourceManager;
 using Azure.Generator.Utilities;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
@@ -29,7 +30,13 @@ public class AzureClientPlugin : ScmCodeModelPlugin
     /// <inheritdoc/>
     public override AzureOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
 
-    internal ResourceDetection ResourceDetection { get; } = new();
+    // TODO: remove these once we can get resource hierarchy natively from TypeSpec input
+    private ResourceDetection? _resourceDetection;
+    internal ResourceDetection ResourceDetection => _resourceDetection ??= new();
+
+    private ResourceBuilder? _resourceBuilder;
+    /// <inheritdoc/>
+    internal ResourceBuilder ResourceBuilder => _resourceBuilder ??= new();
 
     /// <summary>
     /// The Azure client plugin to generate the Azure client SDK.
@@ -55,6 +62,8 @@ public class AzureClientPlugin : ScmCodeModelPlugin
         AddVisitor(new NamespaceVisitor());
         if (IsAzureArm.Value)
         {
+            // Include Azure.ResourceManager
+            AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));
             AddVisitor(new RestClientVisitor());
             AddVisitor(new ResourceVisitor());
         }
