@@ -26,7 +26,7 @@ public class TestLogger : ILogger
 
     public string Name { get; set; }
 
-    public IDisposable BeginScope<TState>(TState state)
+    IDisposable ILogger.BeginScope<TState>(TState state)
     {
         throw new NotImplementedException();
     }
