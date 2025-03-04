@@ -4,7 +4,6 @@
 using System;
 using Azure;
 using Azure.AI.Language.Text.Authoring;
-using Azure.AI.Language.Text.Authoring.Models;
 using Azure.AI.Language.Text.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -20,19 +19,19 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample1_TextAuthoring_GetProject
             string projectName = "MyTextProject";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
 
-            Response<ProjectMetadata> response = authoringClient.GetProject(projectName);
-            ProjectMetadata projectMetadata = response.Value;
+            Response<TextAuthoringProjectMetadata> response = projectClient.GetProject();
+            TextAuthoringProjectMetadata projectMetadata = response.Value;
 
             Console.WriteLine($"Project Name: {projectMetadata.ProjectName}");
             Console.WriteLine($"Language: {projectMetadata.Language}");
-            Console.WriteLine($"Created DateTime: {projectMetadata.CreatedDateTime}");
-            Console.WriteLine($"Last Modified DateTime: {projectMetadata.LastModifiedDateTime}");
+            Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");
+            Console.WriteLine($"Last Modified DateTime: {projectMetadata.LastModifiedOn}");
             Console.WriteLine($"Description: {projectMetadata.Description}");
             #endregion
         }
