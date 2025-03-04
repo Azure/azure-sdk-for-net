@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 case 200:
                     {
                         KubernetesSourceControlConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 case 200:
                     {
                         KubernetesSourceControlConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 case 201:
                     {
                         KubernetesSourceControlConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 case 201:
                     {
                         KubernetesSourceControlConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 case 200:
                     {
                         SourceControlConfigurationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SourceControlConfigurationList.DeserializeSourceControlConfigurationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 case 200:
                     {
                         SourceControlConfigurationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SourceControlConfigurationList.DeserializeSourceControlConfigurationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 case 200:
                     {
                         SourceControlConfigurationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SourceControlConfigurationList.DeserializeSourceControlConfigurationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 case 200:
                     {
                         SourceControlConfigurationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SourceControlConfigurationList.DeserializeSourceControlConfigurationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

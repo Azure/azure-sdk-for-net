@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKustoScriptData(document.RootElement, options);
                     }
                 default:

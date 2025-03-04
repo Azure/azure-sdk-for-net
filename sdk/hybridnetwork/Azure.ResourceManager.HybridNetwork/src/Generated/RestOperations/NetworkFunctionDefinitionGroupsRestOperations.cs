@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionDefinitionGroupListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkFunctionDefinitionGroupListResult.DeserializeNetworkFunctionDefinitionGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionDefinitionGroupListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkFunctionDefinitionGroupListResult.DeserializeNetworkFunctionDefinitionGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionDefinitionGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkFunctionDefinitionGroupData.DeserializeNetworkFunctionDefinitionGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionDefinitionGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkFunctionDefinitionGroupData.DeserializeNetworkFunctionDefinitionGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionDefinitionGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkFunctionDefinitionGroupData.DeserializeNetworkFunctionDefinitionGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionDefinitionGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkFunctionDefinitionGroupData.DeserializeNetworkFunctionDefinitionGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionDefinitionGroupListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkFunctionDefinitionGroupListResult.DeserializeNetworkFunctionDefinitionGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionDefinitionGroupListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkFunctionDefinitionGroupListResult.DeserializeNetworkFunctionDefinitionGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

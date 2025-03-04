@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Weather.Models
 {
@@ -43,7 +44,7 @@ namespace Azure.Maps.Weather.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static LatestStatus FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeLatestStatus(document.RootElement);
         }
     }

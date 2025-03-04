@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubDescriptionData.DeserializeIotHubDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubDescriptionData.DeserializeIotHubDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubDescriptionListResult.DeserializeIotHubDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubDescriptionListResult.DeserializeIotHubDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubDescriptionListResult.DeserializeIotHubDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubDescriptionListResult.DeserializeIotHubDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubRegistryStatistics value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubRegistryStatistics.DeserializeIotHubRegistryStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubRegistryStatistics value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubRegistryStatistics.DeserializeIotHubRegistryStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubSkuDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubSkuDescriptionListResult.DeserializeIotHubSkuDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubSkuDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubSkuDescriptionListResult.DeserializeIotHubSkuDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         EventHubConsumerGroupsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubConsumerGroupsListResult.DeserializeEventHubConsumerGroupsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         EventHubConsumerGroupsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubConsumerGroupsListResult.DeserializeEventHubConsumerGroupsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         EventHubConsumerGroupInfoData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubConsumerGroupInfoData.DeserializeEventHubConsumerGroupInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -963,7 +963,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         EventHubConsumerGroupInfoData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubConsumerGroupInfoData.DeserializeEventHubConsumerGroupInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1046,7 +1046,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         EventHubConsumerGroupInfoData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubConsumerGroupInfoData.DeserializeEventHubConsumerGroupInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1081,7 +1081,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         EventHubConsumerGroupInfoData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubConsumerGroupInfoData.DeserializeEventHubConsumerGroupInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1244,7 +1244,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfoListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubJobInfoListResult.DeserializeIotHubJobInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1273,7 +1273,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfoListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubJobInfoListResult.DeserializeIotHubJobInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1342,7 +1342,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubJobInfo.DeserializeIotHubJobInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1373,7 +1373,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubJobInfo.DeserializeIotHubJobInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1438,7 +1438,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubQuotaMetricInfoListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubQuotaMetricInfoListResult.DeserializeIotHubQuotaMetricInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1467,7 +1467,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubQuotaMetricInfoListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubQuotaMetricInfoListResult.DeserializeIotHubQuotaMetricInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1532,7 +1532,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubEndpointHealthInfoListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubEndpointHealthInfoListResult.DeserializeIotHubEndpointHealthInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1561,7 +1561,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubEndpointHealthInfoListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubEndpointHealthInfoListResult.DeserializeIotHubEndpointHealthInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1620,7 +1620,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubNameAvailabilityResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubNameAvailabilityResponse.DeserializeIotHubNameAvailabilityResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1647,7 +1647,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubNameAvailabilityResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubNameAvailabilityResponse.DeserializeIotHubNameAvailabilityResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1718,7 +1718,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubTestAllRoutesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubTestAllRoutesResult.DeserializeIotHubTestAllRoutesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1749,7 +1749,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubTestAllRoutesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubTestAllRoutesResult.DeserializeIotHubTestAllRoutesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1820,7 +1820,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubTestRouteResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubTestRouteResult.DeserializeIotHubTestRouteResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1851,7 +1851,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubTestRouteResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubTestRouteResult.DeserializeIotHubTestRouteResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1916,7 +1916,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         SharedAccessSignatureAuthorizationRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SharedAccessSignatureAuthorizationRuleListResult.DeserializeSharedAccessSignatureAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1945,7 +1945,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         SharedAccessSignatureAuthorizationRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SharedAccessSignatureAuthorizationRuleListResult.DeserializeSharedAccessSignatureAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2016,7 +2016,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         SharedAccessSignatureAuthorizationRule value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2047,7 +2047,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         SharedAccessSignatureAuthorizationRule value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2118,7 +2118,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubJobInfo.DeserializeIotHubJobInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2149,7 +2149,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubJobInfo.DeserializeIotHubJobInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2220,7 +2220,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubJobInfo.DeserializeIotHubJobInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2251,7 +2251,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubJobInfo.DeserializeIotHubJobInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2300,7 +2300,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubDescriptionListResult.DeserializeIotHubDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2327,7 +2327,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubDescriptionListResult.DeserializeIotHubDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2378,7 +2378,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubDescriptionListResult.DeserializeIotHubDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2407,7 +2407,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubDescriptionListResult.DeserializeIotHubDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2460,7 +2460,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubSkuDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubSkuDescriptionListResult.DeserializeIotHubSkuDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2491,7 +2491,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubSkuDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubSkuDescriptionListResult.DeserializeIotHubSkuDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2546,7 +2546,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         EventHubConsumerGroupsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubConsumerGroupsListResult.DeserializeEventHubConsumerGroupsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2579,7 +2579,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         EventHubConsumerGroupsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubConsumerGroupsListResult.DeserializeEventHubConsumerGroupsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2632,7 +2632,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfoListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubJobInfoListResult.DeserializeIotHubJobInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2663,7 +2663,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubJobInfoListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubJobInfoListResult.DeserializeIotHubJobInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2716,7 +2716,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubQuotaMetricInfoListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubQuotaMetricInfoListResult.DeserializeIotHubQuotaMetricInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2747,7 +2747,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubQuotaMetricInfoListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubQuotaMetricInfoListResult.DeserializeIotHubQuotaMetricInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2800,7 +2800,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubEndpointHealthInfoListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubEndpointHealthInfoListResult.DeserializeIotHubEndpointHealthInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2831,7 +2831,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubEndpointHealthInfoListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubEndpointHealthInfoListResult.DeserializeIotHubEndpointHealthInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2884,7 +2884,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         SharedAccessSignatureAuthorizationRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SharedAccessSignatureAuthorizationRuleListResult.DeserializeSharedAccessSignatureAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2915,7 +2915,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         SharedAccessSignatureAuthorizationRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SharedAccessSignatureAuthorizationRuleListResult.DeserializeSharedAccessSignatureAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

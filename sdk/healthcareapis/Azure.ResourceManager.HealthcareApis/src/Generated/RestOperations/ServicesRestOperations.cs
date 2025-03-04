@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         HealthcareApisServiceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthcareApisServiceData.DeserializeHealthcareApisServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         HealthcareApisServiceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthcareApisServiceData.DeserializeHealthcareApisServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         ServicesDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServicesDescriptionListResult.DeserializeServicesDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         ServicesDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServicesDescriptionListResult.DeserializeServicesDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         ServicesDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServicesDescriptionListResult.DeserializeServicesDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         ServicesDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServicesDescriptionListResult.DeserializeServicesDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         HealthcareApisNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthcareApisNameAvailabilityResult.DeserializeHealthcareApisNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         HealthcareApisNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthcareApisNameAvailabilityResult.DeserializeHealthcareApisNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         ServicesDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServicesDescriptionListResult.DeserializeServicesDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         ServicesDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServicesDescriptionListResult.DeserializeServicesDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         ServicesDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServicesDescriptionListResult.DeserializeServicesDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         ServicesDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServicesDescriptionListResult.DeserializeServicesDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

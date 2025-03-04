@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLoadTestingQuotaBucketContent(document.RootElement, options);
                     }
                 default:
