@@ -36,8 +36,10 @@ namespace Azure.IoT.Hub.Service.Tests
         {
             TestDiagnostics = false;
 
+#if NETFRAMEWORK
             // TODO: set via client options and pipeline instead
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+#endif
         }
 
         protected IotHubServiceClient GetClient()
