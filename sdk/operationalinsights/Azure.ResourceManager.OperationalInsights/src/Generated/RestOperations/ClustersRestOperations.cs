@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         OperationalInsightsClusterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OperationalInsightsClusterData.DeserializeOperationalInsightsClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         OperationalInsightsClusterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OperationalInsightsClusterData.DeserializeOperationalInsightsClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

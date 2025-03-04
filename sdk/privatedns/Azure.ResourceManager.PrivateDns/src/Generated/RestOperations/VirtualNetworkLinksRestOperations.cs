@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                     {
                         VirtualNetworkLinkData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                     {
                         VirtualNetworkLinkData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                     {
                         VirtualNetworkLinkListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VirtualNetworkLinkListResult.DeserializeVirtualNetworkLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                     {
                         VirtualNetworkLinkListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VirtualNetworkLinkListResult.DeserializeVirtualNetworkLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                     {
                         VirtualNetworkLinkListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VirtualNetworkLinkListResult.DeserializeVirtualNetworkLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case 200:
                     {
                         VirtualNetworkLinkListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VirtualNetworkLinkListResult.DeserializeVirtualNetworkLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

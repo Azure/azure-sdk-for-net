@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlQueryTextData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlQueryTextData.DeserializeMySqlQueryTextData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlQueryTextData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlQueryTextData.DeserializeMySqlQueryTextData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlQueryTextListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlQueryTextListResult.DeserializeMySqlQueryTextListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlQueryTextListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlQueryTextListResult.DeserializeMySqlQueryTextListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlQueryTextListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlQueryTextListResult.DeserializeMySqlQueryTextListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlQueryTextListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlQueryTextListResult.DeserializeMySqlQueryTextListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

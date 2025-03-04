@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicObservabilityTagRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicObservabilityTagRuleListResult.DeserializeNewRelicObservabilityTagRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicObservabilityTagRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicObservabilityTagRuleListResult.DeserializeNewRelicObservabilityTagRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicObservabilityTagRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicObservabilityTagRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicObservabilityTagRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicObservabilityTagRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicObservabilityTagRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicObservabilityTagRuleListResult.DeserializeNewRelicObservabilityTagRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicObservabilityTagRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicObservabilityTagRuleListResult.DeserializeNewRelicObservabilityTagRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

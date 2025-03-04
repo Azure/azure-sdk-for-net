@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlFlexibleServersPrivateLinkResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlFlexibleServersPrivateLinkResourceListResult.DeserializePostgreSqlFlexibleServersPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlFlexibleServersPrivateLinkResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlFlexibleServersPrivateLinkResourceListResult.DeserializePostgreSqlFlexibleServersPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlFlexibleServersPrivateLinkResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlFlexibleServersPrivateLinkResourceData.DeserializePostgreSqlFlexibleServersPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlFlexibleServersPrivateLinkResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlFlexibleServersPrivateLinkResourceData.DeserializePostgreSqlFlexibleServersPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlFlexibleServersPrivateLinkResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlFlexibleServersPrivateLinkResourceListResult.DeserializePostgreSqlFlexibleServersPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlFlexibleServersPrivateLinkResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlFlexibleServersPrivateLinkResourceListResult.DeserializePostgreSqlFlexibleServersPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

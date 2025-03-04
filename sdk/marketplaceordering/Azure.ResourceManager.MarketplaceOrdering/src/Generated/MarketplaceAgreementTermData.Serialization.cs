@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMarketplaceAgreementTermData(document.RootElement, options);
                     }
                 default:

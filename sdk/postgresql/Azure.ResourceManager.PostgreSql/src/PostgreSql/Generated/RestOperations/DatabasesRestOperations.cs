@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.PostgreSql
                 case 200:
                     {
                         PostgreSqlDatabaseData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.PostgreSql
                 case 200:
                     {
                         PostgreSqlDatabaseData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.PostgreSql
                 case 200:
                     {
                         PostgreSqlDatabaseListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlDatabaseListResult.DeserializePostgreSqlDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.PostgreSql
                 case 200:
                     {
                         PostgreSqlDatabaseListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlDatabaseListResult.DeserializePostgreSqlDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

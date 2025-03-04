@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Network
     {
         AzureReachabilityReport IOperationSource<AzureReachabilityReport>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return AzureReachabilityReport.DeserializeAzureReachabilityReport(document.RootElement);
         }
 
         async ValueTask<AzureReachabilityReport> IOperationSource<AzureReachabilityReport>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return AzureReachabilityReport.DeserializeAzureReachabilityReport(document.RootElement);
         }
     }

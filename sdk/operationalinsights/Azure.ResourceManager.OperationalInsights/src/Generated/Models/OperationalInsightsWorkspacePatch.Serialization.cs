@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOperationalInsightsWorkspacePatch(document.RootElement, options);
                     }
                 default:

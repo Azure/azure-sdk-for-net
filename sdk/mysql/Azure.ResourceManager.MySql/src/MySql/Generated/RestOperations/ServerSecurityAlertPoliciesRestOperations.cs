@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlServerSecurityAlertPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlServerSecurityAlertPolicyData.DeserializeMySqlServerSecurityAlertPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlServerSecurityAlertPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlServerSecurityAlertPolicyData.DeserializeMySqlServerSecurityAlertPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlServerSecurityAlertPolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlServerSecurityAlertPolicyListResult.DeserializeMySqlServerSecurityAlertPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlServerSecurityAlertPolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlServerSecurityAlertPolicyListResult.DeserializeMySqlServerSecurityAlertPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlServerSecurityAlertPolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlServerSecurityAlertPolicyListResult.DeserializeMySqlServerSecurityAlertPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlServerSecurityAlertPolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlServerSecurityAlertPolicyListResult.DeserializeMySqlServerSecurityAlertPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

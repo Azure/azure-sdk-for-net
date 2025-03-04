@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         ApplicationGatewayWafDynamicManifestData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationGatewayWafDynamicManifestData.DeserializeApplicationGatewayWafDynamicManifestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         ApplicationGatewayWafDynamicManifestData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationGatewayWafDynamicManifestData.DeserializeApplicationGatewayWafDynamicManifestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

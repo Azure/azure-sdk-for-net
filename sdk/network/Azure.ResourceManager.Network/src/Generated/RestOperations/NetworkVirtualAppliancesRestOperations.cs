@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkVirtualApplianceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkVirtualApplianceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkVirtualApplianceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkVirtualApplianceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkVirtualApplianceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkVirtualApplianceListResult.DeserializeNetworkVirtualApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkVirtualApplianceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkVirtualApplianceListResult.DeserializeNetworkVirtualApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkVirtualApplianceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkVirtualApplianceListResult.DeserializeNetworkVirtualApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkVirtualApplianceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkVirtualApplianceListResult.DeserializeNetworkVirtualApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkVirtualApplianceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkVirtualApplianceListResult.DeserializeNetworkVirtualApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkVirtualApplianceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkVirtualApplianceListResult.DeserializeNetworkVirtualApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkVirtualApplianceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkVirtualApplianceListResult.DeserializeNetworkVirtualApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkVirtualApplianceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkVirtualApplianceListResult.DeserializeNetworkVirtualApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

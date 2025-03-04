@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlRecommendationActionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlRecommendationActionData.DeserializeMySqlRecommendationActionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlRecommendationActionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlRecommendationActionData.DeserializeMySqlRecommendationActionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlRecommendationActionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlRecommendationActionListResult.DeserializeMySqlRecommendationActionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlRecommendationActionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlRecommendationActionListResult.DeserializeMySqlRecommendationActionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlRecommendationActionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlRecommendationActionListResult.DeserializeMySqlRecommendationActionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlRecommendationActionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlRecommendationActionListResult.DeserializeMySqlRecommendationActionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
