@@ -14,7 +14,7 @@ namespace Azure.Communication.Identity
         /// <summary>
         /// The latest version of the identity service.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_10_01;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2025_03_02_PREVIEW;
 
         internal string ApiVersion { get; }
 
@@ -29,6 +29,7 @@ namespace Azure.Communication.Identity
                 ServiceVersion.V2022_06_01 => "2022-06-01",
                 ServiceVersion.V2022_10_01 => "2022-10-01",
                 ServiceVersion.V2023_10_01 => "2023-10-01",
+                ServiceVersion.V2025_03_02_PREVIEW => "2025-03-02-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(version))
             };
         }
@@ -55,6 +56,10 @@ namespace Azure.Communication.Identity
             /// The V2023_10_01 of the identity service.
             /// </summary>
             V2023_10_01 = 4,
+            /// <summary>
+            /// The V2025_04_01_PREVIEW of the identity service.
+            /// </summary>
+            V2025_03_02_PREVIEW = 5,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

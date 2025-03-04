@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Azure.Communication.Identity.Models;
 using Azure.Communication.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -513,6 +515,7 @@ namespace Azure.Communication.Identity.Tests
         [TestCase(ServiceVersion.V2022_06_01, TestName = "CreateIdentityWithServiceVersion_V2022_06_01")]
         [TestCase(ServiceVersion.V2022_10_01, TestName = "CreateIdentityWithServiceVersion_V2022_10_01")]
         [TestCase(ServiceVersion.V2023_10_01, TestName = "CreateIdentityWithServiceVersion_V2023_10_01")]
+        [TestCase(ServiceVersion.V2025_03_02_PREVIEW, TestName = "CreateIdentityWithServiceVersion_V2025_03_02_PREVIEW")]
         public async Task CreateIdentityWithDifferentServiceVersions(ServiceVersion version)
         {
             try
@@ -520,6 +523,54 @@ namespace Azure.Communication.Identity.Tests
                 CommunicationIdentityClient client = CreateClient(default, version);
                 CommunicationUserIdentifier userResponse = await client.CreateUserAsync();
                 Assert.IsNotNull(userResponse);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
+
+        [Test]
+        public async Task CreateOrGetUserWithExternalIdShouldFirstCreateThenGet()
+        {
+            try
+            {
+                var externalId = Guid.NewGuid().ToString();
+                CommunicationIdentityClient client = CreateClient();
+                Response<CommunicationUserIdentifier> createResponse = await client.CreateOrGetUserAsync(externalId);
+
+                Assert.AreEqual((int)HttpStatusCode.Created, createResponse.GetRawResponse().Status);
+                Assert.IsNotNull(createResponse.Value.Id);
+
+                Response<CommunicationUserIdentifier> getResponse = await client.CreateOrGetUserAsync(externalId);
+                Assert.AreEqual((int)HttpStatusCode.OK, getResponse.GetRawResponse().Status);
+                Assert.AreEqual(createResponse.Value.Id, getResponse.Value.Id);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
+
+        [Test]
+        public async Task GetUserShouldReturnTheExternalId()
+        {
+            try
+            {
+                var externalId = Guid.NewGuid().ToString();
+                CommunicationIdentityClient client = CreateClient();
+                Response<CommunicationUserIdentifierAndToken> createResponse = await client.CreateOrGetUserAndTokenAsync(externalId,
+                    new List<CommunicationTokenScope> { CommunicationTokenScope.VoIP },
+                    TimeSpan.FromHours(2));
+                createResponse.GetRawResponse();
+                Assert.AreEqual((int)HttpStatusCode.Created, createResponse.GetRawResponse().Status);
+                Assert.IsNotNull(createResponse.Value.User);
+
+                Response<CommunicationIdentityResult> getResponse = await client.GetUserAsync(createResponse.Value.User);
+                Assert.AreEqual((int)HttpStatusCode.OK, getResponse.GetRawResponse().Status);
+                Assert.AreEqual(createResponse.Value.User.Id, getResponse.Value.Id);
+                Assert.AreEqual(externalId, getResponse.Value.ExternalId);
+                Assert.IsNotNull(getResponse.Value.LastTokenIssuedAt);
             }
             catch (Exception ex)
             {

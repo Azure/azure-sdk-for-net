@@ -17,16 +17,22 @@ namespace Azure.Communication.Identity.Models
             {
                 return null;
             }
+            string externalId = default;
             string id = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("externalId"u8))
+                {
+                    externalId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
             }
-            return new CommunicationIdentity(id);
+            return new CommunicationIdentity(externalId, id);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

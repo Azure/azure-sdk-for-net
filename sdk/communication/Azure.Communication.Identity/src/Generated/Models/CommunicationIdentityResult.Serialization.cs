@@ -7,35 +7,30 @@
 
 using System;
 using System.Text.Json;
-using Azure.Communication.Identity.Models;
 
-namespace Azure.Communication.Identity
+namespace Azure.Communication.Identity.Models
 {
-    public partial class CommunicationUserIdentifierAndToken
+    public partial class CommunicationIdentityResult
     {
-        internal static CommunicationUserIdentifierAndToken DeserializeCommunicationUserIdentifierAndToken(JsonElement element)
+        internal static CommunicationIdentityResult DeserializeCommunicationIdentityResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            CommunicationIdentity identity = default;
-            CommunicationIdentityAccessToken accessToken = default;
+            string id = default;
+            string externalId = default;
             DateTimeOffset? lastTokenIssuedAt = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    identity = CommunicationIdentity.DeserializeCommunicationIdentity(property.Value);
+                    id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accessToken"u8))
+                if (property.NameEquals("externalId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    accessToken = CommunicationIdentityAccessToken.DeserializeCommunicationIdentityAccessToken(property.Value);
+                    externalId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lastTokenIssuedAt"u8))
@@ -48,15 +43,15 @@ namespace Azure.Communication.Identity
                     continue;
                 }
             }
-            return new CommunicationUserIdentifierAndToken(identity, accessToken, lastTokenIssuedAt);
+            return new CommunicationIdentityResult(id, externalId, lastTokenIssuedAt);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CommunicationUserIdentifierAndToken FromResponse(Response response)
+        internal static CommunicationIdentityResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCommunicationUserIdentifierAndToken(document.RootElement);
+            return DeserializeCommunicationIdentityResult(document.RootElement);
         }
     }
 }
