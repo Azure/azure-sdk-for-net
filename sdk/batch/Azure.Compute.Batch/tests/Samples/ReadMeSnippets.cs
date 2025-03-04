@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Identity;
 
-namespace Azure.Compute.Batch.Tests.Snippets
+namespace Azure.Compute.Batch.Tests.Samples
 {
     public class ReadMeSnippets
     {
@@ -19,7 +19,7 @@ namespace Azure.Compute.Batch.Tests.Snippets
         {
             #region Snippet:Batch_Readme_AzureNameKeyCredential
             var credential = new AzureNamedKeyCredential("<your account>", "BatchAccountKey");
-            BatchClient _batchClient = new BatchClient(
+            BatchClient batchClient = new BatchClient(
                 new Uri("https://<your account>.eastus.batch.azure.com"),
                 credential);
             #endregion
@@ -30,7 +30,7 @@ namespace Azure.Compute.Batch.Tests.Snippets
             #region Snippet:Batch_Readme_EntraIDCredential
 
             var credential = new DefaultAzureCredential();
-            BatchClient _batchClient = new BatchClient(
+            BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), credential);
             #endregion
         }
@@ -39,7 +39,7 @@ namespace Azure.Compute.Batch.Tests.Snippets
         {
             #region Snippet:Batch_Readme_PoolCreation
 
-            BatchClient _batchClient = new BatchClient(
+            BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
             string poolID = "HelloWorldPool";
@@ -62,17 +62,17 @@ namespace Azure.Compute.Batch.Tests.Snippets
             };
 
             // create pool
-            _batchClient.CreatePool(batchPoolCreateOptions);
+            batchClient.CreatePool(batchPoolCreateOptions);
             #endregion
         }
 
         public void PoolRetrieve()
         {
             #region Snippet:Batch_Readme_PoolRetreival
-            BatchClient _batchClient = new BatchClient(
+            BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            BatchPool batchPool = _batchClient.GetPool("poolID");
+            BatchPool batchPool = batchClient.GetPool("poolID");
 
             Console.WriteLine(batchPool.Id);
             Console.WriteLine(batchPool.Url);
@@ -83,10 +83,10 @@ namespace Azure.Compute.Batch.Tests.Snippets
         public void ListPools()
         {
             #region Snippet:Batch_Readme_ListPools
-            BatchClient _batchClient = new BatchClient(
+            BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            foreach (BatchPool item in _batchClient.GetPools())
+            foreach (BatchPool item in batchClient.GetPools())
             {
                 Console.WriteLine(item.Id);
             }
@@ -96,10 +96,10 @@ namespace Azure.Compute.Batch.Tests.Snippets
         public void NodeRetreival()
         {
             #region Snippet:Batch_Readme_NodeRetreival
-            BatchClient _batchClient = new BatchClient(
+            BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            BatchNode batchNode = _batchClient.GetNode("<poolId>", "<nodeId>");
+            BatchNode batchNode = batchClient.GetNode("<poolId>", "<nodeId>");
             Console.WriteLine(batchNode.Id);
             Console.WriteLine(batchNode.Url);
             Console.WriteLine(batchNode.State);
@@ -109,10 +109,10 @@ namespace Azure.Compute.Batch.Tests.Snippets
         public void ListNodes()
         {
             #region Snippet:Batch_Readme_ListNodes
-            BatchClient _batchClient = new BatchClient(
+            BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            foreach (BatchNode item in _batchClient.GetNodes("poolID"))
+            foreach (BatchNode item in batchClient.GetNodes("poolID"))
             {
                 Console.WriteLine(item.Id);
             }
@@ -122,20 +122,20 @@ namespace Azure.Compute.Batch.Tests.Snippets
         public void JobCreation()
         {
             #region Snippet:Batch_Readme_JobCreation
-            BatchClient _batchClient = new BatchClient(
+            BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            _batchClient.CreateJob(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
+            batchClient.CreateJob(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
             #endregion
         }
 
         public void JobRetreival()
         {
             #region Snippet:Batch_Readme_JobRetreival
-            BatchClient _batchClient = new BatchClient(
+            BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            BatchJob batchJob = _batchClient.GetJob("jobID");
+            BatchJob batchJob = batchClient.GetJob("jobID");
             Console.WriteLine(batchJob.Id);
             Console.WriteLine(batchJob.State);
             #endregion
@@ -144,10 +144,10 @@ namespace Azure.Compute.Batch.Tests.Snippets
         public void ListJobs()
         {
             #region Snippet:Batch_Readme_ListJobs
-            BatchClient _batchClient = new BatchClient(
+            BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            foreach (BatchJob item in _batchClient.GetJobs())
+            foreach (BatchJob item in batchClient.GetJobs())
             {
                 Console.WriteLine(item.Id);
             }
@@ -157,20 +157,20 @@ namespace Azure.Compute.Batch.Tests.Snippets
         public void TaskCreation()
         {
             #region Snippet:Batch_Readme_TaskCreation
-            BatchClient _batchClient = new BatchClient(
+            BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            _batchClient.CreateTask("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
+            batchClient.CreateTask("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
             #endregion
         }
 
         public void TaskRetreival()
         {
             #region Snippet:Batch_Readme_TaskRetreival
-            BatchClient _batchClient = new BatchClient(
+            BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            BatchTask batchTask = _batchClient.GetTask("<jobId>", "<taskId>");
+            BatchTask batchTask = batchClient.GetTask("<jobId>", "<taskId>");
             Console.WriteLine(batchTask.Id);
             Console.WriteLine(batchTask.State);
             #endregion
@@ -179,10 +179,23 @@ namespace Azure.Compute.Batch.Tests.Snippets
         public void ListTasks()
         {
             #region Snippet:Batch_Readme_ListTasks
-            BatchClient _batchClient = new BatchClient(
+            BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            var completedTasks = _batchClient.GetTasks("jobId", filter: "state eq 'completed'");
+            foreach (BatchTask t in batchClient.GetTasks("jobId"))
+            {
+                // do something with the task
+            }
+            #endregion
+        }
+
+         public void GetTaskFile()
+        {
+            #region Snippet:Batch_Readme_GetTaskFile
+            BatchClient batchClient = new BatchClient(
+            new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+            var completedTasks = batchClient.GetTasks("jobId", filter: "state eq 'completed'");
             foreach (BatchTask t in completedTasks)
             {
                 var outputFileName = t.ExecutionInfo.ExitCode == 0 ? "stdout.txt" : "stderr.txt";
@@ -190,7 +203,7 @@ namespace Azure.Compute.Batch.Tests.Snippets
                 Console.WriteLine("Task {0} exited with code {1}. Output ({2}):",
                     t.Id, t.ExecutionInfo.ExitCode, outputFileName);
 
-                BinaryData fileContents = _batchClient.GetTaskFile("jobId", t.Id, outputFileName);
+                BinaryData fileContents = batchClient.GetTaskFile("jobId", t.Id, outputFileName);
                 using (var reader = new StreamReader(fileContents.ToStream()))
                 {
                     Console.WriteLine(reader.ReadLine());
