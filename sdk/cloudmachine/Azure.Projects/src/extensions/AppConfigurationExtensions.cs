@@ -9,12 +9,12 @@ using Azure.Data.AppConfiguration;
 namespace Azure.Projects.KeyVault;
 
 /// <summary>
-/// The key vault extensions.
+/// AppConfiguration extensions.
 /// </summary>
 public static class AppConfigurationExtensions
 {
     /// <summary>
-    /// Gets the key vault secrets client.
+    /// Gets the ConfigurationClient.
     /// </summary>
     /// <param name="workspace"></param>
     /// <returns></returns>
