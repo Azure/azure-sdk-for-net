@@ -20,9 +20,9 @@ To delete a deployment, call DeleteDeploymentAsync on the `ConversationAuthoring
 ```C# Snippet:Sample13_ConversationsAuthoring_DeleteDeploymentAsync
 string projectName = "SampleProject";
 string deploymentName = "SampleDeployment";
-ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName);
+ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
-Operation operation = await deploymentAuthoringClient.DeleteDeploymentAsync(
+Operation operation = await deploymentClient.DeleteDeploymentAsync(
     waitUntil: WaitUntil.Completed
 );
 
