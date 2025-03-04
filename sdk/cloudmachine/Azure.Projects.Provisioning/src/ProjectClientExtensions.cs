@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
 using Azure.Projects.Core;
-using Azure.Core;
-using System.ClientModel.Primitives;
 
 namespace Azure.Projects;
 

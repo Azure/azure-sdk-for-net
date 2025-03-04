@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using Azure.Core;
 
 namespace Azure.Projects.Core
 {

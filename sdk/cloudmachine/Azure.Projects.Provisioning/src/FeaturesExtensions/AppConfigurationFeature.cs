@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure.Projects.Core;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.AppConfiguration;
 using Azure.Provisioning.Primitives;
-using System.ClientModel.Primitives;
 
 namespace Azure.Projects.KeyVault;
 

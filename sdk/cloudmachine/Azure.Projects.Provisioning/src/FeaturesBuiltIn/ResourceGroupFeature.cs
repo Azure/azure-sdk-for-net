@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Projects.Core;
-using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 

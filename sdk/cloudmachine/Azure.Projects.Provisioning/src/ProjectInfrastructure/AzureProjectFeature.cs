@@ -5,7 +5,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Projects.Core;

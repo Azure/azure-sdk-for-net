@@ -2,13 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using Azure.Projects.Core;
-using Azure.Core;
 using Azure.Identity;
+using Azure.Projects.Core;
 using Azure.Provisioning.AIFoundry;
 using Azure.Provisioning.Primitives;
-using System.ClientModel.Primitives;
 
 namespace Azure.Projects.AIFoundry
 {

@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using System.Linq;
 using Azure.Provisioning;
+using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
-using Azure.Provisioning.Expressions;
-using System.Linq;
 
 namespace Azure.Projects;
 

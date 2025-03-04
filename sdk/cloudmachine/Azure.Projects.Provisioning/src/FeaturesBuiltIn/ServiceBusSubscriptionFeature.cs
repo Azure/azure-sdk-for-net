@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure.Projects.Core;
-using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ServiceBus;
-using System.ClientModel.Primitives;
 
 namespace Azure.Projects.ServiceBus;
 
