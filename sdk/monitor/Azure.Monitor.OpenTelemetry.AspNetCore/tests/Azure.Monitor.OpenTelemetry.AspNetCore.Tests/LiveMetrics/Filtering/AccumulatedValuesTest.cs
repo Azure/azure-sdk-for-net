@@ -3,7 +3,7 @@
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
 {
-    using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering;
+    using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering;
     using Xunit;
 
     public class AccumulatedValuesTest

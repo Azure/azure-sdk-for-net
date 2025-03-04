@@ -6,7 +6,7 @@ using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics

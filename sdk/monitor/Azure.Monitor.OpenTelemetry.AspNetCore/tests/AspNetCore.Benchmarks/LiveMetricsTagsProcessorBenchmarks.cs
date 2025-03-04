@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
-using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
 using BenchmarkDotNet.Attributes;
 
 /*

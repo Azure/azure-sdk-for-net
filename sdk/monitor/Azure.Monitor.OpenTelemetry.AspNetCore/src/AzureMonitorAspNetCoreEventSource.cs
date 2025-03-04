@@ -3,8 +3,8 @@
 
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore
 {
