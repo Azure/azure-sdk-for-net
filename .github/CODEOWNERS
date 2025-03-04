@@ -451,10 +451,10 @@
 # ServiceOwners:                                                   @sumantmehtams
 
 # ServiceLabel: %Data Lake Storage Gen1
-# ServiceOwners:                                                   @sumantmehtams
+# ServiceOwners:                                                   @sumantmehtams @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
 
 # ServiceLabel: %Data Lake Storage Gen2
-# ServiceOwners:                                                   @sumantmehtams
+# ServiceOwners:                                                   @sumantmehtams @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
 
 # ServiceLabel: %Data Lake Analytics
 # ServiceOwners:                                                   @idear1203
@@ -888,7 +888,7 @@
 /sdk/storage/Microsoft.Azure.WebJobs.*/                            @seanmcc-msft @amnguye @jaschrep-msft @tg-msft @fabiocav @mathewc @jalauzon-msft @nickliu-msft
 
 # ServiceLabel: %Storage
-# ServiceOwners:                                                   @xgithubtriage
+# ServiceOwners:                                                   @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
 
 # ServiceLabel: %Storsimple
 # ServiceOwners:                                                   @anoobbacker @ganzee @manuaery
