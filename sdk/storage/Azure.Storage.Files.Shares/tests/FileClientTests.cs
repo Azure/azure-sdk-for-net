@@ -6823,7 +6823,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/46907")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
         public async Task CreateGetSymbolicLinkAsync()
         {
@@ -6877,7 +6876,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/46907")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
         public async Task CreateGetSymbolicLinkAsync_Error()
         {
@@ -6900,7 +6898,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/46907")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
         public async Task CreateGetSymbolicLinkAsync_OAuth()
         {
