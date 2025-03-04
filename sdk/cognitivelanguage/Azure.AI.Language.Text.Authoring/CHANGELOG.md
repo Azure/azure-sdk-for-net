@@ -1,15 +1,5 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.1 (2025-03-04)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 1.0.0-beta.1
-
-- Initial preview of the Azure.AI.Language.Text.Authoring client library.
+- Initial release of Azure.AI.Language.Text.Authoring library.
