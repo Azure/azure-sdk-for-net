@@ -22,8 +22,8 @@ string projectName = "SampleProject";
 var deploymentName1 = "deployment1";
 var deploymentName2 = "deployment2";
 var swapDetails = new SwapDeploymentsDetails(deploymentName1, deploymentName2);
-ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName1);
-Operation operation = deploymentAuthoringClient.SwapDeployments(
+ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+Operation operation = projectAuthoringClient.SwapDeployments(
     waitUntil: WaitUntil.Completed,
     details: swapDetails
 );

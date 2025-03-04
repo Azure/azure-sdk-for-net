@@ -426,9 +426,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
 
             var swapDetails = new SwapDeploymentsDetails(deploymentName1, deploymentName2);
 
-            ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName1);
+            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
             // Act
-            Operation operation = await deploymentAuthoringClient.SwapDeploymentsAsync(
+            Operation operation = await projectAuthoringClient.SwapDeploymentsAsync(
                 waitUntil: WaitUntil.Completed,
                 details: swapDetails
             );

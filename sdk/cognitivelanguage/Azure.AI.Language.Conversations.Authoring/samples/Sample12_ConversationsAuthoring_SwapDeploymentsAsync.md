@@ -21,11 +21,11 @@ To swap two deployments asynchronously, call SwapDeploymentsAsync on the `Conver
 string projectName = "SampleProject";
 var deploymentName1 = "deployment1";
 var deploymentName2 = "deployment2";
-ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName1);
+ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
 
 var swapDetails = new SwapDeploymentsDetails(deploymentName1, deploymentName2);
 
-Operation operation = await deploymentAuthoringClient.SwapDeploymentsAsync(
+Operation operation = await projectAuthoringClient.SwapDeploymentsAsync(
     waitUntil: WaitUntil.Completed,
     details: swapDetails
 );
