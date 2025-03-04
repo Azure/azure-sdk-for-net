@@ -56,7 +56,6 @@ namespace Azure.Security.KeyVault.Administration
 
             options ??= new KeyVaultAdministrationClientOptions();
             _diagnostics = new ClientDiagnostics(options, true);
-
             _restClient = new KeyVaultRestClient(VaultUri, credential, options);
         }
 
@@ -75,15 +74,15 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                var response = await _restClient.FullBackupAsync(
+                var operation = await _restClient.FullBackupAsync(
                     WaitUntil.Started,
                     new SASTokenParameter(blobStorageUri.AbsoluteUri, sasToken),
                     cancellationToken)
                     .ConfigureAwait(false);
 
                 // Rest client returns an Operation without headers, so we need to create a new response with headers.
-                var headers = new AzureSecurityKeyVaultAdministrationFullBackupHeaders(response.GetRawResponse());
-                var responseWithHeaders = ResponseWithHeaders.FromValue(headers,response.GetRawResponse());
+                var headers = new AzureSecurityKeyVaultAdministrationFullBackupHeaders(operation.GetRawResponse());
+                var responseWithHeaders = ResponseWithHeaders.FromValue(headers,operation.GetRawResponse());
 
                 return new KeyVaultBackupOperation(this, responseWithHeaders);
             }
@@ -109,14 +108,14 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                var response = _restClient.FullBackup(
+                var operation = _restClient.FullBackup(
                     WaitUntil.Started,
                     new SASTokenParameter(blobStorageUri.AbsoluteUri, sasToken),
                     cancellationToken);
 
                 // Rest client returns an Operation without headers, so we need to create a new response with headers.
-                var headers = new AzureSecurityKeyVaultAdministrationFullBackupHeaders(response.GetRawResponse());
-                var responseWithHeaders = ResponseWithHeaders.FromValue(headers, response.GetRawResponse());
+                var headers = new AzureSecurityKeyVaultAdministrationFullBackupHeaders(operation.GetRawResponse());
+                var responseWithHeaders = ResponseWithHeaders.FromValue(headers, operation.GetRawResponse());
 
                 return new KeyVaultBackupOperation(this, responseWithHeaders);
             }
@@ -150,7 +149,7 @@ namespace Azure.Security.KeyVault.Administration
                 // Get the folder name from the backupBlobUri returned from a previous BackupOperation
                 ParseFolderName(folderUri, out string containerUriString, out string folderName);
 
-                var response = await _restClient.FullRestoreOperationAsync(
+                var operation = await _restClient.FullRestoreOperationAsync(
                    WaitUntil.Started,
                     new RestoreOperationParameters(
                         new SASTokenParameter(
@@ -159,8 +158,8 @@ namespace Azure.Security.KeyVault.Administration
                     cancellationToken).ConfigureAwait(false);
 
                 // Rest client returns an Operation without headers, so we need to create a new response with headers.
-                var headers = new AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders(response.GetRawResponse());
-                var responseWithHeaders = ResponseWithHeaders.FromValue(headers, response.GetRawResponse());
+                var headers = new AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders(operation.GetRawResponse());
+                var responseWithHeaders = ResponseWithHeaders.FromValue(headers, operation.GetRawResponse());
 
                 return new KeyVaultRestoreOperation(this, responseWithHeaders);
             }
@@ -194,7 +193,7 @@ namespace Azure.Security.KeyVault.Administration
                 // Get the folder name from the backupBlobUri returned from a previous BackupOperation
                 ParseFolderName(folderUri, out string containerUriString, out string folderName);
 
-                var response = _restClient.FullRestoreOperation(
+                var operation = _restClient.FullRestoreOperation(
                     WaitUntil.Started,
                     new RestoreOperationParameters(
                         new SASTokenParameter(
@@ -203,8 +202,8 @@ namespace Azure.Security.KeyVault.Administration
                     cancellationToken);
 
                 // Rest client returns an Operation without headers, so we need to create a new response with headers.
-                var headers = new AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders(response.GetRawResponse());
-                var responseWithHeaders = ResponseWithHeaders.FromValue(headers, response.GetRawResponse());
+                var headers = new AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders(operation.GetRawResponse());
+                var responseWithHeaders = ResponseWithHeaders.FromValue(headers, operation.GetRawResponse());
 
                 return new KeyVaultRestoreOperation(this, responseWithHeaders);
             }
@@ -241,7 +240,7 @@ namespace Azure.Security.KeyVault.Administration
                 string folderName = uriSegments[uriSegments.Length - 1];
                 string containerUriString = folderUri.AbsoluteUri.Substring(0, folderUri.AbsoluteUri.LastIndexOf("/", StringComparison.OrdinalIgnoreCase));
 
-                var response = await _restClient.SelectiveKeyRestoreOperationAsync(
+                var operation = await _restClient.SelectiveKeyRestoreOperationAsync(
                     WaitUntil.Started,
                     keyName,
                     new SelectiveKeyRestoreOperationParameters(
@@ -251,8 +250,8 @@ namespace Azure.Security.KeyVault.Administration
                     cancellationToken).ConfigureAwait(false);
 
                 // Rest client returns an Operation without headers, so we need to create a new response with headers.
-                var headers = new AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders(response.GetRawResponse());
-                var responseWithHeaders = ResponseWithHeaders.FromValue(headers, response.GetRawResponse());
+                var headers = new AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders(operation.GetRawResponse());
+                var responseWithHeaders = ResponseWithHeaders.FromValue(headers, operation.GetRawResponse());
 
                 return new KeyVaultSelectiveKeyRestoreOperation(this, responseWithHeaders);
             }
@@ -289,7 +288,7 @@ namespace Azure.Security.KeyVault.Administration
                 string folderName = uriSegments[uriSegments.Length - 1];
                 string containerUriString = folderUri.AbsoluteUri.Substring(0, folderUri.AbsoluteUri.LastIndexOf("/", StringComparison.OrdinalIgnoreCase));
 
-                var response = _restClient.SelectiveKeyRestoreOperation(
+                var operation = _restClient.SelectiveKeyRestoreOperation(
                     WaitUntil.Started,
                     keyName,
                     new SelectiveKeyRestoreOperationParameters(
@@ -299,8 +298,8 @@ namespace Azure.Security.KeyVault.Administration
                     cancellationToken);
 
                 // Rest client returns an Operation without headers, so we need to create a new response with headers.
-                var headers = new AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders(response.GetRawResponse());
-                var responseWithHeaders = ResponseWithHeaders.FromValue(headers, response.GetRawResponse());
+                var headers = new AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders(operation.GetRawResponse());
+                var responseWithHeaders = ResponseWithHeaders.FromValue(headers, operation.GetRawResponse());
 
                 return new KeyVaultSelectiveKeyRestoreOperation(this, responseWithHeaders);
             }
