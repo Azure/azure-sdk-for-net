@@ -270,10 +270,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [text_docs]: https://learn.microsoft.com/azure/ai-services/language-service/conversational-language-understanding/overview
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [ConversationAnalysisAuthoringClient_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationAnalysisAuthoringClient.cs
-[ConversationAuthoringProject_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/ConversationAuthoringProject.cs
-[ConversationAuthoringDeployment_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/ConversationAuthoringDeployment.cs
-[ConversationAuthoringExportedModel_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/ConversationAuthoringExportedModel.cs
-[ConversationAuthoringTrainedModel_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/ConversationAuthoringTrainedModel.cs
+[ConversationAuthoringProject_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationAuthoringProject.cs
+[ConversationAuthoringDeployment_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationAuthoringDeployment.cs
+[ConversationAuthoringExportedModel_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationAuthoringExportedModel.cs
+[ConversationAuthoringTrainedModel_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationAuthoringTrainedModel.cs
 [cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication/
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_portal]: https://portal.azure.com
