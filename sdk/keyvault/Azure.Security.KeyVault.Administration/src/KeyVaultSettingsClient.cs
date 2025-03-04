@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -17,6 +18,7 @@ namespace Azure.Security.KeyVault.Administration
     public class KeyVaultSettingsClient
     {
         private readonly KeyVaultRestClient _restClient;
+        private readonly ClientDiagnostics _diagnostics;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultSettingsClient"/> class for the specified vault.
@@ -44,6 +46,7 @@ namespace Azure.Security.KeyVault.Administration
 
             options ??= new KeyVaultAdministrationClientOptions();
 
+            _diagnostics = new ClientDiagnostics(options, true);
             _restClient = new KeyVaultRestClient(vaultUri,credential, options);
         }
         /// <summary>
@@ -70,7 +73,7 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSetting)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSetting)}");
             scope.Start();
             try
             {
@@ -96,7 +99,7 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSetting)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSetting)}");
             scope.Start();
             try
             {
@@ -117,7 +120,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<GetSettingsResult> GetSettings(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSettings)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSettings)}");
             scope.Start();
             try
             {
@@ -138,7 +141,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<GetSettingsResult>> GetSettingsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSettings)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSettings)}");
             scope.Start();
             try
             {
@@ -162,12 +165,17 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNull(setting, nameof(setting));
 
-            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(UpdateSetting)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(UpdateSetting)}");
             scope.Start();
             try
             {
                 Response response = _restClient.UpdateSetting(setting.Name, setting.Value.ToString());
-                return Response.FromValue(KeyVaultSetting.FromResponse(response), response);
+
+                KeyVaultSetting value0 = default;
+                using var document = JsonDocument.Parse(response.ContentStream, default);
+                value0 = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement);
+
+                return Response.FromValue(value0, response);
             }
             catch (Exception ex)
             {
@@ -187,12 +195,17 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNull(setting, nameof(setting));
 
-            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(UpdateSetting)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(UpdateSetting)}");
             scope.Start();
             try
             {
                 Response response = await _restClient.UpdateSettingAsync(setting.Name, setting.Value.ToString()).ConfigureAwait(false);
-                return Response.FromValue(KeyVaultSetting.FromResponse(response), response);
+
+                KeyVaultSetting value0 = default;
+                using var document = await JsonDocument.ParseAsync(response.ContentStream, default).ConfigureAwait(false);
+                value0 = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement);
+
+                return Response.FromValue(value0, response);
             }
             catch (Exception ex)
             {
