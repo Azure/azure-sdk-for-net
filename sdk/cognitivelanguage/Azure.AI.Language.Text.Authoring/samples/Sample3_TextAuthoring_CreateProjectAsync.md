@@ -9,9 +9,8 @@ To create an `AuthoringClient`, you will need the service endpoint and credentia
 ```C# Snippet:CreateTextAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 ## Create a Project Asynchronously
@@ -20,17 +19,18 @@ To create a new project, call CreateProjectAsync on the TextAnalysisAuthoring cl
 
 ```C# Snippet:Sample3_TextAuthoring_CreateProjectAsync
 string projectName = "MyNewProjectAsync";
-var projectData = new
+TextAuthoringProject projectClient = client.GetProject(projectName);
+var projectData = new TextAuthoringCreateProjectDetails(
+    projectKind: "customMultiLabelClassification",
+    storageInputContainerName: "e2e0test0data",
+    language: "en"
+)
 {
-    projectName = projectName,
-    language = "en",
-    projectKind = "CustomEntityRecognition",
-    description = "Project description for a Custom Entity Recognition project",
-    multilingual = true
+    Description = "Project description for a Custom Entity Recognition project",
+    Multilingual = true
 };
 
-using RequestContent content = RequestContent.Create(projectData);
-Response response = await authoringClient.CreateProjectAsync(projectName, content);
+Response response = await projectClient.CreateProjectAsync(projectData);
 
 Console.WriteLine($"Project created with status: {response.Status}");
 ```
