@@ -47,6 +47,15 @@
     <None Update="TestData\ModelX\ModelXWireFormat.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestData\ModelWithXmlAndJson\ModelWithXmlAndJson.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\ModelWithXmlAndJson\ModelWithXmlAndJson.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\ModelWithXmlAndJson\ModelWithXmlAndJsonWireFormat.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\ResourceProviderData\ResourceProviderData-TwoSpaces.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

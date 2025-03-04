@@ -16,10 +16,10 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
     [XmlRoot("Tag")]
     public class ModelWithXmlAndJson : IPersistableModel<ModelWithXmlAndJson>, IJsonModel<ModelWithXmlAndJson>
     {
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, BinaryData> _rawData;
         internal ModelWithXmlAndJson()
         {
-            _additionalBinaryDataProperties = new Dictionary<string, BinaryData>();
+            _rawData = new Dictionary<string, BinaryData>();
         }
 
         internal ModelWithXmlAndJson(string? key, string? value, string? readonlyProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -30,7 +30,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             Key = key;
             Value = value;
             ReadOnlyProperty = readonlyProperty;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _rawData = additionalBinaryDataProperties;
         }
 
         /// <summary> Initializes a new instance of ModelXml for testing. </summary>
@@ -45,7 +45,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             Key = key;
             Value = value;
             ReadOnlyProperty = readonlyProperty;
-            _additionalBinaryDataProperties = new Dictionary<string, BinaryData>();
+            _rawData = new Dictionary<string, BinaryData>();
         }
 
         /// <summary> Gets or sets the key. </summary>
@@ -67,8 +67,12 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
             string format = options.Format == "W" ? ((IPersistableModel<ModelWithXmlAndJson>)this).GetFormatFromOptions(options) : options.Format;
-            ModelReaderWriterHelper.ValidateFormat(this, format);
+            if (options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ModelWithXmlAndJson>)} interface");
+            }
 
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
@@ -76,9 +80,9 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             writer.WriteStringValue(Value);
             writer.WritePropertyName("readOnlyProperty"u8);
             writer.WriteStringValue(ReadOnlyProperty);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _rawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _rawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
@@ -98,8 +102,12 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         protected virtual ModelWithXmlAndJson JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
             string format = options.Format == "W" ? ((IPersistableModel<ModelWithXmlAndJson>)this).GetFormatFromOptions(options) : options.Format;
-            ModelReaderWriterHelper.ValidateFormat(this, format);
+            if (options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ModelWithXmlAndJson>)} interface");
+            }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeModelXmlJson(document.RootElement, options);
@@ -109,8 +117,8 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
             string format = options.Format == "W" ? ((IPersistableModel<ModelWithXmlAndJson>)this).GetFormatFromOptions(options) : options.Format;
-            ModelReaderWriterHelper.ValidateFormat(this, format);
 
             switch (format)
             {
@@ -120,7 +128,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                     {
                         using MemoryStream stream = new MemoryStream();
                         using XmlWriter writer = XmlWriter.Create(stream);
-                        Serialize(writer, options, null);
+                        SerializeAsXml(writer, options, null);
                         writer.Flush();
                         if (stream.Position > int.MaxValue)
                         {
@@ -158,7 +166,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         string IPersistableModel<ModelWithXmlAndJson>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
 
-        private void Serialize(XmlWriter writer, ModelReaderWriterOptions options, string? nameHint)
+        private void SerializeAsXml(XmlWriter writer, ModelReaderWriterOptions options, string? nameHint)
         {
             writer.WriteStartElement(nameHint ?? "Tag");
             writer.WriteStartElement("Key");
@@ -170,9 +178,9 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             writer.WriteStartElement("ReadOnlyProperty");
             writer.WriteValue(ReadOnlyProperty);
             writer.WriteEndElement();
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _rawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _rawData)
                 {
                     writer.WriteStartElement(item.Key);
                     writer.WriteValue(item.Value);
