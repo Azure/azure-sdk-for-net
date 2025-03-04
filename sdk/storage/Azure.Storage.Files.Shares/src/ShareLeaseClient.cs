@@ -166,6 +166,8 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<ShareFileLease> Acquire(
             TimeSpan? duration = default,
@@ -204,6 +206,8 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<ShareFileLease>> AcquireAsync(
             TimeSpan? duration = default,
@@ -234,6 +238,8 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -266,6 +272,8 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -308,6 +316,8 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response<ShareFileLease>> AcquireInternal(
             TimeSpan? duration,
@@ -429,6 +439,8 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<FileLeaseReleaseInfo> Release(
             CancellationToken cancellationToken = default) =>
@@ -458,6 +470,8 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<FileLeaseReleaseInfo>> ReleaseAsync(
             CancellationToken cancellationToken = default) =>
@@ -490,6 +504,8 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         internal virtual async Task<Response<FileLeaseReleaseInfo>> ReleaseInternal(
             bool async,
@@ -591,6 +607,8 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<ShareFileLease> Change(
             string proposedId,
@@ -622,6 +640,8 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<ShareFileLease>> ChangeAsync(
             string proposedId,
@@ -656,6 +676,8 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response<ShareFileLease>> ChangeInternal(
             string proposedId,
@@ -769,6 +791,8 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<ShareFileLease> Break(
             CancellationToken cancellationToken = default) =>
@@ -800,6 +824,8 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<ShareFileLease>> BreakAsync(
             CancellationToken cancellationToken = default) =>
@@ -834,6 +860,8 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response<ShareFileLease>> BreakInternal(
             bool async,
@@ -939,6 +967,8 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<ShareFileLease> Renew(
             CancellationToken cancellationToken = default) =>
@@ -969,6 +999,8 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<ShareFileLease>> RenewAsync(
             CancellationToken cancellationToken = default) =>
@@ -1002,6 +1034,8 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response<ShareFileLease>> RenewInternal(
             bool async,
