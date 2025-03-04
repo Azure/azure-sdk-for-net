@@ -196,6 +196,7 @@ jobs:
           parameters:
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
             AOTTestInputs: ${{ parameters.AOTTestInputs }}
+            PackageInfoFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
 
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: "Component Detection"

@@ -130,7 +130,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
         # when AOTCompat is true, there is an additional parameter we need to retrieve
         $aotArtifacts = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "AOTTestInputs")
         if ($aotArtifacts) {
-          $aotArtifacts = $aotArtifacts | Where-Object { $_.Name -eq $pkgProp.ArtifactName }
+          $aotArtifacts = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
           $pkgProp.CIParameters["AOTTestInputs"] = $aotArtifacts
         }
       }
