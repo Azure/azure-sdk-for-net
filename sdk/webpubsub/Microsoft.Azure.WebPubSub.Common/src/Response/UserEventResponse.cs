@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// Message.
         /// </summary>
         [DataMember(Name = "data")]
-        [JsonPropertyName("data"), JsonConverter(typeof(BinaryDataJsonConverter))]
+        [JsonPropertyName("data"), JsonConverter(typeof(System.Text.Json.Serialization.BinaryDataJsonConverter))]
         public BinaryData Data { get; set; }
 
         /// <summary>
