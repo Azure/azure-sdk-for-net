@@ -35,39 +35,27 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TrafficControllerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TrafficControllerResource.CreateResourceIdentifier" /> to create a <see cref="TrafficControllerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="TrafficControllerAssociationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TrafficControllerAssociationResource.CreateResourceIdentifier" /> to create a <see cref="TrafficControllerAssociationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TrafficControllerResource"/> object. </returns>
-        public virtual TrafficControllerResource GetTrafficControllerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TrafficControllerAssociationResource"/> object. </returns>
+        public virtual TrafficControllerAssociationResource GetTrafficControllerAssociationResource(ResourceIdentifier id)
         {
-            TrafficControllerResource.ValidateResourceId(id);
-            return new TrafficControllerResource(Client, id);
+            TrafficControllerAssociationResource.ValidateResourceId(id);
+            return new TrafficControllerAssociationResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AssociationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssociationResource.CreateResourceIdentifier" /> to create an <see cref="AssociationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="TrafficControllerFrontendResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TrafficControllerFrontendResource.CreateResourceIdentifier" /> to create a <see cref="TrafficControllerFrontendResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AssociationResource"/> object. </returns>
-        public virtual AssociationResource GetAssociationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TrafficControllerFrontendResource"/> object. </returns>
+        public virtual TrafficControllerFrontendResource GetTrafficControllerFrontendResource(ResourceIdentifier id)
         {
-            AssociationResource.ValidateResourceId(id);
-            return new AssociationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="FrontendResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FrontendResource.CreateResourceIdentifier" /> to create a <see cref="FrontendResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FrontendResource"/> object. </returns>
-        public virtual FrontendResource GetFrontendResource(ResourceIdentifier id)
-        {
-            FrontendResource.ValidateResourceId(id);
-            return new FrontendResource(Client, id);
+            TrafficControllerFrontendResource.ValidateResourceId(id);
+            return new TrafficControllerFrontendResource(Client, id);
         }
 
         /// <summary>
@@ -80,6 +68,18 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
         {
             ApplicationGatewayForContainersSecurityPolicyResource.ValidateResourceId(id);
             return new ApplicationGatewayForContainersSecurityPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TrafficControllerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TrafficControllerResource.CreateResourceIdentifier" /> to create a <see cref="TrafficControllerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TrafficControllerResource"/> object. </returns>
+        public virtual TrafficControllerResource GetTrafficControllerResource(ResourceIdentifier id)
+        {
+            TrafficControllerResource.ValidateResourceId(id);
+            return new TrafficControllerResource(Client, id);
         }
     }
 }

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="wafPolicy"> Web Application Firewall Policy of the Traffic Controller Security Policy. </param>
         /// <param name="provisioningState"> Provisioning State of Traffic Controller SecurityPolicy Resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayForContainersSecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.PolicyType? policyType, WritableSubResource wafPolicy, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ApplicationGatewayForContainersSecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ApplicationGatewayForContainersSecurityPolicyType? policyType, WritableSubResource wafPolicy, ServiceNetworkingProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             PolicyType = policyType;
             WafPolicy = wafPolicy;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <summary> Type of the Traffic Controller Security Policy. </summary>
-        public Models.PolicyType? PolicyType { get; }
+        public ApplicationGatewayForContainersSecurityPolicyType? PolicyType { get; }
         /// <summary> Web Application Firewall Policy of the Traffic Controller Security Policy. </summary>
         internal WritableSubResource WafPolicy { get; set; }
         /// <summary> Gets or sets Id. </summary>
@@ -99,6 +99,6 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <summary> Provisioning State of Traffic Controller SecurityPolicy Resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ServiceNetworkingProvisioningState? ProvisioningState { get; }
     }
 }
