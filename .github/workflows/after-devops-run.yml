@@ -1,17 +1,22 @@
 name: Follow up on DevOps run
 
-on :
-  check_run:
-    types: [created, completed]
+on:
+  check_suite:
+    types: [completed]
+  issue_comment:
+    types: [created]
+
+permissions: {}
 
 jobs:
-  apiview_commenting:
-    runs-on: ubuntu-latest
-
+  event-handler:
+    permissions:
+      statuses: write # to set status (azure/azure-sdk-actions)
+      pull-requests: write # to read pull requests and write comments (azure/azure-sdk-actions)
+      checks: read # to read check status (azure/azure-sdk-actions)
+    name: Handle ${{ github.event_name }} ${{ github.event.action }} event
+    runs-on: ubuntu-latest # This image is intentionally set to "latest", and not to a specific version
     steps:
-      - name: Output Check Run Information
-        run: |
-          echo "Check Run Name: ${{ github.event.check_run.url }}"
-          echo "Check Run Name: ${{ github.event.check_run.name }}"
-          echo "Check Run Status: ${{ github.event.check_run.status }}"
-          echo "Check Run Conclusion: ${{ github.event.check_run.conclusion }}"
+      - uses: azure/azure-sdk-actions@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
