@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Functions.Worker
         /// <summary>
         /// Message content.
         /// </summary>
-        [JsonConverter(typeof(System.Text.Json.Serialization.BinaryDataJsonConverter))]
+        [JsonConverter(typeof(System.BinaryDataJsonConverter))]
         [JsonPropertyName("data")]
         public BinaryData Data { get; set; }
 

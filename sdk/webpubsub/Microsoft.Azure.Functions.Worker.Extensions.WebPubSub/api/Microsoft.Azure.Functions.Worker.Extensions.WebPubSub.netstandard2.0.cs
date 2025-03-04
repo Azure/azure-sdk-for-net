@@ -125,7 +125,6 @@ namespace Microsoft.Azure.Functions.Worker
     public sealed partial class SendToAllAction : Microsoft.Azure.Functions.Worker.WebPubSubAction
     {
         public SendToAllAction() { }
-        [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.BinaryDataJsonConverter))]
         public System.BinaryData Data { get { throw null; } set { } }
         public Microsoft.Azure.Functions.Worker.WebPubSubDataType DataType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Excluded { get { throw null; } set { } }
@@ -134,14 +133,12 @@ namespace Microsoft.Azure.Functions.Worker
     {
         public SendToConnectionAction() { }
         public string ConnectionId { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.BinaryDataJsonConverter))]
         public System.BinaryData Data { get { throw null; } set { } }
         public Microsoft.Azure.Functions.Worker.WebPubSubDataType DataType { get { throw null; } set { } }
     }
     public partial class SendToGroupAction : Microsoft.Azure.Functions.Worker.WebPubSubAction
     {
         public SendToGroupAction() { }
-        [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.BinaryDataJsonConverter))]
         public System.BinaryData Data { get { throw null; } set { } }
         public Microsoft.Azure.Functions.Worker.WebPubSubDataType DataType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Excluded { get { throw null; } set { } }
@@ -150,7 +147,6 @@ namespace Microsoft.Azure.Functions.Worker
     public sealed partial class SendToUserAction : Microsoft.Azure.Functions.Worker.WebPubSubAction
     {
         public SendToUserAction() { }
-        [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.BinaryDataJsonConverter))]
         public System.BinaryData Data { get { throw null; } set { } }
         public Microsoft.Azure.Functions.Worker.WebPubSubDataType DataType { get { throw null; } set { } }
         public string UserId { get { throw null; } set { } }
@@ -158,7 +154,6 @@ namespace Microsoft.Azure.Functions.Worker
     public sealed partial class UserEventRequest : Microsoft.Azure.Functions.Worker.WebPubSubEventRequest
     {
         public UserEventRequest() { }
-        [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.BinaryDataJsonConverter))]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("data")]
         public System.BinaryData Data { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("dataType")]
@@ -175,7 +170,6 @@ namespace Microsoft.Azure.Functions.Worker
         public UserEventResponse(string data, Microsoft.Azure.Functions.Worker.WebPubSubDataType dataType = Microsoft.Azure.Functions.Worker.WebPubSubDataType.Text) { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("states")]
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> ConnectionStates { get { throw null; } }
-        [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.BinaryDataJsonConverter))]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("data")]
         public System.BinaryData Data { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("dataType")]

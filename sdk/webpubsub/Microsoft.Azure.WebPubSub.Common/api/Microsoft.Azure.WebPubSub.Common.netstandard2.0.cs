@@ -293,7 +293,6 @@ namespace Microsoft.Azure.WebPubSub.Common
     {
         public UserEventRequest(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext context, System.BinaryData data, Microsoft.Azure.WebPubSub.Common.WebPubSubDataType dataType) : base (default(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext)) { }
         [System.Runtime.Serialization.DataMemberAttribute(Name="data")]
-        [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.BinaryDataJsonConverter))]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("data")]
         public System.BinaryData Data { get { throw null; } }
         [System.Runtime.Serialization.DataMemberAttribute(Name="dataType")]
@@ -313,7 +312,6 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.Runtime.Serialization.IgnoreDataMemberAttribute]
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> ConnectionStates { get { throw null; } }
         [System.Runtime.Serialization.DataMemberAttribute(Name="data")]
-        [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.BinaryDataJsonConverter))]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("data")]
         public System.BinaryData Data { get { throw null; } set { } }
         [System.Runtime.Serialization.DataMemberAttribute(Name="dataType")]
