@@ -1,4 +1,4 @@
-name: Follow up on DevOps run
+name: Follow up on DevOps run test
 
 on:
   check_suite:
