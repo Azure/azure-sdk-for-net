@@ -34,22 +34,22 @@ public static class AzureOpenAIExtensions
     }
 
     /// <summary>
-    /// Gets the OpenAI embeddings client.
+    /// Gets the OpenAI embedding client.
     /// </summary>
     /// <param name="provider"></param>
     /// <param name="deploymentName"></param>
     /// <returns></returns>
-    public static EmbeddingClient GetAzureOpenAIEmbeddingsClient(this ConnectionProvider provider, string? deploymentName = null)
+    public static EmbeddingClient GetAzureOpenAIEmbeddingClient(this ConnectionProvider provider, string? deploymentName = null)
     {
         string name = deploymentName ?? "default";
 
-        EmbeddingClient embeddingsClient = provider.Subclients.GetClient(() =>
+        EmbeddingClient embeddingClient = provider.Subclients.GetClient(() =>
         {
             AzureOpenAIClient aoiaClient = provider.Subclients.GetClient(() => CreateAzureOpenAIClient(provider), null);
-            return provider.CreateEmbeddingsClient(aoiaClient, deploymentName);
+            return provider.CreateEmbeddingClient(aoiaClient, deploymentName);
         }, name);
 
-        return embeddingsClient;
+        return embeddingClient;
     }
 
     private static AzureOpenAIClient CreateAzureOpenAIClient(this ConnectionProvider provider)
@@ -73,10 +73,10 @@ public static class AzureOpenAIExtensions
         return chat;
     }
 
-    private static EmbeddingClient CreateEmbeddingsClient(this ConnectionProvider provider, AzureOpenAIClient client, string? deploymentName = null)
+    private static EmbeddingClient CreateEmbeddingClient(this ConnectionProvider provider, AzureOpenAIClient client, string? deploymentName = null)
     {
         ClientConnection connection = provider.GetConnection(typeof(EmbeddingClient).FullName!);
-        EmbeddingClient embeddings = client.GetEmbeddingClient(deploymentName ?? connection.Locator);
-        return embeddings;
+        EmbeddingClient embedding = client.GetEmbeddingClient(deploymentName ?? connection.Locator);
+        return embedding;
     }
 }

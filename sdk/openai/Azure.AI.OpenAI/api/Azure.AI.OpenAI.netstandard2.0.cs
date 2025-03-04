@@ -66,7 +66,7 @@ namespace Azure.AI.OpenAI
     public static partial class AzureOpenAIExtensions
     {
         public static OpenAI.Chat.ChatClient GetAzureOpenAIChatClient(this System.ClientModel.Primitives.ConnectionProvider provider, string? deploymentName = null) { throw null; }
-        public static OpenAI.Embeddings.EmbeddingClient GetAzureOpenAIEmbeddingsClient(this System.ClientModel.Primitives.ConnectionProvider provider, string? deploymentName = null) { throw null; }
+        public static OpenAI.Embeddings.EmbeddingClient GetAzureOpenAIEmbeddingClient(this System.ClientModel.Primitives.ConnectionProvider provider, string? deploymentName = null) { throw null; }
     }
     public partial class ContentFilterBlocklistResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ContentFilterBlocklistResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ContentFilterBlocklistResult>
     {
