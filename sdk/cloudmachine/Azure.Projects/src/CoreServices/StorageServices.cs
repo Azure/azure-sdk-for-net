@@ -49,7 +49,7 @@ public readonly struct StorageServices
 
             BlobContainerClient container = new(uri, (TokenCredential)connection.Credential);
             return container;
-        });
+        }, null);
         return container;
     }
 

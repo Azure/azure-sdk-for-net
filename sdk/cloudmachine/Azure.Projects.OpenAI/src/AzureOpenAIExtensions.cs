@@ -30,7 +30,7 @@ public static class AzureOpenAIExtensions
         string name = deploymentName ?? "default";
 
         // TODO: nest the calls after new SCM merges
-        AzureOpenAIClient aoiaClient = workspace.Subclients.GetClient(() => CreateAzureOpenAIClient(workspace));
+        AzureOpenAIClient aoiaClient = workspace.Subclients.GetClient(() => CreateAzureOpenAIClient(workspace), null);
         ChatClient chatClient = workspace.Subclients.GetClient(() =>
         {
             return workspace.CreateChatClient(aoiaClient, deploymentName);
@@ -50,7 +50,7 @@ public static class AzureOpenAIExtensions
         string name = deploymentName ?? "default";
 
         // TODO: nest the calls after new SCM merges
-        AzureOpenAIClient aoiaClient = workspace.Subclients.GetClient(() => CreateAzureOpenAIClient(workspace));
+        AzureOpenAIClient aoiaClient = workspace.Subclients.GetClient(() => CreateAzureOpenAIClient(workspace), null);
         EmbeddingClient embeddingsClient = workspace.Subclients.GetClient(() =>
         {
             return workspace.CreateEmbeddingsClient(aoiaClient, deploymentName);

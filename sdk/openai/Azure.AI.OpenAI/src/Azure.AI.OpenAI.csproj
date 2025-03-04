@@ -54,6 +54,7 @@
     <Otherwise>
       <ItemGroup>
         <PackageReference Include="Azure.Core" />
+        <ProjectReference Include="..\..\..\core\System.ClientModel\src\System.ClientModel.csproj" />
       </ItemGroup>
     </Otherwise>
   </Choose>
