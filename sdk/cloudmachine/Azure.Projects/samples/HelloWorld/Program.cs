@@ -1,4 +1,7 @@
-﻿using Azure.Projects;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Projects;
 using Azure.Projects.OpenAI;
 using OpenAI.Chat;
 

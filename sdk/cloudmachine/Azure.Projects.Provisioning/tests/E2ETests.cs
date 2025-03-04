@@ -3,8 +3,10 @@
 
 #nullable enable
 
-using Azure.AI.Agents;
+using Azure.Data.AppConfiguration;
 using Azure.Projects.AIFoundry;
+using Azure.Projects.KeyVault;
+using Azure.Projects.AppConfiguration;
 using Azure.Projects.OpenAI;
 using NUnit.Framework;
 using OpenAI.Chat;
@@ -25,6 +27,21 @@ public class E2ETests
         ChatClient chat = project.GetOpenAIChatClient();
 
         Assert.AreEqual(2, project.Connections.Count);
+    }
+
+    [TestCase("-bicep")]
+    [TestCase("")]
+    public void AppConfiguration(string arg)
+    {
+        ProjectInfrastructure infra = new("cm0a110d2f21084bb");
+        infra.AddFeature(new AppConfigurationFeature());
+        if (infra.TryExecuteCommand([arg]))
+            return;
+
+        ProjectClient project = new(infra.Connections);
+        Assert.AreEqual(1, project.Connections.Count);
+
+        ConfigurationClient config = project.GetConfigurationClient();
     }
 
     [TestCase("-bicep")]

@@ -17,6 +17,19 @@ namespace Azure.Projects.OpenAI
         public static OpenAI.Embeddings.EmbeddingClient GetOpenAIEmbeddingsClient(this System.ClientModel.Primitives.ConnectionProvider workspace, string? deploymentName = null) { throw null; }
         public static void Trim(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages) { }
     }
+    public partial class ChatProcessor
+    {
+        public ChatProcessor(OpenAI.Chat.ChatClient chat) { }
+        public ChatProcessor(OpenAI.Chat.ChatClient chat, OpenAI.Embeddings.EmbeddingClient? embeddings, Azure.Projects.OpenAI.ChatTools? tools = null) { }
+        public Azure.Projects.OpenAI.ChatTools? Tools { get { throw null; } set { } }
+        public Azure.Projects.OpenAI.EmbeddingsVectorbase? VectorDb { get { throw null; } set { } }
+        protected virtual OpenAI.Chat.ChatCompletion OnComplete(System.Collections.Generic.List<OpenAI.Chat.ChatMessage> conversation, string prompt) { throw null; }
+        protected virtual void OnGround(System.Collections.Generic.List<OpenAI.Chat.ChatMessage> conversation, string prompt) { }
+        protected virtual void OnLength(System.Collections.Generic.List<OpenAI.Chat.ChatMessage> conversation, OpenAI.Chat.ChatCompletion completion) { }
+        protected virtual void OnStop(System.Collections.Generic.List<OpenAI.Chat.ChatMessage> conversation, OpenAI.Chat.ChatCompletion completion) { }
+        protected virtual void OnToolCalls(System.Collections.Generic.List<OpenAI.Chat.ChatMessage> conversation, OpenAI.Chat.ChatCompletion completion) { }
+        public OpenAI.Chat.ChatCompletion TakeTurn(System.Collections.Generic.List<OpenAI.Chat.ChatMessage> conversation, string prompt) { throw null; }
+    }
     public partial class ChatTools
     {
         public ChatTools(params System.Type[] tools) { }
