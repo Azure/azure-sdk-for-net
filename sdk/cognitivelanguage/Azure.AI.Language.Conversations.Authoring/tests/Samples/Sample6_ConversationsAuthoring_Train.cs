@@ -20,34 +20,32 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample6_ConversationsAuthoring_Train
             string projectName = "MySampleProject";
-
-            var trainingJobDetails = new TrainingJobDetails(
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+            TrainingJobDetails trainingJobDetails = new TrainingJobDetails(
                 modelLabel: "MyModel",
-                trainingMode: TrainingMode.Standard
+                trainingMode: ConversationAuthoringTrainingMode.Standard
             )
             {
                 TrainingConfigVersion = "1.0",
                 EvaluationOptions = new EvaluationDetails
                 {
-                    Kind = EvaluationKind.Percentage,
+                    Kind = ConversationAuthoringEvaluationKind.Percentage,
                     TestingSplitPercentage = 20,
                     TrainingSplitPercentage = 80
                 }
             };
 
-            Operation<TrainingJobResult> operation = authoringClient.Train(
+            Operation<TrainingJobResult> operation = projectClient.Train(
                 waitUntil: WaitUntil.Completed,
-                projectName: projectName,
-                body: trainingJobDetails
+                details: trainingJobDetails
             );
 
              // Extract the operation-location header
-            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 
             Console.WriteLine($"Training completed with status: {operation.GetRawResponse().Status}");
