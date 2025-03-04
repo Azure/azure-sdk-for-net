@@ -3,15 +3,19 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
+    /// CPU usage is a measure of how much processing power a process is using over a period of time. To calculate this,
+    /// you need to know how much CPU time the process has consumed during a specific interval.
+    ///
     /// In order to perform a cpu monitor without requiring large
     /// amounts of permissions from the user, we can do a pseudo monitor
     /// where with poll the CPU to see how it does with a simple wait task.
@@ -24,9 +28,25 @@ namespace Azure.Storage.DataMovement
     ///
     /// A lot of computations were taken from the azcopy cpuMonitor
     /// </summary>
-    internal class CpuMonitor
+    internal class ResourceMonitor : IResourceMonitor
     {
+        private Task _monitoringWorker;
+        private CancellationTokenSource _cancellationTokenSource;
+        private TimeSpan _monitoringInterval;
+
+        public float CpuUsage { get; private set; }
         public bool IsRunning { get; private set; }
+        private double PreviousProcessorTime { get; set; } = 0;
+        private double CurrentProcessorTime { get; set; }
+        private int CoreCount { get; } = Environment.ProcessorCount;
+
+        private Process CurrentProcess
+        {
+            get
+            {
+                return Process.GetCurrentProcess();
+            }
+        }
 
         /// <summary>
         /// CPUContentionExists returns true if demand for CPU capacity is affecting
@@ -35,15 +55,28 @@ namespace Azure.Storage.DataMovement
 
         public bool ContentionExists { get; private set; }
 
-        private Task _monitoringWorker;
+        public double MemoryUsage { get; private set; }
 
         /// <summary>
         /// Initalizes the CPU monitor.
         ///
         /// This should be called early on in the job transfers.
         /// </summary>
-        public CpuMonitor()
+        ///
+        public ResourceMonitor() { }
+
+        /// <summary>
+        /// Initalizes the CPU monitor.
+        ///
+        /// This should be called early on in the job transfers.
+        /// Monitoring intervals below 100 Milliseconds are likely to give 0 readings.
+        /// Monitoring intervals should be above 1000 Milliseconds to be able to get readings
+        /// </summary>
+        ///
+
+        public ResourceMonitor(TimeSpan monitoringInterval)
         {
+            _monitoringInterval = monitoringInterval;
         }
 
         /// <summary>
@@ -134,6 +167,36 @@ namespace Azure.Storage.DataMovement
             }
         }
 
+        public void StartMonitoring()
+        {
+            if (IsRunning)
+                return;
+
+            IsRunning = true;
+            // One cancellation token so that each thread is cancelled
+            _cancellationTokenSource = new CancellationTokenSource();
+
+            // Running each monitor on its own thread because they are not dependent on each other.
+            // If they were dependent on each other, then I could run it like this:
+            // Task.Run(async () =>
+            //{
+            //    await MonitorCpuUsage(_cancellationTokenSource.Token).ConfigureAwait(false);
+            //    await MonitorMemoryUsage(_cancellationTokenSource.Token).ConfigureAwait(false);
+            //});
+
+            Task.Run(() => MonitorCpuUsage(_cancellationTokenSource.Token));
+            Task.Run(() => MonitorMemoryUsage(_cancellationTokenSource.Token));
+        }
+
+        public void StopMonitoring()
+        {
+            if (!IsRunning)
+                throw new InvalidOperationException();
+
+            IsRunning = false;
+            _cancellationTokenSource?.Cancel();
+        }
+
         private static async Task MonitoringWorker(
             TimeSpan waitTime,
             ChannelWriter<TimeSpan> durationWriter,
@@ -155,6 +218,88 @@ namespace Azure.Storage.DataMovement
 
                 await durationWriter.WriteAsync(excessTime, cancellationToken).ConfigureAwait(false);
             }
+        }
+
+        private async Task MonitorCpuUsage(CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                await Task.Delay(_monitoringInterval, cancellationToken).ConfigureAwait(false);
+                MonitorCpuUsageLegacy();
+            }
+        }
+
+        private void MonitorCpuUsageLegacy()
+        {
+            // using process would work on all old and new frameworks
+            // https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.process.getcurrentprocess?view=net-9.0#system-diagnostics-process-getcurrentprocess
+            // Calling Refresh forces the Process object to update its cached information with current values from the OS.
+            CurrentProcess.Refresh();
+            CurrentProcessorTime = CurrentProcess.TotalProcessorTime.TotalMilliseconds;
+            CpuUsage = CalculateCpuUsage();
+            PreviousProcessorTime = CurrentProcessorTime;
+        }
+
+        private float CalculateCpuUsage()
+        {
+            // CPU Usage = (CPU Time Used / (Time Elapsed * Number of Cores)) * 100
+            // Delta CPU Time Used = Current CPU Time - Previous CPU Time
+            // Process.TotalProcessorTime.TotlMilliseconds returns the processing time across all processors
+            // Environment.ProcessorCount returns then total number of cores (which includes physical cores plus hyper
+            // threaded cores
+            return (float)(CurrentProcessorTime - PreviousProcessorTime) / (float)(_monitoringInterval.TotalMilliseconds * CoreCount);
+        }
+
+        private async Task MonitorMemoryUsage(CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                await Task.Delay(_monitoringInterval, cancellationToken).ConfigureAwait(false);
+                // This is the memory that is shown in the task manager
+                //long currentMemoryUsage = CurrentProcess.WorkingSet64;
+                long currentMemoryUsage = CurrentProcess.PrivateMemorySize64;
+
+#if NETSTANDARD2_0_OR_GREATER
+                // This is wrong, but the workaround looks like it would be really long and difficult to implment....
+                //long totalPhysicalMemory = CurrentProcess.WorkingSet64;
+                long totalPhysicalMemory = (long)CalculateMemoryNETStandard();
+
+#else
+                long totalPhysicalMemory = GC.GetGCMemoryInfo().TotalAvailableMemoryBytes;
+                // Assumption: Probably not MAC
+                // Use PInvoke here
+
+#endif
+                MemoryUsage = (double)currentMemoryUsage / (double)totalPhysicalMemory;
+            }
+        }
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern bool GlobalMemoryStatusEx(ref MEMORYSTATUSEX lpBuffer);
+
+        private ulong CalculateMemoryNETStandard()
+        {
+            MEMORYSTATUSEX memStatus = new MEMORYSTATUSEX { dwLength = (uint)Marshal.SizeOf(typeof(MEMORYSTATUSEX)) };
+            if (GlobalMemoryStatusEx(ref memStatus))
+            {
+                return memStatus.ullTotalPhys;
+                //Console.WriteLine($"Available RAM: {memStatus.ullAvailPhys / 1024 / 1024} MB");
+            }
+            return 0;
+        }
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        internal struct MEMORYSTATUSEX
+        {
+            public uint dwLength;
+            public uint dwMemoryLoad;
+            public ulong ullTotalPhys;
+            public ulong ullAvailPhys;
+            public ulong ullTotalPageFile;
+            public ulong ullAvailPageFile;
+            public ulong ullTotalVirtual;
+            public ulong ullAvailVirtual;
+            public ulong ullAvailExtendedVirtual;
         }
     }
 }
