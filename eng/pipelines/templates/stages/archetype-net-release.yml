@@ -118,20 +118,6 @@ stages:
                       artifactName: ${{parameters.ArtifactName}}-signed  # Required, name of the pipeline artifact
                       targetPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed  # Optional, specifies where the artifact is downloaded to
 
-                  outputParentDirectory: '$(Pipeline.Workspace)'
-                  outputs:
-                    - output: nuget
-                      displayName: 'Publish ${{artifact.name}} package to NuGet.org'
-                      packageParentPath: '$(Pipeline.Workspace)'
-                      packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)//${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
-                      nuGetFeedType: external
-                      publishFeedCredentials: Nuget.org
-                    - output: nuget
-                      displayName: 'Publish to DevOps Feed'
-                      packageParentPath: '$(Pipeline.Workspace)'
-                      packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
-                      publishVstsFeed: ${{ parameters.DevOpsFeedID }}
-
                 strategy:
                   runOnce:
                     deploy:
@@ -139,6 +125,22 @@ stages:
                         - template: /eng/pipelines/templates/steps/copy-credscan-suppressions.yml
                           parameters:
                             ArtifactPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed
+
+                        - task: 1ES.PublishNuget@1
+                          displayName: Publish ${{artifact.name}} package to NuGet.org
+                          inputs:
+                            packageParentPath: '$(Pipeline.Workspace)'
+                            packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)//${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
+                            nuGetFeedType: external
+                            publishFeedCredentials: Nuget.org
+
+                        - task: 1ES.PublishNuget@1
+                          displayName: Publish to DevOps Feed
+                          inputs:
+                            packageParentPath: '$(Pipeline.Workspace)'
+                            packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
+                            publishVstsFeed: ${{ parameters.DevOpsFeedID }}
+
 
               - ${{if ne(artifact.skipSymbolsUpload, 'true')}}:
                 - job: UploadSymbols
