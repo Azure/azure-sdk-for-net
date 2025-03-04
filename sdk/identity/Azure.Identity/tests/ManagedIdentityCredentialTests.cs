@@ -551,8 +551,6 @@ namespace Azure.Identity.Tests
             var mockTransport = new MockTransport(response);
             var options = new TokenCredentialOptions() { Transport = mockTransport };
 
-            // ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(new ResourceIdentifier(_expectedResourceId), options));
-
             ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(
                 new ManagedIdentityClient(
                     new ManagedIdentityClientOptions()
