@@ -1,9 +1,0 @@
-<Project>
-  <ItemGroup>
-    <!--
-      Include Azure.Core.Tests project when building Azure.ResourceManager.Tests so we can validate that
-      core management test infrastructure isn't broken.
-    -->
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\core\Azure.Core\tests\Azure.Core.Tests.csproj" />
-  </ItemGroup>
-</Project>
