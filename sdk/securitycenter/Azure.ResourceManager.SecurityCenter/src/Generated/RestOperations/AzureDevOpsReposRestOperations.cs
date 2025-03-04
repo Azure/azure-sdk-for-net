@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AzureDevOpsRepositoryListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureDevOpsRepositoryListResponse.DeserializeAzureDevOpsRepositoryListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AzureDevOpsRepositoryListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureDevOpsRepositoryListResponse.DeserializeAzureDevOpsRepositoryListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DevOpsRepositoryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevOpsRepositoryData.DeserializeDevOpsRepositoryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DevOpsRepositoryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevOpsRepositoryData.DeserializeDevOpsRepositoryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AzureDevOpsRepositoryListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureDevOpsRepositoryListResponse.DeserializeAzureDevOpsRepositoryListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AzureDevOpsRepositoryListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureDevOpsRepositoryListResponse.DeserializeAzureDevOpsRepositoryListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Quota
                 case 200:
                     {
                         QuotaRequestDetailData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QuotaRequestDetailData.DeserializeQuotaRequestDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Quota
                 case 200:
                     {
                         QuotaRequestDetailData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QuotaRequestDetailData.DeserializeQuotaRequestDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Quota
                 case 200:
                     {
                         QuotaRequestDetailsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QuotaRequestDetailsList.DeserializeQuotaRequestDetailsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Quota
                 case 200:
                     {
                         QuotaRequestDetailsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QuotaRequestDetailsList.DeserializeQuotaRequestDetailsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Quota
                 case 200:
                     {
                         QuotaRequestDetailsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QuotaRequestDetailsList.DeserializeQuotaRequestDetailsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Quota
                 case 200:
                     {
                         QuotaRequestDetailsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QuotaRequestDetailsList.DeserializeQuotaRequestDetailsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

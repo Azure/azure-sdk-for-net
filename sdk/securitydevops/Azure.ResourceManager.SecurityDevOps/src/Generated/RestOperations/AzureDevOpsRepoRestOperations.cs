@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureDevOpsRepoListResponse.DeserializeAzureDevOpsRepoListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureDevOpsRepoListResponse.DeserializeAzureDevOpsRepoListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureDevOpsRepoListResponse.DeserializeAzureDevOpsRepoListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureDevOpsRepoListResponse.DeserializeAzureDevOpsRepoListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureDevOpsRepoListResponse.DeserializeAzureDevOpsRepoListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureDevOpsRepoListResponse.DeserializeAzureDevOpsRepoListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureDevOpsRepoListResponse.DeserializeAzureDevOpsRepoListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureDevOpsRepoListResponse.DeserializeAzureDevOpsRepoListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

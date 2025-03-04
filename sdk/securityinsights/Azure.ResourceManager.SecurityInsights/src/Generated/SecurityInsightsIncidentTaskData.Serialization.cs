@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecurityInsightsIncidentTaskData(document.RootElement, options);
                     }
                 default:
