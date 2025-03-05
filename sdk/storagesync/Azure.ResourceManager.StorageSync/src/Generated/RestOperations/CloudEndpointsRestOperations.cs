@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         CloudEndpointData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudEndpointData.DeserializeCloudEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         CloudEndpointData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudEndpointData.DeserializeCloudEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         CloudEndpointArray value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudEndpointArray.DeserializeCloudEndpointArray(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         CloudEndpointArray value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudEndpointArray.DeserializeCloudEndpointArray(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         CloudEndpointAfsShareMetadataCertificatePublicKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudEndpointAfsShareMetadataCertificatePublicKeys.DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1211,7 +1211,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         CloudEndpointAfsShareMetadataCertificatePublicKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudEndpointAfsShareMetadataCertificatePublicKeys.DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

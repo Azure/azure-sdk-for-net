@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         SyncGroupArray value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncGroupArray.DeserializeSyncGroupArray(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         SyncGroupArray value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncGroupArray.DeserializeSyncGroupArray(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         StorageSyncGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageSyncGroupData.DeserializeStorageSyncGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         StorageSyncGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageSyncGroupData.DeserializeStorageSyncGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         StorageSyncGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageSyncGroupData.DeserializeStorageSyncGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         StorageSyncGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageSyncGroupData.DeserializeStorageSyncGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

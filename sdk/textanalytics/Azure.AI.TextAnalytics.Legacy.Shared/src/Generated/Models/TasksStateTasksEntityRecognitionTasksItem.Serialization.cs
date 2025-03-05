@@ -56,7 +56,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new TasksStateTasksEntityRecognitionTasksItem FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTasksStateTasksEntityRecognitionTasksItem(document.RootElement);
         }
     }

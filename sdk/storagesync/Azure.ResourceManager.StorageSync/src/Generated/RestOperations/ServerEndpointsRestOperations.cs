@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         StorageSyncServerEndpointData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageSyncServerEndpointData.DeserializeStorageSyncServerEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         StorageSyncServerEndpointData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageSyncServerEndpointData.DeserializeStorageSyncServerEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         ServerEndpointArray value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServerEndpointArray.DeserializeServerEndpointArray(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         ServerEndpointArray value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServerEndpointArray.DeserializeServerEndpointArray(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

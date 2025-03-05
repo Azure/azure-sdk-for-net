@@ -139,7 +139,7 @@ namespace Azure.AI.Translation.Text
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTransliterableScript(document.RootElement, options);
                     }
                 default:
@@ -153,7 +153,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new TransliterableScript FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTransliterableScript(document.RootElement);
         }
 

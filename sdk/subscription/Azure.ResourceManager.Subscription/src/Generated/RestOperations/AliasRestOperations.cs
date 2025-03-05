@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Subscription
                 case 200:
                     {
                         SubscriptionAliasData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SubscriptionAliasData.DeserializeSubscriptionAliasData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Subscription
                 case 200:
                     {
                         SubscriptionAliasData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SubscriptionAliasData.DeserializeSubscriptionAliasData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Subscription
                 case 200:
                     {
                         SubscriptionAliasListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SubscriptionAliasListResult.DeserializeSubscriptionAliasListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Subscription
                 case 200:
                     {
                         SubscriptionAliasListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SubscriptionAliasListResult.DeserializeSubscriptionAliasListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

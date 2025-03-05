@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapLandscapeMonitorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapLandscapeMonitorData.DeserializeSapLandscapeMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapLandscapeMonitorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapLandscapeMonitorData.DeserializeSapLandscapeMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Workloads
                 case 201:
                     {
                         SapLandscapeMonitorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapLandscapeMonitorData.DeserializeSapLandscapeMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Workloads
                 case 201:
                     {
                         SapLandscapeMonitorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapLandscapeMonitorData.DeserializeSapLandscapeMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapLandscapeMonitorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapLandscapeMonitorData.DeserializeSapLandscapeMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapLandscapeMonitorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapLandscapeMonitorData.DeserializeSapLandscapeMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapLandscapeMonitorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapLandscapeMonitorListResult.DeserializeSapLandscapeMonitorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapLandscapeMonitorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapLandscapeMonitorListResult.DeserializeSapLandscapeMonitorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

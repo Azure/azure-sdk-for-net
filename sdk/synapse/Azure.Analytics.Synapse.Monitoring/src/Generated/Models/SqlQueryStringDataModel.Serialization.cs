@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SqlQueryStringDataModel FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSqlQueryStringDataModel(document.RootElement);
         }
     }

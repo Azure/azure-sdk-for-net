@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTrafficManagerHeatMapData(document.RootElement, options);
                     }
                 default:

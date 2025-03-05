@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapApplicationServerInstanceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapApplicationServerInstanceData.DeserializeSapApplicationServerInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapApplicationServerInstanceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapApplicationServerInstanceData.DeserializeSapApplicationServerInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapApplicationServerInstanceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapApplicationServerInstanceList.DeserializeSapApplicationServerInstanceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapApplicationServerInstanceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapApplicationServerInstanceList.DeserializeSapApplicationServerInstanceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapApplicationServerInstanceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapApplicationServerInstanceList.DeserializeSapApplicationServerInstanceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapApplicationServerInstanceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapApplicationServerInstanceList.DeserializeSapApplicationServerInstanceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

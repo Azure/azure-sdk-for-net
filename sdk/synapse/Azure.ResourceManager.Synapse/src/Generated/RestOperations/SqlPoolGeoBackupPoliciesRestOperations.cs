@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseGeoBackupPolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseGeoBackupPolicyListResult.DeserializeSynapseGeoBackupPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseGeoBackupPolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseGeoBackupPolicyListResult.DeserializeSynapseGeoBackupPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Synapse
                 case 201:
                     {
                         SynapseGeoBackupPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseGeoBackupPolicyData.DeserializeSynapseGeoBackupPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Synapse
                 case 201:
                     {
                         SynapseGeoBackupPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseGeoBackupPolicyData.DeserializeSynapseGeoBackupPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseGeoBackupPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseGeoBackupPolicyData.DeserializeSynapseGeoBackupPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseGeoBackupPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseGeoBackupPolicyData.DeserializeSynapseGeoBackupPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

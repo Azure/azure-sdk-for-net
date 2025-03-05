@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapsePrivateLinkHubListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapsePrivateLinkHubListResult.DeserializeSynapsePrivateLinkHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapsePrivateLinkHubListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapsePrivateLinkHubListResult.DeserializeSynapsePrivateLinkHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapsePrivateLinkHubData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapsePrivateLinkHubData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Synapse
                 case 201:
                     {
                         SynapsePrivateLinkHubData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Synapse
                 case 201:
                     {
                         SynapsePrivateLinkHubData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Synapse
                 case 201:
                     {
                         SynapsePrivateLinkHubData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Synapse
                 case 201:
                     {
                         SynapsePrivateLinkHubData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapsePrivateLinkHubListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapsePrivateLinkHubListResult.DeserializeSynapsePrivateLinkHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapsePrivateLinkHubListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapsePrivateLinkHubListResult.DeserializeSynapsePrivateLinkHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapsePrivateLinkHubListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapsePrivateLinkHubListResult.DeserializeSynapsePrivateLinkHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapsePrivateLinkHubListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapsePrivateLinkHubListResult.DeserializeSynapsePrivateLinkHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapsePrivateLinkHubListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapsePrivateLinkHubListResult.DeserializeSynapsePrivateLinkHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapsePrivateLinkHubListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapsePrivateLinkHubListResult.DeserializeSynapsePrivateLinkHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         SqlScriptsListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         SqlScriptsListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -208,7 +208,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         SqlScriptResource value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -238,7 +238,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         SqlScriptResource value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -419,7 +419,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         SqlScriptsListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -446,7 +446,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         SqlScriptsListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
