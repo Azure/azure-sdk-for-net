@@ -59,13 +59,13 @@ public class BlobServiceFeature : AzureProjectFeature
 {
     public StorageAccountFeature? Account { get; set; }
 
-    protected internal override void EmitImplicitFeatures(FeatureCollection features, string projectId)
+    protected internal override void AddImplicitFeatures(FeatureCollection features, string projectId)
     {
         StorageAccountFeature? account = features.FindAll<StorageAccountFeature>().FirstOrDefault();
         if (account == default)
         {
             account = new(projectId);
-            features.Add(account);
+            features.Append(account);
         }
         Account = account;
     }
@@ -91,13 +91,12 @@ public class BlobContainerFeature : AzureProjectFeature
     public string ContainerName { get; }
     public BlobServiceFeature? Service { get; set; }
 
-    public BlobContainerFeature(string? containerName = default)
+    public BlobContainerFeature(string containerName = "default")
     {
-        if (containerName == default) containerName = ProjectConnections.DefaultBlobContainerName;
         ContainerName = containerName;
     }
 
-    protected internal override void EmitImplicitFeatures(FeatureCollection features, string projectId)
+    protected internal override void AddImplicitFeatures(FeatureCollection features, string projectId)
     {
         // TODO: is it OK that we return the first one?
         BlobServiceFeature? service = features.FindAll<BlobServiceFeature>().FirstOrDefault();
@@ -107,14 +106,14 @@ public class BlobContainerFeature : AzureProjectFeature
             if (account == default)
             {
                 account = new(projectId);
-                features.Add(account);
+                features.Append(account);
             }
 
             service = new BlobServiceFeature() { Account = account };
-            features.Add(service);
+            features.Append(service);
         }
         Service = service;
-        features.Add(this);
+        features.Append(this);
     }
 
     protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
@@ -131,7 +130,7 @@ public class BlobContainerFeature : AzureProjectFeature
         };
         infrastructure.AddResource(container);
 
-        AddConnectionToAppConfig(infrastructure,
+        EmitConnection(infrastructure,
             $"Azure.Storage.Blobs.BlobContainerClient@{ContainerName}",
             $"https://{Service.Account.Name}.blob.core.windows.net/{ContainerName}"
         );

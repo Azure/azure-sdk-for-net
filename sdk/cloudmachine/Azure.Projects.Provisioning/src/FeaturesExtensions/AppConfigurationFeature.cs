@@ -26,44 +26,39 @@ internal class AppConfigurationFeature : AzureProjectFeature
         FeatureRole appConfigAdmin = new(AppConfigurationBuiltInRole.GetBuiltInRoleName(AppConfigurationBuiltInRole.AppConfigurationDataOwner), AppConfigurationBuiltInRole.AppConfigurationDataOwner.ToString());
         RequiredSystemRoles.Add(appConfigResource, [appConfigAdmin]);
 
-        //ClientConnection connection = new(
-        //    "Azure.Data.AppConfiguration.ConfigurationClient",
-        //    $"https://{cmId}.azconfig.io",
-        //    ClientAuthenticationMethod.Credential
-        //);
-
         return appConfigResource;
     }
 }
 
 public class AppConfigurationSettingFeature : AzureProjectFeature
 {
-    public AppConfigurationSettingFeature(string key, string value)
+    public AppConfigurationSettingFeature(string key, string value, string bicepIdentifier = "cm_config_setting")
     {
         Key = key;
         Value = value;
-        BicepIdentifier = "cm_config_setting";
+        BicepIdentifier = bicepIdentifier;
     }
+
     public string Key { get; }
     public string Value { get; }
+    private string BicepIdentifier { get; }
 
-    internal string BicepIdentifier { get; set; }
-    internal AppConfigurationFeature? Parent { get; set; }
+    internal AppConfigurationFeature? Store { get; set; }
 
-    protected internal override void EmitImplicitFeatures(FeatureCollection features, string projectId)
+    protected internal override void AddImplicitFeatures(FeatureCollection features, string projectId)
     {
         AppConfigurationFeature? account = features.FindAll<AppConfigurationFeature>().FirstOrDefault();
         if (account == default)
         {
             account = new();
-            features.Add(account);
+            features.Append(account);
         }
-        Parent = account;
+        Store = account;
     }
 
     protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
-        if (Parent == null)
+        if (Store == null)
         {
             throw new InvalidOperationException("Parent AppConfigurationFeature is not set.");
         }
@@ -73,7 +68,7 @@ public class AppConfigurationSettingFeature : AzureProjectFeature
         {
             Name = this.Key,
             Value = this.Value,
-            Parent = (AppConfigurationStore)Parent.Resource
+            Parent = (AppConfigurationStore)Store.Resource
         };
         infrastructure.AddResource(kvp);
         return kvp;

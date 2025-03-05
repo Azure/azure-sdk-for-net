@@ -3,8 +3,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Linq;
 using Azure.Projects.Core;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.Primitives;
@@ -39,7 +37,7 @@ public class OpenAIModelFeature : AzureProjectFeature
     public string ModelVersion { get; }
     private AIModelKind Kind { get; }
 
-    internal OpenAIFeature Account { get; set; } = default!;
+    internal OpenAIAccountFeature Account { get; set; } = default!;
 
     /// <summary>
     /// Creates client connection for the resource.
@@ -57,17 +55,18 @@ public class OpenAIModelFeature : AzureProjectFeature
     /// </summary>
     /// <param name="features"></param>
     /// <param name="cmId"></param>
-    protected override void EmitImplicitFeatures(FeatureCollection features, string cmId)
+    protected override void AddImplicitFeatures(FeatureCollection features, string cmId)
     {
         // TODO: is it OK that we return the first one?
-        OpenAIFeature? openAI = features.FindAll<OpenAIFeature>().FirstOrDefault();
-        if (openAI == default)
+
+        if (!features.TryGet(out OpenAIAccountFeature? openAI))
         {
-            openAI = new OpenAIFeature(); // TODO: we need to add connection
-            features.Add(openAI);
+            openAI = new OpenAIAccountFeature();
+            features.Append(openAI);
         }
-        Account = openAI;
-        features.Add(this);
+
+        Account = openAI!;
+        features.Append(this);
     }
 
     /// <summary>
@@ -125,7 +124,7 @@ public class OpenAIModelFeature : AzureProjectFeature
 
         string key = Kind == AIModelKind.Chat ? "OpenAI.Chat.ChatClient" : "OpenAI.Embeddings.EmbeddingClient";
         string locator = Kind == AIModelKind.Chat ? $"{cm.ProjectId}_chat" : $"{cm.ProjectId}_embedding";
-        AddConnectionToAppConfig(cm, key, locator);
+        EmitConnection(cm, key, locator);
 
         return deployment;
 

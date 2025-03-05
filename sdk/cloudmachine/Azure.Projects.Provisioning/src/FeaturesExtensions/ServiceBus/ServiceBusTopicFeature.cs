@@ -34,7 +34,7 @@ internal class ServiceBusTopicFeature : AzureProjectFeature
 
         infrastructure.AddResource(topic);
 
-        AddConnectionToAppConfig(infrastructure, Name, Name);
+        EmitConnection(infrastructure, Name, Name);
         return topic;
     }
 

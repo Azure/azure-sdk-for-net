@@ -20,12 +20,6 @@ public static class Azd
     private const string MainBicepName = "main";
     private const string ResourceGroupVersion = "2024-03-01";
 
-    public static void Init(ProjectClient client, string? infraDirectory = default)
-    {
-        ProjectInfrastructure infra = client.GetInfrastructure();
-        Init(infra, infraDirectory);
-    }
-
     public static void Init(ProjectInfrastructure infra, string? infraDirectory = default)
     {
         if (infraDirectory == default)

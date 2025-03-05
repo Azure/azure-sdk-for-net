@@ -4,6 +4,7 @@
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using Azure.Projects.AppConfiguration;
 using Azure.Projects.Core;
@@ -70,8 +71,8 @@ public partial class ProjectInfrastructure
 
     public T AddFeature<T>(T feature) where T: AzureProjectFeature
     {
-        feature.EmitImplicitFeatures(Features, ProjectId);
-        Features.Add(feature);
+        feature.AddImplicitFeatures(Features, ProjectId);
+        Features.Append(feature);
         return feature;
     }
 
@@ -86,7 +87,10 @@ public partial class ProjectInfrastructure
     {
         context ??= new ProvisioningBuildOptions();
 
-        Features.Emit(this);
+        foreach (var feature in Features)
+        {
+            feature.Emit(this);
+        }
 
         // Add any add-on resources to the infrastructure.
         foreach (Provisionable resource in _constrcuts)
@@ -94,8 +98,13 @@ public partial class ProjectInfrastructure
             _infrastructure.Add(resource);
         }
 
+        var roles = Features
+            .Select(feature => feature.RequiredSystemRoles)
+            .SelectMany(role => role)
+            .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
         // This must occur after the features have been emitted.
-        context.InfrastructureResolvers.Add(new RoleResolver(ProjectId, Features.RoleAnnotations, [Identity], [PrincipalIdParameter]));
+        context.InfrastructureResolvers.Add(new RoleResolver(ProjectId, roles, [Identity], [PrincipalIdParameter]));
 
         return _infrastructure.Build(context);
     }

@@ -31,7 +31,7 @@ internal class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature
 
         infrastructure.AddResource(subscription);
 
-        AddConnectionToAppConfig(infrastructure, name, $"{parent.Name}/{name}");
+        EmitConnection(infrastructure, name, $"{parent.Name}/{name}");
         return subscription;
     }
 }

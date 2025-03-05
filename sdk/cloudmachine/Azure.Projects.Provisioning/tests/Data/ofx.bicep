@@ -275,7 +275,7 @@ resource cm_connection_1 'Microsoft.AppConfiguration/configurationStores/keyValu
 }
 
 resource cm_connection_2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
-  name: 'cm_servicebus_connection'
+  name: 'Azure.Messaging.ServiceBus.ServiceBusClient'
   properties: {
     value: 'https://cm0c420d2f21084cd.servicebus.windows.net/'
   }

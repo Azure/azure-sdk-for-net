@@ -37,8 +37,10 @@ public class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = Ser
         );
         RequiredSystemRoles.Add(_serviceBusNamespace, [dataOwner]);
 
-        var connection = ProjectConnections.CreateDefaultServiceBusConnection(infrastructure.ProjectId);
-        AddConnectionToAppConfig(infrastructure, "cm_servicebus_connection", connection.Locator);
+        EmitConnection(infrastructure,
+            "Azure.Messaging.ServiceBus.ServiceBusClient",
+            $"https://{infrastructure.ProjectId}.servicebus.windows.net/"
+        );
 
         return _serviceBusNamespace;
     }

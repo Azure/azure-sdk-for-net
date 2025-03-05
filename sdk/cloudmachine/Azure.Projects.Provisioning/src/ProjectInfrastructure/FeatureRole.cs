@@ -3,7 +3,7 @@
 
 namespace Azure.Projects.Core;
 
-public struct FeatureRole
+public readonly struct FeatureRole
 {
     public FeatureRole(string name, string id)
     {

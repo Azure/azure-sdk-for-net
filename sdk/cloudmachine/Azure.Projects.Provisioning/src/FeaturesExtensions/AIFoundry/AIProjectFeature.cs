@@ -92,7 +92,7 @@ namespace Azure.Projects.AIFoundry
 
             if (_connectionString != null)
             {
-                AddConnectionToAppConfig(infrastructure, "Azure.AI.Projects.AIProjectClient", _connectionString);
+                EmitConnection(infrastructure, "Azure.AI.Projects.AIProjectClient", _connectionString);
             }
 
             return project;

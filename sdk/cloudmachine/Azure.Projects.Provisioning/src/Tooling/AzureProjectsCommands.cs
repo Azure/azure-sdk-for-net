@@ -12,7 +12,7 @@ namespace Azure.Projects;
 
 public static class AzureProjectsCommands
 {
-    public static bool TryExecuteCommand(this ProjectInfrastructure cmi, string[] args)
+    public static bool TryExecuteCommand(this ProjectInfrastructure infrastructure, string[] args)
     {
         if (args.Length < 1)
             return false;
@@ -21,20 +21,20 @@ public static class AzureProjectsCommands
 
         if (args[0] == "-bicep")
         {
-            Azd.Init(cmi);
+            Azd.Init(infrastructure);
             return true;
         }
 
         if (args[0] == "-init")
         {
-            Azd.Init(cmi);
+            Azd.Init(infrastructure);
 
             string? projName = default;
             if (args.Length > 1)
             {
                 projName = args[1];
             }
-            Azd.InitDeployment(cmi, projName);
+            Azd.InitDeployment(infrastructure, projName);
             return true;
         }
 
