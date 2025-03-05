@@ -56,8 +56,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             var activities = new List<Activity>();
             var serviceCollection = new ServiceCollection();
 
-            // This shouldn't be needed but Http Instrumentation library was performing redaction without it.
+#if NET9_0_OR_GREATER
+            // Starting with .NET 9, HttpClient library performs redaction by default
+            AppContext.SetSwitch("System.Net.Http.DisableUriRedaction", true);
+#else
+            // For all older frameworks, the Instrumentation Library performs redaction by default
             serviceCollection.AddEnvironmentVariables(new Dictionary<string, string?> { { "OTEL_DOTNET_EXPERIMENTAL_HTTPCLIENT_DISABLE_URL_QUERY_REDACTION", "true" } });
+#endif
 
             serviceCollection.AddOpenTelemetry()
                 .UseAzureMonitor(x => x.ConnectionString = testConnectionString)
