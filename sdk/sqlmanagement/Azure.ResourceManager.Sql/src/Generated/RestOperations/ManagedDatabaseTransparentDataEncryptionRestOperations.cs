@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedTransparentDataEncryptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedTransparentDataEncryptionData.DeserializeManagedTransparentDataEncryptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedTransparentDataEncryptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedTransparentDataEncryptionData.DeserializeManagedTransparentDataEncryptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Sql
                 case 201:
                     {
                         ManagedTransparentDataEncryptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedTransparentDataEncryptionData.DeserializeManagedTransparentDataEncryptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Sql
                 case 201:
                     {
                         ManagedTransparentDataEncryptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedTransparentDataEncryptionData.DeserializeManagedTransparentDataEncryptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedTransparentDataEncryptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedTransparentDataEncryptionListResult.DeserializeManagedTransparentDataEncryptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedTransparentDataEncryptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedTransparentDataEncryptionListResult.DeserializeManagedTransparentDataEncryptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedTransparentDataEncryptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedTransparentDataEncryptionListResult.DeserializeManagedTransparentDataEncryptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedTransparentDataEncryptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedTransparentDataEncryptionListResult.DeserializeManagedTransparentDataEncryptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

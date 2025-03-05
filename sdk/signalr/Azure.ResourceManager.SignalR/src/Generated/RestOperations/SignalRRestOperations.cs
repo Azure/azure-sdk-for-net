@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SignalR
                 case 200:
                     {
                         SignalRNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SignalRNameAvailabilityResult.DeserializeSignalRNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SignalR
                 case 200:
                     {
                         SignalRNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SignalRNameAvailabilityResult.DeserializeSignalRNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SignalR
                 case 200:
                     {
                         SignalRResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SignalRResourceList.DeserializeSignalRResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SignalR
                 case 200:
                     {
                         SignalRResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SignalRResourceList.DeserializeSignalRResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.SignalR
                 case 200:
                     {
                         SignalRResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SignalRResourceList.DeserializeSignalRResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.SignalR
                 case 200:
                     {
                         SignalRResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SignalRResourceList.DeserializeSignalRResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.SignalR
                 case 200:
                     {
                         SignalRData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SignalRData.DeserializeSignalRData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.SignalR
                 case 200:
                     {
                         SignalRData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SignalRData.DeserializeSignalRData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.SignalR
                 case 200:
                     {
                         SignalRKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SignalRKeys.DeserializeSignalRKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.SignalR
                 case 200:
                     {
                         SignalRKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SignalRKeys.DeserializeSignalRKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.SignalR
                 case 200:
                     {
                         SignalRSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SignalRSkuListResult.DeserializeSignalRSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1017,7 +1017,7 @@ namespace Azure.ResourceManager.SignalR
                 case 200:
                     {
                         SignalRSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SignalRSkuListResult.DeserializeSignalRSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1066,7 +1066,7 @@ namespace Azure.ResourceManager.SignalR
                 case 200:
                     {
                         SignalRResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SignalRResourceList.DeserializeSignalRResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1093,7 +1093,7 @@ namespace Azure.ResourceManager.SignalR
                 case 200:
                     {
                         SignalRResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SignalRResourceList.DeserializeSignalRResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1144,7 +1144,7 @@ namespace Azure.ResourceManager.SignalR
                 case 200:
                     {
                         SignalRResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SignalRResourceList.DeserializeSignalRResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1173,7 +1173,7 @@ namespace Azure.ResourceManager.SignalR
                 case 200:
                     {
                         SignalRResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SignalRResourceList.DeserializeSignalRResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

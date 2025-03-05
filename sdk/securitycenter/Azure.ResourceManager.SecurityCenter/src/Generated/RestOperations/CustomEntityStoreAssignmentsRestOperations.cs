@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         CustomEntityStoreAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         CustomEntityStoreAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 201:
                     {
                         CustomEntityStoreAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 201:
                     {
                         CustomEntityStoreAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         CustomEntityStoreAssignmentsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomEntityStoreAssignmentsListResult.DeserializeCustomEntityStoreAssignmentsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         CustomEntityStoreAssignmentsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomEntityStoreAssignmentsListResult.DeserializeCustomEntityStoreAssignmentsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         CustomEntityStoreAssignmentsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomEntityStoreAssignmentsListResult.DeserializeCustomEntityStoreAssignmentsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         CustomEntityStoreAssignmentsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomEntityStoreAssignmentsListResult.DeserializeCustomEntityStoreAssignmentsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         CustomEntityStoreAssignmentsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomEntityStoreAssignmentsListResult.DeserializeCustomEntityStoreAssignmentsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         CustomEntityStoreAssignmentsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomEntityStoreAssignmentsListResult.DeserializeCustomEntityStoreAssignmentsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         CustomEntityStoreAssignmentsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomEntityStoreAssignmentsListResult.DeserializeCustomEntityStoreAssignmentsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         CustomEntityStoreAssignmentsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomEntityStoreAssignmentsListResult.DeserializeCustomEntityStoreAssignmentsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

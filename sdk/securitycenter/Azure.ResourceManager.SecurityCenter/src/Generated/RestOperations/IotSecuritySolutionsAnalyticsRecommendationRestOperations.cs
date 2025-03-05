@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         IotSecurityAggregatedRecommendationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotSecurityAggregatedRecommendationData.DeserializeIotSecurityAggregatedRecommendationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         IotSecurityAggregatedRecommendationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotSecurityAggregatedRecommendationData.DeserializeIotSecurityAggregatedRecommendationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         IotSecurityAggregatedRecommendationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotSecurityAggregatedRecommendationList.DeserializeIotSecurityAggregatedRecommendationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         IotSecurityAggregatedRecommendationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotSecurityAggregatedRecommendationList.DeserializeIotSecurityAggregatedRecommendationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         IotSecurityAggregatedRecommendationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotSecurityAggregatedRecommendationList.DeserializeIotSecurityAggregatedRecommendationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         IotSecurityAggregatedRecommendationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotSecurityAggregatedRecommendationList.DeserializeIotSecurityAggregatedRecommendationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

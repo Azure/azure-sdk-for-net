@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSelfHelpSolutionData(document.RootElement, options);
                     }
                 default:
