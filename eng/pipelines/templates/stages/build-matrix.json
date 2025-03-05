@@ -2,7 +2,7 @@
   "displayNames": {},
   "matrix": {
     "Agent": {
-      "Windows_2022": {
+      "PRBatch": {
         "OSVmImage": "env:WINDOWSVMIMAGE",
         "Pool": "env:WINDOWSPOOL"
       }
