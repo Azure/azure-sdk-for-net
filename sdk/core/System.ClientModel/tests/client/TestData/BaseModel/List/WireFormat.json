@@ -1,0 +1,20 @@
+[
+  {
+    "kind": "X",
+    "name": "xModel",
+    "fields": [
+        "testField"
+    ],
+    "keyValuePairs": {
+        "color": "red"
+    }
+  },
+  {
+    "kind": "Y",
+    "name": "yModel"
+  },
+  {
+    "kind": "Z",
+    "name": "zModel"
+  }
+]
