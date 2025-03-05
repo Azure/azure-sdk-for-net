@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingTransitionDetails value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingTransitionDetails.DeserializeBillingTransitionDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingTransitionDetails value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingTransitionDetails.DeserializeBillingTransitionDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         InvoiceSectionWithCreateSubPermissionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InvoiceSectionWithCreateSubPermissionListResult.DeserializeInvoiceSectionWithCreateSubPermissionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         InvoiceSectionWithCreateSubPermissionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InvoiceSectionWithCreateSubPermissionListResult.DeserializeInvoiceSectionWithCreateSubPermissionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PaymentTermsEligibilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaymentTermsEligibilityResult.DeserializePaymentTermsEligibilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PaymentTermsEligibilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaymentTermsEligibilityResult.DeserializePaymentTermsEligibilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingAccountData.DeserializeBillingAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingAccountData.DeserializeBillingAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingAccountListResult.DeserializeBillingAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingAccountListResult.DeserializeBillingAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         InvoiceSectionWithCreateSubPermissionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InvoiceSectionWithCreateSubPermissionListResult.DeserializeInvoiceSectionWithCreateSubPermissionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         InvoiceSectionWithCreateSubPermissionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InvoiceSectionWithCreateSubPermissionListResult.DeserializeInvoiceSectionWithCreateSubPermissionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -920,7 +920,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingAccountListResult.DeserializeBillingAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingAccountListResult.DeserializeBillingAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

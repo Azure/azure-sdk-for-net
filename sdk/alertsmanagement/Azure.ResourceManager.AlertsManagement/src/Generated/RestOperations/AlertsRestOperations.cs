@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 case 200:
                     {
                         ServiceAlertMetadata value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceAlertMetadata.DeserializeServiceAlertMetadata(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 case 200:
                     {
                         ServiceAlertMetadata value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceAlertMetadata.DeserializeServiceAlertMetadata(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 case 200:
                     {
                         ServiceAlertListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceAlertListResult.DeserializeServiceAlertListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 case 200:
                     {
                         ServiceAlertListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceAlertListResult.DeserializeServiceAlertListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 case 200:
                     {
                         ServiceAlertData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceAlertData.DeserializeServiceAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 case 200:
                     {
                         ServiceAlertData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceAlertData.DeserializeServiceAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 case 200:
                     {
                         ServiceAlertData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceAlertData.DeserializeServiceAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 case 200:
                     {
                         ServiceAlertData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceAlertData.DeserializeServiceAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 case 200:
                     {
                         ServiceAlertModification value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceAlertModification.DeserializeServiceAlertModification(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 case 200:
                     {
                         ServiceAlertModification value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceAlertModification.DeserializeServiceAlertModification(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 case 200:
                     {
                         ServiceAlertSummary value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceAlertSummary.DeserializeServiceAlertSummary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 case 200:
                     {
                         ServiceAlertSummary value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceAlertSummary.DeserializeServiceAlertSummary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 case 200:
                     {
                         ServiceAlertListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceAlertListResult.DeserializeServiceAlertListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -912,7 +912,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 case 200:
                     {
                         ServiceAlertListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceAlertListResult.DeserializeServiceAlertListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

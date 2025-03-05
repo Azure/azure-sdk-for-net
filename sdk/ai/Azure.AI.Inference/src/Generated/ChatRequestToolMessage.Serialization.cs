@@ -116,7 +116,7 @@ namespace Azure.AI.Inference
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeChatRequestToolMessage(document.RootElement, options);
                     }
                 default:
@@ -130,7 +130,7 @@ namespace Azure.AI.Inference
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new ChatRequestToolMessage FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeChatRequestToolMessage(document.RootElement);
         }
 

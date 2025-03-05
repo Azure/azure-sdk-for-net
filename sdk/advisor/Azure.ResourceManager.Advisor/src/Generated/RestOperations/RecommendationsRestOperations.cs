@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Advisor
                 case 200:
                     {
                         ResourceRecommendationBaseListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceRecommendationBaseListResult.DeserializeResourceRecommendationBaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Advisor
                 case 200:
                     {
                         ResourceRecommendationBaseListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceRecommendationBaseListResult.DeserializeResourceRecommendationBaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Advisor
                 case 200:
                     {
                         ResourceRecommendationBaseData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Advisor
                 case 200:
                     {
                         ResourceRecommendationBaseData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Advisor
                 case 200:
                     {
                         ResourceRecommendationBaseListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceRecommendationBaseListResult.DeserializeResourceRecommendationBaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Advisor
                 case 200:
                     {
                         ResourceRecommendationBaseListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceRecommendationBaseListResult.DeserializeResourceRecommendationBaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
