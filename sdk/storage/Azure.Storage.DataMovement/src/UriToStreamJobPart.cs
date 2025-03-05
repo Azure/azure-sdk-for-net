@@ -204,13 +204,15 @@ namespace Azure.Storage.DataMovement
                     return;
                 }
                 await OnTransferStateChangedAsync(TransferState.InProgress).ConfigureAwait(false);
+
                 if (!_sourceResource.Length.HasValue)
                 {
-                    await UnknownDownloadInternal().ConfigureAwait(false);
+                    // Queue all the work to the chunk channel directly
+                    await QueueChunkToChannelAsync(UnknownLengthDownloadInternal).ConfigureAwait(false);
                 }
                 else
                 {
-                    await LengthKnownDownloadInternal().ConfigureAwait(false);
+                    await KnownLengthDownloadInternal().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -220,29 +222,27 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal async Task UnknownDownloadInternal()
+        internal async Task UnknownLengthDownloadInternal()
         {
-            Task<StorageResourceReadStreamResult> initialTask = _sourceResource.ReadStreamAsync(
-                position: 0,
-                length: _initialTransferSize,
-                _cancellationToken);
-
             try
             {
                 StorageResourceReadStreamResult initialResult = default;
                 try
                 {
-                    initialResult = await initialTask.ConfigureAwait(false);
+                    initialResult = await _sourceResource.ReadStreamAsync(
+                        position: 0,
+                        length: _initialTransferSize,
+                        _cancellationToken).ConfigureAwait(false);
                 }
                 catch
                 {
                     // Range not accepted, we need to attempt to use a default range
+                    // This can happen if the source is empty.
                     initialResult = await _sourceResource.ReadStreamAsync(
                         cancellationToken: _cancellationToken)
                         .ConfigureAwait(false);
                 }
-                // If the initial request returned no content (i.e., a 304),
-                // we'll pass that back to the user immediately
+
                 long? initialLength = initialResult?.ContentLength;
 
                 // There needs to be at least 1 chunk to create the blob even if the
@@ -285,41 +285,20 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal async Task LengthKnownDownloadInternal()
+        internal async Task KnownLengthDownloadInternal()
         {
             long totalLength = _sourceResource.Length.Value;
             if (totalLength == 0)
             {
-                await CreateZeroLengthDownload().ConfigureAwait(false);
+                await QueueChunkToChannelAsync(CreateZeroLengthDownload).ConfigureAwait(false);
             }
             // Download with a single GET
             else if (_initialTransferSize >= totalLength)
             {
-                // To prevent requesting a range that is invalid when
-                // we already know the length we can just make one get blob request.
-                StorageResourceReadStreamResult result = await _sourceResource.
-                    ReadStreamAsync(length: totalLength, cancellationToken: _cancellationToken)
+                await QueueChunkToChannelAsync(
+                    async () =>
+                    await DownloadChunkSingle(totalLength).ConfigureAwait(false))
                     .ConfigureAwait(false);
-
-                long downloadLength = result.ContentLength.Value;
-                // This should not occur but add a check just in case
-                if (downloadLength != totalLength)
-                {
-                    throw Errors.SingleDownloadLengthMismatch(totalLength, downloadLength);
-                }
-
-                bool successfulCopy = await CopyToStreamInternal(
-                    offset: 0,
-                    sourceLength: downloadLength,
-                    source: result.Content,
-                    expectedLength: totalLength,
-                    initial: true).ConfigureAwait(false);
-                if (successfulCopy)
-                {
-                    await ReportBytesWrittenAsync(downloadLength).ConfigureAwait(false);
-                    // Queue the work to end the download
-                    await QueueCompleteFileDownload().ConfigureAwait(false);
-                }
             }
             // Download in chunks
             else
@@ -352,7 +331,7 @@ namespace Azure.Storage.DataMovement
                     // return before it's completed downloading)
                     await QueueChunkToChannelAsync(
                         async () =>
-                        await DownloadStreamingInternal(range: httpRange).ConfigureAwait(false))
+                        await DownloadChunkPartitioned(range: httpRange).ConfigureAwait(false))
                         .ConfigureAwait(false);
                     chunkCount++;
                 }
@@ -389,7 +368,36 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal async Task DownloadStreamingInternal(HttpRange range)
+        internal async Task DownloadChunkSingle(long totalLength)
+        {
+            // To prevent requesting a range that is invalid when
+            // we already know the length we can just make one get blob request.
+            StorageResourceReadStreamResult result = await _sourceResource
+                .ReadStreamAsync(length: totalLength, cancellationToken: _cancellationToken)
+                .ConfigureAwait(false);
+
+            long downloadLength = result.ContentLength.Value;
+            // This should not occur but add a check just in case
+            if (downloadLength != totalLength)
+            {
+                throw Errors.SingleDownloadLengthMismatch(totalLength, downloadLength);
+            }
+
+            bool successfulCopy = await CopyToStreamInternal(
+                offset: 0,
+                sourceLength: downloadLength,
+                source: result.Content,
+                expectedLength: totalLength,
+                initial: true).ConfigureAwait(false);
+            if (successfulCopy)
+            {
+                await ReportBytesWrittenAsync(downloadLength).ConfigureAwait(false);
+                // Queue the work to end the download
+                await QueueCompleteFileDownload().ConfigureAwait(false);
+            }
+        }
+
+        internal async Task DownloadChunkPartitioned(HttpRange range)
         {
             try
             {
