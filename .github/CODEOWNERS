@@ -893,6 +893,13 @@
 # ServiceLabel: %Support
 # ServiceOwners:                                                   @shahbj79 @mit2nil @aygoya @ganganarayanan
 
+
+# PRLabel: %SustainabilityServices
+/sdk/sustainabilityservices/                                       @GdShruti @vijaya-bgg @anirudi @Subhajit-Chatterjee-MS
+
+# ServiceLabel: %SustainabilityServices
+# ServiceOwners:                                                   @GdShruti @vijaya-bgg @anirudi @Subhajit-Chatterjee-MS
+
 # PRLabel: %Synapse
 /sdk/synapse/                                                      @yanjungao718 @annelo-msft
 
