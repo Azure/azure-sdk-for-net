@@ -14,7 +14,7 @@ namespace Azure.Projects;
 /// <summary>
 /// The Azure AI Projects extensions.
 /// </summary>
-public static class AzureAIProjectsExensions
+public static class AzureAIProjectsExtensions
 {
 #region AIProjects
     /// <summary>
@@ -26,11 +26,11 @@ public static class AzureAIProjectsExensions
     {
         Azure.AI.Projects.AgentsClient agentsClient = workspace.Subclients.GetClient(() =>
         {
-            AIProjectClient aiClient = workspace.Subclients.GetClient(() => CreateAzureAIClient(workspace));
+            AIProjectClient aiClient = workspace.Subclients.GetClient(() => CreateAzureAIClient(workspace), null);
             ClientConnection connection = workspace.GetConnection(typeof(AgentsClient).FullName);
             var agentsClient = new AgentsClient(connection.Locator, (TokenCredential)connection.Credential);
             return agentsClient;
-        });
+        }, null);
 
         return agentsClient;
     }
@@ -44,9 +44,9 @@ public static class AzureAIProjectsExensions
     {
         EvaluationsClient evaluationsClient = workspace.Subclients.GetClient(() =>
         {
-            AIProjectClient aiClient = workspace.Subclients.GetClient(() => CreateAzureAIClient(workspace));
+            AIProjectClient aiClient = workspace.Subclients.GetClient(() => CreateAzureAIClient(workspace), null);
             return aiClient.GetEvaluationsClient();
-        });
+        }, null);
 
         return evaluationsClient;
     }
@@ -67,7 +67,7 @@ public static class AzureAIProjectsExensions
     /// <returns></returns>
     public static ChatCompletionsClient GetChatCompletionsClient(this ConnectionProvider workspace)
     {
-        ChatCompletionsClient chatClient = workspace.Subclients.GetClient(() => CreateChatCompletionsClient(workspace));
+        ChatCompletionsClient chatClient = workspace.Subclients.GetClient(() => CreateChatCompletionsClient(workspace), null);
         return chatClient;
     }
 
@@ -90,7 +90,7 @@ public static class AzureAIProjectsExensions
     /// <returns></returns>
     public static EmbeddingsClient GetEmbeddingsClient(this ConnectionProvider workspace)
     {
-        EmbeddingsClient embeddingsClient =  workspace.Subclients.GetClient(() => CreateEmbeddingsClient(workspace));
+        EmbeddingsClient embeddingsClient =  workspace.Subclients.GetClient(() => CreateEmbeddingsClient(workspace), null);
         return embeddingsClient;
     }
 
@@ -116,7 +116,7 @@ public static class AzureAIProjectsExensions
     /// <returns></returns>
     public static SearchClient GetSearchClient(this ConnectionProvider workspace, string indexName)
     {
-        SearchClient searchClient = workspace.Subclients.GetClient(() => CreateSearchClient(workspace, indexName));
+        SearchClient searchClient = workspace.Subclients.GetClient(() => CreateSearchClient(workspace, indexName), indexName);
         return searchClient;
     }
 
@@ -139,7 +139,7 @@ public static class AzureAIProjectsExensions
     /// <returns></returns>
     public static SearchIndexClient GetSearchIndexClient(this ConnectionProvider workspace)
     {
-        SearchIndexClient searchIndexClient = workspace.Subclients.GetClient(() => CreateSearchIndexClient(workspace));
+        SearchIndexClient searchIndexClient = workspace.Subclients.GetClient(() => CreateSearchIndexClient(workspace), null);
         return searchIndexClient;
     }
 
@@ -162,7 +162,7 @@ public static class AzureAIProjectsExensions
     /// <returns></returns>
     public static SearchIndexerClient GetSearchIndexerClient(this ConnectionProvider workspace)
     {
-        SearchIndexerClient searchIndexerClient = workspace.Subclients.GetClient(() => CreateSearchIndexerClient(workspace));
+        SearchIndexerClient searchIndexerClient = workspace.Subclients.GetClient(() => CreateSearchIndexerClient(workspace), null);
         return searchIndexerClient;
     }
 

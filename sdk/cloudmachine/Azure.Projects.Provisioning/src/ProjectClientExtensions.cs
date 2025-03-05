@@ -40,7 +40,7 @@ public static class ProjectClientExtensions
         {
             ProjectInfrastructure infra = new ProjectInfrastructure(client.Id);
             return infra;
-        });
+        }, null);
     }
 
     private static void CopyConnections(ConnectionCollection from, ConnectionCollection to)
