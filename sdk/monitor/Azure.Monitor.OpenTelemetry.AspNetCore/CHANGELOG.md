@@ -10,6 +10,13 @@
 
 ### Other Changes
 
+* Update OpenTelemetry dependencies
+  ([]())
+  - OpenTelemetry 1.11.2
+  - OpenTelemetry.Extensions.Hosting 1.11.2
+  - OpenTelemetry.Instrumentation.AspNetCore 1.11.1
+  - OpenTelemetry.Instrumentation.Http 1.11.1
+
 ## 1.3.0-beta.2 (2024-10-11)
 
 ### Bugs Fixed
