@@ -96,7 +96,7 @@ namespace Azure.DigitalTwins.Core
                 case 201:
                     {
                         IReadOnlyList<DigitalTwinsModelData> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<DigitalTwinsModelData> array = new List<DigitalTwinsModelData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -140,7 +140,7 @@ namespace Azure.DigitalTwins.Core
                 case 201:
                     {
                         IReadOnlyList<DigitalTwinsModelData> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<DigitalTwinsModelData> array = new List<DigitalTwinsModelData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -206,7 +206,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         PagedDigitalTwinsModelDataCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PagedDigitalTwinsModelDataCollection.DeserializePagedDigitalTwinsModelDataCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -238,7 +238,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         PagedDigitalTwinsModelDataCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PagedDigitalTwinsModelDataCollection.DeserializePagedDigitalTwinsModelDataCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -295,7 +295,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         DigitalTwinsModelData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DigitalTwinsModelData.DeserializeDigitalTwinsModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -333,7 +333,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         DigitalTwinsModelData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DigitalTwinsModelData.DeserializeDigitalTwinsModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -581,7 +581,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         PagedDigitalTwinsModelDataCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PagedDigitalTwinsModelDataCollection.DeserializePagedDigitalTwinsModelDataCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -620,7 +620,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         PagedDigitalTwinsModelDataCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PagedDigitalTwinsModelDataCollection.DeserializePagedDigitalTwinsModelDataCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

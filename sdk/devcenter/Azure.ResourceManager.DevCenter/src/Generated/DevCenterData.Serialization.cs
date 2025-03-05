@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDevCenterData(document.RootElement, options);
                     }
                 default:
