@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace System.ClientModel;
+namespace System.ClientModel.Auth;
 
 /// <summary>
-/// Represents a provider that can provide a token.
+/// An interface implemented by the context type for <see cref="TokenProvider{TContext}"/> implementations supporting password flow.
 /// </summary>
 public interface IPasswordFlowContext : IScopedFlowContext
 {

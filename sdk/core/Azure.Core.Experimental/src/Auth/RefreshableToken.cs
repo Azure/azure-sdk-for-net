@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 namespace System.ClientModel;
 
 /// <summary>
-/// Represents a Token capable of providing an OAuth token.
+/// Represents a Token capable of refreshing itself.
 /// </summary>
-#pragma warning disable AZC0012 // Avoid single word type names
 public abstract class RefreshableToken : Token
-#pragma warning restore AZC0012 // Avoid single word type names
 {
     /// <summary>
     /// Creates a new instance of <see cref="Token"/> using the provided <paramref name="tokenValue"/> and <paramref name="expiresOn"/>.

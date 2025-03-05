@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel;
+namespace System.ClientModel.Auth;
 
 /// <summary>
-/// Represents a provider that can provide a token.
+/// An interface implemented by all <see cref="TokenProvider{TContext}"/> implementations.
 /// </summary>
 public interface ITokenProvider
 {
@@ -25,7 +25,7 @@ public interface ITokenProvider
     /// <param name="context"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Token GetAccessToken(object context, CancellationToken cancellationToken);
+    Token GetToken(ITokenContext context, CancellationToken cancellationToken);
 
     /// <summary>
     /// Gets the token.
@@ -33,5 +33,5 @@ public interface ITokenProvider
     /// <param name="context"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    ValueTask<Token> GetAccessTokenAsync(object context, CancellationToken cancellationToken);
+    ValueTask<Token> GetTokenAsync(ITokenContext context, CancellationToken cancellationToken);
 }

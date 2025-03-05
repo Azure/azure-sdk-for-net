@@ -89,7 +89,7 @@ public class TokenProviderTests
             Scopes = scopes;
         }
 
-        public object CloneWithAdditionalScopes(string[] additionalScopes)
+        public ITokenContext WithAdditionalScopes(string[] additionalScopes)
         {
             return new ScopedContext([.. Scopes, .. additionalScopes]);
         }
@@ -196,7 +196,7 @@ public class TokenProviderTests
 
         public Uri RefreshUri { get; } = refreshUri;
 
-        public object CloneWithAdditionalScopes(string[] additionalScopes)
+        public ITokenContext WithAdditionalScopes(string[] additionalScopes)
         {
             return new ClientCredentialsContext(TokenUri, RefreshUri, [.. Scopes, .. additionalScopes]);
         }

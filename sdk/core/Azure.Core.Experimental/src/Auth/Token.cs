@@ -4,7 +4,7 @@
 namespace System.ClientModel;
 
 /// <summary>
-/// Represents a Token capable of providing an OAuth token.
+/// Represents an OAuth token and its metadata.
 /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
 public class Token

@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace System.ClientModel;
+namespace System.ClientModel.Auth;
 
 /// <summary>
-/// Represents a provider that can provide a token.
+/// The most generic interface for a token context. All other token contexts implement this.
 /// </summary>
 public interface ITokenContext
 {

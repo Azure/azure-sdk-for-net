@@ -9,11 +9,8 @@ using Azure.Core.Pipeline;
 namespace System.ClientModel.Auth;
 
 /// <summary>
-/// A <see cref="PipelinePolicy"/> that uses an <see cref="ITokenProvider"/>
+/// A <see cref="PipelinePolicy"/> that uses an <see cref="ITokenProvider"/> to authenticate requests.
 /// </summary>
-/// <remarks>
-/// Initializes a new instance of the <see cref="OAuth2BearerTokenAuthenticationPolicy"/> class.
-/// </remarks>
 public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
 {
     private readonly ITokenProvider _tokenProvider;
@@ -48,13 +45,13 @@ public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
         Token token;
         if (message.TryGetProperty(typeof(IScopedFlowContext), out var rawContext) && rawContext is IScopedFlowContext scopesContext)
         {
-            var context = _flowContext.CloneWithAdditionalScopes(scopesContext.Scopes);
-            token = async ? await _tokenProvider.GetAccessTokenAsync(context, message.CancellationToken).ConfigureAwait(false) :
-            _tokenProvider.GetAccessToken(context, message.CancellationToken);
+            var context = _flowContext.WithAdditionalScopes(scopesContext.Scopes);
+            token = async ? await _tokenProvider.GetTokenAsync(context, message.CancellationToken).ConfigureAwait(false) :
+            _tokenProvider.GetToken(context, message.CancellationToken);
         }
         else
         {
-            token = _tokenProvider.GetAccessToken(_flowContext, message.CancellationToken);
+            token = _tokenProvider.GetToken(_flowContext, message.CancellationToken);
         }
         message.Request.Headers.Set("Authorization", $"Bearer {token.TokenValue}");
 
@@ -78,7 +75,7 @@ public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
             var t when typeof(TokenProvider<IAuthorizationCodeFlowContext>).IsAssignableFrom(t) => typeof(IAuthorizationCodeFlowContext),
             var t when typeof(TokenProvider<IPasswordFlowContext>).IsAssignableFrom(t) => typeof(IPasswordFlowContext),
             var t when typeof(TokenProvider<IImplicitFlowContext>).IsAssignableFrom(t) => typeof(IImplicitFlowContext),
-            _ => throw new InvalidOperationException("Supplied credential does not implement any supported auth flow.")
+            _ => typeof(IScopedFlowContext)
         };
         foreach (var context in contexts)
         {

@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel;
+namespace System.ClientModel.Auth;
 
 /// <summary>
-/// Represents a provider that can provide a token.
+/// The base class for all <see cref="ITokenProvider"/> implementations.
 /// </summary>
-/// <typeparam name="TContext"></typeparam>
+/// <typeparam name="TContext">A type that implements <see cref="ITokenContext"/></typeparam>
 public abstract class TokenProvider<TContext> : ITokenProvider where TContext : ITokenContext
 {
     /// <summary>
@@ -39,9 +39,9 @@ public abstract class TokenProvider<TContext> : ITokenProvider where TContext : 
     object ITokenProvider.CreateContext(IReadOnlyDictionary<string, object> properties)
         => CreateContext(properties);
 
-    Token ITokenProvider.GetAccessToken(object context, CancellationToken cancellationToken)
+    Token ITokenProvider.GetToken(ITokenContext context, CancellationToken cancellationToken)
         => GetAccessToken((TContext)context, cancellationToken);
 
-    ValueTask<Token> ITokenProvider.GetAccessTokenAsync(object context, CancellationToken cancellationToken)
+    ValueTask<Token> ITokenProvider.GetTokenAsync(ITokenContext context, CancellationToken cancellationToken)
         => GetAccessTokenAsync((TContext)context, cancellationToken);
 }

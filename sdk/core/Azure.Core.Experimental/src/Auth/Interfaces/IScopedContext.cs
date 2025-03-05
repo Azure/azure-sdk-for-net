@@ -4,10 +4,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel;
+namespace System.ClientModel.Auth;
 
 /// <summary>
-/// Represents a provider that can provide a token.
+/// An interface implemented by auth flow interfaces supporting scopes.
 /// </summary>
 public interface IScopedFlowContext : ITokenContext
 {
@@ -21,5 +21,5 @@ public interface IScopedFlowContext : ITokenContext
     /// </summary>
     /// <param name="additionalScopes"></param>
     /// <returns></returns>
-    object CloneWithAdditionalScopes(string[] additionalScopes);
+    ITokenContext WithAdditionalScopes(params string[] additionalScopes);
 }
