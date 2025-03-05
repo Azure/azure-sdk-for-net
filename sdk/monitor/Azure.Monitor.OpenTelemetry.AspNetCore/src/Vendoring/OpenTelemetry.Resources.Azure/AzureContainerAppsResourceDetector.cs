@@ -25,7 +25,7 @@ internal sealed class AzureContainerAppsResourceDetector : IResourceDetector
     /// <inheritdoc/>
     public Resource Detect()
     {
-        List<KeyValuePair<string, object>> attributeList = new List<KeyValuePair<string, object>>();
+        List<KeyValuePair<string, object>> attributeList = [];
         try
         {
             var containerAppName = Environment.GetEnvironmentVariable(ResourceAttributeConstants.AzureContainerAppsNameEnvVar);
