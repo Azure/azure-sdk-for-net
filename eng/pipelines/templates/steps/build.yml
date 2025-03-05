@@ -177,6 +177,17 @@ steps:
     inputs:
       ignoreDirectories: '.nuget'
 
+  - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+    - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+      parameters:
+        ArtifactPath: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'packages_$(System.JobName)'
+  - ${{ else }}:
+    - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+      parameters:
+        ArtifactPath: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'packages'
+
   - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
     parameters:
       ArtifactPath: '$(Build.ArtifactStagingDirectory)'

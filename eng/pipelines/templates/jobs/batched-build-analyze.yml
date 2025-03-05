@@ -76,11 +76,7 @@ jobs:
     displayName: "Analyze"
     dependsOn: ${{ parameters.DependsOn }}
     condition: and(succeededOrFailed(), ne(${{ parameters.Matrix }}, '{}'))
-    templateContext:
-      outputs:
-        - output: pipelineArtifact
-          targetPath: '$(Build.ArtifactStagingDirectory)'
-          artifactName: 'verify'
+
 
     # allow duplication of the job by matrix
     strategy:
