@@ -5,7 +5,6 @@ using System;
 using System.Reflection.Emit;
 using Azure;
 using Azure.AI.Language.Text.Authoring;
-using Azure.AI.Language.Text.Authoring.Models;
 using Azure.AI.Language.Text.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -21,37 +20,35 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample2_TextAuthoring_Import
             string projectName = "LoanAgreements";
-
-            var projectMetadata = new CreateProjectDetails(
-                projectKind: "CustomEntityRecognition",
-                storageInputContainerName: "loanagreements",
-                projectName: projectName,
+            TextAuthoringProject projectClient = client.GetProject(projectName);
+            var projectMetadata = new TextAuthoringCreateProjectDetails(
+                projectKind: "CustomSingleLabelClassification",
+                storageInputContainerName: "test-data",
                 language: "en"
             )
             {
                 Description = "This is a sample dataset provided by the Azure Language service team to help users get started with Custom named entity recognition. The provided sample dataset contains 20 loan agreements drawn up between two entities.",
                 Multilingual = false,
-                Settings = new ProjectSettings()
+                Settings = new TextAuthoringProjectSettings()
             };
 
-            var projectAssets = new ExportedCustomEntityRecognitionProjectAssets
+            var projectAssets = new ExportedCustomEntityRecognitionProjectAsset
             {
                 Entities =
                 {
-                    new ExportedEntity
+                    new TextAuthoringExportedEntity
                     {
                         Category = "Date"
                     },
-                    new ExportedEntity
+                    new TextAuthoringExportedEntity
                     {
                         Category = "LenderName"
                     },
-                    new ExportedEntity
+                    new TextAuthoringExportedEntity
                     {
                         Category = "LenderAddress"
                     }
@@ -131,7 +128,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
                 }
             };
 
-            var exportedProject = new ExportedProject(
+            var exportedProject = new TextAuthoringExportedProject(
                 projectFileVersion: "2022-05-01",
                 stringIndexType: StringIndexType.Utf16CodeUnit,
                 metadata: projectMetadata
@@ -140,9 +137,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
                 Assets = projectAssets
             };
 
-            Operation operation = authoringClient.Import(
+            Operation operation = projectClient.Import(
                 waitUntil: WaitUntil.Completed,
-                projectName: projectName,
                 body: exportedProject
             );
 

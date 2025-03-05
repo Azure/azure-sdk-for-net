@@ -1,15 +1,7 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.0-beta.1 (2025-03-04)
 
 ### Other Changes
 
-## 1.0.0-beta.1
-
-- Initial preview of the Azure.AI.Language.Conversations.Authoring client library.
+- Initial release of Azure.AI.Language.Conversations.Authoring library.

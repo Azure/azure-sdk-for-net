@@ -32,7 +32,8 @@ namespace Azure.Search.Documents
     // https://github.com/Azure/autorest.csharp/issues/486
     // Work-around the generator not enjoying mixing model types between the
     // main and .Models namespaces.
-    internal static partial class SearchExtensions
+    [CodeGenModel("SearchExtensions")]
+    internal static partial class InternalSearchExtensions
     {
         public static string ToSerialString(this AutocompleteMode value) =>
             AutocompleteModeExtensions.ToSerialString(value);
