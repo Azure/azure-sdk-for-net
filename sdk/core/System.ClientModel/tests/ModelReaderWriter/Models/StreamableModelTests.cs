@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
-    internal abstract class StreamableModelTests<T> : ModelTests<T> where T : IStreamModel<T>
+    internal abstract class StreamableModelTests<T> : ModelJsonTests<T> where T : IStreamModel<T>, IJsonModel<T>
     {
         [TestCase("J")]
         [TestCase("W")]
@@ -27,5 +27,25 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [TestCase("W")]
         public void RoundTripWithStreamableModelInterfaceNonGeneric(string format)
             => RoundTripTest(format, new ModelInterfaceAsObjectStreamableStrategy<T>());
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void RoundTripWithJsonStreamableInterfaceOfT(string format)
+            => RoundTripTest(format, new JsonStreamableInterfaceStrategy<T>());
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void RoundTripWithJsonStreamableInterfaceNonGeneric(string format)
+              => RoundTripTest(format, new JsonStreamableInterfaceAsObjectStrategy<T>());
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void RoundTripWithJsonStreamableInterfaceUtf8Reader(string format)
+            => RoundTripTest(format, new JsonStreamableInterfaceUtf8ReaderStrategy<T>());
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void RoundTripWithJsonStreamableInterfaceUtf8ReaderNonGeneric(string format)
+            => RoundTripTest(format, new JsonStreamableInterfaceUtf8ReaderAsObjectStrategy<T>());
     }
 }

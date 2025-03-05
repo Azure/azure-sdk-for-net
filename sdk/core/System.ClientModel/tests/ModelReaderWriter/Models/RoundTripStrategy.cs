@@ -22,9 +22,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         protected BinaryData WriteWithJsonInterface<U>(IJsonModel<U> model, ModelReaderWriterOptions options)
         {
             using MemoryStream stream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-            model.Write(writer, options);
-            writer.Flush();
+            WriteWithJsonInterface(model, stream, options);
             if (stream.Position > int.MaxValue)
             {
                 return BinaryData.FromStream(stream);
@@ -33,6 +31,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             {
                 return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
             }
+        }
+
+        protected void WriteWithJsonInterface<U>(IJsonModel<U> model, Stream stream, ModelReaderWriterOptions options)
+        {
+            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            model.Write(writer, options);
+            writer.Flush();
         }
     }
 
@@ -103,20 +108,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
     }
 
-    public class ModelReaderWriterStreamableStrategy<T> : RoundTripStrategy<T> where T : IStreamModel<T>
+    public class ModelReaderWriterStreamableStrategy<T> : ModelReaderWriterStrategy<T> where T : IStreamModel<T>
     {
-        public override bool IsExplicitJsonWrite => false;
-        public override bool IsExplicitJsonRead => false;
         public override bool SupportsStreaming => true;
-
-        public override BinaryData Write(T model, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Write(model, options);
-        }
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
-        }
 
         public override void Write(Stream stream, T model, ModelReaderWriterOptions options)
         {
@@ -124,21 +118,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
     }
 
-    public class ModelReaderWriterStreamableNonGenericStrategy<T> : RoundTripStrategy<T> where T : IStreamModel<T>
+    public class ModelReaderWriterStreamableNonGenericStrategy<T> : ModelReaderWriterNonGenericStrategy<T> where T : IStreamModel<T>
     {
-        public override bool IsExplicitJsonWrite => false;
-        public override bool IsExplicitJsonRead => false;
         public override bool SupportsStreaming => true;
-
-        public override BinaryData Write(T model, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Write((object)model, options);
-        }
-
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), typeof(T), options) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
-        }
 
         public override void Write(Stream stream, T model, ModelReaderWriterOptions options)
         {
@@ -146,21 +128,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
     }
 
-    public class ModelInterfaceStreamableStrategy<T> : RoundTripStrategy<T> where T : IStreamModel<T>
+    public class ModelInterfaceStreamableStrategy<T> : ModelInterfaceStrategy<T> where T : IStreamModel<T>
     {
-        public override bool IsExplicitJsonWrite => false;
-        public override bool IsExplicitJsonRead => false;
         public override bool SupportsStreaming => true;
-
-        public override BinaryData Write(T model, ModelReaderWriterOptions options)
-        {
-            return model.Write(options);
-        }
-
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
-        {
-            return ((IPersistableModel<T>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
-        }
 
         public override void Write(Stream stream, T model, ModelReaderWriterOptions options)
         {
@@ -168,25 +138,53 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
     }
 
-    public class ModelInterfaceAsObjectStreamableStrategy<T> : RoundTripStrategy<T> where T : IStreamModel<T>
+    public class ModelInterfaceAsObjectStreamableStrategy<T> : ModelInterfaceAsObjectStrategy<T> where T : IStreamModel<T>
     {
-        public override bool IsExplicitJsonWrite => false;
-        public override bool IsExplicitJsonRead => false;
         public override bool SupportsStreaming => true;
-
-        public override BinaryData Write(T model, ModelReaderWriterOptions options)
-        {
-            return ((IPersistableModel<object>)model).Write(options);
-        }
-
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
-        {
-            return ((IPersistableModel<object>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
-        }
 
         public override void Write(Stream stream, T model, ModelReaderWriterOptions options)
         {
             ((IStreamModel<object>)model).Write(stream, options);
+        }
+    }
+
+    public class JsonStreamableInterfaceStrategy<T> : JsonInterfaceStrategy<T> where T : IStreamModel<T>, IJsonModel<T>
+    {
+        public override bool SupportsStreaming => true;
+
+        public override void Write(Stream stream, T model, ModelReaderWriterOptions options)
+        {
+            WriteWithJsonInterface(model, stream, options);
+        }
+    }
+
+    public class JsonStreamableInterfaceAsObjectStrategy<T> : JsonInterfaceAsObjectStrategy<T> where T : IStreamModel<T>, IJsonModel<T>
+    {
+        public override bool SupportsStreaming => true;
+
+        public override void Write(Stream stream, T model, ModelReaderWriterOptions options)
+        {
+            WriteWithJsonInterface((IJsonModel<object>)model, stream, options);
+        }
+    }
+
+    public class JsonStreamableInterfaceUtf8ReaderStrategy<T> : JsonInterfaceUtf8ReaderStrategy<T> where T : IStreamModel<T>, IJsonModel<T>
+    {
+        public override bool SupportsStreaming => true;
+
+        public override void Write(Stream stream, T model, ModelReaderWriterOptions options)
+        {
+            WriteWithJsonInterface(model, stream, options);
+        }
+    }
+
+    public class JsonStreamableInterfaceUtf8ReaderAsObjectStrategy<T> : JsonInterfaceUtf8ReaderAsObjectStrategy<T> where T : IStreamModel<T>, IJsonModel<T>
+    {
+        public override bool SupportsStreaming => true;
+
+        public override void Write(Stream stream, T model, ModelReaderWriterOptions options)
+        {
+            WriteWithJsonInterface((IJsonModel<object>)model, stream, options);
         }
     }
 

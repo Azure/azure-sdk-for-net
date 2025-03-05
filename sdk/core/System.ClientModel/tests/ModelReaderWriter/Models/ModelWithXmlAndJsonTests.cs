@@ -8,7 +8,7 @@ using System.ClientModel.Tests.Client;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
-    internal class ModelWithXmlAndJsonTests : ModelJsonTests<ModelWithXmlAndJson>
+    internal class ModelWithXmlAndJsonTests : StreamableModelTests<ModelWithXmlAndJson>
     {
         protected override string WirePayload => File.ReadAllText(TestData.GetLocation("ModelWithXmlAndJson/ModelWithXmlAndJson.xml")).TrimEnd();
 

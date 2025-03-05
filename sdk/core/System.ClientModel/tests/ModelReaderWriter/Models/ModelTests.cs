@@ -74,6 +74,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             {
                 using MemoryStream stream = new MemoryStream();
                 strategy.Write(stream, model, options);
+                if (stream.CanSeek)
+                {
+                    stream.Position = 0;
+                }
                 data = BinaryData.FromStream(stream);
             }
             else
