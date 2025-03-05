@@ -20,22 +20,22 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample3_TextAuthoring_CreateProjectAsync
             string projectName = "MyNewProjectAsync";
-            var projectData = new
+            TextAuthoringProject projectClient = client.GetProject(projectName);
+            var projectData = new TextAuthoringCreateProjectDetails(
+                projectKind: "customMultiLabelClassification",
+                storageInputContainerName: "e2e0test0data",
+                language: "en"
+            )
             {
-                projectName = projectName,
-                language = "en",
-                projectKind = "CustomEntityRecognition",
-                description = "Project description for a Custom Entity Recognition project",
-                multilingual = true
+                Description = "Project description for a Custom Entity Recognition project",
+                Multilingual = true
             };
 
-            using RequestContent content = RequestContent.Create(projectData);
-            Response response = await authoringClient.CreateProjectAsync(projectName, content);
+            Response response = await projectClient.CreateProjectAsync(projectData);
 
             Console.WriteLine($"Project created with status: {response.Status}");
             #endregion
