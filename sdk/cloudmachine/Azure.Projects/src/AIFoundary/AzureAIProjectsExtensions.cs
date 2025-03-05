@@ -14,7 +14,7 @@ namespace Azure.Projects;
 /// <summary>
 /// The Azure AI Projects extensions.
 /// </summary>
-public static class AzureAIProjectsExensions
+public static class AzureAIProjectsExtensions
 {
 #region AIProjects
     /// <summary>
