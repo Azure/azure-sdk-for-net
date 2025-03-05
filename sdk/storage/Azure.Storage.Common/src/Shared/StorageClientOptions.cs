@@ -92,6 +92,8 @@ namespace Azure.Storage
                     return sharedKey.AsPolicy();
                 case TokenCredential token:
                     return token.AsPolicy(scope, options);
+                case AzureSasCredential sas:
+                    return new AzureSasCredentialSynchronousPolicy(sas);
                 default:
                     throw Errors.InvalidCredentials(credentials.GetType().FullName);
             }

@@ -407,7 +407,10 @@ namespace Azure.Storage.Blobs
         {
             _uri = containerUri;
             _clientConfiguration = clientConfiguration;
-            _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(_clientConfiguration.SharedKeyCredential);
+            _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(
+                (object)_clientConfiguration.SharedKeyCredential ??
+                (object)_clientConfiguration.TokenCredential ??
+                (object)_clientConfiguration.SasCredential);
             _clientSideEncryption = clientSideEncryption?.Clone();
             _containerRestClient = BuildContainerRestClient(containerUri);
 
