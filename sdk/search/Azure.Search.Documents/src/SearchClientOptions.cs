@@ -185,7 +185,7 @@ namespace Azure.Search.Documents
     /// <summary>
     /// Search extension methods.
     /// </summary>
-    internal static partial class SearchExtensions
+    internal static partial class InternalSearchExtensions
     {
         /// <summary>
         /// Validate a <see cref="SearchClientOptions.ServiceVersion"/>.

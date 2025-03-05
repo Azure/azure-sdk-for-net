@@ -9,9 +9,8 @@ To create an `AuthoringClient`, you will need the service endpoint and credentia
 ```C# Snippet:CreateTextAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 ## Delete a Trained Model Asynchronously
@@ -21,11 +20,9 @@ To delete a trained model, call DeleteTrainedModelAsync on the TextAnalysisAutho
 ```C# Snippet:Sample9_TextAuthoring_DeleteTrainedModelAsync
 string projectName = "LoanAgreements";
 string trainedModelLabel = "ModelLabel"; // Replace with the actual model label.
+TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
-Response response = await authoringClient.DeleteTrainedModelAsync(
-    projectName: projectName,
-    trainedModelLabel: trainedModelLabel
-);
+Response response = await trainedModelClient.DeleteTrainedModelAsync();
 
 Console.WriteLine($"Trained model deleted. Response status: {response.Status}");
 ```

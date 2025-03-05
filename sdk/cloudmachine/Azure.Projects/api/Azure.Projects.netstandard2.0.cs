@@ -46,7 +46,7 @@ namespace Azure.Projects
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
     }
-    public static partial class AzureAIProjectsExensions
+    public static partial class AzureAIProjectsExtensions
     {
         public static Azure.AI.Projects.AgentsClient GetAgentsClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
         public static Azure.AI.Inference.ChatCompletionsClient GetChatCompletionsClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
@@ -126,6 +126,13 @@ namespace Azure.Projects
         public System.Threading.Tasks.Task<string> UploadJsonAsync(object serializable, string name = null, bool overwrite = false) { throw null; }
         public void WhenUploaded(System.Action<Azure.Projects.StorageFile> function) { }
         public void WhenUploaded(System.Action<System.BinaryData> function) { }
+    }
+}
+namespace Azure.Projects.AppConfiguration
+{
+    public static partial class AppConfigurationExtensions
+    {
+        public static Azure.Data.AppConfiguration.ConfigurationClient GetConfigurationClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
     }
 }
 namespace Azure.Projects.KeyVault
