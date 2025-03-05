@@ -1,23 +1,17 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.3.0-beta.2 (2025-03-11)
 
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.3.0-beta.1 (2024-09-09)
 
 ### Features Added
 
 - Upgraded api-version tag from 'package-2022-08' to 'package-preview-2023-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/2d973fccf9f28681a481e9760fa12b2334216e21/specification/apimanagement/resource-manager/readme.md.
-    - Added supportablity for SkuV2 CRUD operations.
+- Added supportablity for SkuV2 CRUD operations.
 
 ### Other Changes
 
