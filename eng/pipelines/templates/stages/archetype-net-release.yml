@@ -27,9 +27,8 @@ stages:
               artifactName: ${{parameters.ArtifactName}}-signed
 
         steps:
-          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-            parameters:
-              SkipCheckoutNone: true
+          - checkout: self
+            fetchDepth: 1
           - checkout: azure-sdk-build-tools
             path: azure-sdk-build-tools
           - download: current
@@ -63,6 +62,7 @@ stages:
 
                 steps:
                   - checkout: self
+                    fetchDepth: 1
                   - download: current
                     artifact: ${{parameters.ArtifactName}}-signed
                   - template: /eng/pipelines/templates/steps/install-dotnet.yml
