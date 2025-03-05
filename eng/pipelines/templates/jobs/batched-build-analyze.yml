@@ -71,3 +71,39 @@ jobs:
           SDKType: ${{ parameters.SDKType }}
           CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
           AOTTestInputs: ${{ parameters.AOTTestInputs }}
+
+  - job:
+    displayName: "Analyze"
+    dependsOn: ${{ parameters.DependsOn }}
+    condition: and(succeededOrFailed(), ne(${{ parameters.Matrix }}, '{}'))
+    templateContext:
+      outputs:
+        - output: pipelineArtifact
+          targetPath: '$(Build.ArtifactStagingDirectory)'
+          artifactName: 'verify'
+
+    strategy:
+      matrix: $[ ${{ parameters.Matrix }} ]
+
+    pool:
+      # 1es pipeline templates converts `image` to demands: ImageOverride under the hood
+      # which is incompatible with image selection in the default non-1es hosted pools
+      ${{ if eq(parameters.OSName, 'macOS') }}:
+        vmImage: $(OSVmImage)
+      ${{ else }}:
+        image: $(OSVmImage)
+      name: $(Pool)
+      os: ${{ parameters.OSName }}
+    ${{ if eq(parameters.UsePlatformContainer, 'true') }}:
+      # Add a default so the job doesn't fail when the matrix is empty
+      container: $[ variables['Container'] ]
+
+    steps:
+      - template: /eng/pipelines/templates/steps/analyze.yml
+        parameters:
+          Artifacts: ${{ parameters.Artifacts }}
+          TestPipeline: ${{ parameters.TestPipeline }}
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          SDKType: ${{ parameters.SDKType }}
+          CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
+          AOTTestInputs: ${{ parameters.AOTTestInputs }}

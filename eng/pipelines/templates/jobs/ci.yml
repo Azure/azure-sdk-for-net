@@ -51,7 +51,7 @@ jobs:
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
         GenerateJobName: generate_build_matrix
-        JobTemplatePath: /eng/pipelines/templates/jobs/batched-build.yml
+        JobTemplatePath: /eng/pipelines/templates/jobs/batched-build-analyze.yml
         MatrixConfigs:
         - Name: NET_ci_build_base
           Path: eng/pipelines/templates/stages/build-matrix.json
@@ -80,36 +80,49 @@ jobs:
               ForceDirect: true
 
   - ${{ else }}:
-    - template: /eng/pipelines/templates/jobs/build.yml
-      parameters:
-        Artifacts: ${{ parameters.Artifacts }}
-        TestPipeline: ${{ parameters.TestPipeline }}
-        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+    - job: Build
+      pool:
+        name: $(WINDOWSPOOL)
+        image: $(WINDOWSVMIMAGE)
+        os: windows
+
+      variables:
+        Codeql.Enabled: true
+        Codeql.BuildIdentifier: ${{ parameters.ServiceDirectory }}
+        Codeql.SkipTaskAutoInjection: false
         SDKType: ${{ parameters.SDKType }}
-        CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
-        AOTTestInputs: ${{ parameters.AOTTestInputs }}
 
-  - job: "Analyze"
-    timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-    condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
-    templateContext:
-      outputs:
-        - output: pipelineArtifact
-          targetPath: '$(Build.ArtifactStagingDirectory)'
-          artifactName: 'verify'
+      steps:
+        - template: /eng/pipelines/templates/steps/build.yml
+          parameters:
+            Artifacts: ${{ parameters.Artifacts }}
+            TestPipeline: ${{ parameters.TestPipeline }}
+            ServiceDirectory: ${{ parameters.ServiceDirectory }}
+            SDKType: ${{ parameters.SDKType }}
+            CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
+            AOTTestInputs: ${{ parameters.AOTTestInputs }}
 
-    pool:
-      name: $(LINUXPOOL)
-      image: $(LINUXVMIMAGE)
-      os: linux
+    - job: "Analyze"
+      timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+      condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
+      templateContext:
+        outputs:
+          - output: pipelineArtifact
+            targetPath: '$(Build.ArtifactStagingDirectory)'
+            artifactName: 'verify'
 
-    steps:
-      - template: /eng/pipelines/templates/steps/analyze.yml
-        parameters:
-          Artifacts: ${{ parameters.Artifacts }}
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
-          SDKType: ${{ parameters.SDKType }}
-          BuildSnippets: ${{ parameters.BuildSnippets }}
+      pool:
+        name: $(LINUXPOOL)
+        image: $(LINUXVMIMAGE)
+        os: linux
+
+      steps:
+        - template: /eng/pipelines/templates/steps/analyze.yml
+          parameters:
+            Artifacts: ${{ parameters.Artifacts }}
+            ServiceDirectory: ${{ parameters.ServiceDirectory }}
+            SDKType: ${{ parameters.SDKType }}
+            BuildSnippets: ${{ parameters.BuildSnippets }}
 
   # For some pipelines like mgmt which are tested in aggregate we want to limit the pipeline to no tests or
   # other stages that are aggregate in nature as those are tested in another aggregate pipeline
