@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePortalSettingsContractData(document.RootElement, options);
                     }
                 default:

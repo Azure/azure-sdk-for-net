@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeChaosCapabilityTypeData(document.RootElement, options);
                     }
                 default:

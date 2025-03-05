@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAgFoodPlatformPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

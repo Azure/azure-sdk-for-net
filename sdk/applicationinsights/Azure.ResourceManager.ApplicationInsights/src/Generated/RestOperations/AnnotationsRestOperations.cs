@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         AnnotationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnnotationsListResult.DeserializeAnnotationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         AnnotationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnnotationsListResult.DeserializeAnnotationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         IReadOnlyList<ApplicationInsightsAnnotation> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<ApplicationInsightsAnnotation> array = new List<ApplicationInsightsAnnotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         IReadOnlyList<ApplicationInsightsAnnotation> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<ApplicationInsightsAnnotation> array = new List<ApplicationInsightsAnnotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         IReadOnlyList<ApplicationInsightsAnnotation> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<ApplicationInsightsAnnotation> array = new List<ApplicationInsightsAnnotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         IReadOnlyList<ApplicationInsightsAnnotation> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<ApplicationInsightsAnnotation> array = new List<ApplicationInsightsAnnotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {

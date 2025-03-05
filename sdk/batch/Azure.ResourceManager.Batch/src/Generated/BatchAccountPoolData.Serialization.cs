@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchAccountPoolData(document.RootElement, options);
                     }
                 default:

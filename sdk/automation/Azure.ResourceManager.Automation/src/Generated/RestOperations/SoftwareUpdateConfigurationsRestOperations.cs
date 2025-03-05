@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Automation
                 case 201:
                     {
                         SoftwareUpdateConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SoftwareUpdateConfigurationData.DeserializeSoftwareUpdateConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Automation
                 case 201:
                     {
                         SoftwareUpdateConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SoftwareUpdateConfigurationData.DeserializeSoftwareUpdateConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SoftwareUpdateConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SoftwareUpdateConfigurationData.DeserializeSoftwareUpdateConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SoftwareUpdateConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SoftwareUpdateConfigurationData.DeserializeSoftwareUpdateConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SoftwareUpdateConfigurationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SoftwareUpdateConfigurationListResult.DeserializeSoftwareUpdateConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SoftwareUpdateConfigurationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SoftwareUpdateConfigurationListResult.DeserializeSoftwareUpdateConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRoleManagementPolicyAssignmentData(document.RootElement, options);
                     }
                 default:

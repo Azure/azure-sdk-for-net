@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Avs
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWorkloadNetworkGatewayData(document.RootElement, options);
                     }
                 default:
