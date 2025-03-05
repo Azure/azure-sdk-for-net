@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Peering
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConnectionMonitorTestData(document.RootElement, options);
                     }
                 default:

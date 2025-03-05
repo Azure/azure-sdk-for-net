@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePublicLandMobileNetwork(document.RootElement, options);
                     }
                 default:

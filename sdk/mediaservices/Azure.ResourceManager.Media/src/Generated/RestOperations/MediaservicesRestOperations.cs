@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaServicesAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MediaServicesAccountListResult.DeserializeMediaServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaServicesAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MediaServicesAccountListResult.DeserializeMediaServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaServicesAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MediaServicesAccountData.DeserializeMediaServicesAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaServicesAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MediaServicesAccountData.DeserializeMediaServicesAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaServicesEdgePolicies value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MediaServicesEdgePolicies.DeserializeMediaServicesEdgePolicies(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaServicesEdgePolicies value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MediaServicesEdgePolicies.DeserializeMediaServicesEdgePolicies(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaServicesAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MediaServicesAccountListResult.DeserializeMediaServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaServicesAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MediaServicesAccountListResult.DeserializeMediaServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaServicesAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MediaServicesAccountListResult.DeserializeMediaServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaServicesAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MediaServicesAccountListResult.DeserializeMediaServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaServicesAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MediaServicesAccountListResult.DeserializeMediaServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaServicesAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MediaServicesAccountListResult.DeserializeMediaServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

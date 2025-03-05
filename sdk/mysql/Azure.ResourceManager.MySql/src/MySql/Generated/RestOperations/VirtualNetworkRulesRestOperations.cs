@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlVirtualNetworkRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlVirtualNetworkRuleData.DeserializeMySqlVirtualNetworkRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlVirtualNetworkRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlVirtualNetworkRuleData.DeserializeMySqlVirtualNetworkRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlVirtualNetworkRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlVirtualNetworkRuleListResult.DeserializeMySqlVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlVirtualNetworkRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlVirtualNetworkRuleListResult.DeserializeMySqlVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlVirtualNetworkRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlVirtualNetworkRuleListResult.DeserializeMySqlVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlVirtualNetworkRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlVirtualNetworkRuleListResult.DeserializeMySqlVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

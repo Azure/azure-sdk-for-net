@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         OfferListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OfferListResponse.DeserializeOfferListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         OfferListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OfferListResponse.DeserializeOfferListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         CollectionOffersByContextList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CollectionOffersByContextList.DeserializeCollectionOffersByContextList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         CollectionOffersByContextList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CollectionOffersByContextList.DeserializeCollectionOffersByContextList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreOfferData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateStoreOfferData.DeserializePrivateStoreOfferData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreOfferData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateStoreOfferData.DeserializePrivateStoreOfferData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreOfferData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateStoreOfferData.DeserializePrivateStoreOfferData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreOfferData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateStoreOfferData.DeserializePrivateStoreOfferData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreOfferData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateStoreOfferData.DeserializePrivateStoreOfferData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         PrivateStoreOfferData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateStoreOfferData.DeserializePrivateStoreOfferData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         OfferListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OfferListResponse.DeserializeOfferListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         OfferListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OfferListResponse.DeserializeOfferListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         CollectionOffersByContextList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CollectionOffersByContextList.DeserializeCollectionOffersByContextList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.Marketplace
                 case 200:
                     {
                         CollectionOffersByContextList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CollectionOffersByContextList.DeserializeCollectionOffersByContextList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

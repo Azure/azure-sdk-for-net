@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Maps
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMapsAccountData(document.RootElement, options);
                     }
                 default:

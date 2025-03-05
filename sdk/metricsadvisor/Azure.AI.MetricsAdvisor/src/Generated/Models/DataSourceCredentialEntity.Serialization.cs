@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DataSourceCredentialEntity FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDataSourceCredentialEntity(document.RootElement);
         }
 
