@@ -1,0 +1,11 @@
+{
+  "displayNames": {},
+  "matrix": {
+    "Agent": {
+      "Windows_2022": {
+        "OSVmImage": "env:WINDOWSVMIMAGE",
+        "Pool": "env:WINDOWSPOOL"
+      }
+    }
+  }
+}

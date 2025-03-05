@@ -47,6 +47,53 @@ parameters:
     default: false
 
 jobs:
+
+- ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+  - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
+    parameters:
+      GenerateJobName: generate_target_service_test_matrix
+      JobTemplatePath: /eng/pipelines/templates/jobs/build.yml
+      MatrixConfigs:
+      - Name: NET_ci_build_base
+        Path: eng/pipelines/templates/stages/build-matrix.json
+        Selection: sparse
+        GenerateVMJobs: true
+      CloudConfig:
+        Cloud: public
+      ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+        SparseCheckoutPaths:
+          - "/*"
+          - "!SessionRecords"
+        EnablePRGeneration: true
+        PRMatrixSetting: ProjectNames
+        PRJobBatchSize: 20
+        PRMatrixIndirectFilters:
+          - 'Pool=.*LinuxPool$'
+        PreGenerationSteps:
+        # todo: share this pregeneration step with the other jobs analyze and test
+          - script: |
+              echo "##vso[task.setvariable variable=DISCOVER_DEPENDENT_PACKAGES]1"
+            displayName: Enable AdditionalDependency Calculation
+
+          - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
+          - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
+            parameters:
+              ServiceDirectory: ${{parameters.ServiceDirectory}}
+              PackageInfoDirectory: $(Build.ArtifactStagingDirectory)/PackageInfo
+
+          # we probably want to do this a better way, but right now I'm getting batching to
+          # work by just forcing all identified packages to be "direct" so we hit them all
+          - pwsh: |
+              $packageInfos = Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfo" -Filter "*.json" -Recurse
+              $packageInfos | ForEach-Object {
+                $content = Get-Content -Raw -Path $_.FullName | ConvertFrom-Json
+                $content.IncludedForValidation = $false
+                $content | ConvertTo-Json -Depth 32 | Out-File $_.FullName
+              }
+            displayName: Set all packages to direct
+
+- ${{ else }}:
   - job: Build
     pool:
       name: $(WINDOWSPOOL)
@@ -149,6 +196,7 @@ jobs:
             - 'AdditionalTestArguments=.*true'
             - 'Pool=.*LinuxPool$'
           PreGenerationSteps:
+          # todo: share this pregeneration step with the other jobs analyze and build
             - script: |
                 echo "##vso[task.setvariable variable=DISCOVER_DEPENDENT_PACKAGES]1"
               displayName: Enable AdditionalDependency Calculation
