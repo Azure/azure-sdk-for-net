@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 case 200:
                     {
                         RecoveryServicesVaultListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RecoveryServicesVaultListResult.DeserializeRecoveryServicesVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 case 200:
                     {
                         RecoveryServicesVaultListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RecoveryServicesVaultListResult.DeserializeRecoveryServicesVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 case 200:
                     {
                         RecoveryServicesVaultListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RecoveryServicesVaultListResult.DeserializeRecoveryServicesVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 case 200:
                     {
                         RecoveryServicesVaultListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RecoveryServicesVaultListResult.DeserializeRecoveryServicesVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 case 200:
                     {
                         RecoveryServicesVaultData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 case 200:
                     {
                         RecoveryServicesVaultData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 case 200:
                     {
                         RecoveryServicesVaultListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RecoveryServicesVaultListResult.DeserializeRecoveryServicesVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 case 200:
                     {
                         RecoveryServicesVaultListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RecoveryServicesVaultListResult.DeserializeRecoveryServicesVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 case 200:
                     {
                         RecoveryServicesVaultListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RecoveryServicesVaultListResult.DeserializeRecoveryServicesVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 case 200:
                     {
                         RecoveryServicesVaultListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RecoveryServicesVaultListResult.DeserializeRecoveryServicesVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

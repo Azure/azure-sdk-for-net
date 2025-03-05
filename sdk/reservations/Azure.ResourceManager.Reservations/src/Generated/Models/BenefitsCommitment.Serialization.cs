@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBenefitsCommitment(document.RootElement, options);
                     }
                 default:

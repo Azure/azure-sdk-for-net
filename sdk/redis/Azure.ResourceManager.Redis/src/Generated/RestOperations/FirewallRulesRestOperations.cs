@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisFirewallRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisFirewallRuleListResult.DeserializeRedisFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisFirewallRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisFirewallRuleListResult.DeserializeRedisFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Redis
                 case 201:
                     {
                         RedisFirewallRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisFirewallRuleData.DeserializeRedisFirewallRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Redis
                 case 201:
                     {
                         RedisFirewallRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisFirewallRuleData.DeserializeRedisFirewallRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisFirewallRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisFirewallRuleData.DeserializeRedisFirewallRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisFirewallRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisFirewallRuleData.DeserializeRedisFirewallRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisFirewallRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisFirewallRuleListResult.DeserializeRedisFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisFirewallRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisFirewallRuleListResult.DeserializeRedisFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

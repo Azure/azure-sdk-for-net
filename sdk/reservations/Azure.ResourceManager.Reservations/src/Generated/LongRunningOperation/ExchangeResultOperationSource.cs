@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Reservations
     {
         ExchangeResult IOperationSource<ExchangeResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return ExchangeResult.DeserializeExchangeResult(document.RootElement);
         }
 
         async ValueTask<ExchangeResult> IOperationSource<ExchangeResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return ExchangeResult.DeserializeExchangeResult(document.RootElement);
         }
     }
