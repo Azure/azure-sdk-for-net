@@ -72,7 +72,6 @@ jobs:
           SDKType: ${{ parameters.SDKType }}
           CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
           AOTTestInputs: ${{ parameters.AOTTestInputs }}
-
         PreGenerationSteps:
         # todo: share this pregeneration step with the other jobs analyze and test
           - script: |
@@ -96,29 +95,15 @@ jobs:
                 $content | ConvertTo-Json -Depth 32 | Out-File $_.FullName
               }
             displayName: Set all packages to direct
-
   - ${{ else }}:
-    - job: Build
-      pool:
-        name: $(WINDOWSPOOL)
-        image: $(WINDOWSVMIMAGE)
-        os: windows
-
-      variables:
-        Codeql.Enabled: true
-        Codeql.BuildIdentifier: ${{ parameters.ServiceDirectory }}
-        Codeql.SkipTaskAutoInjection: false
+    - template: /eng/pipelines/templates/jobs/build.yml
+      parameters:
+        Artifacts: ${{ parameters.Artifacts }}
+        TestPipeline: ${{ parameters.TestPipeline }}
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
         SDKType: ${{ parameters.SDKType }}
-
-      steps:
-        - template: /eng/pipelines/templates/steps/build.yml
-          parameters:
-            Artifacts: ${{ parameters.Artifacts }}
-            TestPipeline: ${{ parameters.TestPipeline }}
-            ServiceDirectory: ${{ parameters.ServiceDirectory }}
-            SDKType: ${{ parameters.SDKType }}
-            CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
-            AOTTestInputs: ${{ parameters.AOTTestInputs }}
+        CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
+        AOTTestInputs: ${{ parameters.AOTTestInputs }}
 
   - job: "Analyze"
     timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}

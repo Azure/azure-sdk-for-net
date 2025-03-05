@@ -1,0 +1,45 @@
+parameters:
+  - name: Artifacts
+    type: object
+    default: []
+  - name: TestPipeline
+    type: boolean
+    default: false
+  - name: ServiceDirectory
+    type: string
+    default: not-specified
+  - name: SDKType
+    type: string
+    default: all
+  - name: CheckAOTCompat
+    type: boolean
+    default: false
+  - name: AOTTestInputs
+    type: object
+    default: []
+  - name: BuildSnippets
+    type: boolean
+    default: true
+
+jobs:
+  - job: Build
+    pool:
+      name: $(WINDOWSPOOL)
+      image: $(WINDOWSVMIMAGE)
+      os: windows
+
+    variables:
+      Codeql.Enabled: true
+      Codeql.BuildIdentifier: ${{ parameters.ServiceDirectory }}
+      Codeql.SkipTaskAutoInjection: false
+      SDKType: ${{ parameters.SDKType }}
+
+    steps:
+      - template: /eng/pipelines/templates/steps/build.yml
+        parameters:
+          Artifacts: ${{ parameters.Artifacts }}
+          TestPipeline: ${{ parameters.TestPipeline }}
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          SDKType: ${{ parameters.SDKType }}
+          CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
+          AOTTestInputs: ${{ parameters.AOTTestInputs }}
