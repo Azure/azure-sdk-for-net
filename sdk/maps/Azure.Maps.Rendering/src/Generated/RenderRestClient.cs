@@ -215,7 +215,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         MapTileSet value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapTileSet.DeserializeMapTileSet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -240,7 +240,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         MapTileSet value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapTileSet.DeserializeMapTileSet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -297,7 +297,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         MapAttribution value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapAttribution.DeserializeMapAttribution(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -330,7 +330,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         MapAttribution value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapAttribution.DeserializeMapAttribution(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -468,7 +468,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         CopyrightCaption value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CopyrightCaption.DeserializeCopyrightCaption(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -495,7 +495,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         CopyrightCaption value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CopyrightCaption.DeserializeCopyrightCaption(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1194,7 +1194,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         RenderCopyright value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RenderCopyright.DeserializeRenderCopyright(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1227,7 +1227,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         RenderCopyright value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RenderCopyright.DeserializeRenderCopyright(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1288,7 +1288,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         RenderCopyright value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RenderCopyright.DeserializeRenderCopyright(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1323,7 +1323,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         RenderCopyright value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RenderCopyright.DeserializeRenderCopyright(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1374,7 +1374,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         RenderCopyright value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RenderCopyright.DeserializeRenderCopyright(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1402,7 +1402,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         RenderCopyright value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RenderCopyright.DeserializeRenderCopyright(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

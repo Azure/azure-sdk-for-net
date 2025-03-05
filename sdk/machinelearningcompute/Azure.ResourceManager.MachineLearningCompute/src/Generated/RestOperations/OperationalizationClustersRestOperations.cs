@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 case 200:
                     {
                         OperationalizationClusterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OperationalizationClusterData.DeserializeOperationalizationClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 case 200:
                     {
                         OperationalizationClusterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OperationalizationClusterData.DeserializeOperationalizationClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 case 200:
                     {
                         OperationalizationClusterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OperationalizationClusterData.DeserializeOperationalizationClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 case 200:
                     {
                         OperationalizationClusterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OperationalizationClusterData.DeserializeOperationalizationClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 case 200:
                     {
                         OperationalizationClusterCredentials value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OperationalizationClusterCredentials.DeserializeOperationalizationClusterCredentials(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 case 200:
                     {
                         OperationalizationClusterCredentials value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OperationalizationClusterCredentials.DeserializeOperationalizationClusterCredentials(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 case 200:
                     {
                         CheckSystemServicesUpdatesAvailableResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CheckSystemServicesUpdatesAvailableResponse.DeserializeCheckSystemServicesUpdatesAvailableResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 case 200:
                     {
                         CheckSystemServicesUpdatesAvailableResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CheckSystemServicesUpdatesAvailableResponse.DeserializeCheckSystemServicesUpdatesAvailableResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 case 200:
                     {
                         PaginatedOperationalizationClustersList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaginatedOperationalizationClustersList.DeserializePaginatedOperationalizationClustersList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 case 200:
                     {
                         PaginatedOperationalizationClustersList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaginatedOperationalizationClustersList.DeserializePaginatedOperationalizationClustersList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 case 200:
                     {
                         PaginatedOperationalizationClustersList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaginatedOperationalizationClustersList.DeserializePaginatedOperationalizationClustersList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 case 200:
                     {
                         PaginatedOperationalizationClustersList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaginatedOperationalizationClustersList.DeserializePaginatedOperationalizationClustersList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 case 200:
                     {
                         PaginatedOperationalizationClustersList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaginatedOperationalizationClustersList.DeserializePaginatedOperationalizationClustersList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 case 200:
                     {
                         PaginatedOperationalizationClustersList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaginatedOperationalizationClustersList.DeserializePaginatedOperationalizationClustersList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -999,7 +999,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 case 200:
                     {
                         PaginatedOperationalizationClustersList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaginatedOperationalizationClustersList.DeserializePaginatedOperationalizationClustersList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1027,7 +1027,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 case 200:
                     {
                         PaginatedOperationalizationClustersList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaginatedOperationalizationClustersList.DeserializePaginatedOperationalizationClustersList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

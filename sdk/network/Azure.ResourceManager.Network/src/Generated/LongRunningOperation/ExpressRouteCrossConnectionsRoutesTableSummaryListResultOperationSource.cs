@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Network
     {
         ExpressRouteCrossConnectionsRoutesTableSummaryListResult IOperationSource<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return ExpressRouteCrossConnectionsRoutesTableSummaryListResult.DeserializeExpressRouteCrossConnectionsRoutesTableSummaryListResult(document.RootElement);
         }
 
         async ValueTask<ExpressRouteCrossConnectionsRoutesTableSummaryListResult> IOperationSource<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return ExpressRouteCrossConnectionsRoutesTableSummaryListResult.DeserializeExpressRouteCrossConnectionsRoutesTableSummaryListResult(document.RootElement);
         }
     }

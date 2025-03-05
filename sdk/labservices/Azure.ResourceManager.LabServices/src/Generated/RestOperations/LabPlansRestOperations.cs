@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedLabPlans value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PagedLabPlans.DeserializePagedLabPlans(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedLabPlans value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PagedLabPlans.DeserializePagedLabPlans(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedLabPlans value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PagedLabPlans.DeserializePagedLabPlans(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedLabPlans value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PagedLabPlans.DeserializePagedLabPlans(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         LabPlanData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LabPlanData.DeserializeLabPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         LabPlanData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LabPlanData.DeserializeLabPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedLabPlans value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PagedLabPlans.DeserializePagedLabPlans(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedLabPlans value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PagedLabPlans.DeserializePagedLabPlans(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedLabPlans value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PagedLabPlans.DeserializePagedLabPlans(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedLabPlans value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PagedLabPlans.DeserializePagedLabPlans(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

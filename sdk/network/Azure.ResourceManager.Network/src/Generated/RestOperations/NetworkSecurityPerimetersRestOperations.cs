@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkSecurityPerimeterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkSecurityPerimeterData.DeserializeNetworkSecurityPerimeterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkSecurityPerimeterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkSecurityPerimeterData.DeserializeNetworkSecurityPerimeterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
                 case 201:
                     {
                         NetworkSecurityPerimeterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkSecurityPerimeterData.DeserializeNetworkSecurityPerimeterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
                 case 201:
                     {
                         NetworkSecurityPerimeterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkSecurityPerimeterData.DeserializeNetworkSecurityPerimeterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkSecurityPerimeterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkSecurityPerimeterData.DeserializeNetworkSecurityPerimeterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkSecurityPerimeterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkSecurityPerimeterData.DeserializeNetworkSecurityPerimeterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkSecurityPerimeterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkSecurityPerimeterListResult.DeserializeNetworkSecurityPerimeterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkSecurityPerimeterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkSecurityPerimeterListResult.DeserializeNetworkSecurityPerimeterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkSecurityPerimeterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkSecurityPerimeterListResult.DeserializeNetworkSecurityPerimeterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkSecurityPerimeterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkSecurityPerimeterListResult.DeserializeNetworkSecurityPerimeterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkSecurityPerimeterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkSecurityPerimeterListResult.DeserializeNetworkSecurityPerimeterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkSecurityPerimeterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkSecurityPerimeterListResult.DeserializeNetworkSecurityPerimeterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkSecurityPerimeterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkSecurityPerimeterListResult.DeserializeNetworkSecurityPerimeterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkSecurityPerimeterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkSecurityPerimeterListResult.DeserializeNetworkSecurityPerimeterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

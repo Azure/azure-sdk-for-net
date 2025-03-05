@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountListResult.DeserializeIntegrationAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountListResult.DeserializeIntegrationAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountListResult.DeserializeIntegrationAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountListResult.DeserializeIntegrationAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountData.DeserializeIntegrationAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountData.DeserializeIntegrationAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Logic
                 case 201:
                     {
                         IntegrationAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountData.DeserializeIntegrationAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Logic
                 case 201:
                     {
                         IntegrationAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountData.DeserializeIntegrationAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountData.DeserializeIntegrationAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountData.DeserializeIntegrationAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         ListOperationCallbackUri value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListOperationCallbackUri.DeserializeListOperationCallbackUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         ListOperationCallbackUri value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListOperationCallbackUri.DeserializeListOperationCallbackUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountKeyVaultKeyList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountKeyVaultKeyList.DeserializeIntegrationAccountKeyVaultKeyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountKeyVaultKeyList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountKeyVaultKeyList.DeserializeIntegrationAccountKeyVaultKeyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -960,7 +960,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountData.DeserializeIntegrationAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -991,7 +991,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountData.DeserializeIntegrationAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1041,7 +1041,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountListResult.DeserializeIntegrationAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1069,7 +1069,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountListResult.DeserializeIntegrationAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1121,7 +1121,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountListResult.DeserializeIntegrationAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1151,7 +1151,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountListResult.DeserializeIntegrationAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

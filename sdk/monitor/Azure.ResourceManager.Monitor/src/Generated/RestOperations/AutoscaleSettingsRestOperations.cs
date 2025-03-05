@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AutoscaleSettingResourceCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AutoscaleSettingResourceCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Monitor
                 case 201:
                     {
                         AutoscaleSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoscaleSettingData.DeserializeAutoscaleSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Monitor
                 case 201:
                     {
                         AutoscaleSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoscaleSettingData.DeserializeAutoscaleSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AutoscaleSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoscaleSettingData.DeserializeAutoscaleSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AutoscaleSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoscaleSettingData.DeserializeAutoscaleSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AutoscaleSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoscaleSettingData.DeserializeAutoscaleSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AutoscaleSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoscaleSettingData.DeserializeAutoscaleSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AutoscaleSettingResourceCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AutoscaleSettingResourceCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AutoscaleSettingResourceCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AutoscaleSettingResourceCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AutoscaleSettingResourceCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AutoscaleSettingResourceCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoscaleSettingResourceCollection.DeserializeAutoscaleSettingResourceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

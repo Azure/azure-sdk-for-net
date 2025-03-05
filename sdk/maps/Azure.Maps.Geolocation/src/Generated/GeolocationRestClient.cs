@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Geolocation
 {
@@ -83,7 +84,7 @@ namespace Azure.Maps.Geolocation
                 case 200:
                     {
                         CountryRegionResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CountryRegionResult.DeserializeCountryRegionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -115,7 +116,7 @@ namespace Azure.Maps.Geolocation
                 case 200:
                     {
                         CountryRegionResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CountryRegionResult.DeserializeCountryRegionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

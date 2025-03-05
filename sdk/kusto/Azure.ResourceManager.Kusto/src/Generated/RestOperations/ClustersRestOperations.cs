@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         KustoClusterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KustoClusterData.DeserializeKustoClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         KustoClusterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KustoClusterData.DeserializeKustoClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         FollowerDatabaseListResultGet value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FollowerDatabaseListResultGet.DeserializeFollowerDatabaseListResultGet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         FollowerDatabaseListResultGet value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FollowerDatabaseListResultGet.DeserializeFollowerDatabaseListResultGet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         FollowerDatabaseListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FollowerDatabaseListResult.DeserializeFollowerDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         FollowerDatabaseListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FollowerDatabaseListResult.DeserializeFollowerDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1106,7 +1106,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1133,7 +1133,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1186,7 +1186,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1211,7 +1211,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1264,7 +1264,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         KustoSkuDescriptionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KustoSkuDescriptionList.DeserializeKustoSkuDescriptionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1289,7 +1289,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         KustoSkuDescriptionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KustoSkuDescriptionList.DeserializeKustoSkuDescriptionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1353,7 +1353,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         KustoNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KustoNameAvailabilityResult.DeserializeKustoNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1381,7 +1381,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         KustoNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KustoNameAvailabilityResult.DeserializeKustoNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1446,7 +1446,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         ListResourceSkusResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListResourceSkusResult.DeserializeListResourceSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1475,7 +1475,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         ListResourceSkusResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListResourceSkusResult.DeserializeListResourceSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1540,7 +1540,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         OutboundNetworkDependenciesEndpointListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OutboundNetworkDependenciesEndpointListResult.DeserializeOutboundNetworkDependenciesEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1569,7 +1569,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         OutboundNetworkDependenciesEndpointListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OutboundNetworkDependenciesEndpointListResult.DeserializeOutboundNetworkDependenciesEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1822,7 +1822,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         CalloutPoliciesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CalloutPoliciesList.DeserializeCalloutPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1851,7 +1851,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         CalloutPoliciesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CalloutPoliciesList.DeserializeCalloutPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1916,7 +1916,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         KustoLanguageExtensionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KustoLanguageExtensionList.DeserializeKustoLanguageExtensionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1945,7 +1945,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         KustoLanguageExtensionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KustoLanguageExtensionList.DeserializeKustoLanguageExtensionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2186,7 +2186,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         OutboundNetworkDependenciesEndpointListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OutboundNetworkDependenciesEndpointListResult.DeserializeOutboundNetworkDependenciesEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2217,7 +2217,7 @@ namespace Azure.ResourceManager.Kusto
                 case 200:
                     {
                         OutboundNetworkDependenciesEndpointListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OutboundNetworkDependenciesEndpointListResult.DeserializeOutboundNetworkDependenciesEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlServerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlServerData.DeserializeMySqlServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlServerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlServerData.DeserializeMySqlServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlServerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlServerListResult.DeserializeMySqlServerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlServerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlServerListResult.DeserializeMySqlServerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlServerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlServerListResult.DeserializeMySqlServerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlServerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlServerListResult.DeserializeMySqlServerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         NetworkDeviceSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkDeviceSkuData.DeserializeNetworkDeviceSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         NetworkDeviceSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkDeviceSkuData.DeserializeNetworkDeviceSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         NetworkDeviceSkusListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkDeviceSkusListResult.DeserializeNetworkDeviceSkusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         NetworkDeviceSkusListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkDeviceSkusListResult.DeserializeNetworkDeviceSkusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         NetworkDeviceSkusListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkDeviceSkusListResult.DeserializeNetworkDeviceSkusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         NetworkDeviceSkusListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkDeviceSkusListResult.DeserializeNetworkDeviceSkusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

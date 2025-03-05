@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 200:
                     {
                         MixedRealityNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MixedRealityNameAvailabilityResult.DeserializeMixedRealityNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 200:
                     {
                         MixedRealityNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MixedRealityNameAvailabilityResult.DeserializeMixedRealityNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
