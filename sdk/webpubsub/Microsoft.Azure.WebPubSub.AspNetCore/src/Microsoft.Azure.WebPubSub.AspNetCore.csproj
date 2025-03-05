@@ -10,13 +10,18 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);419</NoWarn>
     <GenerateAPIListing>true</GenerateAPIListing>
+    <!-- This package only targets netcoreapp3.1 which has been out of support since Dec 2022. 
+         BCL packages with 8.x versions have not been tested with netcoreapp3.1 and may not be fully
+         compatible. These warnings must be suppressed because this package depends on
+         Azure.Messaging.WebPubSub, which will need to be upgraded to 8.x versions. -->
+    <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
   </PropertyGroup>
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="System.Text.Json" VersionOverride="6.0.11" />
-    <PackageReference Include="System.Text.Encodings.Web" VersionOverride="6.0.1"/>
-    <PackageReference Include="System.Memory.Data" VersionOverride="6.0.1"/>
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Text.Encodings.Web" />
+    <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 
   <ItemGroup>
