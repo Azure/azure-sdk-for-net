@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Compute
     {
         VirtualMachineRunCommandResult IOperationSource<VirtualMachineRunCommandResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return VirtualMachineRunCommandResult.DeserializeVirtualMachineRunCommandResult(document.RootElement);
         }
 
         async ValueTask<VirtualMachineRunCommandResult> IOperationSource<VirtualMachineRunCommandResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return VirtualMachineRunCommandResult.DeserializeVirtualMachineRunCommandResult(document.RootElement);
         }
     }

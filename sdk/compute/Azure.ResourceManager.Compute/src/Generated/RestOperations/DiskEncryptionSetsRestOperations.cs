@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskEncryptionSetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskEncryptionSetData.DeserializeDiskEncryptionSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskEncryptionSetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskEncryptionSetData.DeserializeDiskEncryptionSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskEncryptionSetList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskEncryptionSetList.DeserializeDiskEncryptionSetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskEncryptionSetList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskEncryptionSetList.DeserializeDiskEncryptionSetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskEncryptionSetList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskEncryptionSetList.DeserializeDiskEncryptionSetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskEncryptionSetList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskEncryptionSetList.DeserializeDiskEncryptionSetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         ResourceUriList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceUriList.DeserializeResourceUriList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         ResourceUriList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceUriList.DeserializeResourceUriList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskEncryptionSetList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskEncryptionSetList.DeserializeDiskEncryptionSetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskEncryptionSetList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskEncryptionSetList.DeserializeDiskEncryptionSetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskEncryptionSetList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskEncryptionSetList.DeserializeDiskEncryptionSetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskEncryptionSetList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskEncryptionSetList.DeserializeDiskEncryptionSetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         ResourceUriList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceUriList.DeserializeResourceUriList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         ResourceUriList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceUriList.DeserializeResourceUriList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVCenterInventoryItemData(document.RootElement, options);
                     }
                 default:

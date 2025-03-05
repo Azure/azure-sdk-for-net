@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBandwidthScheduleData(document.RootElement, options);
                     }
                 default:

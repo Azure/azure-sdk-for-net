@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataLakeStoreFirewallRuleData(document.RootElement, options);
                     }
                 default:

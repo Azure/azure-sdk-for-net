@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerAppRevisionData(document.RootElement, options);
                     }
                 default:

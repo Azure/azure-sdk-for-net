@@ -170,7 +170,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new ManifestWrapper FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeManifestWrapper(document.RootElement);
         }
     }

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case 200:
                     {
                         CosmosDBForPostgreSqlServerConfigurationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CosmosDBForPostgreSqlServerConfigurationListResult.DeserializeCosmosDBForPostgreSqlServerConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case 200:
                     {
                         CosmosDBForPostgreSqlServerConfigurationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CosmosDBForPostgreSqlServerConfigurationListResult.DeserializeCosmosDBForPostgreSqlServerConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case 200:
                     {
                         CosmosDBForPostgreSqlClusterConfigurationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CosmosDBForPostgreSqlClusterConfigurationListResult.DeserializeCosmosDBForPostgreSqlClusterConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case 200:
                     {
                         CosmosDBForPostgreSqlClusterConfigurationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CosmosDBForPostgreSqlClusterConfigurationListResult.DeserializeCosmosDBForPostgreSqlClusterConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case 200:
                     {
                         CosmosDBForPostgreSqlConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CosmosDBForPostgreSqlConfigurationData.DeserializeCosmosDBForPostgreSqlConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case 200:
                     {
                         CosmosDBForPostgreSqlConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CosmosDBForPostgreSqlConfigurationData.DeserializeCosmosDBForPostgreSqlConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case 200:
                     {
                         CosmosDBForPostgreSqlServerConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CosmosDBForPostgreSqlServerConfigurationData.DeserializeCosmosDBForPostgreSqlServerConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case 200:
                     {
                         CosmosDBForPostgreSqlServerConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CosmosDBForPostgreSqlServerConfigurationData.DeserializeCosmosDBForPostgreSqlServerConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case 200:
                     {
                         CosmosDBForPostgreSqlServerConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CosmosDBForPostgreSqlServerConfigurationData.DeserializeCosmosDBForPostgreSqlServerConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case 200:
                     {
                         CosmosDBForPostgreSqlServerConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CosmosDBForPostgreSqlServerConfigurationData.DeserializeCosmosDBForPostgreSqlServerConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -790,7 +790,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case 200:
                     {
                         CosmosDBForPostgreSqlServerConfigurationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CosmosDBForPostgreSqlServerConfigurationListResult.DeserializeCosmosDBForPostgreSqlServerConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -823,7 +823,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case 200:
                     {
                         CosmosDBForPostgreSqlServerConfigurationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CosmosDBForPostgreSqlServerConfigurationListResult.DeserializeCosmosDBForPostgreSqlServerConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case 200:
                     {
                         CosmosDBForPostgreSqlClusterConfigurationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CosmosDBForPostgreSqlClusterConfigurationListResult.DeserializeCosmosDBForPostgreSqlClusterConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -907,7 +907,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case 200:
                     {
                         CosmosDBForPostgreSqlClusterConfigurationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CosmosDBForPostgreSqlClusterConfigurationListResult.DeserializeCosmosDBForPostgreSqlClusterConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

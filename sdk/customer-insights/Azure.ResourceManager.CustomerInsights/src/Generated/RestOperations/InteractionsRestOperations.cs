@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         InteractionResourceFormatData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InteractionResourceFormatData.DeserializeInteractionResourceFormatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         InteractionResourceFormatData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InteractionResourceFormatData.DeserializeInteractionResourceFormatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         InteractionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InteractionListResult.DeserializeInteractionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         InteractionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InteractionListResult.DeserializeInteractionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         SuggestRelationshipLinksResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SuggestRelationshipLinksResponse.DeserializeSuggestRelationshipLinksResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         SuggestRelationshipLinksResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SuggestRelationshipLinksResponse.DeserializeSuggestRelationshipLinksResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         InteractionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InteractionListResult.DeserializeInteractionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         InteractionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InteractionListResult.DeserializeInteractionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

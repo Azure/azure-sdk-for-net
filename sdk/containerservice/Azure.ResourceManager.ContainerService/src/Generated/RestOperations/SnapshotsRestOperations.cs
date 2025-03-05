@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         AgentPoolSnapshotListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AgentPoolSnapshotListResult.DeserializeAgentPoolSnapshotListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         AgentPoolSnapshotListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AgentPoolSnapshotListResult.DeserializeAgentPoolSnapshotListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         AgentPoolSnapshotListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AgentPoolSnapshotListResult.DeserializeAgentPoolSnapshotListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         AgentPoolSnapshotListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AgentPoolSnapshotListResult.DeserializeAgentPoolSnapshotListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         AgentPoolSnapshotData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         AgentPoolSnapshotData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 201:
                     {
                         AgentPoolSnapshotData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 201:
                     {
                         AgentPoolSnapshotData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         AgentPoolSnapshotData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         AgentPoolSnapshotData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         AgentPoolSnapshotListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AgentPoolSnapshotListResult.DeserializeAgentPoolSnapshotListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         AgentPoolSnapshotListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AgentPoolSnapshotListResult.DeserializeAgentPoolSnapshotListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         AgentPoolSnapshotListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AgentPoolSnapshotListResult.DeserializeAgentPoolSnapshotListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         AgentPoolSnapshotListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AgentPoolSnapshotListResult.DeserializeAgentPoolSnapshotListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataShare
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataShareAccountData(document.RootElement, options);
                     }
                 default:

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ContainerServiceMaintenanceConfigurationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerServiceMaintenanceConfigurationListResult.DeserializeContainerServiceMaintenanceConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ContainerServiceMaintenanceConfigurationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerServiceMaintenanceConfigurationListResult.DeserializeContainerServiceMaintenanceConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ContainerServiceMaintenanceConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ContainerServiceMaintenanceConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 201:
                     {
                         ContainerServiceMaintenanceConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 201:
                     {
                         ContainerServiceMaintenanceConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ContainerServiceMaintenanceConfigurationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerServiceMaintenanceConfigurationListResult.DeserializeContainerServiceMaintenanceConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ContainerServiceMaintenanceConfigurationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerServiceMaintenanceConfigurationListResult.DeserializeContainerServiceMaintenanceConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

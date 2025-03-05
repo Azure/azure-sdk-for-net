@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         GremlinDatabaseListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GremlinDatabaseListResult.DeserializeGremlinDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         GremlinDatabaseListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GremlinDatabaseListResult.DeserializeGremlinDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         GremlinDatabaseData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GremlinDatabaseData.DeserializeGremlinDatabaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         GremlinDatabaseData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GremlinDatabaseData.DeserializeGremlinDatabaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         ThroughputSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         ThroughputSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -883,7 +883,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         GremlinGraphListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GremlinGraphListResult.DeserializeGremlinGraphListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -914,7 +914,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         GremlinGraphListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GremlinGraphListResult.DeserializeGremlinGraphListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -989,7 +989,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         GremlinGraphData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GremlinGraphData.DeserializeGremlinGraphData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1024,7 +1024,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         GremlinGraphData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GremlinGraphData.DeserializeGremlinGraphData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1310,7 +1310,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         ThroughputSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1345,7 +1345,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         ThroughputSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
