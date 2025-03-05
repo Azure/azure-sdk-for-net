@@ -47,28 +47,32 @@ parameters:
     default: false
 
 jobs:
-
-- ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
-  - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
-    parameters:
-      GenerateJobName: generate_target_service_test_matrix
-      JobTemplatePath: /eng/pipelines/templates/jobs/build.yml
-      MatrixConfigs:
-      - Name: NET_ci_build_base
-        Path: eng/pipelines/templates/stages/build-matrix.json
-        Selection: sparse
-        GenerateVMJobs: true
-      CloudConfig:
-        Cloud: public
-      ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+  - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+    - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
+      parameters:
+        GenerateJobName: generate_target_service_test_matrix
+        JobTemplatePath: /eng/pipelines/templates/jobs/build.yml
+        MatrixConfigs:
+        - Name: NET_ci_build_base
+          Path: eng/pipelines/templates/stages/build-matrix.json
+          Selection: sparse
+          GenerateVMJobs: true
+        CloudConfig:
+          Cloud: public
         SparseCheckoutPaths:
           - "/*"
           - "!SessionRecords"
         EnablePRGeneration: true
         PRMatrixSetting: ProjectNames
         PRJobBatchSize: 20
-        PRMatrixIndirectFilters:
-          - 'Pool=.*LinuxPool$'
+        AdditionalParameters:
+          Artifacts: ${{ parameters.Artifacts }}
+          TestPipeline: ${{ parameters.TestPipeline }}
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          SDKType: ${{ parameters.SDKType }}
+          CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
+          AOTTestInputs: ${{ parameters.AOTTestInputs }}
+
         PreGenerationSteps:
         # todo: share this pregeneration step with the other jobs analyze and test
           - script: |
@@ -93,28 +97,28 @@ jobs:
               }
             displayName: Set all packages to direct
 
-- ${{ else }}:
-  - job: Build
-    pool:
-      name: $(WINDOWSPOOL)
-      image: $(WINDOWSVMIMAGE)
-      os: windows
+  - ${{ else }}:
+    - job: Build
+      pool:
+        name: $(WINDOWSPOOL)
+        image: $(WINDOWSVMIMAGE)
+        os: windows
 
-    variables:
-      Codeql.Enabled: true
-      Codeql.BuildIdentifier: ${{ parameters.ServiceDirectory }}
-      Codeql.SkipTaskAutoInjection: false
-      SDKType: ${{ parameters.SDKType }}
+      variables:
+        Codeql.Enabled: true
+        Codeql.BuildIdentifier: ${{ parameters.ServiceDirectory }}
+        Codeql.SkipTaskAutoInjection: false
+        SDKType: ${{ parameters.SDKType }}
 
-    steps:
-      - template: /eng/pipelines/templates/steps/build.yml
-        parameters:
-          Artifacts: ${{ parameters.Artifacts }}
-          TestPipeline: ${{ parameters.TestPipeline }}
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
-          SDKType: ${{ parameters.SDKType }}
-          CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
-          AOTTestInputs: ${{ parameters.AOTTestInputs }}
+      steps:
+        - template: /eng/pipelines/templates/steps/build.yml
+          parameters:
+            Artifacts: ${{ parameters.Artifacts }}
+            TestPipeline: ${{ parameters.TestPipeline }}
+            ServiceDirectory: ${{ parameters.ServiceDirectory }}
+            SDKType: ${{ parameters.SDKType }}
+            CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
+            AOTTestInputs: ${{ parameters.AOTTestInputs }}
 
   - job: "Analyze"
     timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
