@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         GalleryImageVersionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GalleryImageVersionData.DeserializeGalleryImageVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         GalleryImageVersionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GalleryImageVersionData.DeserializeGalleryImageVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         GalleryImageVersionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GalleryImageVersionList.DeserializeGalleryImageVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         GalleryImageVersionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GalleryImageVersionList.DeserializeGalleryImageVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         GalleryImageVersionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GalleryImageVersionList.DeserializeGalleryImageVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         GalleryImageVersionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GalleryImageVersionList.DeserializeGalleryImageVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.CustomerInsights
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRoleAssignmentResourceFormatData(document.RootElement, options);
                     }
                 default:

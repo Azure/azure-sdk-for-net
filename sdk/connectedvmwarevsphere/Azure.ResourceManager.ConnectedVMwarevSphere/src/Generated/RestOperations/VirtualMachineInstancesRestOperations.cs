@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VMwareVmInstanceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VMwareVmInstanceData.DeserializeVMwareVmInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VMwareVmInstanceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VMwareVmInstanceData.DeserializeVMwareVmInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VMwareVmInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VMwareVmInstanceListResult.DeserializeVMwareVmInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VMwareVmInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VMwareVmInstanceListResult.DeserializeVMwareVmInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VMwareVmInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VMwareVmInstanceListResult.DeserializeVMwareVmInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VMwareVmInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VMwareVmInstanceListResult.DeserializeVMwareVmInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataProductListResult.DeserializeDataProductListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataProductListResult.DeserializeDataProductListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataProductListResult.DeserializeDataProductListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataProductListResult.DeserializeDataProductListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataProductData.DeserializeDataProductData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataProductData.DeserializeDataProductData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         RoleAssignmentDetail value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleAssignmentDetail.DeserializeRoleAssignmentDetail(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         RoleAssignmentDetail value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleAssignmentDetail.DeserializeRoleAssignmentDetail(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         AccountSasToken value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccountSasToken.DeserializeAccountSasToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         AccountSasToken value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccountSasToken.DeserializeAccountSasToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
 #if NET6_0_OR_GREATER
 				content.JsonWriter.WriteRawValue(body);
 #else
-            using (JsonDocument document = JsonDocument.Parse(body))
+            using (JsonDocument document = JsonDocument.Parse(body, ModelSerializationExtensions.JsonDocumentOptions))
             {
                 JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
             }
@@ -837,7 +837,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         RoleAssignmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleAssignmentListResult.DeserializeRoleAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         RoleAssignmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleAssignmentListResult.DeserializeRoleAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1101,7 +1101,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataProductListResult.DeserializeDataProductListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataProductListResult.DeserializeDataProductListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1179,7 +1179,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataProductListResult.DeserializeDataProductListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1208,7 +1208,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case 200:
                     {
                         DataProductListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataProductListResult.DeserializeDataProductListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

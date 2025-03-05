@@ -88,7 +88,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new NumericVariable FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeNumericVariable(document.RootElement);
         }
 

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         MongoDBDatabaseListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MongoDBDatabaseListResult.DeserializeMongoDBDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         MongoDBDatabaseListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MongoDBDatabaseListResult.DeserializeMongoDBDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         MongoDBDatabaseData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MongoDBDatabaseData.DeserializeMongoDBDatabaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         MongoDBDatabaseData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MongoDBDatabaseData.DeserializeMongoDBDatabaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         ThroughputSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         ThroughputSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1307,7 +1307,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         MongoDBCollectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MongoDBCollectionListResult.DeserializeMongoDBCollectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1338,7 +1338,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         MongoDBCollectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MongoDBCollectionListResult.DeserializeMongoDBCollectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1413,7 +1413,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         MongoDBCollectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MongoDBCollectionData.DeserializeMongoDBCollectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1448,7 +1448,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         MongoDBCollectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MongoDBCollectionData.DeserializeMongoDBCollectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1946,7 +1946,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         ThroughputSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1981,7 +1981,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         ThroughputSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2366,7 +2366,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         MongoDBRoleDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MongoDBRoleDefinitionData.DeserializeMongoDBRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2399,7 +2399,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         MongoDBRoleDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MongoDBRoleDefinitionData.DeserializeMongoDBRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2660,7 +2660,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         MongoDBRoleDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MongoDBRoleDefinitionListResult.DeserializeMongoDBRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2689,7 +2689,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         MongoDBRoleDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MongoDBRoleDefinitionListResult.DeserializeMongoDBRoleDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2758,7 +2758,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         MongoDBUserDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MongoDBUserDefinitionData.DeserializeMongoDBUserDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2791,7 +2791,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         MongoDBUserDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MongoDBUserDefinitionData.DeserializeMongoDBUserDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3052,7 +3052,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         MongoDBUserDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MongoDBUserDefinitionListResult.DeserializeMongoDBUserDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3081,7 +3081,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         MongoDBUserDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MongoDBUserDefinitionListResult.DeserializeMongoDBUserDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

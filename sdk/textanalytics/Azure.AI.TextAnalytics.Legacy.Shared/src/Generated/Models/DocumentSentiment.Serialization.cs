@@ -85,7 +85,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DocumentSentiment FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDocumentSentiment(document.RootElement);
         }
     }

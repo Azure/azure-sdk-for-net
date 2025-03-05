@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedLedgerDigestUploadsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedLedgerDigestUploadsListResult.DeserializeManagedLedgerDigestUploadsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedLedgerDigestUploadsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedLedgerDigestUploadsListResult.DeserializeManagedLedgerDigestUploadsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedLedgerDigestUploadData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedLedgerDigestUploadData.DeserializeManagedLedgerDigestUploadData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedLedgerDigestUploadData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedLedgerDigestUploadData.DeserializeManagedLedgerDigestUploadData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedLedgerDigestUploadsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedLedgerDigestUploadsListResult.DeserializeManagedLedgerDigestUploadsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedLedgerDigestUploadsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedLedgerDigestUploadsListResult.DeserializeManagedLedgerDigestUploadsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

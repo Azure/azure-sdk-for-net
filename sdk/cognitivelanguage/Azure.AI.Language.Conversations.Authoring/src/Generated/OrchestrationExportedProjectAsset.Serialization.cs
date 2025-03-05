@@ -147,7 +147,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOrchestrationExportedProjectAsset(document.RootElement, options);
                     }
                 default:
@@ -161,7 +161,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new OrchestrationExportedProjectAsset FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeOrchestrationExportedProjectAsset(document.RootElement);
         }
 

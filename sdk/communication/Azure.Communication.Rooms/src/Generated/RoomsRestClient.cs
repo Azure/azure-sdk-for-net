@@ -87,7 +87,7 @@ namespace Azure.Communication.Rooms
                 case 201:
                     {
                         CommunicationRoom value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationRoom.DeserializeCommunicationRoom(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -111,7 +111,7 @@ namespace Azure.Communication.Rooms
                 case 201:
                     {
                         CommunicationRoom value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationRoom.DeserializeCommunicationRoom(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -145,7 +145,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         RoomsCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoomsCollection.DeserializeRoomsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -165,7 +165,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         RoomsCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoomsCollection.DeserializeRoomsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -207,7 +207,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         CommunicationRoom value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationRoom.DeserializeCommunicationRoom(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -234,7 +234,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         CommunicationRoom value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationRoom.DeserializeCommunicationRoom(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -289,7 +289,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         CommunicationRoom value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationRoom.DeserializeCommunicationRoom(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -319,7 +319,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         CommunicationRoom value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationRoom.DeserializeCommunicationRoom(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -418,7 +418,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         RoomsCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoomsCollection.DeserializeRoomsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -445,7 +445,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         RoomsCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoomsCollection.DeserializeRoomsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

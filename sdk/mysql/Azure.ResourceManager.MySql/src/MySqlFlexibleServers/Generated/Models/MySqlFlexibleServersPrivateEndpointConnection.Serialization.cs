@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMySqlFlexibleServersPrivateEndpointConnection(document.RootElement, options);
                     }
                 default:

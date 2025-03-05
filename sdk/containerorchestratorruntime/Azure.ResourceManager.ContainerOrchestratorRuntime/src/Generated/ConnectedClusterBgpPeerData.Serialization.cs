@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConnectedClusterBgpPeerData(document.RootElement, options);
                     }
                 default:

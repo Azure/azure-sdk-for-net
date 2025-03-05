@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         ScheduleList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScheduleList.DeserializeScheduleList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         ScheduleList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScheduleList.DeserializeScheduleList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DevTestLabScheduleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DevTestLabScheduleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 201:
                     {
                         DevTestLabScheduleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 201:
                     {
                         DevTestLabScheduleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DevTestLabScheduleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DevTestLabScheduleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         ScheduleList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScheduleList.DeserializeScheduleList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         ScheduleList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScheduleList.DeserializeScheduleList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         ScheduleList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScheduleList.DeserializeScheduleList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         ScheduleList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScheduleList.DeserializeScheduleList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         ScheduleList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScheduleList.DeserializeScheduleList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -961,7 +961,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         ScheduleList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScheduleList.DeserializeScheduleList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         ConsumerInvitationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConsumerInvitationList.DeserializeConsumerInvitationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         ConsumerInvitationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConsumerInvitationList.DeserializeConsumerInvitationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataShareConsumerInvitationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataShareConsumerInvitationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataShareConsumerInvitationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataShareConsumerInvitationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         ConsumerInvitationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConsumerInvitationList.DeserializeConsumerInvitationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         ConsumerInvitationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConsumerInvitationList.DeserializeConsumerInvitationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

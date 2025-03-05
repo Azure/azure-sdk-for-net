@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         AutoUpgradeProfileListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoUpgradeProfileListResult.DeserializeAutoUpgradeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         AutoUpgradeProfileListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoUpgradeProfileListResult.DeserializeAutoUpgradeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         AutoUpgradeProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoUpgradeProfileData.DeserializeAutoUpgradeProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         AutoUpgradeProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoUpgradeProfileData.DeserializeAutoUpgradeProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         AutoUpgradeProfileListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoUpgradeProfileListResult.DeserializeAutoUpgradeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         AutoUpgradeProfileListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoUpgradeProfileListResult.DeserializeAutoUpgradeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -45,7 +45,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static VideoPublishingOptions FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeVideoPublishingOptions(document.RootElement);
         }
 

@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 case 200:
                     {
                         VaultCertificateResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VaultCertificateResult.DeserializeVaultCertificateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 case 200:
                     {
                         VaultCertificateResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VaultCertificateResult.DeserializeVaultCertificateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

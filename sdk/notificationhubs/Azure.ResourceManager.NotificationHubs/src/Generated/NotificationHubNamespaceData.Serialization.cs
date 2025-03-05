@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNotificationHubNamespaceData(document.RootElement, options);
                     }
                 default:

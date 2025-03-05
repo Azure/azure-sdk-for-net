@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseAadOnlyAuthenticationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseAadOnlyAuthenticationData.DeserializeSynapseAadOnlyAuthenticationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseAadOnlyAuthenticationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseAadOnlyAuthenticationData.DeserializeSynapseAadOnlyAuthenticationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseAadOnlyAuthenticationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseAadOnlyAuthenticationListResult.DeserializeSynapseAadOnlyAuthenticationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseAadOnlyAuthenticationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseAadOnlyAuthenticationListResult.DeserializeSynapseAadOnlyAuthenticationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseAadOnlyAuthenticationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseAadOnlyAuthenticationListResult.DeserializeSynapseAadOnlyAuthenticationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseAadOnlyAuthenticationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseAadOnlyAuthenticationListResult.DeserializeSynapseAadOnlyAuthenticationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

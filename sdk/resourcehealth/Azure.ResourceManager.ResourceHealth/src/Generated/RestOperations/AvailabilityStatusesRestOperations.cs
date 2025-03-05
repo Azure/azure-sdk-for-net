@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthAvailabilityStatusListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthAvailabilityStatusListResult.DeserializeResourceHealthAvailabilityStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthAvailabilityStatusListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthAvailabilityStatusListResult.DeserializeResourceHealthAvailabilityStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthAvailabilityStatusListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthAvailabilityStatusListResult.DeserializeResourceHealthAvailabilityStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthAvailabilityStatusListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthAvailabilityStatusListResult.DeserializeResourceHealthAvailabilityStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthAvailabilityStatus value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthAvailabilityStatus value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthAvailabilityStatusListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthAvailabilityStatusListResult.DeserializeResourceHealthAvailabilityStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthAvailabilityStatusListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthAvailabilityStatusListResult.DeserializeResourceHealthAvailabilityStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthAvailabilityStatusListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthAvailabilityStatusListResult.DeserializeResourceHealthAvailabilityStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthAvailabilityStatusListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthAvailabilityStatusListResult.DeserializeResourceHealthAvailabilityStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthAvailabilityStatusListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthAvailabilityStatusListResult.DeserializeResourceHealthAvailabilityStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthAvailabilityStatusListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthAvailabilityStatusListResult.DeserializeResourceHealthAvailabilityStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthAvailabilityStatusListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthAvailabilityStatusListResult.DeserializeResourceHealthAvailabilityStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthAvailabilityStatusListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthAvailabilityStatusListResult.DeserializeResourceHealthAvailabilityStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

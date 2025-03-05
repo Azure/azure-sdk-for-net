@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTrafficManagerProfileData(document.RootElement, options);
                     }
                 default:

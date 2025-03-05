@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SqlServerCommunicationLinkData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SqlServerCommunicationLinkData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ServerCommunicationLinkListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServerCommunicationLinkListResult.DeserializeServerCommunicationLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ServerCommunicationLinkListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServerCommunicationLinkListResult.DeserializeServerCommunicationLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1098,7 +1098,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1137,7 +1137,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1232,7 +1232,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1271,7 +1271,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1452,7 +1452,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1481,7 +1481,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1552,7 +1552,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1583,7 +1583,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1660,7 +1660,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1693,7 +1693,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1776,7 +1776,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1811,7 +1811,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1864,7 +1864,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1895,7 +1895,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1950,7 +1950,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1983,7 +1983,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2040,7 +2040,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2075,7 +2075,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2134,7 +2134,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2171,7 +2171,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

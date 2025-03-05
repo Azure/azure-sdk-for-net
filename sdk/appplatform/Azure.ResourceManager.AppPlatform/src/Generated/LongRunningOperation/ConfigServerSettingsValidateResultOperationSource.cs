@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.AppPlatform
     {
         ConfigServerSettingsValidateResult IOperationSource<ConfigServerSettingsValidateResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return ConfigServerSettingsValidateResult.DeserializeConfigServerSettingsValidateResult(document.RootElement);
         }
 
         async ValueTask<ConfigServerSettingsValidateResult> IOperationSource<ConfigServerSettingsValidateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return ConfigServerSettingsValidateResult.DeserializeConfigServerSettingsValidateResult(document.RootElement);
         }
     }

@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         ThreatIntelligenceCount value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ThreatIntelligenceCount.DeserializeThreatIntelligenceCount(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         ThreatIntelligenceCount value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ThreatIntelligenceCount.DeserializeThreatIntelligenceCount(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         ThreatIntelligenceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ThreatIntelligenceList.DeserializeThreatIntelligenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         ThreatIntelligenceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ThreatIntelligenceList.DeserializeThreatIntelligenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         ThreatIntelligenceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ThreatIntelligenceList.DeserializeThreatIntelligenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         ThreatIntelligenceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ThreatIntelligenceList.DeserializeThreatIntelligenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

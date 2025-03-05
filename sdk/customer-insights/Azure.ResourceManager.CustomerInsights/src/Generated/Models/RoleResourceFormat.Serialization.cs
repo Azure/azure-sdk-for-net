@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRoleResourceFormat(document.RootElement, options);
                     }
                 default:

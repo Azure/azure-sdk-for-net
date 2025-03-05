@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         SummaryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SummaryListResult.DeserializeSummaryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         SummaryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SummaryListResult.DeserializeSummaryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         FirmwareAnalysisSummaryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FirmwareAnalysisSummaryData.DeserializeFirmwareAnalysisSummaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         FirmwareAnalysisSummaryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FirmwareAnalysisSummaryData.DeserializeFirmwareAnalysisSummaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         SummaryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SummaryListResult.DeserializeSummaryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         SummaryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SummaryListResult.DeserializeSummaryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

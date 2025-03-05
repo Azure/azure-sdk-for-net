@@ -68,13 +68,13 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         KqlScriptResource IOperationSource<KqlScriptResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return KqlScriptResource.DeserializeKqlScriptResource(document.RootElement);
         }
 
         async ValueTask<KqlScriptResource> IOperationSource<KqlScriptResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return KqlScriptResource.DeserializeKqlScriptResource(document.RootElement);
         }
     }

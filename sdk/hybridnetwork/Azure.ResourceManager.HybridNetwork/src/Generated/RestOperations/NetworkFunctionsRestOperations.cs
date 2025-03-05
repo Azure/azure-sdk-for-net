@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkFunctionData.DeserializeNetworkFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkFunctionData.DeserializeNetworkFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkFunctionData.DeserializeNetworkFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkFunctionData.DeserializeNetworkFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkFunctionListResult.DeserializeNetworkFunctionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkFunctionListResult.DeserializeNetworkFunctionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkFunctionListResult.DeserializeNetworkFunctionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkFunctionListResult.DeserializeNetworkFunctionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkFunctionListResult.DeserializeNetworkFunctionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkFunctionListResult.DeserializeNetworkFunctionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkFunctionListResult.DeserializeNetworkFunctionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         NetworkFunctionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkFunctionListResult.DeserializeNetworkFunctionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

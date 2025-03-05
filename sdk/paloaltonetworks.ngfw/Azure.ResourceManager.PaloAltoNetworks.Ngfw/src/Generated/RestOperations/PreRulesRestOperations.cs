@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PreRulesResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PreRulesResourceListResult.DeserializePreRulesResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PreRulesResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PreRulesResourceListResult.DeserializePreRulesResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PreRulestackRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PreRulestackRuleData.DeserializePreRulestackRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PreRulestackRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PreRulestackRuleData.DeserializePreRulestackRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         FirewallRuleCounter value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FirewallRuleCounter.DeserializeFirewallRuleCounter(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         FirewallRuleCounter value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FirewallRuleCounter.DeserializeFirewallRuleCounter(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         FirewallRuleResetConter value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FirewallRuleResetConter.DeserializeFirewallRuleResetConter(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         FirewallRuleResetConter value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FirewallRuleResetConter.DeserializeFirewallRuleResetConter(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PreRulesResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PreRulesResourceListResult.DeserializePreRulesResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PreRulesResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PreRulesResourceListResult.DeserializePreRulesResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.CostManagement
     {
         BenefitUtilizationSummariesOperationStatus IOperationSource<BenefitUtilizationSummariesOperationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return BenefitUtilizationSummariesOperationStatus.DeserializeBenefitUtilizationSummariesOperationStatus(document.RootElement);
         }
 
         async ValueTask<BenefitUtilizationSummariesOperationStatus> IOperationSource<BenefitUtilizationSummariesOperationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return BenefitUtilizationSummariesOperationStatus.DeserializeBenefitUtilizationSummariesOperationStatus(document.RootElement);
         }
     }

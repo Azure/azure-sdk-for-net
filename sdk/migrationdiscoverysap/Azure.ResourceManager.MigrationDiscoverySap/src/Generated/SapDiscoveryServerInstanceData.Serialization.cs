@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSapDiscoveryServerInstanceData(document.RootElement, options);
                     }
                 default:

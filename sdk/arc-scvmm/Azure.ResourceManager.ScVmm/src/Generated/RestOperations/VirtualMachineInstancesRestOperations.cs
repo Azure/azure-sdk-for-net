@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         ScVmmVirtualMachineInstanceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScVmmVirtualMachineInstanceData.DeserializeScVmmVirtualMachineInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         ScVmmVirtualMachineInstanceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScVmmVirtualMachineInstanceData.DeserializeScVmmVirtualMachineInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         VirtualMachineInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VirtualMachineInstanceListResult.DeserializeVirtualMachineInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         VirtualMachineInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VirtualMachineInstanceListResult.DeserializeVirtualMachineInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         VirtualMachineInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VirtualMachineInstanceListResult.DeserializeVirtualMachineInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -929,7 +929,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         VirtualMachineInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VirtualMachineInstanceListResult.DeserializeVirtualMachineInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

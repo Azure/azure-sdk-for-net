@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapCentralServerInstanceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapCentralServerInstanceData.DeserializeSapCentralServerInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapCentralServerInstanceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapCentralServerInstanceData.DeserializeSapCentralServerInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapCentralInstanceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapCentralInstanceList.DeserializeSapCentralInstanceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapCentralInstanceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapCentralInstanceList.DeserializeSapCentralInstanceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapCentralInstanceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapCentralInstanceList.DeserializeSapCentralInstanceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapCentralInstanceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapCentralInstanceList.DeserializeSapCentralInstanceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

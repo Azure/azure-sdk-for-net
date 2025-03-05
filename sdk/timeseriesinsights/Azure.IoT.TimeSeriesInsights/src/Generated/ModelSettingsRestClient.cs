@@ -68,7 +68,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         ModelSettingsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ModelSettingsResponse.DeserializeModelSettingsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -89,7 +89,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         ModelSettingsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ModelSettingsResponse.DeserializeModelSettingsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -140,7 +140,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         ModelSettingsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ModelSettingsResponse.DeserializeModelSettingsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -168,7 +168,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         ModelSettingsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ModelSettingsResponse.DeserializeModelSettingsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

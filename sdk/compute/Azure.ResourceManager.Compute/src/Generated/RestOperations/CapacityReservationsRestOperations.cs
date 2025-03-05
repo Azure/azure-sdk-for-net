@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CapacityReservationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CapacityReservationData.DeserializeCapacityReservationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CapacityReservationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CapacityReservationData.DeserializeCapacityReservationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CapacityReservationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CapacityReservationListResult.DeserializeCapacityReservationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CapacityReservationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CapacityReservationListResult.DeserializeCapacityReservationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CapacityReservationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CapacityReservationListResult.DeserializeCapacityReservationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CapacityReservationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CapacityReservationListResult.DeserializeCapacityReservationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

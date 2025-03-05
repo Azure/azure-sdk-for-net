@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAzureStorageSmbFileShareEndpointProperties(document.RootElement, options);
                     }
                 default:

@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeJpgImage(document.RootElement, options);
                     }
                 default:

@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         JobExecutionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JobExecutionListResult.DeserializeJobExecutionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         JobExecutionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JobExecutionListResult.DeserializeJobExecutionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         JobExecutionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JobExecutionListResult.DeserializeJobExecutionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         JobExecutionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JobExecutionListResult.DeserializeJobExecutionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SqlServerJobExecutionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlServerJobExecutionData.DeserializeSqlServerJobExecutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SqlServerJobExecutionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlServerJobExecutionData.DeserializeSqlServerJobExecutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         JobExecutionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JobExecutionListResult.DeserializeJobExecutionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         JobExecutionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JobExecutionListResult.DeserializeJobExecutionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         JobExecutionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JobExecutionListResult.DeserializeJobExecutionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         JobExecutionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JobExecutionListResult.DeserializeJobExecutionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

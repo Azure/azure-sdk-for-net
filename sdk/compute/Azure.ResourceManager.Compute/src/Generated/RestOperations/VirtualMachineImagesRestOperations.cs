@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         VirtualMachineImage value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VirtualMachineImage.DeserializeVirtualMachineImage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         VirtualMachineImage value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VirtualMachineImage.DeserializeVirtualMachineImage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         IReadOnlyList<VirtualMachineImageBase> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         IReadOnlyList<VirtualMachineImageBase> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         IReadOnlyList<VirtualMachineImageBase> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         IReadOnlyList<VirtualMachineImageBase> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         IReadOnlyList<VirtualMachineImageBase> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         IReadOnlyList<VirtualMachineImageBase> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         IReadOnlyList<VirtualMachineImageBase> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         IReadOnlyList<VirtualMachineImageBase> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         VmImagesInEdgeZoneListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VmImagesInEdgeZoneListResult.DeserializeVmImagesInEdgeZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         VmImagesInEdgeZoneListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VmImagesInEdgeZoneListResult.DeserializeVmImagesInEdgeZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
