@@ -199,6 +199,14 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     $additionalValidationPackages = @()
     $lookup = @{}
 
+    # Sort so that we very quickly find any directly changed packages before hitting service level changes.
+    # This is important because due to the way we traverse the changed files, the instant we evaluate a pkg
+    # as directly or indirectly changed, we exit the file loop and move on to the next pkg.
+    # The problem is, a package may be detected as indirectly changed _before_ we get to the file that directly changed it!
+    # To avoid this without wonky changes to the detection algorithm, we simply sort our files by their depth, so we will always
+    # detect direct package changes first!
+    $targetedFiles = $targetedFiles | Sort-Object { ($_.Split("/").Count) } -Descending
+
     # this is the primary loop that identifies the packages that have changes
     foreach ($pkg in $allPackageProperties) {
         $pkgDirectory = Resolve-Path "$($pkg.DirectoryPath)"
@@ -263,8 +271,14 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                 # we can assume that the path to the ci.yml will successfully resolve.
                 $ciYml = Join-Path $RepoRoot $yml
                 # ensure we terminate the service directory with a /
-                $directory = [System.IO.Path]::GetDirectoryName($ciYml).Replace("`\", "/") + "/"
+                $directory = [System.IO.Path]::GetDirectoryName($ciYml).Replace("`\", "/")
                 $soleCIYml = (Get-ChildItem -Path $directory -Filter "ci*.yml" -File).Count -eq 1
+
+                # we should only continue with this check if the file being changed is "in the service directory"
+                $serviceDirectoryChange = (Split-Path $filePath -Parent).Replace("`\", "/") -eq $directory
+                if (!$serviceDirectoryChange) {
+                    break
+                }
 
                 if ($soleCIYml -and $filePath.Replace("`\", "/").StartsWith($directory)) {
                     if (-not $shouldInclude) {

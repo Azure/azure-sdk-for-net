@@ -83,7 +83,17 @@ namespace Azure.Core
             {
                 if (allowCertificateOnly)
                 {
+#if NET9_0_OR_GREATER
+                    switch (X509Certificate2.GetCertContentType(cer))
+                    {
+                        case X509ContentType.Pkcs12:
+                            return X509CertificateLoader.LoadPkcs12(cer, (string)null, keyStorageFlags);
+                        default:
+                            return X509CertificateLoader.LoadCertificate(cer);
+                    }
+#else
                     return new X509Certificate2(cer, (string)null, keyStorageFlags);
+#endif
                 }
 
                 throw new InvalidDataException("The certificate is missing the private key");
@@ -151,11 +161,26 @@ namespace Azure.Core
                     privateKey = LightweightPkcs8Decoder.DecodeRSAPkcs8(key);
                 }
 
-                using X509Certificate2 certificateWithoutPrivateKey = new X509Certificate2(cer, (string)null, keyStorageFlags);
+                X509Certificate2 certificateWithoutPrivateKey;
 
-                X509Certificate2 certificate = (X509Certificate2)s_rsaCopyWithPrivateKeyMethod.Invoke(null, new object[] { certificateWithoutPrivateKey, privateKey });
+#if NET9_0_OR_GREATER
+                switch (X509Certificate2.GetCertContentType(cer))
+                {
+                    case X509ContentType.Pkcs12:
+                        certificateWithoutPrivateKey = X509CertificateLoader.LoadPkcs12(cer, (string)null, keyStorageFlags);
+                        break;
+                    default:
+                        certificateWithoutPrivateKey = X509CertificateLoader.LoadCertificate(cer);
+                        break;
+                }
+#else
+                certificateWithoutPrivateKey = new X509Certificate2(cer, (string)null, keyStorageFlags);
+#endif
+
+                X509Certificate2 certificate = (X509Certificate2)s_rsaCopyWithPrivateKeyMethod.Invoke(null, [certificateWithoutPrivateKey, privateKey]);
+                certificateWithoutPrivateKey.Dispose();
+
                 // On .NET Framework the PrivateKey member is not initialized after calling CopyWithPrivateKey.
-
                 // This class only compiles against NET6.0 in tests and never in SDK libraries suppress the warning
 #pragma warning disable SYSLIB0028 // Use CopyWithPrivateKey instead
                 if (certificate.PrivateKey is null)

@@ -40,3 +40,5 @@ Azure Conversations Authoring is part of the Azure Cognitive Service for Languag
 * [Swap Deployments (Async)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample12_ConversationsAuthoring_SwapDeploymentsAsync.md)
 * [Delete a Deployment (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample13_ConversationsAuthoring_DeleteDeployment.md)
 * [Delete a Deployment (Async)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample13_ConversationsAuthoring_DeleteDeploymentAsync.md)
+* [Deploy a Project (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample14_ConversationsAuthoring_DeployProject.md)
+* [Delete a Project (Async)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample14_ConversationsAuthoring_DeployProjectAsync.md)
