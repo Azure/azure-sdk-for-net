@@ -13,7 +13,7 @@ infrastructure.AddFeature(new OpenAIEmbeddingFeature("text-embedding-ada-002", "
 // the app can be called with -init switch to generate bicep and prepare for azd deployment.
 if (infrastructure.TryExecuteCommand(args)) return;
 
-ProjectClient project = infrastructure.GetClient();
+ProjectClient project = new();
 ChatClient chat = project.GetOpenAIChatClient();
 EmbeddingClient embeddings = project.GetOpenAIEmbeddingClient();
 EmbeddingsVectorbase vectorDb = new(embeddings);

@@ -43,16 +43,6 @@ public class BicepGenerationTests
     }
 
     [Test]
-    public void AppConfiguration()
-    {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
-        infra.AddFeature(new AppConfigurationFeature());
-        string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
-        string expectedBicep = LoadTestFile("appConfig.bicep");
-        Assert.AreEqual(expectedBicep, actualBicep);
-    }
-
-    [Test]
     public void KeyVault()
     {
         ProjectInfrastructure infra = new("cm0c420d2f21084cd");

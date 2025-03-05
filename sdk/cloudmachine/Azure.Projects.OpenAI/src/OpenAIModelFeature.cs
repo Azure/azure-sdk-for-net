@@ -71,29 +71,6 @@ public class OpenAIModelFeature : AzureProjectFeature
     }
 
     /// <summary>
-    /// Emit the connections.
-    /// </summary>
-    /// <param name="connections"></param>
-    /// <param name="cmId"></param>
-    /// <exception cref="NotImplementedException"></exception>
-    protected override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
-    {
-        Account.EmitConnectionsInternal(connections, cmId);
-        // add connections
-        switch (Kind)
-        {
-            case AIModelKind.Chat:
-                connections.Add(new ClientConnection("OpenAI.Chat.ChatClient", $"{cmId}_chat"));
-                break;
-            case AIModelKind.Embedding:
-                connections.Add(new ClientConnection("OpenAI.Embeddings.EmbeddingClient", $"{cmId}_embedding"));
-                break;
-            default:
-                throw new NotImplementedException();
-        }
-    }
-
-    /// <summary>
     /// Emit the resources.
     /// </summary>
     /// <param name="cm"></param>

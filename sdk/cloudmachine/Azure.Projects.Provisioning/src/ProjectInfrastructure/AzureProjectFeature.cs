@@ -16,17 +16,8 @@ public abstract class AzureProjectFeature
     private ProvisionableResource? _resource;
 
     protected abstract ProvisionableResource EmitResources(ProjectInfrastructure infrastructure);
-    protected internal virtual void EmitConnections(ICollection<ClientConnection> connections, string projectId) { }
-    protected internal virtual void EmitImplicitFeatures(FeatureCollection features, string projectId)
-        => features.Add(this);
 
-    protected void AddConnectionToAppConfig(ProjectInfrastructure infrastructure, string connectionId, string endpoint)
-    {
-        AppConfigurationFeature appConfig = infrastructure.Features.FindAll<AppConfigurationFeature>().First();
-        AppConfigurationSettingFeature connection = new(appConfig, connectionId, endpoint);
-        connection.BicepIdentifier = "cm_connection";
-        infrastructure.AddFeature(connection);
-    }
+    protected internal virtual void EmitImplicitFeatures(FeatureCollection features, string projectId) { }
 
     internal ProvisionableResource Emit(ProjectInfrastructure infrastructure)
     {
@@ -36,6 +27,13 @@ public abstract class AzureProjectFeature
             _resource = namedResource;
         }
         return Resource;
+    }
+
+    protected void AddConnectionToAppConfig(ProjectInfrastructure infrastructure, string connectionId, string endpoint)
+    {
+        AppConfigurationSettingFeature connection = new(connectionId, endpoint);
+        connection.BicepIdentifier = "cm_connection";
+        infrastructure.AddFeature(connection);
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]

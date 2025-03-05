@@ -20,47 +20,6 @@ namespace Azure.Projects.Tests;
 public class ConnectionTests
 {
     [Test]
-    [TestCase([new string[0]])]
-    public void TwoClients(string[] args)
-    {
-        ProjectInfrastructure infra = new();
-        infra.AddOfx();
-        if (args.Contains("-azd")) Azd.Init(infra);
-
-        ProjectClient client = infra.GetClient();
-
-        ValidateClient(client);
-    }
-
-    // this tests the scenario where provisioning is done in one app, but runtime is done by another app
-    // the connections needs to be serialized and deserialized
-    [Test]
-    public void TwoApps()
-    {
-        // app 1 (with a dependency on the CDK)
-        ProjectInfrastructure infra = new();
-        infra.AddOfx();
-        //if (args.Contains("-azd")) Azd.Init(infra);
-        BinaryData serializedConnections = BinaryData.FromObjectAsJson(infra.Connections);
-
-        // app 2 (no dependency on the CDK)
-        ConnectionCollection deserializedConnections = JsonSerializer.Deserialize<ConnectionCollection>(serializedConnections)!;
-        ProjectClient client = new(deserializedConnections);
-
-        ValidateClient(client);
-    }
-
-    // TODO: maybe this is too hacky. do we really need this?
-    [Test]
-    [TestCase([new string[0]])]
-    public void SingleClientAdd(string[] args)
-    {
-        ProjectClient client = new();
-
-        if (args.Contains("-azd")) Azd.Init(client);
-    }
-
-    [Test]
     public void ConfigurationDemo()
     {
         ProjectInfrastructure infra = new();

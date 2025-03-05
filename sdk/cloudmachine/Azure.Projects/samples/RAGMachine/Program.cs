@@ -10,10 +10,11 @@ ProjectInfrastructure infrastructure = new();
 infrastructure.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
 infrastructure.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
 infrastructure.AddFeature(new AppServiceFeature());
-ProjectClient client = infrastructure.GetClient();
 
 // the app can be called with -init switch to generate bicep and prepare for azd deployment.
 if (infrastructure.TryExecuteCommand(args)) return;
+
+ProjectClient client = new();
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();

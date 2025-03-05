@@ -274,4 +274,44 @@ resource cm_connection_1 'Microsoft.AppConfiguration/configurationStores/keyValu
   parent: cm_app_config
 }
 
+resource cm_connection_2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'cm_servicebus_connection'
+  properties: {
+    value: 'https://cm0c420d2f21084cd.servicebus.windows.net/'
+  }
+  parent: cm_app_config
+}
+
+resource cm_connection_3 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'cm_servicebus_topic_private'
+  properties: {
+    value: 'cm_servicebus_topic_private'
+  }
+  parent: cm_app_config
+}
+
+resource cm_connection_4 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'cm_servicebus_subscription_private'
+  properties: {
+    value: 'cm_servicebus_topic_private/cm_servicebus_subscription_private'
+  }
+  parent: cm_app_config
+}
+
+resource cm_connection_5 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'cm_servicebus_default_topic'
+  properties: {
+    value: 'cm_servicebus_default_topic'
+  }
+  parent: cm_app_config
+}
+
+resource cm_connection_6 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'cm_servicebus_subscription_default'
+  properties: {
+    value: 'cm_servicebus_default_topic/cm_servicebus_subscription_default'
+  }
+  parent: cm_app_config
+}
+
 output project_identity_id string = project_identity.id

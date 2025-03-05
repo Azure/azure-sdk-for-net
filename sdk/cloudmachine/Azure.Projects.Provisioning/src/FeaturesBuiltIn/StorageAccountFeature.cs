@@ -138,19 +138,4 @@ public class BlobContainerFeature : AzureProjectFeature
 
         return container;
     }
-
-    protected internal override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
-    {
-        if (Service == null || Service.Account == null)
-        {
-            throw new InvalidOperationException("Service or Account is not set.");
-        }
-
-        ClientConnection connection = new(
-            $"Azure.Storage.Blobs.BlobContainerClient@{ContainerName}",
-            $"https://{Service.Account.Name}.blob.core.windows.net/{ContainerName}",
-            ClientAuthenticationMethod.Credential
-        );
-        connections.Add(connection);
-    }
 }

@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -39,12 +38,6 @@ public partial class ProjectInfrastructure
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ConnectionCollection Connections { get; } = [];
 
-    public ProjectClient GetClient()
-    {
-        ProjectClient client = new(Connections);
-        return client;
-    }
-
     public ProjectInfrastructure(string? projectId = default)
     {
         ProjectId = projectId ?? ProjectClient.ReadOrCreateProjectId();
@@ -78,7 +71,7 @@ public partial class ProjectInfrastructure
     public T AddFeature<T>(T feature) where T: AzureProjectFeature
     {
         feature.EmitImplicitFeatures(Features, ProjectId);
-        feature.EmitConnections(Connections, ProjectId);
+        Features.Add(feature);
         return feature;
     }
 

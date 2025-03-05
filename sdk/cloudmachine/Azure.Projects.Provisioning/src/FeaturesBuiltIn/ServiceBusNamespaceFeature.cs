@@ -37,9 +37,9 @@ public class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = Ser
         );
         RequiredSystemRoles.Add(_serviceBusNamespace, [dataOwner]);
 
+        var connection = ProjectConnections.CreateDefaultServiceBusConnection(infrastructure.ProjectId);
+        AddConnectionToAppConfig(infrastructure, "cm_servicebus_connection", connection.Locator);
+
         return _serviceBusNamespace;
     }
-
-    protected internal override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
-        => connections.Add(ProjectConnections.CreateDefaultServiceBusConnection(cmId));
 }

@@ -33,12 +33,9 @@ internal class ServiceBusTopicFeature : AzureProjectFeature
         };
 
         infrastructure.AddResource(topic);
-        return topic;
-    }
 
-    protected internal override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
-    {
-        connections.Add(new ClientConnection(Name, Name));
+        AddConnectionToAppConfig(infrastructure, Name, Name);
+        return topic;
     }
 
     /// <summary>

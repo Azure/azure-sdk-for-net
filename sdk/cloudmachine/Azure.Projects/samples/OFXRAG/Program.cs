@@ -14,7 +14,7 @@ if (infrastructure.TryExecuteCommand(args)) return;
 
 ChatTools tools = new(typeof(Tools));
 
-ProjectClient project = infrastructure.GetClient();
+ProjectClient project = new();
 
 List<ChatMessage> conversation = [];
 

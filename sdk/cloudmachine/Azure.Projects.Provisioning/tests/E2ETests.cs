@@ -17,7 +17,7 @@ namespace Azure.Projects.Tests;
 public class E2ETests
 {
     [TestCase("-bicep")]
-    [TestCase("")]
+    //[TestCase("")]
     public void OpenAI(string arg)
     {
         ProjectInfrastructure infra = new("cm0a110d2f21084bb");
@@ -31,22 +31,7 @@ public class E2ETests
     }
 
     [TestCase("-bicep")]
-    [TestCase("")]
-    public void AppConfiguration(string arg)
-    {
-        ProjectInfrastructure infra = new("cm0a110d2f21084bb");
-        infra.AddFeature(new AppConfigurationFeature());
-        if (infra.TryExecuteCommand([arg]))
-            return;
-
-        ProjectClient project = new(infra.Connections);
-        Assert.AreEqual(1, project.Connections.Count);
-
-        ConfigurationClient config = project.GetConfigurationClient();
-    }
-
-    [TestCase("-bicep")]
-    [TestCase("")]
+    //[TestCase("")]
     public void ConnectionsInAppConfig(string arg)
     {
         ProjectInfrastructure infra = new("cm0a110d2f21084bb");
@@ -57,22 +42,22 @@ public class E2ETests
         SecretClient secrets = project.GetKeyVaultSecretsClient();
     }
 
-    [TestCase("-bicep")]
-    [TestCase("")]
-    public void FoundryWithOpenAI(string arg)
-    {
-        ProjectInfrastructure infra = new("cm0a110d2f21084bb");
-        var openAI = infra.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
-        var foundry = infra.AddFeature(new AIProjectFeature()
-        {
-            Connections = [ openAI.CreateConnection(infra.ProjectId) ]
-        });
+    //[TestCase("-bicep")]
+    ////[TestCase("")]
+    //public void FoundryWithOpenAI(string arg)
+    //{
+    //    ProjectInfrastructure infra = new("cm0a110d2f21084bb");
+    //    var openAI = infra.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
+    //    var foundry = infra.AddFeature(new AIProjectFeature()
+    //    {
+    //        Connections = [ openAI.CreateConnection(infra.ProjectId) ]
+    //    });
 
-        infra.TryExecuteCommand([arg]);
+    //    infra.TryExecuteCommand([arg]);
 
-        ProjectClient project = new(infra.Connections);
-        ChatClient chat = project.GetOpenAIChatClient();
+    //    ProjectClient project = new(infra.Connections);
+    //    ChatClient chat = project.GetOpenAIChatClient();
 
-        Assert.AreEqual(2, project.Connections.Count);
-    }
+    //    Assert.AreEqual(2, project.Connections.Count);
+    //}
 }

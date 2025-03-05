@@ -147,7 +147,7 @@ public partial class AIFoundryTests : SamplesBase<AzureProjectsTestEnvironment>
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         infra.AddFeature(new AIProjectFeature(connectionString));
 
-        ProjectClient client = infra.GetClient();
+        ProjectClient client = new();
 
         // Azure AI Project clients
         AgentsClient agents = client.GetAgentsClient();

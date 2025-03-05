@@ -30,15 +30,8 @@ internal class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature
         };
 
         infrastructure.AddResource(subscription);
-        return subscription;
-    }
 
-    protected internal override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
-    {
-        ClientConnection connection = new(
-            $"{name}",
-            $"{parent.Name}/{name}"
-        );
-        connections.Add(connection);
+        AddConnectionToAppConfig(infrastructure, name, $"{parent.Name}/{name}");
+        return subscription;
     }
 }
