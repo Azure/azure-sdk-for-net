@@ -476,10 +476,12 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     var stopRecordingResponse = await client.GetCallRecording().StopAsync(startRecordingResponse.Value.RecordingId);
                     Assert.AreEqual(StatusCodes.Status204NoContent, stopRecordingResponse.Status);
 
-                    // get call recording result 
+                    // get call recording result
                     var recordingResult = await client.GetCallRecording().GetRecordingAsync(startRecordingResponse.Value.RecordingId).ConfigureAwait(false);
                     Assert.NotNull(recordingResult.Value);
                     Assert.NotNull(recordingResult.Value.RecordingDurationMs);
+                    Assert.NotNull(recordingResult.Value.RecordingStorageInfo);
+                    Assert.NotNull(recordingResult.Value.RecordingStorageInfo.RecordingChunks);
                     Assert.AreEqual(recordingResult.Value.RecordingId, startRecordingResponse.Value.RecordingId);
 
                     // try hangup
