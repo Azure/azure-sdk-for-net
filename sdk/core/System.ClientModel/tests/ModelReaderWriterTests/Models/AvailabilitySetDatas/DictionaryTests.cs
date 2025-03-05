@@ -21,7 +21,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 { ModelInstances.s_testAs_3376.Name!, ModelInstances.s_testAs_3376 }
             };
 
-        private class LocalContext : ModelReaderWriterContext
+        public class LocalContext : ModelReaderWriterContext
         {
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
             private Dictionary_AvailabilitySetData_Info? _dictionary_AvailabilitySetData_Info;

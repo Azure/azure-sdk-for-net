@@ -28,8 +28,8 @@
       },
       "location": "eastus",
       "properties": {
-        "platformUpdateDomainCount": 5,
-        "platformFaultDomainCount": 3
+        "platformUpdateDomainCount": 6,
+        "platformFaultDomainCount": 4
       }
     }
   },
@@ -46,8 +46,8 @@
       },
       "location": "eastus",
       "properties": {
-        "platformUpdateDomainCount": 5,
-        "platformFaultDomainCount": 3
+        "platformUpdateDomainCount": 7,
+        "platformFaultDomainCount": 5
       }
     },
     "testAS-3378": {
@@ -62,8 +62,8 @@
       },
       "location": "eastus",
       "properties": {
-        "platformUpdateDomainCount": 5,
-        "platformFaultDomainCount": 3
+        "platformUpdateDomainCount": 8,
+        "platformFaultDomainCount": 6
       }
     }
   }
