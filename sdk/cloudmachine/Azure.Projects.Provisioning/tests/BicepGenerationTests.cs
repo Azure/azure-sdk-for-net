@@ -6,6 +6,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using Azure.Projects.AppConfiguration;
 using Azure.Projects.AppService;
 using Azure.Projects.KeyVault;
 using Azure.Projects.OpenAI;
@@ -20,7 +21,7 @@ public class BicepGenerationTests
     [Test]
     public void MinimalProject()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd", useAppConfig: false);
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
         string expectedBicep = LoadTestFile("minimal.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
@@ -29,18 +30,28 @@ public class BicepGenerationTests
     [Test]
     public void AppConfiguration()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd", useAppConfig: false);
         infra.AddFeature(new AppConfigurationFeature());
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\appConfig.bicep", actualBicep);
         string expectedBicep = LoadTestFile("appConfig.bicep");
+        Assert.AreEqual(expectedBicep, actualBicep);
+    }
+
+    [Test]
+    public void KeyVault()
+    {
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
+        infra.AddFeature(new KeyVaultFeature());
+        string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        File.WriteAllText("d:\\kv.bicep", actualBicep);
+        string expectedBicep = LoadTestFile("kv.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 
     [Test]
     public void OfxProject()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd", useAppConfig: false);
         infra.AddOfx();
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
         string expectedBicep = LoadTestFile("ofx.bicep");
@@ -50,7 +61,7 @@ public class BicepGenerationTests
     [Test]
     public void AIFoundry()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd", useAppConfig: false);
         infra.AddFeature(new AIFoundry.AIProjectFeature());
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
         string expectedBicep = LoadTestFile("Foundry.bicep");
@@ -60,7 +71,7 @@ public class BicepGenerationTests
     [Test]
     public void OpenAI()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd", useAppConfig: false);
         infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
         infra.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
 
@@ -72,7 +83,7 @@ public class BicepGenerationTests
     [Test]
     public void AppService()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd", useAppConfig: false);
         infra.AddFeature(new KeyVaultFeature());
         infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
         infra.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));

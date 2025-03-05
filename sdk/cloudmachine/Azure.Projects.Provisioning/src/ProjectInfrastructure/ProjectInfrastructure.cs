@@ -4,6 +4,7 @@
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Projects.AppConfiguration;
 using Azure.Projects.Core;
 using Azure.Projects.EventGrid;
 using Azure.Projects.ServiceBus;
@@ -45,7 +46,7 @@ public partial class ProjectInfrastructure
         return client;
     }
 
-    public ProjectInfrastructure(string? projectId = default)
+    public ProjectInfrastructure(string? projectId = default, bool? useAppConfig = true)
     {
         ProjectId = projectId ?? ProjectClient.ReadOrCreateProjectId();
 
@@ -70,6 +71,12 @@ public partial class ProjectInfrastructure
         };
         _infrastructure.Add(Identity);
         _infrastructure.Add(new ProvisioningOutput("project_identity_id", typeof(string)) { Value = Identity.Id });
+
+        if (useAppConfig == true)
+        {
+            AppConfigurationFeature appConfig = new();
+            this.AddFeature(appConfig);
+        }
     }
 
     public T AddFeature<T>(T feature) where T: AzureProjectFeature

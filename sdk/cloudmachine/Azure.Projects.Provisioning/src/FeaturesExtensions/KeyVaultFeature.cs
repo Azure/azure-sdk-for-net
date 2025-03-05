@@ -3,6 +3,8 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.Projects.AppConfiguration;
 using Azure.Projects.Core;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.KeyVault;
@@ -52,6 +54,16 @@ public class KeyVaultFeature : AzureProjectFeature
 
         FeatureRole kvAdmin = new(KeyVaultBuiltInRole.GetBuiltInRoleName(KeyVaultBuiltInRole.KeyVaultAdministrator), KeyVaultBuiltInRole.KeyVaultAdministrator.ToString());
         RequiredSystemRoles.Add(keyVaultResource, [kvAdmin]);
+
+        AppConfigurationFeature appConfig = infrastructure.Features.FindAll<AppConfigurationFeature>().First();
+
+        AppConfigurationSettingFeature kvp = new(
+            appConfig,
+            "Azure.Security.KeyVault.Secrets.SecretClient",
+            $"https://{infrastructure.ProjectId}.vault.azure.net/"
+        );
+
+        infrastructure.AddFeature(kvp);
 
         return keyVaultResource;
     }

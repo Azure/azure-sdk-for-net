@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
+using Azure.Data.AppConfiguration;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 
@@ -16,6 +17,8 @@ namespace Azure.Projects;
 /// </summary>
 public partial class ProjectClient : ConnectionProvider
 {
+    private readonly ConfigurationClient _config;
+
     /// <summary>
     /// The project ID.
     /// </summary>
@@ -33,12 +36,12 @@ public partial class ProjectClient : ConnectionProvider
     /// <summary>
     /// Initializes a new instance of the <see cref="ProjectClient"/> class for mocking purposes..
     /// </summary>
-    protected ProjectClient() :
-        this(credential: BuildCredential(default))
+    public ProjectClient()
     {
         Id = AppConfigHelpers.ReadOrCreateProjectId();
         Messaging = new MessagingServices(this);
         Storage = new StorageServices(this);
+        _config = new(new Uri($"https://{Id}.azconfig.io"), Credential);
     }
 
 #pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
@@ -78,7 +81,7 @@ public partial class ProjectClient : ConnectionProvider
     /// <param name="connections"></param>
     /// <param name="credential">The token credential.</param>
     // TODO: we need to combine the configuration and the connections into a single parameter.
-    public ProjectClient(IEnumerable<ClientConnection> connections = default, TokenCredential credential = default)
+    public ProjectClient(IEnumerable<ClientConnection> connections, TokenCredential credential = default)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
     {
         if (connections != null)
@@ -134,7 +137,24 @@ public partial class ProjectClient : ConnectionProvider
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override ClientConnection GetConnection(string connectionId) => Connections[connectionId];
+    public override ClientConnection GetConnection(string connectionId)
+    {
+        if (Connections.Contains(connectionId))
+        {
+            return Connections[connectionId];
+        }
+
+        if (_config != null)
+        {
+            ConfigurationSetting setting = _config.GetConfigurationSetting(connectionId);
+            string value = setting.Value;
+            ClientConnection connetion = new(connectionId, value, Credential);
+            Connections.Add(connetion);
+            return connetion;
+        }
+
+        throw new Exception("Connection not found");
+    }
 
     /// <summary>
     /// Rerurns all connections.

@@ -10,6 +10,7 @@ using Azure.Projects.AppConfiguration;
 using Azure.Projects.OpenAI;
 using NUnit.Framework;
 using OpenAI.Chat;
+using Azure.Security.KeyVault.Secrets;
 
 namespace Azure.Projects.Tests;
 
@@ -19,7 +20,7 @@ public class E2ETests
     [TestCase("")]
     public void OpenAI(string arg)
     {
-        ProjectInfrastructure infra = new("cm0a110d2f21084bb");
+        ProjectInfrastructure infra = new("cm0a110d2f21084bb", useAppConfig: false);
         infra.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
         if (infra.TryExecuteCommand([arg])) return;
 
@@ -33,7 +34,7 @@ public class E2ETests
     [TestCase("")]
     public void AppConfiguration(string arg)
     {
-        ProjectInfrastructure infra = new("cm0a110d2f21084bb");
+        ProjectInfrastructure infra = new("cm0a110d2f21084bb", useAppConfig: false);
         infra.AddFeature(new AppConfigurationFeature());
         if (infra.TryExecuteCommand([arg]))
             return;
@@ -46,9 +47,21 @@ public class E2ETests
 
     [TestCase("-bicep")]
     [TestCase("")]
-    public void FoundryWithOpenAI(string arg)
+    public void ConnectionsInAppConfig(string arg)
     {
         ProjectInfrastructure infra = new("cm0a110d2f21084bb");
+        infra.AddFeature(new KeyVaultFeature());
+        if (infra.TryExecuteCommand([arg])) return;
+
+        ProjectClient project = new();
+        SecretClient secrets = project.GetKeyVaultSecretsClient();
+    }
+
+    [TestCase("-bicep")]
+    [TestCase("")]
+    public void FoundryWithOpenAI(string arg)
+    {
+        ProjectInfrastructure infra = new("cm0a110d2f21084bb", useAppConfig: false);
         var openAI = infra.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
         var foundry = infra.AddFeature(new AIProjectFeature()
         {
