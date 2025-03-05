@@ -19,7 +19,7 @@ namespace Microsoft.Extensions.Configuration
         /// </summary>
         /// <param name="configurationBuilder">The <see cref="IConfigurationBuilder"/> to add to.</param>
         /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
-        public static IConfigurationBuilder AddEnvironmentVariables(this IConfigurationBuilder configurationBuilder)
+        public static IConfigurationBuilder AddEnvironmentVariablesVENDORED(this IConfigurationBuilder configurationBuilder)
         {
             configurationBuilder.Add(new EnvironmentVariablesConfigurationSource());
             return configurationBuilder;
@@ -32,7 +32,7 @@ namespace Microsoft.Extensions.Configuration
         /// <param name="configurationBuilder">The <see cref="IConfigurationBuilder"/> to add to.</param>
         /// <param name="prefix">The prefix that environment variable names must start with. The prefix will be removed from the environment variable names.</param>
         /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
-        public static IConfigurationBuilder AddEnvironmentVariables(
+        public static IConfigurationBuilder AddEnvironmentVariablesVENDORED(
             this IConfigurationBuilder configurationBuilder,
             string? prefix)
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Extensions.Configuration
         /// <param name="builder">The <see cref="IConfigurationBuilder"/> to add to.</param>
         /// <param name="configureSource">Configures the source.</param>
         /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
-        public static IConfigurationBuilder AddEnvironmentVariables(this IConfigurationBuilder builder, Action<EnvironmentVariablesConfigurationSource>? configureSource)
+        public static IConfigurationBuilder AddEnvironmentVariablesVENDORED(this IConfigurationBuilder builder, Action<EnvironmentVariablesConfigurationSource>? configureSource)
             => builder.Add(configureSource);
     }
 }

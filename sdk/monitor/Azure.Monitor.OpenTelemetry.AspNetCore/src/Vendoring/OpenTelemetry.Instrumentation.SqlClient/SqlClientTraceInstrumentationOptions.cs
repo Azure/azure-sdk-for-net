@@ -21,7 +21,7 @@ internal class SqlClientTraceInstrumentationOptions
     /// Initializes a new instance of the <see cref="SqlClientTraceInstrumentationOptions"/> class.
     /// </summary>
     public SqlClientTraceInstrumentationOptions()
-        : this(new ConfigurationBuilder().AddEnvironmentVariables().Build())
+        : this(new ConfigurationBuilder().AddEnvironmentVariablesVENDORED().Build()) // TODO: RENAME WAS NECESSARY TO FIX AMBIGUITY
     {
     }
 
