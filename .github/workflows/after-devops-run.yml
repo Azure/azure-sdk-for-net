@@ -20,4 +20,4 @@ jobs:
       - name: Dump check_suite payload
         run: |
           echo "Event payload:"
-          echo "${{ toJson(github.event) }}"
+          echo "${{ github.event }}"
