@@ -629,6 +629,8 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response CreateIfNotExists(
             Metadata metadata = default,
@@ -661,6 +663,8 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response> CreateIfNotExistsAsync(
             Metadata metadata = default,
@@ -696,6 +700,8 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response> CreateIfNotExistsInternal(
             Metadata metadata,
@@ -759,6 +765,8 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<bool> Exists(
             CancellationToken cancellationToken = default) =>
@@ -781,6 +789,8 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(
             CancellationToken cancellationToken = default) =>
@@ -806,6 +816,8 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response<bool>> ExistsInternal(
             bool async,
@@ -866,6 +878,8 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<bool> DeleteIfExists(
             CancellationToken cancellationToken = default) =>
@@ -892,6 +906,8 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
             CancellationToken cancellationToken = default) =>
@@ -921,6 +937,8 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response<bool>> DeleteIfExistsInternal(
             bool async,
