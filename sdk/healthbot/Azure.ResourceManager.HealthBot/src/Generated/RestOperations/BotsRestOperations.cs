@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.HealthBot
                 case 200:
                     {
                         HealthBotData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthBotData.DeserializeHealthBotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.HealthBot
                 case 200:
                     {
                         HealthBotData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthBotData.DeserializeHealthBotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.HealthBot
                 case 201:
                     {
                         HealthBotData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthBotData.DeserializeHealthBotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.HealthBot
                 case 201:
                     {
                         HealthBotData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthBotData.DeserializeHealthBotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.HealthBot
                 case 200:
                     {
                         BotResponseList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BotResponseList.DeserializeBotResponseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.HealthBot
                 case 200:
                     {
                         BotResponseList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BotResponseList.DeserializeBotResponseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.HealthBot
                 case 200:
                     {
                         BotResponseList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BotResponseList.DeserializeBotResponseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.HealthBot
                 case 200:
                     {
                         BotResponseList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BotResponseList.DeserializeBotResponseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.HealthBot
                 case 200:
                     {
                         BotResponseList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BotResponseList.DeserializeBotResponseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.HealthBot
                 case 200:
                     {
                         BotResponseList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BotResponseList.DeserializeBotResponseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.HealthBot
                 case 200:
                     {
                         BotResponseList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BotResponseList.DeserializeBotResponseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.HealthBot
                 case 200:
                     {
                         BotResponseList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BotResponseList.DeserializeBotResponseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

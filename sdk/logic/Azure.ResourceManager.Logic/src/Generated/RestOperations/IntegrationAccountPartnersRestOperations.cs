@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountPartnerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountPartnerListResult.DeserializeIntegrationAccountPartnerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountPartnerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountPartnerListResult.DeserializeIntegrationAccountPartnerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountPartnerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountPartnerData.DeserializeIntegrationAccountPartnerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountPartnerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountPartnerData.DeserializeIntegrationAccountPartnerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Logic
                 case 201:
                     {
                         IntegrationAccountPartnerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountPartnerData.DeserializeIntegrationAccountPartnerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Logic
                 case 201:
                     {
                         IntegrationAccountPartnerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountPartnerData.DeserializeIntegrationAccountPartnerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowTriggerCallbackUri value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogicWorkflowTriggerCallbackUri.DeserializeLogicWorkflowTriggerCallbackUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowTriggerCallbackUri value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogicWorkflowTriggerCallbackUri.DeserializeLogicWorkflowTriggerCallbackUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountPartnerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountPartnerListResult.DeserializeIntegrationAccountPartnerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountPartnerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountPartnerListResult.DeserializeIntegrationAccountPartnerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

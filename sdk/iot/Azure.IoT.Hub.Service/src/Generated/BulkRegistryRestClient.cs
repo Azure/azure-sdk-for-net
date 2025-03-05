@@ -81,7 +81,7 @@ namespace Azure.IoT.Hub.Service
                 case 400:
                     {
                         BulkRegistryOperationResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BulkRegistryOperationResponse.DeserializeBulkRegistryOperationResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -109,7 +109,7 @@ namespace Azure.IoT.Hub.Service
                 case 400:
                     {
                         BulkRegistryOperationResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BulkRegistryOperationResponse.DeserializeBulkRegistryOperationResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

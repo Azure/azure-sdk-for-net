@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         DataContainerResourceArmPaginatedResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataContainerResourceArmPaginatedResult.DeserializeDataContainerResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         DataContainerResourceArmPaginatedResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataContainerResourceArmPaginatedResult.DeserializeDataContainerResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningDataContainerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MachineLearningDataContainerData.DeserializeMachineLearningDataContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningDataContainerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MachineLearningDataContainerData.DeserializeMachineLearningDataContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         DataContainerResourceArmPaginatedResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataContainerResourceArmPaginatedResult.DeserializeDataContainerResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         DataContainerResourceArmPaginatedResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataContainerResourceArmPaginatedResult.DeserializeDataContainerResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

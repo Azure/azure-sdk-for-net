@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMachineLearningRegistryData(document.RootElement, options);
                     }
                 default:
