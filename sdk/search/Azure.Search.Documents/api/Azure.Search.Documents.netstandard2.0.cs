@@ -91,6 +91,12 @@ namespace Azure.Search.Documents
             V2024_11_01_Preview = 4,
         }
     }
+    public static partial class SearchExtensions
+    {
+        public static Azure.Search.Documents.SearchClient GetSearchClient(this System.ClientModel.Primitives.ConnectionProvider provider, string indexName) { throw null; }
+        public static Azure.Search.Documents.Indexes.SearchIndexClient GetSearchIndexClient(this System.ClientModel.Primitives.ConnectionProvider provider) { throw null; }
+        public static Azure.Search.Documents.Indexes.SearchIndexerClient GetSearchIndexerClient(this System.ClientModel.Primitives.ConnectionProvider provider) { throw null; }
+    }
     public static partial class SearchFilter
     {
         public static string Create(System.FormattableString filter) { throw null; }
