@@ -621,8 +621,7 @@ namespace Azure.Storage.Blobs.Specialized
         #region DeleteBlobs
         /// <summary>
         /// The DeleteBlobs operation marks the specified blobs for deletion.
-        /// The blobs are later deleted during garbage collection which could take
-        /// several minutes.  All of the deletions are sent as a single batched request.
+        /// All of the deletions are sent as a single batched request.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
@@ -654,9 +653,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The DeleteBlobsAsync operation marks the specified blobs for
-        /// deletion.  The blobs are later deleted during garbage collection
-        /// which could take several minutes.
-        /// All of the deletions are sent as a single batched request.
+        /// deletion. All of the deletions are sent as a single batched request.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
@@ -688,9 +685,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The DeleteBlobsAsync operation marks the specified blobs for
-        /// deletion.  The blobs are later deleted during garbage collection
-        /// which could take several minutes.
-        /// All of the deletions are sent as a single batched request.
+        /// deletion. All of the deletions are sent as a single batched request.
         /// </summary>
         /// <param name="blobUris">URIs of the blobs to delete.</param>
         /// <param name="snapshotsOption">

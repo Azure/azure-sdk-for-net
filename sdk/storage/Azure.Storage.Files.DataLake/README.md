@@ -231,6 +231,8 @@ PathProperties directoryPathProperties = directoryClient.GetProperties();
 All File DataLake service operations will throw a
 [RequestFailedException][RequestFailedException] on failure with
 helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
+If multiple failures occur, an [AggregateException][AggregateException] will be thrown,
+containing each failure instance.
 
 ## Next steps
 
@@ -253,8 +255,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc].
 For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.DataLake%2FREADME.png)
 
 <!-- LINKS -->
 [samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Files.DataLake/samples
@@ -279,3 +279,4 @@ additional questions or comments.
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
 [https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Files.DataLake/samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Files.DataLake/samples
+[AggregateException]: https://learn.microsoft.com/dotnet/api/system.aggregateexception?view=net-9.0

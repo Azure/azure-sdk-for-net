@@ -136,7 +136,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 TrackBytesTransferred = trackBytes
             }
                 ;
-            transferOptions.CreationPreference = createMode;
+            transferOptions.CreationMode = createMode;
 
             TransferOperation transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTime));
@@ -337,7 +337,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act - Start transfer
             TransferOperation transfer = await transferManager.StartTransferAsync(
-                blobProvider.FromContainer(source.Container.Uri),
+                await blobProvider.FromContainerAsync(source.Container.Uri),
                 LocalFilesStorageResourceProvider.FromDirectory(destination.DirectoryPath),
                 transferOptions);
 

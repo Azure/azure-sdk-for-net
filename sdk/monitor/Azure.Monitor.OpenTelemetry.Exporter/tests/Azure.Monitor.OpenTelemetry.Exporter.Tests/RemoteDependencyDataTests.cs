@@ -190,5 +190,46 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Equal(activity.DisplayName, remoteDependencyDataName);
         }
+
+        [Fact]
+        public void VerifyAllDependenciesSetTargetViaServerAddress()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Client,
+                parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+            activity.SetTag(SemanticConventions.AttributeServerAddress, "unitTestAddress");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor);
+
+            Assert.Equal("unitTestAddress", remoteDependencyData.Target);
+        }
+
+        [Fact]
+        public void VerifyAllDependenciesSetTargetViaServerAddressAndPort()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Client,
+                parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+            activity.SetTag(SemanticConventions.AttributeServerAddress, "unitTestAddress");
+            activity.SetTag(SemanticConventions.AttributeServerPort, "unitTestPort");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor);
+
+            Assert.Equal("unitTestAddress:unitTestPort", remoteDependencyData.Target);
+        }
     }
 }

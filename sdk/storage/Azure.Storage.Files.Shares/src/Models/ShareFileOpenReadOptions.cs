@@ -15,7 +15,7 @@ namespace Azure.Storage.Files.Shares.Models
         public long Position { get; set; }
 
         /// <summary>
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 4 MB.
         /// </summary>
         public int? BufferSize { get; set; }

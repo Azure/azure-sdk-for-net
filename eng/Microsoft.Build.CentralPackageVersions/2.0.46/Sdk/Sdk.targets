@@ -130,7 +130,7 @@
   </ItemGroup>
 
   <Target Name="CheckPackageReferences"
-          Condition=" '$(EnableCentralPackageVersions)' != 'false' And '$(DesignTimeBuild)' != 'true' And @(PackageReference->Count()) > 0 ">
+          Condition=" '$(EnableCentralPackageVersions)' != 'false' And '$(DesignTimeBuild)' != 'true' And @(PackageReference->Count()) > 0">
 
     <!--
       Get a list of duplicate <PackageReference /> and <GlobalPackageReference /> items.  Users must be made aware

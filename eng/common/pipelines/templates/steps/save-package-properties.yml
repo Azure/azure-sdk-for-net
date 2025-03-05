@@ -66,5 +66,5 @@ steps:
           arguments: >
             -ServiceDirectory '${{parameters.ServiceDirectory}}'
             -OutDirectory '${{ parameters.PackageInfoDirectory }}'
-            -AddDevVersion:$${{ eq(variables['SetDevVersion'],'true') }}
+            -AddDevVersion:($env:SETDEVVERSION -eq 'true')
           pwsh: true
