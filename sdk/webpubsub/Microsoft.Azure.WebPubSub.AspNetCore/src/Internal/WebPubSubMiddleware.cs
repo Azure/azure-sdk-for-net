@@ -43,7 +43,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 Log.ReceivedAbuseProtectionRequest(_logger);
                 if (_requestValidator.IsValidOrigin(requestOrigins))
                 {
-                    context.Response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, Constants.AllowedAllOrigins);
+                    context.Response.Headers.Append(Constants.Headers.WebHookAllowedOrigin, Constants.AllowedAllOrigins);
                 }
                 else
                 {
