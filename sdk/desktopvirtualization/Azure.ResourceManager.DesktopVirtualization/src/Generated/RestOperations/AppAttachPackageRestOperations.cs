@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         AppAttachPackageData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppAttachPackageData.DeserializeAppAttachPackageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         AppAttachPackageData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppAttachPackageData.DeserializeAppAttachPackageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 201:
                     {
                         AppAttachPackageData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppAttachPackageData.DeserializeAppAttachPackageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 201:
                     {
                         AppAttachPackageData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppAttachPackageData.DeserializeAppAttachPackageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         AppAttachPackageData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppAttachPackageData.DeserializeAppAttachPackageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         AppAttachPackageData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppAttachPackageData.DeserializeAppAttachPackageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         AppAttachPackageList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppAttachPackageList.DeserializeAppAttachPackageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         AppAttachPackageList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppAttachPackageList.DeserializeAppAttachPackageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         AppAttachPackageList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppAttachPackageList.DeserializeAppAttachPackageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         AppAttachPackageList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppAttachPackageList.DeserializeAppAttachPackageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         AppAttachPackageList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppAttachPackageList.DeserializeAppAttachPackageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         AppAttachPackageList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppAttachPackageList.DeserializeAppAttachPackageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         AppAttachPackageList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppAttachPackageList.DeserializeAppAttachPackageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         AppAttachPackageList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppAttachPackageList.DeserializeAppAttachPackageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHDInsightClusterCreationValidateContent(document.RootElement, options);
                     }
                 default:

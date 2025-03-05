@@ -72,7 +72,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         ImportJobCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ImportJobCollection.DeserializeImportJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -97,7 +97,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         ImportJobCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ImportJobCollection.DeserializeImportJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -156,7 +156,7 @@ namespace Azure.DigitalTwins.Core
                 case 201:
                     {
                         ImportJob value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ImportJob.DeserializeImportJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -196,7 +196,7 @@ namespace Azure.DigitalTwins.Core
                 case 201:
                     {
                         ImportJob value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ImportJob.DeserializeImportJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -245,7 +245,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         ImportJob value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ImportJob.DeserializeImportJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -279,7 +279,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         ImportJob value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ImportJob.DeserializeImportJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -402,7 +402,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         ImportJob value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ImportJob.DeserializeImportJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -436,7 +436,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         ImportJob value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ImportJob.DeserializeImportJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -485,7 +485,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         ImportJobCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ImportJobCollection.DeserializeImportJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -517,7 +517,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         ImportJobCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ImportJobCollection.DeserializeImportJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

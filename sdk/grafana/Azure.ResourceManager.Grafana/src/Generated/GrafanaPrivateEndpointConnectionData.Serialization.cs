@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGrafanaPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

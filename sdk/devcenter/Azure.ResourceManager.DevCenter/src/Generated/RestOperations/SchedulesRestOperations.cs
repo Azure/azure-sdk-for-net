@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         ScheduleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScheduleListResult.DeserializeScheduleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         ScheduleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScheduleListResult.DeserializeScheduleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         DevCenterScheduleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevCenterScheduleData.DeserializeDevCenterScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         DevCenterScheduleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevCenterScheduleData.DeserializeDevCenterScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         ScheduleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScheduleListResult.DeserializeScheduleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         ScheduleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScheduleListResult.DeserializeScheduleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

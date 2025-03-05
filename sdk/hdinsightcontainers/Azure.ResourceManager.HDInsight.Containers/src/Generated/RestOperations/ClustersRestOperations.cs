@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case 200:
                     {
                         HDInsightClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HDInsightClusterListResult.DeserializeHDInsightClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case 200:
                     {
                         HDInsightClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HDInsightClusterListResult.DeserializeHDInsightClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case 200:
                     {
                         HDInsightClusterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HDInsightClusterData.DeserializeHDInsightClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case 200:
                     {
                         HDInsightClusterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HDInsightClusterData.DeserializeHDInsightClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -896,7 +896,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case 200:
                     {
                         ClusterServiceConfigListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ClusterServiceConfigListResult.DeserializeClusterServiceConfigListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -927,7 +927,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case 200:
                     {
                         ClusterServiceConfigListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ClusterServiceConfigListResult.DeserializeClusterServiceConfigListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -998,7 +998,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case 200:
                     {
                         ClusterInstanceViewListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ClusterInstanceViewListResult.DeserializeClusterInstanceViewListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1029,7 +1029,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case 200:
                     {
                         ClusterInstanceViewListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ClusterInstanceViewListResult.DeserializeClusterInstanceViewListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1100,7 +1100,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case 200:
                     {
                         ClusterInstanceViewResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ClusterInstanceViewResult.DeserializeClusterInstanceViewResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1131,7 +1131,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case 200:
                     {
                         ClusterInstanceViewResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ClusterInstanceViewResult.DeserializeClusterInstanceViewResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1184,7 +1184,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case 200:
                     {
                         HDInsightClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HDInsightClusterListResult.DeserializeHDInsightClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1215,7 +1215,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case 200:
                     {
                         HDInsightClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HDInsightClusterListResult.DeserializeHDInsightClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1270,7 +1270,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case 200:
                     {
                         ClusterServiceConfigListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ClusterServiceConfigListResult.DeserializeClusterServiceConfigListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1303,7 +1303,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case 200:
                     {
                         ClusterServiceConfigListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ClusterServiceConfigListResult.DeserializeClusterServiceConfigListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1358,7 +1358,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case 200:
                     {
                         ClusterInstanceViewListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ClusterInstanceViewListResult.DeserializeClusterInstanceViewListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1391,7 +1391,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case 200:
                     {
                         ClusterInstanceViewListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ClusterInstanceViewListResult.DeserializeClusterInstanceViewListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

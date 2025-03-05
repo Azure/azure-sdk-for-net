@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Dns
                 case 200:
                     {
                         DnssecConfigData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DnssecConfigData.DeserializeDnssecConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Dns
                 case 200:
                     {
                         DnssecConfigData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DnssecConfigData.DeserializeDnssecConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Dns
                 case 200:
                     {
                         DnssecConfigListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DnssecConfigListResult.DeserializeDnssecConfigListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Dns
                 case 200:
                     {
                         DnssecConfigListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DnssecConfigListResult.DeserializeDnssecConfigListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Dns
                 case 200:
                     {
                         DnssecConfigListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DnssecConfigListResult.DeserializeDnssecConfigListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Dns
                 case 200:
                     {
                         DnssecConfigListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DnssecConfigListResult.DeserializeDnssecConfigListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
