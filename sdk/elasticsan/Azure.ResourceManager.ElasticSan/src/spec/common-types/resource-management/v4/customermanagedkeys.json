@@ -1,0 +1,71 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Common types",
+    "version": "4.0"
+  },
+  "paths": {},
+  "definitions": {
+    "customerManagedKeyEncryption": {
+      "type": "object",
+      "description": "All Customer-managed key encryption properties for the resource.",
+      "properties": {
+        "keyEncryptionKeyIdentity": {
+          "type": "object",
+          "description": "All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault.",
+          "properties": {
+            "identityType": {
+              "type": "string",
+              "description": "Values can be systemAssignedIdentity or userAssignedIdentity",
+              "enum": [
+                "systemAssignedIdentity",
+                "userAssignedIdentity",
+                "delegatedResourceIdentity"
+              ],
+              "x-ms-enum": {
+                "name": "IdentityType",
+                "modelAsString": true
+              }
+            },
+            "userAssignedIdentityResourceId": {
+              "type": "string",
+              "format": "arm-id",
+              "description": "user assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/<resource group>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity and delegatedResourceIdentity."
+            },
+            "delegatedIdentityClientId": {
+              "type": "string",
+              "format": "uuid",
+              "description": "delegated identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/<resource group>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity and userAssignedIdentity - internal use only."
+            }
+          }
+        },
+        "keyEncryptionKeyUrl": {
+          "type": "string",
+          "description": "key encryption key Url, versioned or non-versioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek."
+        }
+      }
+    },
+    "encryption": {
+      "type": "object",
+      "description": "(Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this. Values are enabled and disabled.",
+      "properties": {
+        "infrastructureEncryption": {
+          "type": "string",
+          "description": "Values are enabled and disabled.",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-ms-enum": {
+            "name": "InfrastructureEncryption",
+            "modelAsString": true
+          }
+        },
+        "customerManagedKeyEncryption": {
+          "$ref": "#/definitions/customerManagedKeyEncryption",
+          "description": "All Customer-managed key encryption properties for the resource."
+        }
+      }
+    }
+  }
+}

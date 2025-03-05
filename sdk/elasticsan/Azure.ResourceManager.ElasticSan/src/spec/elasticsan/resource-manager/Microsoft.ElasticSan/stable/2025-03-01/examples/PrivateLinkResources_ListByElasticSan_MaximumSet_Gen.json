@@ -1,0 +1,41 @@
+{
+  "title": "PrivateLinkResources_ListByElasticSan",
+  "operationId": "PrivateLinkResources_ListByElasticSan",
+  "parameters": {
+    "subscriptionId": "subscriptionid",
+    "resourceGroupName": "resourcegroupname",
+    "elasticSanName": "elasticsanname",
+    "api-version": "2024-05-01"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "properties": {
+              "groupId": "mbouakfumvbeqnevmgxpk",
+              "requiredMembers": [
+                "wujfilzifgumbvxbdhazmzf"
+              ],
+              "requiredZoneNames": [
+                "hzxhgoqxxiaf"
+              ]
+            },
+            "id": "iidc",
+            "name": "ggbyptukibs",
+            "type": "qrfsowhtanlj",
+            "systemData": {
+              "createdBy": "bgurjvijz",
+              "createdByType": "User",
+              "createdAt": "2023-08-25T17:40:52.453Z",
+              "lastModifiedBy": "uvexylihjrtinzkeluohusnaxatfqh",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-08-25T17:40:52.453Z"
+            }
+          }
+        ],
+        "nextLink": "bvbshxnaxznetoylfjjbyf"
+      }
+    }
+  }
+}

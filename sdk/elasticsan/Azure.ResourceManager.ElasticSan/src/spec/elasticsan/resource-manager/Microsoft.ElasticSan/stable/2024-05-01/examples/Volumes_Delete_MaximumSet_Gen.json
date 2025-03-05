@@ -1,0 +1,23 @@
+{
+  "title": "Volumes_Delete",
+  "operationId": "Volumes_Delete",
+  "parameters": {
+    "subscriptionId": "subscriptionid",
+    "resourceGroupName": "resourcegroupname",
+    "elasticSanName": "elasticsanname",
+    "volumeGroupName": "volumegroupname",
+    "volumeName": "volumename",
+    "api-version": "2024-05-01",
+    "x-ms-delete-snapshots": "true",
+    "x-ms-force-delete": "true"
+  },
+  "responses": {
+    "200": {},
+    "202": {
+      "headers": {
+        "location": "https://contoso.com/operationstatus"
+      }
+    },
+    "204": {}
+  }
+}

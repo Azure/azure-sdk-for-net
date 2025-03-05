@@ -1,0 +1,40 @@
+{
+  "title": "List all the available Skus in the region and information related to them",
+  "operationId": "Skus_List",
+  "parameters": {
+    "subscriptionId": "subscriptionid",
+    "api-version": "2024-05-01",
+    "$filter": "obwwdrkq"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "name": "Premium_LRS",
+            "tier": "Premium",
+            "resourceType": "tlqickysdtjahoanstgancifxfu",
+            "locations": [
+              "ceszpxwqyifrxobqykplm"
+            ],
+            "locationInfo": [
+              {
+                "location": "ngycrsoihxdfctigejlf",
+                "zones": [
+                  "1"
+                ]
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "qkht",
+                "value": "eoayvlyzyjjziecxymlpk"
+              }
+            ]
+          }
+        ],
+        "nextLink": "venbbrnqqxaqemezvv"
+      }
+    }
+  }
+}

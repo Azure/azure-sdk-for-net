@@ -1,0 +1,2756 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2024-05-01",
+    "title": "ElasticSanManagement"
+  },
+  "host": "management.azure.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "security": [
+    {
+      "azure_auth": [
+        "user_impersonation"
+      ]
+    }
+  ],
+  "securityDefinitions": {
+    "azure_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+      "flow": "implicit",
+      "description": "Azure Active Directory OAuth2 Flow",
+      "scopes": {
+        "user_impersonation": "impersonate your user account"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "ElasticSans",
+      "description": "APIs for ElasticSan operations."
+    },
+    {
+      "name": "ElasticSanOperations",
+      "description": "APIs for ElasticSan operations,"
+    },
+    {
+      "name": "VolumeGroups",
+      "description": "APIs for Volume Group operations."
+    },
+    {
+      "name": "Volumes",
+      "description": "APIs for Volume operations."
+    }
+  ],
+  "paths": {
+    "/providers/Microsoft.ElasticSan/operations": {
+      "get": {
+        "tags": [
+          "Elastic San Operations"
+        ],
+        "operationId": "Operations_List",
+        "description": "Gets a list of ElasticSan operations.",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. The request has succeeded.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/OperationListResult"
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": null
+        },
+        "x-ms-examples": {
+          "Operations_List_MaximumSet_Gen": {
+            "$ref": "./examples/Operations_List_MaximumSet_Gen.json"
+          },
+          "Operations_List_MinimumSet_Gen": {
+            "$ref": "./examples/Operations_List_MinimumSet_Gen.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/skus": {
+      "get": {
+        "tags": [
+          "Elastic San Skus"
+        ],
+        "summary": "List all the available Skus in the region and information related to them",
+        "operationId": "Skus_List",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "$filter",
+            "in": "query",
+            "description": "Specify $filter='location eq <location>' to filter on location.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lists the available SKUs supported by Microsoft.ElasticSan for given subscription.",
+            "schema": {
+              "$ref": "#/definitions/SkuInformationList"
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": null
+        },
+        "x-ms-examples": {
+          "Skus_List_MaximumSet_Gen": {
+            "$ref": "./examples/Skus_List_MaximumSet_Gen.json"
+          },
+          "Skus_List_MinimumSet_Gen": {
+            "$ref": "./examples/Skus_List_MinimumSet_Gen.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/elasticSans": {
+      "get": {
+        "tags": [
+          "ElasticSans"
+        ],
+        "operationId": "ElasticSans_ListBySubscription",
+        "description": "Gets a list of ElasticSans in a subscription",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- Operation completed successfully; retrieved Elastic San by subscription",
+            "schema": {
+              "$ref": "#/definitions/ElasticSanList"
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "x-ms-examples": {
+          "ElasticSans_ListBySubscription_MaximumSet_Gen": {
+            "$ref": "./examples/ElasticSans_ListBySubscription_MaximumSet_Gen.json"
+          },
+          "ElasticSans_ListBySubscription_MinimumSet_Gen": {
+            "$ref": "./examples/ElasticSans_ListBySubscription_MinimumSet_Gen.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans": {
+      "get": {
+        "tags": [
+          "ElasticSan"
+        ],
+        "operationId": "ElasticSans_ListByResourceGroup",
+        "description": "Gets a list of ElasticSan in a resource group.",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- Operation completed successfully; retrieved elasticSans by resource group",
+            "schema": {
+              "$ref": "#/definitions/ElasticSanList"
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "x-ms-examples": {
+          "ElasticSans_ListByResourceGroup_MaximumSet_Gen": {
+            "$ref": "./examples/ElasticSans_ListByResourceGroup_MaximumSet_Gen.json"
+          },
+          "ElasticSans_ListByResourceGroup_MinimumSet_Gen": {
+            "$ref": "./examples/ElasticSans_ListByResourceGroup_MinimumSet_Gen.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}": {
+      "put": {
+        "tags": [
+          "ElasticSans"
+        ],
+        "operationId": "ElasticSans_Create",
+        "description": "Create ElasticSan.",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ElasticSan"
+            },
+            "description": "Elastic San object."
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- Resource Create or Update operation is successfully completed.",
+            "schema": {
+              "$ref": "#/definitions/ElasticSan"
+            }
+          },
+          "201": {
+            "description": "Created -- Resource Create; operation will complete asynchronously.",
+            "schema": {
+              "$ref": "#/definitions/ElasticSan"
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-long-running-operation-options": {
+          "final-state-via": "location"
+        },
+        "x-ms-examples": {
+          "ElasticSans_Create_MaximumSet_Gen": {
+            "$ref": "./examples/ElasticSans_Create_MaximumSet_Gen.json"
+          },
+          "ElasticSans_Create_MinimumSet_Gen": {
+            "$ref": "./examples/ElasticSans_Create_MinimumSet_Gen.json"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "ElasticSans"
+        ],
+        "operationId": "ElasticSans_Update",
+        "description": "Update a Elastic San.",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ElasticSanUpdate"
+            },
+            "description": "Elastic San object."
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- ElasticSAN properties updated successfully.",
+            "schema": {
+              "$ref": "#/definitions/ElasticSan"
+            }
+          },
+          "202": {
+            "description": "Accepted -- Update request accepted; operation will complete asynchronously.",
+            "headers": {
+              "Location": {
+                "type": "string"
+              }
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-long-running-operation-options": {
+          "final-state-via": "location"
+        },
+        "x-ms-examples": {
+          "ElasticSans_Update_MaximumSet_Gen": {
+            "$ref": "./examples/ElasticSans_Update_MaximumSet_Gen.json"
+          },
+          "ElasticSans_Update_MinimumSet_Gen": {
+            "$ref": "./examples/ElasticSans_Update_MinimumSet_Gen.json"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ElasticSans"
+        ],
+        "operationId": "ElasticSans_Delete",
+        "description": "Delete a Elastic San.",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- Delete operation completed successfully."
+          },
+          "202": {
+            "description": "Accepted -- Delete request accepted; operation will complete asynchronously.",
+            "headers": {
+              "Location": {
+                "type": "string"
+              }
+            }
+          },
+          "204": {
+            "description": "NoContent --ElasticSAN does not exist in the subscription."
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-long-running-operation-options": {
+          "final-state-via": "location"
+        },
+        "x-ms-examples": {
+          "ElasticSans_Delete_MaximumSet_Gen": {
+            "$ref": "./examples/ElasticSans_Delete_MaximumSet_Gen.json"
+          },
+          "ElasticSans_Delete_MinimumSet_Gen": {
+            "$ref": "./examples/ElasticSans_Delete_MinimumSet_Gen.json"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "ElasticSans"
+        ],
+        "operationId": "ElasticSans_Get",
+        "description": "Get a ElasticSan.",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- Operation completed successfully; retrieved ElasticSan.",
+            "schema": {
+              "$ref": "#/definitions/ElasticSan"
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "ElasticSans_Get_MaximumSet_Gen": {
+            "$ref": "./examples/ElasticSans_Get_MaximumSet_Gen.json"
+          },
+          "ElasticSans_Get_MinimumSet_Gen": {
+            "$ref": "./examples/ElasticSans_Get_MinimumSet_Gen.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumeGroups": {
+      "get": {
+        "tags": [
+          "VolumeGroups"
+        ],
+        "description": "List VolumeGroups.",
+        "operationId": "VolumeGroups_ListByElasticSan",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- Operation completed successfully; retrieved Volume Group List.",
+            "schema": {
+              "$ref": "#/definitions/VolumeGroupList"
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "x-ms-examples": {
+          "VolumeGroups_ListByElasticSan_MaximumSet_Gen": {
+            "$ref": "./examples/VolumeGroups_ListByElasticSan_MaximumSet_Gen.json"
+          },
+          "VolumeGroups_ListByElasticSan_MinimumSet_Gen": {
+            "$ref": "./examples/VolumeGroups_ListByElasticSan_MinimumSet_Gen.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}": {
+      "put": {
+        "tags": [
+          "VolumeGroups"
+        ],
+        "description": "Create a Volume Group.",
+        "operationId": "VolumeGroups_Create",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "#/parameters/VolumeGroupNameParameter"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VolumeGroup"
+            },
+            "description": "Volume Group object."
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- Resource Create or Update operation is successfully completed.",
+            "schema": {
+              "$ref": "#/definitions/VolumeGroup"
+            }
+          },
+          "201": {
+            "description": "Created -- Resource Create; operation will complete asynchronously.",
+            "schema": {
+              "$ref": "#/definitions/VolumeGroup"
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-long-running-operation-options": {
+          "final-state-via": "location"
+        },
+        "x-ms-examples": {
+          "VolumeGroups_Create_MaximumSet_Gen": {
+            "$ref": "./examples/VolumeGroups_Create_MaximumSet_Gen.json"
+          },
+          "VolumeGroups_Create_MinimumSet_Gen": {
+            "$ref": "./examples/VolumeGroups_Create_MinimumSet_Gen.json"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "VolumeGroups"
+        ],
+        "description": "Update an VolumeGroup.",
+        "operationId": "VolumeGroups_Update",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "#/parameters/VolumeGroupNameParameter"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VolumeGroupUpdate"
+            },
+            "description": "Volume Group object."
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- Returned when the update operation is successfully completed.",
+            "schema": {
+              "$ref": "#/definitions/VolumeGroup"
+            }
+          },
+          "202": {
+            "description": "Accepted -- Update request accepted; operation will complete asynchronously.",
+            "headers": {
+              "Location": {
+                "type": "string"
+              }
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-long-running-operation-options": {
+          "final-state-via": "location"
+        },
+        "x-ms-examples": {
+          "VolumeGroups_Update_MaximumSet_Gen": {
+            "$ref": "./examples/VolumeGroups_Update_MaximumSet_Gen.json"
+          },
+          "VolumeGroups_Update_MinimumSet_Gen": {
+            "$ref": "./examples/VolumeGroups_Update_MinimumSet_Gen.json"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "VolumeGroups"
+        ],
+        "description": "Delete an VolumeGroup.",
+        "operationId": "VolumeGroups_Delete",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "#/parameters/VolumeGroupNameParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- Delete operation completed successfully."
+          },
+          "202": {
+            "description": "Accepted -- Delete request accepted; operation will complete asynchronously.",
+            "headers": {
+              "Location": {
+                "type": "string"
+              }
+            }
+          },
+          "204": {
+            "description": "NoContent -- Resource does not exist in the subscription."
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-long-running-operation-options": {
+          "final-state-via": "location"
+        },
+        "x-ms-examples": {
+          "VolumeGroups_Delete_MaximumSet_Gen": {
+            "$ref": "./examples/VolumeGroups_Delete_MaximumSet_Gen.json"
+          },
+          "VolumeGroups_Delete_MinimumSet_Gen": {
+            "$ref": "./examples/VolumeGroups_Delete_MinimumSet_Gen.json"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "VolumeGroups"
+        ],
+        "description": "Get an VolumeGroups.",
+        "operationId": "VolumeGroups_Get",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "#/parameters/VolumeGroupNameParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation completed successfully; retrieved iSCSI Target.",
+            "schema": {
+              "$ref": "#/definitions/VolumeGroup"
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "VolumeGroups_Get_MaximumSet_Gen": {
+            "$ref": "./examples/VolumeGroups_Get_MaximumSet_Gen.json"
+          },
+          "VolumeGroups_Get_MinimumSet_Gen": {
+            "$ref": "./examples/VolumeGroups_Get_MinimumSet_Gen.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}": {
+      "put": {
+        "tags": [
+          "Volumes"
+        ],
+        "description": "Create a Volume.",
+        "operationId": "Volumes_Create",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "#/parameters/VolumeGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/VolumeNameParameter"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Volume"
+            },
+            "description": "Volume object."
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- Resource Create or Update operation is successfully completed.",
+            "schema": {
+              "$ref": "#/definitions/Volume"
+            }
+          },
+          "201": {
+            "description": "Created -- Resource Create; operation will complete asynchronously.",
+            "schema": {
+              "$ref": "#/definitions/Volume"
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-long-running-operation-options": {
+          "final-state-via": "location"
+        },
+        "x-ms-examples": {
+          "Volumes_Create_MaximumSet_Gen": {
+            "$ref": "./examples/Volumes_Create_MaximumSet_Gen.json"
+          },
+          "Volumes_Create_MinimumSet_Gen": {
+            "$ref": "./examples/Volumes_Create_MinimumSet_Gen.json"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Volumes"
+        ],
+        "description": "Update an Volume.",
+        "operationId": "Volumes_Update",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "#/parameters/VolumeGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/VolumeNameParameter"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VolumeUpdate"
+            },
+            "description": "Volume object."
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- Returned when the update operation is successfully completed.",
+            "schema": {
+              "$ref": "#/definitions/Volume"
+            }
+          },
+          "202": {
+            "description": "Accepted -- Update request accepted; operation will complete asynchronously.",
+            "headers": {
+              "Location": {
+                "type": "string"
+              }
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-long-running-operation-options": {
+          "final-state-via": "location"
+        },
+        "x-ms-examples": {
+          "Volumes_Update_MaximumSet_Gen": {
+            "$ref": "./examples/Volumes_Update_MaximumSet_Gen.json"
+          },
+          "Volumes_Update_MinimumSet_Gen": {
+            "$ref": "./examples/Volumes_Update_MinimumSet_Gen.json"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Volumes"
+        ],
+        "description": "Delete an Volume.",
+        "operationId": "Volumes_Delete",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "#/parameters/VolumeGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/VolumeNameParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "x-ms-delete-snapshots",
+            "in": "header",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "true",
+              "false"
+            ],
+            "x-ms-enum": {
+              "name": "x-ms-delete-snapshots",
+              "modelAsString": true
+            },
+            "description": "Optional, used to delete snapshots under volume. Allowed value are only true or false. Default value is false."
+          },
+          {
+            "name": "x-ms-force-delete",
+            "in": "header",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "true",
+              "false"
+            ],
+            "x-ms-enum": {
+              "name": "x-ms-force-delete",
+              "modelAsString": true
+            },
+            "description": "Optional, used to delete volume if active sessions present. Allowed value are only true or false. Default value is false."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete operation completed successfully."
+          },
+          "202": {
+            "description": "Delete request accepted; operation will complete asynchronously.",
+            "headers": {
+              "Location": {
+                "type": "string"
+              }
+            }
+          },
+          "204": {
+            "description": "Resource does not exist in the subscription."
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-long-running-operation-options": {
+          "final-state-via": "location"
+        },
+        "x-ms-examples": {
+          "Volumes_Delete_MaximumSet_Gen": {
+            "$ref": "./examples/Volumes_Delete_MaximumSet_Gen.json"
+          },
+          "Volumes_Delete_MinimumSet_Gen": {
+            "$ref": "./examples/Volumes_Delete_MinimumSet_Gen.json"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Volumes"
+        ],
+        "description": "Get an Volume.",
+        "operationId": "Volumes_Get",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "#/parameters/VolumeGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/VolumeNameParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation completed successfully; retrieved Volume.",
+            "schema": {
+              "$ref": "#/definitions/Volume"
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Volumes_Get_MaximumSet_Gen": {
+            "$ref": "./examples/Volumes_Get_MaximumSet_Gen.json"
+          },
+          "Volumes_Get_MinimumSet_Gen": {
+            "$ref": "./examples/Volumes_Get_MinimumSet_Gen.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes": {
+      "get": {
+        "tags": [
+          "Volumes"
+        ],
+        "description": "List Volumes in a VolumeGroup.",
+        "operationId": "Volumes_ListByVolumeGroup",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "#/parameters/VolumeGroupNameParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation completed successfully; retrieved volumes in a volume group.",
+            "schema": {
+              "$ref": "#/definitions/VolumeList"
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "x-ms-examples": {
+          "Volumes_ListByVolumeGroup_MaximumSet_Gen": {
+            "$ref": "./examples/Volumes_ListByVolumeGroup_MaximumSet_Gen.json"
+          },
+          "Volumes_ListByVolumeGroup_MinimumSet_Gen": {
+            "$ref": "./examples/Volumes_ListByVolumeGroup_MinimumSet_Gen.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections/{privateEndpointConnectionName}": {
+      "put": {
+        "tags": [
+          "PrivateEndpointConnections"
+        ],
+        "description": "Update the state of specified private endpoint connection associated with the Elastic San",
+        "operationId": "PrivateEndpointConnections_Create",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "#/parameters/PrivateEndpointConnectionNameParameter"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PrivateEndpointConnection"
+            },
+            "description": "Private Endpoint Connection Approval object."
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- Resource Create or Update operation is successfully completed.",
+            "schema": {
+              "$ref": "#/definitions/PrivateEndpointConnection"
+            }
+          },
+          "201": {
+            "description": "Created -- Resource Create; operation will complete asynchronously",
+            "schema": {
+              "$ref": "#/definitions/PrivateEndpointConnection"
+            }
+          },
+          "default": {
+            "description": "Error from Elastic SAN resource provider.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-long-running-operation-options": {
+          "final-state-via": "location"
+        },
+        "x-ms-examples": {
+          "PrivateEndpointConnections_Create_MaximumSet_Gen": {
+            "$ref": "./examples/PrivateEndpointConnections_Create_MaximumSet_Gen.json"
+          },
+          "PrivateEndpointConnections_Create_MinimumSet_Gen": {
+            "$ref": "./examples/PrivateEndpointConnections_Create_MinimumSet_Gen.json"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "PrivateEndpointConnections"
+        ],
+        "description": "Gets the specified private endpoint connection associated with the Elastic San",
+        "operationId": "PrivateEndpointConnections_Get",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "#/parameters/PrivateEndpointConnectionNameParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- Get the private endpoint connection properties successfully",
+            "schema": {
+              "$ref": "#/definitions/PrivateEndpointConnection"
+            }
+          },
+          "default": {
+            "description": "Error from Elastic SAN resource provider.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "PrivateEndpointConnections_Get_MaximumSet_Gen": {
+            "$ref": "./examples/PrivateEndpointConnections_Get_MaximumSet_Gen.json"
+          },
+          "PrivateEndpointConnections_Get_MinimumSet_Gen": {
+            "$ref": "./examples/PrivateEndpointConnections_Get_MinimumSet_Gen.json"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "PrivateEndpointConnections"
+        ],
+        "description": "Deletes the specified private endpoint connection associated with the Elastic San",
+        "operationId": "PrivateEndpointConnections_Delete",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "#/parameters/PrivateEndpointConnectionNameParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- Get the private endpoint connection properties successfully"
+          },
+          "202": {
+            "description": "Delete request accepted; operation will complete asynchronously.",
+            "headers": {
+              "Location": {
+                "type": "string"
+              }
+            }
+          },
+          "204": {
+            "description": "No Content -- The Private Endpoint Connection does not exist."
+          },
+          "default": {
+            "description": "Error from Elastic SAN resource provider.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-long-running-operation-options": {
+          "final-state-via": "location"
+        },
+        "x-ms-examples": {
+          "PrivateEndpointConnections_Delete_MaximumSet_Gen": {
+            "$ref": "./examples/PrivateEndpointConnections_Delete_MaximumSet_Gen.json"
+          },
+          "PrivateEndpointConnections_Delete_MinimumSet_Gen": {
+            "$ref": "./examples/PrivateEndpointConnections_Delete_MinimumSet_Gen.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections": {
+      "get": {
+        "tags": [
+          "PrivateEndpointConnections"
+        ],
+        "description": "List all Private Endpoint Connections associated with the Elastic San.",
+        "operationId": "PrivateEndpointConnections_List",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- Successfully retrieved private endpoint connections",
+            "schema": {
+              "$ref": "#/definitions/PrivateEndpointConnectionListResult"
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": null
+        },
+        "x-ms-examples": {
+          "PrivateEndpointConnections_List_MaximumSet_Gen": {
+            "$ref": "./examples/PrivateEndpointConnections_List_MaximumSet_Gen.json"
+          },
+          "PrivateEndpointConnections_List_MinimumSet_Gen": {
+            "$ref": "./examples/PrivateEndpointConnections_List_MinimumSet_Gen.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateLinkResources": {
+      "get": {
+        "tags": [
+          "PrivateLinkResources"
+        ],
+        "operationId": "PrivateLinkResources_ListByElasticSan",
+        "description": "Gets the private link resources that need to be created for a elastic San.",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- Successfully retrieved private endpoint connections",
+            "schema": {
+              "$ref": "#/definitions/PrivateLinkResourceListResult"
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "PrivateLinkResources_ListByElasticSan_MaximumSet_Gen": {
+            "$ref": "./examples/PrivateLinkResources_ListByElasticSan_MaximumSet_Gen.json"
+          },
+          "PrivateLinkResources_ListByElasticSan_MinimumSet_Gen": {
+            "$ref": "./examples/PrivateLinkResources_ListByElasticSan_MinimumSet_Gen.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots": {
+      "get": {
+        "tags": [
+          "Snapshots"
+        ],
+        "description": "List Snapshots in a VolumeGroup or List Snapshots by Volume (name) in a VolumeGroup using filter",
+        "operationId": "VolumeSnapshots_ListByVolumeGroup",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "#/parameters/VolumeGroupNameParameter"
+          },
+          {
+            "name": "$filter",
+            "in": "query",
+            "description": "Specify $filter='volumeName eq <volume name>' to filter on volume.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation completed successfully; retrieved snapshots in a volume group.",
+            "schema": {
+              "$ref": "#/definitions/SnapshotList"
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "x-ms-examples": {
+          "VolumeSnapshots_ListByVolumeGroup_MaximumSet_Gen": {
+            "$ref": "./examples/VolumeSnapshots_ListByVolumeGroup_MaximumSet_Gen.json"
+          },
+          "VolumeSnapshots_ListByVolumeGroup_MinimumSet_Gen": {
+            "$ref": "./examples/VolumeSnapshots_ListByVolumeGroup_MinimumSet_Gen.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}": {
+      "put": {
+        "tags": [
+          "Snapshots"
+        ],
+        "description": "Create a Volume Snapshot.",
+        "operationId": "VolumeSnapshots_Create",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "#/parameters/VolumeGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/SnapshotNameParameter"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Snapshot"
+            },
+            "description": "Snapshot object."
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- Returned when the create operation is successfully completed.",
+            "schema": {
+              "$ref": "#/definitions/Snapshot"
+            }
+          },
+          "201": {
+            "description": "Created -- Resource Created; operation will complete asynchronously.",
+            "schema": {
+              "$ref": "#/definitions/Snapshot"
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-long-running-operation-options": {
+          "final-state-via": "location"
+        },
+        "x-ms-examples": {
+          "VolumeSnapshots_Create_MaximumSet_Gen": {
+            "$ref": "./examples/VolumeSnapshots_Create_MaximumSet_Gen.json"
+          },
+          "VolumeSnapshots_Create_MinimumSet_Gen": {
+            "$ref": "./examples/VolumeSnapshots_Create_MinimumSet_Gen.json"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Snapshots"
+        ],
+        "description": "Delete a Volume Snapshot.",
+        "operationId": "VolumeSnapshots_Delete",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "#/parameters/VolumeGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/SnapshotNameParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK -- Delete operation completed successfully."
+          },
+          "202": {
+            "description": "Accepted -- Delete request accepted; operation will complete asynchronously.",
+            "headers": {
+              "Location": {
+                "type": "string"
+              }
+            }
+          },
+          "204": {
+            "description": "NoContent -- Resource does not exist in the subscription."
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-long-running-operation-options": {
+          "final-state-via": "location"
+        },
+        "x-ms-examples": {
+          "VolumeSnapshots_Delete_MaximumSet_Gen": {
+            "$ref": "./examples/VolumeSnapshots_Delete_MaximumSet_Gen.json"
+          },
+          "VolumeSnapshots_Delete_MinimumSet_Gen": {
+            "$ref": "./examples/VolumeSnapshots_Delete_MinimumSet_Gen.json"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Snapshots"
+        ],
+        "description": "Get a Volume Snapshot.",
+        "operationId": "VolumeSnapshots_Get",
+        "parameters": [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ElasticSanNameParameter"
+          },
+          {
+            "$ref": "#/parameters/VolumeGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/SnapshotNameParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation completed successfully; retrieved Volume Snapshot.",
+            "schema": {
+              "$ref": "#/definitions/Snapshot"
+            }
+          },
+          "default": {
+            "description": "Error from the ElasticSan Resource Provider.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "VolumeSnapshots_Get_MaximumSet_Gen": {
+            "$ref": "./examples/VolumeSnapshots_Get_MaximumSet_Gen.json"
+          },
+          "VolumeSnapshots_Get_MinimumSet_Gen": {
+            "$ref": "./examples/VolumeSnapshots_Get_MinimumSet_Gen.json"
+          }
+        }
+      }
+    }
+  },
+  "parameters": {
+    "ElasticSanNameParameter": {
+      "name": "elasticSanName",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "The name of the ElasticSan.",
+      "pattern": "^[A-Za-z0-9]+((-|_)[a-z0-9A-Z]+)*$",
+      "minLength": 3,
+      "maxLength": 24,
+      "x-ms-parameter-location": "method"
+    },
+    "VolumeGroupNameParameter": {
+      "name": "volumeGroupName",
+      "type": "string",
+      "required": true,
+      "in": "path",
+      "description": "The name of the VolumeGroup.",
+      "pattern": "^[A-Za-z0-9]+((-|_)[a-z0-9A-Z]+)*$",
+      "minLength": 3,
+      "maxLength": 63,
+      "x-ms-parameter-location": "method"
+    },
+    "VolumeNameParameter": {
+      "name": "volumeName",
+      "type": "string",
+      "required": true,
+      "in": "path",
+      "description": "The name of the Volume.",
+      "pattern": "^[a-z0-9]+(-[a-z0-9A-Z]+)*$",
+      "minLength": 3,
+      "maxLength": 63,
+      "x-ms-parameter-location": "method"
+    },
+    "PrivateEndpointConnectionNameParameter": {
+      "name": "privateEndpointConnectionName",
+      "type": "string",
+      "required": true,
+      "in": "path",
+      "description": "The name of the Private Endpoint connection.",
+      "x-ms-parameter-location": "method"
+    },
+    "SnapshotNameParameter": {
+      "name": "snapshotName",
+      "type": "string",
+      "required": true,
+      "in": "path",
+      "description": "The name of the volume snapshot within the given volume group.",
+      "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*$",
+      "minLength": 1,
+      "maxLength": 80,
+      "x-ms-parameter-location": "method"
+    }
+  },
+  "definitions": {
+    "ElasticSanList": {
+      "type": "object",
+      "description": "List of Elastic Sans",
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "An array of Elastic San objects.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ElasticSan"
+          }
+        },
+        "nextLink": {
+          "description": "URI to fetch the next section of the paginated response.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "ElasticSan": {
+      "type": "object",
+      "description": "Response for ElasticSan request.",
+      "required": [
+        "properties",
+        "location"
+      ],
+      "properties": {
+        "properties": {
+          "x-ms-client-flatten": true,
+          "description": "Properties of ElasticSan.",
+          "$ref": "#/definitions/ElasticSanProperties"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/TrackedResource"
+        }
+      ]
+    },
+    "ElasticSanProperties": {
+      "type": "object",
+      "description": "Elastic San response properties.",
+      "required": [
+        "baseSizeTiB",
+        "extendedCapacitySizeTiB",
+        "sku"
+      ],
+      "properties": {
+        "sku": {
+          "description": "resource sku",
+          "$ref": "#/definitions/Sku"
+        },
+        "availabilityZones": {
+          "type": "array",
+          "description": "Logical zone for Elastic San resource; example: [\"1\"].",
+          "items": {
+            "$ref": "#/definitions/AvailabilityZone"
+          }
+        },
+        "provisioningState": {
+          "description": "State of the operation on the resource.",
+          "$ref": "#/definitions/ProvisioningState",
+          "readOnly": true
+        },
+        "baseSizeTiB": {
+          "description": "Base size of the Elastic San appliance in TiB.",
+          "type": "integer",
+          "format": "int64",
+          "x-ms-mutability": [
+            "read",
+            "create"
+          ]
+        },
+        "extendedCapacitySizeTiB": {
+          "description": "Extended size of the Elastic San appliance in TiB.",
+          "type": "integer",
+          "format": "int64",
+          "x-ms-mutability": [
+            "read",
+            "create"
+          ]
+        },
+        "totalVolumeSizeGiB": {
+          "description": "Total size of the provisioned Volumes in GiB.",
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true
+        },
+        "volumeGroupCount": {
+          "description": "Total number of volume groups in this Elastic San appliance.",
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true
+        },
+        "totalIops": {
+          "description": "Total Provisioned IOPS of the Elastic San appliance.",
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true
+        },
+        "totalMBps": {
+          "description": "Total Provisioned MBps Elastic San appliance.",
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true
+        },
+        "totalSizeTiB": {
+          "description": "Total size of the Elastic San appliance in TB.",
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true
+        },
+        "privateEndpointConnections": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrivateEndpointConnection"
+          },
+          "description": "The list of Private Endpoint Connections."
+        },
+        "publicNetworkAccess": {
+          "type": "string",
+          "enum": [
+            "Enabled",
+            "Disabled"
+          ],
+          "x-ms-enum": {
+            "name": "PublicNetworkAccess",
+            "modelAsString": true
+          },
+          "description": "Allow or disallow public network access to ElasticSan. Value is optional but if passed in, must be 'Enabled' or 'Disabled'."
+        }
+      }
+    },
+    "ElasticSanUpdate": {
+      "type": "object",
+      "description": "Response for ElasticSan update request.",
+      "properties": {
+        "properties": {
+          "x-ms-client-flatten": true,
+          "description": "Properties of ElasticSan.",
+          "$ref": "#/definitions/ElasticSanUpdateProperties"
+        },
+        "tags": {
+          "type": "object",
+          "description": "Update tags",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ElasticSanUpdateProperties": {
+      "type": "object",
+      "description": "Elastic San update properties.",
+      "properties": {
+        "baseSizeTiB": {
+          "description": "Base size of the Elastic San appliance in TiB.",
+          "type": "integer",
+          "format": "int64",
+          "x-ms-mutability": [
+            "update"
+          ]
+        },
+        "extendedCapacitySizeTiB": {
+          "description": "Extended size of the Elastic San appliance in TiB.",
+          "type": "integer",
+          "format": "int64",
+          "x-ms-mutability": [
+            "update"
+          ]
+        },
+        "publicNetworkAccess": {
+          "type": "string",
+          "enum": [
+            "Enabled",
+            "Disabled"
+          ],
+          "x-ms-enum": {
+            "name": "PublicNetworkAccess",
+            "modelAsString": true
+          },
+          "description": "Allow or disallow public network access to ElasticSan Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'."
+        }
+      }
+    },
+    "AvailabilityZone": {
+      "type": "string",
+      "description": "Availability zone."
+    },
+    "SkuInformationList": {
+      "description": "List of SKU Information objects",
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "List of ResourceType Sku",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SkuInformation"
+          },
+          "x-ms-identifiers": [],
+          "readOnly": true
+        },
+        "nextLink": {
+          "description": "URI to fetch the next section of the paginated response.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "SkuInformation": {
+      "description": "ElasticSAN SKU and its properties",
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Sku Name",
+          "$ref": "#/definitions/SkuName"
+        },
+        "tier": {
+          "type": "string",
+          "description": "Sku Tier",
+          "$ref": "#/definitions/SkuTier"
+        },
+        "resourceType": {
+          "readOnly": true,
+          "type": "string",
+          "description": "The type of the resource."
+        },
+        "locations": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The set of locations that the SKU is available. This will be supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.)."
+        },
+        "locationInfo": {
+          "description": "Availability of the SKU for the location/zone",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SkuLocationInfo"
+          },
+          "x-ms-identifiers": [],
+          "readOnly": true
+        },
+        "capabilities": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SKUCapability"
+          },
+          "x-ms-identifiers": [],
+          "description": "The capability information in the specified SKU."
+        }
+      }
+    },
+    "SKUCapability": {
+      "properties": {
+        "name": {
+          "readOnly": true,
+          "type": "string",
+          "description": "The name of capability."
+        },
+        "value": {
+          "readOnly": true,
+          "type": "string",
+          "description": "A string value to indicate states of given capability."
+        }
+      },
+      "description": "The capability information in the specified SKU.",
+      "type": "object"
+    },
+    "SkuLocationInfo": {
+      "description": "The location info.",
+      "type": "object",
+      "properties": {
+        "location": {
+          "description": "The location.",
+          "type": "string",
+          "readOnly": true
+        },
+        "zones": {
+          "description": "The zones.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true
+        }
+      }
+    },
+    "Sku": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/SkuName"
+        },
+        "tier": {
+          "$ref": "#/definitions/SkuTier"
+        }
+      },
+      "description": "The SKU name. Required for account creation; optional for update."
+    },
+    "SkuName": {
+      "type": "string",
+      "enum": [
+        "Premium_LRS",
+        "Premium_ZRS"
+      ],
+      "x-ms-enum": {
+        "name": "SkuName",
+        "modelAsString": true,
+        "values": [
+          {
+            "value": "Premium_LRS",
+            "description": "Premium locally redundant storage"
+          },
+          {
+            "value": "Premium_ZRS",
+            "description": "Premium zone redundant storage"
+          }
+        ]
+      },
+      "description": "The sku name."
+    },
+    "SkuTier": {
+      "type": "string",
+      "enum": [
+        "Premium"
+      ],
+      "x-ms-enum": {
+        "name": "SkuTier",
+        "modelAsString": true,
+        "values": [
+          {
+            "value": "Premium",
+            "description": "Premium Tier"
+          }
+        ]
+      },
+      "description": "The sku tier."
+    },
+    "IscsiTargetInfo": {
+      "type": "object",
+      "description": "Iscsi target information",
+      "readOnly": true,
+      "properties": {
+        "targetIqn": {
+          "type": "string",
+          "description": "iSCSI Target IQN (iSCSI Qualified Name); example: \"iqn.2005-03.org.iscsi:server\".",
+          "readOnly": true
+        },
+        "targetPortalHostname": {
+          "type": "string",
+          "description": "iSCSI Target Portal Host Name",
+          "readOnly": true
+        },
+        "targetPortalPort": {
+          "type": "integer",
+          "format": "int32",
+          "description": "iSCSI Target Portal Port",
+          "readOnly": true
+        },
+        "provisioningState": {
+          "description": "State of the operation on the resource.",
+          "$ref": "#/definitions/ProvisioningState"
+        },
+        "status": {
+          "$ref": "#/definitions/OperationalStatus",
+          "description": "Operational status of the iSCSI Target."
+        }
+      }
+    },
+    "VolumeGroup": {
+      "type": "object",
+      "description": "Response for Volume Group request.",
+      "properties": {
+        "identity": {
+          "$ref": "#/definitions/Identity",
+          "description": "The identity of the resource."
+        },
+        "properties": {
+          "x-ms-client-flatten": true,
+          "description": "Properties of VolumeGroup.",
+          "$ref": "#/definitions/VolumeGroupProperties"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+        }
+      ]
+    },
+    "Identity": {
+      "type": "object",
+      "properties": {
+        "principalId": {
+          "readOnly": true,
+          "type": "string",
+          "description": "The principal ID of resource identity."
+        },
+        "tenantId": {
+          "readOnly": true,
+          "type": "string",
+          "description": "The tenant ID of resource."
+        },
+        "type": {
+          "type": "string",
+          "description": "The identity type.",
+          "enum": [
+            "None",
+            "SystemAssigned",
+            "UserAssigned"
+          ],
+          "x-ms-enum": {
+            "name": "IdentityType",
+            "modelAsString": true
+          }
+        },
+        "userAssignedIdentities": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/UserAssignedIdentity"
+          },
+          "description": "Gets or sets a list of key value pairs that describe the set of User Assigned identities that will be used with this volume group. The key is the ARM resource identifier of the identity."
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "description": "Identity for the resource."
+    },
+    "VolumeGroupList": {
+      "type": "object",
+      "description": "List of Volume Groups",
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "An array of Volume Groups objects.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VolumeGroup"
+          }
+        },
+        "nextLink": {
+          "description": "URI to fetch the next section of the paginated response.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "VolumeGroupProperties": {
+      "type": "object",
+      "description": "VolumeGroup response properties.",
+      "properties": {
+        "provisioningState": {
+          "description": "State of the operation on the resource.",
+          "$ref": "#/definitions/ProvisioningState",
+          "readOnly": true
+        },
+        "protocolType": {
+          "description": "Type of storage target",
+          "$ref": "#/definitions/StorageTargetType"
+        },
+        "encryption": {
+          "description": "Type of encryption",
+          "$ref": "#/definitions/EncryptionType"
+        },
+        "encryptionProperties": {
+          "description": "Encryption Properties describing Key Vault and Identity information",
+          "$ref": "#/definitions/EncryptionProperties"
+        },
+        "networkAcls": {
+          "$ref": "#/definitions/NetworkRuleSet",
+          "description": "A collection of rules governing the accessibility from specific network locations.",
+          "x-ms-mutability": [
+            "create",
+            "read"
+          ]
+        },
+        "privateEndpointConnections": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrivateEndpointConnection"
+          },
+          "description": "The list of Private Endpoint Connections."
+        },
+        "enforceDataIntegrityCheckForIscsi": {
+          "type": "boolean",
+          "description": "A boolean indicating whether or not Data Integrity Check is enabled"
+        }
+      }
+    },
+    "EncryptionProperties": {
+      "type": "object",
+      "properties": {
+        "keyVaultProperties": {
+          "$ref": "#/definitions/KeyVaultProperties",
+          "x-ms-client-name": "KeyVaultProperties",
+          "description": "Properties provided by key vault."
+        },
+        "identity": {
+          "$ref": "#/definitions/EncryptionIdentity",
+          "x-ms-client-name": "EncryptionIdentity",
+          "description": "The identity to be used with service-side encryption at rest."
+        }
+      },
+      "description": "The encryption settings on the volume group."
+    },
+    "EncryptionIdentity": {
+      "type": "object",
+      "properties": {
+        "userAssignedIdentity": {
+          "type": "string",
+          "description": "Resource identifier of the UserAssigned identity to be associated with server-side encryption on the volume group.",
+          "x-ms-client-name": "EncryptionUserAssignedIdentity"
+        }
+      },
+      "description": "Encryption identity for the volume group."
+    },
+    "KeyVaultProperties": {
+      "type": "object",
+      "description": "Properties of key vault.",
+      "properties": {
+        "keyName": {
+          "type": "string",
+          "description": "The name of KeyVault key.",
+          "x-ms-client-name": "KeyName"
+        },
+        "keyVersion": {
+          "type": "string",
+          "description": "The version of KeyVault key.",
+          "x-ms-client-name": "KeyVersion"
+        },
+        "keyVaultUri": {
+          "type": "string",
+          "description": "The Uri of KeyVault.",
+          "x-ms-client-name": "KeyVaultUri",
+          "format": "uri"
+        },
+        "currentVersionedKeyIdentifier": {
+          "type": "string",
+          "readOnly": true,
+          "description": "The object identifier of the current versioned Key Vault Key in use.",
+          "x-ms-client-name": "CurrentVersionedKeyIdentifier"
+        },
+        "lastKeyRotationTimestamp": {
+          "type": "string",
+          "readOnly": true,
+          "format": "date-time",
+          "description": "Timestamp of last rotation of the Key Vault Key.",
+          "x-ms-client-name": "LastKeyRotationTimestamp"
+        },
+        "currentVersionedKeyExpirationTimestamp": {
+          "type": "string",
+          "readOnly": true,
+          "format": "date-time",
+          "description": "This is a read only property that represents the expiration time of the current version of the customer managed key used for encryption.",
+          "x-ms-client-name": "CurrentVersionedKeyExpirationTimestamp"
+        }
+      }
+    },
+    "UserAssignedIdentity": {
+      "type": "object",
+      "properties": {
+        "principalId": {
+          "readOnly": true,
+          "type": "string",
+          "description": "The principal ID of the identity."
+        },
+        "clientId": {
+          "readOnly": true,
+          "type": "string",
+          "description": "The client ID of the identity."
+        }
+      },
+      "description": "UserAssignedIdentity for the resource."
+    },
+    "VolumeGroupUpdate": {
+      "type": "object",
+      "description": "Volume Group request.",
+      "properties": {
+        "identity": {
+          "$ref": "#/definitions/Identity",
+          "description": "The identity of the resource."
+        },
+        "properties": {
+          "x-ms-client-flatten": true,
+          "description": "Properties of VolumeGroup.",
+          "$ref": "#/definitions/VolumeGroupUpdateProperties"
+        }
+      }
+    },
+    "VolumeGroupUpdateProperties": {
+      "type": "object",
+      "description": "VolumeGroup response properties.",
+      "properties": {
+        "protocolType": {
+          "description": "Type of storage target",
+          "$ref": "#/definitions/StorageTargetType"
+        },
+        "encryption": {
+          "description": "Type of encryption",
+          "$ref": "#/definitions/EncryptionType"
+        },
+        "encryptionProperties": {
+          "description": "Encryption Properties describing Key Vault and Identity information",
+          "$ref": "#/definitions/EncryptionProperties"
+        },
+        "networkAcls": {
+          "$ref": "#/definitions/NetworkRuleSet",
+          "description": "A collection of rules governing the accessibility from specific network locations.",
+          "x-ms-mutability": [
+            "update"
+          ]
+        },
+        "enforceDataIntegrityCheckForIscsi": {
+          "type": "boolean",
+          "description": "A boolean indicating whether or not Data Integrity Check is enabled"
+        }
+      }
+    },
+    "Volume": {
+      "type": "object",
+      "description": "Response for Volume request.",
+      "required": [
+        "properties"
+      ],
+      "properties": {
+        "properties": {
+          "x-ms-client-flatten": true,
+          "description": "Properties of Volume.",
+          "$ref": "#/definitions/VolumeProperties"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+        }
+      ]
+    },
+    "VolumeList": {
+      "type": "object",
+      "description": "List of Volumes",
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "An array of Volume objects.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Volume"
+          }
+        },
+        "nextLink": {
+          "description": "URI to fetch the next section of the paginated response.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "VolumeProperties": {
+      "type": "object",
+      "required": [
+        "sizeGiB"
+      ],
+      "description": "Volume response properties.",
+      "properties": {
+        "volumeId": {
+          "description": "Unique Id of the volume in GUID format",
+          "type": "string",
+          "readOnly": true
+        },
+        "creationData": {
+          "description": "State of the operation on the resource.",
+          "$ref": "#/definitions/SourceCreationData"
+        },
+        "sizeGiB": {
+          "description": "Volume size.",
+          "type": "integer",
+          "format": "int64"
+        },
+        "storageTarget": {
+          "description": "Storage target information",
+          "$ref": "#/definitions/IscsiTargetInfo"
+        },
+        "managedBy": {
+          "description": "Parent resource information.",
+          "$ref": "#/definitions/ManagedByInfo"
+        },
+        "provisioningState": {
+          "description": "State of the operation on the resource.",
+          "$ref": "#/definitions/ProvisioningState",
+          "readOnly": true
+        }
+      }
+    },
+    "ManagedByInfo": {
+      "type": "object",
+      "description": "Parent resource information.",
+      "properties": {
+        "resourceId": {
+          "type": "string",
+          "x-ms-client-name": "ResourceId",
+          "description": "Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use."
+        }
+      }
+    },
+    "VolumeUpdate": {
+      "type": "object",
+      "description": "Response for Volume request.",
+      "properties": {
+        "properties": {
+          "x-ms-client-flatten": true,
+          "description": "Properties of Volume.",
+          "$ref": "#/definitions/VolumeUpdateProperties"
+        }
+      }
+    },
+    "VolumeUpdateProperties": {
+      "type": "object",
+      "description": "Volume response properties.",
+      "properties": {
+        "sizeGiB": {
+          "description": "Volume size.",
+          "type": "integer",
+          "format": "int64"
+        },
+        "managedBy": {
+          "description": "Parent resource information.",
+          "$ref": "#/definitions/ManagedByInfo"
+        }
+      }
+    },
+    "SourceCreationData": {
+      "type": "object",
+      "description": "Data source used when creating the volume.",
+      "properties": {
+        "createSource": {
+          "type": "string",
+          "enum": [
+            "None",
+            "VolumeSnapshot",
+            "DiskSnapshot",
+            "Disk",
+            "DiskRestorePoint"
+          ],
+          "x-ms-enum": {
+            "name": "VolumeCreateOption",
+            "modelAsString": true
+          },
+          "description": "This enumerates the possible sources of a volume creation."
+        },
+        "sourceId": {
+          "type": "string",
+          "description": "Fully qualified resource ID for the resource. E.g. \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}\""
+        }
+      }
+    },
+    "ProvisioningState": {
+      "type": "string",
+      "enum": [
+        "Invalid",
+        "Succeeded",
+        "Failed",
+        "Canceled",
+        "Pending",
+        "Creating",
+        "Updating",
+        "Deleting"
+      ],
+      "x-ms-enum": {
+        "name": "ProvisioningStates",
+        "modelAsString": true
+      },
+      "description": "Provisioning state of the iSCSI Target.",
+      "readOnly": true
+    },
+    "OperationalStatus": {
+      "type": "string",
+      "enum": [
+        "Invalid",
+        "Unknown",
+        "Healthy",
+        "Unhealthy",
+        "Updating",
+        "Running",
+        "Stopped",
+        "Stopped (deallocated)"
+      ],
+      "x-ms-enum": {
+        "name": "OperationalStatus",
+        "modelAsString": true
+      },
+      "description": "Operational status of the resource."
+    },
+    "StorageTargetType": {
+      "type": "string",
+      "enum": [
+        "Iscsi",
+        "None"
+      ],
+      "x-ms-enum": {
+        "name": "StorageTargetType",
+        "modelAsString": true
+      },
+      "description": "Storage Target type."
+    },
+    "EncryptionType": {
+      "type": "string",
+      "description": "The type of key used to encrypt the data of the disk.",
+      "enum": [
+        "EncryptionAtRestWithPlatformKey",
+        "EncryptionAtRestWithCustomerManagedKey"
+      ],
+      "x-ms-enum": {
+        "name": "EncryptionType",
+        "modelAsString": true,
+        "values": [
+          {
+            "value": "EncryptionAtRestWithPlatformKey",
+            "description": "Volume is encrypted at rest with Platform managed key. It is the default encryption type."
+          },
+          {
+            "value": "EncryptionAtRestWithCustomerManagedKey",
+            "description": "Volume is encrypted at rest with Customer managed key that can be changed and revoked by a customer."
+          }
+        ]
+      }
+    },
+    "NetworkRuleSet": {
+      "type": "object",
+      "properties": {
+        "virtualNetworkRules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VirtualNetworkRule"
+          },
+          "description": "The list of virtual network rules."
+        }
+      },
+      "description": "A set of rules governing the network accessibility."
+    },
+    "VirtualNetworkRule": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-ms-client-name": "VirtualNetworkResourceId",
+          "description": "Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}."
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "Allow"
+          ],
+          "x-ms-enum": {
+            "name": "Action",
+            "modelAsString": true
+          },
+          "default": "Allow",
+          "description": "The action of virtual network rule."
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "description": "Virtual Network rule."
+    },
+    "PrivateEndpointConnection": {
+      "type": "object",
+      "description": " Response for PrivateEndpoint Connection object",
+      "required": [
+        "properties"
+      ],
+      "properties": {
+        "properties": {
+          "x-ms-client-flatten": true,
+          "description": "Private Endpoint Connection Properties.",
+          "$ref": "#/definitions/PrivateEndpointConnectionProperties"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/Resource"
+        }
+      ]
+    },
+    "PrivateEndpointConnectionProperties": {
+      "type": "object",
+      "description": " Response for PrivateEndpoint connection properties",
+      "properties": {
+        "provisioningState": {
+          "description": "Provisioning State of Private Endpoint connection resource",
+          "$ref": "#/definitions/ProvisioningState",
+          "readOnly": true
+        },
+        "privateEndpoint": {
+          "description": "Private Endpoint resource",
+          "$ref": "#/definitions/PrivateEndpoint"
+        },
+        "privateLinkServiceConnectionState": {
+          "description": "Private Link Service Connection State.",
+          "$ref": "#/definitions/PrivateLinkServiceConnectionState"
+        },
+        "groupIds": {
+          "description": " List of resources private endpoint is mapped",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "privateLinkServiceConnectionState"
+      ]
+    },
+    "PrivateEndpoint": {
+      "type": "object",
+      "description": "Response for PrivateEndpoint",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The ARM identifier for Private Endpoint",
+          "readOnly": true
+        }
+      }
+    },
+    "PrivateLinkServiceConnectionState": {
+      "type": "object",
+      "description": "Response for Private Link Service Connection state",
+      "properties": {
+        "status": {
+          "description": "Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service.",
+          "$ref": "#/definitions/PrivateEndpointServiceConnectionStatus"
+        },
+        "description": {
+          "type": "string",
+          "description": "The reason for approval/rejection of the connection."
+        },
+        "actionsRequired": {
+          "type": "string",
+          "description": "A message indicating if changes on the service provider require any updates on the consumer."
+        }
+      }
+    },
+    "PrivateEndpointServiceConnectionStatus": {
+      "type": "string",
+      "description": "The private endpoint connection status.",
+      "enum": [
+        "Pending",
+        "Approved",
+        "Failed",
+        "Rejected"
+      ],
+      "x-ms-enum": {
+        "name": "PrivateEndpointServiceConnectionStatus",
+        "modelAsString": true
+      }
+    },
+    "PrivateLinkResourceListResult": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "array",
+          "description": "Array of private link resources",
+          "items": {
+            "$ref": "#/definitions/PrivateLinkResource"
+          }
+        },
+        "nextLink": {
+          "description": "URI to fetch the next section of the paginated response.",
+          "type": "string",
+          "readOnly": true
+        }
+      },
+      "description": "A list of private link resources"
+    },
+    "PrivateLinkResource": {
+      "type": "object",
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/PrivateLinkResourceProperties",
+          "description": "Resource properties.",
+          "x-ms-client-flatten": true
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/Resource"
+        }
+      ],
+      "description": "A private link resource"
+    },
+    "PrivateLinkResourceProperties": {
+      "type": "object",
+      "properties": {
+        "groupId": {
+          "description": "The private link resource group id.",
+          "type": "string",
+          "readOnly": true
+        },
+        "requiredMembers": {
+          "description": "The private link resource required member names.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true
+        },
+        "requiredZoneNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The private link resource Private link DNS zone name."
+        }
+      },
+      "description": "Properties of a private link resource."
+    },
+    "PrivateEndpointConnectionListResult": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "array",
+          "description": "Array of private endpoint connections",
+          "items": {
+            "$ref": "#/definitions/PrivateEndpointConnection"
+          }
+        },
+        "nextLink": {
+          "description": "URI to fetch the next section of the paginated response.",
+          "type": "string",
+          "readOnly": true
+        }
+      },
+      "description": "List of private endpoint connections associated with SAN"
+    },
+    "Snapshot": {
+      "type": "object",
+      "required": [
+        "properties"
+      ],
+      "description": "Response for Volume Snapshot request.",
+      "properties": {
+        "properties": {
+          "x-ms-client-flatten": true,
+          "description": "Properties of Volume Snapshot.",
+          "$ref": "#/definitions/SnapshotProperties"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+        }
+      ]
+    },
+    "SnapshotList": {
+      "type": "object",
+      "description": "List of Snapshots",
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "An array of Snapshot objects.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Snapshot"
+          }
+        },
+        "nextLink": {
+          "description": "URI to fetch the next section of the paginated response.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "SnapshotProperties": {
+      "type": "object",
+      "required": [
+        "creationData"
+      ],
+      "description": "Properties for Snapshot.",
+      "properties": {
+        "creationData": {
+          "description": "Data used when creating a volume snapshot.",
+          "$ref": "#/definitions/SnapshotCreationData"
+        },
+        "provisioningState": {
+          "description": "State of the operation on the resource.",
+          "$ref": "#/definitions/ProvisioningState",
+          "readOnly": true
+        },
+        "sourceVolumeSizeGiB": {
+          "description": "Size of Source Volume",
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true
+        },
+        "volumeName": {
+          "description": "Source Volume Name of a snapshot",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "SnapshotCreationData": {
+      "type": "object",
+      "required": [
+        "sourceId"
+      ],
+      "description": "Data used when creating a volume snapshot.",
+      "properties": {
+        "sourceId": {
+          "type": "string",
+          "description": "Fully qualified resource ID of the volume. E.g. \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}\""
+        }
+      }
+    }
+  }
+}

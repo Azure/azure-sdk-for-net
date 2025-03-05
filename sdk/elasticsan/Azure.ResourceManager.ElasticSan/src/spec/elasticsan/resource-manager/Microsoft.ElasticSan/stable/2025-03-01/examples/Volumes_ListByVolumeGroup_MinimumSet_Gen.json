@@ -1,0 +1,16 @@
+{
+  "title": "Volumes_ListByVolumeGroup",
+  "operationId": "Volumes_ListByVolumeGroup",
+  "parameters": {
+    "subscriptionId": "subscriptionid",
+    "resourceGroupName": "resourcegroupname",
+    "elasticSanName": "elasticsanname",
+    "volumeGroupName": "volumegroupname",
+    "api-version": "2024-05-01"
+  },
+  "responses": {
+    "200": {
+      "body": {}
+    }
+  }
+}

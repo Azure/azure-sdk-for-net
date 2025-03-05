@@ -1,0 +1,70 @@
+{
+  "title": "VolumeSnapshots_Create",
+  "operationId": "VolumeSnapshots_Create",
+  "parameters": {
+    "subscriptionId": "subscriptionid",
+    "resourceGroupName": "resourcegroupname",
+    "elasticSanName": "elasticsanname",
+    "volumeGroupName": "volumegroupname",
+    "snapshotName": "snapshotname",
+    "parameters": {
+      "properties": {
+        "creationData": {
+          "sourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}"
+        }
+      }
+    },
+    "api-version": "2024-05-01"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "properties": {
+          "creationData": {
+            "sourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}"
+          },
+          "provisioningState": "Succeeded",
+          "sourceVolumeSizeGiB": 28,
+          "volumeName": "volumename"
+        },
+        "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}",
+        "name": "qukfugetqthsufp",
+        "type": "Microsoft.ElasticSan/elasticSans/volumeGroups/snapshots",
+        "systemData": {
+          "createdBy": "f",
+          "createdByType": "User",
+          "createdAt": "2023-09-06T06:58:45.864Z",
+          "lastModifiedBy": "wifrlzeszzcckvdzdwxhvservlvarp",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-09-06T06:58:45.864Z"
+        }
+      }
+    },
+    "201": {
+      "headers": {
+        "location": "https://contoso.com/operationstatus"
+      },
+      "body": {
+        "properties": {
+          "creationData": {
+            "sourceId": "vfirlleqvpepxnptyyrz"
+          },
+          "provisioningState": "Invalid",
+          "sourceVolumeSizeGiB": 28,
+          "volumeName": "o"
+        },
+        "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}",
+        "name": "qukfugetqthsufp",
+        "type": "Microsoft.ElasticSan/elasticSans/volumeGroups/snapshots",
+        "systemData": {
+          "createdBy": "f",
+          "createdByType": "User",
+          "createdAt": "2023-09-06T06:58:45.864Z",
+          "lastModifiedBy": "wifrlzeszzcckvdzdwxhvservlvarp",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-09-06T06:58:45.864Z"
+        }
+      }
+    }
+  }
+}

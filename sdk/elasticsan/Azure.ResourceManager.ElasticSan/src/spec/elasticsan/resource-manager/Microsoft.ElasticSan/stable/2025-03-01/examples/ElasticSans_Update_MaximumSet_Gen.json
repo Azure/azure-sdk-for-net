@@ -1,0 +1,93 @@
+{
+  "title": "ElasticSans_Update",
+  "operationId": "ElasticSans_Update",
+  "parameters": {
+    "subscriptionId": "subscriptionid",
+    "resourceGroupName": "resourcegroupname",
+    "elasticSanName": "elasticsanname",
+    "parameters": {
+      "properties": {
+        "baseSizeTiB": 13,
+        "extendedCapacitySizeTiB": 29,
+        "publicNetworkAccess": "Enabled"
+      },
+      "tags": {
+        "key1931": "yhjwkgmrrwrcoxblgwgzjqusch"
+      }
+    },
+    "api-version": "2024-05-01"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "properties": {
+          "sku": {
+            "name": "Premium_LRS",
+            "tier": "Premium"
+          },
+          "availabilityZones": [
+            "1"
+          ],
+          "provisioningState": "Succeeded",
+          "baseSizeTiB": 15,
+          "extendedCapacitySizeTiB": 6,
+          "totalVolumeSizeGiB": 15,
+          "volumeGroupCount": 24,
+          "totalIops": 22,
+          "totalMBps": 4,
+          "totalSizeTiB": 27,
+          "privateEndpointConnections": [
+            {
+              "properties": {
+                "provisioningState": "Succeeded",
+                "privateEndpoint": {
+                  "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}"
+                },
+                "privateLinkServiceConnectionState": {
+                  "status": "Pending",
+                  "description": "Auto-Approved",
+                  "actionsRequired": "None"
+                },
+                "groupIds": [
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}"
+                ]
+              },
+              "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections/{privateEndpointConnectionName}",
+              "name": "{privateEndpointConnectionName}",
+              "type": "Microsoft.ElasticSan/elasticSans/privateEndpointConnections",
+              "systemData": {
+                "createdBy": "kakcyehdrphqkilgkhpbdtvpupak",
+                "createdByType": "User",
+                "createdAt": "2023-08-23T12:16:10.057Z",
+                "lastModifiedBy": "bcclmbseed",
+                "lastModifiedByType": "User",
+                "lastModifiedAt": "2023-08-23T12:16:10.057Z"
+              }
+            }
+          ],
+          "publicNetworkAccess": "Enabled"
+        },
+        "systemData": {
+          "createdBy": "otfifnrahdshqombvtg",
+          "createdByType": "User",
+          "createdAt": "2023-07-03T09:59:45.919Z",
+          "lastModifiedBy": "jnaxavnlhrboshtidtib",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-07-03T09:59:45.919Z"
+        },
+        "tags": {
+          "key5002": "lhag"
+        },
+        "location": "France Central",
+        "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}",
+        "name": "vfoatmakv",
+        "type": "Microsoft.ElasticSan/ElasticSans"
+      }
+    },
+    "202": {
+      "headers": {
+        "location": "https://contoso.com/operationstatus"
+      }
+    }
+  }
+}

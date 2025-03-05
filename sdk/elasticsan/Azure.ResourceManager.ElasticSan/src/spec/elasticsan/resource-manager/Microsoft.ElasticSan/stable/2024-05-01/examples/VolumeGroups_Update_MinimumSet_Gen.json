@@ -1,0 +1,22 @@
+{
+  "title": "VolumeGroups_Update",
+  "operationId": "VolumeGroups_Update",
+  "parameters": {
+    "subscriptionId": "subscriptionid",
+    "resourceGroupName": "resourcegroupname",
+    "elasticSanName": "elasticsanname",
+    "volumeGroupName": "volumegroupname",
+    "parameters": {},
+    "api-version": "2024-05-01"
+  },
+  "responses": {
+    "200": {
+      "body": {}
+    },
+    "202": {
+      "headers": {
+        "location": "https://contoso.com/operationstatus"
+      }
+    }
+  }
+}

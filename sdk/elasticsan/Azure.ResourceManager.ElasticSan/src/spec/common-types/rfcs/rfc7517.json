@@ -1,0 +1,102 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "Common types"
+  },
+  "paths": {},
+  "definitions": {
+    "JSONWebKey": {
+      "type": "object",
+      "required": [
+        "kty"
+      ],
+      "properties": {
+        "alg": {
+          "description": "The \"alg\" (algorithm) parameter identifies the algorithm intended for\nuse with the key.  The values used should either be registered in the\nIANA \"JSON Web Signature and Encryption Algorithms\" registry\nestablished by [JWA] or be a value that contains a Collision-\nResistant Name.",
+          "type": "string"
+        },
+        "crv": {
+          "description": "The \"crv\" (curve) parameter identifies the curve type",
+          "type": "string"
+        },
+        "d": {
+          "description": "RSA private exponent or ECC private key",
+          "type": "string"
+        },
+        "dp": {
+          "description": "RSA Private Key Parameter",
+          "type": "string"
+        },
+        "dq": {
+          "description": "RSA Private Key Parameter",
+          "type": "string"
+        },
+        "e": {
+          "description": "RSA public exponent, in Base64",
+          "type": "string"
+        },
+        "k": {
+          "description": "Symmetric key",
+          "type": "string"
+        },
+        "kid": {
+          "description": "The \"kid\" (key ID) parameter is used to match a specific key.  This\nis used, for instance, to choose among a set of keys within a JWK Set\nduring key rollover.  The structure of the \"kid\" value is\nunspecified.  When \"kid\" values are used within a JWK Set, different\nkeys within the JWK Set SHOULD use distinct \"kid\" values.  (One\nexample in which different keys might use the same \"kid\" value is if\nthey have different \"kty\" (key type) values but are considered to be\nequivalent alternatives by the application using them.)  The \"kid\"\nvalue is a case-sensitive string.",
+          "type": "string"
+        },
+        "kty": {
+          "description": "The \"kty\" (key type) parameter identifies the cryptographic algorithm\nfamily used with the key, such as \"RSA\" or \"EC\". \"kty\" values should\neither be registered in the IANA \"JSON Web Key Types\" registry\nestablished by [JWA] or be a value that contains a Collision-\nResistant Name.  The \"kty\" value is a case-sensitive string.",
+          "type": "string"
+        },
+        "n": {
+          "description": "RSA modulus, in Base64",
+          "type": "string"
+        },
+        "p": {
+          "description": "RSA secret prime",
+          "type": "string"
+        },
+        "q": {
+          "description": "RSA secret prime, with p < q",
+          "type": "string"
+        },
+        "qi": {
+          "description": "RSA Private Key Parameter",
+          "type": "string"
+        },
+        "use": {
+          "description": "Use (\"public key use\") identifies the intended use of\nthe public key. The \"use\" parameter is employed to indicate whether\na public key is used for encrypting data or verifying the signature\non data. Values are commonly \"sig\" (signature) or \"enc\" (encryption).",
+          "type": "string"
+        },
+        "x": {
+          "description": "X coordinate for the Elliptic Curve point",
+          "type": "string"
+        },
+        "x5c": {
+          "description": "The \"x5c\" (X.509 certificate chain) parameter contains a chain of one\nor more PKIX certificates [RFC5280].  The certificate chain is\nrepresented as a JSON array of certificate value strings.  Each\nstring in the array is a base64-encoded (Section 4 of [RFC4648] --\nnot base64url-encoded) DER [ITU.X690.1994] PKIX certificate value.\nThe PKIX certificate containing the key value MUST be the first\ncertificate.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "y": {
+          "description": "Y coordinate for the Elliptic Curve point",
+          "type": "string"
+        }
+      }
+    },
+    "JSONWebKeySet": {
+      "type": "object",
+      "properties": {
+        "keys": {
+          "description": "The value of the \"keys\" parameter is an array of JWK values.  By\ndefault, the order of the JWK values within the array does not imply\nan order of preference among them, although applications of JWK Sets\ncan choose to assign a meaning to the order for their purposes, if\ndesired.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/JSONWebKey"
+          },
+          "x-ms-identifiers": []
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "title": "PrivateEndpointConnections_List",
+  "operationId": "PrivateEndpointConnections_List",
+  "parameters": {
+    "subscriptionId": "subscriptionid",
+    "resourceGroupName": "resourcegroupname",
+    "elasticSanName": "elasticsanname",
+    "api-version": "2024-05-01"
+  },
+  "responses": {
+    "200": {
+      "body": {}
+    }
+  }
+}

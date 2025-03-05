@@ -1,0 +1,38 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Common types",
+    "version": "5.0"
+  },
+  "paths": {},
+  "definitions": {
+    "ManagedOnBehalfOfConfiguration": {
+      "type": "object",
+      "description": "Managed-On-Behalf-Of configuration properties. This configuration exists for the resources where a resource provider manages those resources on behalf of the resource owner.",
+      "properties": {
+        "moboBrokerResources": {
+          "type": "array",
+          "description": "Managed-On-Behalf-Of broker resources",
+          "items": {
+            "$ref": "#/definitions/MoboBrokerResource"
+          },
+          "x-ms-identifiers": [
+            "id"
+          ]
+        }
+      },
+      "readOnly": true
+    },
+    "MoboBrokerResource": {
+      "type": "object",
+      "description": "Managed-On-Behalf-Of broker resource. This resource is created by the Resource Provider to manage some resources on behalf of the user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "arm-id",
+          "description": "Resource identifier of a Managed-On-Behalf-Of broker resource"
+        }
+      }
+    }
+  }
+}

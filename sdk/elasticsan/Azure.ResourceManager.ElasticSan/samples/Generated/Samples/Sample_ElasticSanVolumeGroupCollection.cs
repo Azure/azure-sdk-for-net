@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_VolumeGroupsCreateMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Create_MaximumSet_Gen.json
+            // Generated from example definition: file:///D:/Works/Codespace/Azure/tem/azure-sdk-for-net/sdk/elasticsan/Azure.ResourceManager.ElasticSan/src/spec/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2025-03-01/examples/VolumeGroups_Create_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -83,7 +83,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_VolumeGroupsCreateMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Create_MinimumSet_Gen.json
+            // Generated from example definition: file:///D:/Works/Codespace/Azure/tem/azure-sdk-for-net/sdk/elasticsan/Azure.ResourceManager.ElasticSan/src/spec/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2025-03-01/examples/VolumeGroups_Create_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +119,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumeGroupsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Get_MaximumSet_Gen.json
+            // Generated from example definition: file:///D:/Works/Codespace/Azure/tem/azure-sdk-for-net/sdk/elasticsan/Azure.ResourceManager.ElasticSan/src/spec/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2025-03-01/examples/VolumeGroups_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,7 +153,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumeGroupsGetMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Get_MinimumSet_Gen.json
+            // Generated from example definition: file:///D:/Works/Codespace/Azure/tem/azure-sdk-for-net/sdk/elasticsan/Azure.ResourceManager.ElasticSan/src/spec/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2025-03-01/examples/VolumeGroups_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -187,7 +187,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VolumeGroupsListByElasticSanMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_ListByElasticSan_MaximumSet_Gen.json
+            // Generated from example definition: file:///D:/Works/Codespace/Azure/tem/azure-sdk-for-net/sdk/elasticsan/Azure.ResourceManager.ElasticSan/src/spec/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2025-03-01/examples/VolumeGroups_ListByElasticSan_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_ListByElasticSan" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -223,7 +223,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VolumeGroupsListByElasticSanMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_ListByElasticSan_MinimumSet_Gen.json
+            // Generated from example definition: file:///D:/Works/Codespace/Azure/tem/azure-sdk-for-net/sdk/elasticsan/Azure.ResourceManager.ElasticSan/src/spec/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2025-03-01/examples/VolumeGroups_ListByElasticSan_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_ListByElasticSan" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -259,7 +259,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_VolumeGroupsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Get_MaximumSet_Gen.json
+            // Generated from example definition: file:///D:/Works/Codespace/Azure/tem/azure-sdk-for-net/sdk/elasticsan/Azure.ResourceManager.ElasticSan/src/spec/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2025-03-01/examples/VolumeGroups_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -289,7 +289,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_VolumeGroupsGetMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Get_MinimumSet_Gen.json
+            // Generated from example definition: file:///D:/Works/Codespace/Azure/tem/azure-sdk-for-net/sdk/elasticsan/Azure.ResourceManager.ElasticSan/src/spec/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2025-03-01/examples/VolumeGroups_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -319,7 +319,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_VolumeGroupsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Get_MaximumSet_Gen.json
+            // Generated from example definition: file:///D:/Works/Codespace/Azure/tem/azure-sdk-for-net/sdk/elasticsan/Azure.ResourceManager.ElasticSan/src/spec/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2025-03-01/examples/VolumeGroups_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -361,7 +361,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_VolumeGroupsGetMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Get_MinimumSet_Gen.json
+            // Generated from example definition: file:///D:/Works/Codespace/Azure/tem/azure-sdk-for-net/sdk/elasticsan/Azure.ResourceManager.ElasticSan/src/spec/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2025-03-01/examples/VolumeGroups_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
