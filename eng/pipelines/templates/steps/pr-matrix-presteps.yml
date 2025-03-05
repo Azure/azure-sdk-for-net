@@ -19,16 +19,6 @@ steps:
       ServiceDirectory: ${{parameters.ServiceDirectory}}
       PackageInfoDirectory: $(Build.ArtifactStagingDirectory)/PackageInfoPublishing
 
-  - pwsh: |
-      $packageInfos = Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfo" -Filter "*.json" -Recurse
-      $packageInfos | ForEach-Object {
-        $content = Get-Content -Raw -Path $_.FullName | ConvertFrom-Json
-        $content.IncludedForValidation = $false
-        $content | ConvertTo-Json -Depth 32 | Out-File $_.FullName
-      }
-    displayName: Set all packages to direct
-    condition: and(succeededOrFailed(), eq(${{ parameters.ForceDirect }}, true))
-
   # when we publish the packageinfo as an artifact, it actually cleans up the original files. Since we need them during matrix generation steps
   # that will execute directly after the pregeneration steps here, we output them to a publishing directory, copy from there into the target PackageInfoDirectory,
   # and then publish the originals
@@ -42,3 +32,14 @@ steps:
     parameters:
       ArtifactName: '${{ parameters.PublishingArtifactName }}'
       ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfoPublishing'
+
+  - pwsh: |
+      $packageInfos = Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfo" -Filter "*.json" -Recurse
+      $packageInfos | ForEach-Object {
+        $content = Get-Content -Raw -Path $_.FullName | ConvertFrom-Json
+        $content.IncludedForValidation = $false
+        $content | ConvertTo-Json -Depth 32 | Out-File $_.FullName
+      }
+    displayName: Set all packages to direct
+    condition: and(succeededOrFailed(), eq(${{ parameters.ForceDirect }}, true))
+
