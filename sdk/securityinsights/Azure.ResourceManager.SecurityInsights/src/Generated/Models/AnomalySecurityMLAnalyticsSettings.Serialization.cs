@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CustomizableObservations);
 #else
-                using (JsonDocument document = JsonDocument.Parse(CustomizableObservations))
+                using (JsonDocument document = JsonDocument.Parse(CustomizableObservations, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAnomalySecurityMLAnalyticsSettings(document.RootElement, options);
                     }
                 default:

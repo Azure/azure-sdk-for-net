@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Purview
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePurviewKafkaConfigurationData(document.RootElement, options);
                     }
                 default:

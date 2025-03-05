@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServiceFabricApplicationTypeVersionData(document.RootElement, options);
                     }
                 default:

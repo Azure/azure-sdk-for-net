@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEntityData(document.RootElement, options);
                     }
                 default:
