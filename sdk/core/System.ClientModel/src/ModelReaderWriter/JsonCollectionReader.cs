@@ -3,15 +3,15 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text.Json;
 
 namespace System.ClientModel.Primitives;
 
 internal class JsonCollectionReader : CollectionReader
 {
-    internal override object Read(Type returnType, BinaryData data, ModelReaderWriterContext context, ModelReaderWriterOptions options)
+    internal override object Read(Type returnType, CollectionBuilder builder, BinaryData data, ModelReaderWriterContext context, ModelReaderWriterOptions options)
     {
-        object collection = context.GetModelInfoInternal(returnType).CreateObject();
         Utf8JsonReader reader = new Utf8JsonReader(data);
         reader.Read();
         var genericType = returnType.IsGenericType ? returnType.GetGenericTypeDefinition() : null;
@@ -26,19 +26,8 @@ internal class JsonCollectionReader : CollectionReader
         {
             throw new FormatException("Expected start of array.");
         }
-        var builder = AssertCollectionBuilder(collection);
         ReadJsonCollection(ref reader, builder, options, context);
         return builder.ToObject();
-    }
-
-    private static CollectionBuilder AssertCollectionBuilder(object collection)
-    {
-        if (collection is not CollectionBuilder builder)
-        {
-            throw new InvalidOperationException($"Expected CollectionBuilder from CreateObject but got {collection.GetType().Name}");
-        }
-
-        return builder;
     }
 
     private void ReadJsonCollection(
@@ -56,7 +45,8 @@ internal class JsonCollectionReader : CollectionReader
         IJsonModel<object>? jsonModel = null;
         string? propertyName = null;
 
-        var element = context.GetModelInfoInternal(elementType).CreateObject();
+        var elementInfo = context.GetModelInfoInternal(elementType);
+        var element = elementInfo.CreateObject();
         if (element is CollectionBuilder elementBuilder)
         {
             isInnerCollection = true;
@@ -80,10 +70,10 @@ internal class JsonCollectionReader : CollectionReader
                     {
                         if (isElementDictionary)
                         {
-                            var innerDictionary = context.GetModelInfoInternal(elementType).CreateObject();
-                            var dictBuilder = AssertCollectionBuilder(innerDictionary);
-                            ReadJsonCollection(ref reader, dictBuilder, options, context);
-                            collectionBuilder.AddItem(dictBuilder.ToObject(), propertyName);
+                            var dictionaryBuilder = elementInfo.CreateObject() as CollectionBuilder;
+                            Debug.Assert(dictionaryBuilder != null);
+                            ReadJsonCollection(ref reader, dictionaryBuilder!, options, context);
+                            collectionBuilder.AddItem(dictionaryBuilder!.ToObject(), propertyName);
                         }
                         else
                         {
@@ -92,6 +82,7 @@ internal class JsonCollectionReader : CollectionReader
                     }
                     else
                     {
+                        Debug.Assert(jsonModel != null);
                         collectionBuilder.AddItem(jsonModel!.Create(ref reader, options), propertyName);
                     }
                     break;
@@ -101,10 +92,10 @@ internal class JsonCollectionReader : CollectionReader
                         throw new FormatException("Unexpected StartArray found.");
                     }
 
-                    object innerList = context.GetModelInfoInternal(elementType).CreateObject();
-                    var builder = AssertCollectionBuilder(innerList);
-                    ReadJsonCollection(ref reader, builder, options, context);
-                    collectionBuilder.AddItem(builder.ToObject(), propertyName);
+                    var listBuilder = elementInfo.CreateObject() as CollectionBuilder;
+                    Debug.Assert(listBuilder != null);
+                    ReadJsonCollection(ref reader, listBuilder!, options, context);
+                    collectionBuilder.AddItem(listBuilder!.ToObject(), propertyName);
                     break;
                 case JsonTokenType.EndArray:
                     return;

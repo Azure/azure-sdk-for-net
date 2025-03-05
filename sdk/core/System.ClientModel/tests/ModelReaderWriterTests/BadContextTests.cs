@@ -125,9 +125,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         private class PersistableModel_NonPersistableElement : IJsonModel<PersistableModel_NonPersistableElement>
         {
-            public PersistableModel_NonPersistableElement Create(BinaryData data, ModelReaderWriterOptions options) => new PersistableModel_NonPersistableElement();
+            public PersistableModel_NonPersistableElement Create(BinaryData data, ModelReaderWriterOptions options) => new();
 
-            public PersistableModel_NonPersistableElement Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new PersistableModel_NonPersistableElement();
+            public PersistableModel_NonPersistableElement Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new();
 
             public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -140,9 +140,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         private class PersistableModel_NullElement : IJsonModel<PersistableModel_NullElement>
         {
-            public PersistableModel_NullElement Create(BinaryData data, ModelReaderWriterOptions options) => new PersistableModel_NullElement();
+            public PersistableModel_NullElement Create(BinaryData data, ModelReaderWriterOptions options) => new();
 
-            public PersistableModel_NullElement Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new PersistableModel_NullElement();
+            public PersistableModel_NullElement Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new();
 
             public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 

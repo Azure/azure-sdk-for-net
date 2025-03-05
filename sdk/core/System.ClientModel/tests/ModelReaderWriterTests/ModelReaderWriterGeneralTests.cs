@@ -479,6 +479,33 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 #endif
         }
 
+        [Test]
+        public void WriteListOfNonPersistable()
+        {
+            var list = new List<DoesNotImplementInterface>() { new DoesNotImplementInterface() };
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, s_readerWriterContext, new ModelReaderWriterOptions("W")));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("Unable to write List`1 can only write collections of IPersistableModel", ex!.Message);
+        }
+
+        [Test]
+        public void WriteEmptyDictionary()
+        {
+            var dict = new Dictionary<string, SubType>();
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(dict, s_readerWriterContext, new ModelReaderWriterOptions("W")));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("Can't use format 'W' format on an empty collection please specify a concrete format", ex!.Message);
+        }
+
+        [Test]
+        public void WriteEmptyList()
+        {
+            var list = new List<SubType>();
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, s_readerWriterContext, new ModelReaderWriterOptions("W")));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("Can't use format 'W' format on an empty collection please specify a concrete format", ex!.Message);
+        }
+
         private class ReadReturnsNull : IPersistableModel<ReadReturnsNull>
         {
             public ReadReturnsNull Create(BinaryData data, ModelReaderWriterOptions options)

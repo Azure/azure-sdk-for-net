@@ -18,6 +18,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         private ModelX_Info? _modelX_Info;
         private ResourceProviderData_Info? _resourceProviderData_Info;
         private UnknownBaseModel_Info? _unknownBaseModel_Info;
+        private ModelY_Info? _modelY_Info;
 
         public override ModelInfo? GetModelInfo(Type type)
         {
@@ -30,8 +31,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 Type t when t == typeof(ModelX) => _modelX_Info ??= new(),
                 Type t when t == typeof(ResourceProviderData) => _resourceProviderData_Info ??= new(),
                 Type t when t == typeof(UnknownBaseModel) => _unknownBaseModel_Info ??= new(),
+                Type t when t == typeof(ModelY) => _modelY_Info ??= new(),
                 _ => null
             };
+        }
+
+        private class ModelY_Info : ModelInfo
+        {
+            public override object CreateObject() => new ModelY();
         }
 
         private class UnknownBaseModel_Info : ModelInfo

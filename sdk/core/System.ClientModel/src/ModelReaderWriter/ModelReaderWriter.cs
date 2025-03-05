@@ -271,7 +271,7 @@ public static class ModelReaderWriter
         if (returnObj is CollectionBuilder builder)
         {
             var collectionReader = CollectionReader.GetCollectionReader(builder, options);
-            return collectionReader.Read(returnType, data, context, options);
+            return collectionReader.Read(returnType, builder, data, context, options);
         }
         else if (returnObj is IPersistableModel<object> persistableModel)
         {

@@ -68,12 +68,7 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
     {
         IJsonModel<object>? AotCompatActivate()
         {
-            var activator = _context.GetModelInfo(typeToConvert);
-            if (activator is null)
-            {
-                throw new InvalidOperationException($"No activator found for {typeToConvert.Name}.");
-            }
-            return activator.CreateObject() as IJsonModel<object>;
+            return _context.GetModelInfoInternal(typeToConvert).CreateObject() as IJsonModel<object>;
         }
 
         [UnconditionalSuppressMessage("Trimming", "IL2067",
