@@ -187,7 +187,7 @@ internal sealed class SqlClientDiagnosticListener : ListenerHandler
 
                                 if (this.options.RecordException)
                                 {
-                                    activity.AddException(exception); // TODO: I made this change only to get the build to pass. We MUST NOT merge any edits to vendored files!!! This needs to be fixed in the Contrib repo.
+                                    activity.AddException(exception); // TODO: I made this change only to get the build to pass. This has already been fixed in Contrib repo and needs to be synced here
                                 }
                             }
                             else
