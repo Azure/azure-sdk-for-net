@@ -22,7 +22,7 @@ sdk/
 
 This necessitates that release definitions on the [internal](https://dev.azure.com/azure-sdk/internal/) azure devops exist for each service in a repository. However, each build definition can only build and ship packages **within the service it was created for**.
 
-This service-directory also applied to  `public` build definitions that triggered on [pull requests](https://github.com/Azure/azure-sdk-for-python/pulls) in our repos. Due to this, large changesets that touched multiple service directories would incurr a build for _every servicedirectory that was touched_. The `azure-sdk` EngSys calls this situation a `build storm`.
+This service-directory also applied to `public` build definitions that triggered on [pull requests](https://github.com/Azure/azure-sdk-for-python/pulls) in our repos. Due to this, large changesets that touched multiple service directories would incur a build for _every service directory that was touched_. The `azure-sdk` EngSys calls this situation a `build storm`.
 
 The `<language> - pullrequest` definitions entirely replace service-specific build definitions. It has the ability to expand and contract the targeted packagesfor build according to a **git diff** of the actual changes made. Because of this, any repo that has cut over to `pullrequest` will enjoy no longer incurring build storms on large cross-cutting changes. While the individual build run will be very long running and batch up tests across a bunch of agents, it _will_ eventually complete. It will be _impossible_ to exhaust Github or Devops token utilization as well, given that it is a single definition triggering checks.
 
