@@ -16,7 +16,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var ex = Assert.Throws<ArgumentException>(s_failBuilder.FailAssertItem);
             Assert.IsNotNull(ex);
             Assert.AreEqual("item", ex!.ParamName);
+#if NET8_0_OR_GREATER
             Assert.AreEqual("item must be type Int32 (Parameter 'item')", ex.Message);
+#else
+            Assert.AreEqual($"item must be type Int32{Environment.NewLine}Parameter name: item", ex.Message);
+#endif
         }
 
         [Test]
