@@ -159,8 +159,8 @@ stages:
 
                   steps:
                     - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-                    - checkout: self
-                      path: s  # Keep this in the same path it would be if it was only a single checkout
+                      parameters:
+                        SkipCheckoutNone: true
                     - checkout: azure-sdk-build-tools
                       path: azure-sdk-build-tools
                     - template: /pipelines/steps/publish-symbols.yml@azure-sdk-build-tools
