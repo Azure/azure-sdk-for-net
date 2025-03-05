@@ -46,9 +46,15 @@ steps:
     displayName: "Set SkipDevBuildNumber env variable"
 
   # run this before setting SetDevVersion to true, so that versioning properties will be non-dev always
-  - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
-    parameters:
-      ServiceDirectory: ${{ parameters.ServiceDirectory }}
+  - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        artifact: BuildPackagesArtifact
+        path: $(Build.SourcesDirectory)/PackageInfo
+  - ${{ else }}:
+    - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
+      parameters:
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
   - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
 
