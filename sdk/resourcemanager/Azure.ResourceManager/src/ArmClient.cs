@@ -230,6 +230,11 @@ namespace Azure.ResourceManager
             }
         }
 
+        /// <summary>
+        /// Gets the default tenant.
+        /// </summary>
+        public virtual TenantResource DefaultTenant => _tenant;
+
         /// <summary> Gets a collection of GenericResources. </summary>
         /// <returns> An object representing collection of GenericResources and their operations. </returns>
         public virtual GenericResourceCollection GetGenericResources() => _tenant.GetGenericResources();
@@ -239,8 +244,8 @@ namespace Azure.ResourceManager
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        [System.ObsoleteAttribute("This method is obsolete as the `top` parameter is not supported by service and will be removed in a future release.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete as the `top` parameter is not supported by service and will be removed in a future release.", false)]
         public virtual Pageable<TenantResourceProvider> GetTenantResourceProviders(int? top, string expand, CancellationToken cancellationToken = default) => _tenant.GetTenantResourceProviders(expand, cancellationToken);
 
         /// <summary> Gets all resource providers for a subscription. </summary>
@@ -248,20 +253,22 @@ namespace Azure.ResourceManager
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        [System.ObsoleteAttribute("This method is obsolete as the `top` parameter is not supported by service and will be removed in a future release.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete as the `top` parameter is not supported by service and will be removed in a future release.", false)]
         public virtual AsyncPageable<TenantResourceProvider> GetTenantResourceProvidersAsync(int? top, string expand, CancellationToken cancellationToken = default) => _tenant.GetTenantResourceProvidersAsync(expand, cancellationToken);
 
         /// <summary> Gets all resource providers for a subscription. </summary>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<TenantResourceProvider> GetTenantResourceProviders(string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantResourceProviders(expand, cancellationToken);
 
         /// <summary> Gets all resource providers for a subscription. </summary>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<TenantResourceProvider> GetTenantResourceProvidersAsync(string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantResourceProvidersAsync(expand, cancellationToken);
 
         /// <summary> Gets the specified resource provider at the tenant level. </summary>
@@ -270,6 +277,7 @@ namespace Azure.ResourceManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<TenantResourceProvider> GetTenantResourceProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantResourceProvider(resourceProviderNamespace, expand, cancellationToken);
 
         /// <summary> Gets the specified resource provider at the tenant level. </summary>
@@ -278,12 +286,14 @@ namespace Azure.ResourceManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<TenantResourceProvider>> GetTenantResourceProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => await _tenant.GetTenantResourceProviderAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Gets the management group collection for this tenant.
         /// </summary>
         /// <returns> A collection of the management groups. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ManagementGroupCollection GetManagementGroups() => _tenant.GetManagementGroups();
 
         /// <summary>

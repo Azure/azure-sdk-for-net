@@ -6,6 +6,7 @@ namespace Azure.ResourceManager
         public ArmClient(Azure.Core.TokenCredential credential) { }
         public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId) { }
         public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId, Azure.ResourceManager.ArmClientOptions options) { }
+        public virtual Azure.ResourceManager.Resources.TenantResource DefaultTenant { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual T GetCachedClient<T>(System.Func<Azure.ResourceManager.ArmClient, T> clientFactory) where T : class { throw null; }
         public virtual Azure.ResourceManager.Resources.DataPolicyManifestResource GetDataPolicyManifestResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -17,6 +18,7 @@ namespace Azure.ResourceManager
         public virtual Azure.ResourceManager.Resources.ManagementGroupPolicyDefinitionResource GetManagementGroupPolicyDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinitionResource GetManagementGroupPolicySetDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ManagementGroups.ManagementGroupResource GetManagementGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ManagementGroups.ManagementGroupCollection GetManagementGroups() { throw null; }
         public virtual Azure.ResourceManager.ManagementGroups.ManagementGroupSubscriptionResource GetManagementGroupSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.ManagementLockResource GetManagementLockResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -32,15 +34,19 @@ namespace Azure.ResourceManager
         public virtual Azure.ResourceManager.Resources.TagResource GetTagResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.TenantPolicyDefinitionResource GetTenantPolicyDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.TenantPolicySetDefinitionResource GetTenantPolicySetDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.Resources.Models.TenantResourceProvider> GetTenantResourceProvider(string resourceProviderNamespace, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.TenantResourceProvider>> GetTenantResourceProviderAsync(string resourceProviderNamespace, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete as the `top` parameter is not supported by service and will be removed in a future release.", false)]
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.TenantResourceProvider> GetTenantResourceProviders(int? top, string expand, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.TenantResourceProvider> GetTenantResourceProviders(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete as the `top` parameter is not supported by service and will be removed in a future release.", false)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.TenantResourceProvider> GetTenantResourceProvidersAsync(int? top, string expand, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.TenantResourceProvider> GetTenantResourceProvidersAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Resources.TenantCollection GetTenants() { throw null; }
     }
