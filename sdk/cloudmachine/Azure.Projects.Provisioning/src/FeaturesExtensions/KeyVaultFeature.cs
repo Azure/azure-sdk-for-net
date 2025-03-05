@@ -56,14 +56,12 @@ public class KeyVaultFeature : AzureProjectFeature
         RequiredSystemRoles.Add(keyVaultResource, [kvAdmin]);
 
         AppConfigurationFeature appConfig = infrastructure.Features.FindAll<AppConfigurationFeature>().First();
-
-        AppConfigurationSettingFeature kvp = new(
+        AppConfigurationSettingFeature connection = new(
             appConfig,
             "Azure.Security.KeyVault.Secrets.SecretClient",
             $"https://{infrastructure.ProjectId}.vault.azure.net/"
         );
-
-        infrastructure.AddFeature(kvp);
+        infrastructure.AddFeature(connection);
 
         return keyVaultResource;
     }

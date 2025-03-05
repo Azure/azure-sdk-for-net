@@ -9,6 +9,8 @@ using Azure.Core;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.Primitives;
 using System.ClientModel.Primitives;
+using Azure.Provisioning;
+using Azure.Projects.AppConfiguration;
 
 namespace Azure.Projects.OpenAI;
 
@@ -146,6 +148,17 @@ public class OpenAIModelFeature : AzureProjectFeature
         }
 
         cm.AddResource(deployment);
+
+        AppConfigurationFeature appConfig = cm.Features.FindAll<AppConfigurationFeature>().First();
+        string key = Kind == AIModelKind.Chat ? "OpenAI.Chat.ChatClient" : "Azure.AI.OpenAI.AzureOpenAIClient";
+        string locator = Kind == AIModelKind.Chat ? $"{cm.ProjectId}_chat" : $"{cm.ProjectId}_embedding";
+        AppConfigurationSettingFeature connection = new(
+            appConfig,
+            key,
+            locator
+        );
+        cm.AddFeature(connection);
+
         return deployment;
 
         OpenAIModelFeature? FindPrevious(ProjectInfrastructure cm, OpenAIModelFeature current)
