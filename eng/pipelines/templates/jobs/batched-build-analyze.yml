@@ -96,8 +96,6 @@ jobs:
       - template: /eng/pipelines/templates/steps/analyze.yml
         parameters:
           Artifacts: ${{ parameters.Artifacts }}
-          TestPipeline: ${{ parameters.TestPipeline }}
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           SDKType: ${{ parameters.SDKType }}
-          CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
-          AOTTestInputs: ${{ parameters.AOTTestInputs }}
+          BuildSnippets: ${{ parameters.BuildSnippets }}
