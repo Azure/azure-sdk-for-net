@@ -40,5 +40,5 @@ steps:
 
   - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
     parameters:
-      ArtifactName: 'TestPackagesArtifact'
+      ArtifactName: '${{ parameters.PublishingArtifactName }}'
       ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfoPublishing'
