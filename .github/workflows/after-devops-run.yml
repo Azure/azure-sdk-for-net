@@ -19,5 +19,5 @@ jobs:
     steps:
       - name: Dump check_suite payload
         run: |
-          echo "Event payload:"
-          echo "${{ github.event }}"
+          Write-Host "Event payload:"
+          Write-Host "${{ github.event }}" | ConvertTo-Json -Depth 10
