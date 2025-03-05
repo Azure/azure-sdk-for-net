@@ -12,7 +12,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
     public class TestClientModelReaderWriterContext : ModelReaderWriterContext
     {
         private AvailabilitySetData_Info? _availabilitySetData_Info;
-        private List_AvailabilitySetData_Info? _list_AvailabilitySet_Info;
         private BaseModel_Info? _baseModel_Info;
         private ModelAsStruct_Info? _modelAsStruct_Info;
         private ModelWithPersistableOnly_Info? _modelWithPersistableOnly_Info;
@@ -25,7 +24,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             return type switch
             {
                 Type t when t == typeof(AvailabilitySetData) => _availabilitySetData_Info ??= new(),
-                Type t when t == typeof(List<AvailabilitySetData>) => _list_AvailabilitySet_Info ??= new(),
                 Type t when t == typeof(BaseModel) => _baseModel_Info ??= new(),
                 Type t when t == typeof(ModelAsStruct) => _modelAsStruct_Info ??= new(),
                 Type t when t == typeof(ModelWithPersistableOnly) => _modelWithPersistableOnly_Info ??= new(),
@@ -64,25 +62,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         private class BaseModel_Info : ModelInfo
         {
             public override object CreateObject() => new UnknownBaseModel();
-        }
-
-        private class List_AvailabilitySetData_Info : ModelInfo
-        {
-            public override object CreateObject() => new List_AvailabilitySetData_Builder();
-
-            private class List_AvailabilitySetData_Builder : CollectionBuilder
-            {
-                private readonly Lazy<List<AvailabilitySetData>> _instance = new(() => []);
-
-                protected override void AddItem(object item, string? key = null)
-                {
-                    _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
-                }
-
-                protected override object GetBuilder() => _instance.Value;
-
-                protected override object CreateElement() => new AvailabilitySetData();
-            }
         }
 
         private class AvailabilitySetData_Info : ModelInfo
