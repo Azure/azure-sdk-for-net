@@ -32,5 +32,5 @@ internal abstract class CollectionReader
         }
     }
 
-    internal abstract object Read(Type returnType, CollectionBuilder builder, BinaryData data, ModelReaderWriterContext context, ModelReaderWriterOptions options);
+    internal abstract object Read(CollectionBuilder builder, BinaryData data, ModelReaderWriterContext context, ModelReaderWriterOptions options);
 }

@@ -3,7 +3,6 @@
 
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
@@ -14,18 +13,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
         protected override ModelReaderWriterContext Context => new LocalContext();
 
-        protected override int ReverseLayerMask => 1;
+        protected override bool IsRoundTripOrderDeterministic => false;
 
-        protected override void Reverse(ref Stack<AvailabilitySetData> collection, ref IEnumerable enumerable)
+        protected override void CompareCollections(Stack<AvailabilitySetData> expected, Stack<AvailabilitySetData> actual, string format)
         {
-            Stack<AvailabilitySetData> newStack = new Stack<AvailabilitySetData>();
-            var reverseEnumerator = enumerable.GetEnumerator();
-            while (reverseEnumerator.MoveNext())
+            var newStack = new Stack<AvailabilitySetData>();
+            foreach (var item in actual)
             {
-                newStack.Push((AvailabilitySetData)reverseEnumerator.Current);
+                newStack.Push(item);
             }
-            collection = newStack;
-            enumerable = GetEnumerable(collection);
+            base.CompareCollections(expected, newStack, format);
         }
 
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)

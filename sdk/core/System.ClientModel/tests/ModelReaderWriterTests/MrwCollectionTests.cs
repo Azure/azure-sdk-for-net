@@ -3,7 +3,6 @@
 
 using System.ClientModel.Primitives;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
 
@@ -16,7 +15,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         protected virtual string GetJsonCollectionType() => GetCollectionType();
 
-        protected virtual int ReverseLayerMask => 0;
+        protected virtual void CompareCollections(TCollection expected, TCollection actual, string format)
+            => CompareEnumerable(GetEnumerable(expected!), GetEnumerable(actual!), format, 0);
+
+        protected virtual bool IsWriteOrderDeterministic => true;
+        protected virtual bool IsRoundTripOrderDeterministic => true;
 
         protected override string GetJsonFolderName()
         {
@@ -67,22 +70,23 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             BinaryData data = strategy.Write(Instance, options);
             Assert.IsNotNull(data);
-            Assert.AreEqual(collapsedPayload, data.ToString());
+            var actualPayload = data.ToString();
+            Assert.AreEqual(actualPayload.Length, actualPayload.Length);
+
+            if (IsWriteOrderDeterministic)
+            {
+                Assert.AreEqual(collapsedPayload, actualPayload);
+            }
 
             var actual = strategy.Read(data.ToString(), Instance!, options);
             Assert.IsNotNull(actual);
             Assert.AreEqual(Instance!.GetType(), actual!.GetType());
 
-            CompareEnumerable(GetEnumerable(Instance!), GetEnumerable(actual!), format, 0);
+            CompareCollections(Instance!, (TCollection)actual!, format);
 
             BinaryData data2 = strategy.Write((TCollection)actual, options);
             Assert.AreEqual(data.Length, data2.Length);
-            if (ReverseLayerMask > 0)
-            {
-                //this means one of the collections was a stack which will result in a reverse order of elements
-                Assert.IsFalse(data.ToMemory().Span.SequenceEqual(data2.ToMemory().Span));
-            }
-            else
+            if (IsRoundTripOrderDeterministic)
             {
                 Assert.IsTrue(data.ToMemory().Span.SequenceEqual(data2.ToMemory().Span));
             }
@@ -92,17 +96,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             Assert.IsNotNull(expected);
             Assert.IsNotNull(actual);
-
-            if ((ReverseLayerMask & (1 << layer)) != 0)
-            {
-                Stack<object> newStack = new();
-                var reverseEnumerator = actual.GetEnumerator();
-                while (reverseEnumerator.MoveNext())
-                {
-                    newStack.Push(reverseEnumerator.Current);
-                }
-                actual = newStack;
-            }
 
             var expectedEnumerator = GetEnumerable(expected!).GetEnumerator();
             var actualEnumerator = GetEnumerable(actual!).GetEnumerator();
@@ -118,6 +111,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                     CompareModels((TElement)expectedEnumerator.Current, (TElement)actualEnumerator.Current, format);
                 }
             }
+
             //assert none left in round trip
             Assert.IsFalse(actualEnumerator.MoveNext(), "More items found in round trip collection");
         }

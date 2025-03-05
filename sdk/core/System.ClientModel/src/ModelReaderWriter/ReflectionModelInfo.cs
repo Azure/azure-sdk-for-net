@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Primitives;
@@ -22,13 +23,29 @@ internal class ReflectionModelInfo : ModelInfo
         return GetInstance(_type);
     }
 
-    private static IPersistableModel<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
+    private static IPersistableModel<object> GetInstance(
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
     {
         //arrays will cause Activator.CreateInstance to throw MissingMethodException which is not
         //consistent behavior with all other collection error messages so we do this extra check
         if (returnType.IsArray)
         {
             throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IPersistableModel<object>)}");
+        }
+        //same thing with immutable and readonly collections
+        if (returnType.IsGenericType)
+        {
+            if (returnType.Namespace?.Equals("System.Collections.Immutable") == true)
+            {
+                throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IPersistableModel<object>)}");
+            }
+
+            var genericType = returnType.GetGenericTypeDefinition();
+
+            if (genericType.Equals(typeof(ReadOnlyCollection<>)) || genericType.Equals(typeof(ReadOnlyDictionary<,>)))
+            {
+                throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IPersistableModel<object>)}");
+            }
         }
 
         var model = GetObjectInstance(returnType) as IPersistableModel<object>;

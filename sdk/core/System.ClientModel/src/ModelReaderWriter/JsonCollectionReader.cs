@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -10,12 +9,11 @@ namespace System.ClientModel.Primitives;
 
 internal class JsonCollectionReader : CollectionReader
 {
-    internal override object Read(Type returnType, CollectionBuilder builder, BinaryData data, ModelReaderWriterContext context, ModelReaderWriterOptions options)
+    internal override object Read(CollectionBuilder builder, BinaryData data, ModelReaderWriterContext context, ModelReaderWriterOptions options)
     {
-        Utf8JsonReader reader = new Utf8JsonReader(data);
+        Utf8JsonReader reader = new(data);
         reader.Read();
-        var genericType = returnType.IsGenericType ? returnType.GetGenericTypeDefinition() : null;
-        if (genericType?.Equals(typeof(Dictionary<,>)) == true)
+        if (builder.GetBuilder() is IDictionary)
         {
             if (reader.TokenType != JsonTokenType.StartObject)
             {
@@ -30,7 +28,7 @@ internal class JsonCollectionReader : CollectionReader
         return builder.ToObject();
     }
 
-    private void ReadJsonCollection(
+    private static void ReadJsonCollection(
         ref Utf8JsonReader reader,
         CollectionBuilder collectionBuilder,
         ModelReaderWriterOptions options,

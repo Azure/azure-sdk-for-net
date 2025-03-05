@@ -13,7 +13,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
         protected override ModelReaderWriterContext Context => new LocalContext();
 
-        protected override int ReverseLayerMask => 1;
+        protected override bool IsRoundTripOrderDeterministic => false;
 
         protected override Stack<List<AvailabilitySetData>> GetModelInstance()
         {
@@ -22,6 +22,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 new([ModelInstances.s_testAs_3377, ModelInstances.s_testAs_3378]),
                 new([ModelInstances.s_testAs_3375, ModelInstances.s_testAs_3376])
             ]);
+        }
+
+        protected override void CompareCollections(Stack<List<AvailabilitySetData>> expected, Stack<List<AvailabilitySetData>> actual, string format)
+        {
+            var newStack = new Stack<List<AvailabilitySetData>>();
+            foreach (var item in actual)
+            {
+                newStack.Push(item);
+            }
+            base.CompareCollections(expected, newStack, format);
         }
 
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)
