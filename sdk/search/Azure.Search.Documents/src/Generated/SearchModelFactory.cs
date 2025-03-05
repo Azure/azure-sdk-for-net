@@ -43,6 +43,36 @@ namespace Azure.Search.Documents.Models
             return new QueryAnswerResult(score, key, text, highlights, additionalProperties);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DebugInfo"/>. </summary>
+        /// <param name="queryRewrites"> Contains debugging information specific to query rewrites. </param>
+        /// <returns> A new <see cref="Models.DebugInfo"/> instance for mocking. </returns>
+        public static DebugInfo DebugInfo(QueryRewritesDebugInfo queryRewrites = null)
+        {
+            return new DebugInfo(queryRewrites);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.QueryRewritesDebugInfo"/>. </summary>
+        /// <param name="text"> List of query rewrites generated for the text query. </param>
+        /// <param name="vectors"> List of query rewrites generated for the vectorizable text queries. </param>
+        /// <returns> A new <see cref="Models.QueryRewritesDebugInfo"/> instance for mocking. </returns>
+        public static QueryRewritesDebugInfo QueryRewritesDebugInfo(QueryRewritesValuesDebugInfo text = null, IEnumerable<QueryRewritesValuesDebugInfo> vectors = null)
+        {
+            vectors ??= new List<QueryRewritesValuesDebugInfo>();
+
+            return new QueryRewritesDebugInfo(text, vectors?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.QueryRewritesValuesDebugInfo"/>. </summary>
+        /// <param name="inputQuery"> The input text to the generative query rewriting model. There may be cases where the user query and the input to the generative model are not identical. </param>
+        /// <param name="rewrites"> List of query rewrites. </param>
+        /// <returns> A new <see cref="Models.QueryRewritesValuesDebugInfo"/> instance for mocking. </returns>
+        public static QueryRewritesValuesDebugInfo QueryRewritesValuesDebugInfo(string inputQuery = null, IEnumerable<string> rewrites = null)
+        {
+            rewrites ??= new List<string>();
+
+            return new QueryRewritesValuesDebugInfo(inputQuery, rewrites?.ToList());
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.QueryCaptionResult"/>. </summary>
         /// <param name="text"> A representative text passage extracted from the document most relevant to the search query. </param>
         /// <param name="highlights"> Same text passage as in the Text property with highlighted phrases most relevant to the query. </param>

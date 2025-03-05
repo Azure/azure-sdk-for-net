@@ -90,16 +90,6 @@ directive:
     $.additionalProperties = true;
 ```
 
-### Fix `SearchDocumentsResult["@search.debugInfo"]` -> `SearchDocumentsResult["@search.debug"]`
-``` yaml
-directive:
-  - from: searchindex.json
-    where: $.definitions.SearchDocumentsResult.properties
-    transform: >
-      $["@search.debug"] = $["@search.debugInfo"];
-      delete $["@search.debugInfo"];
-```
-
 ### Fix `SearchResult["@search.documentDebugInfo"]`
 ``` yaml
 directive:

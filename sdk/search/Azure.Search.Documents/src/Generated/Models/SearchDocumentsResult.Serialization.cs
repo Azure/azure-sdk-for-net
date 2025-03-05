@@ -22,6 +22,7 @@ namespace Azure.Search.Documents.Models
             double? searchCoverage = default;
             IReadOnlyDictionary<string, IList<FacetResult>> searchFacets = default;
             IReadOnlyList<QueryAnswerResult> searchAnswers = default;
+            DebugInfo searchDebug = default;
             SearchOptions searchNextPageParameters = default;
             IReadOnlyList<SearchResult> value = default;
             string odataNextLink = default;
@@ -89,6 +90,16 @@ namespace Azure.Search.Documents.Models
                     searchAnswers = array;
                     continue;
                 }
+                if (property.NameEquals("@search.debug"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        searchDebug = null;
+                        continue;
+                    }
+                    searchDebug = DebugInfo.DeserializeDebugInfo(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("@search.nextPageParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -146,6 +157,7 @@ namespace Azure.Search.Documents.Models
                 searchCoverage,
                 searchFacets ?? new ChangeTrackingDictionary<string, IList<FacetResult>>(),
                 searchAnswers ?? new ChangeTrackingList<QueryAnswerResult>(),
+                searchDebug,
                 searchNextPageParameters,
                 value,
                 odataNextLink,

@@ -3384,6 +3384,11 @@ namespace Azure.Search.Documents.Models
         public double? Coverage { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.AutocompleteItem> Results { get { throw null; } }
     }
+    public partial class DebugInfo
+    {
+        internal DebugInfo() { }
+        public Azure.Search.Documents.Models.QueryRewritesDebugInfo QueryRewrites { get { throw null; } }
+    }
     public partial class DocumentDebugInfo
     {
         internal DocumentDebugInfo() { }
@@ -3707,6 +3712,12 @@ namespace Azure.Search.Documents.Models
         public int? Count { get { throw null; } set { } }
         public Azure.Search.Documents.Models.QueryRewritesType RewritesType { get { throw null; } }
     }
+    public partial class QueryRewritesDebugInfo
+    {
+        internal QueryRewritesDebugInfo() { }
+        public Azure.Search.Documents.Models.QueryRewritesValuesDebugInfo Text { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.QueryRewritesValuesDebugInfo> Vectors { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct QueryRewritesType : System.IEquatable<Azure.Search.Documents.Models.QueryRewritesType>
     {
@@ -3724,6 +3735,12 @@ namespace Azure.Search.Documents.Models
         public static implicit operator Azure.Search.Documents.Models.QueryRewritesType (string value) { throw null; }
         public static bool operator !=(Azure.Search.Documents.Models.QueryRewritesType left, Azure.Search.Documents.Models.QueryRewritesType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class QueryRewritesValuesDebugInfo
+    {
+        internal QueryRewritesValuesDebugInfo() { }
+        public string InputQuery { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Rewrites { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct QuerySpellerType : System.IEquatable<Azure.Search.Documents.Models.QuerySpellerType>
@@ -3820,6 +3837,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.CognitiveServicesAccount CognitiveServicesAccount(string oDataType, string description) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.DataChangeDetectionPolicy DataChangeDetectionPolicy(string oDataType) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.DataDeletionDetectionPolicy DataDeletionDetectionPolicy(string oDataType) { throw null; }
+        public static Azure.Search.Documents.Models.DebugInfo DebugInfo(Azure.Search.Documents.Models.QueryRewritesDebugInfo queryRewrites = null) { throw null; }
         public static Azure.Search.Documents.Models.DocumentDebugInfo DocumentDebugInfo(Azure.Search.Documents.Models.SemanticDebugInfo semantic = null, Azure.Search.Documents.Models.VectorsDebugInfo vectors = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Models.FacetResult FacetResult(long? count = default(long?), System.Collections.Generic.IReadOnlyDictionary<string, object> additionalProperties = null) { throw null; }
@@ -3841,6 +3859,8 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.QueryResultDocumentRerankerInput QueryResultDocumentRerankerInput(string title = null, string content = null, string keywords = null) { throw null; }
         public static Azure.Search.Documents.Models.QueryResultDocumentSemanticField QueryResultDocumentSemanticField(string name = null, Azure.Search.Documents.Models.SemanticFieldState? state = default(Azure.Search.Documents.Models.SemanticFieldState?)) { throw null; }
         public static Azure.Search.Documents.Models.QueryResultDocumentSubscores QueryResultDocumentSubscores(Azure.Search.Documents.Models.TextResult text = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IDictionary<string, Azure.Search.Documents.Models.SingleVectorFieldResult>> vectors = null, double? documentBoost = default(double?)) { throw null; }
+        public static Azure.Search.Documents.Models.QueryRewritesDebugInfo QueryRewritesDebugInfo(Azure.Search.Documents.Models.QueryRewritesValuesDebugInfo text = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.QueryRewritesValuesDebugInfo> vectors = null) { throw null; }
+        public static Azure.Search.Documents.Models.QueryRewritesValuesDebugInfo QueryRewritesValuesDebugInfo(string inputQuery = null, System.Collections.Generic.IEnumerable<string> rewrites = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.ScoringFunction ScoringFunction(string type, string fieldName, double boost, Azure.Search.Documents.Indexes.Models.ScoringFunctionInterpolation? interpolation) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerError SearchIndexerError(string key, string errorMessage, int statusCode, string name, string details, string documentationLink) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerLimits SearchIndexerLimits(System.TimeSpan? maxRunTime, long? maxDocumentExtractionSize, long? maxDocumentContentCharactersToExtract) { throw null; }
@@ -3856,7 +3876,9 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.SearchResultsPage<T> SearchResultsPage<T>(Azure.Search.Documents.Models.SearchResults<T> results) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Models.SearchResults<T> SearchResults<T>(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.SearchResult<T>> values, long? totalCount, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.Search.Documents.Models.FacetResult>> facets, double? coverage, Azure.Response rawResponse) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Models.SearchResults<T> SearchResults<T>(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.SearchResult<T>> values, long? totalCount, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.Search.Documents.Models.FacetResult>> facets, double? coverage, Azure.Response rawResponse, Azure.Search.Documents.Models.SemanticSearchResults semanticSearch) { throw null; }
+        public static Azure.Search.Documents.Models.SearchResults<T> SearchResults<T>(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.SearchResult<T>> values, long? totalCount, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.Search.Documents.Models.FacetResult>> facets, double? coverage, Azure.Response rawResponse, Azure.Search.Documents.Models.SemanticSearchResults semanticSearch, Azure.Search.Documents.Models.DebugInfo debugInfo) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Models.SearchResult<T> SearchResult<T>(T document, double? score, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> highlights) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -3897,6 +3919,7 @@ namespace Azure.Search.Documents.Models
         internal SearchResultsPage() { }
         public override string ContinuationToken { get { throw null; } }
         public double? Coverage { get { throw null; } }
+        public Azure.Search.Documents.Models.DebugInfo DebugInfo { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.Search.Documents.Models.FacetResult>> Facets { get { throw null; } }
         public Azure.Search.Documents.Models.SemanticSearchResults SemanticSearch { get { throw null; } }
         public long? TotalCount { get { throw null; } }
@@ -3907,6 +3930,7 @@ namespace Azure.Search.Documents.Models
     {
         internal SearchResults() { }
         public double? Coverage { get { throw null; } }
+        public Azure.Search.Documents.Models.DebugInfo DebugInfo { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.Search.Documents.Models.FacetResult>> Facets { get { throw null; } }
         public Azure.Search.Documents.Models.SemanticSearchResults SemanticSearch { get { throw null; } }
         public long? TotalCount { get { throw null; } }
