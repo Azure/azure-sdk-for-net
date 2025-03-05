@@ -50,7 +50,7 @@ steps:
     - task: DownloadPipelineArtifact@2
       inputs:
         artifact: BuildPackagesArtifact
-        path: $(Build.SourcesDirectory)/PackageInfo
+        path: $(Build.ArtifactStagingDirectory)/PackageInfo
   - ${{ else }}:
     - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
       parameters:
