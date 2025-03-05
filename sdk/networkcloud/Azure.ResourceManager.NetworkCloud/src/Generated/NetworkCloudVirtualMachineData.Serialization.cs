@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
+            if (Optional.IsDefined(ConsoleExtendedLocation))
+            {
+                writer.WritePropertyName("consoleExtendedLocation"u8);
+                writer.WriteObjectValue(ConsoleExtendedLocation, options);
+            }
             writer.WritePropertyName("cpuCores"u8);
             writer.WriteNumberValue(CpuCores);
             if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
@@ -204,6 +209,7 @@ namespace Azure.ResourceManager.NetworkCloud
             VirtualMachineBootMethod? bootMethod = default;
             NetworkAttachment cloudServicesNetworkAttachment = default;
             ResourceIdentifier clusterId = default;
+            ExtendedLocation consoleExtendedLocation = default;
             long cpuCores = default;
             VirtualMachineDetailedStatus? detailedStatus = default;
             string detailedStatusMessage = default;
@@ -323,6 +329,15 @@ namespace Azure.ResourceManager.NetworkCloud
                                 continue;
                             }
                             clusterId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("consoleExtendedLocation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            consoleExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cpuCores"u8))
@@ -509,6 +524,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 bootMethod,
                 cloudServicesNetworkAttachment,
                 clusterId,
+                consoleExtendedLocation,
                 cpuCores,
                 detailedStatus,
                 detailedStatusMessage,
