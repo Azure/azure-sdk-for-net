@@ -6,15 +6,10 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.4.0</ApiCompatVersion>
     <PackageTags>Azure, WebPubSub</PackageTags>
-    <RequiredTargetFrameworks>netcoreapp3.1</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);419</NoWarn>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <!-- This package only targets netcoreapp3.1 which has been out of support since Dec 2022. 
-         BCL packages with 8.x versions have not been tested with netcoreapp3.1 and may not be fully
-         compatible. These warnings must be suppressed because this package depends on
-         Azure.Messaging.WebPubSub, which will need to be upgraded to 8.x versions. -->
-    <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
   </PropertyGroup>
 
   <ItemGroup>
