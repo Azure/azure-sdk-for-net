@@ -21,3 +21,4 @@ jobs:
         run: |
           Write-Host "Event payload:"
           Write-Host "${{ github.event }}" | ConvertTo-Json -Depth 10
+        shell: pwsh
