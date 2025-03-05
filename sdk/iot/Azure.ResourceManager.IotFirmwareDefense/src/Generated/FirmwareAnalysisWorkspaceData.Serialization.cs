@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFirmwareAnalysisWorkspaceData(document.RootElement, options);
                     }
                 default:

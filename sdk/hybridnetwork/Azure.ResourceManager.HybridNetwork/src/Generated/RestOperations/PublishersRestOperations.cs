@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         PublisherListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PublisherListResult.DeserializePublisherListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         PublisherListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PublisherListResult.DeserializePublisherListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         PublisherListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PublisherListResult.DeserializePublisherListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         PublisherListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PublisherListResult.DeserializePublisherListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         PublisherData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PublisherData.DeserializePublisherData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         PublisherData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PublisherData.DeserializePublisherData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         PublisherData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PublisherData.DeserializePublisherData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         PublisherData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PublisherData.DeserializePublisherData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         PublisherListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PublisherListResult.DeserializePublisherListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         PublisherListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PublisherListResult.DeserializePublisherListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         PublisherListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PublisherListResult.DeserializePublisherListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case 200:
                     {
                         PublisherListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PublisherListResult.DeserializePublisherListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
