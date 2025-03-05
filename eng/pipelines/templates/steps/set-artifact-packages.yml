@@ -45,7 +45,7 @@ steps:
       Write-Host "We see the following package properties"
 
       Get-ChildItem -Recurse "${{ parameters.PackageInfo }}" *.json `
-        | ForEach-Object { Write-Host $_.FullName; Get-Content -Raw $_.FullName } `
+        | ForEach-Object { Write-Host $_.FullName; Get-Content -Raw $_.FullName }
     displayName: Output Visible Variables
     condition: ne(variables['ProjectNames'], '')
 
