@@ -10,6 +10,7 @@ using Azure.Projects.AppConfiguration;
 using Azure.Projects.AppService;
 using Azure.Projects.KeyVault;
 using Azure.Projects.OpenAI;
+using Azure.Projects.Storage;
 using NUnit.Framework;
 
 [assembly: NonParallelizable]
@@ -21,16 +22,30 @@ public class BicepGenerationTests
     [Test]
     public void MinimalProject()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd", useAppConfig: false);
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        File.WriteAllText("d:\\minimal.bicep", actualBicep);
+
         string expectedBicep = LoadTestFile("minimal.bicep");
+        Assert.AreEqual(expectedBicep, actualBicep);
+    }
+
+    [Test]
+    public void Blobs()
+    {
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
+        infra.AddFeature(new BlobContainerFeature("testcontainer"));
+
+        string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        File.WriteAllText("d:\\blobs.bicep", actualBicep);
+        string expectedBicep = LoadTestFile("blobs.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 
     [Test]
     public void AppConfiguration()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd", useAppConfig: false);
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
         infra.AddFeature(new AppConfigurationFeature());
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
         string expectedBicep = LoadTestFile("appConfig.bicep");
@@ -51,9 +66,10 @@ public class BicepGenerationTests
     [Test]
     public void OfxProject()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd", useAppConfig: false);
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
         infra.AddOfx();
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        File.WriteAllText("d:\\ofx.bicep", actualBicep);
         string expectedBicep = LoadTestFile("ofx.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
@@ -61,9 +77,11 @@ public class BicepGenerationTests
     [Test]
     public void AIFoundry()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd", useAppConfig: false);
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
         infra.AddFeature(new AIFoundry.AIProjectFeature());
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        File.WriteAllText("d:\\Foundry.bicep", actualBicep);
+
         string expectedBicep = LoadTestFile("Foundry.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
@@ -71,11 +89,13 @@ public class BicepGenerationTests
     [Test]
     public void OpenAI()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd", useAppConfig: false);
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
         infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
         infra.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
 
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        File.WriteAllText("d:\\OpenAI.bicep", actualBicep);
+
         string expectedBicep = LoadTestFile("OpenAI.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
@@ -83,13 +103,14 @@ public class BicepGenerationTests
     [Test]
     public void AppService()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd", useAppConfig: false);
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
         infra.AddFeature(new KeyVaultFeature());
         infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
         infra.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
         infra.AddFeature(new AppServiceFeature());
 
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        File.WriteAllText("d:\\app.bicep", actualBicep);
         string expectedBicep = LoadTestFile("app.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }

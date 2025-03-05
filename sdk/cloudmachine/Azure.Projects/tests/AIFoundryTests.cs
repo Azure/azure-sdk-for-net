@@ -37,7 +37,7 @@ public partial class AIFoundryTests : SamplesBase<AzureProjectsTestEnvironment>
 
         // Azure OpenAI Clients using connections API
         ChatClient openAIChatClient = client.GetOpenAIChatClient("gpt-4o-mini");
-        EmbeddingClient openAIEmbeddingsClient = client.GetOpenAIEmbeddingsClient("text-embedding-ada-002");
+        EmbeddingClient openAIEmbeddingsClient = client.GetOpenAIEmbeddingClient("text-embedding-ada-002");
 
         // Azure AI Search Clients using connections API
         SearchClient searchClient = client.GetSearchClient("index");
@@ -159,7 +159,7 @@ public partial class AIFoundryTests : SamplesBase<AzureProjectsTestEnvironment>
 
         // Azure OpenAI Clients using connections API
         ChatClient openAIChatClient = client.GetOpenAIChatClient("gpt-4o-mini");
-        EmbeddingClient openAIEmbeddingsClient = client.GetOpenAIEmbeddingsClient("text-embedding-ada-002");
+        EmbeddingClient openAIEmbeddingsClient = client.GetOpenAIEmbeddingClient("text-embedding-ada-002");
 
         // Azure AI Search Clients using connections API
         SearchClient searchClient = client.GetSearchClient("index");

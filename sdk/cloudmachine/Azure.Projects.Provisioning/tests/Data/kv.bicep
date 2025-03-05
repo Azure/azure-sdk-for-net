@@ -82,7 +82,7 @@ resource cm_kv_project_identity_KeyVaultAdministrator 'Microsoft.Authorization/r
   scope: cm_kv
 }
 
-resource cm_config_kv1 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource cm_connection_1 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Security.KeyVault.Secrets.SecretClient'
   properties: {
     value: 'https://cm0c420d2f21084cd.vault.azure.net/'

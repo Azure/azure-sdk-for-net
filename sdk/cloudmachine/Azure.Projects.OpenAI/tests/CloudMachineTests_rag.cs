@@ -31,7 +31,7 @@ public partial class AzureProjectsTests
 
         ProjectClient cm = new(new MockConfiguration("cmec4615e3fdfa44e"), default);
         var chat = cm.GetOpenAIChatClient();
-        var embeddings = cm.GetOpenAIEmbeddingsClient();
+        var embeddings = cm.GetOpenAIEmbeddingClient();
 
         // helpers
         ChatTools tools = new(typeof(MyFunctions));

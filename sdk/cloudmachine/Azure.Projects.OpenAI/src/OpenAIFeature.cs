@@ -6,8 +6,6 @@ using Azure.Projects.Core;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.Primitives;
 using System.ClientModel.Primitives;
-using System.Linq;
-using Azure.Projects.AppConfiguration;
 
 namespace Azure.Projects.OpenAI;
 
@@ -27,13 +25,7 @@ internal class OpenAIFeature : AzureProjectFeature
         );
         RequiredSystemRoles.Add(cognitiveServices, [openAIContributor]);
 
-        AppConfigurationFeature appConfig = infrastructure.Features.FindAll<AppConfigurationFeature>().First();
-        AppConfigurationSettingFeature connection = new(
-            appConfig,
-            "Azure.AI.OpenAI.AzureOpenAIClient",
-            $"https://{infrastructure.ProjectId}.openai.azure.com"
-        );
-        infrastructure.AddFeature(connection);
+        AddConnectionToAppConfig(infrastructure, "Azure.AI.OpenAI.AzureOpenAIClient", $"https://{infrastructure.ProjectId}.openai.azure.com");
 
         return cognitiveServices;
     }

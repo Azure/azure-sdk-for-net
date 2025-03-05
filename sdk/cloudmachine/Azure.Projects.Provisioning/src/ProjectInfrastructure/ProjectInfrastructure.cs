@@ -1,14 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using Azure.Projects.AppConfiguration;
 using Azure.Projects.Core;
-using Azure.Projects.EventGrid;
-using Azure.Projects.ServiceBus;
-using Azure.Projects.Storage;
 using Azure.Provisioning;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
@@ -46,7 +45,7 @@ public partial class ProjectInfrastructure
         return client;
     }
 
-    public ProjectInfrastructure(string? projectId = default, bool? useAppConfig = true)
+    public ProjectInfrastructure(string? projectId = default)
     {
         ProjectId = projectId ?? ProjectClient.ReadOrCreateProjectId();
 
@@ -72,16 +71,13 @@ public partial class ProjectInfrastructure
         _infrastructure.Add(Identity);
         _infrastructure.Add(new ProvisioningOutput("project_identity_id", typeof(string)) { Value = Identity.Id });
 
-        if (useAppConfig == true)
-        {
-            AppConfigurationFeature appConfig = new();
-            this.AddFeature(appConfig);
-        }
+        AppConfigurationFeature appConfig = new();
+        this.AddFeature(appConfig);
     }
 
     public T AddFeature<T>(T feature) where T: AzureProjectFeature
     {
-        feature.EmitFeatures(Features, ProjectId);
+        feature.EmitImplicitFeatures(Features, ProjectId);
         feature.EmitConnections(Connections, ProjectId);
         return feature;
     }
@@ -110,55 +106,11 @@ public partial class ProjectInfrastructure
 
         return _infrastructure.Build(context);
     }
-}
 
-public static class OfxExtensions
-{
-    public static void AddOfx(this ProjectInfrastructure infra)
+    private int _index = 0;
+    internal string CreateUniqueBicepIdentifier(string baseIdentifier)
     {
-        infra.AddBlobsContainer();
-        infra.AddServiceBus();
-    }
-
-    public static void AddBlobsContainer(this ProjectInfrastructure infra, string? containerName = default, bool enableEvents = true)
-    {
-        var storage = infra.AddStorageAccount();
-        var blobs = infra.AddFeature(new BlobServiceFeature(storage));
-        var defaultContainer = infra.AddFeature(new BlobContainerFeature(blobs));
-
-        if (enableEvents)
-        {
-            var sb = infra.AddServiceBusNamespace();
-            var sbTopicPrivate = infra.AddFeature(new ServiceBusTopicFeature("cm_servicebus_topic_private", sb));
-            var systemTopic = infra.AddFeature(new EventGridSystemTopicFeature(infra.ProjectId, storage, "Microsoft.Storage.StorageAccounts"));
-            infra.AddFeature(new SystemTopicEventSubscriptionFeature("cm-eventgrid-subscription-blob", systemTopic, sbTopicPrivate, sb));
-            infra.AddFeature(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_private", sbTopicPrivate)); // TODO: should private connections not be in the Connections collection?
-        }
-    }
-
-    private static ServiceBusNamespaceFeature AddServiceBusNamespace(this ProjectInfrastructure infra)
-    {
-        if (!infra.Features.TryGet(out ServiceBusNamespaceFeature? serviceBusNamespace))
-        {
-            serviceBusNamespace = infra.AddFeature(new ServiceBusNamespaceFeature(infra.ProjectId));
-        }
-        return serviceBusNamespace!;
-    }
-
-    private static StorageAccountFeature AddStorageAccount(this ProjectInfrastructure infra)
-    {
-        if (!infra.Features.TryGet(out StorageAccountFeature? storageAccount))
-        {
-            storageAccount = infra.AddFeature(new StorageAccountFeature(infra.ProjectId));
-        }
-        return storageAccount!;
-    }
-
-    private static void AddServiceBus(this ProjectInfrastructure infra)
-    {
-        var sb = infra.AddServiceBusNamespace();
-        // Add core features
-        var sbTopicDefault = infra.AddFeature(new ServiceBusTopicFeature("cm_servicebus_default_topic", sb));
-        infra.AddFeature(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_default", sbTopicDefault));
+        int index = Interlocked.Increment(ref _index);
+        return baseIdentifier + "_" + index;
     }
 }

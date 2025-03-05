@@ -5,6 +5,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using Azure.Projects.AppConfiguration;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Projects.Core;
@@ -13,16 +15,24 @@ public abstract class AzureProjectFeature
 {
     private ProvisionableResource? _resource;
 
-    protected abstract ProvisionableResource EmitResources(ProjectInfrastructure cm);
-    protected internal virtual void EmitConnections(ICollection<ClientConnection> connections, string cmId) { }
-    protected internal virtual void EmitFeatures(FeatureCollection features, string cmId)
+    protected abstract ProvisionableResource EmitResources(ProjectInfrastructure infrastructure);
+    protected internal virtual void EmitConnections(ICollection<ClientConnection> connections, string projectId) { }
+    protected internal virtual void EmitImplicitFeatures(FeatureCollection features, string projectId)
         => features.Add(this);
 
-    internal ProvisionableResource Emit(ProjectInfrastructure cm)
+    protected void AddConnectionToAppConfig(ProjectInfrastructure infrastructure, string connectionId, string endpoint)
+    {
+        AppConfigurationFeature appConfig = infrastructure.Features.FindAll<AppConfigurationFeature>().First();
+        AppConfigurationSettingFeature connection = new(appConfig, connectionId, endpoint);
+        connection.BicepIdentifier = "cm_connection";
+        infrastructure.AddFeature(connection);
+    }
+
+    internal ProvisionableResource Emit(ProjectInfrastructure infrastructure)
     {
         if (_resource == null)
         {
-            ProvisionableResource namedResource = EmitResources(cm);
+            ProvisionableResource namedResource = EmitResources(infrastructure);
             _resource = namedResource;
         }
         return Resource;

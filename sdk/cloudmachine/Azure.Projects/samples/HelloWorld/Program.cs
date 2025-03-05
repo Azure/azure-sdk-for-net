@@ -6,10 +6,13 @@ using Azure.Projects.OpenAI;
 using OpenAI.Chat;
 
 ProjectInfrastructure infrastructure = new();
-infrastructure.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
+infrastructure.AddFeature(new OpenAIChatFeature("gpt-35-turbo", "0125"));
 
-// the app can be called with -bicep or -init switch to generate bicep and prepare for azd deployment.
-if (infrastructure.TryExecuteCommand(args)) return;
+if (args.Length > 0 && args[0] == "-bicep")
+{
+    Azd.Init(infrastructure);
+    return;
+}
 
 ProjectClient project = new();
 ChatClient chat = project.GetOpenAIChatClient();

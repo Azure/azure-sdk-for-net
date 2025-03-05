@@ -2,15 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Projects.Core;
-using Azure.Core;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.Primitives;
-using System.ClientModel.Primitives;
-using Azure.Provisioning;
-using Azure.Projects.AppConfiguration;
 
 namespace Azure.Projects.OpenAI;
 
@@ -60,7 +57,7 @@ public class OpenAIModelFeature : AzureProjectFeature
     /// </summary>
     /// <param name="features"></param>
     /// <param name="cmId"></param>
-    protected override void EmitFeatures(FeatureCollection features, string cmId)
+    protected override void EmitImplicitFeatures(FeatureCollection features, string cmId)
     {
         // TODO: is it OK that we return the first one?
         OpenAIFeature? openAI = features.FindAll<OpenAIFeature>().FirstOrDefault();
@@ -149,15 +146,9 @@ public class OpenAIModelFeature : AzureProjectFeature
 
         cm.AddResource(deployment);
 
-        AppConfigurationFeature appConfig = cm.Features.FindAll<AppConfigurationFeature>().First();
-        string key = Kind == AIModelKind.Chat ? "OpenAI.Chat.ChatClient" : "Azure.AI.OpenAI.AzureOpenAIClient";
+        string key = Kind == AIModelKind.Chat ? "OpenAI.Chat.ChatClient" : "OpenAI.Embeddings.EmbeddingClient";
         string locator = Kind == AIModelKind.Chat ? $"{cm.ProjectId}_chat" : $"{cm.ProjectId}_embedding";
-        AppConfigurationSettingFeature connection = new(
-            appConfig,
-            key,
-            locator
-        );
-        cm.AddFeature(connection);
+        AddConnectionToAppConfig(cm, key, locator);
 
         return deployment;
 
@@ -189,4 +180,36 @@ public enum AIModelKind
     /// Embedding model.
     /// </summary>
     Embedding,
+}
+
+/// <summary>
+/// OpenAI feature for Azure OpenAI.
+/// </summary>
+public class OpenAIChatFeature : OpenAIModelFeature
+{
+    /// <summary>
+    /// Create a new OpenAI chat model deployment.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="modelVersion"></param>
+    public OpenAIChatFeature(string model, string modelVersion)
+        : base(model, modelVersion)
+    {
+    }
+}
+
+/// <summary>
+/// OpenAI feature for Azure OpenAI.
+/// </summary>
+public class OpenAIEmbeddingFeature : OpenAIModelFeature
+{
+    /// <summary>
+    /// Create a new OpenAI embedding model deployment.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="modelVersion"></param>
+    public OpenAIEmbeddingFeature(string model, string modelVersion)
+        : base(model, modelVersion, AIModelKind.Embedding)
+    {
+    }
 }

@@ -45,27 +45,28 @@ public class AppConfigurationFeature : AzureProjectFeature
 
 public class AppConfigurationSettingFeature : AzureProjectFeature
 {
-    private static int _index = 0;
-
     public AppConfigurationSettingFeature(AppConfigurationFeature parent, string key, string value)
     {
         Key = key;
         Value = value;
         Parent = parent;
+        BicepIdentifier = "cm_config_setting";
     }
     public string Key { get; }
     public string Value { get; }
+
+    internal string BicepIdentifier { get; set; }
     public AppConfigurationFeature Parent { get; }
-    protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
-        int index = Interlocked.Increment(ref _index);
-        AppConfigurationKeyValue kvp = new($"cm_config_kv{index}")
+        string bicepIdentifier = infrastructure.CreateUniqueBicepIdentifier(BicepIdentifier);
+        AppConfigurationKeyValue kvp = new(bicepIdentifier)
         {
             Name = this.Key,
             Value = this.Value,
             Parent = (AppConfigurationStore)this.Parent.Resource
         };
-        cm.AddResource(kvp);
+        infrastructure.AddResource(kvp);
         return kvp;
     }
 }

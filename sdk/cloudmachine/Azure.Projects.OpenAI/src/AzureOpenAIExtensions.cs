@@ -45,7 +45,7 @@ public static class AzureOpenAIExtensions
     /// <param name="workspace"></param>
     /// <param name="deploymentName"></param>
     /// <returns></returns>
-    public static EmbeddingClient GetOpenAIEmbeddingsClient(this ConnectionProvider workspace, string? deploymentName = null)
+    public static EmbeddingClient GetOpenAIEmbeddingClient(this ConnectionProvider workspace, string? deploymentName = null)
     {
         string name = deploymentName ?? "default";
 

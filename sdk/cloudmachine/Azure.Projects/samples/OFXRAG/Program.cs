@@ -20,7 +20,7 @@ List<ChatMessage> conversation = [];
 
 ChatProcessor processor = new(
     project.GetOpenAIChatClient(),
-    project.GetOpenAIEmbeddingsClient(),
+    project.GetOpenAIEmbeddingClient(),
     tools
 );
 

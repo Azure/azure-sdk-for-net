@@ -7,15 +7,15 @@ using OpenAI.Chat;
 using OpenAI.Embeddings;
 
 ProjectInfrastructure infrastructure = new();
-infrastructure.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
-infrastructure.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
+infrastructure.AddFeature(new OpenAIChatFeature("gpt-35-turbo", "0125"));
+infrastructure.AddFeature(new OpenAIEmbeddingFeature("text-embedding-ada-002", "2"));
 
 // the app can be called with -init switch to generate bicep and prepare for azd deployment.
 if (infrastructure.TryExecuteCommand(args)) return;
 
 ProjectClient project = infrastructure.GetClient();
 ChatClient chat = project.GetOpenAIChatClient();
-EmbeddingClient embeddings = project.GetOpenAIEmbeddingsClient();
+EmbeddingClient embeddings = project.GetOpenAIEmbeddingClient();
 EmbeddingsVectorbase vectorDb = new(embeddings);
 List<ChatMessage> conversation = [];
 ChatTools tools = new ChatTools(typeof(Tools));

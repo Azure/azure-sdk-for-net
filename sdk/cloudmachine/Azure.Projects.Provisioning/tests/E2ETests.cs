@@ -20,7 +20,7 @@ public class E2ETests
     [TestCase("")]
     public void OpenAI(string arg)
     {
-        ProjectInfrastructure infra = new("cm0a110d2f21084bb", useAppConfig: false);
+        ProjectInfrastructure infra = new("cm0a110d2f21084bb");
         infra.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
         if (infra.TryExecuteCommand([arg])) return;
 
@@ -34,7 +34,7 @@ public class E2ETests
     [TestCase("")]
     public void AppConfiguration(string arg)
     {
-        ProjectInfrastructure infra = new("cm0a110d2f21084bb", useAppConfig: false);
+        ProjectInfrastructure infra = new("cm0a110d2f21084bb");
         infra.AddFeature(new AppConfigurationFeature());
         if (infra.TryExecuteCommand([arg]))
             return;
@@ -61,7 +61,7 @@ public class E2ETests
     [TestCase("")]
     public void FoundryWithOpenAI(string arg)
     {
-        ProjectInfrastructure infra = new("cm0a110d2f21084bb", useAppConfig: false);
+        ProjectInfrastructure infra = new("cm0a110d2f21084bb");
         var openAI = infra.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
         var foundry = infra.AddFeature(new AIProjectFeature()
         {
