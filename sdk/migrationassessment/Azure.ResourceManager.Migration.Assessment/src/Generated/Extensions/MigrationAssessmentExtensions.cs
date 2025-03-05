@@ -33,60 +33,60 @@ namespace Azure.ResourceManager.Migration.Assessment
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentAssessmentProjectResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentAssessmentProjectResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentAssessmentProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationAssessmentProjectResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAssessmentProjectResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessmentAssessmentProjectResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessmentProjectResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MigrationAssessmentAssessmentProjectResource"/> object. </returns>
-        public static MigrationAssessmentAssessmentProjectResource GetMigrationAssessmentAssessmentProjectResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAssessmentProjectResource"/> object. </returns>
+        public static MigrationAssessmentProjectResource GetMigrationAssessmentProjectResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessmentAssessmentProjectResource(id);
+            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessmentProjectResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentAssessmentOptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentAssessmentOptionResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentAssessmentOptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationAssessmentOptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAssessmentOptionResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentOptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessmentAssessmentOptionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessmentOptionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MigrationAssessmentAssessmentOptionResource"/> object. </returns>
-        public static MigrationAssessmentAssessmentOptionResource GetMigrationAssessmentAssessmentOptionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAssessmentOptionResource"/> object. </returns>
+        public static MigrationAssessmentOptionResource GetMigrationAssessmentOptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessmentAssessmentOptionResource(id);
+            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessmentOptionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentAvsAssessmentOptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentAvsAssessmentOptionResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentAvsAssessmentOptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationAvsAssessmentOptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAvsAssessmentOptionResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAvsAssessmentOptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessmentAvsAssessmentOptionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAvsAssessmentOptionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MigrationAssessmentAvsAssessmentOptionResource"/> object. </returns>
-        public static MigrationAssessmentAvsAssessmentOptionResource GetMigrationAssessmentAvsAssessmentOptionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAvsAssessmentOptionResource"/> object. </returns>
+        public static MigrationAvsAssessmentOptionResource GetMigrationAvsAssessmentOptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessmentAvsAssessmentOptionResource(id);
+            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAvsAssessmentOptionResource(id);
         }
 
         /// <summary>
@@ -109,193 +109,193 @@ namespace Azure.ResourceManager.Migration.Assessment
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessmentAssessmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MigrationAssessmentAssessmentResource"/> object. </returns>
-        public static MigrationAssessmentAssessmentResource GetMigrationAssessmentAssessmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAssessmentResource"/> object. </returns>
+        public static MigrationAssessmentResource GetMigrationAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessmentAssessmentResource(id);
+            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessmentResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AssessedMachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssessedMachineResource.CreateResourceIdentifier" /> to create an <see cref="AssessedMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationAssessedMachineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAssessedMachineResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessedMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetAssessedMachineResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessedMachineResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AssessedMachineResource"/> object. </returns>
-        public static AssessedMachineResource GetAssessedMachineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAssessedMachineResource"/> object. </returns>
+        public static MigrationAssessedMachineResource GetMigrationAssessedMachineResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationAssessmentArmClient(client).GetAssessedMachineResource(id);
+            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessedMachineResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentAvsAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentAvsAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentAvsAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationAvsAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAvsAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAvsAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessmentAvsAssessmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAvsAssessmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MigrationAssessmentAvsAssessmentResource"/> object. </returns>
-        public static MigrationAssessmentAvsAssessmentResource GetMigrationAssessmentAvsAssessmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAvsAssessmentResource"/> object. </returns>
+        public static MigrationAvsAssessmentResource GetMigrationAvsAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessmentAvsAssessmentResource(id);
+            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAvsAssessmentResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentAvsAssessedMachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentAvsAssessedMachineResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentAvsAssessedMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationAvsAssessedMachineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAvsAssessedMachineResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAvsAssessedMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessmentAvsAssessedMachineResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAvsAssessedMachineResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MigrationAssessmentAvsAssessedMachineResource"/> object. </returns>
-        public static MigrationAssessmentAvsAssessedMachineResource GetMigrationAssessmentAvsAssessedMachineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAvsAssessedMachineResource"/> object. </returns>
+        public static MigrationAvsAssessedMachineResource GetMigrationAvsAssessedMachineResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessmentAvsAssessedMachineResource(id);
+            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAvsAssessedMachineResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentSqlAssessmentV2Resource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentSqlAssessmentV2Resource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentSqlAssessmentV2Resource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationSqlAssessmentV2Resource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationSqlAssessmentV2Resource.CreateResourceIdentifier" /> to create a <see cref="MigrationSqlAssessmentV2Resource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessmentSqlAssessmentV2Resource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationSqlAssessmentV2Resource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MigrationAssessmentSqlAssessmentV2Resource"/> object. </returns>
-        public static MigrationAssessmentSqlAssessmentV2Resource GetMigrationAssessmentSqlAssessmentV2Resource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationSqlAssessmentV2Resource"/> object. </returns>
+        public static MigrationSqlAssessmentV2Resource GetMigrationSqlAssessmentV2Resource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessmentSqlAssessmentV2Resource(id);
+            return GetMockableMigrationAssessmentArmClient(client).GetMigrationSqlAssessmentV2Resource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AssessedSqlDatabaseV2Resource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssessedSqlDatabaseV2Resource.CreateResourceIdentifier" /> to create an <see cref="AssessedSqlDatabaseV2Resource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationAssessedSqlDatabaseV2Resource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAssessedSqlDatabaseV2Resource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessedSqlDatabaseV2Resource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetAssessedSqlDatabaseV2Resource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessedSqlDatabaseV2Resource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AssessedSqlDatabaseV2Resource"/> object. </returns>
-        public static AssessedSqlDatabaseV2Resource GetAssessedSqlDatabaseV2Resource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAssessedSqlDatabaseV2Resource"/> object. </returns>
+        public static MigrationAssessedSqlDatabaseV2Resource GetMigrationAssessedSqlDatabaseV2Resource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationAssessmentArmClient(client).GetAssessedSqlDatabaseV2Resource(id);
+            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessedSqlDatabaseV2Resource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AssessedSqlInstanceV2Resource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssessedSqlInstanceV2Resource.CreateResourceIdentifier" /> to create an <see cref="AssessedSqlInstanceV2Resource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationAssessedSqlInstanceV2Resource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAssessedSqlInstanceV2Resource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessedSqlInstanceV2Resource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetAssessedSqlInstanceV2Resource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessedSqlInstanceV2Resource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AssessedSqlInstanceV2Resource"/> object. </returns>
-        public static AssessedSqlInstanceV2Resource GetAssessedSqlInstanceV2Resource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAssessedSqlInstanceV2Resource"/> object. </returns>
+        public static MigrationAssessedSqlInstanceV2Resource GetMigrationAssessedSqlInstanceV2Resource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationAssessmentArmClient(client).GetAssessedSqlInstanceV2Resource(id);
+            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessedSqlInstanceV2Resource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AssessedSqlMachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssessedSqlMachineResource.CreateResourceIdentifier" /> to create an <see cref="AssessedSqlMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationAssessedSqlMachineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAssessedSqlMachineResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessedSqlMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetAssessedSqlMachineResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessedSqlMachineResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AssessedSqlMachineResource"/> object. </returns>
-        public static AssessedSqlMachineResource GetAssessedSqlMachineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAssessedSqlMachineResource"/> object. </returns>
+        public static MigrationAssessedSqlMachineResource GetMigrationAssessedSqlMachineResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationAssessmentArmClient(client).GetAssessedSqlMachineResource(id);
+            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessedSqlMachineResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AssessedSqlRecommendedEntityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssessedSqlRecommendedEntityResource.CreateResourceIdentifier" /> to create an <see cref="AssessedSqlRecommendedEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationAssessedSqlRecommendedEntityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAssessedSqlRecommendedEntityResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessedSqlRecommendedEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetAssessedSqlRecommendedEntityResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessedSqlRecommendedEntityResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AssessedSqlRecommendedEntityResource"/> object. </returns>
-        public static AssessedSqlRecommendedEntityResource GetAssessedSqlRecommendedEntityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAssessedSqlRecommendedEntityResource"/> object. </returns>
+        public static MigrationAssessedSqlRecommendedEntityResource GetMigrationAssessedSqlRecommendedEntityResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationAssessmentArmClient(client).GetAssessedSqlRecommendedEntityResource(id);
+            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessedSqlRecommendedEntityResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentSqlAssessmentV2SummaryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentSqlAssessmentV2SummaryResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentSqlAssessmentV2SummaryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationSqlAssessmentV2SummaryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationSqlAssessmentV2SummaryResource.CreateResourceIdentifier" /> to create a <see cref="MigrationSqlAssessmentV2SummaryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessmentSqlAssessmentV2SummaryResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationSqlAssessmentV2SummaryResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MigrationAssessmentSqlAssessmentV2SummaryResource"/> object. </returns>
-        public static MigrationAssessmentSqlAssessmentV2SummaryResource GetMigrationAssessmentSqlAssessmentV2SummaryResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationSqlAssessmentV2SummaryResource"/> object. </returns>
+        public static MigrationSqlAssessmentV2SummaryResource GetMigrationSqlAssessmentV2SummaryResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessmentSqlAssessmentV2SummaryResource(id);
+            return GetMockableMigrationAssessmentArmClient(client).GetMigrationSqlAssessmentV2SummaryResource(id);
         }
 
         /// <summary>
@@ -394,22 +394,22 @@ namespace Azure.ResourceManager.Migration.Assessment
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentAssessmentProjectSummaryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentAssessmentProjectSummaryResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentAssessmentProjectSummaryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationAssessmentProjectSummaryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAssessmentProjectSummaryResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentProjectSummaryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessmentAssessmentProjectSummaryResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessmentProjectSummaryResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MigrationAssessmentAssessmentProjectSummaryResource"/> object. </returns>
-        public static MigrationAssessmentAssessmentProjectSummaryResource GetMigrationAssessmentAssessmentProjectSummaryResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAssessmentProjectSummaryResource"/> object. </returns>
+        public static MigrationAssessmentProjectSummaryResource GetMigrationAssessmentProjectSummaryResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessmentAssessmentProjectSummaryResource(id);
+            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessmentProjectSummaryResource(id);
         }
 
         /// <summary>
@@ -432,22 +432,22 @@ namespace Azure.ResourceManager.Migration.Assessment
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentSqlAssessmentOptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentSqlAssessmentOptionResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentSqlAssessmentOptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationSqlAssessmentOptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationSqlAssessmentOptionResource.CreateResourceIdentifier" /> to create a <see cref="MigrationSqlAssessmentOptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationAssessmentSqlAssessmentOptionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentArmClient.GetMigrationSqlAssessmentOptionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MigrationAssessmentSqlAssessmentOptionResource"/> object. </returns>
-        public static MigrationAssessmentSqlAssessmentOptionResource GetMigrationAssessmentSqlAssessmentOptionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationSqlAssessmentOptionResource"/> object. </returns>
+        public static MigrationSqlAssessmentOptionResource GetMigrationSqlAssessmentOptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationAssessmentArmClient(client).GetMigrationAssessmentSqlAssessmentOptionResource(id);
+            return GetMockableMigrationAssessmentArmClient(client).GetMigrationSqlAssessmentOptionResource(id);
         }
 
         /// <summary>
@@ -489,20 +489,20 @@ namespace Azure.ResourceManager.Migration.Assessment
         }
 
         /// <summary>
-        /// Gets a collection of MigrationAssessmentAssessmentProjectResources in the ResourceGroupResource.
+        /// Gets a collection of MigrationAssessmentProjectResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentResourceGroupResource.GetMigrationAssessmentAssessmentProjects()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentResourceGroupResource.GetMigrationAssessmentProjects()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of MigrationAssessmentAssessmentProjectResources and their operations over a MigrationAssessmentAssessmentProjectResource. </returns>
-        public static MigrationAssessmentAssessmentProjectCollection GetMigrationAssessmentAssessmentProjects(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of MigrationAssessmentProjectResources and their operations over a MigrationAssessmentProjectResource. </returns>
+        public static MigrationAssessmentProjectCollection GetMigrationAssessmentProjects(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMigrationAssessmentResourceGroupResource(resourceGroupResource).GetMigrationAssessmentAssessmentProjects();
+            return GetMockableMigrationAssessmentResourceGroupResource(resourceGroupResource).GetMigrationAssessmentProjects();
         }
 
         /// <summary>
@@ -522,12 +522,12 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationAssessmentAssessmentProjectResource"/></description>
+        /// <description><see cref="MigrationAssessmentProjectResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentResourceGroupResource.GetMigrationAssessmentAssessmentProjectAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentResourceGroupResource.GetMigrationAssessmentProjectAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -536,11 +536,11 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<MigrationAssessmentAssessmentProjectResource>> GetMigrationAssessmentAssessmentProjectAsync(this ResourceGroupResource resourceGroupResource, string projectName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MigrationAssessmentProjectResource>> GetMigrationAssessmentProjectAsync(this ResourceGroupResource resourceGroupResource, string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMigrationAssessmentResourceGroupResource(resourceGroupResource).GetMigrationAssessmentAssessmentProjectAsync(projectName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMigrationAssessmentResourceGroupResource(resourceGroupResource).GetMigrationAssessmentProjectAsync(projectName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -560,12 +560,12 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationAssessmentAssessmentProjectResource"/></description>
+        /// <description><see cref="MigrationAssessmentProjectResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentResourceGroupResource.GetMigrationAssessmentAssessmentProject(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentResourceGroupResource.GetMigrationAssessmentProject(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -574,11 +574,11 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<MigrationAssessmentAssessmentProjectResource> GetMigrationAssessmentAssessmentProject(this ResourceGroupResource resourceGroupResource, string projectName, CancellationToken cancellationToken = default)
+        public static Response<MigrationAssessmentProjectResource> GetMigrationAssessmentProject(this ResourceGroupResource resourceGroupResource, string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMigrationAssessmentResourceGroupResource(resourceGroupResource).GetMigrationAssessmentAssessmentProject(projectName, cancellationToken);
+            return GetMockableMigrationAssessmentResourceGroupResource(resourceGroupResource).GetMigrationAssessmentProject(projectName, cancellationToken);
         }
 
         /// <summary>
@@ -598,23 +598,23 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationAssessmentAssessmentProjectResource"/></description>
+        /// <description><see cref="MigrationAssessmentProjectResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentSubscriptionResource.GetMigrationAssessmentAssessmentProjects(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentSubscriptionResource.GetMigrationAssessmentProjects(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MigrationAssessmentAssessmentProjectResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MigrationAssessmentAssessmentProjectResource> GetMigrationAssessmentAssessmentProjectsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MigrationAssessmentProjectResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MigrationAssessmentProjectResource> GetMigrationAssessmentProjectsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMigrationAssessmentSubscriptionResource(subscriptionResource).GetMigrationAssessmentAssessmentProjectsAsync(cancellationToken);
+            return GetMockableMigrationAssessmentSubscriptionResource(subscriptionResource).GetMigrationAssessmentProjectsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -634,23 +634,23 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationAssessmentAssessmentProjectResource"/></description>
+        /// <description><see cref="MigrationAssessmentProjectResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentSubscriptionResource.GetMigrationAssessmentAssessmentProjects(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMigrationAssessmentSubscriptionResource.GetMigrationAssessmentProjects(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MigrationAssessmentAssessmentProjectResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MigrationAssessmentAssessmentProjectResource> GetMigrationAssessmentAssessmentProjects(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MigrationAssessmentProjectResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MigrationAssessmentProjectResource> GetMigrationAssessmentProjects(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMigrationAssessmentSubscriptionResource(subscriptionResource).GetMigrationAssessmentAssessmentProjects(cancellationToken);
+            return GetMockableMigrationAssessmentSubscriptionResource(subscriptionResource).GetMigrationAssessmentProjects(cancellationToken);
         }
     }
 }

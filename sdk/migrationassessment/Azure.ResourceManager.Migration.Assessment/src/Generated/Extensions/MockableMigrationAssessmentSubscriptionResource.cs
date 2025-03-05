@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableMigrationAssessmentSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _migrationAssessmentAssessmentProjectAssessmentProjectsOperationsClientDiagnostics;
-        private AssessmentProjectsRestOperations _migrationAssessmentAssessmentProjectAssessmentProjectsOperationsRestClient;
+        private ClientDiagnostics _migrationAssessmentProjectAssessmentProjectsOperationsClientDiagnostics;
+        private AssessmentProjectsRestOperations _migrationAssessmentProjectAssessmentProjectsOperationsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableMigrationAssessmentSubscriptionResource"/> class for mocking. </summary>
         protected MockableMigrationAssessmentSubscriptionResource()
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Mocking
         {
         }
 
-        private ClientDiagnostics MigrationAssessmentAssessmentProjectAssessmentProjectsOperationsClientDiagnostics => _migrationAssessmentAssessmentProjectAssessmentProjectsOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Migration.Assessment", MigrationAssessmentAssessmentProjectResource.ResourceType.Namespace, Diagnostics);
-        private AssessmentProjectsRestOperations MigrationAssessmentAssessmentProjectAssessmentProjectsOperationsRestClient => _migrationAssessmentAssessmentProjectAssessmentProjectsOperationsRestClient ??= new AssessmentProjectsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MigrationAssessmentAssessmentProjectResource.ResourceType));
+        private ClientDiagnostics MigrationAssessmentProjectAssessmentProjectsOperationsClientDiagnostics => _migrationAssessmentProjectAssessmentProjectsOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Migration.Assessment", MigrationAssessmentProjectResource.ResourceType.Namespace, Diagnostics);
+        private AssessmentProjectsRestOperations MigrationAssessmentProjectAssessmentProjectsOperationsRestClient => _migrationAssessmentProjectAssessmentProjectsOperationsRestClient ??= new AssessmentProjectsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MigrationAssessmentProjectResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.Migration.Assessment.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationAssessmentAssessmentProjectResource"/></description>
+        /// <description><see cref="MigrationAssessmentProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MigrationAssessmentAssessmentProjectResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MigrationAssessmentAssessmentProjectResource> GetMigrationAssessmentAssessmentProjectsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MigrationAssessmentProjectResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MigrationAssessmentProjectResource> GetMigrationAssessmentProjectsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MigrationAssessmentAssessmentProjectAssessmentProjectsOperationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MigrationAssessmentAssessmentProjectAssessmentProjectsOperationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MigrationAssessmentAssessmentProjectResource(Client, MigrationAssessmentAssessmentProjectData.DeserializeMigrationAssessmentAssessmentProjectData(e)), MigrationAssessmentAssessmentProjectAssessmentProjectsOperationsClientDiagnostics, Pipeline, "MockableMigrationAssessmentSubscriptionResource.GetMigrationAssessmentAssessmentProjects", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MigrationAssessmentProjectAssessmentProjectsOperationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MigrationAssessmentProjectAssessmentProjectsOperationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MigrationAssessmentProjectResource(Client, MigrationAssessmentProjectData.DeserializeMigrationAssessmentProjectData(e)), MigrationAssessmentProjectAssessmentProjectsOperationsClientDiagnostics, Pipeline, "MockableMigrationAssessmentSubscriptionResource.GetMigrationAssessmentProjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.Migration.Assessment.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationAssessmentAssessmentProjectResource"/></description>
+        /// <description><see cref="MigrationAssessmentProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MigrationAssessmentAssessmentProjectResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MigrationAssessmentAssessmentProjectResource> GetMigrationAssessmentAssessmentProjects(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MigrationAssessmentProjectResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MigrationAssessmentProjectResource> GetMigrationAssessmentProjects(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MigrationAssessmentAssessmentProjectAssessmentProjectsOperationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MigrationAssessmentAssessmentProjectAssessmentProjectsOperationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MigrationAssessmentAssessmentProjectResource(Client, MigrationAssessmentAssessmentProjectData.DeserializeMigrationAssessmentAssessmentProjectData(e)), MigrationAssessmentAssessmentProjectAssessmentProjectsOperationsClientDiagnostics, Pipeline, "MockableMigrationAssessmentSubscriptionResource.GetMigrationAssessmentAssessmentProjects", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MigrationAssessmentProjectAssessmentProjectsOperationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MigrationAssessmentProjectAssessmentProjectsOperationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MigrationAssessmentProjectResource(Client, MigrationAssessmentProjectData.DeserializeMigrationAssessmentProjectData(e)), MigrationAssessmentProjectAssessmentProjectsOperationsClientDiagnostics, Pipeline, "MockableMigrationAssessmentSubscriptionResource.GetMigrationAssessmentProjects", "value", "nextLink", cancellationToken);
         }
     }
 }

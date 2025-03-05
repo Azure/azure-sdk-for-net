@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             {
                 return null;
             }
-            AssessmentType? assessmentType = default;
+            MigrationAssessmentType? assessmentType = default;
             int? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                     {
                         continue;
                     }
-                    assessmentType = new AssessmentType(property.Value.GetString());
+                    assessmentType = new MigrationAssessmentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("count"u8))

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <param name="webApplications"> Web applications discovered on the machine. </param>
         /// <param name="updatedOn"> When was machine last updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationAssessmentMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkloadSummary workloadSummary, IReadOnlyList<MigrationAssessmentError> errors, ProcessorInfo hostProcessor, ProductSupportStatus productSupportStatus, ResourceIdentifier discoveryMachineArmId, ResourceIdentifier datacenterManagementServerArmId, string datacenterManagementServerName, MachineBootType? bootType, string displayName, double? megabytesOfMemory, int? numberOfCores, string operatingSystemType, string operatingSystemName, string operatingSystemVersion, string description, DateTimeOffset? createdOn, IReadOnlyDictionary<string, MigrationAssessmentDisk> disks, IReadOnlyList<string> groups, IReadOnlyDictionary<string, MigrationAssessmentNetworkAdapter> networkAdapters, IReadOnlyList<string> sqlInstances, IReadOnlyList<string> webApplications, DateTimeOffset? updatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MigrationAssessmentMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AssessmentWorkloadSummary workloadSummary, IReadOnlyList<MigrationAssessmentError> errors, AssessedMachineProcessorInfo hostProcessor, AssessmentProductSupportStatus productSupportStatus, ResourceIdentifier discoveryMachineArmId, ResourceIdentifier datacenterManagementServerArmId, string datacenterManagementServerName, AssessedMachineBootType? bootType, string displayName, double? megabytesOfMemory, int? numberOfCores, string operatingSystemType, string operatingSystemName, string operatingSystemVersion, string description, DateTimeOffset? createdOn, IReadOnlyDictionary<string, MigrationAssessmentDisk> disks, IReadOnlyList<string> groups, IReadOnlyDictionary<string, MigrationAssessmentNetworkAdapter> networkAdapters, IReadOnlyList<string> sqlInstances, IReadOnlyList<string> webApplications, DateTimeOffset? updatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             WorkloadSummary = workloadSummary;
             Errors = errors;
@@ -118,13 +118,13 @@ namespace Azure.ResourceManager.Migration.Assessment
         }
 
         /// <summary> Gets or sets workload summary. </summary>
-        public WorkloadSummary WorkloadSummary { get; }
+        public AssessmentWorkloadSummary WorkloadSummary { get; }
         /// <summary> List of errors for this machine. </summary>
         public IReadOnlyList<MigrationAssessmentError> Errors { get; }
         /// <summary> Gets Processor details of the host. </summary>
-        public ProcessorInfo HostProcessor { get; }
+        public AssessedMachineProcessorInfo HostProcessor { get; }
         /// <summary> Gets the product support status related details. </summary>
-        public ProductSupportStatus ProductSupportStatus { get; }
+        public AssessmentProductSupportStatus ProductSupportStatus { get; }
         /// <summary> Site id of machine discovered in private data center. </summary>
         public ResourceIdentifier DiscoveryMachineArmId { get; }
         /// <summary> The data center management server ARM Id for the machine. </summary>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <summary> The data center management server name for the machine. </summary>
         public string DatacenterManagementServerName { get; }
         /// <summary> Boot type of machine discovered in private data center. </summary>
-        public MachineBootType? BootType { get; }
+        public AssessedMachineBootType? BootType { get; }
         /// <summary> Display Name of the Machine. </summary>
         public string DisplayName { get; }
         /// <summary> Megabytes of memory found allocated for the machine in private data center. </summary>

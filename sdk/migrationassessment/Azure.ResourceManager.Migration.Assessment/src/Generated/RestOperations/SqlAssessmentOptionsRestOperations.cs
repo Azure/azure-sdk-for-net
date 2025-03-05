@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="assessmentOptionsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="assessmentOptionsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MigrationAssessmentSqlAssessmentOptionData>> GetAsync(string subscriptionId, string resourceGroupName, string projectName, string assessmentOptionsName, CancellationToken cancellationToken = default)
+        public async Task<Response<MigrationSqlAssessmentOptionData>> GetAsync(string subscriptionId, string resourceGroupName, string projectName, string assessmentOptionsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.Migration.Assessment
             {
                 case 200:
                     {
-                        MigrationAssessmentSqlAssessmentOptionData value = default;
+                        MigrationSqlAssessmentOptionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MigrationAssessmentSqlAssessmentOptionData.DeserializeMigrationAssessmentSqlAssessmentOptionData(document.RootElement);
+                        value = MigrationSqlAssessmentOptionData.DeserializeMigrationSqlAssessmentOptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MigrationAssessmentSqlAssessmentOptionData)null, message.Response);
+                    return Response.FromValue((MigrationSqlAssessmentOptionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="assessmentOptionsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="assessmentOptionsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MigrationAssessmentSqlAssessmentOptionData> Get(string subscriptionId, string resourceGroupName, string projectName, string assessmentOptionsName, CancellationToken cancellationToken = default)
+        public Response<MigrationSqlAssessmentOptionData> Get(string subscriptionId, string resourceGroupName, string projectName, string assessmentOptionsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,13 +222,13 @@ namespace Azure.ResourceManager.Migration.Assessment
             {
                 case 200:
                     {
-                        MigrationAssessmentSqlAssessmentOptionData value = default;
+                        MigrationSqlAssessmentOptionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MigrationAssessmentSqlAssessmentOptionData.DeserializeMigrationAssessmentSqlAssessmentOptionData(document.RootElement);
+                        value = MigrationSqlAssessmentOptionData.DeserializeMigrationSqlAssessmentOptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MigrationAssessmentSqlAssessmentOptionData)null, message.Response);
+                    return Response.FromValue((MigrationSqlAssessmentOptionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

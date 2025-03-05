@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             ResourceGroupResource rg = await DefaultSubscription.GetResourceGroups().GetAsync("sakanwar");
 
             // Get Assessment Project
-            var response = await rg.GetMigrationAssessmentAssessmentProjectAsync("ccy-pe1950project");
+            var response = await rg.GetMigrationAssessmentProjectAsync("ccy-pe1950project");
             var assessmentProjectResource = response.Value;
             Assert.IsNotNull(assessmentProjectResource);
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             ResourceGroupResource rg = await DefaultSubscription.GetResourceGroups().GetAsync("sdktest");
 
             // Get Assessment Project
-            var response = await rg.GetMigrationAssessmentAssessmentProjectAsync("privateendpoint-test4be2project");
+            var response = await rg.GetMigrationAssessmentProjectAsync("privateendpoint-test4be2project");
             var assessmentProjectResource = response.Value;
             Assert.IsNotNull(assessmentProjectResource);
 

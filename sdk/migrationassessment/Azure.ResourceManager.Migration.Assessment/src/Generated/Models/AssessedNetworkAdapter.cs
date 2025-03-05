@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="megabytesPerSecondReceived"> Gets the megabytes per second received. </param>
         /// <param name="megabytesPerSecondTransmitted"> Gets the megabytes per second transmitted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssessedNetworkAdapter(MigrationAssessmentCloudSuitability? suitability, AzureNetworkAdapterSuitabilityDetail? suitabilityDetail, AzureNetworkAdapterSuitabilityExplanation? suitabilityExplanation, double? monthlyBandwidthCosts, double? netGigabytesTransmittedPerMonth, string displayName, string macAddress, IReadOnlyList<string> ipAddresses, double? megabytesPerSecondReceived, double? megabytesPerSecondTransmitted, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssessedNetworkAdapter(MigrationAssessmentCloudSuitability? suitability, NetworkAdapterSuitabilityDetail? suitabilityDetail, NetworkAdapterSuitabilityExplanation? suitabilityExplanation, double? monthlyBandwidthCosts, double? netGigabytesTransmittedPerMonth, string displayName, string macAddress, IReadOnlyList<string> ipAddresses, double? megabytesPerSecondReceived, double? megabytesPerSecondTransmitted, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Suitability = suitability;
             SuitabilityDetail = suitabilityDetail;
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <summary> Gets the suitability. </summary>
         public MigrationAssessmentCloudSuitability? Suitability { get; }
         /// <summary> Gets the suitability detail. </summary>
-        public AzureNetworkAdapterSuitabilityDetail? SuitabilityDetail { get; }
+        public NetworkAdapterSuitabilityDetail? SuitabilityDetail { get; }
         /// <summary> Gets the suitability explanation. </summary>
-        public AzureNetworkAdapterSuitabilityExplanation? SuitabilityExplanation { get; }
+        public NetworkAdapterSuitabilityExplanation? SuitabilityExplanation { get; }
         /// <summary> Gets the monthly bandwidth costs. </summary>
         public double? MonthlyBandwidthCosts { get; }
         /// <summary> Gets the net gigabytes transmitted per month. </summary>

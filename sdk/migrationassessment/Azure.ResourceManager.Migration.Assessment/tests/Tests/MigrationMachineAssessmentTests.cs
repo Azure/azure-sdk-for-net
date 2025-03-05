@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             ResourceGroupResource rg = await DefaultSubscription.GetResourceGroups().GetAsync("sdktest-net");
 
             var response =
-                await rg.GetMigrationAssessmentAssessmentProjectAsync("sdktestproject");
+                await rg.GetMigrationAssessmentProjectAsync("sdktestproject");
             var assessmentProjectResource = response.Value;
             Assert.IsNotNull(assessmentProjectResource);
 
@@ -54,40 +54,40 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             ResourceGroupResource rg = await DefaultSubscription.GetResourceGroups().GetAsync("sdktest-net");
 
             var response =
-                await rg.GetMigrationAssessmentAssessmentProjectAsync("sdktestproject");
+                await rg.GetMigrationAssessmentProjectAsync("sdktestproject");
             var assessmentProjectResource = response.Value;
             Assert.IsNotNull(assessmentProjectResource);
 
             var collection = await assessmentProjectResource.GetMigrationAssessmentGroupAsync("sdktestgroup");
 
-            var assessmentCollection = collection.Value.GetMigrationAssessmentAssessments();
+            var assessmentCollection = collection.Value.GetMigrationAssessments();
 
             // Create Assessment
             string assessmentName = "asm1";
-            MigrationAssessmentAssessmentData asmData = new MigrationAssessmentAssessmentData()
+            MigrationAssessmentData asmData = new MigrationAssessmentData()
             {
                 ProvisioningState = MigrationAssessmentProvisioningState.Succeeded,
                 EASubscriptionId = null,
-                AzurePricingTier = AzurePricingTier.Standard,
-                AzureStorageRedundancy = AzureStorageRedundancy.Unknown,
-                ReservedInstance = AzureReservedInstance.None,
-                AzureHybridUseBenefit = AzureHybridUseBenefit.Unknown,
+                AzurePricingTier = AssessmentPricingTier.Standard,
+                AzureStorageRedundancy = AssessmentStorageRedundancy.Unknown,
+                ReservedInstance = AssessmentReservedInstance.None,
+                AzureHybridUseBenefit = AssessmentHybridUseBenefit.Unknown,
                 AzureDiskTypes =
                     {
-                    AzureDiskType.Premium,AzureDiskType.StandardSsd
+                    AssessmentDiskType.Premium,AssessmentDiskType.StandardSsd
                     },
                 AzureVmFamilies =
                     {
-                    AzureVmFamily.DSeries,AzureVmFamily.Lsv2Series,AzureVmFamily.MSeries,AzureVmFamily.Mdsv2Series,AzureVmFamily.Msv2Series,AzureVmFamily.Mv2Series
+                    AssessmentVmFamily.DSeries,AssessmentVmFamily.Lsv2Series,AssessmentVmFamily.MSeries,AssessmentVmFamily.Mdsv2Series,AssessmentVmFamily.Msv2Series,AssessmentVmFamily.Mv2Series
                     },
-                VmUptime = new VmUptime()
+                VmUptime = new AssessmentVmUptime()
                 {
                     DaysPerMonth = 13,
                     HoursPerDay = 26,
                 },
                 AzureLocation = AzureLocation.BrazilSouth,
-                AzureOfferCode = AzureOfferCode.SavingsPlan1Year,
-                Currency = AzureCurrency.USD,
+                AzureOfferCode = AssessmentOfferCode.SavingsPlan1Year,
+                Currency = AssessmentCurrency.USD,
                 ScalingFactor = 2,
                 Percentile = PercentileOfUtilization.Percentile50,
                 TimeRange = AssessmentTimeRange.Month,
@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             Assert.IsNotNull(downloadReportResponse.Value.AssessmentReportUri);
 
             // Get Assessed Machines
-            var assessedMachines = await assessmentResource.GetAssessedMachines().ToEnumerableAsync();
+            var assessedMachines = await assessmentResource.GetMigrationAssessedMachines().ToEnumerableAsync();
             Assert.IsNotNull(assessedMachines);
             Assert.GreaterOrEqual(assessedMachines.Count, 1);
 
             // Get an Assessed Machine
-            var assessedMachine = await assessmentResource.GetAssessedMachineAsync(assessedMachines.First().Data.Name);
+            var assessedMachine = await assessmentResource.GetMigrationAssessedMachineAsync(assessedMachines.First().Data.Name);
             Assert.IsNotNull(assessedMachine);
 
             // Delete Assessment

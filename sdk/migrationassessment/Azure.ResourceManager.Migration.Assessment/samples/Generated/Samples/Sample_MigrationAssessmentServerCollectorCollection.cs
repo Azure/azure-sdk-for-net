@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MigrationAssessmentAssessmentProjectResource created on azure
-            // for more information of creating MigrationAssessmentAssessmentProjectResource, please refer to the document of MigrationAssessmentAssessmentProjectResource
+            // this example assumes you already have this MigrationAssessmentProjectResource created on azure
+            // for more information of creating MigrationAssessmentProjectResource, please refer to the document of MigrationAssessmentProjectResource
             string subscriptionId = "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600";
             string resourceGroupName = "ayagrawRG";
             string projectName = "app18700project";
-            ResourceIdentifier migrationAssessmentAssessmentProjectResourceId = MigrationAssessmentAssessmentProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
-            MigrationAssessmentAssessmentProjectResource migrationAssessmentAssessmentProject = client.GetMigrationAssessmentAssessmentProjectResource(migrationAssessmentAssessmentProjectResourceId);
+            ResourceIdentifier migrationAssessmentProjectResourceId = MigrationAssessmentProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            MigrationAssessmentProjectResource migrationAssessmentProject = client.GetMigrationAssessmentProjectResource(migrationAssessmentProjectResourceId);
 
             // get the collection of this MigrationAssessmentServerCollectorResource
-            MigrationAssessmentServerCollectorCollection collection = migrationAssessmentAssessmentProject.GetMigrationAssessmentServerCollectors();
+            MigrationAssessmentServerCollectorCollection collection = migrationAssessmentProject.GetMigrationAssessmentServerCollectors();
 
             // invoke the operation
             string serverCollectorName = "walter389fcollector";
@@ -82,16 +82,16 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MigrationAssessmentAssessmentProjectResource created on azure
-            // for more information of creating MigrationAssessmentAssessmentProjectResource, please refer to the document of MigrationAssessmentAssessmentProjectResource
+            // this example assumes you already have this MigrationAssessmentProjectResource created on azure
+            // for more information of creating MigrationAssessmentProjectResource, please refer to the document of MigrationAssessmentProjectResource
             string subscriptionId = "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600";
             string resourceGroupName = "ayagrawRG";
             string projectName = "app18700project";
-            ResourceIdentifier migrationAssessmentAssessmentProjectResourceId = MigrationAssessmentAssessmentProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
-            MigrationAssessmentAssessmentProjectResource migrationAssessmentAssessmentProject = client.GetMigrationAssessmentAssessmentProjectResource(migrationAssessmentAssessmentProjectResourceId);
+            ResourceIdentifier migrationAssessmentProjectResourceId = MigrationAssessmentProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            MigrationAssessmentProjectResource migrationAssessmentProject = client.GetMigrationAssessmentProjectResource(migrationAssessmentProjectResourceId);
 
             // get the collection of this MigrationAssessmentServerCollectorResource
-            MigrationAssessmentServerCollectorCollection collection = migrationAssessmentAssessmentProject.GetMigrationAssessmentServerCollectors();
+            MigrationAssessmentServerCollectorCollection collection = migrationAssessmentProject.GetMigrationAssessmentServerCollectors();
 
             // invoke the operation
             string serverCollectorName = "walter389fcollector";
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MigrationAssessmentAssessmentProjectResource created on azure
-            // for more information of creating MigrationAssessmentAssessmentProjectResource, please refer to the document of MigrationAssessmentAssessmentProjectResource
+            // this example assumes you already have this MigrationAssessmentProjectResource created on azure
+            // for more information of creating MigrationAssessmentProjectResource, please refer to the document of MigrationAssessmentProjectResource
             string subscriptionId = "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600";
             string resourceGroupName = "ayagrawRG";
             string projectName = "app18700project";
-            ResourceIdentifier migrationAssessmentAssessmentProjectResourceId = MigrationAssessmentAssessmentProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
-            MigrationAssessmentAssessmentProjectResource migrationAssessmentAssessmentProject = client.GetMigrationAssessmentAssessmentProjectResource(migrationAssessmentAssessmentProjectResourceId);
+            ResourceIdentifier migrationAssessmentProjectResourceId = MigrationAssessmentProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            MigrationAssessmentProjectResource migrationAssessmentProject = client.GetMigrationAssessmentProjectResource(migrationAssessmentProjectResourceId);
 
             // get the collection of this MigrationAssessmentServerCollectorResource
-            MigrationAssessmentServerCollectorCollection collection = migrationAssessmentAssessmentProject.GetMigrationAssessmentServerCollectors();
+            MigrationAssessmentServerCollectorCollection collection = migrationAssessmentProject.GetMigrationAssessmentServerCollectors();
 
             // invoke the operation and iterate over the result
             await foreach (MigrationAssessmentServerCollectorResource item in collection.GetAllAsync())
@@ -152,16 +152,16 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MigrationAssessmentAssessmentProjectResource created on azure
-            // for more information of creating MigrationAssessmentAssessmentProjectResource, please refer to the document of MigrationAssessmentAssessmentProjectResource
+            // this example assumes you already have this MigrationAssessmentProjectResource created on azure
+            // for more information of creating MigrationAssessmentProjectResource, please refer to the document of MigrationAssessmentProjectResource
             string subscriptionId = "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600";
             string resourceGroupName = "ayagrawRG";
             string projectName = "app18700project";
-            ResourceIdentifier migrationAssessmentAssessmentProjectResourceId = MigrationAssessmentAssessmentProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
-            MigrationAssessmentAssessmentProjectResource migrationAssessmentAssessmentProject = client.GetMigrationAssessmentAssessmentProjectResource(migrationAssessmentAssessmentProjectResourceId);
+            ResourceIdentifier migrationAssessmentProjectResourceId = MigrationAssessmentProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            MigrationAssessmentProjectResource migrationAssessmentProject = client.GetMigrationAssessmentProjectResource(migrationAssessmentProjectResourceId);
 
             // get the collection of this MigrationAssessmentServerCollectorResource
-            MigrationAssessmentServerCollectorCollection collection = migrationAssessmentAssessmentProject.GetMigrationAssessmentServerCollectors();
+            MigrationAssessmentServerCollectorCollection collection = migrationAssessmentProject.GetMigrationAssessmentServerCollectors();
 
             // invoke the operation
             string serverCollectorName = "walter389fcollector";
@@ -182,16 +182,16 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MigrationAssessmentAssessmentProjectResource created on azure
-            // for more information of creating MigrationAssessmentAssessmentProjectResource, please refer to the document of MigrationAssessmentAssessmentProjectResource
+            // this example assumes you already have this MigrationAssessmentProjectResource created on azure
+            // for more information of creating MigrationAssessmentProjectResource, please refer to the document of MigrationAssessmentProjectResource
             string subscriptionId = "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600";
             string resourceGroupName = "ayagrawRG";
             string projectName = "app18700project";
-            ResourceIdentifier migrationAssessmentAssessmentProjectResourceId = MigrationAssessmentAssessmentProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
-            MigrationAssessmentAssessmentProjectResource migrationAssessmentAssessmentProject = client.GetMigrationAssessmentAssessmentProjectResource(migrationAssessmentAssessmentProjectResourceId);
+            ResourceIdentifier migrationAssessmentProjectResourceId = MigrationAssessmentProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            MigrationAssessmentProjectResource migrationAssessmentProject = client.GetMigrationAssessmentProjectResource(migrationAssessmentProjectResourceId);
 
             // get the collection of this MigrationAssessmentServerCollectorResource
-            MigrationAssessmentServerCollectorCollection collection = migrationAssessmentAssessmentProject.GetMigrationAssessmentServerCollectors();
+            MigrationAssessmentServerCollectorCollection collection = migrationAssessmentProject.GetMigrationAssessmentServerCollectors();
 
             // invoke the operation
             string serverCollectorName = "walter389fcollector";

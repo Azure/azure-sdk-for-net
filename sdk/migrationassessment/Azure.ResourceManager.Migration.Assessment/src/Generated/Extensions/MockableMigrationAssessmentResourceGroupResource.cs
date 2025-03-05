@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Migration.Assessment.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of MigrationAssessmentAssessmentProjectResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of MigrationAssessmentAssessmentProjectResources and their operations over a MigrationAssessmentAssessmentProjectResource. </returns>
-        public virtual MigrationAssessmentAssessmentProjectCollection GetMigrationAssessmentAssessmentProjects()
+        /// <summary> Gets a collection of MigrationAssessmentProjectResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MigrationAssessmentProjectResources and their operations over a MigrationAssessmentProjectResource. </returns>
+        public virtual MigrationAssessmentProjectCollection GetMigrationAssessmentProjects()
         {
-            return GetCachedClient(client => new MigrationAssessmentAssessmentProjectCollection(client, Id));
+            return GetCachedClient(client => new MigrationAssessmentProjectCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationAssessmentAssessmentProjectResource"/></description>
+        /// <description><see cref="MigrationAssessmentProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MigrationAssessmentAssessmentProjectResource>> GetMigrationAssessmentAssessmentProjectAsync(string projectName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrationAssessmentProjectResource>> GetMigrationAssessmentProjectAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            return await GetMigrationAssessmentAssessmentProjects().GetAsync(projectName, cancellationToken).ConfigureAwait(false);
+            return await GetMigrationAssessmentProjects().GetAsync(projectName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationAssessmentAssessmentProjectResource"/></description>
+        /// <description><see cref="MigrationAssessmentProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MigrationAssessmentAssessmentProjectResource> GetMigrationAssessmentAssessmentProject(string projectName, CancellationToken cancellationToken = default)
+        public virtual Response<MigrationAssessmentProjectResource> GetMigrationAssessmentProject(string projectName, CancellationToken cancellationToken = default)
         {
-            return GetMigrationAssessmentAssessmentProjects().Get(projectName, cancellationToken);
+            return GetMigrationAssessmentProjects().Get(projectName, cancellationToken);
         }
     }
 }

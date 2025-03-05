@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
         private static string targetSubscriptionId;
         private static Guid tenantId;
         private static ResourceGroupResource rg;
-        private static MigrationAssessmentAssessmentProjectResource assessmentProjectResource;
+        private static MigrationAssessmentProjectResource assessmentProjectResource;
         private static CollectorAgentPropertiesBase agentProperties;
 
         public MigrationAssessmentCollectorTests(bool isAsync) : base(isAsync)
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
 
             string assessmentProjName = Recording.GenerateAssetName("assessmentProj-");
 
-            var assessmentProjectData = new MigrationAssessmentAssessmentProjectData(targetRegion);
-            var assessmentProjectCollection = rg.GetMigrationAssessmentAssessmentProjects();
+            var assessmentProjectData = new MigrationAssessmentProjectData(targetRegion);
+            var assessmentProjectCollection = rg.GetMigrationAssessmentProjects();
 
             // Create Assessment Project
             var response =

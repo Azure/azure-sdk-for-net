@@ -28,29 +28,29 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             ResourceGroupResource rg = await DefaultSubscription.GetResourceGroups().GetAsync("venkatjakka-rvtools");
 
             var response =
-                await rg.GetMigrationAssessmentAssessmentProjectAsync("anf-boliden1307project");
+                await rg.GetMigrationAssessmentProjectAsync("anf-boliden1307project");
             var assessmentProjectResource = response.Value;
             Assert.IsNotNull(assessmentProjectResource);
 
             var collection = await assessmentProjectResource.GetMigrationAssessmentGroupAsync("testgroup");
 
-            var assessmentCollection = collection.Value.GetMigrationAssessmentAvsAssessments();
+            var assessmentCollection = collection.Value.GetMigrationAvsAssessments();
 
             // Create AVS Assessment
             string assessmentName = "avs-asm0";
-            MigrationAssessmentAvsAssessmentData asmData = new MigrationAssessmentAvsAssessmentData()
+            MigrationAvsAssessmentData asmData = new MigrationAvsAssessmentData()
             {
                 ProvisioningState = MigrationAssessmentProvisioningState.Succeeded,
                 FailuresToTolerateAndRaidLevel = FttAndRaidLevel.Ftt1Raid5,
                 VcpuOversubscription = 4,
-                NodeType = AvsNodeType.AV36,
-                ReservedInstance = AzureReservedInstance.None,
+                NodeType = AssessmentAvsNodeType.Av36,
+                ReservedInstance = AssessmentReservedInstance.None,
                 MemOvercommit = 1.5,
                 DedupeCompression = 1.5,
                 IsStretchClusterEnabled = false,
                 AzureLocation = AzureLocation.BrazilSouth,
-                AzureOfferCode = AzureOfferCode.MSAZR0003P,
-                Currency = AzureCurrency.USD,
+                AzureOfferCode = AssessmentOfferCode.MSAZR0003P,
+                Currency = AssessmentCurrency.USD,
                 ScalingFactor = 2,
                 Percentile = PercentileOfUtilization.Percentile50,
                 TimeRange = AssessmentTimeRange.Month,
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             Assert.IsNotNull(downloadReportResponse.Value.AssessmentReportUri);
 
             // Get Assessed Machines
-            var assessedMachines = await assessmentResource.GetMigrationAssessmentAvsAssessedMachines().ToEnumerableAsync();
+            var assessedMachines = await assessmentResource.GetMigrationAvsAssessedMachines().ToEnumerableAsync();
             Assert.IsNotNull(assessedMachines);
             Assert.GreaterOrEqual(assessedMachines.Count, 1);
 
             // Get an Assessed Machine
-            var assessedMachine = await assessmentResource.GetMigrationAssessmentAvsAssessedMachineAsync(assessedMachines.First().Data.Name);
+            var assessedMachine = await assessmentResource.GetMigrationAvsAssessedMachineAsync(assessedMachines.First().Data.Name);
             Assert.IsNotNull(assessedMachine);
 
             // Delete Assessment
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             ResourceGroupResource rg = await DefaultSubscription.GetResourceGroups().GetAsync("venkatjakka-rvtools");
 
             var response =
-                await rg.GetMigrationAssessmentAssessmentProjectAsync("anf-boliden1307project");
+                await rg.GetMigrationAssessmentProjectAsync("anf-boliden1307project");
             var assessmentProjectResource = response.Value;
             Assert.IsNotNull(assessmentProjectResource);
-            MigrationAssessmentAvsAssessmentOptionCollection collection = assessmentProjectResource.GetMigrationAssessmentAvsAssessmentOptions();
+            MigrationAvsAssessmentOptionCollection collection = assessmentProjectResource.GetMigrationAvsAssessmentOptions();
 
             // Get Assessment Options
             var assessmentOptionResponse = await collection.GetAsync(assessmentOptionsName);

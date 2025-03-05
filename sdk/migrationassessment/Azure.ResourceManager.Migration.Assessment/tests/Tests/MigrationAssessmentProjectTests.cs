@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
         private static AzureLocation targetRegion;
         private static string targetSubscriptionId;
         private static ResourceGroupResource rg;
-        private static MigrationAssessmentAssessmentProjectResource assessmentProjectResource;
+        private static MigrationAssessmentProjectResource assessmentProjectResource;
 
         public MigrationAssessmentProjectTests(bool isAsync) : base(isAsync)
         {
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
 
             string assessmentProjName = Recording.GenerateAssetName("assessmentProj-");
 
-            var assessmentProjectData = new MigrationAssessmentAssessmentProjectData(targetRegion);
-            var assessmentProjectCollection = rg.GetMigrationAssessmentAssessmentProjects();
+            var assessmentProjectData = new MigrationAssessmentProjectData(targetRegion);
+            var assessmentProjectCollection = rg.GetMigrationAssessmentProjects();
 
             // Create Assessment Project
             var response =
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
         public async Task TestAssessmentProjectOperations()
         {
             string rgName = rg.Id.Name;
-            var assessmentProjectCollection = rg.GetMigrationAssessmentAssessmentProjects();
+            var assessmentProjectCollection = rg.GetMigrationAssessmentProjects();
 
             string assessmentProjName = assessmentProjectResource.Data.Name;
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             Assert.IsNotNull(assessmentProjectResource.Id);
 
             // Update Assessment Project
-            var assessmentProjectPatch = new MigrationAssessmentAssessmentProjectPatch();
+            var assessmentProjectPatch = new MigrationAssessmentProjectPatch();
             assessmentProjectPatch.Tags.Add("Key1", "TestPatchValue");
             var response = await assessmentProjectResource.UpdateAsync(WaitUntil.Completed, assessmentProjectPatch);
             assessmentProjectResource = response.Value;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
         [RecordedTest]
         public async Task TestAssessmentProjectSummaryOperations()
         {
-            var collection = assessmentProjectResource.GetMigrationAssessmentAssessmentProjectSummaries();
+            var collection = assessmentProjectResource.GetMigrationAssessmentProjectSummaries();
 
             // Get Assessment Project Summary
             var assessmentProjectSummaryResource = await collection.GetAsync("default");

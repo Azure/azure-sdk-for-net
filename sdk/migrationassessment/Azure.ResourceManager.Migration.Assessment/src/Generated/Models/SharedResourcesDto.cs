@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <summary> Initializes a new instance of <see cref="SharedResourcesDto"/>. </summary>
         internal SharedResourcesDto()
         {
-            SharedDataDisks = new ChangeTrackingList<AzureManagedDiskSkuDto>();
-            SharedLogDisks = new ChangeTrackingList<AzureManagedDiskSkuDto>();
-            SharedTempDBDisks = new ChangeTrackingList<AzureManagedDiskSkuDto>();
+            SharedDataDisks = new ChangeTrackingList<AssessmentManagedDiskSkuDto>();
+            SharedLogDisks = new ChangeTrackingList<AssessmentManagedDiskSkuDto>();
+            SharedTempDBDisks = new ChangeTrackingList<AssessmentManagedDiskSkuDto>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SharedResourcesDto"/>. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="numberOfMounts"> Gets number of mounts of shared disks. </param>
         /// <param name="quorumWitness"> Gets quorum witness. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SharedResourcesDto(IReadOnlyList<AzureManagedDiskSkuDto> sharedDataDisks, IReadOnlyList<AzureManagedDiskSkuDto> sharedLogDisks, IReadOnlyList<AzureManagedDiskSkuDto> sharedTempDBDisks, int? numberOfMounts, AzureQuorumWitnessDto quorumWitness, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SharedResourcesDto(IReadOnlyList<AssessmentManagedDiskSkuDto> sharedDataDisks, IReadOnlyList<AssessmentManagedDiskSkuDto> sharedLogDisks, IReadOnlyList<AssessmentManagedDiskSkuDto> sharedTempDBDisks, int? numberOfMounts, QuorumWitnessDto quorumWitness, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SharedDataDisks = sharedDataDisks;
             SharedLogDisks = sharedLogDisks;
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         }
 
         /// <summary> Gets the list of shared data disks. </summary>
-        public IReadOnlyList<AzureManagedDiskSkuDto> SharedDataDisks { get; }
+        public IReadOnlyList<AssessmentManagedDiskSkuDto> SharedDataDisks { get; }
         /// <summary> Gets the list of shared log disks. </summary>
-        public IReadOnlyList<AzureManagedDiskSkuDto> SharedLogDisks { get; }
+        public IReadOnlyList<AssessmentManagedDiskSkuDto> SharedLogDisks { get; }
         /// <summary> Gets the list of shared Temporary database disks. </summary>
-        public IReadOnlyList<AzureManagedDiskSkuDto> SharedTempDBDisks { get; }
+        public IReadOnlyList<AssessmentManagedDiskSkuDto> SharedTempDBDisks { get; }
         /// <summary> Gets number of mounts of shared disks. </summary>
         public int? NumberOfMounts { get; }
         /// <summary> Gets quorum witness. </summary>
-        internal AzureQuorumWitnessDto QuorumWitness { get; }
+        internal QuorumWitnessDto QuorumWitness { get; }
         /// <summary> Gets quorum witness type. </summary>
-        public AzureQuorumWitnessDtoQuorumWitnessType? QuorumWitnessType
+        public QuorumWitnessDtoQuorumWitnessType? QuorumWitnessType
         {
             get => QuorumWitness?.QuorumWitnessType;
         }

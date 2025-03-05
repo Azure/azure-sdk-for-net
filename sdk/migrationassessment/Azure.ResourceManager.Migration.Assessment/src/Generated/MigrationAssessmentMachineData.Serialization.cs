@@ -208,14 +208,14 @@ namespace Azure.ResourceManager.Migration.Assessment
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            WorkloadSummary workloadSummary = default;
+            AssessmentWorkloadSummary workloadSummary = default;
             IReadOnlyList<MigrationAssessmentError> errors = default;
-            ProcessorInfo hostProcessor = default;
-            ProductSupportStatus productSupportStatus = default;
+            AssessedMachineProcessorInfo hostProcessor = default;
+            AssessmentProductSupportStatus productSupportStatus = default;
             ResourceIdentifier discoveryMachineArmId = default;
             ResourceIdentifier datacenterManagementServerArmId = default;
             string datacenterManagementServerName = default;
-            MachineBootType? bootType = default;
+            AssessedMachineBootType? bootType = default;
             string displayName = default;
             double? megabytesOfMemory = default;
             int? numberOfCores = default;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            workloadSummary = WorkloadSummary.DeserializeWorkloadSummary(property0.Value, options);
+                            workloadSummary = AssessmentWorkloadSummary.DeserializeAssessmentWorkloadSummary(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("errors"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            hostProcessor = ProcessorInfo.DeserializeProcessorInfo(property0.Value, options);
+                            hostProcessor = AssessedMachineProcessorInfo.DeserializeAssessedMachineProcessorInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("productSupportStatus"u8))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            productSupportStatus = ProductSupportStatus.DeserializeProductSupportStatus(property0.Value, options);
+                            productSupportStatus = AssessmentProductSupportStatus.DeserializeAssessmentProductSupportStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("discoveryMachineArmId"u8))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            bootType = new MachineBootType(property0.Value.GetString());
+                            bootType = new AssessedMachineBootType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("displayName"u8))

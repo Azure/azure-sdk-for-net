@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Migration.Assessment
     /// A Class representing a MigrationAssessmentGroup along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MigrationAssessmentGroupResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetMigrationAssessmentGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MigrationAssessmentAssessmentProjectResource"/> using the GetMigrationAssessmentGroup method.
+    /// Otherwise you can get one from its parent resource <see cref="MigrationAssessmentProjectResource"/> using the GetMigrationAssessmentGroup method.
     /// </summary>
     public partial class MigrationAssessmentGroupResource : ArmResource
     {
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Migration.Assessment
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of MigrationAssessmentAssessmentResources in the MigrationAssessmentGroup. </summary>
-        /// <returns> An object representing collection of MigrationAssessmentAssessmentResources and their operations over a MigrationAssessmentAssessmentResource. </returns>
-        public virtual MigrationAssessmentAssessmentCollection GetMigrationAssessmentAssessments()
+        /// <summary> Gets a collection of MigrationAssessmentResources in the MigrationAssessmentGroup. </summary>
+        /// <returns> An object representing collection of MigrationAssessmentResources and their operations over a MigrationAssessmentResource. </returns>
+        public virtual MigrationAssessmentCollection GetMigrationAssessments()
         {
-            return GetCachedClient(client => new MigrationAssessmentAssessmentCollection(client, Id));
+            return GetCachedClient(client => new MigrationAssessmentCollection(client, Id));
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationAssessmentAssessmentResource"/></description>
+        /// <description><see cref="MigrationAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MigrationAssessmentAssessmentResource>> GetMigrationAssessmentAssessmentAsync(string assessmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrationAssessmentResource>> GetMigrationAssessmentAsync(string assessmentName, CancellationToken cancellationToken = default)
         {
-            return await GetMigrationAssessmentAssessments().GetAsync(assessmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMigrationAssessments().GetAsync(assessmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationAssessmentAssessmentResource"/></description>
+        /// <description><see cref="MigrationAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -153,47 +153,16 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MigrationAssessmentAssessmentResource> GetMigrationAssessmentAssessment(string assessmentName, CancellationToken cancellationToken = default)
+        public virtual Response<MigrationAssessmentResource> GetMigrationAssessment(string assessmentName, CancellationToken cancellationToken = default)
         {
-            return GetMigrationAssessmentAssessments().Get(assessmentName, cancellationToken);
+            return GetMigrationAssessments().Get(assessmentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MigrationAssessmentAvsAssessmentResources in the MigrationAssessmentGroup. </summary>
-        /// <returns> An object representing collection of MigrationAssessmentAvsAssessmentResources and their operations over a MigrationAssessmentAvsAssessmentResource. </returns>
-        public virtual MigrationAssessmentAvsAssessmentCollection GetMigrationAssessmentAvsAssessments()
+        /// <summary> Gets a collection of MigrationAvsAssessmentResources in the MigrationAssessmentGroup. </summary>
+        /// <returns> An object representing collection of MigrationAvsAssessmentResources and their operations over a MigrationAvsAssessmentResource. </returns>
+        public virtual MigrationAvsAssessmentCollection GetMigrationAvsAssessments()
         {
-            return GetCachedClient(client => new MigrationAssessmentAvsAssessmentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a AvsAssessment
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/assessmentProjects/{projectName}/groups/{groupName}/avsAssessments/{assessmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvsAssessmentsOperations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MigrationAssessmentAvsAssessmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="assessmentName"> AVS Assessment ARM name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MigrationAssessmentAvsAssessmentResource>> GetMigrationAssessmentAvsAssessmentAsync(string assessmentName, CancellationToken cancellationToken = default)
-        {
-            return await GetMigrationAssessmentAvsAssessments().GetAsync(assessmentName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new MigrationAvsAssessmentCollection(client, Id));
         }
 
         /// <summary>
@@ -213,7 +182,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationAssessmentAvsAssessmentResource"/></description>
+        /// <description><see cref="MigrationAvsAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,16 +191,47 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MigrationAssessmentAvsAssessmentResource> GetMigrationAssessmentAvsAssessment(string assessmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrationAvsAssessmentResource>> GetMigrationAvsAssessmentAsync(string assessmentName, CancellationToken cancellationToken = default)
         {
-            return GetMigrationAssessmentAvsAssessments().Get(assessmentName, cancellationToken);
+            return await GetMigrationAvsAssessments().GetAsync(assessmentName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of MigrationAssessmentSqlAssessmentV2Resources in the MigrationAssessmentGroup. </summary>
-        /// <returns> An object representing collection of MigrationAssessmentSqlAssessmentV2Resources and their operations over a MigrationAssessmentSqlAssessmentV2Resource. </returns>
-        public virtual MigrationAssessmentSqlAssessmentV2Collection GetMigrationAssessmentSqlAssessmentV2s()
+        /// <summary>
+        /// Get a AvsAssessment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/assessmentProjects/{projectName}/groups/{groupName}/avsAssessments/{assessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvsAssessmentsOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationAvsAssessmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assessmentName"> AVS Assessment ARM name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MigrationAvsAssessmentResource> GetMigrationAvsAssessment(string assessmentName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new MigrationAssessmentSqlAssessmentV2Collection(client, Id));
+            return GetMigrationAvsAssessments().Get(assessmentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of MigrationSqlAssessmentV2Resources in the MigrationAssessmentGroup. </summary>
+        /// <returns> An object representing collection of MigrationSqlAssessmentV2Resources and their operations over a MigrationSqlAssessmentV2Resource. </returns>
+        public virtual MigrationSqlAssessmentV2Collection GetMigrationSqlAssessmentV2s()
+        {
+            return GetCachedClient(client => new MigrationSqlAssessmentV2Collection(client, Id));
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationAssessmentSqlAssessmentV2Resource"/></description>
+        /// <description><see cref="MigrationSqlAssessmentV2Resource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -260,9 +260,9 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MigrationAssessmentSqlAssessmentV2Resource>> GetMigrationAssessmentSqlAssessmentV2Async(string assessmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrationSqlAssessmentV2Resource>> GetMigrationSqlAssessmentV2Async(string assessmentName, CancellationToken cancellationToken = default)
         {
-            return await GetMigrationAssessmentSqlAssessmentV2s().GetAsync(assessmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMigrationSqlAssessmentV2s().GetAsync(assessmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationAssessmentSqlAssessmentV2Resource"/></description>
+        /// <description><see cref="MigrationSqlAssessmentV2Resource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,9 +291,9 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MigrationAssessmentSqlAssessmentV2Resource> GetMigrationAssessmentSqlAssessmentV2(string assessmentName, CancellationToken cancellationToken = default)
+        public virtual Response<MigrationSqlAssessmentV2Resource> GetMigrationSqlAssessmentV2(string assessmentName, CancellationToken cancellationToken = default)
         {
-            return GetMigrationAssessmentSqlAssessmentV2s().Get(assessmentName, cancellationToken);
+            return GetMigrationSqlAssessmentV2s().Get(assessmentName, cancellationToken);
         }
 
         /// <summary>

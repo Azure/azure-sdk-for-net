@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Migration.Assessment
     /// A Class representing a MigrationAssessmentPrivateEndpointConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MigrationAssessmentPrivateEndpointConnectionResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetMigrationAssessmentPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MigrationAssessmentAssessmentProjectResource"/> using the GetMigrationAssessmentPrivateEndpointConnection method.
+    /// Otherwise you can get one from its parent resource <see cref="MigrationAssessmentProjectResource"/> using the GetMigrationAssessmentPrivateEndpointConnection method.
     /// </summary>
     public partial class MigrationAssessmentPrivateEndpointConnectionResource : ArmResource
     {

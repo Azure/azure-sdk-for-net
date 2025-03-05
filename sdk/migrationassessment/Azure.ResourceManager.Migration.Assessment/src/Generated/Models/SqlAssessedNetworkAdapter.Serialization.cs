@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 return null;
             }
             MigrationAssessmentCloudSuitability? suitability = default;
-            AzureNetworkAdapterSuitabilityDetail? suitabilityDetail = default;
-            AzureNetworkAdapterSuitabilityExplanation? suitabilityExplanation = default;
+            NetworkAdapterSuitabilityDetail? suitabilityDetail = default;
+            NetworkAdapterSuitabilityExplanation? suitabilityExplanation = default;
             double? monthlyBandwidthCosts = default;
             double? netGigabytesTransmittedPerMonth = default;
             string name = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                     {
                         continue;
                     }
-                    suitabilityDetail = new AzureNetworkAdapterSuitabilityDetail(property.Value.GetString());
+                    suitabilityDetail = new NetworkAdapterSuitabilityDetail(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("suitabilityExplanation"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                     {
                         continue;
                     }
-                    suitabilityExplanation = new AzureNetworkAdapterSuitabilityExplanation(property.Value.GetString());
+                    suitabilityExplanation = new NetworkAdapterSuitabilityExplanation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("monthlyBandwidthCosts"u8))

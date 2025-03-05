@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Migration.Assessment
 {
     /// <summary>
     /// A class representing a collection of <see cref="MigrationAssessmentServerCollectorResource"/> and their operations.
-    /// Each <see cref="MigrationAssessmentServerCollectorResource"/> in the collection will belong to the same instance of <see cref="MigrationAssessmentAssessmentProjectResource"/>.
-    /// To get a <see cref="MigrationAssessmentServerCollectorCollection"/> instance call the GetMigrationAssessmentServerCollectors method from an instance of <see cref="MigrationAssessmentAssessmentProjectResource"/>.
+    /// Each <see cref="MigrationAssessmentServerCollectorResource"/> in the collection will belong to the same instance of <see cref="MigrationAssessmentProjectResource"/>.
+    /// To get a <see cref="MigrationAssessmentServerCollectorCollection"/> instance call the GetMigrationAssessmentServerCollectors method from an instance of <see cref="MigrationAssessmentProjectResource"/>.
     /// </summary>
     public partial class MigrationAssessmentServerCollectorCollection : ArmCollection, IEnumerable<MigrationAssessmentServerCollectorResource>, IAsyncEnumerable<MigrationAssessmentServerCollectorResource>
     {
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Migration.Assessment
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != MigrationAssessmentAssessmentProjectResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MigrationAssessmentAssessmentProjectResource.ResourceType), nameof(id));
+            if (id.ResourceType != MigrationAssessmentProjectResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MigrationAssessmentProjectResource.ResourceType), nameof(id));
         }
 
         /// <summary>

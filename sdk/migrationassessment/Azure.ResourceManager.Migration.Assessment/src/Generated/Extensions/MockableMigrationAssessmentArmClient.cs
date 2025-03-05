@@ -35,39 +35,39 @@ namespace Azure.ResourceManager.Migration.Assessment.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentAssessmentProjectResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentAssessmentProjectResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentAssessmentProjectResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MigrationAssessmentProjectResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAssessmentProjectResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentProjectResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrationAssessmentAssessmentProjectResource"/> object. </returns>
-        public virtual MigrationAssessmentAssessmentProjectResource GetMigrationAssessmentAssessmentProjectResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAssessmentProjectResource"/> object. </returns>
+        public virtual MigrationAssessmentProjectResource GetMigrationAssessmentProjectResource(ResourceIdentifier id)
         {
-            MigrationAssessmentAssessmentProjectResource.ValidateResourceId(id);
-            return new MigrationAssessmentAssessmentProjectResource(Client, id);
+            MigrationAssessmentProjectResource.ValidateResourceId(id);
+            return new MigrationAssessmentProjectResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentAssessmentOptionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentAssessmentOptionResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentAssessmentOptionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MigrationAssessmentOptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAssessmentOptionResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentOptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrationAssessmentAssessmentOptionResource"/> object. </returns>
-        public virtual MigrationAssessmentAssessmentOptionResource GetMigrationAssessmentAssessmentOptionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAssessmentOptionResource"/> object. </returns>
+        public virtual MigrationAssessmentOptionResource GetMigrationAssessmentOptionResource(ResourceIdentifier id)
         {
-            MigrationAssessmentAssessmentOptionResource.ValidateResourceId(id);
-            return new MigrationAssessmentAssessmentOptionResource(Client, id);
+            MigrationAssessmentOptionResource.ValidateResourceId(id);
+            return new MigrationAssessmentOptionResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentAvsAssessmentOptionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentAvsAssessmentOptionResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentAvsAssessmentOptionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MigrationAvsAssessmentOptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAvsAssessmentOptionResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAvsAssessmentOptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrationAssessmentAvsAssessmentOptionResource"/> object. </returns>
-        public virtual MigrationAssessmentAvsAssessmentOptionResource GetMigrationAssessmentAvsAssessmentOptionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAvsAssessmentOptionResource"/> object. </returns>
+        public virtual MigrationAvsAssessmentOptionResource GetMigrationAvsAssessmentOptionResource(ResourceIdentifier id)
         {
-            MigrationAssessmentAvsAssessmentOptionResource.ValidateResourceId(id);
-            return new MigrationAssessmentAvsAssessmentOptionResource(Client, id);
+            MigrationAvsAssessmentOptionResource.ValidateResourceId(id);
+            return new MigrationAvsAssessmentOptionResource(Client, id);
         }
 
         /// <summary>
@@ -83,123 +83,123 @@ namespace Azure.ResourceManager.Migration.Assessment.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentAssessmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentAssessmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MigrationAssessmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrationAssessmentAssessmentResource"/> object. </returns>
-        public virtual MigrationAssessmentAssessmentResource GetMigrationAssessmentAssessmentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAssessmentResource"/> object. </returns>
+        public virtual MigrationAssessmentResource GetMigrationAssessmentResource(ResourceIdentifier id)
         {
-            MigrationAssessmentAssessmentResource.ValidateResourceId(id);
-            return new MigrationAssessmentAssessmentResource(Client, id);
+            MigrationAssessmentResource.ValidateResourceId(id);
+            return new MigrationAssessmentResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AssessedMachineResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssessedMachineResource.CreateResourceIdentifier" /> to create an <see cref="AssessedMachineResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MigrationAssessedMachineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAssessedMachineResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessedMachineResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AssessedMachineResource"/> object. </returns>
-        public virtual AssessedMachineResource GetAssessedMachineResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAssessedMachineResource"/> object. </returns>
+        public virtual MigrationAssessedMachineResource GetMigrationAssessedMachineResource(ResourceIdentifier id)
         {
-            AssessedMachineResource.ValidateResourceId(id);
-            return new AssessedMachineResource(Client, id);
+            MigrationAssessedMachineResource.ValidateResourceId(id);
+            return new MigrationAssessedMachineResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentAvsAssessmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentAvsAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentAvsAssessmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MigrationAvsAssessmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAvsAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAvsAssessmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrationAssessmentAvsAssessmentResource"/> object. </returns>
-        public virtual MigrationAssessmentAvsAssessmentResource GetMigrationAssessmentAvsAssessmentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAvsAssessmentResource"/> object. </returns>
+        public virtual MigrationAvsAssessmentResource GetMigrationAvsAssessmentResource(ResourceIdentifier id)
         {
-            MigrationAssessmentAvsAssessmentResource.ValidateResourceId(id);
-            return new MigrationAssessmentAvsAssessmentResource(Client, id);
+            MigrationAvsAssessmentResource.ValidateResourceId(id);
+            return new MigrationAvsAssessmentResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentAvsAssessedMachineResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentAvsAssessedMachineResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentAvsAssessedMachineResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MigrationAvsAssessedMachineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAvsAssessedMachineResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAvsAssessedMachineResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrationAssessmentAvsAssessedMachineResource"/> object. </returns>
-        public virtual MigrationAssessmentAvsAssessedMachineResource GetMigrationAssessmentAvsAssessedMachineResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAvsAssessedMachineResource"/> object. </returns>
+        public virtual MigrationAvsAssessedMachineResource GetMigrationAvsAssessedMachineResource(ResourceIdentifier id)
         {
-            MigrationAssessmentAvsAssessedMachineResource.ValidateResourceId(id);
-            return new MigrationAssessmentAvsAssessedMachineResource(Client, id);
+            MigrationAvsAssessedMachineResource.ValidateResourceId(id);
+            return new MigrationAvsAssessedMachineResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentSqlAssessmentV2Resource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentSqlAssessmentV2Resource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentSqlAssessmentV2Resource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MigrationSqlAssessmentV2Resource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationSqlAssessmentV2Resource.CreateResourceIdentifier" /> to create a <see cref="MigrationSqlAssessmentV2Resource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrationAssessmentSqlAssessmentV2Resource"/> object. </returns>
-        public virtual MigrationAssessmentSqlAssessmentV2Resource GetMigrationAssessmentSqlAssessmentV2Resource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationSqlAssessmentV2Resource"/> object. </returns>
+        public virtual MigrationSqlAssessmentV2Resource GetMigrationSqlAssessmentV2Resource(ResourceIdentifier id)
         {
-            MigrationAssessmentSqlAssessmentV2Resource.ValidateResourceId(id);
-            return new MigrationAssessmentSqlAssessmentV2Resource(Client, id);
+            MigrationSqlAssessmentV2Resource.ValidateResourceId(id);
+            return new MigrationSqlAssessmentV2Resource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AssessedSqlDatabaseV2Resource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssessedSqlDatabaseV2Resource.CreateResourceIdentifier" /> to create an <see cref="AssessedSqlDatabaseV2Resource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MigrationAssessedSqlDatabaseV2Resource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAssessedSqlDatabaseV2Resource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessedSqlDatabaseV2Resource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AssessedSqlDatabaseV2Resource"/> object. </returns>
-        public virtual AssessedSqlDatabaseV2Resource GetAssessedSqlDatabaseV2Resource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAssessedSqlDatabaseV2Resource"/> object. </returns>
+        public virtual MigrationAssessedSqlDatabaseV2Resource GetMigrationAssessedSqlDatabaseV2Resource(ResourceIdentifier id)
         {
-            AssessedSqlDatabaseV2Resource.ValidateResourceId(id);
-            return new AssessedSqlDatabaseV2Resource(Client, id);
+            MigrationAssessedSqlDatabaseV2Resource.ValidateResourceId(id);
+            return new MigrationAssessedSqlDatabaseV2Resource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AssessedSqlInstanceV2Resource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssessedSqlInstanceV2Resource.CreateResourceIdentifier" /> to create an <see cref="AssessedSqlInstanceV2Resource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MigrationAssessedSqlInstanceV2Resource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAssessedSqlInstanceV2Resource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessedSqlInstanceV2Resource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AssessedSqlInstanceV2Resource"/> object. </returns>
-        public virtual AssessedSqlInstanceV2Resource GetAssessedSqlInstanceV2Resource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAssessedSqlInstanceV2Resource"/> object. </returns>
+        public virtual MigrationAssessedSqlInstanceV2Resource GetMigrationAssessedSqlInstanceV2Resource(ResourceIdentifier id)
         {
-            AssessedSqlInstanceV2Resource.ValidateResourceId(id);
-            return new AssessedSqlInstanceV2Resource(Client, id);
+            MigrationAssessedSqlInstanceV2Resource.ValidateResourceId(id);
+            return new MigrationAssessedSqlInstanceV2Resource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AssessedSqlMachineResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssessedSqlMachineResource.CreateResourceIdentifier" /> to create an <see cref="AssessedSqlMachineResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MigrationAssessedSqlMachineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAssessedSqlMachineResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessedSqlMachineResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AssessedSqlMachineResource"/> object. </returns>
-        public virtual AssessedSqlMachineResource GetAssessedSqlMachineResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAssessedSqlMachineResource"/> object. </returns>
+        public virtual MigrationAssessedSqlMachineResource GetMigrationAssessedSqlMachineResource(ResourceIdentifier id)
         {
-            AssessedSqlMachineResource.ValidateResourceId(id);
-            return new AssessedSqlMachineResource(Client, id);
+            MigrationAssessedSqlMachineResource.ValidateResourceId(id);
+            return new MigrationAssessedSqlMachineResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AssessedSqlRecommendedEntityResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssessedSqlRecommendedEntityResource.CreateResourceIdentifier" /> to create an <see cref="AssessedSqlRecommendedEntityResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MigrationAssessedSqlRecommendedEntityResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAssessedSqlRecommendedEntityResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessedSqlRecommendedEntityResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AssessedSqlRecommendedEntityResource"/> object. </returns>
-        public virtual AssessedSqlRecommendedEntityResource GetAssessedSqlRecommendedEntityResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAssessedSqlRecommendedEntityResource"/> object. </returns>
+        public virtual MigrationAssessedSqlRecommendedEntityResource GetMigrationAssessedSqlRecommendedEntityResource(ResourceIdentifier id)
         {
-            AssessedSqlRecommendedEntityResource.ValidateResourceId(id);
-            return new AssessedSqlRecommendedEntityResource(Client, id);
+            MigrationAssessedSqlRecommendedEntityResource.ValidateResourceId(id);
+            return new MigrationAssessedSqlRecommendedEntityResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentSqlAssessmentV2SummaryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentSqlAssessmentV2SummaryResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentSqlAssessmentV2SummaryResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MigrationSqlAssessmentV2SummaryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationSqlAssessmentV2SummaryResource.CreateResourceIdentifier" /> to create a <see cref="MigrationSqlAssessmentV2SummaryResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrationAssessmentSqlAssessmentV2SummaryResource"/> object. </returns>
-        public virtual MigrationAssessmentSqlAssessmentV2SummaryResource GetMigrationAssessmentSqlAssessmentV2SummaryResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationSqlAssessmentV2SummaryResource"/> object. </returns>
+        public virtual MigrationSqlAssessmentV2SummaryResource GetMigrationSqlAssessmentV2SummaryResource(ResourceIdentifier id)
         {
-            MigrationAssessmentSqlAssessmentV2SummaryResource.ValidateResourceId(id);
-            return new MigrationAssessmentSqlAssessmentV2SummaryResource(Client, id);
+            MigrationSqlAssessmentV2SummaryResource.ValidateResourceId(id);
+            return new MigrationSqlAssessmentV2SummaryResource(Client, id);
         }
 
         /// <summary>
@@ -263,15 +263,15 @@ namespace Azure.ResourceManager.Migration.Assessment.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentAssessmentProjectSummaryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentAssessmentProjectSummaryResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentAssessmentProjectSummaryResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MigrationAssessmentProjectSummaryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationAssessmentProjectSummaryResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentProjectSummaryResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrationAssessmentAssessmentProjectSummaryResource"/> object. </returns>
-        public virtual MigrationAssessmentAssessmentProjectSummaryResource GetMigrationAssessmentAssessmentProjectSummaryResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationAssessmentProjectSummaryResource"/> object. </returns>
+        public virtual MigrationAssessmentProjectSummaryResource GetMigrationAssessmentProjectSummaryResource(ResourceIdentifier id)
         {
-            MigrationAssessmentAssessmentProjectSummaryResource.ValidateResourceId(id);
-            return new MigrationAssessmentAssessmentProjectSummaryResource(Client, id);
+            MigrationAssessmentProjectSummaryResource.ValidateResourceId(id);
+            return new MigrationAssessmentProjectSummaryResource(Client, id);
         }
 
         /// <summary>
@@ -287,15 +287,15 @@ namespace Azure.ResourceManager.Migration.Assessment.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationAssessmentSqlAssessmentOptionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationAssessmentSqlAssessmentOptionResource.CreateResourceIdentifier" /> to create a <see cref="MigrationAssessmentSqlAssessmentOptionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MigrationSqlAssessmentOptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationSqlAssessmentOptionResource.CreateResourceIdentifier" /> to create a <see cref="MigrationSqlAssessmentOptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrationAssessmentSqlAssessmentOptionResource"/> object. </returns>
-        public virtual MigrationAssessmentSqlAssessmentOptionResource GetMigrationAssessmentSqlAssessmentOptionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationSqlAssessmentOptionResource"/> object. </returns>
+        public virtual MigrationSqlAssessmentOptionResource GetMigrationSqlAssessmentOptionResource(ResourceIdentifier id)
         {
-            MigrationAssessmentSqlAssessmentOptionResource.ValidateResourceId(id);
-            return new MigrationAssessmentSqlAssessmentOptionResource(Client, id);
+            MigrationSqlAssessmentOptionResource.ValidateResourceId(id);
+            return new MigrationSqlAssessmentOptionResource(Client, id);
         }
 
         /// <summary>

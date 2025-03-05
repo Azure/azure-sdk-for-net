@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <summary> Initializes a new instance of <see cref="AssessedSqlDatabaseV2ListResult"/>. </summary>
         /// <param name="value"> The AssessedSqlDatabaseV2 items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AssessedSqlDatabaseV2ListResult(IEnumerable<AssessedSqlDatabaseV2Data> value)
+        internal AssessedSqlDatabaseV2ListResult(IEnumerable<MigrationAssessedSqlDatabaseV2Data> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="value"> The AssessedSqlDatabaseV2 items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssessedSqlDatabaseV2ListResult(IReadOnlyList<AssessedSqlDatabaseV2Data> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssessedSqlDatabaseV2ListResult(IReadOnlyList<MigrationAssessedSqlDatabaseV2Data> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         }
 
         /// <summary> The AssessedSqlDatabaseV2 items on this page. </summary>
-        public IReadOnlyList<AssessedSqlDatabaseV2Data> Value { get; }
+        public IReadOnlyList<MigrationAssessedSqlDatabaseV2Data> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

@@ -166,12 +166,12 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             {
                 return null;
             }
-            AzureSqlPaasSkuDto azureSqlSku = default;
-            IReadOnlyList<AzureSqlPaasSkuDto> replicaAzureSqlSku = default;
+            AssessmentSqlPaasSkuDto azureSqlSku = default;
+            IReadOnlyList<AssessmentSqlPaasSkuDto> replicaAzureSqlSku = default;
             SharedResourcesDto sharedResources = default;
             double? monthlyComputeCost = default;
             double? monthlyStorageCost = default;
-            IReadOnlyList<CostComponent> costComponents = default;
+            IReadOnlyList<AssessmentCostComponent> costComponents = default;
             MigrationAssessmentCloudSuitability? securitySuitability = default;
             bool? shouldProvisionReplicas = default;
             SkuReplicationMode? skuReplicationMode = default;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                     {
                         continue;
                     }
-                    azureSqlSku = AzureSqlPaasSkuDto.DeserializeAzureSqlPaasSkuDto(property.Value, options);
+                    azureSqlSku = AssessmentSqlPaasSkuDto.DeserializeAssessmentSqlPaasSkuDto(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("replicaAzureSqlSku"u8))
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                     {
                         continue;
                     }
-                    List<AzureSqlPaasSkuDto> array = new List<AzureSqlPaasSkuDto>();
+                    List<AssessmentSqlPaasSkuDto> array = new List<AssessmentSqlPaasSkuDto>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureSqlPaasSkuDto.DeserializeAzureSqlPaasSkuDto(item, options));
+                        array.Add(AssessmentSqlPaasSkuDto.DeserializeAssessmentSqlPaasSkuDto(item, options));
                     }
                     replicaAzureSqlSku = array;
                     continue;
@@ -240,10 +240,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                     {
                         continue;
                     }
-                    List<CostComponent> array = new List<CostComponent>();
+                    List<AssessmentCostComponent> array = new List<AssessmentCostComponent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CostComponent.DeserializeCostComponent(item, options));
+                        array.Add(AssessmentCostComponent.DeserializeAssessmentCostComponent(item, options));
                     }
                     costComponents = array;
                     continue;
@@ -343,11 +343,11 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new SqlAssessmentV2PaasSuitabilityDetails(
                 azureSqlSku,
-                replicaAzureSqlSku ?? new ChangeTrackingList<AzureSqlPaasSkuDto>(),
+                replicaAzureSqlSku ?? new ChangeTrackingList<AssessmentSqlPaasSkuDto>(),
                 sharedResources,
                 monthlyComputeCost,
                 monthlyStorageCost,
-                costComponents ?? new ChangeTrackingList<CostComponent>(),
+                costComponents ?? new ChangeTrackingList<AssessmentCostComponent>(),
                 securitySuitability,
                 shouldProvisionReplicas,
                 skuReplicationMode,

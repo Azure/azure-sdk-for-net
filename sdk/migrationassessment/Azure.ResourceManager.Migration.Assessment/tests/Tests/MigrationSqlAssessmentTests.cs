@@ -28,55 +28,49 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             ResourceGroupResource rg = await DefaultSubscription.GetResourceGroups().GetAsync("dhlodhiCCY");
 
             var response =
-                await rg.GetMigrationAssessmentAssessmentProjectAsync("sql-ecy-05197632project");
+                await rg.GetMigrationAssessmentProjectAsync("sql-ecy-05197632project");
             var assessmentProjectResource = response.Value;
             Assert.IsNotNull(assessmentProjectResource);
 
             var collection = await assessmentProjectResource.GetMigrationAssessmentGroupAsync("suyashtest");
 
-            var assessmentCollection = collection.Value.GetMigrationAssessmentSqlAssessmentV2s();
+            var assessmentCollection = collection.Value.GetMigrationSqlAssessmentV2s();
 
             // Create Sql Assessment
             string assessmentName = "Sql-asm0";
-            MigrationAssessmentSqlAssessmentV2Data asmData = new MigrationAssessmentSqlAssessmentV2Data()
+            MigrationSqlAssessmentV2Data asmData = new MigrationSqlAssessmentV2Data()
             {
                 ProvisioningState = MigrationAssessmentProvisioningState.Succeeded,
                 OSLicense = MigrationAssessmentOSLicense.Unknown,
                 EnvironmentType = AssessmentEnvironmentType.Production,
                 OptimizationLogic = SqlOptimizationLogic.MinimizeCost,
-                ReservedInstanceForVm = AzureReservedInstance.None,
+                ReservedInstanceForVm = AssessmentReservedInstance.None,
                 GroupType = MigrationAssessmentGroupType.Default,
-                AssessmentType = AssessmentType.SqlAssessment,
-                SqlServerLicense = SqlServerLicense.Unknown,
-                ReservedInstance = AzureReservedInstance.None,
-                AzureSecurityOfferingType = AzureSecurityOfferingType.NO,
+                AssessmentType = MigrationAssessmentType.SqlAssessment,
+                SqlServerLicense = AssessmentSqlServerLicense.Unknown,
+                ReservedInstance = AssessmentReservedInstance.None,
+                AzureSecurityOfferingType = AssessmentSecurityOfferingType.No,
                 EnableHadrAssessment = false,
                 IsInternetAccessAvailable = true,
-                AzureSqlVmSettings = new SqlVmSettings()
-                {
-                    InstanceSeries = new List<AzureVmFamily>()
-                    {
-                        AzureVmFamily.MSeries
-                    }
-                },
+                AzureSqlVmSettings = new AssessmentSqlVmSettings(),
                 MultiSubnetIntent = MultiSubnetIntent.None,
                 AsyncCommitModeIntent = AsyncCommitModeIntent.None,
-                AzureSqlDatabaseSettings = new SqlDBSettings()
+                AzureSqlDatabaseSettings = new AssessmentSqlDBSettings()
                 {
                     AzureSqlComputeTier = MigrationAssessmentComputeTier.Automatic,
-                    AzureSqlDataBaseType = AzureSqlDataBaseType.Automatic,
-                    AzureSqlServiceTier = AzureSqlServiceTier.Automatic,
-                    AzureSqlPurchaseModel = AzureSqlPurchaseModel.VCore,
+                    AzureSqlDataBaseType = AssessmentSqlDataBaseType.Automatic,
+                    AzureSqlServiceTier = AssessmentSqlServiceTier.Automatic,
+                    AzureSqlPurchaseModel = AssessmentSqlPurchaseModel.VCore,
                 },
-                AzureSqlManagedInstanceSettings = new SqlMISettings()
+                AzureSqlManagedInstanceSettings = new AssessmentSqlMISettings()
                 {
-                    AzureSqlInstanceType = AzureSqlInstanceType.Automatic,
-                    AzureSqlServiceTier = AzureSqlServiceTier.Automatic
+                    AzureSqlInstanceType = AssessmentSqlInstanceType.Automatic,
+                    AzureSqlServiceTier = AssessmentSqlServiceTier.Automatic
                 },
-                Currency = AzureCurrency.USD,
+                Currency = AssessmentCurrency.USD,
                 AzureLocation = AzureLocation.SouthCentralUS,
-                AzureOfferCode = AzureOfferCode.MSAZR0023P,
-                AzureOfferCodeForVm = AzureOfferCode.MSAZR0023P,
+                AzureOfferCode = AssessmentOfferCode.MSAZR0023P,
+                AzureOfferCodeForVm = AssessmentOfferCode.MSAZR0023P,
                 ScalingFactor = 2,
                 Percentile = PercentileOfUtilization.Percentile50,
                 TimeRange = AssessmentTimeRange.Month,
@@ -85,6 +79,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
                 DiscountPercentage = 10,
                 SizingCriterion = AssessmentSizingCriterion.PerformanceBased
             };
+            asmData.AzureSqlVmSettings.InstanceSeries.Add(AssessmentVmFamily.MSeries);
 
             var assessmentResponse = await assessmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, assessmentName, asmData);
             var assessmentResource = assessmentResponse.Value;
@@ -113,43 +108,43 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             Assert.IsNotNull(downloadReportResponse.Value.AssessmentReportUri);
 
             // Get Assessed Machines
-            var assessedMachines = await assessmentResource.GetAssessedSqlMachines().ToEnumerableAsync();
+            var assessedMachines = await assessmentResource.GetMigrationAssessedSqlMachines().ToEnumerableAsync();
             Assert.IsNotNull(assessedMachines);
             Assert.GreaterOrEqual(assessedMachines.Count, 1);
 
             // Get an Assessed Machine
-            var assessedMachine = await assessmentResource.GetAssessedSqlMachineAsync(assessedMachines.First().Data.Name);
+            var assessedMachine = await assessmentResource.GetMigrationAssessedSqlMachineAsync(assessedMachines.First().Data.Name);
             Assert.IsNotNull(assessedMachine);
 
             // Get Assessed DBs
-            var assessedDBs = await assessmentResource.GetAssessedSqlDatabaseV2s().ToEnumerableAsync();
+            var assessedDBs = await assessmentResource.GetMigrationAssessedSqlDatabaseV2s().ToEnumerableAsync();
             Assert.IsNotNull(assessedDBs);
             Assert.GreaterOrEqual(assessedDBs.Count, 1);
 
             // Get an Assessed DB
-            var assessedDB = await assessmentResource.GetAssessedSqlDatabaseV2Async(assessedDBs.First().Data.Name);
+            var assessedDB = await assessmentResource.GetMigrationAssessedSqlDatabaseV2Async(assessedDBs.First().Data.Name);
             Assert.IsNotNull(assessedDB);
 
             // Get Assessed Instances
-            var assessedInstances = await assessmentResource.GetAssessedSqlInstanceV2s().ToEnumerableAsync();
+            var assessedInstances = await assessmentResource.GetMigrationAssessedSqlInstanceV2s().ToEnumerableAsync();
             Assert.IsNotNull(assessedInstances);
             Assert.GreaterOrEqual(assessedInstances.Count, 1);
 
             // Get an Assessed Machine
-            var assessedInstance = await assessmentResource.GetAssessedSqlInstanceV2Async(assessedInstances.First().Data.Name);
+            var assessedInstance = await assessmentResource.GetMigrationAssessedSqlInstanceV2Async(assessedInstances.First().Data.Name);
             Assert.IsNotNull(assessedInstance);
 
             // Get Assessed Machines
-            var recommendedEntities = await assessmentResource.GetAssessedSqlRecommendedEntities().ToEnumerableAsync();
+            var recommendedEntities = await assessmentResource.GetMigrationAssessedSqlRecommendedEntities().ToEnumerableAsync();
             Assert.IsNotNull(recommendedEntities);
             Assert.GreaterOrEqual(recommendedEntities.Count, 1);
 
             // Get an Assessed Machine
-            var recommendedEntity = await assessmentResource.GetAssessedSqlRecommendedEntityAsync(recommendedEntities.First().Data.Name);
+            var recommendedEntity = await assessmentResource.GetMigrationAssessedSqlRecommendedEntityAsync(recommendedEntities.First().Data.Name);
             Assert.IsNotNull(recommendedEntity);
 
             // Get Assessment Summary
-            var assessmentSummary = await assessmentResource.GetMigrationAssessmentSqlAssessmentV2SummaryAsync("default");
+            var assessmentSummary = await assessmentResource.GetMigrationSqlAssessmentV2SummaryAsync("default");
             Assert.IsNotNull(assessmentSummary);
 
             // Delete Assessment
@@ -166,10 +161,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             ResourceGroupResource rg = await DefaultSubscription.GetResourceGroups().GetAsync("dhlodhiCCY");
 
             var response =
-                await rg.GetMigrationAssessmentAssessmentProjectAsync("sql-ecy-05197632project");
+                await rg.GetMigrationAssessmentProjectAsync("sql-ecy-05197632project");
             var assessmentProjectResource = response.Value;
             Assert.IsNotNull(assessmentProjectResource);
-            MigrationAssessmentSqlAssessmentOptionCollection collection = assessmentProjectResource.GetMigrationAssessmentSqlAssessmentOptions();
+            MigrationSqlAssessmentOptionCollection collection = assessmentProjectResource.GetMigrationSqlAssessmentOptions();
 
             // Get Assessment Options
             var assessmentOptionResponse = await collection.GetAsync(assessmentOptionsName);

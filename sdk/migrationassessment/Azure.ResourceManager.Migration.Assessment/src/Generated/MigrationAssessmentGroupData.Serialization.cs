@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Migration.Assessment
             MigrationAssessmentGroupStatus? groupStatus = default;
             int? machineCount = default;
             IReadOnlyList<string> assessments = default;
-            IList<AssessmentType> supportedAssessmentTypes = default;
+            IList<MigrationAssessmentType> supportedAssessmentTypes = default;
             bool? areAssessmentsRunning = default;
             DateTimeOffset? createdTimestamp = default;
             DateTimeOffset? updatedTimestamp = default;
@@ -214,10 +214,10 @@ namespace Azure.ResourceManager.Migration.Assessment
                             {
                                 continue;
                             }
-                            List<AssessmentType> array = new List<AssessmentType>();
+                            List<MigrationAssessmentType> array = new List<MigrationAssessmentType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new AssessmentType(item.GetString()));
+                                array.Add(new MigrationAssessmentType(item.GetString()));
                             }
                             supportedAssessmentTypes = array;
                             continue;
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Migration.Assessment
                 groupStatus,
                 machineCount,
                 assessments ?? new ChangeTrackingList<string>(),
-                supportedAssessmentTypes ?? new ChangeTrackingList<AssessmentType>(),
+                supportedAssessmentTypes ?? new ChangeTrackingList<MigrationAssessmentType>(),
                 areAssessmentsRunning,
                 createdTimestamp,
                 updatedTimestamp,

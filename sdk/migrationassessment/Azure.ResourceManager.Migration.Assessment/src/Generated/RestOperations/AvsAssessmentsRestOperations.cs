@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/> or <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/> or <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MigrationAssessmentAvsAssessmentData>> GetAsync(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, CancellationToken cancellationToken = default)
+        public async Task<Response<MigrationAvsAssessmentData>> GetAsync(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -203,13 +203,13 @@ namespace Azure.ResourceManager.Migration.Assessment
             {
                 case 200:
                     {
-                        MigrationAssessmentAvsAssessmentData value = default;
+                        MigrationAvsAssessmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MigrationAssessmentAvsAssessmentData.DeserializeMigrationAssessmentAvsAssessmentData(document.RootElement);
+                        value = MigrationAvsAssessmentData.DeserializeMigrationAvsAssessmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MigrationAssessmentAvsAssessmentData)null, message.Response);
+                    return Response.FromValue((MigrationAvsAssessmentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/> or <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/> or <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MigrationAssessmentAvsAssessmentData> Get(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, CancellationToken cancellationToken = default)
+        public Response<MigrationAvsAssessmentData> Get(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -238,19 +238,19 @@ namespace Azure.ResourceManager.Migration.Assessment
             {
                 case 200:
                     {
-                        MigrationAssessmentAvsAssessmentData value = default;
+                        MigrationAvsAssessmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MigrationAssessmentAvsAssessmentData.DeserializeMigrationAssessmentAvsAssessmentData(document.RootElement);
+                        value = MigrationAvsAssessmentData.DeserializeMigrationAvsAssessmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MigrationAssessmentAvsAssessmentData)null, message.Response);
+                    return Response.FromValue((MigrationAvsAssessmentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, MigrationAssessmentAvsAssessmentData data)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, MigrationAvsAssessmentData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Migration.Assessment
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, MigrationAssessmentAvsAssessmentData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, MigrationAvsAssessmentData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/>, <paramref name="assessmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/> or <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, MigrationAssessmentAvsAssessmentData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, MigrationAvsAssessmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/>, <paramref name="assessmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/> or <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, MigrationAssessmentAvsAssessmentData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, MigrationAvsAssessmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

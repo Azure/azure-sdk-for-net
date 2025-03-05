@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMigrationAssessmentModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessmentAssessmentProjectData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessmentProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// The ARM id of the storage account used for interactions when public access is
         /// disabled.
         /// </param>
-        /// <returns> A new <see cref="Assessment.MigrationAssessmentAssessmentProjectData"/> instance for mocking. </returns>
-        public static MigrationAssessmentAssessmentProjectData MigrationAssessmentAssessmentProjectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MigrationAssessmentProvisioningState? provisioningState = null, DateTimeOffset? createOn = null, DateTimeOffset? updatedOn = null, string serviceEndpoint = null, string assessmentSolutionId = null, AssessmentProjectStatus? projectStatus = null, string customerWorkspaceId = null, string customerWorkspaceLocation = null, string publicNetworkAccess = null, IEnumerable<MigrationAssessmentPrivateEndpointConnectionData> privateEndpointConnections = null, ResourceIdentifier customerStorageAccountArmId = null)
+        /// <returns> A new <see cref="Assessment.MigrationAssessmentProjectData"/> instance for mocking. </returns>
+        public static MigrationAssessmentProjectData MigrationAssessmentProjectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MigrationAssessmentProvisioningState? provisioningState = null, DateTimeOffset? createOn = null, DateTimeOffset? updatedOn = null, string serviceEndpoint = null, ResourceIdentifier assessmentSolutionId = null, AssessmentProjectStatus? projectStatus = null, ResourceIdentifier customerWorkspaceId = null, string customerWorkspaceLocation = null, string publicNetworkAccess = null, IEnumerable<MigrationAssessmentPrivateEndpointConnectionData> privateEndpointConnections = null, ResourceIdentifier customerStorageAccountArmId = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<MigrationAssessmentPrivateEndpointConnectionData>();
 
-            return new MigrationAssessmentAssessmentProjectData(
+            return new MigrationAssessmentProjectData(
                 id,
                 name,
                 resourceType,
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessmentAssessmentOptionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessmentOptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="premiumDiskVmFamilies"> List of VM Families that support premium disks for assessments. </param>
         /// <param name="savingsPlanVmFamilies"> List of VM Families that support Savings plan offer for assessments. </param>
         /// <param name="savingsPlanSupportedLocations"> List of Azure locations that support Savings plan offer for assessments. </param>
-        /// <returns> A new <see cref="Assessment.MigrationAssessmentAssessmentOptionData"/> instance for mocking. </returns>
-        public static MigrationAssessmentAssessmentOptionData MigrationAssessmentAssessmentOptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<VmFamilyConfig> vmFamilies = null, IEnumerable<string> reservedInstanceVmFamilies = null, IEnumerable<string> reservedInstanceSupportedLocations = null, IEnumerable<string> reservedInstanceSupportedCurrencies = null, IEnumerable<string> reservedInstanceSupportedOffers = null, IEnumerable<UltraDiskAssessmentConfig> ultraDiskVmFamilies = null, IEnumerable<string> premiumDiskVmFamilies = null, IEnumerable<string> savingsPlanVmFamilies = null, IEnumerable<string> savingsPlanSupportedLocations = null)
+        /// <returns> A new <see cref="Assessment.MigrationAssessmentOptionData"/> instance for mocking. </returns>
+        public static MigrationAssessmentOptionData MigrationAssessmentOptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<AssessmentVmFamilyConfig> vmFamilies = null, IEnumerable<string> reservedInstanceVmFamilies = null, IEnumerable<string> reservedInstanceSupportedLocations = null, IEnumerable<string> reservedInstanceSupportedCurrencies = null, IEnumerable<string> reservedInstanceSupportedOffers = null, IEnumerable<UltraDiskAssessmentConfig> ultraDiskVmFamilies = null, IEnumerable<string> premiumDiskVmFamilies = null, IEnumerable<string> savingsPlanVmFamilies = null, IEnumerable<string> savingsPlanSupportedLocations = null)
         {
-            vmFamilies ??= new List<VmFamilyConfig>();
+            vmFamilies ??= new List<AssessmentVmFamilyConfig>();
             reservedInstanceVmFamilies ??= new List<string>();
             reservedInstanceSupportedLocations ??= new List<string>();
             reservedInstanceSupportedCurrencies ??= new List<string>();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             savingsPlanVmFamilies ??= new List<string>();
             savingsPlanSupportedLocations ??= new List<string>();
 
-            return new MigrationAssessmentAssessmentOptionData(
+            return new MigrationAssessmentOptionData(
                 id,
                 name,
                 resourceType,
@@ -145,17 +145,17 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VmFamilyConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AssessmentVmFamilyConfig"/>. </summary>
         /// <param name="familyName"> Name of the VM family. </param>
         /// <param name="targetLocations"> List of Azure regions. </param>
         /// <param name="category"> Category of the VM family. </param>
-        /// <returns> A new <see cref="Models.VmFamilyConfig"/> instance for mocking. </returns>
-        public static VmFamilyConfig VmFamilyConfig(string familyName = null, IEnumerable<string> targetLocations = null, IEnumerable<string> category = null)
+        /// <returns> A new <see cref="Models.AssessmentVmFamilyConfig"/> instance for mocking. </returns>
+        public static AssessmentVmFamilyConfig AssessmentVmFamilyConfig(string familyName = null, IEnumerable<string> targetLocations = null, IEnumerable<string> category = null)
         {
             targetLocations ??= new List<string>();
             category ??= new List<string>();
 
-            return new VmFamilyConfig(familyName, targetLocations?.ToList(), category?.ToList(), serializedAdditionalRawData: null);
+            return new AssessmentVmFamilyConfig(familyName, targetLocations?.ToList(), category?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UltraDiskAssessmentConfig"/>. </summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             return new UltraDiskAssessmentConfig(familyName, targetLocations?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessmentAvsAssessmentOptionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAvsAssessmentOptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -180,17 +180,17 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="reservedInstanceSupportedLocations"> List of supported Azure regions for reserved instances. </param>
         /// <param name="reservedInstanceSupportedCurrencies"> List of supported currencies for reserved instances. </param>
         /// <param name="reservedInstanceSupportedOffers"> List of supported Azure offer codes for reserved instances. </param>
-        /// <returns> A new <see cref="Assessment.MigrationAssessmentAvsAssessmentOptionData"/> instance for mocking. </returns>
-        public static MigrationAssessmentAvsAssessmentOptionData MigrationAssessmentAvsAssessmentOptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<AvsSkuConfig> avsNodes = null, IEnumerable<FttAndRaidLevel> failuresToTolerateAndRaidLevelValues = null, IEnumerable<AvsNodeType> reservedInstanceAvsNodes = null, IEnumerable<AzureLocation> reservedInstanceSupportedLocations = null, IEnumerable<AzureCurrency> reservedInstanceSupportedCurrencies = null, IEnumerable<AzureOfferCode> reservedInstanceSupportedOffers = null)
+        /// <returns> A new <see cref="Assessment.MigrationAvsAssessmentOptionData"/> instance for mocking. </returns>
+        public static MigrationAvsAssessmentOptionData MigrationAvsAssessmentOptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<AssessmentAvsSkuConfig> avsNodes = null, IEnumerable<FttAndRaidLevel> failuresToTolerateAndRaidLevelValues = null, IEnumerable<AssessmentAvsNodeType> reservedInstanceAvsNodes = null, IEnumerable<AzureLocation> reservedInstanceSupportedLocations = null, IEnumerable<AssessmentCurrency> reservedInstanceSupportedCurrencies = null, IEnumerable<AssessmentOfferCode> reservedInstanceSupportedOffers = null)
         {
-            avsNodes ??= new List<AvsSkuConfig>();
+            avsNodes ??= new List<AssessmentAvsSkuConfig>();
             failuresToTolerateAndRaidLevelValues ??= new List<FttAndRaidLevel>();
-            reservedInstanceAvsNodes ??= new List<AvsNodeType>();
+            reservedInstanceAvsNodes ??= new List<AssessmentAvsNodeType>();
             reservedInstanceSupportedLocations ??= new List<AzureLocation>();
-            reservedInstanceSupportedCurrencies ??= new List<AzureCurrency>();
-            reservedInstanceSupportedOffers ??= new List<AzureOfferCode>();
+            reservedInstanceSupportedCurrencies ??= new List<AssessmentCurrency>();
+            reservedInstanceSupportedOffers ??= new List<AssessmentOfferCode>();
 
-            return new MigrationAssessmentAvsAssessmentOptionData(
+            return new MigrationAvsAssessmentOptionData(
                 id,
                 name,
                 resourceType,
@@ -219,10 +219,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="updatedOn"> Time when this group was last updated. Date-Time represented in ISO-8601 format. </param>
         /// <param name="groupType"> The type of group. </param>
         /// <returns> A new <see cref="Assessment.MigrationAssessmentGroupData"/> instance for mocking. </returns>
-        public static MigrationAssessmentGroupData MigrationAssessmentGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationAssessmentProvisioningState? provisioningState = null, MigrationAssessmentGroupStatus? groupStatus = null, int? machineCount = null, IEnumerable<string> assessments = null, IEnumerable<AssessmentType> supportedAssessmentTypes = null, bool? areAssessmentsRunning = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, MigrationAssessmentGroupType? groupType = null)
+        public static MigrationAssessmentGroupData MigrationAssessmentGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationAssessmentProvisioningState? provisioningState = null, MigrationAssessmentGroupStatus? groupStatus = null, int? machineCount = null, IEnumerable<string> assessments = null, IEnumerable<MigrationAssessmentType> supportedAssessmentTypes = null, bool? areAssessmentsRunning = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, MigrationAssessmentGroupType? groupType = null)
         {
             assessments ??= new List<string>();
-            supportedAssessmentTypes ??= new List<AssessmentType>();
+            supportedAssessmentTypes ??= new List<MigrationAssessmentType>();
 
             return new MigrationAssessmentGroupData(
                 id,
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessmentAssessmentData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -318,19 +318,19 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="updatedOn"> Date and Time when assessment was last updated. </param>
         /// <param name="status"> Whether assessment is in valid state and all machines have been assessed. </param>
         /// <param name="schemaVersion"> Schema version. </param>
-        /// <returns> A new <see cref="Assessment.MigrationAssessmentAssessmentData"/> instance for mocking. </returns>
-        public static MigrationAssessmentAssessmentData MigrationAssessmentAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationAssessmentProvisioningState? provisioningState = null, IReadOnlyDictionary<string, int> assessmentErrorSummary = null, double? monthlyUltraStorageCost = null, IEnumerable<CostComponent> costComponents = null, string eaSubscriptionId = null, AzurePricingTier? azurePricingTier = null, AzureStorageRedundancy? azureStorageRedundancy = null, AzureReservedInstance? reservedInstance = null, AzureHybridUseBenefit? azureHybridUseBenefit = null, IEnumerable<AzureDiskType> azureDiskTypes = null, IEnumerable<AzureVmFamily> azureVmFamilies = null, IReadOnlyDictionary<string, int> distributionBySupportStatus = null, IReadOnlyDictionary<string, int> distributionByServicePackInsight = null, IReadOnlyDictionary<string, int> distributionByOSName = null, double? monthlyComputeCost = null, double? monthlyBandwidthCost = null, double? monthlyStorageCost = null, double? monthlyPremiumStorageCost = null, double? monthlyStandardSsdStorageCost = null, IReadOnlyDictionary<string, int> suitabilitySummary = null, int? numberOfMachines = null, VmUptime vmUptime = null, MigrationAssessmentGroupType? groupType = null, AssessmentType? assessmentType = null, AzureLocation? azureLocation = null, AzureOfferCode? azureOfferCode = null, AzureCurrency? currency = null, double? scalingFactor = null, PercentileOfUtilization? percentile = null, AssessmentTimeRange? timeRange = null, DateTimeOffset? perfDataStartOn = null, DateTimeOffset? perfDataEndOn = null, AssessmentStage? stage = null, double? discountPercentage = null, AssessmentSizingCriterion? sizingCriterion = null, double? confidenceRatingInPercentage = null, DateTimeOffset? pricesQueriedOn = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, AssessmentStatus? status = null, string schemaVersion = null)
+        /// <returns> A new <see cref="Assessment.MigrationAssessmentData"/> instance for mocking. </returns>
+        public static MigrationAssessmentData MigrationAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationAssessmentProvisioningState? provisioningState = null, IReadOnlyDictionary<string, int> assessmentErrorSummary = null, double? monthlyUltraStorageCost = null, IEnumerable<AssessmentCostComponent> costComponents = null, string eaSubscriptionId = null, AssessmentPricingTier? azurePricingTier = null, AssessmentStorageRedundancy? azureStorageRedundancy = null, AssessmentReservedInstance? reservedInstance = null, AssessmentHybridUseBenefit? azureHybridUseBenefit = null, IEnumerable<AssessmentDiskType> azureDiskTypes = null, IEnumerable<AssessmentVmFamily> azureVmFamilies = null, IReadOnlyDictionary<string, int> distributionBySupportStatus = null, IReadOnlyDictionary<string, int> distributionByServicePackInsight = null, IReadOnlyDictionary<string, int> distributionByOSName = null, double? monthlyComputeCost = null, double? monthlyBandwidthCost = null, double? monthlyStorageCost = null, double? monthlyPremiumStorageCost = null, double? monthlyStandardSsdStorageCost = null, IReadOnlyDictionary<string, int> suitabilitySummary = null, int? numberOfMachines = null, AssessmentVmUptime vmUptime = null, MigrationAssessmentGroupType? groupType = null, MigrationAssessmentType? assessmentType = null, AzureLocation? azureLocation = null, AssessmentOfferCode? azureOfferCode = null, AssessmentCurrency? currency = null, double? scalingFactor = null, PercentileOfUtilization? percentile = null, AssessmentTimeRange? timeRange = null, DateTimeOffset? perfDataStartOn = null, DateTimeOffset? perfDataEndOn = null, MigrationAssessmentStage? stage = null, double? discountPercentage = null, AssessmentSizingCriterion? sizingCriterion = null, double? confidenceRatingInPercentage = null, DateTimeOffset? pricesQueriedOn = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, MigrationAssessmentStatus? status = null, string schemaVersion = null)
         {
             assessmentErrorSummary ??= new Dictionary<string, int>();
-            costComponents ??= new List<CostComponent>();
-            azureDiskTypes ??= new List<AzureDiskType>();
-            azureVmFamilies ??= new List<AzureVmFamily>();
+            costComponents ??= new List<AssessmentCostComponent>();
+            azureDiskTypes ??= new List<AssessmentDiskType>();
+            azureVmFamilies ??= new List<AssessmentVmFamily>();
             distributionBySupportStatus ??= new Dictionary<string, int>();
             distributionByServicePackInsight ??= new Dictionary<string, int>();
             distributionByOSName ??= new Dictionary<string, int>();
             suitabilitySummary ??= new Dictionary<string, int>();
 
-            return new MigrationAssessmentAssessmentData(
+            return new MigrationAssessmentData(
                 id,
                 name,
                 resourceType,
@@ -379,17 +379,17 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CostComponent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AssessmentCostComponent"/>. </summary>
         /// <param name="name"> Gets the name of the component. </param>
         /// <param name="value"> The value of the component. </param>
         /// <param name="description"> The textual description of the component. </param>
-        /// <returns> A new <see cref="Models.CostComponent"/> instance for mocking. </returns>
-        public static CostComponent CostComponent(CostComponentName? name = null, double? value = null, string description = null)
+        /// <returns> A new <see cref="Models.AssessmentCostComponent"/> instance for mocking. </returns>
+        public static AssessmentCostComponent AssessmentCostComponent(AssessmentCostComponentName? name = null, double? value = null, string description = null)
         {
-            return new CostComponent(name, value, description, serializedAdditionalRawData: null);
+            return new AssessmentCostComponent(name, value, description, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assessment.AssessedMachineData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessedMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -444,15 +444,15 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// Gets a value indicating whether machine is suitable for the cloud platform
         /// selected.
         /// </param>
-        /// <returns> A new <see cref="Assessment.AssessedMachineData"/> instance for mocking. </returns>
-        public static AssessedMachineData AssessedMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<MigrationAssessmentError> errors = null, IReadOnlyDictionary<string, AssessedDisk> disks = null, double? monthlyUltraStorageCost = null, ProcessorInfo hostProcessor = null, IEnumerable<CostComponent> costComponents = null, ProductSupportStatus productSupportStatus = null, double? monthlyBandwidthCost = null, double? monthlyStorageCost = null, double? monthlyPremiumStorageCost = null, double? monthlyStandardSsdStorageCost = null, IReadOnlyDictionary<string, AssessedNetworkAdapter> networkAdapters = null, AzureVmSize? recommendedSize = null, int? numberOfCoresForRecommendedSize = null, double? megabytesOfMemoryForRecommendedSize = null, double? monthlyComputeCostForRecommendedSize = null, AzureVmSuitabilityExplanation? suitabilityExplanation = null, AzureVmSuitabilityDetail? suitabilityDetail = null, AssessedMachineType? typePropertiesType = null, MachineBootType? bootType = null, string operatingSystemType = null, string operatingSystemName = null, string operatingSystemVersion = null, GuestOperatingSystemArchitecture? operatingSystemArchitecture = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string displayName = null, string description = null, ResourceIdentifier datacenterMachineArmId = null, ResourceIdentifier datacenterManagementServerArmId = null, string datacenterManagementServerName = null, double? megabytesOfMemory = null, int? numberOfCores = null, double? confidenceRatingInPercentage = null, double? percentageCoresUtilization = null, double? percentageMemoryUtilization = null, MigrationAssessmentCloudSuitability? suitability = null)
+        /// <returns> A new <see cref="Assessment.MigrationAssessedMachineData"/> instance for mocking. </returns>
+        public static MigrationAssessedMachineData MigrationAssessedMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<MigrationAssessmentError> errors = null, IReadOnlyDictionary<string, MigrationAssessedDisk> disks = null, double? monthlyUltraStorageCost = null, AssessedMachineProcessorInfo hostProcessor = null, IEnumerable<AssessmentCostComponent> costComponents = null, AssessmentProductSupportStatus productSupportStatus = null, double? monthlyBandwidthCost = null, double? monthlyStorageCost = null, double? monthlyPremiumStorageCost = null, double? monthlyStandardSsdStorageCost = null, IReadOnlyDictionary<string, AssessedNetworkAdapter> networkAdapters = null, AssessmentVmSize? recommendedSize = null, int? numberOfCoresForRecommendedSize = null, double? megabytesOfMemoryForRecommendedSize = null, double? monthlyComputeCostForRecommendedSize = null, AssessmentVmSuitabilityExplanation? suitabilityExplanation = null, AssessmentVmSuitabilityDetail? suitabilityDetail = null, MigrationAssessedMachineType? typePropertiesType = null, AssessedMachineBootType? bootType = null, string operatingSystemType = null, string operatingSystemName = null, string operatingSystemVersion = null, GuestOperatingSystemArchitecture? operatingSystemArchitecture = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string displayName = null, string description = null, ResourceIdentifier datacenterMachineArmId = null, ResourceIdentifier datacenterManagementServerArmId = null, string datacenterManagementServerName = null, double? megabytesOfMemory = null, int? numberOfCores = null, double? confidenceRatingInPercentage = null, double? percentageCoresUtilization = null, double? percentageMemoryUtilization = null, MigrationAssessmentCloudSuitability? suitability = null)
         {
             errors ??= new List<MigrationAssessmentError>();
-            disks ??= new Dictionary<string, AssessedDisk>();
-            costComponents ??= new List<CostComponent>();
+            disks ??= new Dictionary<string, MigrationAssessedDisk>();
+            costComponents ??= new List<AssessmentCostComponent>();
             networkAdapters ??= new Dictionary<string, AssessedNetworkAdapter>();
 
-            return new AssessedMachineData(
+            return new MigrationAssessedMachineData(
                 id,
                 name,
                 resourceType,
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AssessedDisk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrationAssessedDisk"/>. </summary>
         /// <param name="suitability"> Gets the suitability. </param>
         /// <param name="suitabilityExplanation"> Gets the suitability explanation. </param>
         /// <param name="suitabilityDetail"> Gets the suitability detail. </param>
@@ -549,10 +549,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="megabytesPerSecondOfWrite"> Gets the megabytes per second of write. </param>
         /// <param name="numberOfReadOperationsPerSecond"> Gets the number of read operations per second. </param>
         /// <param name="numberOfWriteOperationsPerSecond"> Gets the number of write operations per second. </param>
-        /// <returns> A new <see cref="Models.AssessedDisk"/> instance for mocking. </returns>
-        public static AssessedDisk AssessedDisk(MigrationAssessmentCloudSuitability? suitability = null, AzureDiskSuitabilityExplanation? suitabilityExplanation = null, AzureDiskSuitabilityDetail? suitabilityDetail = null, AzureDiskSize? recommendedDiskSize = null, AzureDiskType? recommendedDiskType = null, int? gigabytesForRecommendedDiskSize = null, double? recommendDiskThroughputInMbps = null, double? recommendedDiskIops = null, double? monthlyStorageCost = null, string name = null, string displayName = null, double? gigabytesProvisioned = null, double? megabytesPerSecondOfRead = null, double? megabytesPerSecondOfWrite = null, double? numberOfReadOperationsPerSecond = null, double? numberOfWriteOperationsPerSecond = null)
+        /// <returns> A new <see cref="Models.MigrationAssessedDisk"/> instance for mocking. </returns>
+        public static MigrationAssessedDisk MigrationAssessedDisk(MigrationAssessmentCloudSuitability? suitability = null, AssessmentSuitabilityExplanation? suitabilityExplanation = null, AssessmentDiskSuitabilityDetail? suitabilityDetail = null, AssessmentDiskSize? recommendedDiskSize = null, AssessmentDiskType? recommendedDiskType = null, int? gigabytesForRecommendedDiskSize = null, double? recommendDiskThroughputInMbps = null, double? recommendedDiskIops = null, double? monthlyStorageCost = null, string name = null, string displayName = null, double? gigabytesProvisioned = null, double? megabytesPerSecondOfRead = null, double? megabytesPerSecondOfWrite = null, double? numberOfReadOperationsPerSecond = null, double? numberOfWriteOperationsPerSecond = null)
         {
-            return new AssessedDisk(
+            return new MigrationAssessedDisk(
                 suitability,
                 suitabilityExplanation,
                 suitabilityDetail,
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProductSupportStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AssessmentProductSupportStatus"/>. </summary>
         /// <param name="currentVersion"> Gets or sets current version of ServicePack. </param>
         /// <param name="servicePackStatus"> Gets or sets ServicePack of the product. </param>
         /// <param name="esuStatus"> Gets or sets the Extended Security Update ESU status. </param>
@@ -584,10 +584,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="extendedSecurityUpdateYear1EndOn"> Gets or sets the extended security update year 1 end date of the product. </param>
         /// <param name="extendedSecurityUpdateYear2EndOn"> Gets or sets the extended security update year 2 end date of the product. </param>
         /// <param name="extendedSecurityUpdateYear3EndOn"> Gets or sets the extended security update year 3 end date of the product. </param>
-        /// <returns> A new <see cref="Models.ProductSupportStatus"/> instance for mocking. </returns>
-        public static ProductSupportStatus ProductSupportStatus(string currentVersion = null, string servicePackStatus = null, string esuStatus = null, string supportStatus = null, int? eta = null, string currentEsuYear = null, DateTimeOffset? mainstreamEndOn = null, DateTimeOffset? extendedSupportEndOn = null, DateTimeOffset? extendedSecurityUpdateYear1EndOn = null, DateTimeOffset? extendedSecurityUpdateYear2EndOn = null, DateTimeOffset? extendedSecurityUpdateYear3EndOn = null)
+        /// <returns> A new <see cref="Models.AssessmentProductSupportStatus"/> instance for mocking. </returns>
+        public static AssessmentProductSupportStatus AssessmentProductSupportStatus(string currentVersion = null, string servicePackStatus = null, string esuStatus = null, string supportStatus = null, int? eta = null, string currentEsuYear = null, DateTimeOffset? mainstreamEndOn = null, DateTimeOffset? extendedSupportEndOn = null, DateTimeOffset? extendedSecurityUpdateYear1EndOn = null, DateTimeOffset? extendedSecurityUpdateYear2EndOn = null, DateTimeOffset? extendedSecurityUpdateYear3EndOn = null)
         {
-            return new ProductSupportStatus(
+            return new AssessmentProductSupportStatus(
                 currentVersion,
                 servicePackStatus,
                 esuStatus,
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="megabytesPerSecondReceived"> Gets the megabytes per second received. </param>
         /// <param name="megabytesPerSecondTransmitted"> Gets the megabytes per second transmitted. </param>
         /// <returns> A new <see cref="Models.AssessedNetworkAdapter"/> instance for mocking. </returns>
-        public static AssessedNetworkAdapter AssessedNetworkAdapter(MigrationAssessmentCloudSuitability? suitability = null, AzureNetworkAdapterSuitabilityDetail? suitabilityDetail = null, AzureNetworkAdapterSuitabilityExplanation? suitabilityExplanation = null, double? monthlyBandwidthCosts = null, double? netGigabytesTransmittedPerMonth = null, string displayName = null, string macAddress = null, IEnumerable<string> ipAddresses = null, double? megabytesPerSecondReceived = null, double? megabytesPerSecondTransmitted = null)
+        public static AssessedNetworkAdapter AssessedNetworkAdapter(MigrationAssessmentCloudSuitability? suitability = null, NetworkAdapterSuitabilityDetail? suitabilityDetail = null, NetworkAdapterSuitabilityExplanation? suitabilityExplanation = null, double? monthlyBandwidthCosts = null, double? netGigabytesTransmittedPerMonth = null, string displayName = null, string macAddress = null, IEnumerable<string> ipAddresses = null, double? megabytesPerSecondReceived = null, double? megabytesPerSecondTransmitted = null)
         {
             ipAddresses ??= new List<string>();
 
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             return new AssessmentReportDownloadUri(assessmentReportUri, expireOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessmentAvsAssessmentData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAvsAssessmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -703,13 +703,13 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="updatedOn"> Date and Time when assessment was last updated. </param>
         /// <param name="status"> Whether assessment is in valid state and all machines have been assessed. </param>
         /// <param name="schemaVersion"> Schema version. </param>
-        /// <returns> A new <see cref="Assessment.MigrationAssessmentAvsAssessmentData"/> instance for mocking. </returns>
-        public static MigrationAssessmentAvsAssessmentData MigrationAssessmentAvsAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationAssessmentProvisioningState? provisioningState = null, IReadOnlyDictionary<string, int> assessmentErrorSummary = null, FttAndRaidLevel? failuresToTolerateAndRaidLevel = null, double? vcpuOversubscription = null, AvsNodeType? nodeType = null, AzureReservedInstance? reservedInstance = null, double? totalMonthlyCost = null, MigrationAssessmentCloudSuitability? suitability = null, AvsSuitabilityExplanation? suitabilityExplanation = null, int? numberOfNodes = null, double? cpuUtilization = null, double? ramUtilization = null, double? storageUtilization = null, double? totalCpuCores = null, double? totalRamInGB = null, double? totalStorageInGB = null, int? numberOfMachines = null, IReadOnlyDictionary<string, int> suitabilitySummary = null, double? memOvercommit = null, double? dedupeCompression = null, string limitingFactor = null, bool? isStretchClusterEnabled = null, MigrationAssessmentGroupType? groupType = null, AssessmentType? assessmentType = null, AzureLocation? azureLocation = null, AzureOfferCode? azureOfferCode = null, AzureCurrency? currency = null, double? scalingFactor = null, PercentileOfUtilization? percentile = null, AssessmentTimeRange? timeRange = null, DateTimeOffset? perfDataStartOn = null, DateTimeOffset? perfDataEndOn = null, AssessmentStage? stage = null, double? discountPercentage = null, AssessmentSizingCriterion? sizingCriterion = null, double? confidenceRatingInPercentage = null, DateTimeOffset? pricesQueriedOn = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, AssessmentStatus? status = null, string schemaVersion = null)
+        /// <returns> A new <see cref="Assessment.MigrationAvsAssessmentData"/> instance for mocking. </returns>
+        public static MigrationAvsAssessmentData MigrationAvsAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationAssessmentProvisioningState? provisioningState = null, IReadOnlyDictionary<string, int> assessmentErrorSummary = null, FttAndRaidLevel? failuresToTolerateAndRaidLevel = null, double? vcpuOversubscription = null, AssessmentAvsNodeType? nodeType = null, AssessmentReservedInstance? reservedInstance = null, double? totalMonthlyCost = null, MigrationAssessmentCloudSuitability? suitability = null, AvsSuitabilityExplanation? suitabilityExplanation = null, int? numberOfNodes = null, double? cpuUtilization = null, double? ramUtilization = null, double? storageUtilization = null, double? totalCpuCores = null, double? totalRamInGB = null, double? totalStorageInGB = null, int? numberOfMachines = null, IReadOnlyDictionary<string, int> suitabilitySummary = null, double? memOvercommit = null, double? dedupeCompression = null, string limitingFactor = null, bool? isStretchClusterEnabled = null, MigrationAssessmentGroupType? groupType = null, MigrationAssessmentType? assessmentType = null, AzureLocation? azureLocation = null, AssessmentOfferCode? azureOfferCode = null, AssessmentCurrency? currency = null, double? scalingFactor = null, PercentileOfUtilization? percentile = null, AssessmentTimeRange? timeRange = null, DateTimeOffset? perfDataStartOn = null, DateTimeOffset? perfDataEndOn = null, MigrationAssessmentStage? stage = null, double? discountPercentage = null, AssessmentSizingCriterion? sizingCriterion = null, double? confidenceRatingInPercentage = null, DateTimeOffset? pricesQueriedOn = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, MigrationAssessmentStatus? status = null, string schemaVersion = null)
         {
             assessmentErrorSummary ??= new Dictionary<string, int>();
             suitabilitySummary ??= new Dictionary<string, int>();
 
-            return new MigrationAssessmentAvsAssessmentData(
+            return new MigrationAvsAssessmentData(
                 id,
                 name,
                 resourceType,
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessmentAvsAssessedMachineData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAvsAssessedMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -802,14 +802,14 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// Gets a value indicating whether machine is suitable for the cloud platform
         /// selected.
         /// </param>
-        /// <returns> A new <see cref="Assessment.MigrationAssessmentAvsAssessedMachineData"/> instance for mocking. </returns>
-        public static MigrationAssessmentAvsAssessedMachineData MigrationAssessmentAvsAssessedMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<MigrationAssessmentError> errors = null, IReadOnlyDictionary<string, AvsAssessedDisk> disks = null, IReadOnlyDictionary<string, AvsAssessedNetworkAdapter> networkAdapters = null, double? storageInUseGB = null, AvsVmSuitabilityExplanation? suitabilityExplanation = null, AvsVmSuitabilityDetail? suitabilityDetail = null, AssessedMachineType? typePropertiesType = null, MachineBootType? bootType = null, string operatingSystemType = null, string operatingSystemName = null, string operatingSystemVersion = null, GuestOperatingSystemArchitecture? operatingSystemArchitecture = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string displayName = null, string description = null, ResourceIdentifier datacenterMachineArmId = null, ResourceIdentifier datacenterManagementServerArmId = null, string datacenterManagementServerName = null, double? megabytesOfMemory = null, int? numberOfCores = null, double? confidenceRatingInPercentage = null, double? percentageCoresUtilization = null, double? percentageMemoryUtilization = null, MigrationAssessmentCloudSuitability? suitability = null)
+        /// <returns> A new <see cref="Assessment.MigrationAvsAssessedMachineData"/> instance for mocking. </returns>
+        public static MigrationAvsAssessedMachineData MigrationAvsAssessedMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<MigrationAssessmentError> errors = null, IReadOnlyDictionary<string, AvsAssessedDisk> disks = null, IReadOnlyDictionary<string, AvsAssessedNetworkAdapter> networkAdapters = null, double? storageInUseGB = null, AvsVmSuitabilityExplanation? suitabilityExplanation = null, AvsVmSuitabilityDetail? suitabilityDetail = null, MigrationAssessedMachineType? typePropertiesType = null, AssessedMachineBootType? bootType = null, string operatingSystemType = null, string operatingSystemName = null, string operatingSystemVersion = null, GuestOperatingSystemArchitecture? operatingSystemArchitecture = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string displayName = null, string description = null, ResourceIdentifier datacenterMachineArmId = null, ResourceIdentifier datacenterManagementServerArmId = null, string datacenterManagementServerName = null, double? megabytesOfMemory = null, int? numberOfCores = null, double? confidenceRatingInPercentage = null, double? percentageCoresUtilization = null, double? percentageMemoryUtilization = null, MigrationAssessmentCloudSuitability? suitability = null)
         {
             errors ??= new List<MigrationAssessmentError>();
             disks ??= new Dictionary<string, AvsAssessedDisk>();
             networkAdapters ??= new Dictionary<string, AvsAssessedNetworkAdapter>();
 
-            return new MigrationAssessmentAvsAssessedMachineData(
+            return new MigrationAvsAssessedMachineData(
                 id,
                 name,
                 resourceType,
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessmentSqlAssessmentV2Data"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationSqlAssessmentV2Data"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -950,12 +950,12 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="updatedOn"> Date and Time when assessment was last updated. </param>
         /// <param name="status"> Whether assessment is in valid state and all machines have been assessed. </param>
         /// <param name="schemaVersion"> Schema version. </param>
-        /// <returns> A new <see cref="Assessment.MigrationAssessmentSqlAssessmentV2Data"/> instance for mocking. </returns>
-        public static MigrationAssessmentSqlAssessmentV2Data MigrationAssessmentSqlAssessmentV2Data(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationAssessmentProvisioningState? provisioningState = null, MigrationAssessmentOSLicense? osLicense = null, AssessmentEnvironmentType? environmentType = null, EntityUptime entityUptime = null, SqlOptimizationLogic? optimizationLogic = null, AzureReservedInstance? reservedInstanceForVm = null, AzureOfferCode? azureOfferCodeForVm = null, string eaSubscriptionId = null, SqlMISettings azureSqlManagedInstanceSettings = null, SqlDBSettings azureSqlDatabaseSettings = null, IEnumerable<AzureVmFamily> azureSqlVmInstanceSeries = null, MultiSubnetIntent? multiSubnetIntent = null, AsyncCommitModeIntent? asyncCommitModeIntent = null, bool? isInternetAccessAvailable = null, AzureLocation? disasterRecoveryLocation = null, bool? enableHadrAssessment = null, AzureSecurityOfferingType? azureSecurityOfferingType = null, AzureReservedInstance? reservedInstance = null, SqlServerLicense? sqlServerLicense = null, MigrationAssessmentGroupType? groupType = null, AssessmentType? assessmentType = null, AzureLocation? azureLocation = null, AzureOfferCode? azureOfferCode = null, AzureCurrency? currency = null, double? scalingFactor = null, PercentileOfUtilization? percentile = null, AssessmentTimeRange? timeRange = null, DateTimeOffset? perfDataStartOn = null, DateTimeOffset? perfDataEndOn = null, AssessmentStage? stage = null, double? discountPercentage = null, AssessmentSizingCriterion? sizingCriterion = null, double? confidenceRatingInPercentage = null, DateTimeOffset? pricesQueriedOn = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, AssessmentStatus? status = null, string schemaVersion = null)
+        /// <returns> A new <see cref="Assessment.MigrationSqlAssessmentV2Data"/> instance for mocking. </returns>
+        public static MigrationSqlAssessmentV2Data MigrationSqlAssessmentV2Data(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationAssessmentProvisioningState? provisioningState = null, MigrationAssessmentOSLicense? osLicense = null, AssessmentEnvironmentType? environmentType = null, AssessmentEntityUptime entityUptime = null, SqlOptimizationLogic? optimizationLogic = null, AssessmentReservedInstance? reservedInstanceForVm = null, AssessmentOfferCode? azureOfferCodeForVm = null, string eaSubscriptionId = null, AssessmentSqlMISettings azureSqlManagedInstanceSettings = null, AssessmentSqlDBSettings azureSqlDatabaseSettings = null, IEnumerable<AssessmentVmFamily> azureSqlVmInstanceSeries = null, MultiSubnetIntent? multiSubnetIntent = null, AsyncCommitModeIntent? asyncCommitModeIntent = null, bool? isInternetAccessAvailable = null, AzureLocation? disasterRecoveryLocation = null, bool? enableHadrAssessment = null, AssessmentSecurityOfferingType? azureSecurityOfferingType = null, AssessmentReservedInstance? reservedInstance = null, AssessmentSqlServerLicense? sqlServerLicense = null, MigrationAssessmentGroupType? groupType = null, MigrationAssessmentType? assessmentType = null, AzureLocation? azureLocation = null, AssessmentOfferCode? azureOfferCode = null, AssessmentCurrency? currency = null, double? scalingFactor = null, PercentileOfUtilization? percentile = null, AssessmentTimeRange? timeRange = null, DateTimeOffset? perfDataStartOn = null, DateTimeOffset? perfDataEndOn = null, MigrationAssessmentStage? stage = null, double? discountPercentage = null, AssessmentSizingCriterion? sizingCriterion = null, double? confidenceRatingInPercentage = null, DateTimeOffset? pricesQueriedOn = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, MigrationAssessmentStatus? status = null, string schemaVersion = null)
         {
-            azureSqlVmInstanceSeries ??= new List<AzureVmFamily>();
+            azureSqlVmInstanceSeries ??= new List<AssessmentVmFamily>();
 
-            return new MigrationAssessmentSqlAssessmentV2Data(
+            return new MigrationSqlAssessmentV2Data(
                 id,
                 name,
                 resourceType,
@@ -970,7 +970,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 eaSubscriptionId,
                 azureSqlManagedInstanceSettings,
                 azureSqlDatabaseSettings,
-                azureSqlVmInstanceSeries != null ? new SqlVmSettings(azureSqlVmInstanceSeries?.ToList(), serializedAdditionalRawData: null) : null,
+                azureSqlVmInstanceSeries != null ? new AssessmentSqlVmSettings(azureSqlVmInstanceSeries?.ToList(), serializedAdditionalRawData: null) : null,
                 multiSubnetIntent,
                 asyncCommitModeIntent,
                 isInternetAccessAvailable,
@@ -1001,7 +1001,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assessment.AssessedSqlDatabaseV2Data"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessedSqlDatabaseV2Data"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1040,10 +1040,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="sizingCriterion"> Assessment sizing criterion. </param>
         /// <param name="createdOn"> When was assessed SQL database first created. </param>
         /// <param name="updatedOn"> When was assessed SQL database last updated. </param>
-        /// <returns> A new <see cref="Assessment.AssessedSqlDatabaseV2Data"/> instance for mocking. </returns>
-        public static AssessedSqlDatabaseV2Data AssessedSqlDatabaseV2Data(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationAssessmentTargetType? recommendedAzureSqlTargetType = null, RecommendedSuitability? recommendedSuitability = null, double? bufferCacheSizeInMB = null, ProductSupportStatus productSupportStatus = null, SqlAssessmentV2PaasSuitabilityDetails azureSqlMISuitabilityDetails = null, SqlAssessmentV2PaasSuitabilityDetails azureSqlDBSuitabilityDetails = null, bool? isDatabaseHighlyAvailable = null, SqlAvailabilityGroupDataOverview linkedAvailabilityGroupOverview = null, ResourceIdentifier machineArmId = null, ResourceIdentifier assessedSqlInstanceArmId = null, string machineName = null, string instanceName = null, string databaseName = null, double? databaseSizeInMB = null, CompatibilityLevel? compatibilityLevel = null, ResourceIdentifier sqlDatabaseSdsArmId = null, double? percentageCoresUtilization = null, double? megabytesPerSecondOfRead = null, double? megabytesPerSecondOfWrite = null, double? numberOfReadOperationsPerSecond = null, double? numberOfWriteOperationsPerSecond = null, double? confidenceRatingInPercentage = null, AssessmentSizingCriterion? sizingCriterion = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
+        /// <returns> A new <see cref="Assessment.MigrationAssessedSqlDatabaseV2Data"/> instance for mocking. </returns>
+        public static MigrationAssessedSqlDatabaseV2Data MigrationAssessedSqlDatabaseV2Data(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationAssessmentTargetType? recommendedAzureSqlTargetType = null, AssessedSqlRecommendedSuitability? recommendedSuitability = null, double? bufferCacheSizeInMB = null, AssessmentProductSupportStatus productSupportStatus = null, SqlAssessmentV2PaasSuitabilityDetails azureSqlMISuitabilityDetails = null, SqlAssessmentV2PaasSuitabilityDetails azureSqlDBSuitabilityDetails = null, bool? isDatabaseHighlyAvailable = null, SqlAvailabilityGroupDataOverview linkedAvailabilityGroupOverview = null, ResourceIdentifier machineArmId = null, ResourceIdentifier assessedSqlInstanceArmId = null, string machineName = null, string instanceName = null, string databaseName = null, double? databaseSizeInMB = null, AssessedDatabaseCompatibilityLevel? compatibilityLevel = null, ResourceIdentifier sqlDatabaseSdsArmId = null, double? percentageCoresUtilization = null, double? megabytesPerSecondOfRead = null, double? megabytesPerSecondOfWrite = null, double? numberOfReadOperationsPerSecond = null, double? numberOfWriteOperationsPerSecond = null, double? confidenceRatingInPercentage = null, AssessmentSizingCriterion? sizingCriterion = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
         {
-            return new AssessedSqlDatabaseV2Data(
+            return new MigrationAssessedSqlDatabaseV2Data(
                 id,
                 name,
                 resourceType,
@@ -1092,10 +1092,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="suitability"> Gets the azure suitability. </param>
         /// <param name="migrationIssues"> Gets the list of migrations issues. </param>
         /// <returns> A new <see cref="Models.SqlAssessmentV2PaasSuitabilityDetails"/> instance for mocking. </returns>
-        public static SqlAssessmentV2PaasSuitabilityDetails SqlAssessmentV2PaasSuitabilityDetails(AzureSqlPaasSkuDto azureSqlSku = null, IEnumerable<AzureSqlPaasSkuDto> replicaAzureSqlSku = null, SharedResourcesDto sharedResources = null, double? monthlyComputeCost = null, double? monthlyStorageCost = null, IEnumerable<CostComponent> costComponents = null, MigrationAssessmentCloudSuitability? securitySuitability = null, bool? shouldProvisionReplicas = null, SkuReplicationMode? skuReplicationMode = null, IEnumerable<SqlMigrationGuideline> migrationGuidelines = null, IEnumerable<SqlRecommendationReasoning> recommendationReasonings = null, MigrationAssessmentTargetType? migrationTargetPlatform = null, MigrationAssessmentCloudSuitability? suitability = null, IEnumerable<SqlAssessmentMigrationIssue> migrationIssues = null)
+        public static SqlAssessmentV2PaasSuitabilityDetails SqlAssessmentV2PaasSuitabilityDetails(AssessmentSqlPaasSkuDto azureSqlSku = null, IEnumerable<AssessmentSqlPaasSkuDto> replicaAzureSqlSku = null, SharedResourcesDto sharedResources = null, double? monthlyComputeCost = null, double? monthlyStorageCost = null, IEnumerable<AssessmentCostComponent> costComponents = null, MigrationAssessmentCloudSuitability? securitySuitability = null, bool? shouldProvisionReplicas = null, SkuReplicationMode? skuReplicationMode = null, IEnumerable<SqlMigrationGuideline> migrationGuidelines = null, IEnumerable<SqlRecommendationReasoning> recommendationReasonings = null, MigrationAssessmentTargetType? migrationTargetPlatform = null, MigrationAssessmentCloudSuitability? suitability = null, IEnumerable<SqlAssessmentMigrationIssue> migrationIssues = null)
         {
-            replicaAzureSqlSku ??= new List<AzureSqlPaasSkuDto>();
-            costComponents ??= new List<CostComponent>();
+            replicaAzureSqlSku ??= new List<AssessmentSqlPaasSkuDto>();
+            costComponents ??= new List<AssessmentCostComponent>();
             migrationGuidelines ??= new List<SqlMigrationGuideline>();
             recommendationReasonings ??= new List<SqlRecommendationReasoning>();
             migrationIssues ??= new List<SqlAssessmentMigrationIssue>();
@@ -1118,7 +1118,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AzureSqlPaasSkuDto"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AssessmentSqlPaasSkuDto"/>. </summary>
         /// <param name="azureSqlServiceTier"> Gets the service tier. </param>
         /// <param name="azureSqlComputeTier"> Gets the compute tier. </param>
         /// <param name="azureSqlHardwareGeneration"> Gets the hardware generation. </param>
@@ -1133,10 +1133,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// </param>
         /// <param name="cores"> Gets the number of cores. </param>
         /// <param name="azureSqlTargetType"> Gets the target type. </param>
-        /// <returns> A new <see cref="Models.AzureSqlPaasSkuDto"/> instance for mocking. </returns>
-        public static AzureSqlPaasSkuDto AzureSqlPaasSkuDto(AzureSqlServiceTier? azureSqlServiceTier = null, MigrationAssessmentComputeTier? azureSqlComputeTier = null, MigrationAssessmentHardwareGeneration? azureSqlHardwareGeneration = null, double? storageMaxSizeInMB = null, double? predictedDataSizeInMB = null, double? predictedLogSizeInMB = null, int? cores = null, MigrationAssessmentTargetType? azureSqlTargetType = null)
+        /// <returns> A new <see cref="Models.AssessmentSqlPaasSkuDto"/> instance for mocking. </returns>
+        public static AssessmentSqlPaasSkuDto AssessmentSqlPaasSkuDto(AssessmentSqlServiceTier? azureSqlServiceTier = null, MigrationAssessmentComputeTier? azureSqlComputeTier = null, MigrationAssessmentHardwareGeneration? azureSqlHardwareGeneration = null, double? storageMaxSizeInMB = null, double? predictedDataSizeInMB = null, double? predictedLogSizeInMB = null, int? cores = null, MigrationAssessmentTargetType? azureSqlTargetType = null)
         {
-            return new AzureSqlPaasSkuDto(
+            return new AssessmentSqlPaasSkuDto(
                 azureSqlServiceTier,
                 azureSqlComputeTier,
                 azureSqlHardwareGeneration,
@@ -1155,22 +1155,22 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="numberOfMounts"> Gets number of mounts of shared disks. </param>
         /// <param name="quorumWitnessType"> Gets quorum witness. </param>
         /// <returns> A new <see cref="Models.SharedResourcesDto"/> instance for mocking. </returns>
-        public static SharedResourcesDto SharedResourcesDto(IEnumerable<AzureManagedDiskSkuDto> sharedDataDisks = null, IEnumerable<AzureManagedDiskSkuDto> sharedLogDisks = null, IEnumerable<AzureManagedDiskSkuDto> sharedTempDBDisks = null, int? numberOfMounts = null, AzureQuorumWitnessDtoQuorumWitnessType? quorumWitnessType = null)
+        public static SharedResourcesDto SharedResourcesDto(IEnumerable<AssessmentManagedDiskSkuDto> sharedDataDisks = null, IEnumerable<AssessmentManagedDiskSkuDto> sharedLogDisks = null, IEnumerable<AssessmentManagedDiskSkuDto> sharedTempDBDisks = null, int? numberOfMounts = null, QuorumWitnessDtoQuorumWitnessType? quorumWitnessType = null)
         {
-            sharedDataDisks ??= new List<AzureManagedDiskSkuDto>();
-            sharedLogDisks ??= new List<AzureManagedDiskSkuDto>();
-            sharedTempDBDisks ??= new List<AzureManagedDiskSkuDto>();
+            sharedDataDisks ??= new List<AssessmentManagedDiskSkuDto>();
+            sharedLogDisks ??= new List<AssessmentManagedDiskSkuDto>();
+            sharedTempDBDisks ??= new List<AssessmentManagedDiskSkuDto>();
 
             return new SharedResourcesDto(
                 sharedDataDisks?.ToList(),
                 sharedLogDisks?.ToList(),
                 sharedTempDBDisks?.ToList(),
                 numberOfMounts,
-                quorumWitnessType != null ? new AzureQuorumWitnessDto(quorumWitnessType, serializedAdditionalRawData: null) : null,
+                quorumWitnessType != null ? new QuorumWitnessDto(quorumWitnessType, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AzureManagedDiskSkuDto"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AssessmentManagedDiskSkuDto"/>. </summary>
         /// <param name="diskType"> Gets the Type ("tier") of disk - e.g. standard, premium, ultra. </param>
         /// <param name="diskSize"> Gets the Size of the managed disk - e.g. P30, P40. </param>
         /// <param name="diskRedundancy"> Gets disk redundancy - e.g. LRS, ZRS. </param>
@@ -1178,10 +1178,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="recommendedSizeInGib"> Gets the recommended in GB of the managed disk. </param>
         /// <param name="recommendedThroughputInMbps"> Gets the recommended throughput in MBPS of the managed disk. </param>
         /// <param name="recommendedIops"> Gets the recommended IOPS of the managed disk. </param>
-        /// <returns> A new <see cref="Models.AzureManagedDiskSkuDto"/> instance for mocking. </returns>
-        public static AzureManagedDiskSkuDto AzureManagedDiskSkuDto(AzureManagedDiskSkuDtoDiskType? diskType = null, AzureDiskSize? diskSize = null, AzureManagedDiskSkuDtoDiskRedundancy? diskRedundancy = null, double? storageCost = null, double? recommendedSizeInGib = null, double? recommendedThroughputInMbps = null, double? recommendedIops = null)
+        /// <returns> A new <see cref="Models.AssessmentManagedDiskSkuDto"/> instance for mocking. </returns>
+        public static AssessmentManagedDiskSkuDto AssessmentManagedDiskSkuDto(ManagedDiskSkuDtoDiskType? diskType = null, AssessmentDiskSize? diskSize = null, ManagedDiskSkuDtoDiskRedundancy? diskRedundancy = null, double? storageCost = null, double? recommendedSizeInGib = null, double? recommendedThroughputInMbps = null, double? recommendedIops = null)
         {
-            return new AzureManagedDiskSkuDto(
+            return new AssessmentManagedDiskSkuDto(
                 diskType,
                 diskSize,
                 diskRedundancy,
@@ -1274,7 +1274,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assessment.AssessedSqlInstanceV2Data"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessedSqlInstanceV2Data"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1310,14 +1310,14 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="sizingCriterion"> Assessment sizing criterion. </param>
         /// <param name="createdOn"> When was assessed SQL instance first created. </param>
         /// <param name="updatedOn"> When was assessed SQL instance last updated. </param>
-        /// <returns> A new <see cref="Assessment.AssessedSqlInstanceV2Data"/> instance for mocking. </returns>
-        public static AssessedSqlInstanceV2Data AssessedSqlInstanceV2Data(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, double? memoryInUseInMB = null, bool? hasScanOccurred = null, MigrationAssessmentTargetType? recommendedAzureSqlTargetType = null, RecommendedSuitability? recommendedSuitability = null, SqlAssessmentV2PaasSuitabilityDetails azureSqlMISuitabilityDetails = null, SqlAssessmentV2PaasSuitabilityDetails azureSqlDBSuitabilityDetails = null, SqlAssessmentV2IaasSuitabilityDetails azureSqlVmSuitabilityDetails = null, IEnumerable<AssessedSqlInstanceStorageDetails> storageTypeBasedDetails = null, ProductSupportStatus productSupportStatus = null, SqlFciMetadata fciMetadata = null, SqlAvailabilityReplicaSummary availabilityReplicaSummary = null, bool? isClustered = null, bool? isHighAvailabilityEnabled = null, IEnumerable<SqlRecommendationReasoning> recommendedTargetReasonings = null, ResourceIdentifier machineArmId = null, string machineName = null, string instanceName = null, ResourceIdentifier sqlInstanceSdsArmId = null, string sqlEdition = null, string sqlVersion = null, int? numberOfCoresAllocated = null, double? percentageCoresUtilization = null, IEnumerable<AssessedSqlInstanceDiskDetails> logicalDisks = null, AssessedSqlInstanceDatabaseSummary databaseSummary = null, double? confidenceRatingInPercentage = null, AssessmentSizingCriterion? sizingCriterion = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
+        /// <returns> A new <see cref="Assessment.MigrationAssessedSqlInstanceV2Data"/> instance for mocking. </returns>
+        public static MigrationAssessedSqlInstanceV2Data MigrationAssessedSqlInstanceV2Data(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, double? memoryInUseInMB = null, bool? hasScanOccurred = null, MigrationAssessmentTargetType? recommendedAzureSqlTargetType = null, AssessedSqlRecommendedSuitability? recommendedSuitability = null, SqlAssessmentV2PaasSuitabilityDetails azureSqlMISuitabilityDetails = null, SqlAssessmentV2PaasSuitabilityDetails azureSqlDBSuitabilityDetails = null, SqlAssessmentV2IaasSuitabilityDetails azureSqlVmSuitabilityDetails = null, IEnumerable<AssessedSqlInstanceStorageDetails> storageTypeBasedDetails = null, AssessmentProductSupportStatus productSupportStatus = null, AssessmentSqlFciMetadata fciMetadata = null, SqlAvailabilityReplicaSummary availabilityReplicaSummary = null, bool? isClustered = null, bool? isHighAvailabilityEnabled = null, IEnumerable<SqlRecommendationReasoning> recommendedTargetReasonings = null, ResourceIdentifier machineArmId = null, string machineName = null, string instanceName = null, ResourceIdentifier sqlInstanceSdsArmId = null, string sqlEdition = null, string sqlVersion = null, int? numberOfCoresAllocated = null, double? percentageCoresUtilization = null, IEnumerable<AssessedSqlInstanceDiskDetails> logicalDisks = null, AssessedSqlInstanceDatabaseSummary databaseSummary = null, double? confidenceRatingInPercentage = null, AssessmentSizingCriterion? sizingCriterion = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
         {
             storageTypeBasedDetails ??= new List<AssessedSqlInstanceStorageDetails>();
             recommendedTargetReasonings ??= new List<SqlRecommendationReasoning>();
             logicalDisks ??= new List<AssessedSqlInstanceDiskDetails>();
 
-            return new AssessedSqlInstanceV2Data(
+            return new MigrationAssessedSqlInstanceV2Data(
                 id,
                 name,
                 resourceType,
@@ -1369,10 +1369,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="suitability"> Gets the azure suitability. </param>
         /// <param name="migrationIssues"> Gets the list of migrations issues. </param>
         /// <returns> A new <see cref="Models.SqlAssessmentV2IaasSuitabilityDetails"/> instance for mocking. </returns>
-        public static SqlAssessmentV2IaasSuitabilityDetails SqlAssessmentV2IaasSuitabilityDetails(AzureSqlIaasSkuDto azureSqlSku = null, IEnumerable<AzureSqlIaasSkuDto> replicaAzureSqlSku = null, SharedResourcesDto sharedResources = null, double? monthlyComputeCost = null, double? monthlyStorageCost = null, IEnumerable<CostComponent> costComponents = null, MigrationAssessmentCloudSuitability? securitySuitability = null, bool? shouldProvisionReplicas = null, SkuReplicationMode? skuReplicationMode = null, IEnumerable<SqlMigrationGuideline> migrationGuidelines = null, IEnumerable<SqlRecommendationReasoning> recommendationReasonings = null, MigrationAssessmentTargetType? migrationTargetPlatform = null, MigrationAssessmentCloudSuitability? suitability = null, IEnumerable<SqlAssessmentMigrationIssue> migrationIssues = null)
+        public static SqlAssessmentV2IaasSuitabilityDetails SqlAssessmentV2IaasSuitabilityDetails(AssessmentAzureSqlIaasSkuDto azureSqlSku = null, IEnumerable<AssessmentAzureSqlIaasSkuDto> replicaAzureSqlSku = null, SharedResourcesDto sharedResources = null, double? monthlyComputeCost = null, double? monthlyStorageCost = null, IEnumerable<AssessmentCostComponent> costComponents = null, MigrationAssessmentCloudSuitability? securitySuitability = null, bool? shouldProvisionReplicas = null, SkuReplicationMode? skuReplicationMode = null, IEnumerable<SqlMigrationGuideline> migrationGuidelines = null, IEnumerable<SqlRecommendationReasoning> recommendationReasonings = null, MigrationAssessmentTargetType? migrationTargetPlatform = null, MigrationAssessmentCloudSuitability? suitability = null, IEnumerable<SqlAssessmentMigrationIssue> migrationIssues = null)
         {
-            replicaAzureSqlSku ??= new List<AzureSqlIaasSkuDto>();
-            costComponents ??= new List<CostComponent>();
+            replicaAzureSqlSku ??= new List<AssessmentAzureSqlIaasSkuDto>();
+            costComponents ??= new List<AssessmentCostComponent>();
             migrationGuidelines ??= new List<SqlMigrationGuideline>();
             recommendationReasonings ??= new List<SqlRecommendationReasoning>();
             migrationIssues ??= new List<SqlAssessmentMigrationIssue>();
@@ -1395,21 +1395,21 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AzureSqlIaasSkuDto"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AssessmentAzureSqlIaasSkuDto"/>. </summary>
         /// <param name="virtualMachineSize"> Gets the The Azure Compute Virtual Machine. </param>
         /// <param name="dataDiskSizes"> Gets the The list of data disk sizes. </param>
         /// <param name="logDiskSizes"> Gets the The list of log disk sizes. </param>
         /// <param name="azureSqlTargetType"> Gets the target type. </param>
-        /// <returns> A new <see cref="Models.AzureSqlIaasSkuDto"/> instance for mocking. </returns>
-        public static AzureSqlIaasSkuDto AzureSqlIaasSkuDto(AzureVmSkuDto virtualMachineSize = null, IEnumerable<AzureManagedDiskSkuDto> dataDiskSizes = null, IEnumerable<AzureManagedDiskSkuDto> logDiskSizes = null, MigrationAssessmentTargetType? azureSqlTargetType = null)
+        /// <returns> A new <see cref="Models.AssessmentAzureSqlIaasSkuDto"/> instance for mocking. </returns>
+        public static AssessmentAzureSqlIaasSkuDto AssessmentAzureSqlIaasSkuDto(AssessmentVmSkuDto virtualMachineSize = null, IEnumerable<AssessmentManagedDiskSkuDto> dataDiskSizes = null, IEnumerable<AssessmentManagedDiskSkuDto> logDiskSizes = null, MigrationAssessmentTargetType? azureSqlTargetType = null)
         {
-            dataDiskSizes ??= new List<AzureManagedDiskSkuDto>();
-            logDiskSizes ??= new List<AzureManagedDiskSkuDto>();
+            dataDiskSizes ??= new List<AssessmentManagedDiskSkuDto>();
+            logDiskSizes ??= new List<AssessmentManagedDiskSkuDto>();
 
-            return new AzureSqlIaasSkuDto(virtualMachineSize, dataDiskSizes?.ToList(), logDiskSizes?.ToList(), azureSqlTargetType, serializedAdditionalRawData: null);
+            return new AssessmentAzureSqlIaasSkuDto(virtualMachineSize, dataDiskSizes?.ToList(), logDiskSizes?.ToList(), azureSqlTargetType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AzureVmSkuDto"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AssessmentVmSkuDto"/>. </summary>
         /// <param name="azureVmFamily"> Gets the Virtual Machine Family, for example : standardMSFamily. </param>
         /// <param name="cores"> Gets the Compute Size in vCores. </param>
         /// <param name="azureSkuName"> Gets the Virtual Machine SKU name,: E.g. : Standard_F16s. </param>
@@ -1418,10 +1418,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// vCPU VM Sizes.
         /// </param>
         /// <param name="maxNetworkInterfaces"> Gets the Max network interfaces. </param>
-        /// <returns> A new <see cref="Models.AzureVmSkuDto"/> instance for mocking. </returns>
-        public static AzureVmSkuDto AzureVmSkuDto(AzureVmFamily? azureVmFamily = null, int? cores = null, AzureVmSize? azureSkuName = null, int? availableCores = null, int? maxNetworkInterfaces = null)
+        /// <returns> A new <see cref="Models.AssessmentVmSkuDto"/> instance for mocking. </returns>
+        public static AssessmentVmSkuDto AssessmentVmSkuDto(AssessmentVmFamily? azureVmFamily = null, int? cores = null, AssessmentVmSize? azureSkuName = null, int? availableCores = null, int? maxNetworkInterfaces = null)
         {
-            return new AzureVmSkuDto(
+            return new AssessmentVmSkuDto(
                 azureVmFamily,
                 cores,
                 azureSkuName,
@@ -1450,14 +1450,14 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SqlFciMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AssessmentSqlFciMetadata"/>. </summary>
         /// <param name="state"> Gets the Sql fci meta data state. </param>
         /// <param name="isMultiSubnet"> Gets whether fci is multi subnet. </param>
         /// <param name="fciSharedDiskCount"> Gets the fci shared disk count. </param>
-        /// <returns> A new <see cref="Models.SqlFciMetadata"/> instance for mocking. </returns>
-        public static SqlFciMetadata SqlFciMetadata(SqlFciMetadataState? state = null, bool? isMultiSubnet = null, int? fciSharedDiskCount = null)
+        /// <returns> A new <see cref="Models.AssessmentSqlFciMetadata"/> instance for mocking. </returns>
+        public static AssessmentSqlFciMetadata AssessmentSqlFciMetadata(AssessmentSqlFciMetadataState? state = null, bool? isMultiSubnet = null, int? fciSharedDiskCount = null)
         {
-            return new SqlFciMetadata(state, isMultiSubnet, fciSharedDiskCount, serializedAdditionalRawData: null);
+            return new AssessmentSqlFciMetadata(state, isMultiSubnet, fciSharedDiskCount, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlAvailabilityReplicaSummary"/>. </summary>
@@ -1509,7 +1509,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             return new AssessedSqlInstanceDatabaseSummary(numberOfUserDatabases, totalDatabaseSizeInMB, largestDatabaseSizeInMB, totalDiscoveredUserDatabases, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assessment.AssessedSqlMachineData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessedSqlMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1566,16 +1566,16 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// selected.
         /// </param>
         /// <param name="sizingCriterion"> Assessment sizing criterion. </param>
-        /// <returns> A new <see cref="Assessment.AssessedSqlMachineData"/> instance for mocking. </returns>
-        public static AssessedSqlMachineData AssessedSqlMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string biosGuid = null, string fqdn = null, IEnumerable<AssessedSqlInstanceSummary> sqlInstances = null, AzureVmSuitabilityDetail? suitabilityDetail = null, AzureVmSuitabilityExplanation? suitabilityExplanation = null, AzureVmSize? recommendedVmSize = null, AzureVmFamily? recommendedVmFamily = null, ProductSupportStatus productSupportStatus = null, int? recommendedVmSizeNumberOfCores = null, double? recommendedVmSizeMegabytesOfMemory = null, double? monthlyComputeCost = null, IReadOnlyDictionary<string, AssessedDataDisk> disks = null, IReadOnlyDictionary<string, SqlAssessedNetworkAdapter> networkAdapters = null, double? monthlyBandwidthCost = null, double? monthlyStorageCost = null, IEnumerable<CostComponent> costComponents = null, MigrationAssessmentCloudSuitability? securitySuitability = null, IEnumerable<SqlMigrationGuideline> migrationGuidelines = null, MachineBootType? bootType = null, string operatingSystemType = null, string operatingSystemName = null, string operatingSystemVersion = null, GuestOperatingSystemArchitecture? operatingSystemArchitecture = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string displayName = null, AssessedMachineType? typePropertiesType = null, string description = null, ResourceIdentifier datacenterMachineArmId = null, ResourceIdentifier datacenterManagementServerArmId = null, string datacenterManagementServerName = null, double? megabytesOfMemory = null, int? numberOfCores = null, double? confidenceRatingInPercentage = null, double? percentageCoresUtilization = null, double? percentageMemoryUtilization = null, MigrationAssessmentCloudSuitability? suitability = null, AssessmentSizingCriterion? sizingCriterion = null)
+        /// <returns> A new <see cref="Assessment.MigrationAssessedSqlMachineData"/> instance for mocking. </returns>
+        public static MigrationAssessedSqlMachineData MigrationAssessedSqlMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string biosGuid = null, string fqdn = null, IEnumerable<AssessedSqlInstanceSummary> sqlInstances = null, AssessmentVmSuitabilityDetail? suitabilityDetail = null, AssessmentVmSuitabilityExplanation? suitabilityExplanation = null, AssessmentVmSize? recommendedVmSize = null, AssessmentVmFamily? recommendedVmFamily = null, AssessmentProductSupportStatus productSupportStatus = null, int? recommendedVmSizeNumberOfCores = null, double? recommendedVmSizeMegabytesOfMemory = null, double? monthlyComputeCost = null, IReadOnlyDictionary<string, MigrationAssessedDataDisk> disks = null, IReadOnlyDictionary<string, SqlAssessedNetworkAdapter> networkAdapters = null, double? monthlyBandwidthCost = null, double? monthlyStorageCost = null, IEnumerable<AssessmentCostComponent> costComponents = null, MigrationAssessmentCloudSuitability? securitySuitability = null, IEnumerable<SqlMigrationGuideline> migrationGuidelines = null, AssessedMachineBootType? bootType = null, string operatingSystemType = null, string operatingSystemName = null, string operatingSystemVersion = null, GuestOperatingSystemArchitecture? operatingSystemArchitecture = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string displayName = null, MigrationAssessedMachineType? typePropertiesType = null, string description = null, ResourceIdentifier datacenterMachineArmId = null, ResourceIdentifier datacenterManagementServerArmId = null, string datacenterManagementServerName = null, double? megabytesOfMemory = null, int? numberOfCores = null, double? confidenceRatingInPercentage = null, double? percentageCoresUtilization = null, double? percentageMemoryUtilization = null, MigrationAssessmentCloudSuitability? suitability = null, AssessmentSizingCriterion? sizingCriterion = null)
         {
             sqlInstances ??= new List<AssessedSqlInstanceSummary>();
-            disks ??= new Dictionary<string, AssessedDataDisk>();
+            disks ??= new Dictionary<string, MigrationAssessedDataDisk>();
             networkAdapters ??= new Dictionary<string, SqlAssessedNetworkAdapter>();
-            costComponents ??= new List<CostComponent>();
+            costComponents ??= new List<AssessmentCostComponent>();
             migrationGuidelines ??= new List<SqlMigrationGuideline>();
 
-            return new AssessedSqlMachineData(
+            return new MigrationAssessedSqlMachineData(
                 id,
                 name,
                 resourceType,
@@ -1632,7 +1632,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="isHighAvailabilityEnabled"> Gets whether Sql is highly available. </param>
         /// <param name="sqlFciState"> Gets the Sql Fci state. </param>
         /// <returns> A new <see cref="Models.AssessedSqlInstanceSummary"/> instance for mocking. </returns>
-        public static AssessedSqlInstanceSummary AssessedSqlInstanceSummary(string instanceId = null, string instanceName = null, ResourceIdentifier sqlInstanceSdsArmId = null, string sqlInstanceEntityId = null, string sqlEdition = null, string sqlVersion = null, bool? isClustered = null, bool? isHighAvailabilityEnabled = null, SqlFciState? sqlFciState = null)
+        public static AssessedSqlInstanceSummary AssessedSqlInstanceSummary(string instanceId = null, string instanceName = null, ResourceIdentifier sqlInstanceSdsArmId = null, string sqlInstanceEntityId = null, string sqlEdition = null, string sqlVersion = null, bool? isClustered = null, bool? isHighAvailabilityEnabled = null, AssessmentSqlFciState? sqlFciState = null)
         {
             return new AssessedSqlInstanceSummary(
                 instanceId,
@@ -1647,7 +1647,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AssessedDataDisk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrationAssessedDataDisk"/>. </summary>
         /// <param name="suitability"> Gets the suitability. </param>
         /// <param name="suitabilityExplanation"> Gets the suitability explanation. </param>
         /// <param name="suitabilityDetail"> Gets the suitability detail. </param>
@@ -1664,10 +1664,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="megabytesPerSecondOfWrite"> Gets the megabytes per second of write. </param>
         /// <param name="numberOfReadOperationsPerSecond"> Gets the number of read operations per second. </param>
         /// <param name="numberOfWriteOperationsPerSecond"> Gets the number of write operations per second. </param>
-        /// <returns> A new <see cref="Models.AssessedDataDisk"/> instance for mocking. </returns>
-        public static AssessedDataDisk AssessedDataDisk(MigrationAssessmentCloudSuitability? suitability = null, AzureDiskSuitabilityExplanation? suitabilityExplanation = null, AzureDiskSuitabilityDetail? suitabilityDetail = null, AzureDiskSize? recommendedDiskSize = null, AzureDiskType? recommendedDiskType = null, int? recommendedDiskSizeGigabytes = null, double? recommendDiskThroughputInMbps = null, double? recommendedDiskIops = null, double? monthlyStorageCost = null, string name = null, string displayName = null, double? gigabytesProvisioned = null, double? megabytesPerSecondOfRead = null, double? megabytesPerSecondOfWrite = null, double? numberOfReadOperationsPerSecond = null, double? numberOfWriteOperationsPerSecond = null)
+        /// <returns> A new <see cref="Models.MigrationAssessedDataDisk"/> instance for mocking. </returns>
+        public static MigrationAssessedDataDisk MigrationAssessedDataDisk(MigrationAssessmentCloudSuitability? suitability = null, AssessmentSuitabilityExplanation? suitabilityExplanation = null, AssessmentDiskSuitabilityDetail? suitabilityDetail = null, AssessmentDiskSize? recommendedDiskSize = null, AssessmentDiskType? recommendedDiskType = null, int? recommendedDiskSizeGigabytes = null, double? recommendDiskThroughputInMbps = null, double? recommendedDiskIops = null, double? monthlyStorageCost = null, string name = null, string displayName = null, double? gigabytesProvisioned = null, double? megabytesPerSecondOfRead = null, double? megabytesPerSecondOfWrite = null, double? numberOfReadOperationsPerSecond = null, double? numberOfWriteOperationsPerSecond = null)
         {
-            return new AssessedDataDisk(
+            return new MigrationAssessedDataDisk(
                 suitability,
                 suitabilityExplanation,
                 suitabilityDetail,
@@ -1700,7 +1700,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="megabytesPerSecondReceived"> Gets the megabytes per second received. </param>
         /// <param name="megabytesPerSecondTransmitted"> Gets the megabytes per second transmitted. </param>
         /// <returns> A new <see cref="Models.SqlAssessedNetworkAdapter"/> instance for mocking. </returns>
-        public static SqlAssessedNetworkAdapter SqlAssessedNetworkAdapter(MigrationAssessmentCloudSuitability? suitability = null, AzureNetworkAdapterSuitabilityDetail? suitabilityDetail = null, AzureNetworkAdapterSuitabilityExplanation? suitabilityExplanation = null, double? monthlyBandwidthCosts = null, double? netGigabytesTransmittedPerMonth = null, string name = null, string displayName = null, string macAddress = null, IEnumerable<string> ipAddresses = null, double? megabytesPerSecondReceived = null, double? megabytesPerSecondTransmitted = null)
+        public static SqlAssessedNetworkAdapter SqlAssessedNetworkAdapter(MigrationAssessmentCloudSuitability? suitability = null, NetworkAdapterSuitabilityDetail? suitabilityDetail = null, NetworkAdapterSuitabilityExplanation? suitabilityExplanation = null, double? monthlyBandwidthCosts = null, double? netGigabytesTransmittedPerMonth = null, string name = null, string displayName = null, string macAddress = null, IEnumerable<string> ipAddresses = null, double? megabytesPerSecondReceived = null, double? megabytesPerSecondTransmitted = null)
         {
             ipAddresses ??= new List<string>();
 
@@ -1719,7 +1719,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assessment.AssessedSqlRecommendedEntityData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessedSqlRecommendedEntityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1744,10 +1744,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="sqlEdition"> Gets the SQL edition from the recommended entity if applicable. </param>
         /// <param name="sqlVersion"> Gets the SQL version from the recommended entity if applicable. </param>
         /// <param name="sizingCriterion"> Assessment sizing criterion. </param>
-        /// <returns> A new <see cref="Assessment.AssessedSqlRecommendedEntityData"/> instance for mocking. </returns>
-        public static AssessedSqlRecommendedEntityData AssessedSqlRecommendedEntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string machineName = null, string instanceName = null, ProductSupportStatus productSupportStatus = null, int? dbCount = null, int? discoveredDBCount = null, bool? hasScanOccurred = null, MigrationAssessmentTargetType? recommendedAzureSqlTargetType = null, RecommendedSuitability? recommendedSuitability = null, SqlAssessmentV2PaasSuitabilityDetails azureSqlMISuitabilityDetails = null, SqlAssessmentV2PaasSuitabilityDetails azureSqlDBSuitabilityDetails = null, SqlAssessmentV2IaasSuitabilityDetails azureSqlVmSuitabilityDetails = null, ResourceIdentifier assessedSqlEntityArmId = null, bool? isClustered = null, bool? isHighAvailabilityEnabled = null, string sqlEdition = null, string sqlVersion = null, AssessmentSizingCriterion? sizingCriterion = null)
+        /// <returns> A new <see cref="Assessment.MigrationAssessedSqlRecommendedEntityData"/> instance for mocking. </returns>
+        public static MigrationAssessedSqlRecommendedEntityData MigrationAssessedSqlRecommendedEntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string machineName = null, string instanceName = null, AssessmentProductSupportStatus productSupportStatus = null, int? dbCount = null, int? discoveredDBCount = null, bool? hasScanOccurred = null, MigrationAssessmentTargetType? recommendedAzureSqlTargetType = null, AssessedSqlRecommendedSuitability? recommendedSuitability = null, SqlAssessmentV2PaasSuitabilityDetails azureSqlMISuitabilityDetails = null, SqlAssessmentV2PaasSuitabilityDetails azureSqlDBSuitabilityDetails = null, SqlAssessmentV2IaasSuitabilityDetails azureSqlVmSuitabilityDetails = null, ResourceIdentifier assessedSqlEntityArmId = null, bool? isClustered = null, bool? isHighAvailabilityEnabled = null, string sqlEdition = null, string sqlVersion = null, AssessmentSizingCriterion? sizingCriterion = null)
         {
-            return new AssessedSqlRecommendedEntityData(
+            return new MigrationAssessedSqlRecommendedEntityData(
                 id,
                 name,
                 resourceType,
@@ -1772,7 +1772,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessmentSqlAssessmentV2SummaryData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationSqlAssessmentV2SummaryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1790,8 +1790,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="numberOfSqlDatabases"> Number of sql databases part of the assessment. </param>
         /// <param name="numberOfFciInstances"> Number of sql failover cluster instances part of the assessment. </param>
         /// <param name="numberOfSqlAvailabilityGroups"> Number of sql availability groups part of the assessment. </param>
-        /// <returns> A new <see cref="Assessment.MigrationAssessmentSqlAssessmentV2SummaryData"/> instance for mocking. </returns>
-        public static MigrationAssessmentSqlAssessmentV2SummaryData MigrationAssessmentSqlAssessmentV2SummaryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, SqlAssessmentV2SummaryDetails> assessmentSummary = null, IReadOnlyDictionary<string, int> distributionBySupportStatus = null, IReadOnlyDictionary<string, int> distributionByServicePackInsight = null, IReadOnlyDictionary<string, int> distributionBySqlVersion = null, IReadOnlyDictionary<string, int> distributionBySqlEdition = null, IReadOnlyDictionary<string, int> instanceDistributionBySizingCriterion = null, IReadOnlyDictionary<string, int> databaseDistributionBySizingCriterion = null, int? numberOfMachines = null, int? numberOfSqlInstances = null, int? numberOfSuccessfullyDiscoveredSqlInstances = null, int? numberOfSqlDatabases = null, int? numberOfFciInstances = null, int? numberOfSqlAvailabilityGroups = null)
+        /// <returns> A new <see cref="Assessment.MigrationSqlAssessmentV2SummaryData"/> instance for mocking. </returns>
+        public static MigrationSqlAssessmentV2SummaryData MigrationSqlAssessmentV2SummaryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, SqlAssessmentV2SummaryDetails> assessmentSummary = null, IReadOnlyDictionary<string, int> distributionBySupportStatus = null, IReadOnlyDictionary<string, int> distributionByServicePackInsight = null, IReadOnlyDictionary<string, int> distributionBySqlVersion = null, IReadOnlyDictionary<string, int> distributionBySqlEdition = null, IReadOnlyDictionary<string, int> instanceDistributionBySizingCriterion = null, IReadOnlyDictionary<string, int> databaseDistributionBySizingCriterion = null, int? numberOfMachines = null, int? numberOfSqlInstances = null, int? numberOfSuccessfullyDiscoveredSqlInstances = null, int? numberOfSqlDatabases = null, int? numberOfFciInstances = null, int? numberOfSqlAvailabilityGroups = null)
         {
             assessmentSummary ??= new Dictionary<string, SqlAssessmentV2SummaryDetails>();
             distributionBySupportStatus ??= new Dictionary<string, int>();
@@ -1801,7 +1801,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             instanceDistributionBySizingCriterion ??= new Dictionary<string, int>();
             databaseDistributionBySizingCriterion ??= new Dictionary<string, int>();
 
-            return new MigrationAssessmentSqlAssessmentV2SummaryData(
+            return new MigrationSqlAssessmentV2SummaryData(
                 id,
                 name,
                 resourceType,
@@ -1922,7 +1922,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="webApplications"> Web applications discovered on the machine. </param>
         /// <param name="updatedOn"> When was machine last updated. </param>
         /// <returns> A new <see cref="Assessment.MigrationAssessmentMachineData"/> instance for mocking. </returns>
-        public static MigrationAssessmentMachineData MigrationAssessmentMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkloadSummary workloadSummary = null, IEnumerable<MigrationAssessmentError> errors = null, ProcessorInfo hostProcessor = null, ProductSupportStatus productSupportStatus = null, ResourceIdentifier discoveryMachineArmId = null, ResourceIdentifier datacenterManagementServerArmId = null, string datacenterManagementServerName = null, MachineBootType? bootType = null, string displayName = null, double? megabytesOfMemory = null, int? numberOfCores = null, string operatingSystemType = null, string operatingSystemName = null, string operatingSystemVersion = null, string description = null, DateTimeOffset? createdOn = null, IReadOnlyDictionary<string, MigrationAssessmentDisk> disks = null, IEnumerable<string> groups = null, IReadOnlyDictionary<string, MigrationAssessmentNetworkAdapter> networkAdapters = null, IEnumerable<string> sqlInstances = null, IEnumerable<string> webApplications = null, DateTimeOffset? updatedOn = null)
+        public static MigrationAssessmentMachineData MigrationAssessmentMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AssessmentWorkloadSummary workloadSummary = null, IEnumerable<MigrationAssessmentError> errors = null, AssessedMachineProcessorInfo hostProcessor = null, AssessmentProductSupportStatus productSupportStatus = null, ResourceIdentifier discoveryMachineArmId = null, ResourceIdentifier datacenterManagementServerArmId = null, string datacenterManagementServerName = null, AssessedMachineBootType? bootType = null, string displayName = null, double? megabytesOfMemory = null, int? numberOfCores = null, string operatingSystemType = null, string operatingSystemName = null, string operatingSystemVersion = null, string description = null, DateTimeOffset? createdOn = null, IReadOnlyDictionary<string, MigrationAssessmentDisk> disks = null, IEnumerable<string> groups = null, IReadOnlyDictionary<string, MigrationAssessmentNetworkAdapter> networkAdapters = null, IEnumerable<string> sqlInstances = null, IEnumerable<string> webApplications = null, DateTimeOffset? updatedOn = null)
         {
             errors ??= new List<MigrationAssessmentError>();
             disks ??= new Dictionary<string, MigrationAssessmentDisk>();
@@ -1961,13 +1961,13 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AssessmentWorkloadSummary"/>. </summary>
         /// <param name="oracleInstances"> Gets or sets oracle databases. </param>
         /// <param name="springApps"> Gets or sets oracle databases. </param>
-        /// <returns> A new <see cref="Models.WorkloadSummary"/> instance for mocking. </returns>
-        public static WorkloadSummary WorkloadSummary(int? oracleInstances = null, int? springApps = null)
+        /// <returns> A new <see cref="Models.AssessmentWorkloadSummary"/> instance for mocking. </returns>
+        public static AssessmentWorkloadSummary AssessmentWorkloadSummary(int? oracleInstances = null, int? springApps = null)
         {
-            return new WorkloadSummary(oracleInstances, springApps, serializedAdditionalRawData: null);
+            return new AssessmentWorkloadSummary(oracleInstances, springApps, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrationAssessmentDisk"/>. </summary>
@@ -2016,7 +2016,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessmentAssessmentProjectSummaryData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessmentProjectSummaryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2031,12 +2031,12 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="numberOfImportMachines"> Gets the number of import machines part of this project. </param>
         /// <param name="numberOfAssessments"> Gets the number of assessments created in this project. </param>
         /// <param name="lastAssessedOn"> Gets the last assessment timestamp. </param>
-        /// <returns> A new <see cref="Assessment.MigrationAssessmentAssessmentProjectSummaryData"/> instance for mocking. </returns>
-        public static MigrationAssessmentAssessmentProjectSummaryData MigrationAssessmentAssessmentProjectSummaryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<AssessmentErrorSummary> errorSummaryAffectedEntities = null, int? numberOfPrivateEndpointConnections = null, int? numberOfGroups = null, int? numberOfMachines = null, int? numberOfImportMachines = null, int? numberOfAssessments = null, DateTimeOffset? lastAssessedOn = null)
+        /// <returns> A new <see cref="Assessment.MigrationAssessmentProjectSummaryData"/> instance for mocking. </returns>
+        public static MigrationAssessmentProjectSummaryData MigrationAssessmentProjectSummaryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<AssessmentErrorSummary> errorSummaryAffectedEntities = null, int? numberOfPrivateEndpointConnections = null, int? numberOfGroups = null, int? numberOfMachines = null, int? numberOfImportMachines = null, int? numberOfAssessments = null, DateTimeOffset? lastAssessedOn = null)
         {
             errorSummaryAffectedEntities ??= new List<AssessmentErrorSummary>();
 
-            return new MigrationAssessmentAssessmentProjectSummaryData(
+            return new MigrationAssessmentProjectSummaryData(
                 id,
                 name,
                 resourceType,
@@ -2055,7 +2055,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="assessmentType"> Gets the assessment type. </param>
         /// <param name="count"> Gets the affected entity count. </param>
         /// <returns> A new <see cref="Models.AssessmentErrorSummary"/> instance for mocking. </returns>
-        public static AssessmentErrorSummary AssessmentErrorSummary(AssessmentType? assessmentType = null, int? count = null)
+        public static AssessmentErrorSummary AssessmentErrorSummary(MigrationAssessmentType? assessmentType = null, int? count = null)
         {
             return new AssessmentErrorSummary(assessmentType, count, serializedAdditionalRawData: null);
         }
@@ -2086,7 +2086,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationAssessmentSqlAssessmentOptionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment.MigrationSqlAssessmentOptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2105,25 +2105,25 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="reservedInstanceSupportedCurrencies"> Gets or sets the list of currencies supported for Reserved Instances. </param>
         /// <param name="reservedInstanceSupportedOffers"> Gets or sets the list of offers supported for Reserved Instances. </param>
         /// <param name="supportedOffers"> Gets or sets the list of offers supported for SQL assessments. </param>
-        /// <returns> A new <see cref="Assessment.MigrationAssessmentSqlAssessmentOptionData"/> instance for mocking. </returns>
-        public static MigrationAssessmentSqlAssessmentOptionData MigrationAssessmentSqlAssessmentOptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<VmFamilyConfig> vmFamilies = null, IEnumerable<AzureVmFamily> reservedInstanceVmFamilies = null, IEnumerable<AzureVmFamily> premiumDiskVmFamilies = null, IEnumerable<AzureVmFamily> savingsPlanVmFamilies = null, IEnumerable<AzureLocation> savingsPlanSupportedLocations = null, IEnumerable<AzureLocation> savingsPlanSupportedLocationsForPaas = null, IEnumerable<AzureLocation> reservedInstanceSupportedLocationsForIaas = null, IEnumerable<AzureOfferCode> savingsPlanSupportedOffers = null, IEnumerable<SqlPaaSTargetConfig> sqlSkus = null, IEnumerable<MigrationAssessmentTargetType> reservedInstanceSqlTargets = null, IEnumerable<AzureLocation> reservedInstanceSupportedLocations = null, IEnumerable<AzureCurrency> reservedInstanceSupportedCurrencies = null, IEnumerable<AzureOfferCode> reservedInstanceSupportedOffers = null, IEnumerable<AzureOfferCode> supportedOffers = null)
+        /// <returns> A new <see cref="Assessment.MigrationSqlAssessmentOptionData"/> instance for mocking. </returns>
+        public static MigrationSqlAssessmentOptionData MigrationSqlAssessmentOptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<AssessmentVmFamilyConfig> vmFamilies = null, IEnumerable<AssessmentVmFamily> reservedInstanceVmFamilies = null, IEnumerable<AssessmentVmFamily> premiumDiskVmFamilies = null, IEnumerable<AssessmentVmFamily> savingsPlanVmFamilies = null, IEnumerable<AzureLocation> savingsPlanSupportedLocations = null, IEnumerable<AzureLocation> savingsPlanSupportedLocationsForPaas = null, IEnumerable<AzureLocation> reservedInstanceSupportedLocationsForIaas = null, IEnumerable<AssessmentOfferCode> savingsPlanSupportedOffers = null, IEnumerable<SqlPaasTargetConfig> sqlSkus = null, IEnumerable<MigrationAssessmentTargetType> reservedInstanceSqlTargets = null, IEnumerable<AzureLocation> reservedInstanceSupportedLocations = null, IEnumerable<AssessmentCurrency> reservedInstanceSupportedCurrencies = null, IEnumerable<AssessmentOfferCode> reservedInstanceSupportedOffers = null, IEnumerable<AssessmentOfferCode> supportedOffers = null)
         {
-            vmFamilies ??= new List<VmFamilyConfig>();
-            reservedInstanceVmFamilies ??= new List<AzureVmFamily>();
-            premiumDiskVmFamilies ??= new List<AzureVmFamily>();
-            savingsPlanVmFamilies ??= new List<AzureVmFamily>();
+            vmFamilies ??= new List<AssessmentVmFamilyConfig>();
+            reservedInstanceVmFamilies ??= new List<AssessmentVmFamily>();
+            premiumDiskVmFamilies ??= new List<AssessmentVmFamily>();
+            savingsPlanVmFamilies ??= new List<AssessmentVmFamily>();
             savingsPlanSupportedLocations ??= new List<AzureLocation>();
             savingsPlanSupportedLocationsForPaas ??= new List<AzureLocation>();
             reservedInstanceSupportedLocationsForIaas ??= new List<AzureLocation>();
-            savingsPlanSupportedOffers ??= new List<AzureOfferCode>();
-            sqlSkus ??= new List<SqlPaaSTargetConfig>();
+            savingsPlanSupportedOffers ??= new List<AssessmentOfferCode>();
+            sqlSkus ??= new List<SqlPaasTargetConfig>();
             reservedInstanceSqlTargets ??= new List<MigrationAssessmentTargetType>();
             reservedInstanceSupportedLocations ??= new List<AzureLocation>();
-            reservedInstanceSupportedCurrencies ??= new List<AzureCurrency>();
-            reservedInstanceSupportedOffers ??= new List<AzureOfferCode>();
-            supportedOffers ??= new List<AzureOfferCode>();
+            reservedInstanceSupportedCurrencies ??= new List<AssessmentCurrency>();
+            reservedInstanceSupportedOffers ??= new List<AssessmentOfferCode>();
+            supportedOffers ??= new List<AssessmentOfferCode>();
 
-            return new MigrationAssessmentSqlAssessmentOptionData(
+            return new MigrationSqlAssessmentOptionData(
                 id,
                 name,
                 resourceType,

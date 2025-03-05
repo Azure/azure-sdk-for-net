@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             {
                 return null;
             }
-            IReadOnlyList<AzureManagedDiskSkuDto> sharedDataDisks = default;
-            IReadOnlyList<AzureManagedDiskSkuDto> sharedLogDisks = default;
-            IReadOnlyList<AzureManagedDiskSkuDto> sharedTempDBDisks = default;
+            IReadOnlyList<AssessmentManagedDiskSkuDto> sharedDataDisks = default;
+            IReadOnlyList<AssessmentManagedDiskSkuDto> sharedLogDisks = default;
+            IReadOnlyList<AssessmentManagedDiskSkuDto> sharedTempDBDisks = default;
             int? numberOfMounts = default;
-            AzureQuorumWitnessDto quorumWitness = default;
+            QuorumWitnessDto quorumWitness = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                     {
                         continue;
                     }
-                    List<AzureManagedDiskSkuDto> array = new List<AzureManagedDiskSkuDto>();
+                    List<AssessmentManagedDiskSkuDto> array = new List<AssessmentManagedDiskSkuDto>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureManagedDiskSkuDto.DeserializeAzureManagedDiskSkuDto(item, options));
+                        array.Add(AssessmentManagedDiskSkuDto.DeserializeAssessmentManagedDiskSkuDto(item, options));
                     }
                     sharedDataDisks = array;
                     continue;
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                     {
                         continue;
                     }
-                    List<AzureManagedDiskSkuDto> array = new List<AzureManagedDiskSkuDto>();
+                    List<AssessmentManagedDiskSkuDto> array = new List<AssessmentManagedDiskSkuDto>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureManagedDiskSkuDto.DeserializeAzureManagedDiskSkuDto(item, options));
+                        array.Add(AssessmentManagedDiskSkuDto.DeserializeAssessmentManagedDiskSkuDto(item, options));
                     }
                     sharedLogDisks = array;
                     continue;
@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                     {
                         continue;
                     }
-                    List<AzureManagedDiskSkuDto> array = new List<AzureManagedDiskSkuDto>();
+                    List<AssessmentManagedDiskSkuDto> array = new List<AssessmentManagedDiskSkuDto>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureManagedDiskSkuDto.DeserializeAzureManagedDiskSkuDto(item, options));
+                        array.Add(AssessmentManagedDiskSkuDto.DeserializeAssessmentManagedDiskSkuDto(item, options));
                     }
                     sharedTempDBDisks = array;
                     continue;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                     {
                         continue;
                     }
-                    quorumWitness = AzureQuorumWitnessDto.DeserializeAzureQuorumWitnessDto(property.Value, options);
+                    quorumWitness = QuorumWitnessDto.DeserializeQuorumWitnessDto(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -187,9 +187,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new SharedResourcesDto(
-                sharedDataDisks ?? new ChangeTrackingList<AzureManagedDiskSkuDto>(),
-                sharedLogDisks ?? new ChangeTrackingList<AzureManagedDiskSkuDto>(),
-                sharedTempDBDisks ?? new ChangeTrackingList<AzureManagedDiskSkuDto>(),
+                sharedDataDisks ?? new ChangeTrackingList<AssessmentManagedDiskSkuDto>(),
+                sharedLogDisks ?? new ChangeTrackingList<AssessmentManagedDiskSkuDto>(),
+                sharedTempDBDisks ?? new ChangeTrackingList<AssessmentManagedDiskSkuDto>(),
                 numberOfMounts,
                 quorumWitness,
                 serializedAdditionalRawData);

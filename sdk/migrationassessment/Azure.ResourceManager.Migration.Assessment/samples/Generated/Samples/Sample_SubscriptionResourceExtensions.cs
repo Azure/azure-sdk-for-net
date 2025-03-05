@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetMigrationAssessmentAssessmentProjects_AssessmentProjectsOperationsListBySubscriptionMaximumSetGen()
+        public async Task GetMigrationAssessmentProjects_AssessmentProjectsOperationsListBySubscriptionMaximumSetGen()
         {
             // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/AssessmentProjectsOperations_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "AssessmentProjectsOperations_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (MigrationAssessmentAssessmentProjectResource item in subscriptionResource.GetMigrationAssessmentAssessmentProjectsAsync())
+            await foreach (MigrationAssessmentProjectResource item in subscriptionResource.GetMigrationAssessmentProjectsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MigrationAssessmentAssessmentProjectData resourceData = item.Data;
+                MigrationAssessmentProjectData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

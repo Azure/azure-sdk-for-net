@@ -23,35 +23,80 @@ use-model-reader-writer: true
 #  show-serialized-names: true
 
 rename-mapping:
-  # Solve naming conflic with the data class of SqlAssessmentV2Summary
-  SqlAssessmentV2SummaryData: SqlAssessmentV2SummaryDetails
-  # Correct the violations of the naming rules (suffix)
-  AssessedDiskData: AssessedDataDisk
-  AvsSkuOptions: AvsSkuConfig
-  SqlPaaSTargetOptions: SqlPaaSTargetConfig
-  VmFamilyOptions: VmFamilyConfig
-  SqlAssessmentV2IaasSuitabilityData: SqlAssessmentV2IaasSuitabilityDetails
-  SqlAssessmentV2PaasSuitabilityData: SqlAssessmentV2PaasSuitabilityDetails
-  UltraDiskAssessmentOptions: UltraDiskAssessmentConfig
-  # Correct the violations of the naming rules
-  AzureAvsNodeType: AvsNodeType
+  AssessedDisk: MigrationAssessedDisk
+  AssessedDiskData: MigrationAssessedDataDisk
+  AssessedMachine.properties.createdTimestamp: CreatedOn
+  AssessedMachine.properties.updatedTimestamp: UpdatedOn
+  AssessedMachine: MigrationAssessedMachine
+  AssessedMachineType: MigrationAssessedMachineType
+  AssessedSqlDatabaseV2.properties.createdTimestamp: CreatedOn
+  AssessedSqlDatabaseV2.properties.updatedTimestamp: UpdatedOn
+  AssessedSqlDatabaseV2: MigrationAssessedSqlDatabaseV2
+  AssessedSqlInstanceV2.properties.createdTimestamp: CreatedOn
+  AssessedSqlInstanceV2.properties.updatedTimestamp: UpdatedOn
+  AssessedSqlInstanceV2: MigrationAssessedSqlInstanceV2
+  AssessedSqlMachine.properties.createdTimestamp: CreatedOn
+  AssessedSqlMachine.properties.updatedTimestamp: UpdatedOn
+  AssessedSqlMachine: MigrationAssessedSqlMachine
+  AssessedSqlRecommendedEntity: MigrationAssessedSqlRecommendedEntity
+  Assessment.properties.createdTimestamp: CreatedOn
+  Assessment.properties.pricesTimestamp: PricesQueriedOn
+  Assessment.properties.updatedTimestamp: UpdatedOn
+  Assessment: MigrationAssessment
+  AssessmentOptions: MigrationAssessmentOptions
+  AssessmentProject.properties.assessmentSolutionId: -|arm-id
+  AssessmentProject.properties.createdTimestamp: CreateOn
+  AssessmentProject.properties.customerWorkspaceId: -|arm-id
+  AssessmentProject.properties.updatedTimestamp: UpdatedOn
+  AssessmentProject: MigrationAssessmentProject
+  AssessmentProjectSummary.properties.lastAssessmentTimestamp: LastAssessedOn
+  AssessmentProjectSummary: MigrationAssessmentProjectSummary
+  AssessmentProjectUpdate.properties.assessmentSolutionId: -|arm-id
+  AssessmentProjectUpdate.properties.customerWorkspaceId: -|arm-id
+  AssessmentStage: MigrationAssessmentStage
+  AssessmentStatus: MigrationAssessmentStatus
+  AssessmentType: MigrationAssessmentType
+  AvsAssessedMachine.properties.createdTimestamp: CreatedOn
+  AvsAssessedMachine.properties.updatedTimestamp: UpdatedOn
+  AvsAssessedMachine: MigrationAvsAssessedMachine
+  AvsAssessment.properties.createdTimestamp: CreatedOn
+  AvsAssessment.properties.pricesTimestamp: PricesQueriedOn
+  AvsAssessment.properties.updatedTimestamp: UpdatedOn
+  AvsAssessment: MigrationAvsAssessment
+  AvsAssessmentOptions: MigrationAvsAssessmentOptions
+  AvsSkuOptions: AssessmentAvsSkuConfig
+  AzureAvsNodeType: AssessmentAvsNodeType
+  AzureAvsNodeType.AV36: Av36
   AzureAvsSuitabilityExplanation: AvsSuitabilityExplanation
   AzureAvsVmSuitabilityDetail: AvsVmSuitabilityDetail
   AzureAvsVmSuitabilityExplanation: AvsVmSuitabilityExplanation
-  AzureManagedDiskSkuDTODiskRedundancy.LRS: Lrs
-  AzureManagedDiskSkuDTODiskRedundancy.ZRS: Zrs
-  AzureSqlPurchaseModel.DTU: Dtu
-  AzureVirtualMachineSkuDTO: AzureVmSkuDTO
-  CollectorAgentPropertiesBase.lastHeartbeatUtc: LastHeartbeatOn
-  DownloadUrl: AssessmentReportDownloadUri
-  EnvironmentType: AssessmentEnvironmentType
-  Error.updatedTimeStamp: UpdatedOn
-  ErrorSummary: AssessmentErrorSummary
-  UpdateGroupBody: MigrateGroupUpdateContent
-  GroupBodyProperties: MigrateGroupUpdateProperties
-  GroupUpdateOperation: MigrateGroupUpdateOperationType
-  MachineBootType.EFI: Efi
-  AssessmentProjectUpdate.properties.customerWorkspaceId: -|arm-id
+  AzureCurrency: AssessmentCurrency
+  AzureDiskSize: AssessmentDiskSize
+  AzureDiskSize.StandardSSD_E1: StandardSsdE1
+  AzureDiskSize.StandardSSD_E10: StandardSsdE10
+  AzureDiskSize.StandardSSD_E15: StandardSsdE15
+  AzureDiskSize.StandardSSD_E2: StandardSsdE2
+  AzureDiskSize.StandardSSD_E20: StandardSsdE20
+  AzureDiskSize.StandardSSD_E3: StandardSsdE3
+  AzureDiskSize.StandardSSD_E30: StandardSsdE30
+  AzureDiskSize.StandardSSD_E4: StandardSsdE4
+  AzureDiskSize.StandardSSD_E40: StandardSsdE40
+  AzureDiskSize.StandardSSD_E50: StandardSsdE50
+  AzureDiskSize.StandardSSD_E6: StandardSsdE6
+  AzureDiskSize.StandardSSD_E60: StandardSsdE60
+  AzureDiskSize.StandardSSD_E70: StandardSsdE70
+  AzureDiskSize.StandardSSD_E80: StandardSsdE80
+  AzureDiskSuitabilityDetail: AssessmentDiskSuitabilityDetail
+  AzureDiskSuitabilityExplanation: AssessmentSuitabilityExplanation
+  AzureDiskType: AssessmentDiskType
+  AzureVmFamily:  AssessmentVmFamily
+  AzureHybridUseBenefit: AssessmentHybridUseBenefit
+  AzureManagedDiskSkuDTO: AssessmentManagedDiskSkuDTO
+  AzureManagedDiskSkuDTODiskRedundancy: ManagedDiskSkuDTODiskRedundancy
+  AzureManagedDiskSkuDTODiskType: ManagedDiskSkuDTODiskType
+  AzureNetworkAdapterSuitabilityDetail: NetworkAdapterSuitabilityDetail
+  AzureNetworkAdapterSuitabilityExplanation: NetworkAdapterSuitabilityExplanation
+  AzureOfferCode: AssessmentOfferCode
   AzureOfferCode.MSAZR0003P: MSAZR0003P
   AzureOfferCode.MSAZR0022P: MSAZR0022P
   AzureOfferCode.MSAZR0023P: MSAZR0023P
@@ -91,82 +136,90 @@ rename-mapping:
   AzureOfferCode.MSMCAZR0121P: MSMCAZR0121P
   AzureOfferCode.MSMCAZR0125P: MSMCAZR0125P
   AzureOfferCode.MSMCAZR0128P: MSMCAZR0128P
-  Percentile: PercentileOfUtilization
-  TimeRange: AssessmentTimeRange
-  ProjectStatus: AssessmentProjectStatus
-  SqlFCIMetadata: SqlFciMetadata
-  SqlFCIMetadataState: SqlFciMetadataState
-  SqlFCIState: SqlFciState
-  OptimizationLogic: SqlOptimizationLogic
-  AssessedMachine.properties.createdTimestamp: CreatedOn
-  AssessedMachine.properties.updatedTimestamp: UpdatedOn
-  AssessedSqlDatabaseV2.properties.createdTimestamp: CreatedOn
-  AssessedSqlDatabaseV2.properties.updatedTimestamp: UpdatedOn
-  AssessedSqlInstanceV2.properties.createdTimestamp: CreatedOn
-  AssessedSqlInstanceV2.properties.updatedTimestamp: UpdatedOn
-  AssessedSqlMachine.properties.createdTimestamp: CreatedOn
-  AssessedSqlMachine.properties.updatedTimestamp: UpdatedOn
-  Assessment.properties.pricesTimestamp: PricesQueriedOn
-  Assessment.properties.createdTimestamp: CreatedOn
-  Assessment.properties.updatedTimestamp: UpdatedOn
-  AssessmentProject.properties.createdTimestamp: CreateOn
-  AssessmentProject.properties.updatedTimestamp: UpdatedOn
-  AssessmentProjectSummary.properties.lastAssessmentTimestamp: LastAssessedOn
-  AvsAssessedMachine.properties.createdTimestamp: CreatedOn
-  AvsAssessedMachine.properties.updatedTimestamp: UpdatedOn
-  AvsAssessment.properties.pricesTimestamp: PricesQueriedOn
-  AvsAssessment.properties.createdTimestamp: CreatedOn
-  AvsAssessment.properties.updatedTimestamp: UpdatedOn
+  AzurePricingTier: AssessmentPricingTier
+  AzureQuorumWitnessDTO: QuorumWitnessDTO
+  AzureQuorumWitnessDTOQuorumWitnessType: QuorumWitnessDTOQuorumWitnessType
+  AzureReservedInstance: AssessmentReservedInstance
+  AzureSecurityOfferingType: AssessmentSecurityOfferingType
+  AzureSecurityOfferingType.NO: No
+  AzureSecurityOfferingType.MDC: Mdc
+  AzureSqlDataBaseType: AssessmentSqlDataBaseType
+  AzureSqlIaasSkuDTO: AssessmentAzureSqlIaasSkuDTO
+  AzureSqlInstanceType: AssessmentSqlInstanceType
+  AzureSqlPaasSkuDTO: AssessmentSqlPaasSkuDTO
+  AzureSqlPurchaseModel: AssessmentSqlPurchaseModel
+  AzureSqlPurchaseModel.DTU: Dtu
+  AzureSqlServiceTier: AssessmentSqlServiceTier
+  AzureStorageRedundancy: AssessmentStorageRedundancy
+  AzureVirtualMachineSkuDTO: AssessmentVmSkuDTO
+  AzureVmSize: AssessmentVmSize
+  AzureVmSuitabilityDetail: AssessmentVmSuitabilityDetail
+  AzureVmSuitabilityExplanation: AssessmentVmSuitabilityExplanation
+  CollectorAgentPropertiesBase.lastHeartbeatUtc: LastHeartbeatOn
+  CompatibilityLevel: AssessedDatabaseCompatibilityLevel
+  CostComponent: AssessmentCostComponent
+  CostComponentName: AssessmentCostComponentName
+  DownloadUrl: AssessmentReportDownloadUri
+  EntityUptime: AssessmentEntityUptime
+  EnvironmentType: AssessmentEnvironmentType
+  Error.updatedTimeStamp: UpdatedOn
+  ErrorSummary: AssessmentErrorSummary
   Group.properties.createdTimestamp: CreatedOn
   Group.properties.updatedTimestamp: UpdatedOn
+  GroupBodyProperties: MigrateGroupUpdateProperties
+  GroupUpdateOperation: MigrateGroupUpdateOperationType
   HypervCollector.properties.createdTimestamp: CreatedOn
   HypervCollector.properties.updatedTimestamp: UpdatedOn
   ImportCollector.properties.createdTimestamp: CreatedOn
   ImportCollector.properties.updatedTimestamp: UpdatedOn
   Machine.properties.createdTimestamp: CreatedOn
   Machine.properties.updatedTimestamp: UpdatedOn
+  MachineBootType.EFI: Efi
+  MachineBootType: AssessedMachineBootType
+  OptimizationLogic: SqlOptimizationLogic
+  Percentile: PercentileOfUtilization
+  ProcessorInfo: AssessedMachineProcessorInfo
+  ProductSupportStatus: AssessmentProductSupportStatus
+  ProjectStatus: AssessmentProjectStatus
+  RecommendedSuitability: AssessedSqlRecommendedSuitability
   ServerCollector.properties.createdTimestamp: CreatedOn
   ServerCollector.properties.updatedTimestamp: UpdatedOn
-  SqlAssessmentV2.properties.pricesTimestamp: PricesQueriedOn
+  SqlAssessmentOptions: MigrationSqlAssessmentOptions
   SqlAssessmentV2.properties.createdTimestamp: CreatedOn
+  SqlAssessmentV2.properties.pricesTimestamp: PricesQueriedOn
   SqlAssessmentV2.properties.updatedTimestamp: UpdatedOn
+  SqlAssessmentV2: MigrationSqlAssessmentV2
+  SqlAssessmentV2IaasSuitabilityData: SqlAssessmentV2IaasSuitabilityDetails
+  SqlAssessmentV2PaasSuitabilityData: SqlAssessmentV2PaasSuitabilityDetails
+  SqlAssessmentV2Summary: MigrationSqlAssessmentV2Summary
+  SqlAssessmentV2SummaryData: SqlAssessmentV2SummaryDetails
   SqlCollector.properties.createdTimestamp: CreatedOn
   SqlCollector.properties.updatedTimestamp: UpdatedOn
+  SqlDbSettings: AssessmentSqlDbSettings
+  SqlFCIMetadata: AssessmentSqlFciMetadata
+  SqlFCIMetadataState: AssessmentSqlFciMetadataState
+  SqlFCIState: AssessmentSqlFciState
+  SqlMiSettings: AssessmentSqlMISettings
+  SqlMigrationGuidelineCategory.FailoverCluterInstanceGuideLine: FailoverCluterInstanceGuideLine
+  SqlPaaSTargetOptions: SqlPaasTargetConfig
+  SqlServerLicense: AssessmentSqlServerLicense
+  SqlVmSettings: AssessmentSqlVmSettings
+  TimeRange: AssessmentTimeRange
+  UltraDiskAssessmentOptions: UltraDiskAssessmentConfig
+  UpdateGroupBody: MigrateGroupUpdateContent
+  VmFamilyOptions: AssessmentVmFamilyConfig
+  VmUptime: AssessmentVmUptime
   VmwareCollector.properties.createdTimestamp: CreatedOn
   VmwareCollector.properties.updatedTimestamp: UpdatedOn
-  SqlMigrationGuidelineCategory.FailoverCluterInstanceGuideLine: FailoverCluterInstanceGuideLine
-  AzureDiskSize.StandardSSD_E10: StandardSsdE10
-  AzureDiskSize.StandardSSD_E15: StandardSsdE15
-  AzureDiskSize.StandardSSD_E20: StandardSsdE20
-  AzureDiskSize.StandardSSD_E30: StandardSsdE30
-  AzureDiskSize.StandardSSD_E40: StandardSsdE40
-  AzureDiskSize.StandardSSD_E50: StandardSsdE50
-  AzureDiskSize.StandardSSD_E60: StandardSsdE60
-  AzureDiskSize.StandardSSD_E70: StandardSsdE70
-  AzureDiskSize.StandardSSD_E80: StandardSsdE80
-  AzureDiskSize.StandardSSD_E1: StandardSsdE1
-  AzureDiskSize.StandardSSD_E2: StandardSsdE2
-  AzureDiskSize.StandardSSD_E3: StandardSsdE3
-  AzureDiskSize.StandardSSD_E4: StandardSsdE4
-  AzureDiskSize.StandardSSD_E6: StandardSsdE6
+  WorkloadSummary: AssessmentWorkloadSummary
 
 prepend-rp-prefix:
   # Correct the violations of the naming rules
-  - Assessment
-  - AssessmentOptions
-  - AssessmentProject
-  - AssessmentProjectSummary
-  - AvsAssessedMachine
-  - AvsAssessment
-  - AvsAssessmentOptions
   - Group
   - HypervCollector
   - ImportCollector
   - Machine
   - ServerCollector
-  - SqlAssessmentOptions
-  - SqlAssessmentV2
-  - SqlAssessmentV2Summary
   - SqlCollector
   - VmwareCollector
   - CloudSuitability
@@ -218,6 +271,8 @@ acronym-mapping:
   Db: DB
   SqlMi: SqlMI
   Ea: EA
+  LRS: Lrs
+  ZRS: Zrs
 
 directive:
   # Use double instead of float for all properties

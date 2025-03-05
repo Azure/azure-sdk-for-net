@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/>, <paramref name="assessmentName"/> or <paramref name="assessedSqlMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/>, <paramref name="assessmentName"/> or <paramref name="assessedSqlMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AssessedSqlMachineData>> GetAsync(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, string assessedSqlMachineName, CancellationToken cancellationToken = default)
+        public async Task<Response<MigrationAssessedSqlMachineData>> GetAsync(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, string assessedSqlMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -257,13 +257,13 @@ namespace Azure.ResourceManager.Migration.Assessment
             {
                 case 200:
                     {
-                        AssessedSqlMachineData value = default;
+                        MigrationAssessedSqlMachineData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AssessedSqlMachineData.DeserializeAssessedSqlMachineData(document.RootElement);
+                        value = MigrationAssessedSqlMachineData.DeserializeMigrationAssessedSqlMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AssessedSqlMachineData)null, message.Response);
+                    return Response.FromValue((MigrationAssessedSqlMachineData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/>, <paramref name="assessmentName"/> or <paramref name="assessedSqlMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/>, <paramref name="assessmentName"/> or <paramref name="assessedSqlMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AssessedSqlMachineData> Get(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, string assessedSqlMachineName, CancellationToken cancellationToken = default)
+        public Response<MigrationAssessedSqlMachineData> Get(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, string assessedSqlMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -294,13 +294,13 @@ namespace Azure.ResourceManager.Migration.Assessment
             {
                 case 200:
                     {
-                        AssessedSqlMachineData value = default;
+                        MigrationAssessedSqlMachineData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AssessedSqlMachineData.DeserializeAssessedSqlMachineData(document.RootElement);
+                        value = MigrationAssessedSqlMachineData.DeserializeMigrationAssessedSqlMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AssessedSqlMachineData)null, message.Response);
+                    return Response.FromValue((MigrationAssessedSqlMachineData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

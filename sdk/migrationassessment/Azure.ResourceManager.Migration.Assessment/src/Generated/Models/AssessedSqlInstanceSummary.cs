@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="isHighAvailabilityEnabled"> Gets whether Sql is highly available. </param>
         /// <param name="sqlFciState"> Gets the Sql Fci state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssessedSqlInstanceSummary(string instanceId, string instanceName, ResourceIdentifier sqlInstanceSdsArmId, string sqlInstanceEntityId, string sqlEdition, string sqlVersion, bool? isClustered, bool? isHighAvailabilityEnabled, SqlFciState? sqlFciState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssessedSqlInstanceSummary(string instanceId, string instanceName, ResourceIdentifier sqlInstanceSdsArmId, string sqlInstanceEntityId, string sqlEdition, string sqlVersion, bool? isClustered, bool? isHighAvailabilityEnabled, AssessmentSqlFciState? sqlFciState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceId = instanceId;
             InstanceName = instanceName;
@@ -93,6 +93,6 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <summary> Gets whether Sql is highly available. </summary>
         public bool? IsHighAvailabilityEnabled { get; }
         /// <summary> Gets the Sql Fci state. </summary>
-        public SqlFciState? SqlFciState { get; }
+        public AssessmentSqlFciState? SqlFciState { get; }
     }
 }

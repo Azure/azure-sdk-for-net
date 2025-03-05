@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="projectSummaryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="projectSummaryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MigrationAssessmentAssessmentProjectSummaryData>> GetAsync(string subscriptionId, string resourceGroupName, string projectName, string projectSummaryName, CancellationToken cancellationToken = default)
+        public async Task<Response<MigrationAssessmentProjectSummaryData>> GetAsync(string subscriptionId, string resourceGroupName, string projectName, string projectSummaryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.Migration.Assessment
             {
                 case 200:
                     {
-                        MigrationAssessmentAssessmentProjectSummaryData value = default;
+                        MigrationAssessmentProjectSummaryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MigrationAssessmentAssessmentProjectSummaryData.DeserializeMigrationAssessmentAssessmentProjectSummaryData(document.RootElement);
+                        value = MigrationAssessmentProjectSummaryData.DeserializeMigrationAssessmentProjectSummaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MigrationAssessmentAssessmentProjectSummaryData)null, message.Response);
+                    return Response.FromValue((MigrationAssessmentProjectSummaryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="projectSummaryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="projectSummaryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MigrationAssessmentAssessmentProjectSummaryData> Get(string subscriptionId, string resourceGroupName, string projectName, string projectSummaryName, CancellationToken cancellationToken = default)
+        public Response<MigrationAssessmentProjectSummaryData> Get(string subscriptionId, string resourceGroupName, string projectName, string projectSummaryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,13 +222,13 @@ namespace Azure.ResourceManager.Migration.Assessment
             {
                 case 200:
                     {
-                        MigrationAssessmentAssessmentProjectSummaryData value = default;
+                        MigrationAssessmentProjectSummaryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MigrationAssessmentAssessmentProjectSummaryData.DeserializeMigrationAssessmentAssessmentProjectSummaryData(document.RootElement);
+                        value = MigrationAssessmentProjectSummaryData.DeserializeMigrationAssessmentProjectSummaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MigrationAssessmentAssessmentProjectSummaryData)null, message.Response);
+                    return Response.FromValue((MigrationAssessmentProjectSummaryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

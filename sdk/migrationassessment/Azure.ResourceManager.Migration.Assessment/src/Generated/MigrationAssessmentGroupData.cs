@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         public MigrationAssessmentGroupData()
         {
             Assessments = new ChangeTrackingList<string>();
-            SupportedAssessmentTypes = new ChangeTrackingList<AssessmentType>();
+            SupportedAssessmentTypes = new ChangeTrackingList<MigrationAssessmentType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrationAssessmentGroupData"/>. </summary>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <param name="updatedOn"> Time when this group was last updated. Date-Time represented in ISO-8601 format. </param>
         /// <param name="groupType"> The type of group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationAssessmentGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MigrationAssessmentProvisioningState? provisioningState, MigrationAssessmentGroupStatus? groupStatus, int? machineCount, IReadOnlyList<string> assessments, IList<AssessmentType> supportedAssessmentTypes, bool? areAssessmentsRunning, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, MigrationAssessmentGroupType? groupType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MigrationAssessmentGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MigrationAssessmentProvisioningState? provisioningState, MigrationAssessmentGroupStatus? groupStatus, int? machineCount, IReadOnlyList<string> assessments, IList<MigrationAssessmentType> supportedAssessmentTypes, bool? areAssessmentsRunning, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, MigrationAssessmentGroupType? groupType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             GroupStatus = groupStatus;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <summary> List of References to Assessments created on this group. </summary>
         public IReadOnlyList<string> Assessments { get; }
         /// <summary> List of assessment types supported on this group. </summary>
-        public IList<AssessmentType> SupportedAssessmentTypes { get; }
+        public IList<MigrationAssessmentType> SupportedAssessmentTypes { get; }
         /// <summary> If the assessments are in running state. </summary>
         public bool? AreAssessmentsRunning { get; }
         /// <summary> Time when this group was created. Date-Time represented in ISO-8601 format. </summary>

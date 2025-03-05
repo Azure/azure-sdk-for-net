@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/>, <paramref name="assessmentName"/> or <paramref name="assessedMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/>, <paramref name="assessmentName"/> or <paramref name="assessedMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AssessedMachineData>> GetAsync(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, string assessedMachineName, CancellationToken cancellationToken = default)
+        public async Task<Response<MigrationAssessedMachineData>> GetAsync(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, string assessedMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -257,13 +257,13 @@ namespace Azure.ResourceManager.Migration.Assessment
             {
                 case 200:
                     {
-                        AssessedMachineData value = default;
+                        MigrationAssessedMachineData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AssessedMachineData.DeserializeAssessedMachineData(document.RootElement);
+                        value = MigrationAssessedMachineData.DeserializeMigrationAssessedMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AssessedMachineData)null, message.Response);
+                    return Response.FromValue((MigrationAssessedMachineData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/>, <paramref name="assessmentName"/> or <paramref name="assessedMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/>, <paramref name="assessmentName"/> or <paramref name="assessedMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AssessedMachineData> Get(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, string assessedMachineName, CancellationToken cancellationToken = default)
+        public Response<MigrationAssessedMachineData> Get(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, string assessedMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -294,13 +294,13 @@ namespace Azure.ResourceManager.Migration.Assessment
             {
                 case 200:
                     {
-                        AssessedMachineData value = default;
+                        MigrationAssessedMachineData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AssessedMachineData.DeserializeAssessedMachineData(document.RootElement);
+                        value = MigrationAssessedMachineData.DeserializeMigrationAssessedMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AssessedMachineData)null, message.Response);
+                    return Response.FromValue((MigrationAssessedMachineData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

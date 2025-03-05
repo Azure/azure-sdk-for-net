@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="assessmentType"> Gets the assessment type. </param>
         /// <param name="count"> Gets the affected entity count. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssessmentErrorSummary(AssessmentType? assessmentType, int? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssessmentErrorSummary(MigrationAssessmentType? assessmentType, int? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssessmentType = assessmentType;
             Count = count;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         }
 
         /// <summary> Gets the assessment type. </summary>
-        public AssessmentType? AssessmentType { get; }
+        public MigrationAssessmentType? AssessmentType { get; }
         /// <summary> Gets the affected entity count. </summary>
         public int? Count { get; }
     }

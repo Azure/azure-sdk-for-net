@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             {
                 return null;
             }
-            IReadOnlyList<AssessedSqlRecommendedEntityData> value = default;
+            IReadOnlyList<MigrationAssessedSqlRecommendedEntityData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<AssessedSqlRecommendedEntityData> array = new List<AssessedSqlRecommendedEntityData>();
+                    List<MigrationAssessedSqlRecommendedEntityData> array = new List<MigrationAssessedSqlRecommendedEntityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssessedSqlRecommendedEntityData.DeserializeAssessedSqlRecommendedEntityData(item, options));
+                        array.Add(MigrationAssessedSqlRecommendedEntityData.DeserializeMigrationAssessedSqlRecommendedEntityData(item, options));
                     }
                     value = array;
                     continue;

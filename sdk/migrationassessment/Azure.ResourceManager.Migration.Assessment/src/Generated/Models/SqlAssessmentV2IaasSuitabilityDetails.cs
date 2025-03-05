@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <summary> Initializes a new instance of <see cref="SqlAssessmentV2IaasSuitabilityDetails"/>. </summary>
         internal SqlAssessmentV2IaasSuitabilityDetails()
         {
-            ReplicaAzureSqlSku = new ChangeTrackingList<AzureSqlIaasSkuDto>();
-            CostComponents = new ChangeTrackingList<CostComponent>();
+            ReplicaAzureSqlSku = new ChangeTrackingList<AssessmentAzureSqlIaasSkuDto>();
+            CostComponents = new ChangeTrackingList<AssessmentCostComponent>();
             MigrationGuidelines = new ChangeTrackingList<SqlMigrationGuideline>();
             RecommendationReasonings = new ChangeTrackingList<SqlRecommendationReasoning>();
             MigrationIssues = new ChangeTrackingList<SqlAssessmentMigrationIssue>();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="suitability"> Gets the azure suitability. </param>
         /// <param name="migrationIssues"> Gets the list of migrations issues. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlAssessmentV2IaasSuitabilityDetails(AzureSqlIaasSkuDto azureSqlSku, IReadOnlyList<AzureSqlIaasSkuDto> replicaAzureSqlSku, SharedResourcesDto sharedResources, double? monthlyComputeCost, double? monthlyStorageCost, IReadOnlyList<CostComponent> costComponents, MigrationAssessmentCloudSuitability? securitySuitability, bool? shouldProvisionReplicas, SkuReplicationMode? skuReplicationMode, IReadOnlyList<SqlMigrationGuideline> migrationGuidelines, IReadOnlyList<SqlRecommendationReasoning> recommendationReasonings, MigrationAssessmentTargetType? migrationTargetPlatform, MigrationAssessmentCloudSuitability? suitability, IReadOnlyList<SqlAssessmentMigrationIssue> migrationIssues, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SqlAssessmentV2IaasSuitabilityDetails(AssessmentAzureSqlIaasSkuDto azureSqlSku, IReadOnlyList<AssessmentAzureSqlIaasSkuDto> replicaAzureSqlSku, SharedResourcesDto sharedResources, double? monthlyComputeCost, double? monthlyStorageCost, IReadOnlyList<AssessmentCostComponent> costComponents, MigrationAssessmentCloudSuitability? securitySuitability, bool? shouldProvisionReplicas, SkuReplicationMode? skuReplicationMode, IReadOnlyList<SqlMigrationGuideline> migrationGuidelines, IReadOnlyList<SqlRecommendationReasoning> recommendationReasonings, MigrationAssessmentTargetType? migrationTargetPlatform, MigrationAssessmentCloudSuitability? suitability, IReadOnlyList<SqlAssessmentMigrationIssue> migrationIssues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureSqlSku = azureSqlSku;
             ReplicaAzureSqlSku = replicaAzureSqlSku;
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         }
 
         /// <summary> Gets the azure SQL IAAS SKU. </summary>
-        public AzureSqlIaasSkuDto AzureSqlSku { get; }
+        public AssessmentAzureSqlIaasSkuDto AzureSqlSku { get; }
         /// <summary> Gets the replica azure SQL IAAS SKU. </summary>
-        public IReadOnlyList<AzureSqlIaasSkuDto> ReplicaAzureSqlSku { get; }
+        public IReadOnlyList<AssessmentAzureSqlIaasSkuDto> ReplicaAzureSqlSku { get; }
         /// <summary> Gets the shared resources. </summary>
         public SharedResourcesDto SharedResources { get; }
         /// <summary> Gets the monthly compute cost. </summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <summary> Gets the monthly storage cost. </summary>
         public double? MonthlyStorageCost { get; }
         /// <summary> Gets the collection of cost components. </summary>
-        public IReadOnlyList<CostComponent> CostComponents { get; }
+        public IReadOnlyList<AssessmentCostComponent> CostComponents { get; }
         /// <summary> Gets the suitability for Microsoft cloud defender. </summary>
         public MigrationAssessmentCloudSuitability? SecuritySuitability { get; }
         /// <summary> Gets a value indicating whether replicas should be provisioned. </summary>

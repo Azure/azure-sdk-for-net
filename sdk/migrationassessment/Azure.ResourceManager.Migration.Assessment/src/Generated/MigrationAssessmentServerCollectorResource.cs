@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Migration.Assessment
     /// A Class representing a MigrationAssessmentServerCollector along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MigrationAssessmentServerCollectorResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetMigrationAssessmentServerCollectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MigrationAssessmentAssessmentProjectResource"/> using the GetMigrationAssessmentServerCollector method.
+    /// Otherwise you can get one from its parent resource <see cref="MigrationAssessmentProjectResource"/> using the GetMigrationAssessmentServerCollector method.
     /// </summary>
     public partial class MigrationAssessmentServerCollectorResource : ArmResource
     {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
         private static AzureLocation targetRegion;
         private static string targetSubscriptionId;
         private static ResourceGroupResource rg;
-        private static MigrationAssessmentAssessmentProjectResource assessmentProjectResource;
+        private static MigrationAssessmentProjectResource assessmentProjectResource;
 
         public MigrationAssessmentCommonTests(bool isAsync) : base(isAsync)
         {
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
 
             string assessmentProjName = Recording.GenerateAssetName("assessmentProj-");
 
-            var assessmentProjectData = new MigrationAssessmentAssessmentProjectData(targetRegion);
-            var assessmentProjectCollection = rg.GetMigrationAssessmentAssessmentProjects();
+            var assessmentProjectData = new MigrationAssessmentProjectData(targetRegion);
+            var assessmentProjectCollection = rg.GetMigrationAssessmentProjects();
 
             // Create Assessment Project
             var response =
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
         public async Task TestAssessmentOptionsOperations()
         {
             string assessmentOptionsName = "default";
-            MigrationAssessmentAssessmentOptionCollection collection = assessmentProjectResource.GetMigrationAssessmentAssessmentOptions();
+            MigrationAssessmentOptionCollection collection = assessmentProjectResource.GetMigrationAssessmentOptions();
 
             // Get Assessment Options
             var assessmentOptionResponse = await collection.GetAsync(assessmentOptionsName);

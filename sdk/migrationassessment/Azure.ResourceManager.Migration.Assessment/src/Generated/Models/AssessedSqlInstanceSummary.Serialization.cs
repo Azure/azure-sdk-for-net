@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             string sqlVersion = default;
             bool? isClustered = default;
             bool? isHighAvailabilityEnabled = default;
-            SqlFciState? sqlFciState = default;
+            AssessmentSqlFciState? sqlFciState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
                     {
                         continue;
                     }
-                    sqlFciState = new SqlFciState(property.Value.GetString());
+                    sqlFciState = new AssessmentSqlFciState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

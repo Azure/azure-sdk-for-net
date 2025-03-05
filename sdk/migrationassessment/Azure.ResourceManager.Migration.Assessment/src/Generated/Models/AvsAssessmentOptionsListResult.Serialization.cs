@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             {
                 return null;
             }
-            IReadOnlyList<MigrationAssessmentAvsAssessmentOptionData> value = default;
+            IReadOnlyList<MigrationAvsAssessmentOptionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<MigrationAssessmentAvsAssessmentOptionData> array = new List<MigrationAssessmentAvsAssessmentOptionData>();
+                    List<MigrationAvsAssessmentOptionData> array = new List<MigrationAvsAssessmentOptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrationAssessmentAvsAssessmentOptionData.DeserializeMigrationAssessmentAvsAssessmentOptionData(item, options));
+                        array.Add(MigrationAvsAssessmentOptionData.DeserializeMigrationAvsAssessmentOptionData(item, options));
                     }
                     value = array;
                     continue;

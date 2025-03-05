@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Migration.Assessment
     /// A Class representing a MigrationAssessmentPrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MigrationAssessmentPrivateLinkResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetMigrationAssessmentPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MigrationAssessmentAssessmentProjectResource"/> using the GetMigrationAssessmentPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MigrationAssessmentProjectResource"/> using the GetMigrationAssessmentPrivateLinkResource method.
     /// </summary>
     public partial class MigrationAssessmentPrivateLinkResource : ArmResource
     {

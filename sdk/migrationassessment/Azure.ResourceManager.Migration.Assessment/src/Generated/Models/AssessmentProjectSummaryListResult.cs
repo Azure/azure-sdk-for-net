@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <summary> Initializes a new instance of <see cref="AssessmentProjectSummaryListResult"/>. </summary>
         /// <param name="value"> The AssessmentProjectSummary items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AssessmentProjectSummaryListResult(IEnumerable<MigrationAssessmentAssessmentProjectSummaryData> value)
+        internal AssessmentProjectSummaryListResult(IEnumerable<MigrationAssessmentProjectSummaryData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <param name="value"> The AssessmentProjectSummary items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssessmentProjectSummaryListResult(IReadOnlyList<MigrationAssessmentAssessmentProjectSummaryData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssessmentProjectSummaryListResult(IReadOnlyList<MigrationAssessmentProjectSummaryData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         }
 
         /// <summary> The AssessmentProjectSummary items on this page. </summary>
-        public IReadOnlyList<MigrationAssessmentAssessmentProjectSummaryData> Value { get; }
+        public IReadOnlyList<MigrationAssessmentProjectSummaryData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
