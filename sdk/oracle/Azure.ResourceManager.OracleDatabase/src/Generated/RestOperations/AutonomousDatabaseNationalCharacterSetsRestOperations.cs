@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         AutonomousDatabaseNationalCharacterSetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutonomousDatabaseNationalCharacterSetListResult.DeserializeAutonomousDatabaseNationalCharacterSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         AutonomousDatabaseNationalCharacterSetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutonomousDatabaseNationalCharacterSetListResult.DeserializeAutonomousDatabaseNationalCharacterSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         AutonomousDatabaseNationalCharacterSetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutonomousDatabaseNationalCharacterSetData.DeserializeAutonomousDatabaseNationalCharacterSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         AutonomousDatabaseNationalCharacterSetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutonomousDatabaseNationalCharacterSetData.DeserializeAutonomousDatabaseNationalCharacterSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         AutonomousDatabaseNationalCharacterSetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutonomousDatabaseNationalCharacterSetListResult.DeserializeAutonomousDatabaseNationalCharacterSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         AutonomousDatabaseNationalCharacterSetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutonomousDatabaseNationalCharacterSetListResult.DeserializeAutonomousDatabaseNationalCharacterSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

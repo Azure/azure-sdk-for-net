@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         AutoScaleVCoreData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoScaleVCoreData.DeserializeAutoScaleVCoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         AutoScaleVCoreData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoScaleVCoreData.DeserializeAutoScaleVCoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         AutoScaleVCoreData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoScaleVCoreData.DeserializeAutoScaleVCoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         AutoScaleVCoreData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoScaleVCoreData.DeserializeAutoScaleVCoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         AutoScaleVCoreData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoScaleVCoreData.DeserializeAutoScaleVCoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         AutoScaleVCoreData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoScaleVCoreData.DeserializeAutoScaleVCoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         AutoScaleVCoreListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoScaleVCoreListResult.DeserializeAutoScaleVCoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         AutoScaleVCoreListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoScaleVCoreListResult.DeserializeAutoScaleVCoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         AutoScaleVCoreListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoScaleVCoreListResult.DeserializeAutoScaleVCoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         AutoScaleVCoreListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoScaleVCoreListResult.DeserializeAutoScaleVCoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

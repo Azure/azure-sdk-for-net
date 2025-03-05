@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCloudExadataInfrastructureData(document.RootElement, options);
                     }
                 default:
