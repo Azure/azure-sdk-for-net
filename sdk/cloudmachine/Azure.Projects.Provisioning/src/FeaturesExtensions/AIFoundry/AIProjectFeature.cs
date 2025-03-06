@@ -79,15 +79,15 @@ namespace Azure.Projects.AIFoundry
             AIFoundryHubCdk hub = new($"{cmId}_hub", $"{cmId}_hub");
             AIFoundryProjectCdk project = new($"{cmId}_project", $"{cmId}_project", hub);
 
-            infrastructure.AddResource(hub);
-            infrastructure.AddResource(project);
+            infrastructure.AddConstruct(hub);
+            infrastructure.AddConstruct(project);
 
             EmitConnections(Connections, cmId);
             for (int i = 0; i < Connections.Count; i++)
             {
                 ClientConnection connection = Connections[i];
                 AIFoundryConnectionCdk connectionCdk = new($"{cmId}connection{i}", connection.Id, connection.Locator, project);
-                infrastructure.AddResource(connectionCdk);
+                infrastructure.AddConstruct(connectionCdk);
             }
 
             if (_connectionString != null)

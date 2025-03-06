@@ -32,7 +32,7 @@ internal class ServiceBusTopicFeature : AzureProjectFeature
             Status = ServiceBusMessagingEntityStatus.Active
         };
 
-        infrastructure.AddResource(topic);
+        infrastructure.AddConstruct(topic);
 
         EmitConnection(infrastructure, Name, Name);
         return topic;

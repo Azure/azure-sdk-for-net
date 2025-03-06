@@ -29,7 +29,7 @@ internal class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature
             Status = ServiceBusMessagingEntityStatus.Active
         };
 
-        infrastructure.AddResource(subscription);
+        infrastructure.AddConstruct(subscription);
 
         EmitConnection(infrastructure, name, $"{parent.Name}/{name}");
         return subscription;

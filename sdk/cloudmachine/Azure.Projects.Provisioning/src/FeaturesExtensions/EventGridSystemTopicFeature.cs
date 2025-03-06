@@ -28,7 +28,7 @@ internal class EventGridSystemTopicFeature(string topicName, AzureProjectFeature
             Name = topicName
         };
 
-        infrastructure.AddResource(topic);
+        infrastructure.AddConstruct(topic);
         return topic;
     }
 }

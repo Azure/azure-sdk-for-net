@@ -40,16 +40,18 @@ public class StorageAccountFeature : AzureProjectFeature
                 UserAssignedIdentities = { { BicepFunction.Interpolate($"{infrastructure.Identity.Id}").Compile().ToString(), new UserAssignedIdentityDetails() } }
             }
         };
-        infrastructure.AddResource(storage);
+        infrastructure.AddConstruct(storage);
 
-        FeatureRole blobContributor = new(
-            StorageBuiltInRole.GetBuiltInRoleName(StorageBuiltInRole.StorageBlobDataContributor), StorageBuiltInRole.StorageBlobDataContributor.ToString()
+        infrastructure.AddSystemRole(
+            storage,
+            StorageBuiltInRole.GetBuiltInRoleName(StorageBuiltInRole.StorageBlobDataContributor),
+            StorageBuiltInRole.StorageBlobDataContributor.ToString()
         );
-        FeatureRole tableContributor = new(
-            StorageBuiltInRole.GetBuiltInRoleName(StorageBuiltInRole.StorageTableDataContributor), StorageBuiltInRole.StorageTableDataContributor.ToString()
+        infrastructure.AddSystemRole(
+            storage,
+            StorageBuiltInRole.GetBuiltInRoleName(StorageBuiltInRole.StorageTableDataContributor),
+            StorageBuiltInRole.StorageTableDataContributor.ToString()
         );
-
-        RequiredSystemRoles.Add(storage, [blobContributor, tableContributor]);
 
         return storage;
     }
@@ -81,7 +83,7 @@ public class BlobServiceFeature : AzureProjectFeature
         {
             Parent = (StorageAccount)Account.Resource,
         };
-        cm.AddResource(blobs);
+        cm.AddConstruct(blobs);
         return blobs;
     }
 }
@@ -128,7 +130,7 @@ public class BlobContainerFeature : AzureProjectFeature
             Parent = (BlobService)Service.Resource,
             Name = ContainerName
         };
-        infrastructure.AddResource(container);
+        infrastructure.AddConstruct(container);
 
         EmitConnection(infrastructure,
             $"Azure.Storage.Blobs.BlobContainerClient@{ContainerName}",

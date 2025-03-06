@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -19,6 +18,8 @@ public partial class ProjectInfrastructure
 {
     private readonly Infrastructure _infrastructure = new("project");
     private readonly List<NamedProvisionableConstruct> _constrcuts = [];
+    private readonly Dictionary<Provisionable, List<FeatureRole>> _requiredSystemRoles = new();
+    private readonly FeatureCollection _features = new();
 
     /// <summary>
     /// This is the resource group name for the project resources.
@@ -34,10 +35,22 @@ public partial class ProjectInfrastructure
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ProvisioningParameter PrincipalIdParameter => new("principalId", typeof(string));
 
-    public FeatureCollection Features { get; } = new();
+    public FeatureCollection Features => _features;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public ConnectionCollection Connections { get; } = [];
+    public void AddSystemRole(Provisionable provisionable, string roleName, string roleId)
+    {
+        FeatureRole role = new(roleName, roleId);
+
+        if (!_requiredSystemRoles.TryGetValue(provisionable, out List<FeatureRole>? roles))
+        {
+            _requiredSystemRoles.Add(provisionable, [role]);
+        }
+        else
+        {
+            roles.Add(role);
+        }
+    }
 
     public ProjectInfrastructure(string? projectId = default)
     {
@@ -77,34 +90,29 @@ public partial class ProjectInfrastructure
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public void AddResource(NamedProvisionableConstruct resource)
+    public void AddConstruct(NamedProvisionableConstruct construct)
     {
-        _constrcuts.Add(resource);
+        _constrcuts.Add(construct);
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ProvisioningPlan Build(ProvisioningBuildOptions? context = default)
     {
-        context ??= new ProvisioningBuildOptions();
-
-        foreach (var feature in Features)
+        // emit features
+        foreach (AzureProjectFeature feature in Features)
         {
             feature.Emit(this);
         }
 
-        // Add any add-on resources to the infrastructure.
-        foreach (Provisionable resource in _constrcuts)
+        // add constructs to infrastructure
+        foreach (NamedProvisionableConstruct construct in _constrcuts)
         {
-            _infrastructure.Add(resource);
+            _infrastructure.Add(construct);
         }
 
-        var roles = Features
-            .Select(feature => feature.RequiredSystemRoles)
-            .SelectMany(role => role)
-            .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-
         // This must occur after the features have been emitted.
-        context.InfrastructureResolvers.Add(new RoleResolver(ProjectId, roles, [Identity], [PrincipalIdParameter]));
+        context ??= new ProvisioningBuildOptions();
+        context.InfrastructureResolvers.Add(new RoleResolver(ProjectId, _requiredSystemRoles, [Identity], [PrincipalIdParameter]));
 
         return _infrastructure.Build(context);
     }

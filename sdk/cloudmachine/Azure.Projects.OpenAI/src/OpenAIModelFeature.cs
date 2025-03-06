@@ -120,7 +120,7 @@ public class OpenAIModelFeature : AzureProjectFeature
             deployment.DependsOn.Add(previousDeployment);
         }
 
-        cm.AddResource(deployment);
+        cm.AddConstruct(deployment);
 
         string key = Kind == AIModelKind.Chat ? "OpenAI.Chat.ChatClient" : "OpenAI.Embeddings.EmbeddingClient";
         string locator = Kind == AIModelKind.Chat ? $"{cm.ProjectId}_chat" : $"{cm.ProjectId}_embedding";

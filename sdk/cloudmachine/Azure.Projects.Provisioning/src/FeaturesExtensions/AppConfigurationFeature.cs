@@ -21,10 +21,13 @@ internal class AppConfigurationFeature : AzureProjectFeature
             Name = infrastructure.ProjectId,
             SkuName = "Free",
         };
-        infrastructure.AddResource(appConfigResource);
+        infrastructure.AddConstruct(appConfigResource);
 
-        FeatureRole appConfigAdmin = new(AppConfigurationBuiltInRole.GetBuiltInRoleName(AppConfigurationBuiltInRole.AppConfigurationDataOwner), AppConfigurationBuiltInRole.AppConfigurationDataOwner.ToString());
-        RequiredSystemRoles.Add(appConfigResource, [appConfigAdmin]);
+        infrastructure.AddSystemRole(
+            appConfigResource,
+            AppConfigurationBuiltInRole.GetBuiltInRoleName(AppConfigurationBuiltInRole.AppConfigurationDataOwner),
+            AppConfigurationBuiltInRole.AppConfigurationDataOwner.ToString()
+        );
 
         return appConfigResource;
     }
@@ -70,7 +73,7 @@ public class AppConfigurationSettingFeature : AzureProjectFeature
             Value = this.Value,
             Parent = (AppConfigurationStore)Store.Resource
         };
-        infrastructure.AddResource(kvp);
+        infrastructure.AddConstruct(kvp);
         return kvp;
     }
 }

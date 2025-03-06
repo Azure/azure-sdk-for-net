@@ -21,7 +21,7 @@ public class KeyVaultFeature : AzureProjectFeature
     protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
         // Add a KeyVault to the infrastructure.
-        KeyVaultService keyVaultResource = new("cm_kv")
+        KeyVaultService kv = new("cm_kv")
         {
             Name = infrastructure.ProjectId,
             Properties =
@@ -41,16 +41,19 @@ public class KeyVaultFeature : AzureProjectFeature
                     ]
                 },
         };
-        infrastructure.AddResource(keyVaultResource);
+        infrastructure.AddConstruct(kv);
 
-        FeatureRole kvAdmin = new(KeyVaultBuiltInRole.GetBuiltInRoleName(KeyVaultBuiltInRole.KeyVaultAdministrator), KeyVaultBuiltInRole.KeyVaultAdministrator.ToString());
-        RequiredSystemRoles.Add(keyVaultResource, [kvAdmin]);
+        infrastructure.AddSystemRole(
+            kv,
+            KeyVaultBuiltInRole.GetBuiltInRoleName(KeyVaultBuiltInRole.KeyVaultAdministrator),
+            KeyVaultBuiltInRole.KeyVaultAdministrator.ToString()
+        );
 
         EmitConnection(infrastructure,
             "Azure.Security.KeyVault.Secrets.SecretClient",
             $"https://{infrastructure.ProjectId}.vault.azure.net/"
         );
 
-        return keyVaultResource;
+        return kv;
     }
 }

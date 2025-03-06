@@ -8,7 +8,6 @@ using System.ComponentModel;
 using Azure.Core;
 using Azure.Data.AppConfiguration;
 using Azure.Identity;
-using Microsoft.Extensions.Configuration;
 
 namespace Azure.Projects;
 
@@ -25,12 +24,6 @@ public partial class ProjectClient : ConnectionProvider
     [EditorBrowsable(EditorBrowsableState.Never)]
     public string Id { get; }
 
-    /// <summary>
-    /// subclient connections.
-    /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public ConnectionCollection Connections { get; } = [];
-
     private readonly TokenCredential Credential = BuildCredential(default);
 
     /// <summary>
@@ -38,86 +31,10 @@ public partial class ProjectClient : ConnectionProvider
     /// </summary>
     public ProjectClient()
     {
-        Id = AppConfigHelpers.ReadOrCreateProjectId();
+        Id = ReadOrCreateProjectId();
         Messaging = new MessagingServices(this);
         Storage = new StorageServices(this);
         _config = new(new Uri($"https://{Id}.azconfig.io"), Credential);
-    }
-
-#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ProjectClient"/> class.
-    /// </summary>
-    /// <param name="configuration">The configuration settings.</param>
-    /// <param name="credential">The token credential.</param>
-    public ProjectClient(IConfiguration configuration, TokenCredential credential = default)
-#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-    {
-        Id = configuration["AzureProject:ID"];
-        if (Id == null)
-        {
-            Id = AppConfigHelpers.ReadOrCreateProjectId();
-        }
-
-        IConfigurationSection connectionsSection = configuration.GetSection("AzureProject:Connections");
-
-        foreach (IConfigurationSection connection in connectionsSection.GetChildren())
-        {
-            string id = connection["Id"];
-            if (id == null) continue;
-            string locator = connection["Locator"];
-
-            Connections.Add(new ClientConnection(id, locator, ClientAuthenticationMethod.Credential));
-        }
-
-        Messaging = new MessagingServices(this);
-        Storage = new StorageServices(this);
-    }
-
-#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ProjectClient"/> class.
-    /// </summary>
-    /// <param name="connections"></param>
-    /// <param name="credential">The token credential.</param>
-    // TODO: we need to combine the configuration and the connections into a single parameter.
-    public ProjectClient(IEnumerable<ClientConnection> connections, TokenCredential credential = default)
-#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-    {
-        if (connections != null)
-        {
-            foreach (ClientConnection connection in connections)
-            {
-                if (connection.Authentication == ClientAuthenticationMethod.Credential)
-                {
-                    if (connection.Credential == null)
-                    {
-                        var copy = new ClientConnection(connection.Id, connection.Locator, Credential);
-                        Connections.Add(copy);
-                    }
-                    else if (connection.Credential is ClientAuthenticationMethod)
-                    {
-                        var auth = (ClientAuthenticationMethod)connection.Credential;
-                        if (auth == ClientAuthenticationMethod.Credential)
-                        {
-                            var copy = new ClientConnection(connection.Id, connection.Locator, Credential);
-                            Connections.Add(copy);
-                            continue;
-                        }
-                        else
-                            throw new NotImplementedException();
-                    }
-                }
-                else
-                {
-                    Connections.Add(connection);
-                }
-            }
-        }
-
-        Id = AppConfigHelpers.ReadOrCreateProjectId();
-        Messaging = new MessagingServices(this);
-        Storage = new StorageServices(this);
     }
 
     /// <summary>
@@ -129,39 +46,6 @@ public partial class ProjectClient : ConnectionProvider
     /// Gets the storage services.
     /// </summary>
     public StorageServices Storage { get; }
-
-    /// <summary>
-    /// Retrieves the connection options for a specified client type and instance ID.
-    /// </summary>
-    /// <param name="connectionId"></param>
-    /// <returns></returns>
-    /// <exception cref="Exception"></exception>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override ClientConnection GetConnection(string connectionId)
-    {
-        if (Connections.Contains(connectionId))
-        {
-            return Connections[connectionId];
-        }
-
-        if (_config != null)
-        {
-            ConfigurationSetting setting = _config.GetConfigurationSetting(connectionId);
-            string value = setting.Value;
-            ClientConnection connetion = new(connectionId, value, Credential);
-            Connections.Add(connetion);
-            return connetion;
-        }
-
-        throw new Exception("Connection not found");
-    }
-
-    /// <summary>
-    /// Rerurns all connections.
-    /// </summary>
-    /// <returns></returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override IEnumerable<ClientConnection> GetAllConnections() => Connections;
 
     private static TokenCredential BuildCredential(TokenCredential credential)
     {
@@ -177,23 +61,4 @@ public partial class ProjectClient : ConnectionProvider
 
         return credential;
     }
-
-    /// <summary>
-    /// Reads or creates the project ID.
-    /// </summary>
-    /// <returns></returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static string ReadOrCreateProjectId() => AppConfigHelpers.ReadOrCreateProjectId();
-
-    /// <inheritdoc/>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override bool Equals(object obj) => base.Equals(obj);
-
-    /// <inheritdoc/>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override int GetHashCode() => base.GetHashCode();
-
-    /// <inheritdoc/>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override string ToString() => Id;
 }

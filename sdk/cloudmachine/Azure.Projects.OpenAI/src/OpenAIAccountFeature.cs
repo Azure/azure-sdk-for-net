@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Projects.Core;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.Primitives;
@@ -23,13 +24,13 @@ internal class OpenAIAccountFeature : AzureProjectFeature
             },
         };
 
-        infrastructure.AddResource(cognitiveServices);
+        infrastructure.AddConstruct(cognitiveServices);
 
-        FeatureRole openAIContributor =  new(
+        infrastructure.AddSystemRole(
+            cognitiveServices,
             CognitiveServicesBuiltInRole.GetBuiltInRoleName(CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor),
             CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor.ToString()
         );
-        RequiredSystemRoles.Add(cognitiveServices, [openAIContributor]);
 
         EmitConnection(infrastructure, "Azure.AI.OpenAI.AzureOpenAIClient", $"https://{infrastructure.ProjectId}.openai.azure.com");
 

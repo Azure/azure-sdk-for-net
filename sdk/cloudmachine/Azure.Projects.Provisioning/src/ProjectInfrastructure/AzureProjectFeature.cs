@@ -46,8 +46,6 @@ public abstract partial class AzureProjectFeature
         return Resource;
     }
 
-    protected internal Dictionary<Provisionable, FeatureRole[]> RequiredSystemRoles { get; } = [];
-
     protected static T EnsureEmits<T>(AzureProjectFeature feature)
     {
         if (feature.Resource is T typed)
