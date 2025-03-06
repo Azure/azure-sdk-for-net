@@ -109,7 +109,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public void ResourceMonitorConstructor_ShouldNotAllowLessThan100ms()
+        public void ResourceMonitorConstructor_ShouldNotAllowLessThan0ms()
         {
             // Assert
             Assert.Throws<ArgumentOutOfRangeException>(() => new ResourceMonitor(TimeSpan.FromMilliseconds(0)));
@@ -138,7 +138,7 @@ namespace Azure.Storage.DataMovement.Tests
             List<float> higherMonitorCpuUsages = new();
             List<double> higherMonitorMemoryUsages = new();
 
-            TimeSpan endTime = TimeSpan.FromSeconds(30);
+            TimeSpan endTime = TimeSpan.FromSeconds(5);
             TimeSpan monitorInterval = TimeSpan.FromMilliseconds(1000);
 
             // Act
@@ -167,7 +167,7 @@ namespace Azure.Storage.DataMovement.Tests
             watch.Restart();
 
             // The higher frequency check
-            monitorInterval = TimeSpan.FromMilliseconds(100);
+            monitorInterval = TimeSpan.FromMilliseconds(1);
             resourceMonitor = new(monitorInterval);
             resourceMonitor.StartMonitoring();
 
