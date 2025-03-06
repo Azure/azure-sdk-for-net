@@ -254,7 +254,7 @@ jobs:
         parameters:
           PackageInfo: '$(Build.ArtifactStagingDirectory)/PackageInfo'
           Artifacts: ${{ parameters.Artifacts }}
-          IncludeIndirect: false
+          IncludeIndirect: true
 
       - template: /eng/common/pipelines/templates/steps/verify-samples.yml
         parameters:
@@ -263,7 +263,7 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-readmes.yml
         parameters:
           PackagePropertiesFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
-          IncludeIndirect: false
+          IncludeIndirect: true
 
       - task: NodeTool@0
         inputs:
@@ -315,23 +315,19 @@ jobs:
       - pwsh: |
           $failed = $false
           if ("$(ProjectNames)") {
-            $services = "$(ChangedServices)" -split ","
-
-            foreach ($service in $services) {
-              Write-Host "building $service"
-              dotnet build eng/service.proj -warnaserror `
+            dotnet build eng/service.proj -warnaserror `
                 /t:rebuild `
                 /p:DebugType=none `
                 /p:SDKType=${{ parameters.SDKType }} `
-                /p:ServiceDirectory=$service `
+                /p:ServiceDirectory=* `
                 /p:IncludePerf=false `
                 /p:IncludeStress=false `
                 /p:PublicSign=false `
                 /p:Configuration=$(BuildConfiguration) `
                 /p:EnableSourceLink=false `
                 /p:BuildSnippets=true `
+                /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
                 $(DiagnosticArguments)
-            }
           }
           else {
             Write-Host "No services were directly changed. Skipping snippet build."
