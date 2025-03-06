@@ -81,7 +81,9 @@ public class ChatTools
     /// <returns></returns>
     public string Call(string name, object[] arguments)
     {
-        MethodInfo method = _methods[name];
+        if (!_methods.TryGetValue(name, out MethodInfo? method))
+            return $"I don't have a tool called {name}";
+
         object? result = method.Invoke(null, arguments);
         return result!.ToString()!;
     }

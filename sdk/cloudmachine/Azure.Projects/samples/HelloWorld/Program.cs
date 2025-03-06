@@ -5,7 +5,7 @@ using Azure.Projects;
 using Azure.Projects.OpenAI;
 using OpenAI.Chat;
 
-ProjectInfrastructure infrastructure = new();
+ProjectInfrastructure infrastructure = new("cm69489e8c64db465");
 infrastructure.AddFeature(new OpenAIChatFeature("gpt-35-turbo", "0125"));
 
 if (args.Length > 0 && args[0] == "-bicep")
@@ -16,5 +16,5 @@ if (args.Length > 0 && args[0] == "-bicep")
 
 ProjectClient project = new();
 ChatClient chat = project.GetOpenAIChatClient();
-Console.WriteLine(chat.CompleteChat("list all noble gasses."));
+Console.WriteLine(chat.CompleteChat("list all noble gasses.").AsText());
 
