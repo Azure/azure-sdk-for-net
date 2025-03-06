@@ -18,7 +18,7 @@ namespace Azure.Storage.DataMovement
     {
         internal int _initialConcurrency;
         internal int _maxConcurrency;
-        public static IResourceMonitor _resourceMonitor;
+        public static ResourceMonitor _resourceMonitor;
         internal int _finalReason; // ConcurrencyTunerState
         internal int _finalConcurrency;
         internal SemaphoreSlim _lockFinal;
