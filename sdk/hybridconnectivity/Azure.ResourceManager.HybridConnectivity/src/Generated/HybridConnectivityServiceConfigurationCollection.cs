@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.HybridConnectivity
     /// </summary>
     public partial class HybridConnectivityServiceConfigurationCollection : ArmCollection, IEnumerable<HybridConnectivityServiceConfigurationResource>, IAsyncEnumerable<HybridConnectivityServiceConfigurationResource>
     {
-        private readonly ClientDiagnostics _hybridConnectivityServiceConfigurationServiceConfigurationsClientDiagnostics;
-        private readonly ServiceConfigurationsRestOperations _hybridConnectivityServiceConfigurationServiceConfigurationsRestClient;
+        private readonly ClientDiagnostics _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics;
+        private readonly ServiceConfigurationResourcesRestOperations _hybridConnectivityServiceConfigurationServiceConfigurationResourcesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="HybridConnectivityServiceConfigurationCollection"/> class for mocking. </summary>
         protected HybridConnectivityServiceConfigurationCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal HybridConnectivityServiceConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hybridConnectivityServiceConfigurationServiceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", HybridConnectivityServiceConfigurationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HybridConnectivityServiceConfigurationResource.ResourceType, out string hybridConnectivityServiceConfigurationServiceConfigurationsApiVersion);
-            _hybridConnectivityServiceConfigurationServiceConfigurationsRestClient = new ServiceConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridConnectivityServiceConfigurationServiceConfigurationsApiVersion);
+            _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", HybridConnectivityServiceConfigurationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HybridConnectivityServiceConfigurationResource.ResourceType, out string hybridConnectivityServiceConfigurationServiceConfigurationResourcesApiVersion);
+            _hybridConnectivityServiceConfigurationServiceConfigurationResourcesRestClient = new ServiceConfigurationResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridConnectivityServiceConfigurationServiceConfigurationResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceConfigurations_CreateOrupdate</description>
+        /// <description>ServiceConfigurationResource_CreateOrupdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-15</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.HybridConnectivity
             Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationsClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.CreateOrUpdate");
+            using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hybridConnectivityServiceConfigurationServiceConfigurationsRestClient.CreateOrupdateAsync(Id.Parent, Id.Name, serviceConfigurationName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _hybridConnectivityServiceConfigurationServiceConfigurationsRestClient.CreateCreateOrupdateRequestUri(Id.Parent, Id.Name, serviceConfigurationName, data);
+                var response = await _hybridConnectivityServiceConfigurationServiceConfigurationResourcesRestClient.CreateOrupdateAsync(Id.Parent, Id.Name, serviceConfigurationName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesRestClient.CreateCreateOrupdateRequestUri(Id.Parent, Id.Name, serviceConfigurationName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new HybridConnectivityArmOperation<HybridConnectivityServiceConfigurationResource>(Response.FromValue(new HybridConnectivityServiceConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceConfigurations_CreateOrupdate</description>
+        /// <description>ServiceConfigurationResource_CreateOrupdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-15</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.HybridConnectivity
             Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationsClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.CreateOrUpdate");
+            using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hybridConnectivityServiceConfigurationServiceConfigurationsRestClient.CreateOrupdate(Id.Parent, Id.Name, serviceConfigurationName, data, cancellationToken);
-                var uri = _hybridConnectivityServiceConfigurationServiceConfigurationsRestClient.CreateCreateOrupdateRequestUri(Id.Parent, Id.Name, serviceConfigurationName, data);
+                var response = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesRestClient.CreateOrupdate(Id.Parent, Id.Name, serviceConfigurationName, data, cancellationToken);
+                var uri = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesRestClient.CreateCreateOrupdateRequestUri(Id.Parent, Id.Name, serviceConfigurationName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new HybridConnectivityArmOperation<HybridConnectivityServiceConfigurationResource>(Response.FromValue(new HybridConnectivityServiceConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -160,11 +160,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceConfigurations_Get</description>
+        /// <description>ServiceConfigurationResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-15</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,11 +179,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
 
-            using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationsClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.Get");
+            using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hybridConnectivityServiceConfigurationServiceConfigurationsRestClient.GetAsync(Id.Parent, Id.Name, serviceConfigurationName, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridConnectivityServiceConfigurationServiceConfigurationResourcesRestClient.GetAsync(Id.Parent, Id.Name, serviceConfigurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HybridConnectivityServiceConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -204,11 +204,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceConfigurations_Get</description>
+        /// <description>ServiceConfigurationResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-15</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
 
-            using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationsClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.Get");
+            using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = _hybridConnectivityServiceConfigurationServiceConfigurationsRestClient.Get(Id.Parent, Id.Name, serviceConfigurationName, cancellationToken);
+                var response = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesRestClient.Get(Id.Parent, Id.Name, serviceConfigurationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HybridConnectivityServiceConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -248,11 +248,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceConfigurations_ListByEndpointResource</description>
+        /// <description>ServiceConfigurationResource_ListByEndpointResource</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-15</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <returns> An async collection of <see cref="HybridConnectivityServiceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridConnectivityServiceConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridConnectivityServiceConfigurationServiceConfigurationsRestClient.CreateListByEndpointResourceRequest(Id.Parent, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridConnectivityServiceConfigurationServiceConfigurationsRestClient.CreateListByEndpointResourceNextPageRequest(nextLink, Id.Parent, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridConnectivityServiceConfigurationResource(Client, HybridConnectivityServiceConfigurationData.DeserializeHybridConnectivityServiceConfigurationData(e)), _hybridConnectivityServiceConfigurationServiceConfigurationsClientDiagnostics, Pipeline, "HybridConnectivityServiceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridConnectivityServiceConfigurationServiceConfigurationResourcesRestClient.CreateListByEndpointResourceRequest(Id.Parent, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridConnectivityServiceConfigurationServiceConfigurationResourcesRestClient.CreateListByEndpointResourceNextPageRequest(nextLink, Id.Parent, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridConnectivityServiceConfigurationResource(Client, HybridConnectivityServiceConfigurationData.DeserializeHybridConnectivityServiceConfigurationData(e)), _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics, Pipeline, "HybridConnectivityServiceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -278,11 +278,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceConfigurations_ListByEndpointResource</description>
+        /// <description>ServiceConfigurationResource_ListByEndpointResource</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-15</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <returns> A collection of <see cref="HybridConnectivityServiceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridConnectivityServiceConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridConnectivityServiceConfigurationServiceConfigurationsRestClient.CreateListByEndpointResourceRequest(Id.Parent, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridConnectivityServiceConfigurationServiceConfigurationsRestClient.CreateListByEndpointResourceNextPageRequest(nextLink, Id.Parent, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridConnectivityServiceConfigurationResource(Client, HybridConnectivityServiceConfigurationData.DeserializeHybridConnectivityServiceConfigurationData(e)), _hybridConnectivityServiceConfigurationServiceConfigurationsClientDiagnostics, Pipeline, "HybridConnectivityServiceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridConnectivityServiceConfigurationServiceConfigurationResourcesRestClient.CreateListByEndpointResourceRequest(Id.Parent, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridConnectivityServiceConfigurationServiceConfigurationResourcesRestClient.CreateListByEndpointResourceNextPageRequest(nextLink, Id.Parent, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridConnectivityServiceConfigurationResource(Client, HybridConnectivityServiceConfigurationData.DeserializeHybridConnectivityServiceConfigurationData(e)), _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics, Pipeline, "HybridConnectivityServiceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -308,11 +308,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceConfigurations_Get</description>
+        /// <description>ServiceConfigurationResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-15</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -327,11 +327,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
 
-            using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationsClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.Exists");
+            using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _hybridConnectivityServiceConfigurationServiceConfigurationsRestClient.GetAsync(Id.Parent, Id.Name, serviceConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _hybridConnectivityServiceConfigurationServiceConfigurationResourcesRestClient.GetAsync(Id.Parent, Id.Name, serviceConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,11 +350,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceConfigurations_Get</description>
+        /// <description>ServiceConfigurationResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-15</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -369,11 +369,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
 
-            using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationsClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.Exists");
+            using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _hybridConnectivityServiceConfigurationServiceConfigurationsRestClient.Get(Id.Parent, Id.Name, serviceConfigurationName, cancellationToken: cancellationToken);
+                var response = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesRestClient.Get(Id.Parent, Id.Name, serviceConfigurationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -392,11 +392,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceConfigurations_Get</description>
+        /// <description>ServiceConfigurationResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-15</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -411,11 +411,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
 
-            using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationsClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.GetIfExists");
+            using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _hybridConnectivityServiceConfigurationServiceConfigurationsRestClient.GetAsync(Id.Parent, Id.Name, serviceConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _hybridConnectivityServiceConfigurationServiceConfigurationResourcesRestClient.GetAsync(Id.Parent, Id.Name, serviceConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<HybridConnectivityServiceConfigurationResource>(response.GetRawResponse());
                 return Response.FromValue(new HybridConnectivityServiceConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -436,11 +436,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceConfigurations_Get</description>
+        /// <description>ServiceConfigurationResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-15</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -455,11 +455,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
 
-            using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationsClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.GetIfExists");
+            using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _hybridConnectivityServiceConfigurationServiceConfigurationsRestClient.Get(Id.Parent, Id.Name, serviceConfigurationName, cancellationToken: cancellationToken);
+                var response = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesRestClient.Get(Id.Parent, Id.Name, serviceConfigurationName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<HybridConnectivityServiceConfigurationResource>(response.GetRawResponse());
                 return Response.FromValue(new HybridConnectivityServiceConfigurationResource(Client, response.Value), response.GetRawResponse());
