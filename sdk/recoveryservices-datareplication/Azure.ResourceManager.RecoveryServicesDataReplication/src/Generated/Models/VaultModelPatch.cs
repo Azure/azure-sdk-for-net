@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> Vault model for update. </summary>
+    /// <summary> Vault model update. </summary>
     public partial class VaultModelPatch : ResourceData
     {
         /// <summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> Gets or sets the resource tags. </param>
         /// <param name="properties"> Vault properties. </param>
-        /// <param name="identity"> Vault model. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="identity"> Vault identity. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VaultModelPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, VaultModelProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public IDictionary<string, string> Tags { get; }
         /// <summary> Vault properties. </summary>
         public VaultModelProperties Properties { get; set; }
-        /// <summary> Vault model. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        /// <summary> Vault identity. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

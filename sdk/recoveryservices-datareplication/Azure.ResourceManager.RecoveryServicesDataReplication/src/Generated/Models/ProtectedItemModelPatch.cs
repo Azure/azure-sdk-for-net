@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> Protected item model for update. </summary>
+    /// <summary> Protected item model update. </summary>
     public partial class ProtectedItemModelPatch : ResourceData
     {
         /// <summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Protected item model properties. </summary>
         internal ProtectedItemModelPropertiesUpdate Properties { get; set; }
         /// <summary>
-        /// Protected item model custom properties.
+        /// Protected item model custom properties update.
         /// Please note <see cref="ProtectedItemModelCustomPropertiesUpdate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="HyperVToAzStackHCIProtectedItemModelCustomPropertiesUpdate"/> and <see cref="VMwareToAzStackHCIProtectedItemModelCustomPropertiesUpdate"/>.
         /// </summary>

@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         }
 
         /// <summary>
-        /// Performs resource deployment validation.
+        /// Performs resource deployment preflight validation.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         }
 
         /// <summary>
-        /// Performs resource deployment validation.
+        /// Performs resource deployment preflight validation.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

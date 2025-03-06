@@ -39,5 +39,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }
+
+        protected async Task<ResourceGroupResource> GetResourceGroup(SubscriptionResource subscription, string resourceGroupName)
+        {
+            var lro = await subscription.GetResourceGroups().GetAsync(resourceGroupName);
+            return lro.Value;
+        }
     }
 }

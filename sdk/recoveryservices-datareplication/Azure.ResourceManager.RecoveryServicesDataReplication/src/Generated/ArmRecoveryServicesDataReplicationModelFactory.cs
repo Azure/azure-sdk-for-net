@@ -1380,7 +1380,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> Gets or sets the resource tags. </param>
         /// <param name="properties"> Vault properties. </param>
-        /// <param name="identity"> Vault model. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="identity"> Vault identity. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <returns> A new <see cref="Models.VaultModelPatch"/> instance for mocking. </returns>
         public static VaultModelPatch VaultModelPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, VaultModelProperties properties = null, ManagedServiceIdentity identity = null)
         {

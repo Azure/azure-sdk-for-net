@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetVaultModels_ListsTheVaults()
+        public async Task GetVaultModels_ListsTheVaultsBySubscription()
         {
             // Generated from example definition: 2024-09-01/Vault_ListBySubscription.json
             // this example is just showing the usage of "VaultModel_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetFabricModels_ListsTheFabrics()
+        public async Task GetFabricModels_ListsTheFabricsBySubscription()
         {
             // Generated from example definition: 2024-09-01/Fabric_ListBySubscription.json
             // this example is just showing the usage of "FabricModel_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
