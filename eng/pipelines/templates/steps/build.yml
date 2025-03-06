@@ -62,7 +62,6 @@ steps:
     parameters:
       PackageInfo: '$(Build.ArtifactStagingDirectory)/PackageInfo'
       Artifacts: ${{ parameters.Artifacts }}
-      IncludeIndirect: false
 
   - pwsh: |
       # Reset SkipDevBuildNumber as empty
