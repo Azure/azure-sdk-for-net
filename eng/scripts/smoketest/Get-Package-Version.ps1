@@ -56,7 +56,7 @@ function Get-SmokeTestPkgProperties
     foreach ($pkg in $newPackages) {
         $pkgVersion = [AzureEngSemanticVersion]::ParseVersionString($pkg.Version)
         $pkgVersion.PrereleaseLabel = ""
-        $pkgVersionBase = $pkgVersion.ToString() -Replace '-.*',""
+        $pkgVersionBase = $pkgVersion.ToString()
 
         $pkgVersionAlpha = "$pkgVersionBase-alpha.$azureCoreVerDateStr"
         $pkgInfo = Find-Package -Name $pkg.Name `
