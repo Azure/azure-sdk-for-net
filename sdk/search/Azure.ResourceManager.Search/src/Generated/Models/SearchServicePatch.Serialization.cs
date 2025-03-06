@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSearchServicePatch(document.RootElement, options);
                     }
                 default:

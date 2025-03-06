@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeClusterCodeVersionsResult(document.RootElement, options);
                     }
                 default:

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ArmApplicationDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ArmApplicationDefinitionData.DeserializeArmApplicationDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ArmApplicationDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ArmApplicationDefinitionData.DeserializeArmApplicationDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ArmApplicationDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ArmApplicationDefinitionListResult.DeserializeArmApplicationDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ArmApplicationDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ArmApplicationDefinitionListResult.DeserializeArmApplicationDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ArmApplicationDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ArmApplicationDefinitionListResult.DeserializeArmApplicationDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ArmApplicationDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ArmApplicationDefinitionListResult.DeserializeArmApplicationDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBSubscriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SBSubscriptionListResult.DeserializeSBSubscriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBSubscriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SBSubscriptionListResult.DeserializeSBSubscriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusSubscriptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceBusSubscriptionData.DeserializeServiceBusSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusSubscriptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceBusSubscriptionData.DeserializeServiceBusSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusSubscriptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceBusSubscriptionData.DeserializeServiceBusSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusSubscriptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceBusSubscriptionData.DeserializeServiceBusSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBSubscriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SBSubscriptionListResult.DeserializeSBSubscriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBSubscriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SBSubscriptionListResult.DeserializeSBSubscriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

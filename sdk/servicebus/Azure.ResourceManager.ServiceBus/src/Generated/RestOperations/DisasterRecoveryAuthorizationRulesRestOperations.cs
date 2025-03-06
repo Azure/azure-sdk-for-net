@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBAuthorizationRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SBAuthorizationRuleListResult.DeserializeSBAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBAuthorizationRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SBAuthorizationRuleListResult.DeserializeSBAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusAuthorizationRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusAuthorizationRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusAccessKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceBusAccessKeys.DeserializeServiceBusAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusAccessKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceBusAccessKeys.DeserializeServiceBusAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBAuthorizationRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SBAuthorizationRuleListResult.DeserializeSBAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBAuthorizationRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SBAuthorizationRuleListResult.DeserializeSBAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

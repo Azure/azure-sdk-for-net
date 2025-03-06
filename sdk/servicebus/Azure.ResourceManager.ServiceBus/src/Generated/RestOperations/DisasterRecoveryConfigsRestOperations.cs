@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ArmDisasterRecoveryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ArmDisasterRecoveryListResult.DeserializeArmDisasterRecoveryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ArmDisasterRecoveryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ArmDisasterRecoveryListResult.DeserializeArmDisasterRecoveryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 201:
                     {
                         ServiceBusDisasterRecoveryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceBusDisasterRecoveryData.DeserializeServiceBusDisasterRecoveryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 201:
                     {
                         ServiceBusDisasterRecoveryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceBusDisasterRecoveryData.DeserializeServiceBusDisasterRecoveryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusDisasterRecoveryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceBusDisasterRecoveryData.DeserializeServiceBusDisasterRecoveryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusDisasterRecoveryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceBusDisasterRecoveryData.DeserializeServiceBusDisasterRecoveryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceBusNameAvailabilityResult.DeserializeServiceBusNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceBusNameAvailabilityResult.DeserializeServiceBusNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -775,7 +775,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ArmDisasterRecoveryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ArmDisasterRecoveryListResult.DeserializeArmDisasterRecoveryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ArmDisasterRecoveryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ArmDisasterRecoveryListResult.DeserializeArmDisasterRecoveryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

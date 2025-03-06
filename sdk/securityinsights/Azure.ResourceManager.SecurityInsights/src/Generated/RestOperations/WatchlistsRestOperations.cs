@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         WatchlistList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WatchlistList.DeserializeWatchlistList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         WatchlistList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WatchlistList.DeserializeWatchlistList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         SecurityInsightsWatchlistData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityInsightsWatchlistData.DeserializeSecurityInsightsWatchlistData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         SecurityInsightsWatchlistData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityInsightsWatchlistData.DeserializeSecurityInsightsWatchlistData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 201:
                     {
                         SecurityInsightsWatchlistData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityInsightsWatchlistData.DeserializeSecurityInsightsWatchlistData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 201:
                     {
                         SecurityInsightsWatchlistData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityInsightsWatchlistData.DeserializeSecurityInsightsWatchlistData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         WatchlistList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WatchlistList.DeserializeWatchlistList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         WatchlistList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WatchlistList.DeserializeWatchlistList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
