@@ -10,6 +10,7 @@
 - Fixed bug where in rare cases, a `NullReferenceException` could be thrown when parsing an error response from the service.
 - Fixed bug to ensure that the accumulated disposables within the internal `StorageWriteStream` are disposed properly in the event that an exception is thrown during the disposal process. (#47781)
 - Fixed bug to Redact SAS credentials from Error.SasCredentialRequiresUriWithoutSas message.
+- Fixed bug where LazyLoadingReadOnlyStream overprovisions the default buffer memory for OpenRead
 
 ### Other Changes
 
