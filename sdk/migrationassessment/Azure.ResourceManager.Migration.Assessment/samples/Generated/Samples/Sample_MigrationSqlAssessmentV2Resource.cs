@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
                 MultiSubnetIntent = MultiSubnetIntent.DisasterRecovery,
                 AsyncCommitModeIntent = AsyncCommitModeIntent.DisasterRecovery,
                 DisasterRecoveryLocation = new AzureLocation("EastAsia"),
-                EnableHadrAssessment = true,
+                IsHadrAssessmentEnabled = true,
                 ReservedInstance = AssessmentReservedInstance.None,
                 SqlServerLicense = AssessmentSqlServerLicense.Unknown,
                 AzureLocation = new AzureLocation("SoutheastAsia"),

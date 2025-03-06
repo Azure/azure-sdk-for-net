@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Migration.Assessment
                 writer.WritePropertyName("disasterRecoveryLocation"u8);
                 writer.WriteStringValue(DisasterRecoveryLocation.Value);
             }
-            if (Optional.IsDefined(EnableHadrAssessment))
+            if (Optional.IsDefined(IsHadrAssessmentEnabled))
             {
                 writer.WritePropertyName("enableHadrAssessment"u8);
-                writer.WriteBooleanValue(EnableHadrAssessment.Value);
+                writer.WriteBooleanValue(IsHadrAssessmentEnabled.Value);
             }
             if (Optional.IsDefined(AzureSecurityOfferingType))
             {

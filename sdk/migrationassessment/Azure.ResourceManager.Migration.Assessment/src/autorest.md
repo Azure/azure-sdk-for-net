@@ -186,6 +186,7 @@ rename-mapping:
   ServerCollector.properties.updatedTimestamp: UpdatedOn
   SqlAssessmentOptions: MigrationSqlAssessmentOptions
   SqlAssessmentV2.properties.createdTimestamp: CreatedOn
+  SqlAssessmentV2.properties.enableHadrAssessment: IsHadrAssessmentEnabled
   SqlAssessmentV2.properties.pricesTimestamp: PricesQueriedOn
   SqlAssessmentV2.properties.updatedTimestamp: UpdatedOn
   SqlAssessmentV2: MigrationSqlAssessmentV2

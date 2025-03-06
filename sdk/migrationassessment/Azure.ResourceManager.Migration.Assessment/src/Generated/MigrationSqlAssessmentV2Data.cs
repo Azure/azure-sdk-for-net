@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// Gets or sets the Azure Location or Azure region where to which the machines
         /// will be migrated.
         /// </param>
-        /// <param name="enableHadrAssessment"> Gets or sets a value indicating whether HADR assessments needs to be created. </param>
+        /// <param name="isHadrAssessmentEnabled"> Gets or sets a value indicating whether HADR assessments needs to be created. </param>
         /// <param name="azureSecurityOfferingType"> Gets or sets a value indicating azure security offering type. </param>
         /// <param name="reservedInstance"> Reserved instance. </param>
         /// <param name="sqlServerLicense"> SQL server license. </param>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// <param name="status"> Whether assessment is in valid state and all machines have been assessed. </param>
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationSqlAssessmentV2Data(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MigrationAssessmentProvisioningState? provisioningState, MigrationAssessmentOSLicense? osLicense, AssessmentEnvironmentType? environmentType, AssessmentEntityUptime entityUptime, SqlOptimizationLogic? optimizationLogic, AssessmentReservedInstance? reservedInstanceForVm, AssessmentOfferCode? azureOfferCodeForVm, string eaSubscriptionId, AssessmentSqlMISettings azureSqlManagedInstanceSettings, AssessmentSqlDBSettings azureSqlDatabaseSettings, AssessmentSqlVmSettings azureSqlVmSettings, MultiSubnetIntent? multiSubnetIntent, AsyncCommitModeIntent? asyncCommitModeIntent, bool? isInternetAccessAvailable, AzureLocation? disasterRecoveryLocation, bool? enableHadrAssessment, AssessmentSecurityOfferingType? azureSecurityOfferingType, AssessmentReservedInstance? reservedInstance, AssessmentSqlServerLicense? sqlServerLicense, MigrationAssessmentGroupType? groupType, MigrationAssessmentType? assessmentType, AzureLocation? azureLocation, AssessmentOfferCode? azureOfferCode, AssessmentCurrency? currency, double? scalingFactor, PercentileOfUtilization? percentile, AssessmentTimeRange? timeRange, DateTimeOffset? perfDataStartOn, DateTimeOffset? perfDataEndOn, MigrationAssessmentStage? stage, double? discountPercentage, AssessmentSizingCriterion? sizingCriterion, double? confidenceRatingInPercentage, DateTimeOffset? pricesQueriedOn, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, MigrationAssessmentStatus? status, string schemaVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MigrationSqlAssessmentV2Data(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MigrationAssessmentProvisioningState? provisioningState, MigrationAssessmentOSLicense? osLicense, AssessmentEnvironmentType? environmentType, AssessmentEntityUptime entityUptime, SqlOptimizationLogic? optimizationLogic, AssessmentReservedInstance? reservedInstanceForVm, AssessmentOfferCode? azureOfferCodeForVm, string eaSubscriptionId, AssessmentSqlMISettings azureSqlManagedInstanceSettings, AssessmentSqlDBSettings azureSqlDatabaseSettings, AssessmentSqlVmSettings azureSqlVmSettings, MultiSubnetIntent? multiSubnetIntent, AsyncCommitModeIntent? asyncCommitModeIntent, bool? isInternetAccessAvailable, AzureLocation? disasterRecoveryLocation, bool? isHadrAssessmentEnabled, AssessmentSecurityOfferingType? azureSecurityOfferingType, AssessmentReservedInstance? reservedInstance, AssessmentSqlServerLicense? sqlServerLicense, MigrationAssessmentGroupType? groupType, MigrationAssessmentType? assessmentType, AzureLocation? azureLocation, AssessmentOfferCode? azureOfferCode, AssessmentCurrency? currency, double? scalingFactor, PercentileOfUtilization? percentile, AssessmentTimeRange? timeRange, DateTimeOffset? perfDataStartOn, DateTimeOffset? perfDataEndOn, MigrationAssessmentStage? stage, double? discountPercentage, AssessmentSizingCriterion? sizingCriterion, double? confidenceRatingInPercentage, DateTimeOffset? pricesQueriedOn, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, MigrationAssessmentStatus? status, string schemaVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             OSLicense = osLicense;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Migration.Assessment
             AsyncCommitModeIntent = asyncCommitModeIntent;
             IsInternetAccessAvailable = isInternetAccessAvailable;
             DisasterRecoveryLocation = disasterRecoveryLocation;
-            EnableHadrAssessment = enableHadrAssessment;
+            IsHadrAssessmentEnabled = isHadrAssessmentEnabled;
             AzureSecurityOfferingType = azureSecurityOfferingType;
             ReservedInstance = reservedInstance;
             SqlServerLicense = sqlServerLicense;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Migration.Assessment
         /// </summary>
         public AzureLocation? DisasterRecoveryLocation { get; set; }
         /// <summary> Gets or sets a value indicating whether HADR assessments needs to be created. </summary>
-        public bool? EnableHadrAssessment { get; set; }
+        public bool? IsHadrAssessmentEnabled { get; set; }
         /// <summary> Gets or sets a value indicating azure security offering type. </summary>
         public AssessmentSecurityOfferingType? AzureSecurityOfferingType { get; set; }
         /// <summary> Reserved instance. </summary>

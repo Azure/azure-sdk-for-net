@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
                 SqlServerLicense = AssessmentSqlServerLicense.Unknown,
                 ReservedInstance = AssessmentReservedInstance.None,
                 AzureSecurityOfferingType = AssessmentSecurityOfferingType.No,
-                EnableHadrAssessment = false,
+                IsHadrAssessmentEnabled = false,
                 IsInternetAccessAvailable = true,
                 AzureSqlVmSettings = new AssessmentSqlVmSettings(),
                 MultiSubnetIntent = MultiSubnetIntent.None,
