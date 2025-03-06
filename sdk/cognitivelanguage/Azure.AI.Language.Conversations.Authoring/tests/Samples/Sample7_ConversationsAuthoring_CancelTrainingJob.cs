@@ -4,7 +4,6 @@
 using System;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
-using Azure.AI.Language.Conversations.Authoring.Models;
 using Azure.AI.Language.Conversations.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -27,7 +26,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             string jobId = "YourTrainingJobId";
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-            Operation<TrainingJobResult> cancelOperation = projectClient.CancelTrainingJob(
+            Operation<ConversationAuthoringTrainingJobResult> cancelOperation = projectClient.CancelTrainingJob(
                 waitUntil: WaitUntil.Completed,
                 jobId: jobId
             );

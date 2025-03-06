@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
-using Azure.AI.Language.Conversations.Authoring.Models;
 using Azure.AI.Language.Conversations.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -27,13 +26,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             string projectName = "MySampleProjectAsync";
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-            TrainingJobDetails trainingJobDetails = new TrainingJobDetails(
+            ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
                 modelLabel: "MyModel",
                 trainingMode: ConversationAuthoringTrainingMode.Standard
             )
             {
                 TrainingConfigVersion = "1.0",
-                EvaluationOptions = new EvaluationDetails
+                EvaluationOptions = new ConversationAuthoringEvaluationDetails
                 {
                     Kind = ConversationAuthoringEvaluationKind.Percentage,
                     TestingSplitPercentage = 20,
@@ -41,7 +40,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 }
             };
 
-            Operation<TrainingJobResult> operation = await projectClient.TrainAsync(
+            Operation<ConversationAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
                 waitUntil: WaitUntil.Completed,
                 details: trainingJobDetails
             );
