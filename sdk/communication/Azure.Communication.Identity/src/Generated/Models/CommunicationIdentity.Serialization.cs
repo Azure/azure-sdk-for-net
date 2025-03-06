@@ -5,11 +5,12 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 
 namespace Azure.Communication.Identity.Models
 {
-    internal partial class CommunicationIdentity
+    public partial class CommunicationIdentity
     {
         internal static CommunicationIdentity DeserializeCommunicationIdentity(JsonElement element)
         {
@@ -17,16 +18,32 @@ namespace Azure.Communication.Identity.Models
             {
                 return null;
             }
+            string externalId = default;
             string id = default;
+            DateTimeOffset? lastTokenIssuedAt = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("externalId"u8))
+                {
+                    externalId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("lastTokenIssuedAt"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastTokenIssuedAt = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
             }
-            return new CommunicationIdentity(id);
+            return new CommunicationIdentity(externalId, id, lastTokenIssuedAt);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
