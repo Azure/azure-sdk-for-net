@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 201:
                     {
                         StreamAnalyticsPrivateEndpointData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 201:
                     {
                         StreamAnalyticsPrivateEndpointData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamAnalyticsPrivateEndpointData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamAnalyticsPrivateEndpointData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamAnalyticsPrivateEndpointListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StreamAnalyticsPrivateEndpointListResult.DeserializeStreamAnalyticsPrivateEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamAnalyticsPrivateEndpointListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StreamAnalyticsPrivateEndpointListResult.DeserializeStreamAnalyticsPrivateEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamAnalyticsPrivateEndpointListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StreamAnalyticsPrivateEndpointListResult.DeserializeStreamAnalyticsPrivateEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamAnalyticsPrivateEndpointListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StreamAnalyticsPrivateEndpointListResult.DeserializeStreamAnalyticsPrivateEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

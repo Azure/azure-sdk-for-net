@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.StorageActions
                 case 200:
                     {
                         StorageTaskAssignmentsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageTaskAssignmentsListResult.DeserializeStorageTaskAssignmentsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.StorageActions
                 case 200:
                     {
                         StorageTaskAssignmentsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageTaskAssignmentsListResult.DeserializeStorageTaskAssignmentsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.StorageActions
                 case 200:
                     {
                         StorageTaskAssignmentsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageTaskAssignmentsListResult.DeserializeStorageTaskAssignmentsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.StorageActions
                 case 200:
                     {
                         StorageTaskAssignmentsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageTaskAssignmentsListResult.DeserializeStorageTaskAssignmentsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

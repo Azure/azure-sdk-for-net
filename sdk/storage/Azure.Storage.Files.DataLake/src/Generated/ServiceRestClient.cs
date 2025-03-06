@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Files.DataLake.Models;
 
 namespace Azure.Storage.Files.DataLake
@@ -86,7 +87,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     {
                         FileSystemList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FileSystemList.DeserializeFileSystemList(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -112,7 +113,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     {
                         FileSystemList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FileSystemList.DeserializeFileSystemList(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }

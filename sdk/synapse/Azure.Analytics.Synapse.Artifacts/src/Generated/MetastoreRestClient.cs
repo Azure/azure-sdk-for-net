@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 201:
                     {
                         MetastoreRegistrationResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetastoreRegistrationResponse.DeserializeMetastoreRegistrationResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -109,7 +109,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 201:
                     {
                         MetastoreRegistrationResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetastoreRegistrationResponse.DeserializeMetastoreRegistrationResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -151,7 +151,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         MetastoreRequestSuccessResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetastoreRequestSuccessResponse.DeserializeMetastoreRequestSuccessResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -178,7 +178,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         MetastoreRequestSuccessResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetastoreRequestSuccessResponse.DeserializeMetastoreRequestSuccessResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -229,7 +229,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 201:
                     {
                         MetastoreUpdationResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetastoreUpdationResponse.DeserializeMetastoreUpdationResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -261,7 +261,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 201:
                     {
                         MetastoreUpdationResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetastoreUpdationResponse.DeserializeMetastoreUpdationResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

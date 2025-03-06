@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService
     {
         IList<WebAppNetworkTrace> IOperationSource<IList<WebAppNetworkTrace>>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService
 
         async ValueTask<IList<WebAppNetworkTrace>> IOperationSource<IList<WebAppNetworkTrace>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
             foreach (var item in document.RootElement.EnumerateArray())
             {

@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamAnalyticsSubscriptionQuotasListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StreamAnalyticsSubscriptionQuotasListResult.DeserializeStreamAnalyticsSubscriptionQuotasListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamAnalyticsSubscriptionQuotasListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StreamAnalyticsSubscriptionQuotasListResult.DeserializeStreamAnalyticsSubscriptionQuotasListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamAnalyticsQueryCompilationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StreamAnalyticsQueryCompilationResult.DeserializeStreamAnalyticsQueryCompilationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                     {
                         StreamAnalyticsQueryCompilationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StreamAnalyticsQueryCompilationResult.DeserializeStreamAnalyticsQueryCompilationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.StoragePool
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDiskPoolData(document.RootElement, options);
                     }
                 default:

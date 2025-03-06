@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseTransparentDataEncryptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseTransparentDataEncryptionData.DeserializeSynapseTransparentDataEncryptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseTransparentDataEncryptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseTransparentDataEncryptionData.DeserializeSynapseTransparentDataEncryptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Synapse
                 case 201:
                     {
                         SynapseTransparentDataEncryptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseTransparentDataEncryptionData.DeserializeSynapseTransparentDataEncryptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Synapse
                 case 201:
                     {
                         SynapseTransparentDataEncryptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseTransparentDataEncryptionData.DeserializeSynapseTransparentDataEncryptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseTransparentDataEncryptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseTransparentDataEncryptionListResult.DeserializeSynapseTransparentDataEncryptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseTransparentDataEncryptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseTransparentDataEncryptionListResult.DeserializeSynapseTransparentDataEncryptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseTransparentDataEncryptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseTransparentDataEncryptionListResult.DeserializeSynapseTransparentDataEncryptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseTransparentDataEncryptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseTransparentDataEncryptionListResult.DeserializeSynapseTransparentDataEncryptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

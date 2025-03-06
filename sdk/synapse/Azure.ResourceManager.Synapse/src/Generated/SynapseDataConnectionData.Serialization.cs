@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Synapse
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSynapseDataConnectionData(document.RootElement, options);
                     }
                 default:
