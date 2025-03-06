@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayContainerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FluidRelayContainerData.DeserializeFluidRelayContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayContainerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FluidRelayContainerData.DeserializeFluidRelayContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayContainerList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FluidRelayContainerList.DeserializeFluidRelayContainerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayContainerList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FluidRelayContainerList.DeserializeFluidRelayContainerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayContainerList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FluidRelayContainerList.DeserializeFluidRelayContainerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case 200:
                     {
                         FluidRelayContainerList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FluidRelayContainerList.DeserializeFluidRelayContainerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

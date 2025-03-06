@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FabricCapacityData.DeserializeFabricCapacityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FabricCapacityData.DeserializeFabricCapacityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FabricCapacityListResult.DeserializeFabricCapacityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FabricCapacityListResult.DeserializeFabricCapacityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FabricCapacityListResult.DeserializeFabricCapacityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FabricCapacityListResult.DeserializeFabricCapacityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FabricNameAvailabilityResult.DeserializeFabricNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FabricNameAvailabilityResult.DeserializeFabricNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         RpSkuEnumerationForExistingResourceResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RpSkuEnumerationForExistingResourceResult.DeserializeRpSkuEnumerationForExistingResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -913,7 +913,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         RpSkuEnumerationForExistingResourceResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RpSkuEnumerationForExistingResourceResult.DeserializeRpSkuEnumerationForExistingResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -966,7 +966,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         RpSkuEnumerationForNewResourceResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RpSkuEnumerationForNewResourceResult.DeserializeRpSkuEnumerationForNewResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -991,7 +991,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         RpSkuEnumerationForNewResourceResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RpSkuEnumerationForNewResourceResult.DeserializeRpSkuEnumerationForNewResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1042,7 +1042,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FabricCapacityListResult.DeserializeFabricCapacityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1071,7 +1071,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FabricCapacityListResult.DeserializeFabricCapacityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1120,7 +1120,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FabricCapacityListResult.DeserializeFabricCapacityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1147,7 +1147,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FabricCapacityListResult.DeserializeFabricCapacityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1200,7 +1200,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         RpSkuEnumerationForExistingResourceResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RpSkuEnumerationForExistingResourceResult.DeserializeRpSkuEnumerationForExistingResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1231,7 +1231,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         RpSkuEnumerationForExistingResourceResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RpSkuEnumerationForExistingResourceResult.DeserializeRpSkuEnumerationForExistingResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1280,7 +1280,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         RpSkuEnumerationForNewResourceResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RpSkuEnumerationForNewResourceResult.DeserializeRpSkuEnumerationForNewResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1307,7 +1307,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         RpSkuEnumerationForNewResourceResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RpSkuEnumerationForNewResourceResult.DeserializeRpSkuEnumerationForNewResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

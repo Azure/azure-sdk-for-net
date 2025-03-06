@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeviceRegistryBillingContainerData(document.RootElement, options);
                     }
                 default:

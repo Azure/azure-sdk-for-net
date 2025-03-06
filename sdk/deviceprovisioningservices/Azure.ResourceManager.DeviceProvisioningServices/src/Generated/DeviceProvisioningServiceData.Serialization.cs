@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeviceProvisioningServiceData(document.RootElement, options);
                     }
                 default:
