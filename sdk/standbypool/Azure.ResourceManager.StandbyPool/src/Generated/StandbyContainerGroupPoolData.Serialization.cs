@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStandbyContainerGroupPoolData(document.RootElement, options);
                     }
                 default:
