@@ -53,7 +53,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNull(category, nameof(category));
 
             Category = category;
-            Prebuilts = new ChangeTrackingList<ExportedPrebuiltEntity>();
+            Prebuilts = new ChangeTrackingList<ConversationAuthoringExportedPrebuiltEntity>();
             RequiredComponents = new ChangeTrackingList<string>();
         }
 
@@ -65,7 +65,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="regex"> The regex component of the entity. </param>
         /// <param name="requiredComponents"> The required components. Allowed values are 'learned', 'list', 'prebuilts' and 'regex'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationExportedEntity(string category, ConversationAuthoringCompositionMode? compositionMode, ExportedEntityList entities, IList<ExportedPrebuiltEntity> prebuilts, ExportedEntityRegex regex, IList<string> requiredComponents, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationExportedEntity(string category, ConversationAuthoringCompositionMode? compositionMode, ConversationAuthoringExportedEntityList entities, IList<ConversationAuthoringExportedPrebuiltEntity> prebuilts, ExportedEntityRegex regex, IList<string> requiredComponents, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             CompositionMode = compositionMode;
@@ -86,9 +86,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> The behavior to follow when the entity's components overlap with each other. </summary>
         public ConversationAuthoringCompositionMode? CompositionMode { get; set; }
         /// <summary> The list component of the entity. </summary>
-        public ExportedEntityList Entities { get; set; }
+        public ConversationAuthoringExportedEntityList Entities { get; set; }
         /// <summary> The prebuilt entities components. </summary>
-        public IList<ExportedPrebuiltEntity> Prebuilts { get; }
+        public IList<ConversationAuthoringExportedPrebuiltEntity> Prebuilts { get; }
         /// <summary> The regex component of the entity. </summary>
         public ExportedEntityRegex Regex { get; set; }
         /// <summary> The required components. Allowed values are 'learned', 'list', 'prebuilts' and 'regex'. </summary>

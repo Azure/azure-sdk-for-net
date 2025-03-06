@@ -23,13 +23,13 @@ To train a model asynchronously, call TrainAsync on the `ConversationAuthoringPr
 string projectName = "MySampleProjectAsync";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-TrainingJobDetails trainingJobDetails = new TrainingJobDetails(
+ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
     modelLabel: "MyModel",
     trainingMode: ConversationAuthoringTrainingMode.Standard
 )
 {
     TrainingConfigVersion = "1.0",
-    EvaluationOptions = new EvaluationDetails
+    EvaluationOptions = new ConversationAuthoringEvaluationDetails
     {
         Kind = ConversationAuthoringEvaluationKind.Percentage,
         TestingSplitPercentage = 20,
@@ -37,7 +37,7 @@ TrainingJobDetails trainingJobDetails = new TrainingJobDetails(
     }
 };
 
-Operation<TrainingJobResult> operation = await projectClient.TrainAsync(
+Operation<ConversationAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
     waitUntil: WaitUntil.Completed,
     details: trainingJobDetails
 );

@@ -24,22 +24,26 @@ namespace Azure.Communication.Rooms.Tests.samples
         [Test]
         public async Task AcsRoomRequestSample()
         {
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2024_04_15);
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2025_03_13);
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
             // Create communication users using the CommunicationIdentityClient
             Response<CommunicationUserIdentifier> communicationUser1 = await communicationIdentityClient.CreateUserAsync();
             Response<CommunicationUserIdentifier> communicationUser2 = await communicationIdentityClient.CreateUserAsync();
+            Response<CommunicationUserIdentifier> communicationUser3 = await communicationIdentityClient.CreateUserAsync();
 
             DateTimeOffset validFrom = DateTimeOffset.UtcNow;
             DateTimeOffset validUntil = validFrom.AddDays(1);
             RoomParticipant participant1 = new RoomParticipant(communicationUser1.Value); // If role is not provided, then it is set as Attendee by default
             RoomParticipant participant2 = new RoomParticipant(communicationUser2.Value) { Role = ParticipantRole.Presenter};
+            // Starting in 1.2.0 release, A new role Collaborator is added
+            RoomParticipant participant3 = new RoomParticipant(communicationUser3.Value) { Role = ParticipantRole.Collaborator };
             List<RoomParticipant> invitedParticipants = new List<RoomParticipant>
             {
                 participant1,
-                participant2
+                participant2,
+                participant3
             };
 
             Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom, validUntil, invitedParticipants);
@@ -122,7 +126,7 @@ namespace Azure.Communication.Rooms.Tests.samples
         [Test]
         public async Task AddUpdateAndRemoveParticipantsExample()
         {
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2024_04_15);
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2025_03_13);
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             Response<CommunicationUserIdentifier> communicationUser1 = await communicationIdentityClient.CreateUserAsync();
             Response<CommunicationUserIdentifier> communicationUser2 = await communicationIdentityClient.CreateUserAsync();
@@ -179,7 +183,7 @@ namespace Azure.Communication.Rooms.Tests.samples
         [Test]
         public async Task RoomRequestsTroubleShooting()
         {
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2024_04_15);
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2025_03_13);
             #region Snippet:Azure_Communication_RoomsClient_Tests_Troubleshooting
             try
             {

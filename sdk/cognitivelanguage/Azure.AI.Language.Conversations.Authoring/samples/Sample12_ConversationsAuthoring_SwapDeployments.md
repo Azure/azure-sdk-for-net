@@ -21,7 +21,7 @@ To swap two deployments, call SwapDeployments on the `ConversationAuthoringDeplo
 string projectName = "SampleProject";
 string deploymentName1 = "deployment1";
 string deploymentName2 = "deployment2";
-SwapDeploymentsDetails swapDetails = new SwapDeploymentsDetails(deploymentName1, deploymentName2);
+ConversationAuthoringSwapDeploymentsDetails swapDetails = new ConversationAuthoringSwapDeploymentsDetails(deploymentName1, deploymentName2);
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
 Operation operation = projectClient.SwapDeployments(
     waitUntil: WaitUntil.Completed,

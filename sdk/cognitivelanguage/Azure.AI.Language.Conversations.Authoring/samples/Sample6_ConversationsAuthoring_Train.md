@@ -22,13 +22,13 @@ To train a model, call Train on the `ConversationAuthoringProject` client. The m
 ```C# Snippet:Sample6_ConversationsAuthoring_Train
 string projectName = "MySampleProject";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
-TrainingJobDetails trainingJobDetails = new TrainingJobDetails(
+ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
     modelLabel: "MyModel",
     trainingMode: ConversationAuthoringTrainingMode.Standard
 )
 {
     TrainingConfigVersion = "1.0",
-    EvaluationOptions = new EvaluationDetails
+    EvaluationOptions = new ConversationAuthoringEvaluationDetails
     {
         Kind = ConversationAuthoringEvaluationKind.Percentage,
         TestingSplitPercentage = 20,
@@ -36,7 +36,7 @@ TrainingJobDetails trainingJobDetails = new TrainingJobDetails(
     }
 };
 
-Operation<TrainingJobResult> operation = projectClient.Train(
+Operation<ConversationAuthoringTrainingJobResult> operation = projectClient.Train(
     waitUntil: WaitUntil.Completed,
     details: trainingJobDetails
 );

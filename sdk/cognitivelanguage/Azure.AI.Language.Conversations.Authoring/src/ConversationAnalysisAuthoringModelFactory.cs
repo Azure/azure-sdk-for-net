@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.Language.Conversations.Authoring.Models
+namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Model factory for Conversations Authoring models. </summary>
     [CodeGenModel("AILanguageConversationsAuthoringModelFactory")]
