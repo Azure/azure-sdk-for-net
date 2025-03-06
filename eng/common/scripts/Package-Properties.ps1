@@ -272,13 +272,14 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                 $ciYml = Join-Path $RepoRoot $yml
                 # ensure we terminate the service directory with a /
                 $directory = [System.IO.Path]::GetDirectoryName($ciYml).Replace("`\", "/")
-                $soleCIYml = (Get-ChildItem -Path $directory -Filter "ci*.yml" -File).Count -eq 1
 
                 # we should only continue with this check if the file being changed is "in the service directory"
                 $serviceDirectoryChange = (Split-Path $filePath -Parent).Replace("`\", "/") -eq $directory
                 if (!$serviceDirectoryChange) {
                     break
                 }
+
+                $soleCIYml = (Get-ChildItem -Path $directory -Filter "ci*.yml" -File).Count -eq 1
 
                 if ($soleCIYml -and $filePath.Replace("`\", "/").StartsWith($directory)) {
                     if (-not $shouldInclude) {
