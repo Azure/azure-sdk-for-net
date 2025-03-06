@@ -180,3 +180,5 @@ TempTypeSpecFiles/
 
 # Common toolchain intermediate files
 temp
+/sdk
+/eng/common/scripts/job-matrix
