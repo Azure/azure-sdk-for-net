@@ -116,13 +116,6 @@ namespace Azure.Projects
         public void WhenUploaded(System.Action<System.BinaryData> function) { }
     }
 }
-namespace Azure.Projects.AppConfiguration
-{
-    public static partial class AppConfigurationExtensions
-    {
-        public static Azure.Data.AppConfiguration.ConfigurationClient GetConfigurationClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
-    }
-}
 namespace Azure.Projects.KeyVault
 {
     public static partial class KeyVaultExtensions
