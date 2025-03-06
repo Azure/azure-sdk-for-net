@@ -13,7 +13,7 @@ using Azure.Monitor.Query.Models;
 using NUnit.Framework;
 using static Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests.TelemetryValidationHelper;
 
-#if !NETFRAMEWORK
+#if NET
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     public abstract class BaseLiveTest : RecordedTestBase<AzureMonitorTestEnvironment>
