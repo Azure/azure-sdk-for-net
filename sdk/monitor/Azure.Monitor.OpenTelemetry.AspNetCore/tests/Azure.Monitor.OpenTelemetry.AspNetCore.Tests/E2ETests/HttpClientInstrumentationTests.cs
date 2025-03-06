@@ -56,14 +56,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             var activities = new List<Activity>();
             var serviceCollection = new ServiceCollection();
 
-#if NET9_0_OR_GREATER
-            // Starting with .NET 9, HttpClient library performs redaction by default
-            AppContext.SetSwitch("System.Net.Http.DisableUriRedaction", true);
-#else
-            // For all older frameworks, the Instrumentation Library performs redaction by default
-            serviceCollection.AddEnvironmentVariables(new Dictionary<string, string?> { { "OTEL_DOTNET_EXPERIMENTAL_HTTPCLIENT_DISABLE_URL_QUERY_REDACTION", "true" } });
-#endif
-
             serviceCollection.AddOpenTelemetry()
                 .UseAzureMonitor(x => x.ConnectionString = testConnectionString)
                 .WithTracing(x => x.AddInMemoryExporter(activities))
@@ -92,6 +84,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             string url = queryString is null
                     ? path
                     : path + queryString;
+
+            string expectedQueryString = queryString is null
+                    ? string.Empty
+#if NET9_0_OR_GREATER //Starting with .NET 9, HttpClient library performs redaction by default
+                    : "?*";
+#else  // For all older frameworks, the Instrumentation Library performs redaction by default
+                    : "?key=Redacted";
+#endif
+
+            string urlForValidation = path + expectedQueryString;
+
             var httpclient = new HttpClient();
 
             try
@@ -116,9 +119,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             VerifyTelemetryItem(
                 isSuccessfulRequest: expectedStatusCode == 200,
                 hasException: shouldThrowException,
-                expectedUrl: url,
+                expectedUrl: urlForValidation,
                 operationName: $"GET {path}",
-                expectedData: baseAddress + path + (queryString ?? ""),
+                expectedData: baseAddress + path + expectedQueryString,
                 expectedTarget: $"{host}:{port}",
                 statusCode: expectedStatusCode.ToString(),
                 telemetryItem: telemetryItem,
