@@ -40,15 +40,6 @@ steps:
     displayName: Resolve Targeted Packages
     condition: eq(variables['ProjectNames'], '')
 
-  - pwsh: |
-      Write-Host "The projectNames are $(ProjectNames)"
-      Write-Host "We see the following package properties"
-
-      Get-ChildItem -Recurse "${{ parameters.PackageInfo }}" *.json `
-        | ForEach-Object { Write-Host $_.FullName; Get-Content -Raw $_.FullName }
-    displayName: Output Visible Variables
-    condition: ne(variables['ProjectNames'], '')
-
   # this script sets $(ChangedServices) and populates a props file with the targeted set of projects
   # for the build. This file is set to variable $(ProjectListOverrideFile).
   - pwsh: |
