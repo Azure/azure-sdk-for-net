@@ -25,6 +25,7 @@ namespace Azure.Communication.Rooms
         private const string PresenterValue = "Presenter";
         private const string AttendeeValue = "Attendee";
         private const string ConsumerValue = "Consumer";
+        private const string CollaboratorValue = "Collaborator";
 
         /// <summary> Presenter. </summary>
         public static ParticipantRole Presenter { get; } = new ParticipantRole(PresenterValue);
@@ -32,6 +33,8 @@ namespace Azure.Communication.Rooms
         public static ParticipantRole Attendee { get; } = new ParticipantRole(AttendeeValue);
         /// <summary> Consumer. </summary>
         public static ParticipantRole Consumer { get; } = new ParticipantRole(ConsumerValue);
+        /// <summary> Collaborator. </summary>
+        public static ParticipantRole Collaborator { get; } = new ParticipantRole(CollaboratorValue);
         /// <summary> Determines if two <see cref="ParticipantRole"/> values are the same. </summary>
         public static bool operator ==(ParticipantRole left, ParticipantRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ParticipantRole"/> values are not the same. </summary>

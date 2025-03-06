@@ -26,7 +26,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             // Arrange
             string projectName = "NewProject001";
             ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
-            var projectData = new CreateProjectDetails(
+            var projectData = new ConversationAuthoringCreateProjectDetails(
                   projectKind: "Conversation",
                   language: "en-us"
                 )
@@ -51,12 +51,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             string projectName = "Test-data-labels";
 
             // Create metadata based on JSON data
-            var projectMetadata = new CreateProjectDetails(
+            var projectMetadata = new ConversationAuthoringCreateProjectDetails(
                 projectKind: "Conversation",
                 language: "en-us"
             )
             {
-                Settings = new ProjectSettings(0.0F), // ConfidenceThreshold set to 0
+                Settings = new ConversationAuthoringProjectSettings(0.0F), // ConfidenceThreshold set to 0
                 Multilingual = false,
                 Description = string.Empty
             };
@@ -116,7 +116,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             ));
 
             // Build the exported project
-            var exportedProject = new ExportedProject(
+            var exportedProject = new ConversationAuthoringExportedProject(
                 projectFileVersion: "2022-10-01-preview",
                 stringIndexType: StringIndexType.Utf16CodeUnit,
                 metadata: projectMetadata
@@ -177,8 +177,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
 
             ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
             // Act
-            Response<ProjectMetadata> response = await projectAuthoringClient.GetProjectAsync();
-            ProjectMetadata projectMetadata = response.Value;
+            Response<ConversationAuthoringProjectMetadata> response = await projectAuthoringClient.GetProjectAsync();
+            ConversationAuthoringProjectMetadata projectMetadata = response.Value;
 
             // Assert
             Assert.IsNotNull(response, "The response should not be null.");
@@ -215,13 +215,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             // Arrange
             string projectName = "Test-data-labels";
 
-            var trainingJobDetails = new TrainingJobDetails(
+            var trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
                 modelLabel: "MyModel",
                 trainingMode: ConversationAuthoringTrainingMode.Standard
             )
             {
                 TrainingConfigVersion = "2023-04-15",
-                EvaluationOptions = new EvaluationDetails
+                EvaluationOptions = new ConversationAuthoringEvaluationDetails
                 {
                     Kind = ConversationAuthoringEvaluationKind.Percentage,
                     TestingSplitPercentage = 20,
@@ -231,7 +231,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
 
             ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
             // Act
-            Operation<TrainingJobResult> operation = await projectAuthoringClient.TrainAsync(
+            Operation<ConversationAuthoringTrainingJobResult> operation = await projectAuthoringClient.TrainAsync(
                 waitUntil: WaitUntil.Completed,
                 details: trainingJobDetails
             );
@@ -254,7 +254,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
 
             // Act
             ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
-            Operation<TrainingJobResult> cancelOperation = await projectAuthoringClient.CancelTrainingJobAsync(
+            Operation<ConversationAuthoringTrainingJobResult> cancelOperation = await projectAuthoringClient.CancelTrainingJobAsync(
                 waitUntil: WaitUntil.Started,
                 jobId: jobId
             );
@@ -277,7 +277,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
 
             ConversationAuthoringTrainedModel trainedModelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
             // Act
-            Response<EvaluationSummary> evaluationSummaryResponse = await trainedModelAuthoringClient.GetModelEvaluationSummaryAsync(            );
+            Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = await trainedModelAuthoringClient.GetModelEvaluationSummaryAsync(            );
 
             // Assert
             Assert.IsNotNull(evaluationSummaryResponse, "The evaluation summary response should not be null.");
@@ -424,7 +424,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             var deploymentName1 = "deployment1";
             var deploymentName2 = "deployment2";
 
-            var swapDetails = new SwapDeploymentsDetails(deploymentName1, deploymentName2);
+            var swapDetails = new ConversationAuthoringSwapDeploymentsDetails(deploymentName1, deploymentName2);
 
             ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
             // Act
@@ -470,7 +470,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
 
             ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName);
 
-            CreateDeploymentDetails trainedModeDetails = new CreateDeploymentDetails("m1");
+            ConversationAuthoringCreateDeploymentDetails trainedModeDetails = new ConversationAuthoringCreateDeploymentDetails("m1");
             // Act
             Operation operation = await deploymentAuthoringClient.DeployProjectAsync(
                 waitUntil: WaitUntil.Completed,

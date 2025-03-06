@@ -23,7 +23,7 @@ string deploymentName = "staging";
 
 ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
-CreateDeploymentDetails trainedModeDetails = new CreateDeploymentDetails("m1");
+ConversationAuthoringCreateDeploymentDetails trainedModeDetails = new ConversationAuthoringCreateDeploymentDetails("m1");
 
 Operation operation = deploymentClient.DeployProject(
     waitUntil: WaitUntil.Completed,
