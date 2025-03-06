@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerGroupData(document.RootElement, options);
                     }
                 default:

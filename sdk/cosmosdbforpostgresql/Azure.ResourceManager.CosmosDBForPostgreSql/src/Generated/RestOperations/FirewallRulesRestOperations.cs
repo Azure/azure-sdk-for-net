@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case 200:
                     {
                         CosmosDBForPostgreSqlFirewallRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case 200:
                     {
                         CosmosDBForPostgreSqlFirewallRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case 200:
                     {
                         CosmosDBForPostgreSqlFirewallRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CosmosDBForPostgreSqlFirewallRuleListResult.DeserializeCosmosDBForPostgreSqlFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case 200:
                     {
                         CosmosDBForPostgreSqlFirewallRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CosmosDBForPostgreSqlFirewallRuleListResult.DeserializeCosmosDBForPostgreSqlFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

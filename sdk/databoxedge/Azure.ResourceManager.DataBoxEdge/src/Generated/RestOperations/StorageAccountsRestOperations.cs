@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         StorageAccountList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageAccountList.DeserializeStorageAccountList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         StorageAccountList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageAccountList.DeserializeStorageAccountList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeStorageAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxEdgeStorageAccountData.DeserializeDataBoxEdgeStorageAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeStorageAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxEdgeStorageAccountData.DeserializeDataBoxEdgeStorageAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         StorageAccountList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageAccountList.DeserializeStorageAccountList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         StorageAccountList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageAccountList.DeserializeStorageAccountList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

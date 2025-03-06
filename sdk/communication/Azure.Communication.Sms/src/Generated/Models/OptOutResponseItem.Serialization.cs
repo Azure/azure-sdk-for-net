@@ -55,7 +55,7 @@ namespace Azure.Communication.Sms.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static OptOutResponseItem FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeOptOutResponseItem(document.RootElement);
         }
     }

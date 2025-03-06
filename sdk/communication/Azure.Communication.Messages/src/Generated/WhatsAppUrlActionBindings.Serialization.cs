@@ -105,7 +105,7 @@ namespace Azure.Communication.Messages.Models.Channels
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWhatsAppUrlActionBindings(document.RootElement, options);
                     }
                 default:
@@ -119,7 +119,7 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new WhatsAppUrlActionBindings FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeWhatsAppUrlActionBindings(document.RootElement);
         }
 

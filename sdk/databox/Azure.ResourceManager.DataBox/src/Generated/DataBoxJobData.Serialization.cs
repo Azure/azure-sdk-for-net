@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.DataBox
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataBoxJobData(document.RootElement, options);
                     }
                 default:

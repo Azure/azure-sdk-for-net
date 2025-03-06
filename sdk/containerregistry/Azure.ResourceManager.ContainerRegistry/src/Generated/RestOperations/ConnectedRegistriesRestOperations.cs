@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ConnectedRegistryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConnectedRegistryListResult.DeserializeConnectedRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ConnectedRegistryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConnectedRegistryListResult.DeserializeConnectedRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ConnectedRegistryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConnectedRegistryData.DeserializeConnectedRegistryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ConnectedRegistryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConnectedRegistryData.DeserializeConnectedRegistryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ConnectedRegistryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConnectedRegistryListResult.DeserializeConnectedRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ConnectedRegistryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConnectedRegistryListResult.DeserializeConnectedRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

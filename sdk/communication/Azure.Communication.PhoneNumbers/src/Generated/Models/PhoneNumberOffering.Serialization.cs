@@ -63,7 +63,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static PhoneNumberOffering FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePhoneNumberOffering(document.RootElement);
         }
     }

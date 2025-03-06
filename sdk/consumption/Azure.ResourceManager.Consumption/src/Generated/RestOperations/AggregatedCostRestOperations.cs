@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ConsumptionAggregatedCostResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConsumptionAggregatedCostResult.DeserializeConsumptionAggregatedCostResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ConsumptionAggregatedCostResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConsumptionAggregatedCostResult.DeserializeConsumptionAggregatedCostResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ConsumptionAggregatedCostResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConsumptionAggregatedCostResult.DeserializeConsumptionAggregatedCostResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ConsumptionAggregatedCostResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConsumptionAggregatedCostResult.DeserializeConsumptionAggregatedCostResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

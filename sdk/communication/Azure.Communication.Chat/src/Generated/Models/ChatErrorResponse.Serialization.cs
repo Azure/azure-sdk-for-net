@@ -33,7 +33,7 @@ namespace Azure.Communication.Chat
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ChatErrorResponse FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeChatErrorResponse(document.RootElement);
         }
     }

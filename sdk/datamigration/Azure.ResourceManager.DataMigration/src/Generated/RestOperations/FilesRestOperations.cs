@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         FileList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FileList.DeserializeFileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         FileList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FileList.DeserializeFileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         ProjectFileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProjectFileData.DeserializeProjectFileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         ProjectFileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProjectFileData.DeserializeProjectFileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 201:
                     {
                         ProjectFileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProjectFileData.DeserializeProjectFileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 201:
                     {
                         ProjectFileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProjectFileData.DeserializeProjectFileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         ProjectFileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProjectFileData.DeserializeProjectFileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         ProjectFileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProjectFileData.DeserializeProjectFileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         FileStorageInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FileStorageInfo.DeserializeFileStorageInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         FileStorageInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FileStorageInfo.DeserializeFileStorageInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         FileStorageInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FileStorageInfo.DeserializeFileStorageInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         FileStorageInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FileStorageInfo.DeserializeFileStorageInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -850,7 +850,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         FileList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FileList.DeserializeFileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -883,7 +883,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         FileList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FileList.DeserializeFileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

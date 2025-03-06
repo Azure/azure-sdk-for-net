@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerAppInitContainer(document.RootElement, options);
                     }
                 default:

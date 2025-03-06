@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsComputePolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsComputePolicyListResult.DeserializeDataLakeAnalyticsComputePolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsComputePolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsComputePolicyListResult.DeserializeDataLakeAnalyticsComputePolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsComputePolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsComputePolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsComputePolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsComputePolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsComputePolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsComputePolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsComputePolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeAnalyticsComputePolicyListResult.DeserializeDataLakeAnalyticsComputePolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeAnalyticsComputePolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeAnalyticsComputePolicyListResult.DeserializeDataLakeAnalyticsComputePolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogSingleSignOnResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatadogSingleSignOnResourceListResponse.DeserializeDatadogSingleSignOnResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogSingleSignOnResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatadogSingleSignOnResourceListResponse.DeserializeDatadogSingleSignOnResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogSingleSignOnResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogSingleSignOnResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogSingleSignOnResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatadogSingleSignOnResourceListResponse.DeserializeDatadogSingleSignOnResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Datadog
                 case 200:
                     {
                         DatadogSingleSignOnResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatadogSingleSignOnResourceListResponse.DeserializeDatadogSingleSignOnResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

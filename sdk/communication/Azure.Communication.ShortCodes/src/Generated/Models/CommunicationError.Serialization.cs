@@ -71,7 +71,7 @@ namespace Azure.Communication.ShortCodes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static CommunicationError FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCommunicationError(document.RootElement);
         }
     }

@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOSOptionProfileData(document.RootElement, options);
                     }
                 default:

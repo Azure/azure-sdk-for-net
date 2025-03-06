@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskAccessData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskAccessData.DeserializeDiskAccessData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskAccessData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskAccessData.DeserializeDiskAccessData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskAccessList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskAccessList.DeserializeDiskAccessList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskAccessList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskAccessList.DeserializeDiskAccessList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskAccessList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskAccessList.DeserializeDiskAccessList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskAccessList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskAccessList.DeserializeDiskAccessList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         ComputePrivateLinkResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ComputePrivateLinkResourceListResult.DeserializeComputePrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         ComputePrivateLinkResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ComputePrivateLinkResourceListResult.DeserializeComputePrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         ComputePrivateEndpointConnectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         ComputePrivateEndpointConnectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1014,7 +1014,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         ComputePrivateEndpointConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ComputePrivateEndpointConnectionListResult.DeserializeComputePrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1043,7 +1043,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         ComputePrivateEndpointConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ComputePrivateEndpointConnectionListResult.DeserializeComputePrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1094,7 +1094,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskAccessList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskAccessList.DeserializeDiskAccessList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1123,7 +1123,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskAccessList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskAccessList.DeserializeDiskAccessList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1172,7 +1172,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskAccessList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskAccessList.DeserializeDiskAccessList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1199,7 +1199,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskAccessList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskAccessList.DeserializeDiskAccessList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1252,7 +1252,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         ComputePrivateEndpointConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ComputePrivateEndpointConnectionListResult.DeserializeComputePrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1283,7 +1283,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         ComputePrivateEndpointConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ComputePrivateEndpointConnectionListResult.DeserializeComputePrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

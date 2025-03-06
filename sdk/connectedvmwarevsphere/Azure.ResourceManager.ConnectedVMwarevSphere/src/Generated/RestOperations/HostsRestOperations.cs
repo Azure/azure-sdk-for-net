@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VMwareHostData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VMwareHostData.DeserializeVMwareHostData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VMwareHostData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VMwareHostData.DeserializeVMwareHostData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VMwareHostData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VMwareHostData.DeserializeVMwareHostData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VMwareHostData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VMwareHostData.DeserializeVMwareHostData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VMwareHostListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VMwareHostListResult.DeserializeVMwareHostListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VMwareHostListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VMwareHostListResult.DeserializeVMwareHostListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VMwareHostListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VMwareHostListResult.DeserializeVMwareHostListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VMwareHostListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VMwareHostListResult.DeserializeVMwareHostListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VMwareHostListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VMwareHostListResult.DeserializeVMwareHostListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VMwareHostListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VMwareHostListResult.DeserializeVMwareHostListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VMwareHostListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VMwareHostListResult.DeserializeVMwareHostListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VMwareHostListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VMwareHostListResult.DeserializeVMwareHostListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

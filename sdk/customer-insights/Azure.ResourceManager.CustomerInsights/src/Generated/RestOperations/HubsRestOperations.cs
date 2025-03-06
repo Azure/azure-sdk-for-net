@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 201:
                     {
                         HubData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HubData.DeserializeHubData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 201:
                     {
                         HubData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HubData.DeserializeHubData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         HubData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HubData.DeserializeHubData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         HubData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HubData.DeserializeHubData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         HubData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HubData.DeserializeHubData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         HubData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HubData.DeserializeHubData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         HubListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HubListResult.DeserializeHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         HubListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HubListResult.DeserializeHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         HubListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HubListResult.DeserializeHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         HubListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HubListResult.DeserializeHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         HubListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HubListResult.DeserializeHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         HubListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HubListResult.DeserializeHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         HubListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HubListResult.DeserializeHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         HubListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HubListResult.DeserializeHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
