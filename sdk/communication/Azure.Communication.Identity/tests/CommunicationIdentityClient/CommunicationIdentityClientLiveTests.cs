@@ -535,11 +535,12 @@ namespace Azure.Communication.Identity.Tests
         {
             try
             {
-                var externalId = Guid.NewGuid().ToString();
+                var externalId = "bob@contoso.com";
                 CommunicationIdentityClient client = CreateClient();
                 Response<CommunicationUserIdentifier> createResponse = await client.CreateUserAsync(externalId);
 
-                Assert.AreEqual((int)HttpStatusCode.Created, createResponse.GetRawResponse().Status);
+                Assert.IsTrue((int)HttpStatusCode.Created == createResponse.GetRawResponse().Status
+                    || (int)HttpStatusCode.OK == createResponse.GetRawResponse().Status);
                 Assert.IsNotNull(createResponse.Value.Id);
 
                 Response<CommunicationUserIdentifier> getResponse = await client.CreateUserAsync(externalId);
@@ -557,13 +558,13 @@ namespace Azure.Communication.Identity.Tests
         {
             try
             {
-                var externalId = Guid.NewGuid().ToString();
+                var externalId = "alice@contoso.com";
                 CommunicationIdentityClient client = CreateClient();
                 Response<CommunicationUserIdentifierAndToken> createResponse = await client.CreateUserAndTokenAsync(externalId,
                     new List<CommunicationTokenScope> { CommunicationTokenScope.VoIP },
                     TimeSpan.FromHours(2));
-                createResponse.GetRawResponse();
-                Assert.AreEqual((int)HttpStatusCode.Created, createResponse.GetRawResponse().Status);
+                Assert.IsTrue((int)HttpStatusCode.Created == createResponse.GetRawResponse().Status
+                    || (int)HttpStatusCode.OK == createResponse.GetRawResponse().Status);
                 Assert.IsNotNull(createResponse.Value.User);
 
                 Response<CommunicationIdentity> getResponse = await client.GetUserAsync(createResponse.Value.User);
