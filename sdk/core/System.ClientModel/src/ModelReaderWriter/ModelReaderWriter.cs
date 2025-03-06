@@ -4,6 +4,7 @@
 using System.ClientModel.Internal;
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Runtime.CompilerServices;
 
 namespace System.ClientModel.Primitives;
@@ -68,6 +69,65 @@ public static class ModelReaderWriter
     }
 
     /// <summary>
+    /// Writes the model into the provided <see cref="Stream"/>.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="model"></param>
+    /// <param name="stream"></param>
+    /// <param name="options"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static void Write<T>(T model, Stream stream, ModelReaderWriterOptions? options = default)
+        where T : IStreamModel<T>
+    {
+        if (model is null)
+        {
+            throw new ArgumentNullException(nameof(model));
+        }
+
+        if (stream is null)
+        {
+            throw new ArgumentNullException(nameof(stream));
+        }
+
+        options ??= ModelReaderWriterOptions.Json;
+
+        WriteStreamModel(model, stream, options);
+    }
+
+    /// <summary>
+    /// Writes the model into the provided <see cref="Stream"/>.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="stream"></param>
+    /// <param name="options"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    public static void Write(object model, Stream stream, ModelReaderWriterOptions? options = default)
+    {
+        if (model is null)
+        {
+            throw new ArgumentNullException(nameof(model));
+        }
+        if (stream is null)
+        {
+            throw new ArgumentNullException(nameof(stream));
+        }
+
+        options ??= ModelReaderWriterOptions.Json;
+
+        //temp blocking this for symetry of functionality on read/write with no context.
+        //will be allowed after https://github.com/Azure/azure-sdk-for-net/issues/48294
+        if (model is IStreamModel<object> iModel)
+        {
+            WriteStreamModel(iModel, stream, options);
+        }
+        else
+        {
+            throw new InvalidOperationException($"{model.GetType().Name} does not implement IStreamModel");
+        }
+    }
+
+    /// <summary>
     /// Converts the value of a model into a <see cref="BinaryData"/>.
     /// </summary>
     /// <typeparam name="T">The type of the value to write.</typeparam>
@@ -111,6 +171,56 @@ public static class ModelReaderWriter
         return WritePersistableOrEnumerable(model, context, options);
     }
 
+    /// <summary>
+    /// Writes the model into the provided <see cref="Stream"/>.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="model"></param>
+    /// <param name="stream"></param>
+    /// <param name="context"></param>
+    /// <param name="options"></param>
+    public static void Write<T>(T model, Stream stream, ModelReaderWriterContext context, ModelReaderWriterOptions? options = default)
+    {
+        if (model is null)
+        {
+            throw new ArgumentNullException(nameof(model));
+        }
+
+        if (stream is null)
+        {
+            throw new ArgumentNullException(nameof(stream));
+        }
+
+        options ??= ModelReaderWriterOptions.Json;
+
+        WriteStreamModelOrEnumerable(model, stream, context, options);
+    }
+
+    /// <summary>
+    /// Writes the model into the provided <see cref="Stream"/>.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="stream"></param>
+    /// <param name="context"></param>
+    /// <param name="options"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static void Write(object model, Stream stream, ModelReaderWriterContext context, ModelReaderWriterOptions? options = default)
+    {
+        if (model is null)
+        {
+            throw new ArgumentNullException(nameof(model));
+        }
+
+        if (stream is null)
+        {
+            throw new ArgumentNullException(nameof(stream));
+        }
+
+        options ??= ModelReaderWriterOptions.Json;
+
+        WriteStreamModelOrEnumerable(model, stream, context, options);
+    }
+
     private static BinaryData WritePersistableOrEnumerable<T>(T model, ModelReaderWriterContext context, ModelReaderWriterOptions options)
     {
         if (model is IPersistableModel<T> iModel)
@@ -119,11 +229,9 @@ public static class ModelReaderWriter
         }
         else
         {
-            var enumerable = model as IEnumerable ?? context.GetModelBuilder(model!.GetType()).GetEnumerable(model);
-            if (enumerable is not null)
+            if (TryWriteEnumerable(model, context, options, out BinaryData? data) && data != null)
             {
-                var collectionWriter = CollectionWriter.GetCollectionWriter(enumerable, options);
-                return collectionWriter.Write(enumerable, options);
+                return data;
             }
             else
             {
@@ -134,17 +242,103 @@ public static class ModelReaderWriter
 
     private static BinaryData WritePersistable<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
     {
-        if (ShouldWriteAsJson(model, options, out IJsonModel<T>? jsonModel))
+        if (TryWriteJson(model, options, out BinaryData? data) && data != null)
         {
-            using (UnsafeBufferSequence.Reader reader = new ModelWriter<T>(jsonModel, options).ExtractReader())
-            {
-                return reader.ToBinaryData();
-            }
+            return data;
         }
         else
         {
             return model.Write(options);
         }
+    }
+
+    private static void WriteStreamModelOrEnumerable<T>(
+        T model,
+        Stream stream,
+        ModelReaderWriterContext context,
+        ModelReaderWriterOptions options)
+    {
+        if (model is IStreamModel<T> iModel)
+        {
+            WriteStreamModel(iModel, stream, options);
+            return;
+        }
+        else
+        {
+            if (TryWriteEnumerable(model, context, options, out _, stream))
+            {
+                return;
+            }
+            else
+            {
+                throw new InvalidOperationException($"{model!.GetType().Name} must implement IEnumerable or IStreamModel");
+            }
+        }
+    }
+
+    private static void WriteStreamModel<T>(IStreamModel<T> model, Stream stream, ModelReaderWriterOptions options)
+    {
+        if (TryWriteJson(model, options, out _, stream))
+        {
+            return;
+        }
+        else
+        {
+            model.Write(stream, options);
+        }
+
+        return;
+    }
+
+    private static bool TryWriteJson<T>(
+        IPersistableModel<T> model,
+        ModelReaderWriterOptions options,
+        out BinaryData? data,
+        Stream? stream = default)
+    {
+        data = null;
+
+        if (ShouldWriteAsJson(model, options, out IJsonModel<T>? jsonModel))
+        {
+            var writer = new ModelWriter<T>(jsonModel, options);
+            if (stream != null)
+            {
+                writer.WriteTo(stream);
+                return true;
+            }
+
+            using var reader = writer.ExtractReader();
+            data = reader.ToBinaryData();
+            return true;
+        }
+
+        return false;
+    }
+
+    private static bool TryWriteEnumerable<T>(
+        T model,
+        ModelReaderWriterContext context,
+        ModelReaderWriterOptions options,
+        out BinaryData? data,
+        Stream? stream = default)
+    {
+        data = null;
+
+        var enumerable = model as IEnumerable ?? context.GetModelBuilder(model!.GetType()).GetEnumerable(model);
+        if (enumerable != null)
+        {
+            var collectionWriter = CollectionWriter.GetCollectionWriter(enumerable, options);
+            if (stream != null)
+            {
+                collectionWriter.WriteTo(enumerable, stream, options);
+                return true;
+            }
+
+            data = collectionWriter.Write(enumerable, options);
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>

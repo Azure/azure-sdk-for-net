@@ -19,6 +19,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         private ResourceProviderData_Builder? _resourceProviderData_Builder;
         private UnknownBaseModel_Builder? _unknownBaseModel_Builder;
         private ModelY_Builder? _modelY_Builder;
+        private ModelWithXmlAndJson_Info? _modelWithXmlAndJson_Info;
 
         public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modelInfo)
         {
@@ -32,6 +33,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 Type t when t == typeof(ResourceProviderData) => _resourceProviderData_Builder ??= new(),
                 Type t when t == typeof(UnknownBaseModel) => _unknownBaseModel_Builder ??= new(),
                 Type t when t == typeof(ModelY) => _modelY_Builder ??= new(),
+                Type t when t == typeof(ModelWithXmlAndJson) => _modelWithXmlAndJson_Info ??= new(),
                 _ => null
             };
             return modelInfo is not null;
@@ -83,6 +85,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             private Func<object>? _createInstance;
             protected override Func<object> CreateInstance => _createInstance ??= () => new AvailabilitySetData();
+        }
+
+        private class ModelWithXmlAndJson_Info : ModelBuilder
+        {
+            private Func<object>? _createInstance;
+            protected override Func<object> CreateInstance => _createInstance ??= () => new ModelWithXmlAndJson();
         }
     }
 }

@@ -58,7 +58,22 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             T model = (T)strategy.Read(serviceResponse, Instance, options);
 
             VerifyModel(model, format);
-            var data = strategy.Write(model, options);
+            BinaryData data;
+            if (strategy.SupportsStreaming)
+            {
+                using MemoryStream stream = new MemoryStream();
+                strategy.Write(stream, model, options);
+                if (stream.CanSeek)
+                {
+                    stream.Position = 0;
+                }
+                data = BinaryData.FromStream(stream);
+            }
+            else
+            {
+                data = strategy.Write(model, options);
+            }
+
             string roundTrip = data.ToString();
 
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));

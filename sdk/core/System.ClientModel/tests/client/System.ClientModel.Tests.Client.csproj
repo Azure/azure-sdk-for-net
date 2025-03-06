@@ -23,6 +23,9 @@
     <None Update="TestData\**\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestData\**\*.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\ModelXml.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

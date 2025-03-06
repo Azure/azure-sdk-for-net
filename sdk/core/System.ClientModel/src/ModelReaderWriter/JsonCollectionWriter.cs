@@ -3,6 +3,7 @@
 
 using System.ClientModel.Internal;
 using System.Collections;
+using System.IO;
 using System.Text.Json;
 
 namespace System.ClientModel.Primitives;
@@ -16,6 +17,13 @@ internal class JsonCollectionWriter : CollectionWriter
         WriteEnumerable(enumerable, writer, options);
         writer.Flush();
         return sequenceWriter.ExtractReader().ToBinaryData();
+    }
+
+    internal override void WriteTo(IEnumerable enumerable, Stream stream, ModelReaderWriterOptions options)
+    {
+        using var writer = new Utf8JsonWriter(stream);
+        WriteEnumerable(enumerable, writer, options);
+        writer.Flush();
     }
 
     private static void WriteJson(object model, Utf8JsonWriter writer, ModelReaderWriterOptions options)

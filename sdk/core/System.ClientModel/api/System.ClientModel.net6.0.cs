@@ -207,6 +207,10 @@ namespace System.ClientModel.Primitives
         string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
         System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
     }
+    public partial interface IStreamModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
+    {
+        void Write(System.IO.Stream stream, System.ClientModel.Primitives.ModelReaderWriterOptions options);
+    }
     public partial class JsonModelConverter : System.Text.Json.Serialization.JsonConverter<System.ClientModel.Primitives.IJsonModel<object>>
     {
         public JsonModelConverter() { }
@@ -243,8 +247,12 @@ namespace System.ClientModel.Primitives
         public static T? Read<T>(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public static System.BinaryData Write(object model, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
         public static System.BinaryData Write(object model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
+        public static void Write(object model, System.IO.Stream stream, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { }
+        public static void Write(object model, System.IO.Stream stream, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { }
         public static System.BinaryData Write<T>(T model, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
         public static System.BinaryData Write<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
+        public static void Write<T>(T model, System.IO.Stream stream, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { }
+        public static void Write<T>(T model, System.IO.Stream stream, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IStreamModel<T> { }
     }
     public abstract partial class ModelReaderWriterContext
     {
@@ -258,6 +266,42 @@ namespace System.ClientModel.Primitives
         public string Format { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
+    }
+    public partial class MultiPartFileWithOptionalMetadata
+    {
+        public MultiPartFileWithOptionalMetadata(System.BinaryData contents) { }
+        public MultiPartFileWithOptionalMetadata(System.IO.Stream contents) { }
+        public System.BinaryData? Contents { get { throw null; } }
+        public string ContentType { get { throw null; } set { } }
+        public System.IO.Stream? File { get { throw null; } }
+        public string? Filename { get { throw null; } set { } }
+    }
+    public partial class MultiPartFileWithRequiredContentType
+    {
+        public MultiPartFileWithRequiredContentType(System.BinaryData contents, string contentType) { }
+        public MultiPartFileWithRequiredContentType(System.IO.Stream contents, string contentType) { }
+        public System.BinaryData? Contents { get { throw null; } }
+        public string ContentType { get { throw null; } }
+        public System.IO.Stream? File { get { throw null; } }
+        public string? Filename { get { throw null; } set { } }
+    }
+    public partial class MultiPartFileWithRequiredFilename
+    {
+        public MultiPartFileWithRequiredFilename(System.BinaryData contents, string filename) { }
+        public MultiPartFileWithRequiredFilename(System.IO.Stream contents, string filename) { }
+        public System.BinaryData? Contents { get { throw null; } }
+        public string ContentType { get { throw null; } set { } }
+        public System.IO.Stream? File { get { throw null; } }
+        public string Filename { get { throw null; } }
+    }
+    public partial class MultiPartFileWithRequiredMetadata
+    {
+        public MultiPartFileWithRequiredMetadata(System.BinaryData contents, string filename, string contentType) { }
+        public MultiPartFileWithRequiredMetadata(System.IO.Stream contents, string filename, string contentType) { }
+        public System.BinaryData? Contents { get { throw null; } }
+        public string ContentType { get { throw null; } }
+        public System.IO.Stream? File { get { throw null; } }
+        public string Filename { get { throw null; } }
     }
     public abstract partial class OperationResult
     {
