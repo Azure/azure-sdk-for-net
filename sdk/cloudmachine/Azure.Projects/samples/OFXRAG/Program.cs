@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.OpenAI;
 using Azure.Projects;
 using Azure.Projects.OpenAI;
 using OpenAI.Chat;
@@ -19,8 +20,8 @@ ProjectClient project = new();
 List<ChatMessage> conversation = [];
 
 ChatProcessor processor = new(
-    project.GetOpenAIChatClient(),
-    project.GetOpenAIEmbeddingClient(),
+    project.GetAzureOpenAIChatClient(),
+    project.GetAzureOpenAIEmbeddingClient(),
     tools
 );
 

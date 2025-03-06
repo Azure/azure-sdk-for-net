@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.OpenAI;
 using Azure.Projects;
 using Azure.Projects.OpenAI;
 using OpenAI.Chat;
@@ -14,8 +15,8 @@ infrastructure.AddFeature(new OpenAIEmbeddingFeature("text-embedding-ada-002", "
 if (infrastructure.TryExecuteCommand(args)) return;
 
 ProjectClient project = new();
-ChatClient chat = project.GetOpenAIChatClient();
-EmbeddingClient embeddings = project.GetOpenAIEmbeddingClient();
+ChatClient chat = project.GetAzureOpenAIChatClient();
+EmbeddingClient embeddings = project.GetAzureOpenAIEmbeddingClient();
 EmbeddingsVectorbase vectorDb = new(embeddings);
 List<ChatMessage> conversation = [];
 ChatTools tools = new ChatTools(typeof(Tools));

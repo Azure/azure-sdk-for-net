@@ -3,14 +3,12 @@
 
 #nullable enable
 
-using Azure.Data.AppConfiguration;
-using Azure.Projects.AIFoundry;
+using Azure.AI.OpenAI;
 using Azure.Projects.KeyVault;
-using Azure.Projects.AppConfiguration;
 using Azure.Projects.OpenAI;
+using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
 using OpenAI.Chat;
-using Azure.Security.KeyVault.Secrets;
 
 namespace Azure.Projects.Tests;
 
@@ -25,7 +23,7 @@ public class E2ETests
         if (infra.TryExecuteCommand([arg])) return;
 
         ProjectClient project = new();
-        ChatClient chat = project.GetOpenAIChatClient();
+        ChatClient chat = project.GetAzureOpenAIChatClient();
     }
 
     [TestCase("-bicep")]
@@ -39,23 +37,4 @@ public class E2ETests
         ProjectClient project = new();
         SecretClient secrets = project.GetKeyVaultSecretsClient();
     }
-
-    //[TestCase("-bicep")]
-    ////[TestCase("")]
-    //public void FoundryWithOpenAI(string arg)
-    //{
-    //    ProjectInfrastructure infra = new("cm0a110d2f21084bb");
-    //    var openAI = infra.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
-    //    var foundry = infra.AddFeature(new AIProjectFeature()
-    //    {
-    //        Connections = [ openAI.CreateConnection(infra.ProjectId) ]
-    //    });
-
-    //    infra.TryExecuteCommand([arg]);
-
-    //    ProjectClient project = new(infra.Connections);
-    //    ChatClient chat = project.GetOpenAIChatClient();
-
-    //    Assert.AreEqual(2, project.Connections.Count);
-    //}
 }

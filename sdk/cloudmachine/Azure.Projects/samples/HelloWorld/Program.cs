@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.OpenAI;
 using Azure.Projects;
 using Azure.Projects.OpenAI;
 using OpenAI.Chat;
@@ -15,6 +16,6 @@ if (args.Length > 0 && args[0] == "-bicep")
 }
 
 ProjectClient project = new();
-ChatClient chat = project.GetOpenAIChatClient();
+ChatClient chat = project.GetAzureOpenAIChatClient();
 Console.WriteLine(chat.CompleteChat("list all noble gasses.").AsText());
 

@@ -5,6 +5,7 @@ using Azure.Projects.AppService;
 using Azure.Projects.OpenAI;
 using Azure.Projects;
 using OpenAI.Chat;
+using Azure.AI.OpenAI;
 
 ProjectInfrastructure infrastructure = new();
 infrastructure.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
@@ -27,7 +28,7 @@ var app = builder.Build();
 app.MapRazorPages();
 app.UseStaticFiles();
 
-EmbeddingsVectorbase vectorDb = new(client.GetOpenAIEmbeddingClient());
+EmbeddingsVectorbase vectorDb = new(client.GetAzureOpenAIEmbeddingClient());
 List<ChatMessage> prompt = [];
 
 // Register the vector db to be updated when a new file is uploaded
@@ -45,7 +46,7 @@ app.MapPost("/chat", async (HttpRequest request) =>
         prompt.Add(related);
         prompt.Add(ChatMessage.CreateUserMessage(message));
 
-        ChatClient chat = client.GetOpenAIChatClient();
+        ChatClient chat = client.GetAzureOpenAIChatClient();
         ChatCompletion completion = await chat.CompleteChatAsync(prompt);
         switch (completion.FinishReason)
         {

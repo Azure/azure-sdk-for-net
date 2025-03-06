@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.OpenAI;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
 
