@@ -5,7 +5,7 @@ using Azure.Projects;
 using Azure.Projects.OpenAI;
 using OpenAI.Chat;
 
-ProjectInfrastructure infrastructure = new("cm69489e8c64db465");
+ProjectInfrastructure infrastructure = new();
 infrastructure.AddFeature(new OpenAIChatFeature("gpt-35-turbo", "0125"));
 
 if (args.Length > 0 && args[0] == "-bicep")

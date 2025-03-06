@@ -138,8 +138,31 @@ public class ChatTools
         var messages = new List<ToolChatMessage>();
         foreach (ChatToolCall toolCall in toolCalls)
         {
-            ChatToolCall functionToolCall = toolCall as ChatToolCall;
-            var result = Call(functionToolCall);
+            var result = Call(toolCall);
+            messages.Add(new ToolChatMessage(toolCall.Id, result));
+        }
+        return messages;
+    }
+
+    /// <summary>
+    /// Calls all the specified <see cref="ChatToolCall"/>s.
+    /// </summary>
+    /// <param name="toolCalls"></param>
+    /// <param name="failed"></param>
+    /// <returns></returns>
+    public IEnumerable<ToolChatMessage> CallAll(IEnumerable<ChatToolCall> toolCalls, out List<string>? failed)
+    {
+        failed = null;
+        var messages = new List<ToolChatMessage>();
+        foreach (ChatToolCall toolCall in toolCalls)
+        {
+            if (!_methods.ContainsKey(toolCall.FunctionName))
+            {
+                if (failed == null) failed = new List<string>();
+                failed.Add(toolCall.FunctionName);
+                continue;
+            }
+            var result = Call(toolCall);
             messages.Add(new ToolChatMessage(toolCall.Id, result));
         }
         return messages;

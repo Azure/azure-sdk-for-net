@@ -53,9 +53,20 @@ complete:
             conversation = new(conversation.Slice(conversation.Count / 2, conversation.Count / 2));
             goto complete;
         case ChatFinishReason.ToolCalls:
-            conversation.Add(completion);
-            IEnumerable<ToolChatMessage> toolResults = tools.CallAll(completion.ToolCalls);
-            conversation.AddRange(toolResults);
+
+            // for some reason I am getting tool calls for tools that dont exist. 
+            List<string> failed;
+            IEnumerable<ToolChatMessage> toolResults = tools.CallAll(completion.ToolCalls, out failed);
+            if (failed != null)
+            {
+                failed.ForEach(f => Console.WriteLine($"Failed to call tool: {f}"));
+                conversation.Add(ChatMessage.CreateUserMessage("don't call tools that dont exist"));
+            }
+            else
+            {
+                conversation.Add(completion);
+                conversation.AddRange(toolResults);
+            }
             goto complete;
         default:
             //case ChatFinishReason.ContentFilter:
