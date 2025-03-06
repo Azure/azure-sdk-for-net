@@ -74,8 +74,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             binding.Bind(new TableAttributeBindingProvider(_nameResolver, _accountProvider, _converterManager));
             binding.BindToInput<ParameterBindingData>(CreateParameterBindingData);
 
-             binding.WhenIsNull(EnableRowKeyForDynamicObjectProperty).BindToInput<JArray>(CreateJArray);
-             binding.BindToInput<JObject>(CreateJObject);
+            binding.WhenIsNull(EnableRowKeyForDynamicObjectProperty).BindToInput<JArray>(CreateJArray);
+            binding.BindToInput<JObject>(CreateJObject);
         }
 
         // Get the storage table from the attribute.
@@ -133,17 +133,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             return parameterBindingData;
         }
 
-        private JObject CreateJObject(TableAttribute attribute, CancellationToken cancellation)
+        private async Task<JObject> CreateJObject(TableAttribute attribute, CancellationToken cancellation)
         {
             // Code will not reach to this method as it will follow the Poco flow similar to Inproc.
             // Meaning it will go TableAttributeBindingProvider() -> TryCreatePocoBinding flow.
-            // But we can figure out how to fix that.
+            // We can figure that out how to fix it
 
-            //
             // some dummy code to make it compile
-            var obj = new JObject();
+            var obj = await CreateJArray(attribute, cancellation).ConfigureAwait(false);
+            var element = obj.First();
 
-            return obj;
+            return (JObject)element;
         }
 
         // Used as an alternative to binding to IQueryable.
@@ -223,34 +223,32 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         private static TableEntity CreateTableEntityFromJObject(JObject entity)
         {
             TableEntity tableEntity = new TableEntity();
-            if (entity is not null)
+
+            foreach (JProperty property in entity.Properties())
             {
-                foreach (JProperty property in entity.Properties())
+                var key = property.Name;
+
+                // For reserved attributes, normalize to the casing used when communicating with service
+                if (nameof(TableEntity.ETag).Equals(key, StringComparison.OrdinalIgnoreCase))
                 {
-                    var key = property.Name;
+                    key = PocoTypeBinder.ETagKeyName;
+                }
+                else if (nameof(TableEntity.PartitionKey).Equals(key, StringComparison.OrdinalIgnoreCase))
+                {
+                    key = nameof(TableEntity.PartitionKey);
+                }
+                else if (nameof(TableEntity.RowKey).Equals(key, StringComparison.OrdinalIgnoreCase))
+                {
+                    key = nameof(TableEntity.RowKey);
+                }
 
-                    // For reserved attributes, normalize to the casing used when communicating with service
-                    if (nameof(TableEntity.ETag).Equals(key, StringComparison.OrdinalIgnoreCase))
-                    {
-                        key = PocoTypeBinder.ETagKeyName;
-                    }
-                    else if (nameof(TableEntity.PartitionKey).Equals(key, StringComparison.OrdinalIgnoreCase))
-                    {
-                        key = nameof(TableEntity.PartitionKey);
-                    }
-                    else if (nameof(TableEntity.RowKey).Equals(key, StringComparison.OrdinalIgnoreCase))
-                    {
-                        key = nameof(TableEntity.RowKey);
-                    }
-
-                    if (property.Value is JValue value)
-                    {
-                        tableEntity[key] = value.Value;
-                    }
-                    else
-                    {
-                        tableEntity[key] = property.Value.ToString();
-                    }
+                if (property.Value is JValue value)
+                {
+                    tableEntity[key] = value.Value;
+                }
+                else
+                {
+                    tableEntity[key] = property.Value.ToString();
                 }
             }
 

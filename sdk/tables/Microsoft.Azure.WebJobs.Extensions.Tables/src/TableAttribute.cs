@@ -78,7 +78,7 @@ namespace Microsoft.Azure.WebJobs
         /// <param name="tableName">The name of the table containing the entity.</param>
         /// <param name="partitionKey">The partition key of the entity.</param>
         /// <param name="rowKey">The row key of the entity.</param>
-        /// <param name="enableRowKeyForDynamicObject">The row key of the entity.</param>
+        /// <param name="enableRowKeyForDynamicObject">The value to consider row key for dynamic object.</param>
         public TableAttribute(string tableName, string partitionKey, string rowKey, string enableRowKeyForDynamicObject)
         {
             _tableName = tableName;
