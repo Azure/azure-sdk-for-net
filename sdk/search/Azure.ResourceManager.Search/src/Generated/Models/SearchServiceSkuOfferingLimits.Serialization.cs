@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class SkuOfferingLimits : IUtf8JsonSerializable, IJsonModel<SkuOfferingLimits>
+    public partial class SearchServiceSkuOfferingLimits : IUtf8JsonSerializable, IJsonModel<SearchServiceSkuOfferingLimits>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkuOfferingLimits>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServiceSkuOfferingLimits>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SkuOfferingLimits>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SearchServiceSkuOfferingLimits>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuOfferingLimits>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceSkuOfferingLimits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuOfferingLimits)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchServiceSkuOfferingLimits)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Indexes))
@@ -87,19 +87,19 @@ namespace Azure.ResourceManager.Search.Models
             }
         }
 
-        SkuOfferingLimits IJsonModel<SkuOfferingLimits>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SearchServiceSkuOfferingLimits IJsonModel<SearchServiceSkuOfferingLimits>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuOfferingLimits>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceSkuOfferingLimits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuOfferingLimits)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchServiceSkuOfferingLimits)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSkuOfferingLimits(document.RootElement, options);
+            return DeserializeSearchServiceSkuOfferingLimits(document.RootElement, options);
         }
 
-        internal static SkuOfferingLimits DeserializeSkuOfferingLimits(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SearchServiceSkuOfferingLimits DeserializeSearchServiceSkuOfferingLimits(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SkuOfferingLimits(
+            return new SearchServiceSkuOfferingLimits(
                 indexes,
                 indexers,
                 partitionStorageInGigabytes,
@@ -318,9 +318,9 @@ namespace Azure.ResourceManager.Search.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<SkuOfferingLimits>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SearchServiceSkuOfferingLimits>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuOfferingLimits>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceSkuOfferingLimits>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -329,26 +329,26 @@ namespace Azure.ResourceManager.Search.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SkuOfferingLimits)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchServiceSkuOfferingLimits)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SkuOfferingLimits IPersistableModel<SkuOfferingLimits>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SearchServiceSkuOfferingLimits IPersistableModel<SearchServiceSkuOfferingLimits>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuOfferingLimits>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceSkuOfferingLimits>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSkuOfferingLimits(document.RootElement, options);
+                        return DeserializeSearchServiceSkuOfferingLimits(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkuOfferingLimits)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchServiceSkuOfferingLimits)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SkuOfferingLimits>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SearchServiceSkuOfferingLimits>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure AI Search service. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure AI Search service. </param>
         /// <param name="eTag"> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </param>
-        /// <param name="upgradeAvailable"> Indicates whether or not the search service has an upgrade available. </param>
+        /// <param name="isUpgradeAvailable"> Indicates whether or not the search service has an upgrade available. </param>
         /// <param name="serviceUpgradeOn"> The date and time the search service was last upgraded. This field will be null until the service gets upgraded for the first time. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku searchSku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, Uri endpoint, SearchServiceHostingMode? hostingMode, ComputeType? computeType, SearchServicePublicInternetAccess? publicInternetAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, SearchServiceNetworkRuleSet networkRuleSet, IList<SearchDisabledDataExfiltrationOption> disabledDataExfiltrationOptions, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, ETag? eTag, bool? upgradeAvailable, DateTimeOffset? serviceUpgradeOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal SearchServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku searchSku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, Uri endpoint, SearchServiceHostingMode? hostingMode, SearchServiceComputeType? computeType, SearchServicePublicInternetAccess? publicInternetAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, SearchServiceNetworkRuleSet networkRuleSet, IList<SearchDisabledDataExfiltrationOption> disabledDataExfiltrationOptions, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, ETag? eTag, bool? isUpgradeAvailable, DateTimeOffset? serviceUpgradeOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             SearchSku = searchSku;
             Identity = identity;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Search.Models
             PrivateEndpointConnections = privateEndpointConnections;
             SharedPrivateLinkResources = sharedPrivateLinkResources;
             ETag = eTag;
-            UpgradeAvailable = upgradeAvailable;
+            IsUpgradeAvailable = isUpgradeAvailable;
             ServiceUpgradeOn = serviceUpgradeOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Search.Models
         public SearchServiceHostingMode? HostingMode { get; set; }
         /// <summary> Configure this property to support the search service using either the default compute or Azure Confidential Compute. </summary>
         [WirePath("properties.computeType")]
-        public ComputeType? ComputeType { get; set; }
+        public SearchServiceComputeType? ComputeType { get; set; }
         /// <summary> This value can be set to 'enabled' to avoid breaking changes on existing customer resources and templates. If set to 'disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </summary>
         [WirePath("properties.publicNetworkAccess")]
         public SearchServicePublicInternetAccess? PublicInternetAccess { get; set; }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Search.Models
         public ETag? ETag { get; }
         /// <summary> Indicates whether or not the search service has an upgrade available. </summary>
         [WirePath("properties.upgradeAvailable")]
-        public bool? UpgradeAvailable { get; }
+        public bool? IsUpgradeAvailable { get; }
         /// <summary> The date and time the search service was last upgraded. This field will be null until the service gets upgraded for the first time. </summary>
         [WirePath("properties.serviceUpgradeDate")]
         public DateTimeOffset? ServiceUpgradeOn { get; }

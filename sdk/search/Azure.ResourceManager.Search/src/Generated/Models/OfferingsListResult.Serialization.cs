@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            IReadOnlyList<OfferingsByRegion> value = default;
+            IReadOnlyList<SearchServiceOfferingsByRegion> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    List<OfferingsByRegion> array = new List<OfferingsByRegion>();
+                    List<SearchServiceOfferingsByRegion> array = new List<SearchServiceOfferingsByRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OfferingsByRegion.DeserializeOfferingsByRegion(item, options));
+                        array.Add(SearchServiceOfferingsByRegion.DeserializeSearchServiceOfferingsByRegion(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OfferingsListResult(value ?? new ChangeTrackingList<OfferingsByRegion>(), nextLink, serializedAdditionalRawData);
+            return new OfferingsListResult(value ?? new ChangeTrackingList<SearchServiceOfferingsByRegion>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

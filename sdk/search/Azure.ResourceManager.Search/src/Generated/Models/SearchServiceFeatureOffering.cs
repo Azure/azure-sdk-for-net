@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The FeatureOffering. </summary>
-    public partial class FeatureOffering
+    /// <summary> The SearchServiceFeatureOffering. </summary>
+    public partial class SearchServiceFeatureOffering
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FeatureOffering"/>. </summary>
-        internal FeatureOffering()
+        /// <summary> Initializes a new instance of <see cref="SearchServiceFeatureOffering"/>. </summary>
+        internal SearchServiceFeatureOffering()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FeatureOffering"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceFeatureOffering"/>. </summary>
         /// <param name="name"> The name of the feature offered in this region. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FeatureOffering(FeatureName? name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SearchServiceFeatureOffering(SearchServiceFeatureName? name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> The name of the feature offered in this region. </summary>
         [WirePath("name")]
-        public FeatureName? Name { get; }
+        public SearchServiceFeatureName? Name { get; }
     }
 }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Search.Samples
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                ComputeType = ComputeType.Default,
+                ComputeType = SearchServiceComputeType.Default,
                 Tags =
 {
 ["app-name"] = "My e-commerce app"
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Search.Samples
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                ComputeType = ComputeType.Default,
+                ComputeType = SearchServiceComputeType.Default,
                 AuthOptions = new SearchAadAuthDataPlaneAuthOptions
                 {
                     AadAuthFailureMode = SearchAadAuthFailureMode.Http401WithBearerChallenge,
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Search.Samples
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                ComputeType = ComputeType.Default,
+                ComputeType = SearchServiceComputeType.Default,
                 IsLocalAuthDisabled = true,
                 Tags =
 {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Search.Samples
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                ComputeType = ComputeType.Default,
+                ComputeType = SearchServiceComputeType.Default,
                 PublicInternetAccess = SearchServicePublicInternetAccess.Disabled,
                 Tags =
 {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Search.Samples
                 ReplicaCount = 1,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                ComputeType = ComputeType.Default,
+                ComputeType = SearchServiceComputeType.Default,
                 NetworkRuleSet = new SearchServiceNetworkRuleSet
                 {
                     IPRules = {new SearchServiceIPRule
@@ -294,7 +294,7 @@ Value = "123.4.6.0/18",
                 ReplicaCount = 1,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                ComputeType = ComputeType.Default,
+                ComputeType = SearchServiceComputeType.Default,
                 NetworkRuleSet = new SearchServiceNetworkRuleSet
                 {
                     IPRules = {new SearchServiceIPRule
@@ -351,7 +351,7 @@ Value = "123.4.6.0/18",
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                ComputeType = ComputeType.Default,
+                ComputeType = SearchServiceComputeType.Default,
                 EncryptionWithCmk = new SearchEncryptionWithCmk
                 {
                     Enforcement = SearchEncryptionWithCmkEnforcement.Enabled,
@@ -401,7 +401,7 @@ Value = "123.4.6.0/18",
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                ComputeType = ComputeType.Default,
+                ComputeType = SearchServiceComputeType.Default,
                 DisabledDataExfiltrationOptions = { SearchDisabledDataExfiltrationOption.All },
                 Tags =
 {
@@ -455,7 +455,7 @@ Value = "123.4.6.0/18",
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                ComputeType = ComputeType.Default,
+                ComputeType = SearchServiceComputeType.Default,
                 Tags =
 {
 ["app-name"] = "My e-commerce app"
@@ -501,7 +501,7 @@ Value = "123.4.6.0/18",
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                ComputeType = ComputeType.Default,
+                ComputeType = SearchServiceComputeType.Default,
                 SemanticSearch = SearchSemanticSearch.Free,
                 Tags =
 {

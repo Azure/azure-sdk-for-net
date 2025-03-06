@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class OfferingsByRegion : IUtf8JsonSerializable, IJsonModel<OfferingsByRegion>
+    public partial class SearchServiceOfferingsByRegion : IUtf8JsonSerializable, IJsonModel<SearchServiceOfferingsByRegion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OfferingsByRegion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServiceOfferingsByRegion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<OfferingsByRegion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SearchServiceOfferingsByRegion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OfferingsByRegion>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceOfferingsByRegion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OfferingsByRegion)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchServiceOfferingsByRegion)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(RegionName))
@@ -78,19 +78,19 @@ namespace Azure.ResourceManager.Search.Models
             }
         }
 
-        OfferingsByRegion IJsonModel<OfferingsByRegion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SearchServiceOfferingsByRegion IJsonModel<SearchServiceOfferingsByRegion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OfferingsByRegion>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceOfferingsByRegion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OfferingsByRegion)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchServiceOfferingsByRegion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOfferingsByRegion(document.RootElement, options);
+            return DeserializeSearchServiceOfferingsByRegion(document.RootElement, options);
         }
 
-        internal static OfferingsByRegion DeserializeOfferingsByRegion(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SearchServiceOfferingsByRegion DeserializeSearchServiceOfferingsByRegion(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.Search.Models
                 return null;
             }
             string regionName = default;
-            IReadOnlyList<FeatureOffering> features = default;
-            IReadOnlyList<SkuOffering> skus = default;
+            IReadOnlyList<SearchServiceFeatureOffering> features = default;
+            IReadOnlyList<SearchServiceSkuOffering> skus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    List<FeatureOffering> array = new List<FeatureOffering>();
+                    List<SearchServiceFeatureOffering> array = new List<SearchServiceFeatureOffering>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FeatureOffering.DeserializeFeatureOffering(item, options));
+                        array.Add(SearchServiceFeatureOffering.DeserializeSearchServiceFeatureOffering(item, options));
                     }
                     features = array;
                     continue;
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    List<SkuOffering> array = new List<SkuOffering>();
+                    List<SearchServiceSkuOffering> array = new List<SearchServiceSkuOffering>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuOffering.DeserializeSkuOffering(item, options));
+                        array.Add(SearchServiceSkuOffering.DeserializeSearchServiceSkuOffering(item, options));
                     }
                     skus = array;
                     continue;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OfferingsByRegion(regionName, features ?? new ChangeTrackingList<FeatureOffering>(), skus ?? new ChangeTrackingList<SkuOffering>(), serializedAdditionalRawData);
+            return new SearchServiceOfferingsByRegion(regionName, features ?? new ChangeTrackingList<SearchServiceFeatureOffering>(), skus ?? new ChangeTrackingList<SearchServiceSkuOffering>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -231,9 +231,9 @@ namespace Azure.ResourceManager.Search.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<OfferingsByRegion>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SearchServiceOfferingsByRegion>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OfferingsByRegion>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceOfferingsByRegion>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -242,26 +242,26 @@ namespace Azure.ResourceManager.Search.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(OfferingsByRegion)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchServiceOfferingsByRegion)} does not support writing '{options.Format}' format.");
             }
         }
 
-        OfferingsByRegion IPersistableModel<OfferingsByRegion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SearchServiceOfferingsByRegion IPersistableModel<SearchServiceOfferingsByRegion>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OfferingsByRegion>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceOfferingsByRegion>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeOfferingsByRegion(document.RootElement, options);
+                        return DeserializeSearchServiceOfferingsByRegion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OfferingsByRegion)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchServiceOfferingsByRegion)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<OfferingsByRegion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SearchServiceOfferingsByRegion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

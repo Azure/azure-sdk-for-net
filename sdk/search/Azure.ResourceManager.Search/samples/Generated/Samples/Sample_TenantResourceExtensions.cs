@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Search.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            await foreach (OfferingsByRegion item in tenantResource.GetOfferingsAsync())
+            await foreach (SearchServiceOfferingsByRegion item in tenantResource.GetOfferingsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> The limits associated with this SKU offered in this region. </summary>
-    public partial class SkuOfferingLimits
+    public partial class SearchServiceSkuOfferingLimits
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SkuOfferingLimits"/>. </summary>
-        internal SkuOfferingLimits()
+        /// <summary> Initializes a new instance of <see cref="SearchServiceSkuOfferingLimits"/>. </summary>
+        internal SearchServiceSkuOfferingLimits()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkuOfferingLimits"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceSkuOfferingLimits"/>. </summary>
         /// <param name="indexes"> The maximum number of indexes available for this SKU. </param>
         /// <param name="indexers"> The maximum number of indexers available for this SKU. </param>
         /// <param name="partitionStorageInGigabytes"> The maximum storage size in Gigabytes available for this SKU per partition. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="replicas"> The maximum number of replicas available for this SKU. </param>
         /// <param name="partitions"> The maximum number of partitions available for this SKU. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SkuOfferingLimits(int? indexes, int? indexers, float? partitionStorageInGigabytes, float? partitionVectorStorageInGigabytes, int? searchUnits, int? replicas, int? partitions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SearchServiceSkuOfferingLimits(int? indexes, int? indexers, float? partitionStorageInGigabytes, float? partitionVectorStorageInGigabytes, int? searchUnits, int? replicas, int? partitions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Indexes = indexes;
             Indexers = indexers;

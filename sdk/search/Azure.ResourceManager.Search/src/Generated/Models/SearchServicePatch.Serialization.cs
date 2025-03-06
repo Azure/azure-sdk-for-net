@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(UpgradeAvailable))
+            if (options.Format != "W" && Optional.IsDefined(IsUpgradeAvailable))
             {
                 writer.WritePropertyName("upgradeAvailable"u8);
-                writer.WriteBooleanValue(UpgradeAvailable.Value);
+                writer.WriteBooleanValue(IsUpgradeAvailable.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ServiceUpgradeOn))
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Search.Models
             int? partitionCount = default;
             Uri endpoint = default;
             SearchServiceHostingMode? hostingMode = default;
-            ComputeType? computeType = default;
+            SearchServiceComputeType? computeType = default;
             SearchServicePublicInternetAccess? publicNetworkAccess = default;
             SearchServiceStatus? status = default;
             string statusDetails = default;
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Search.Models
                             {
                                 continue;
                             }
-                            computeType = new ComputeType(property0.Value.GetString());
+                            computeType = new SearchServiceComputeType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -989,7 +989,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpgradeAvailable), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsUpgradeAvailable), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    upgradeAvailable: ");
@@ -997,10 +997,10 @@ namespace Azure.ResourceManager.Search.Models
             }
             else
             {
-                if (Optional.IsDefined(UpgradeAvailable))
+                if (Optional.IsDefined(IsUpgradeAvailable))
                 {
                     builder.Append("    upgradeAvailable: ");
-                    var boolValue = UpgradeAvailable.Value == true ? "true" : "false";
+                    var boolValue = IsUpgradeAvailable.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

@@ -519,8 +519,8 @@ namespace Azure.ResourceManager.Search
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="OfferingsByRegion"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OfferingsByRegion> GetOfferingsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SearchServiceOfferingsByRegion"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SearchServiceOfferingsByRegion> GetOfferingsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -551,8 +551,8 @@ namespace Azure.ResourceManager.Search
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="OfferingsByRegion"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OfferingsByRegion> GetOfferings(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SearchServiceOfferingsByRegion"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SearchServiceOfferingsByRegion> GetOfferings(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

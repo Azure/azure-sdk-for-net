@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The SkuOffering. </summary>
-    public partial class SkuOffering
+    /// <summary> The SearchServiceOfferingsByRegion. </summary>
+    public partial class SearchServiceOfferingsByRegion
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,33 +45,34 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SkuOffering"/>. </summary>
-        internal SkuOffering()
+        /// <summary> Initializes a new instance of <see cref="SearchServiceOfferingsByRegion"/>. </summary>
+        internal SearchServiceOfferingsByRegion()
         {
+            Features = new ChangeTrackingList<SearchServiceFeatureOffering>();
+            Skus = new ChangeTrackingList<SearchServiceSkuOffering>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkuOffering"/>. </summary>
-        /// <param name="sku"> Defines the SKU of a search service, which determines billing rate and capacity limits. </param>
-        /// <param name="limits"> The limits associated with this SKU offered in this region. </param>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceOfferingsByRegion"/>. </summary>
+        /// <param name="regionName"> The name of the region. </param>
+        /// <param name="features"> The list of features offered in this region. </param>
+        /// <param name="skus"> The list of SKUs offered in this region. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SkuOffering(SearchSku sku, SkuOfferingLimits limits, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SearchServiceOfferingsByRegion(string regionName, IReadOnlyList<SearchServiceFeatureOffering> features, IReadOnlyList<SearchServiceSkuOffering> skus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Sku = sku;
-            Limits = limits;
+            RegionName = regionName;
+            Features = features;
+            Skus = skus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Defines the SKU of a search service, which determines billing rate and capacity limits. </summary>
-        internal SearchSku Sku { get; }
-        /// <summary> The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions.'. </summary>
-        [WirePath("sku.name")]
-        public SearchServiceSkuName? SkuName
-        {
-            get => Sku?.Name;
-        }
-
-        /// <summary> The limits associated with this SKU offered in this region. </summary>
-        [WirePath("limits")]
-        public SkuOfferingLimits Limits { get; }
+        /// <summary> The name of the region. </summary>
+        [WirePath("regionName")]
+        public string RegionName { get; }
+        /// <summary> The list of features offered in this region. </summary>
+        [WirePath("features")]
+        public IReadOnlyList<SearchServiceFeatureOffering> Features { get; }
+        /// <summary> The list of SKUs offered in this region. </summary>
+        [WirePath("skus")]
+        public IReadOnlyList<SearchServiceSkuOffering> Skus { get; }
     }
 }

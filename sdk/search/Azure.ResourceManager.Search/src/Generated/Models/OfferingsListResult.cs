@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Initializes a new instance of <see cref="OfferingsListResult"/>. </summary>
         internal OfferingsListResult()
         {
-            Value = new ChangeTrackingList<OfferingsByRegion>();
+            Value = new ChangeTrackingList<SearchServiceOfferingsByRegion>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OfferingsListResult"/>. </summary>
         /// <param name="value"> The list of regions with their respective features and SKUs offered. </param>
         /// <param name="nextLink"> The URL to get the next set of offerings, if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OfferingsListResult(IReadOnlyList<OfferingsByRegion> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OfferingsListResult(IReadOnlyList<SearchServiceOfferingsByRegion> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> The list of regions with their respective features and SKUs offered. </summary>
-        public IReadOnlyList<OfferingsByRegion> Value { get; }
+        public IReadOnlyList<SearchServiceOfferingsByRegion> Value { get; }
         /// <summary> The URL to get the next set of offerings, if any. </summary>
         public string NextLink { get; }
     }
