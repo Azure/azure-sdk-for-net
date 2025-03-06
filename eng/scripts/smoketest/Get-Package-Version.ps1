@@ -31,7 +31,7 @@ function Get-SmokeTestPkgProperties
     $azureCorePkgInfo = $newPackages.Where({ $_.Name -eq "Azure.Core"})
     $azureCoreVer = [AzureEngSemanticVersion]::ParseVersionString($azureCorePkgInfo.Version)
     $azureCoreVer.PrereleaseLabel = ""
-    $azureCoreVerBase = $azureCoreVer.ToString() -Replace '-.*',""
+    $azureCoreVerBase = $azureCoreVer.ToString()
 
     # Pick a version of core that is at least one day old but no older then one month old
     # Using at least one day old to ensure all the packages had a chance to build for that day
