@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
-using Azure.AI.Language.Conversations.Authoring.Models;
 using Azure.AI.Language.Conversations.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -23,24 +22,23 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample2_ConversationsAuthoring_ImportAsync
             string projectName = "MyImportedProjectAsync";
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-            var projectMetadata = new CreateProjectDetails(
+            ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
                 projectKind: "Conversation",
-                projectName: projectName,
                 language: "en"
             )
             {
-                Settings = new ProjectSettings(0.7F),
+                Settings = new ConversationAuthoringProjectSettings(0.7F),
                 Multilingual = true,
                 Description = "Trying out CLU with assets"
             };
 
-            var projectAssets = new ConversationExportedProjectAssets();
+            ConversationExportedProjectAsset projectAssets = new ConversationExportedProjectAsset();
 
             projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent1" ));
             projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent2" ));
@@ -71,7 +69,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 Dataset = "dataset1"
             });
 
-            var exportedProject = new ExportedProject(
+            ConversationAuthoringExportedProject exportedProject = new ConversationAuthoringExportedProject(
                 projectFileVersion: "2023-10-01",
                 stringIndexType: StringIndexType.Utf16CodeUnit,
                 metadata: projectMetadata
@@ -80,15 +78,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 Assets = projectAssets
             };
 
-            Operation operation = await authoringClient.ImportAsync(
+            Operation operation = await projectClient.ImportAsync(
                 waitUntil: WaitUntil.Completed,
-                projectName: projectName,
-                body: exportedProject,
-                exportedProjectFormat: ExportedProjectFormat.Conversation
+                exportedProject: exportedProject,
+                exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );
 
              // Extract the operation-location header
-            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 
             Console.WriteLine($"Project import completed with status: {operation.GetRawResponse().Status}");

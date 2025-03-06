@@ -9,27 +9,28 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Microsoft Fabric LakeHouse linked service. </summary>
+    /// <summary> Microsoft Fabric Lakehouse linked service. </summary>
     public partial class LakeHouseLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of <see cref="LakeHouseLinkedService"/>. </summary>
         public LakeHouseLinkedService()
         {
-            Type = "LakeHouse";
+            Type = "Lakehouse";
         }
 
         /// <summary> Initializes a new instance of <see cref="LakeHouseLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="workspaceId"> The ID of Microsoft Fabric workspace. Type: string (or Expression with resultType string). </param>
-        /// <param name="artifactId"> The ID of Microsoft Fabric LakeHouse artifact. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalId"> The ID of the application used to authenticate against Microsoft Fabric LakeHouse. Type: string (or Expression with resultType string). </param>
+        /// <param name="artifactId"> The ID of Microsoft Fabric Lakehouse artifact. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalId"> The ID of the application used to authenticate against Microsoft Fabric Lakehouse. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey">
-        /// The Key of the application used to authenticate against Microsoft Fabric LakeHouse.
+        /// The Key of the application used to authenticate against Microsoft Fabric Lakehouse.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
@@ -41,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
-        internal LakeHouseLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object workspaceId, object artifactId, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, string encryptedCredential, object servicePrincipalCredentialType, SecretBase servicePrincipalCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal LakeHouseLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object workspaceId, object artifactId, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, string encryptedCredential, object servicePrincipalCredentialType, SecretBase servicePrincipalCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             WorkspaceId = workspaceId;
             ArtifactId = artifactId;
@@ -51,17 +52,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             EncryptedCredential = encryptedCredential;
             ServicePrincipalCredentialType = servicePrincipalCredentialType;
             ServicePrincipalCredential = servicePrincipalCredential;
-            Type = type ?? "LakeHouse";
+            Type = type ?? "Lakehouse";
         }
 
         /// <summary> The ID of Microsoft Fabric workspace. Type: string (or Expression with resultType string). </summary>
         public object WorkspaceId { get; set; }
-        /// <summary> The ID of Microsoft Fabric LakeHouse artifact. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The ID of Microsoft Fabric Lakehouse artifact. Type: string (or Expression with resultType string). </summary>
         public object ArtifactId { get; set; }
-        /// <summary> The ID of the application used to authenticate against Microsoft Fabric LakeHouse. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The ID of the application used to authenticate against Microsoft Fabric Lakehouse. Type: string (or Expression with resultType string). </summary>
         public object ServicePrincipalId { get; set; }
         /// <summary>
-        /// The Key of the application used to authenticate against Microsoft Fabric LakeHouse.
+        /// The Key of the application used to authenticate against Microsoft Fabric Lakehouse.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </summary>

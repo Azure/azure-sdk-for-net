@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
-using Azure.AI.Language.Conversations.Authoring.Models;
 using Azure.AI.Language.Conversations.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -21,21 +20,20 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample7_ConversationsAuthoring_CancelTrainingJobAsync
             string projectName = "MyProject";
             string jobId = "YourTrainingJobId";
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-            Operation<TrainingJobResult> cancelOperation = await authoringClient.CancelTrainingJobAsync(
+            Operation<ConversationAuthoringTrainingJobResult> cancelOperation = await projectClient.CancelTrainingJobAsync(
                 waitUntil: WaitUntil.Completed,
-                projectName: projectName,
                 jobId: jobId
             );
 
              // Extract the operation-location header
-            string operationLocation = cancelOperation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            string operationLocation = cancelOperation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 
             Console.WriteLine($"Training job cancellation completed with status: {cancelOperation.GetRawResponse().Status}");

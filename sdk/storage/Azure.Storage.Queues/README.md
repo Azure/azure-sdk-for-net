@@ -158,6 +158,8 @@ QueueClient queueClient = new QueueClient(connectionString, queueName, queueClie
 All Azure Storage Queue service operations will throw a
 [RequestFailedException][RequestFailedException] on failure with
 helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
+If multiple failures occur, an [AggregateException][AggregateException] will be thrown,
+containing each failure instance.
 
 ```C# Snippet:Azure_Storage_Queues_Samples_Sample01a_HelloWorld_Errors
 // We'll need a connection string to your Azure Storage account.
@@ -201,8 +203,6 @@ For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Queues%2FREADME.png)
-
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Queues/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Queues/
@@ -227,3 +227,4 @@ additional questions or comments.
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
+[AggregateException]: https://learn.microsoft.com/dotnet/api/system.aggregateexception?view=net-9.0

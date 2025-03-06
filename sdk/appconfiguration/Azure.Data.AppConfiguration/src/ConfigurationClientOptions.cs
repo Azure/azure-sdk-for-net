@@ -13,6 +13,10 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2023_11_01;
+        private const string AzConfigUsGovCloudHostName = "azconfig.azure.us";
+        private const string AzConfigChinaCloudHostName = "azconfig.azure.cn";
+        private const string AppConfigUsGovCloudHostName = "appconfig.azure.us";
+        private const string AppConfigChinaCloudHostName = "appconfig.azure.cn";
 
         /// <summary>
         /// The versions of the App Configuration service supported by this client library.
@@ -36,6 +40,12 @@ namespace Azure.Data.AppConfiguration
             V2023_11_01 = 2
         }
 
+        /// <summary>
+        /// Gets or sets the Audience to use for authentication with Microsoft Entra. The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="ConfigurationAudience.AzurePublicCloud" /> will be assumed.</value>
+        public ConfigurationAudience? Audience { get; set; }
+
         internal string Version { get; }
 
         /// <summary>
@@ -57,6 +67,24 @@ namespace Azure.Data.AppConfiguration
                 _ => throw new NotSupportedException()
             };
             this.ConfigureLogging();
+        }
+
+        internal string GetDefaultScope(Uri uri)
+        {
+            if (string.IsNullOrEmpty(Audience?.ToString()))
+            {
+                string host = uri.GetComponents(UriComponents.Host, UriFormat.SafeUnescaped);
+                return host switch
+                {
+                    _ when host.EndsWith(AzConfigUsGovCloudHostName, StringComparison.InvariantCultureIgnoreCase) || host.EndsWith(AppConfigUsGovCloudHostName, StringComparison.InvariantCultureIgnoreCase)
+                        => $"{ConfigurationAudience.AzureGovernment}/.default",
+                    _ when host.EndsWith(AzConfigChinaCloudHostName, StringComparison.InvariantCultureIgnoreCase) || host.EndsWith(AppConfigChinaCloudHostName, StringComparison.InvariantCultureIgnoreCase)
+                        => $"{ConfigurationAudience.AzureChina}/.default",
+                    _ => $"{ConfigurationAudience.AzurePublicCloud}/.default"
+                };
+            }
+
+            return $"{Audience}/.default";
         }
     }
 }

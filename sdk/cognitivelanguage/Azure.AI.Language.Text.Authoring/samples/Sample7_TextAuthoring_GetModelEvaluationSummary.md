@@ -9,9 +9,8 @@ To create an `AuthoringClient`, you will need the service endpoint and credentia
 ```C# Snippet:CreateTextAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 ## Get Model Evaluation Summary Synchronously
@@ -21,14 +20,15 @@ To retrieve the evaluation summary of a trained model, call GetModelEvaluationSu
 ```C# Snippet:Sample7_TextAuthoring_GetSingleLabelClassificationEvaluationSummary
 string projectName = "LoanAgreements";
 string trainedModelLabel = "model2";
+TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
 // Get the evaluation summary for the trained model
-Response<EvaluationSummary> evaluationSummaryResponse = authoringClient.GetModelEvaluationSummary(projectName, trainedModelLabel);
+Response<TextAuthoringEvalSummary> evaluationSummaryResponse = trainedModelClient.GetModelEvaluationSummary();
 
-EvaluationSummary evaluationSummary = evaluationSummaryResponse.Value;
+TextAuthoringEvalSummary evaluationSummary = evaluationSummaryResponse.Value;
 
 // Cast to the specific evaluation summary type for custom single label classification
-if (evaluationSummary is CustomSingleLabelClassificationEvaluationSummary singleLabelSummary)
+if (evaluationSummary is CustomSingleLabelClassificationEvalSummary singleLabelSummary)
 {
     Console.WriteLine($"Project Kind: CustomSingleLabelClassification");
     Console.WriteLine($"Evaluation Options: ");
@@ -45,14 +45,21 @@ if (evaluationSummary is CustomSingleLabelClassificationEvaluationSummary single
 
     // Print confusion matrix
     Console.WriteLine("Confusion Matrix:");
-    foreach (var row in singleLabelSummary.CustomSingleLabelClassificationEvaluation.ConfusionMatrix.AdditionalProperties)
+    foreach (var row in singleLabelSummary.CustomSingleLabelClassificationEvaluation.ConfusionMatrix)
     {
         Console.WriteLine($"Row: {row.Key}");
-        var columnData = row.Value.ToObjectFromJson<Dictionary<string, BinaryData>>();
-        foreach (var col in columnData)
+        foreach (var col in row.Value.AdditionalProperties)
         {
-            var values = col.Value.ToObjectFromJson<Dictionary<string, float>>();
-            Console.WriteLine($"    Column: {col.Key}, Normalized Value: {values["normalizedValue"]}, Raw Value: {values["rawValue"]}");
+            try
+            {
+                // Deserialize BinaryData properly
+                var cell = col.Value.ToObject<TextAuthoringConfusionMatrixCell>(new JsonObjectSerializer());
+                Console.WriteLine($"    Column: {col.Key}, Normalized Value: {cell.NormalizedValue}, Raw Value: {cell.RawValue}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"    Error deserializing column {col.Key}: {ex.Message}");
+            }
         }
     }
 

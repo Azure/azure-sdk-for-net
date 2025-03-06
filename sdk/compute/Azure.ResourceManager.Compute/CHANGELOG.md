@@ -1,11 +1,31 @@
 # Release History
 
+## 1.9.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.9.0-beta.1 (2025-02-22)
+
+### Features Added
+
+- Enabled AnyZone Capability preview. 
+
 ## 1.8.0 (2025-02-05)
 
 ### Features Added
 
 - Upgraded api-version tag from 'package-2024-11-03' to 'package-2024-11-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/bf420af156ea90b4226e96582bdb4c9647491ae6/specification/compute/resource-manager/readme.md. 
-    - Added a new property named `IsBootstrapCertificate` to `CloudServiceRoleProfile` class.
+- Added a new property named `IsBootstrapCertificate` to `CloudServiceRoleProfile` class.
+
+### Bugs Fixed
+
+- Change a few parameters in one of the overload of `ArmComputeModelFactory.VirtualMachineScaleSetData` to required to reduce the possibility of ambiguous invocation.
  
 ## 1.7.0 (2024-12-29)
 

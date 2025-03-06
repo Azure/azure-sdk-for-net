@@ -15,7 +15,7 @@ The Azure Event Hubs Processor client library offers samples in two forms.  Comm
 
 The markdown-based samples are ordered by increasing complexity, starting with more basic scenarios to help get started quickly.  Though each sample is independent, they will assume an understanding of the content discussed in earlier samples.
 
-Each of the application samples are intended to be self-contained and focused on illustrating one specific scenario.  The simplest way to begin is to launch the project for debugging in Visual Studio, or your preferred IDE, and provide the Event Hubs connection information in response to the prompts.  Each of these sample applications is accompanied by a dedicated README, offering more specific detail about its hosting needs and operation. 
+Each of the application samples are intended to be self-contained and focused on illustrating one specific scenario.  The simplest way to begin is to launch the project for debugging in Visual Studio, or your preferred IDE, and provide the Event Hubs connection information in response to the prompts.  Each of these sample applications is accompanied by a dedicated README, offering more specific detail about its hosting needs and operation.
 
 ## Getting started
 
@@ -27,11 +27,11 @@ Each of the application samples are intended to be self-contained and focused on
 
 - **Azure Storage blob container:** Checkpoint and ownership data in Azure Storage will be written to blobs in a specific container.  The `EventProcessorClient` requires an existing container and will not implicitly create one to help guard against accidental misconfiguration.  It is recommended that you use a unique container for each Event Hub and consumer group combination.  If you are not familiar with Azure Storage containers, you may wish to refer to the documentation on [managing containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-create?tabs=dotnet).  There, you can find detailed instructions for using .NET, the Azure CLI, or Azure PowerShell to create a container.
 
-- **C# 8.0:** The Azure Event Hubs client library makes use of new features that were introduced in C# 8.0.  In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://learn.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`. 
+- **C# 8.0:** The Azure Event Hubs client library makes use of new features that were introduced in C# 8.0.  In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://learn.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.
 
   Visual Studio users wishing to take full advantage of the C# 8.0 syntax will need to use Visual Studio 2019 or later.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com).  Users of Visual Studio 2017 can take advantage of the C# 8 syntax by making use of the [Microsoft.Net.Compilers NuGet package](https://www.nuget.org/packages/Microsoft.Net.Compilers/) and setting the language version, though the editing experience may not be ideal.
 
-  You can still use the library with previous C# language versions, but will need to manage asynchronous enumerable and asynchronous disposable members manually rather than benefiting from the new syntax.  You may still target any framework version supported by your .NET Core SDK, including earlier versions of .NET Core or the .NET framework.  For more information, see: [how to specify target frameworks](https://learn.microsoft.com/dotnet/standard/frameworks#how-to-specify-target-frameworks).  
+  You can still use the library with previous C# language versions, but will need to manage asynchronous enumerable and asynchronous disposable members manually rather than benefiting from the new syntax.  You may still target any framework version supported by your .NET Core SDK, including earlier versions of .NET Core or the .NET framework.  For more information, see: [how to specify target frameworks](https://learn.microsoft.com/dotnet/standard/frameworks#how-to-specify-target-frameworks).
 
 To quickly create a basic set of resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
 
@@ -57,34 +57,34 @@ For the event processor client to make use of Azure Storage blobs for checkpoint
 
 ## Common samples
 
-- [Hello world](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample01_HelloWorld.md)  
-  An introduction to the Event Processor client, illustrating how to create the client and perform basic operations.  
-  
-- [Event Processor Configuration](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample02_EventProcessorConfiguration.md)  
-  A demonstration of the options for customizing the Event Processor client configuration, such as specifying a proxy. 
-  
-- [Event Processor Handlers](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample03_EventProcessorHandlers.md)  
+- [Hello world](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample01_HelloWorld.md)
+  An introduction to the Event Processor client, illustrating how to create the client and perform basic operations.
+
+- [Event Processor Configuration](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample02_EventProcessorConfiguration.md)
+  A demonstration of the options for customizing the Event Processor client configuration, such as specifying a proxy.
+
+- [Event Processor Handlers](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample03_EventProcessorHandlers.md)
   A discussion of using event handlers for interacting with the Event Processor client as it is running, illustrating the available events and common usage scenarios like processing events, detecting errors, and specifying a position to begin reading events if a checkpoint does not exist.
-  
-- [Processing Events](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample04_ProcessingEvents.md)  
-  A deep dive into processing events, handling errors, and creating checkpoints using the Event Processor client. 
-  
-- [Identity and Shared Access Credentials](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample05_IdentityAndSharedAccessCredentials.md)  
+
+- [Processing Events](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample04_ProcessingEvents.md)
+  A deep dive into processing events, handling errors, and creating checkpoints using the Event Processor client.
+
+- [Identity and Shared Access Credentials](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample05_IdentityAndSharedAccessCredentials.md)
   A discussion of the different types of authorization supported, focusing on identity-based credentials for Azure Active Directory and use the of shared access signatures and keys.
-  
-- [Requesting Azure Storage Service Versions](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample06_RequestingStorageServiceVersions.md)  
+
+- [Requesting Azure Storage Service Versions](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample06_RequestingStorageServiceVersions.md)
   An illustration of configuring the Blob Storage client to use a specific version of the service, rather than the default (latest).  This is useful when the Azure host environment that you are targeting supports a different version of Blob Storage service than is available in the Azure public cloud, such as Azure Stack Hub 2002.
 
-- [Processing Events in Batches](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample07_BatchProcessing.md)  
+- [Processing Events in Batches](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample07_BatchProcessing.md)
   A demonstration of how events can be processed in batches rather than individually.
-  
-- [Mocking Client Types](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample08_MockingClientTypes.md)  
+
+- [Mocking Client Types](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample08_MockingClientTypes.md)
   A demonstration of how to mock the types in the Event Hubs Processor client library, focusing on common application scenarios.
 
-- [Using the Event Processor with an ASP.NET hosted service](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/aspnet-hosted-service/README.md)  
+- [Using the Event Processor with an ASP.NET hosted service](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/aspnet-hosted-service/README.md)
   An example of how to create and configure the Event Processor client in an ASP.NET context as a hosted service implementation.
 
-## Contributing  
+## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
 
@@ -93,5 +93,3 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 Please see our [contributing guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs.Processor/samples/%2FREADME.png)

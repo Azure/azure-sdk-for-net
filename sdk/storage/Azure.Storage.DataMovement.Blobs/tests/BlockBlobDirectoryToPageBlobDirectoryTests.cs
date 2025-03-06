@@ -39,7 +39,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Stream contents = null,
             TransferPropertiesTestType propertiesTestType = TransferPropertiesTestType.Default,
             CancellationToken cancellationToken = default)
-            => CreateBlockBlobAsync(container, objectName, contents, cancellationToken);
+            => CreateBlockBlobAsync(container, objectLength, objectName, contents, cancellationToken);
 
         protected override StorageResourceContainer GetDestinationStorageResourceContainer(
             BlobContainerClient containerClient,
@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
             return new BlobStorageResourceContainer(containerClient, new BlobStorageResourceContainerOptions()
             {
-                BlobDirectoryPrefix = directoryPath,
+                BlobPrefix = directoryPath,
                 BlobType = BlobType.Page,
                 BlobOptions = options
             });
@@ -76,7 +76,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             => new BlobStorageResourceContainer(
                 containerClient,
                 new BlobStorageResourceContainerOptions() {
-                    BlobDirectoryPrefix = directoryPath,
+                    BlobPrefix = directoryPath,
                     BlobType = BlobType.Block });
 
         protected internal override PageBlobClient GetDestinationBlob(BlobContainerClient containerClient, string blobName)

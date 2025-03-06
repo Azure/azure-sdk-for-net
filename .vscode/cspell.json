@@ -1449,7 +1449,8 @@
         "Ename",
         "Evalue",
         "Twilio",
-        "Soql"
+        "Soql",
+        "Tswtz"
       ]
     },
     {
@@ -1637,6 +1638,15 @@
       "filename": "**/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/api/*.cs",
       "words": [
         "prebuilts"
+      ]
+    },
+    {
+      "filename": "**/sdk/iotoperations/Azure.ResourceManager.IotOperations/api/*.cs",
+      "words": [
+        "sasl",
+        "Sasl",
+        "Acks",
+        "acks"
       ]
     }
   ],

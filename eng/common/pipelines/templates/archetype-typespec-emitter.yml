@@ -172,14 +172,15 @@ extends:
 
           - ${{ if parameters.PublishPublic }}:
             # publish to npmjs.org using ESRP
-            - task: EsrpRelease@7
+            - task: EsrpRelease@9
               inputs:
                 displayName: Publish to npmjs.org
-                ConnectedServiceName: Azure SDK Engineering System
+                ConnectedServiceName: Azure SDK PME Managed Identity
                 ClientId: 5f81938c-2544-4f1f-9251-dd9de5b8a81b
-                KeyVaultName: AzureSDKEngKeyVault
-                AuthCertName: azure-sdk-esrp-release-auth-certificate
-                SignCertName: azure-sdk-esrp-release-sign-certificate
+                DomainTenantId: 975f013f-7f24-47e8-a7d3-abc4752bf346
+                UseManagedIdentity: true
+                KeyVaultName: kv-azuresdk-codesign
+                SignCertName: azure-sdk-esrp-release-certificate
                 Intent: PackageDistribution
                 ContentType: npm
                 FolderLocation: $(buildArtifactsPath)/packages
@@ -187,7 +188,6 @@ extends:
                 Approvers: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
                 ServiceEndpointUrl: https://api.esrp.microsoft.com
                 MainPublisher: ESRPRELPACMANTEST
-                DomainTenantId: 72f988bf-86f1-41af-91ab-2d7cd011db47
 
           - task: PowerShell@2
             displayName: Create emitter-package.json
@@ -447,3 +447,14 @@ extends:
             parameters:
               artifactName: test_artifacts_$(System.JobName)
               artifactPath: $(Build.ArtifactStagingDirectory)
+
+          - ${{ if and(eq(variables['System.TeamProject'], 'internal'), ne(variables['Build.Reason'], 'PullRequest')) }}:
+              - task: AzureCLI@2
+                displayName: "Upload Spector Standard Coverage Report"
+                condition: and(ne(variables['SpectorName'], ''), succeeded())
+                inputs:
+                  azureSubscription: "TypeSpec Storage"
+                  scriptType: "bash"
+                  scriptLocation: "inlineScript"
+                  inlineScript: npx tsp-spector upload-coverage --coverageFile $(Build.ArtifactStagingDirectory)/tsp-spector-coverage-azure.json --generatorName @azure-typespec/$(SpectorName) --storageAccountName typespec --containerName coverages --generatorVersion $(node -p -e "require('./package.json').version") --generatorMode azure
+                  workingDirectory: $(Build.SourcesDirectory)/eng/packages/$(SpectorName)

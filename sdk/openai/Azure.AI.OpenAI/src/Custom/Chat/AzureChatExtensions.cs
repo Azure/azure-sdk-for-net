@@ -16,8 +16,8 @@ public static partial class AzureChatExtensions
     {
         options.SerializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
 
-        IList<ChatDataSource> existingSources
-            = AdditionalPropertyHelpers.GetAdditionalListProperty<ChatDataSource>(
+        IList<ChatDataSource> existingSources =
+            AdditionalPropertyHelpers.GetAdditionalPropertyAsListOfChatDataSource(
                 options.SerializedAdditionalRawData,
                 "data_sources")
             ?? new ChangeTrackingList<ChatDataSource>();
@@ -31,7 +31,7 @@ public static partial class AzureChatExtensions
     [Experimental("AOAI001")]
     public static IReadOnlyList<ChatDataSource> GetDataSources(this ChatCompletionOptions options)
     {
-        return AdditionalPropertyHelpers.GetAdditionalListProperty<ChatDataSource>(
+        return AdditionalPropertyHelpers.GetAdditionalPropertyAsListOfChatDataSource(
             options.SerializedAdditionalRawData,
             "data_sources") as IReadOnlyList<ChatDataSource>;
     }
@@ -42,6 +42,7 @@ public static partial class AzureChatExtensions
         if (newPropertyEnabled)
         {
             // Blocking serialization of max_tokens via dictionary acts as a signal to skip pre-serialization fixup
+            options.SerializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             AdditionalPropertyHelpers.SetEmptySentinelValue(options.SerializedAdditionalRawData, "max_tokens");
         }
         else
@@ -58,7 +59,7 @@ public static partial class AzureChatExtensions
     [Experimental("AOAI001")]
     public static RequestContentFilterResult GetRequestContentFilterResult(this ChatCompletion chatCompletion)
     {
-        return AdditionalPropertyHelpers.GetAdditionalListProperty<RequestContentFilterResult>(
+        return AdditionalPropertyHelpers.GetAdditionalPropertyAsListOfRequestContentFilterResult(
             chatCompletion.SerializedAdditionalRawData,
             "prompt_filter_results")?[0];
     }
@@ -66,7 +67,7 @@ public static partial class AzureChatExtensions
     [Experimental("AOAI001")]
     public static ResponseContentFilterResult GetResponseContentFilterResult(this ChatCompletion chatCompletion)
     {
-        return AdditionalPropertyHelpers.GetAdditionalProperty<ResponseContentFilterResult>(
+        return AdditionalPropertyHelpers.GetAdditionalPropertyAsResponseContentFilterResult(
             chatCompletion.Choices?[0]?.SerializedAdditionalRawData,
             "content_filter_results");
     }
@@ -74,7 +75,7 @@ public static partial class AzureChatExtensions
     [Experimental("AOAI001")]
     public static ChatMessageContext GetMessageContext(this ChatCompletion chatCompletion)
     {
-        return AdditionalPropertyHelpers.GetAdditionalProperty<ChatMessageContext>(
+        return AdditionalPropertyHelpers.GetAdditionalPropertyAsChatMessageContext(
             chatCompletion.Choices?[0]?.Message?.SerializedAdditionalRawData,
             "context");
     }
@@ -84,7 +85,7 @@ public static partial class AzureChatExtensions
     {
         if (chatUpdate.Choices?.Count > 0)
         {
-            return AdditionalPropertyHelpers.GetAdditionalProperty<ChatMessageContext>(
+            return AdditionalPropertyHelpers.GetAdditionalPropertyAsChatMessageContext(
                 chatUpdate.Choices[0].Delta?.SerializedAdditionalRawData,
                 "context");
         }
@@ -94,7 +95,7 @@ public static partial class AzureChatExtensions
     [Experimental("AOAI001")]
     public static RequestContentFilterResult GetRequestContentFilterResult(this StreamingChatCompletionUpdate chatUpdate)
     {
-        return AdditionalPropertyHelpers.GetAdditionalListProperty<RequestContentFilterResult>(
+        return AdditionalPropertyHelpers.GetAdditionalPropertyAsListOfRequestContentFilterResult(
             chatUpdate.SerializedAdditionalRawData,
             "prompt_filter_results")?[0];
     }
@@ -102,8 +103,27 @@ public static partial class AzureChatExtensions
     [Experimental("AOAI001")]
     public static ResponseContentFilterResult GetResponseContentFilterResult(this StreamingChatCompletionUpdate chatUpdate)
     {
-        return AdditionalPropertyHelpers.GetAdditionalProperty<ResponseContentFilterResult>(
+        return AdditionalPropertyHelpers.GetAdditionalPropertyAsResponseContentFilterResult(
             chatUpdate?.Choices?.ElementAtOrDefault(0)?.SerializedAdditionalRawData,
             "content_filter_results");
+    }
+
+    [Experimental("AOAI001")]
+    public static void SetUserSecurityContext(this ChatCompletionOptions options, UserSecurityContext userSecurityContext)
+    {
+        options.SerializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
+
+        AdditionalPropertyHelpers.SetAdditionalProperty(
+            options.SerializedAdditionalRawData,
+            "user_security_context",
+            userSecurityContext);
+    }
+
+    [Experimental("AOAI001")]
+    public static UserSecurityContext GetUserSecurityContext(this ChatCompletionOptions options)
+    {
+        return AdditionalPropertyHelpers.GetAdditionalPropertyAsUserSecurityContext(
+            options.SerializedAdditionalRawData,
+            "user_security_context");
     }
 }
