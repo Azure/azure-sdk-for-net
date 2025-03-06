@@ -55,12 +55,11 @@ public class RecognizedPhrase
     /// <summary> The offset in milliseconds of the phrase. </summary>
     public long offsetMilliseconds { get; set; }
     /// <summary> The nBest of the transcribed phrase. </summary>
-    public Best[] nBest { get; set; }
+    public BestPhrase[] nBest { get; set; }
 }
 
-#pragma warning disable AZC0012 // Single word class names are too generic (Justification: Needed for the deserialization of a response of an existing service)
-/// <summary> A combined recognized phrase of a transcription file </summary>
-public class Best
+/// <summary> Content of a recognized phrase of a transcription file </summary>
+public class BestPhrase
 {
     /// <summary> The confidence for the transcribed phrase. </summary>
     public float confidence { get; set; }
