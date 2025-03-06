@@ -174,7 +174,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeObservedString(document.RootElement, options);
                     }
                 default:
@@ -188,7 +188,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new ObservedString FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeObservedString(document.RootElement);
         }
 
