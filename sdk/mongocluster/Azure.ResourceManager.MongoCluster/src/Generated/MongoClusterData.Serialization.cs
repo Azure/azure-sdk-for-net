@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMongoClusterData(document.RootElement, options);
                     }
                 default:
