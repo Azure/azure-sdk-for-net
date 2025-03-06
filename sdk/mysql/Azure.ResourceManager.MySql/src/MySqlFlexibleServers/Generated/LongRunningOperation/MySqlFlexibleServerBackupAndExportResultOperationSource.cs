@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     {
         MySqlFlexibleServerBackupAndExportResult IOperationSource<MySqlFlexibleServerBackupAndExportResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return MySqlFlexibleServerBackupAndExportResult.DeserializeMySqlFlexibleServerBackupAndExportResult(document.RootElement);
         }
 
         async ValueTask<MySqlFlexibleServerBackupAndExportResult> IOperationSource<MySqlFlexibleServerBackupAndExportResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return MySqlFlexibleServerBackupAndExportResult.DeserializeMySqlFlexibleServerBackupAndExportResult(document.RootElement);
         }
     }

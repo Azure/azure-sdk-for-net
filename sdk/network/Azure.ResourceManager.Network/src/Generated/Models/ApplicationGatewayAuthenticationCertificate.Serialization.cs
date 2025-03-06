@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Data);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Data))
+                using (JsonDocument document = JsonDocument.Parse(Data, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeApplicationGatewayAuthenticationCertificate(document.RootElement, options);
                     }
                 default:

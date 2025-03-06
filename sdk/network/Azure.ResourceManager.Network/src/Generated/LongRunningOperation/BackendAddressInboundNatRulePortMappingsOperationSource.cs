@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Network
     {
         BackendAddressInboundNatRulePortMappings IOperationSource<BackendAddressInboundNatRulePortMappings>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return BackendAddressInboundNatRulePortMappings.DeserializeBackendAddressInboundNatRulePortMappings(document.RootElement);
         }
 
         async ValueTask<BackendAddressInboundNatRulePortMappings> IOperationSource<BackendAddressInboundNatRulePortMappings>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return BackendAddressInboundNatRulePortMappings.DeserializeBackendAddressInboundNatRulePortMappings(document.RootElement);
         }
     }

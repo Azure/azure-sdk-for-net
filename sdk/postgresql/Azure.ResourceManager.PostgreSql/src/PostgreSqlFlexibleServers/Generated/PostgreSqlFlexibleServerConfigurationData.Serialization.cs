@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePostgreSqlFlexibleServerConfigurationData(document.RootElement, options);
                     }
                 default:

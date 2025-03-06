@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 202:
                     {
                         OperationalInsightsWorkspacePurgeResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OperationalInsightsWorkspacePurgeResult.DeserializeOperationalInsightsWorkspacePurgeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 202:
                     {
                         OperationalInsightsWorkspacePurgeResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OperationalInsightsWorkspacePurgeResult.DeserializeOperationalInsightsWorkspacePurgeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         OperationalInsightsWorkspacePurgeStatusResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OperationalInsightsWorkspacePurgeStatusResult.DeserializeOperationalInsightsWorkspacePurgeStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         OperationalInsightsWorkspacePurgeStatusResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OperationalInsightsWorkspacePurgeStatusResult.DeserializeOperationalInsightsWorkspacePurgeStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

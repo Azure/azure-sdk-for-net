@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlFlexibleServerFirewallRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlFlexibleServerFirewallRuleData.DeserializePostgreSqlFlexibleServerFirewallRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlFlexibleServerFirewallRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlFlexibleServerFirewallRuleData.DeserializePostgreSqlFlexibleServerFirewallRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlFlexibleServerFirewallRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlFlexibleServerFirewallRuleListResult.DeserializePostgreSqlFlexibleServerFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlFlexibleServerFirewallRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlFlexibleServerFirewallRuleListResult.DeserializePostgreSqlFlexibleServerFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlFlexibleServerFirewallRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlFlexibleServerFirewallRuleListResult.DeserializePostgreSqlFlexibleServerFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlFlexibleServerFirewallRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlFlexibleServerFirewallRuleListResult.DeserializePostgreSqlFlexibleServerFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

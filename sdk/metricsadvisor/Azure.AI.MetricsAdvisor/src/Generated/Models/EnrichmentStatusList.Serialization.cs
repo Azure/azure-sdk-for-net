@@ -49,7 +49,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static EnrichmentStatusList FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeEnrichmentStatusList(document.RootElement);
         }
     }

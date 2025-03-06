@@ -118,7 +118,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 case 200:
                     {
                         CollectionConfigurationInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CollectionConfigurationInfo.DeserializeCollectionConfigurationInfo(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -159,7 +159,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 case 200:
                     {
                         CollectionConfigurationInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CollectionConfigurationInfo.DeserializeCollectionConfigurationInfo(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -230,7 +230,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 case 200:
                     {
                         CollectionConfigurationInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CollectionConfigurationInfo.DeserializeCollectionConfigurationInfo(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -266,7 +266,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 case 200:
                     {
                         CollectionConfigurationInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CollectionConfigurationInfo.DeserializeCollectionConfigurationInfo(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }

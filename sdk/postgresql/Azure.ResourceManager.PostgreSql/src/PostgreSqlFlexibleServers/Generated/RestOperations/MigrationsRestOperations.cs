@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 201:
                     {
                         PostgreSqlMigrationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 201:
                     {
                         PostgreSqlMigrationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlMigrationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlMigrationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlMigrationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlMigrationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlMigrationResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlMigrationResourceListResult.DeserializePostgreSqlMigrationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlMigrationResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlMigrationResourceListResult.DeserializePostgreSqlMigrationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlMigrationResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlMigrationResourceListResult.DeserializePostgreSqlMigrationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlMigrationResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlMigrationResourceListResult.DeserializePostgreSqlMigrationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

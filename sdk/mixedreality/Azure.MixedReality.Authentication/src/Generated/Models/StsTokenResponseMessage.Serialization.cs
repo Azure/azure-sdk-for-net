@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.MixedReality.Common;
 
 namespace Azure.MixedReality.Authentication
 {
@@ -33,7 +34,7 @@ namespace Azure.MixedReality.Authentication
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static StsTokenResponseMessage FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeStsTokenResponseMessage(document.RootElement);
         }
     }

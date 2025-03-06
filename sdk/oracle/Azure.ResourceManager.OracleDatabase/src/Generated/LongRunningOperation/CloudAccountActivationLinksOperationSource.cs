@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.OracleDatabase
     {
         CloudAccountActivationLinks IOperationSource<CloudAccountActivationLinks>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return CloudAccountActivationLinks.DeserializeCloudAccountActivationLinks(document.RootElement);
         }
 
         async ValueTask<CloudAccountActivationLinks> IOperationSource<CloudAccountActivationLinks>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return CloudAccountActivationLinks.DeserializeCloudAccountActivationLinks(document.RootElement);
         }
     }
