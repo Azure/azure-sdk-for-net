@@ -3,7 +3,7 @@
 
 // This is an ASP.NET Core test app used in unit tests.
 // Unit Tests are expected to define their own routes and middleware.
-#if !NETFRAMEWORK
+#if NET
 using Microsoft.AspNetCore.Builder;
 
 namespace Azure.Monitor.AspNetCoreTestApp
