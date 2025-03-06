@@ -61,7 +61,9 @@ namespace Azure.Identity
         {
             AuthenticationResult result;
 
-            var availableSource = ManagedIdentityApplication.GetManagedIdentitySource();
+            MSAL.ManagedIdentitySource availableSource = ManagedIdentityApplication.GetManagedIdentitySource();
+
+            AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(availableSource.ToString(), _options.ManagedIdentityId.ToString());
 
             // If the source is DefaultToImds and the credential is chained, we should probe the IMDS endpoint first.
             if (availableSource == MSAL.ManagedIdentitySource.DefaultToImds && _isChainedCredential)

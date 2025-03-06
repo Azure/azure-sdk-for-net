@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Type of quota rule. </summary>
+    /// <summary> Type of quota. </summary>
     public readonly partial struct NetAppVolumeQuotaType : IEquatable<NetAppVolumeQuotaType>
     {
         private readonly string _value;

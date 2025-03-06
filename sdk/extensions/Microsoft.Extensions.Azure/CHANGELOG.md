@@ -4,9 +4,13 @@
 
 ### Features Added
 
+- Added support for [AzurePipelinesCredential](https://learn.microsoft.com/dotnet/api/azure.identity.azurepipelinescredential?view=azure-dotnet) in the client factory by specifying configuration item `credential` as "azurepipelinescredential" and providing each credential parameter as a named configuration item.
+
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed an issue when creating clients from configuration using the ASP.NET Core integration testing library, `Microsoft.AspNetCore.Mvc.Testing`.  Due to a difference in how an section value is represented, logic was interpreting a setting with a child object as an empty connection string value.  The child object is now properly parsed and applied for client construction.  ([#48368](https://github.com/Azure/azure-sdk-for-net/issues/48368))
 
 ### Other Changes
 

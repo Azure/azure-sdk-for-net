@@ -52,3 +52,12 @@ extends:
     Artifacts:
     - name: Azure.Template
       safeName: AzureTemplate
+      triggeringPaths:
+      - /.config
+      - /.devcontainer
+      - /.github
+      - /.vscode
+      - /common
+      - /doc
+      - /eng
+      - /samples

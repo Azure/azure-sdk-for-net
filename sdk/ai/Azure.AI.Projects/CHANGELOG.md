@@ -1,16 +1,23 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
+
+* Added `ConnectionProvider` abstraction in `AIProjectClient` to enable seamless connectivity with Azure OpenAI, Inference, and Search SDKs.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
-* Fixed deserialization failure for AzureBlobStorage connection [issue](https://github.com/Azure/azure-sdk-for-net/issues/47874)
-
 ### Other Changes
+
+## 1.0.0-beta.4 (2025-02-28)
+
+### Bugs Fixed
+
+* Fixed deserialization failure for AzureBlobStorage connection [issue](https://github.com/Azure/azure-sdk-for-net/issues/47874)
+* Fixed a bug on deserialization of RunStepDeltaFileSearchToolCall [issue](https://github.com/Azure/azure-sdk-for-net/issues/48333)
 
 ## 1.0.0-beta.3 (2025-01-22)
 

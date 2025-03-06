@@ -144,7 +144,7 @@ namespace Azure.Search.Documents
         internal string HighlightFieldsRaw
         {
             get => HighlightFields.CommaJoin();
-            set => HighlightFields = SearchExtensions.CommaSplit(value);
+            set => HighlightFields = InternalSearchExtensions.CommaSplit(value);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Azure.Search.Documents
         internal string SearchFieldsRaw
         {
             get => SearchFields.CommaJoin();
-            set => SearchFields = SearchExtensions.CommaSplit(value);
+            set => SearchFields = InternalSearchExtensions.CommaSplit(value);
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Azure.Search.Documents
         internal string SelectRaw
         {
             get => Select.CommaJoin();
-            set => Select = SearchExtensions.CommaSplit(value);
+            set => Select = InternalSearchExtensions.CommaSplit(value);
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Azure.Search.Documents
         internal string OrderByRaw
         {
             get => OrderBy.CommaJoin();
-            set => OrderBy = SearchExtensions.CommaSplit(value);
+            set => OrderBy = InternalSearchExtensions.CommaSplit(value);
         }
 
         /// <summary>
