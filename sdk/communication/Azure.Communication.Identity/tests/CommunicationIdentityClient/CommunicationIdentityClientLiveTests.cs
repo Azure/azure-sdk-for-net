@@ -531,18 +531,18 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        public async Task CreateOrGetUserWithExternalIdShouldFirstCreateThenGet()
+        public async Task CreateUserWithExternalIdShouldFirstCreateThenGet()
         {
             try
             {
                 var externalId = Guid.NewGuid().ToString();
                 CommunicationIdentityClient client = CreateClient();
-                Response<CommunicationUserIdentifier> createResponse = await client.CreateOrGetUserAsync(externalId);
+                Response<CommunicationUserIdentifier> createResponse = await client.CreateUserAsync(externalId);
 
                 Assert.AreEqual((int)HttpStatusCode.Created, createResponse.GetRawResponse().Status);
                 Assert.IsNotNull(createResponse.Value.Id);
 
-                Response<CommunicationUserIdentifier> getResponse = await client.CreateOrGetUserAsync(externalId);
+                Response<CommunicationUserIdentifier> getResponse = await client.CreateUserAsync(externalId);
                 Assert.AreEqual((int)HttpStatusCode.OK, getResponse.GetRawResponse().Status);
                 Assert.AreEqual(createResponse.Value.Id, getResponse.Value.Id);
             }
@@ -559,16 +559,16 @@ namespace Azure.Communication.Identity.Tests
             {
                 var externalId = Guid.NewGuid().ToString();
                 CommunicationIdentityClient client = CreateClient();
-                Response<CommunicationUserIdentifierAndToken> createResponse = await client.CreateOrGetUserAndTokenAsync(externalId,
+                Response<CommunicationUserIdentifierAndToken> createResponse = await client.CreateUserAndTokenAsync(externalId,
                     new List<CommunicationTokenScope> { CommunicationTokenScope.VoIP },
                     TimeSpan.FromHours(2));
                 createResponse.GetRawResponse();
                 Assert.AreEqual((int)HttpStatusCode.Created, createResponse.GetRawResponse().Status);
                 Assert.IsNotNull(createResponse.Value.User);
 
-                Response<CommunicationIdentityResult> getResponse = await client.GetUserAsync(createResponse.Value.User);
+                Response<CommunicationIdentity> getResponse = await client.GetUserAsync(createResponse.Value.User);
                 Assert.AreEqual((int)HttpStatusCode.OK, getResponse.GetRawResponse().Status);
-                Assert.AreEqual(createResponse.Value.User.Id, getResponse.Value.Id);
+                Assert.AreEqual(createResponse.Value.User.Id, getResponse.Value.User.Id);
                 Assert.AreEqual(externalId, getResponse.Value.ExternalId);
                 Assert.IsNotNull(getResponse.Value.LastTokenIssuedAt);
             }

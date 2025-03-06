@@ -52,7 +52,7 @@ The `CommunicationIdentityClient` allows you to create users with an associated 
 
 ```C# Snippet:CreateCommunicationUserWithExternalIdAsync
 var externalId = "alice@contoso.com";
-Response<CommunicationUserIdentifier> userResponse = await client.CreateOrGetUserAsync(externalId);
+Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(externalId);
 CommunicationUserIdentifier user = userResponse.Value;
 Console.WriteLine($"User id: {user.Id}");
 ```
@@ -65,12 +65,12 @@ The CommunicationIdentityClient can be used to retrieve details about a user. Th
 
 ```C# Snippet:GetUserAsync
 var externalId = "alice@contoso.com";
-Response<CommunicationUserIdentifier> userResponse = await client.CreateOrGetUserAsync(externalId);
+Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(externalId);
 CommunicationUserIdentifier user = userResponse.Value;
 var userDetails = await client.GetUserAsync(user);
-Console.WriteLine($"User id: {userDetails.Id}");
-Console.WriteLine($"External id: {userDetails.ExternalId}");
-Console.WriteLine($"Last token issued at: {userDetails.LastTokenIssuedAt}");
+Console.WriteLine($"User id: {userDetails.Value.User.Id}");
+Console.WriteLine($"External id: {userDetails.Value.ExternalId}");
+Console.WriteLine($"Last token issued at: {userDetails.Value.LastTokenIssuedAt}");
 ```
 
 ## Generate a user token
