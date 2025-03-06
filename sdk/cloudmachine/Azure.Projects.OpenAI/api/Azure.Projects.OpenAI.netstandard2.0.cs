@@ -8,8 +8,8 @@ namespace Azure.AI.OpenAI
         public static string AsText(this OpenAI.Chat.ChatCompletion completion) { throw null; }
         public static string AsText(this OpenAI.Chat.ChatMessageContent content) { throw null; }
         public static string AsText(this System.ClientModel.ClientResult<OpenAI.Chat.ChatCompletion> completionResult) { throw null; }
-        public static OpenAI.Chat.ChatClient GetAzureOpenAIChatClient(this System.ClientModel.Primitives.ConnectionProvider provider, string? deploymentName = null) { throw null; }
-        public static OpenAI.Embeddings.EmbeddingClient GetAzureOpenAIEmbeddingClient(this System.ClientModel.Primitives.ConnectionProvider provider, string? deploymentName = null) { throw null; }
+        public static OpenAI.Chat.ChatClient GetOpenAIChatClient(this System.ClientModel.Primitives.ConnectionProvider provider, string? deploymentName = null) { throw null; }
+        public static OpenAI.Embeddings.EmbeddingClient GetOpenAIEmbeddingClient(this System.ClientModel.Primitives.ConnectionProvider provider, string? deploymentName = null) { throw null; }
         public static void Trim(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages) { }
     }
 }
