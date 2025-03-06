@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Mgmt.Models;
 using Azure.Generator.Providers;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
@@ -36,7 +35,7 @@ namespace Azure.Generator.Tests.TestHelpers
             ClientResponseApi? clientResponseApi = null,
             ClientPipelineApi? clientPipelineApi = null,
             HttpMessageApi? httpMessageApi = null,
-            Func<InputClient, string, string, ModelProvider, string, bool, ResourceClientProvider>? createResourceCore = null)
+            Func<InputClient, ResourceClientProvider>? createResourceCore = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
             IReadOnlyList<InputEnumType> inputNsEnums = inputEnums?.Invoke() ?? [];
@@ -79,10 +78,10 @@ namespace Azure.Generator.Tests.TestHelpers
             if (createResourceCore is not null)
             {
                 Mock<AzureOutputLibrary> mockOutputLibrary = new Mock<AzureOutputLibrary>() { CallBase = true };
-                mockOutputLibrary.Setup(p => p.CreateResourceCore(It.IsAny<InputClient>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ModelProvider>(), It.IsAny<string>(), It.IsAny<bool>())).Returns(
-                    (InputClient inputClient, string requestPath, string schemaName, ModelProvider resourceData, string resourceType, bool isSingleton) =>
+                mockOutputLibrary.Setup(p => p.CreateResourceCore(It.IsAny<InputClient>())).Returns(
+                    (InputClient inputClient) =>
                     {
-                        return createResourceCore(inputClient, requestPath, schemaName, resourceData, resourceType, isSingleton);
+                        return createResourceCore(inputClient);
                     });
                 mockPluginInstance.Setup(p => p.OutputLibrary).Returns(mockOutputLibrary.Object);
             }

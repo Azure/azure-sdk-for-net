@@ -4,12 +4,24 @@
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Azure.Generator
 {
     internal class ResourceVisitor : ScmLibraryVisitor
     {
+        private HashSet<string> _resourceNames;
+
+        public ResourceVisitor()
+        {
+            _resourceNames = AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients
+                .Where(client => client.Decorators.Any(d => d.Name.Equals("Azure.ResourceManager.@armProviderNamespace")))
+                .Select(client => client.Operations.First(operation => operation.Decorators.Any(d => d.Name.Equals("Azure.ResourceManager.@armResourceRead")))
+                    .Responses.First(r => r.BodyType != null).BodyType!.Name).ToHashSet();
+        }
+
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
         {
             if (type is not null)
@@ -25,9 +37,9 @@ namespace Azure.Generator
             return type;
         }
 
-        private static void TransformResource(TypeProvider type)
+        private void TransformResource(TypeProvider type)
         {
-            if (type is ModelProvider && AzureClientPlugin.Instance.ResourceBuilder.IsResource(type.Name))
+            if (type is ModelProvider && _resourceNames.Contains(type.Name))
             {
                 type.Update(relativeFilePath: TransformRelativeFilePath(type));
                 type.Type.Update(TransformName(type));

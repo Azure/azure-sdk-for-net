@@ -30,14 +30,6 @@ public class AzureClientPlugin : ScmCodeModelPlugin
     /// <inheritdoc/>
     public override AzureOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
 
-    // TODO: remove these once we can get resource hierarchy natively from TypeSpec input
-    private ResourceDetection? _resourceDetection;
-    internal ResourceDetection ResourceDetection => _resourceDetection ??= new();
-
-    private ResourceBuilder? _resourceBuilder;
-    /// <inheritdoc/>
-    internal ResourceBuilder ResourceBuilder => _resourceBuilder ??= new();
-
     /// <summary>
     /// The Azure client plugin to generate the Azure client SDK.
     /// </summary>

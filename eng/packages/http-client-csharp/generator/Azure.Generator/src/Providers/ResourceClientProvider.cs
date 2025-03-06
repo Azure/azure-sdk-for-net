@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -31,6 +32,10 @@ namespace Azure.Generator.Providers
     /// </summary>
     internal class ResourceClientProvider : TypeProvider
     {
+        private const string ResourceGroupScopePrefix = "/subscriptions/{subscriptionId}/resourceGroups";
+        private const string SubscriptionScopePrefix = "/subscriptions";
+        private const string TenantScopePrefix = "/tenants";
+
         private IReadOnlyCollection<InputOperation> _resourceOperations;
         private ClientProvider _clientProvider;
         private readonly IReadOnlyList<string> _contextualParameters;
@@ -41,19 +46,52 @@ namespace Azure.Generator.Providers
         private FieldProvider _restClientField;
         private FieldProvider _resourcetypeField;
 
-        public ResourceClientProvider(InputClient inputClient, string requestPath, string specName, ModelProvider resourceData, string resrouceType, bool isSingleton)
+        public ResourceClientProvider(InputClient inputClient)
         {
-            _resourceOperations = inputClient.Operations.Where(operation => operation.GetHttpPath().SerializedPath.Equals(requestPath)).ToList();
-            SpecName = specName;
-            ResourceData = resourceData;
-            _isSingleton = isSingleton;
+            var getResourceOperation = inputClient.Operations.First(operation => operation.Decorators.Any(d => d.Name.Equals("Azure.ResourceManager.@armResourceRead")));
+            var resourceModel = (InputModelType)getResourceOperation.Responses.First(r => r.BodyType != null).BodyType!;
+            var requestPath = getResourceOperation.GetHttpPath();
+
+            _resourceOperations = inputClient.Operations.Where(operation => operation.GetHttpPath().Equals(requestPath)).ToList();
+            SpecName = resourceModel.Name;
+            ResourceData = AzureClientPlugin.Instance.TypeFactory.CreateModel(resourceModel)!;
+            _isSingleton = resourceModel.Decorators.Any(d => d.Name.Equals("Azure.ResourceManager.@singleton"));
             _clientProvider = AzureClientPlugin.Instance.TypeFactory.CreateClient(inputClient)!;
             _contextualParameters = GetContextualParameters(requestPath);
 
-            _dataField = new FieldProvider(FieldModifiers.Private, resourceData.Type, "_data", this);
-            _clientDiagonosticsField = new FieldProvider(FieldModifiers.Private, typeof(ClientDiagnostics), $"_{specName.ToLower()}ClientDiagnostics", this);
-            _restClientField = new FieldProvider(FieldModifiers.Private, _clientProvider.Type, $"_{specName.ToLower()}RestClient", this);
-            _resourcetypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resrouceType));
+            _dataField = new FieldProvider(FieldModifiers.Private, ResourceData.Type, "_data", this);
+            _clientDiagonosticsField = new FieldProvider(FieldModifiers.Private, typeof(ClientDiagnostics), $"_{SpecName.ToLower()}ClientDiagnostics", this);
+            _restClientField = new FieldProvider(FieldModifiers.Private, _clientProvider.Type, $"_{SpecName.ToLower()}RestClient", this);
+            _resourcetypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(GetResourceTypeFromPath(requestPath)));
+        }
+
+        private static string GetResourceTypeFromPath(RequestPath requestPath)
+        {
+            var index = requestPath.IndexOfLastProviders;
+            if (index < 0)
+            {
+                if (requestPath.SerializedPath.StartsWith(ResourceGroupScopePrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    return "Microsoft.Resources/resourceGroups";
+                }
+                else if (requestPath.SerializedPath.StartsWith(SubscriptionScopePrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    return "Microsoft.Resources/subscriptions";
+                }
+                else if (requestPath.SerializedPath.StartsWith(TenantScopePrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    return "Microsoft.Resources/tenants";
+                }
+                throw new InvalidOperationException($"Cannot find resource type from path {requestPath}");
+            }
+
+            var left = new RequestPath(requestPath.SerializedPath.Substring(index + RequestPath.Providers.Length));
+            var result = new StringBuilder(left[0]);
+            for (int i = 1; i < left.Count; i += 2)
+            {
+                result.Append($"/{left[i]}");
+            }
+            return result.ToString();
         }
 
         private IReadOnlyList<string> GetContextualParameters(string contextualRequestPath)

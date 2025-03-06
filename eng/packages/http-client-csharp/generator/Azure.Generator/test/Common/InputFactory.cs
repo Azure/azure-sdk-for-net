@@ -170,10 +170,11 @@ namespace Azure.Generator.Tests.Common
             string? discriminatedKind = null,
             InputType? additionalProperties = null,
             IDictionary<string, InputModelType>? discriminatedModels = null,
-            IEnumerable<InputModelType>? derivedModels = null)
+            IEnumerable<InputModelType>? derivedModels = null,
+            IReadOnlyList<InputDecoratorInfo>? decorators = null)
         {
             IEnumerable<InputModelProperty> propertiesList = properties ?? [Property("StringProperty", InputPrimitiveType.String)];
-            return new InputModelType(
+            var model = new InputModelType(
                 name,
                 clientNamespace,
                 name,
@@ -191,6 +192,13 @@ namespace Azure.Generator.Tests.Common
                 additionalProperties,
                 modelAsStruct,
                 new());
+            if (decorators is not null)
+            {
+                var decoratorProperty = typeof(InputModelType).GetProperty(nameof(InputModelType.Decorators));
+                var setDecoratorMethod = decoratorProperty?.GetSetMethod(true);
+                setDecoratorMethod!.Invoke(model, [decorators]);
+            }
+            return model;
         }
 
         public static InputType Array(InputType elementType)
@@ -214,9 +222,10 @@ namespace Azure.Generator.Tests.Common
             IEnumerable<InputParameter>? parameters = null,
             IEnumerable<OperationResponse>? responses = null,
             IEnumerable<string>? requestMediaTypes = null,
-            string? path = null)
+            string? path = null,
+            IReadOnlyList<InputDecoratorInfo>? decorators = null)
         {
-            return new InputOperation(
+            var operation = new InputOperation(
                 name,
                 null,
                 null,
@@ -237,6 +246,13 @@ namespace Azure.Generator.Tests.Common
                 true,
                 true,
                 name);
+            if (decorators is not null)
+            {
+                var decoratorProperty = typeof(InputOperation).GetProperty(nameof(InputOperation.Decorators));
+                var setDecoratorMethod = decoratorProperty?.GetSetMethod(true);
+                setDecoratorMethod!.Invoke(operation, [decorators]);
+            }
+            return operation;
         }
 
         public static OperationResponse OperationResponse(IEnumerable<int>? statusCodes = null, InputType? bodytype = null)

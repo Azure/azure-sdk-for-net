@@ -22,7 +22,7 @@ namespace Azure.Generator.Tests.Common
                         ]);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
             var testNameParameter = InputFactory.Parameter("testName", InputPrimitiveType.String, location: RequestLocation.Path);
-            var operation = InputFactory.Operation(name: "Get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}");
+            var operation = InputFactory.Operation(name: "Get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: [new InputDecoratorInfo("Azure.ResourceManager.@armResourceRead", null)]);
             var client = InputFactory.Client(TestClientName, operations: [operation], decorators: [new InputDecoratorInfo("Azure.ResourceManager.@armProviderNamespace", null)]);
             return (client, [responseModel]);
         }

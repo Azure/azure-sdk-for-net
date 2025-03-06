@@ -13,14 +13,6 @@ namespace Azure.Generator
     /// <inheritdoc/>
     public class AzureOutputLibrary : ScmOutputLibrary
     {
-        private Dictionary<string, InputModelType> _inputTypeMap;
-
-        /// <inheritdoc/>
-        public AzureOutputLibrary()
-        {
-            _inputTypeMap = AzureClientPlugin.Instance.InputLibrary.InputNamespace.Models.OfType<InputModelType>().ToDictionary(model => model.Name);
-        }
-
         private LongRunningOperationProvider? _armOperation;
         internal LongRunningOperationProvider ArmOperation => _armOperation ??= new LongRunningOperationProvider(false);
 
@@ -30,12 +22,13 @@ namespace Azure.Generator
         private IReadOnlyList<TypeProvider> BuildResources()
         {
             var result = new List<TypeProvider>();
-            foreach ((InputClient client, string requestPath, bool isSingleton, string requestType, string specName) in AzureClientPlugin.Instance.ResourceBuilder.BuildResourceClients())
+            foreach (var client in AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients)
             {
-                var resourceData = AzureClientPlugin.Instance.TypeFactory.CreateModel(_inputTypeMap[specName])!;
-                var resource = CreateResourceCore(client, requestPath, specName, resourceData, requestType, isSingleton);
-                AzureClientPlugin.Instance.AddTypeToKeep(resource.Name);
-                result.Add(resource);
+                // A resource client should contain the decorator "Azure.ResourceManager.@armProviderNamespace".
+                if (client.Decorators.Any(d => d.Name.Equals("Azure.ResourceManager.@armProviderNamespace")))
+                {
+                    result.Add(CreateResourceCore(client));
+                }
             }
             return result;
         }
@@ -44,14 +37,8 @@ namespace Azure.Generator
         /// Create a resource client provider
         /// </summary>
         /// <param name="inputClient"></param>
-        /// <param name="requestPath"></param>
-        /// <param name="schemaName"></param>
-        /// <param name="resourceData"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="isSingleton"></param>
         /// <returns></returns>
-        public virtual TypeProvider CreateResourceCore(InputClient inputClient, string requestPath, string schemaName, ModelProvider resourceData, string resourceType, bool isSingleton)
-            => new ResourceClientProvider(inputClient, requestPath, schemaName, resourceData, resourceType, isSingleton);
+        public virtual TypeProvider CreateResourceCore(InputClient inputClient) => new ResourceClientProvider(inputClient);
 
         /// <inheritdoc/>
         // TODO: generate collections
