@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePatchResourceTagsAndSku(document.RootElement, options);
                     }
                 default:

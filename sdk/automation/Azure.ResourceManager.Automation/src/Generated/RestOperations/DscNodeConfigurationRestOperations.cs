@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DscNodeConfigurationData.DeserializeDscNodeConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DscNodeConfigurationData.DeserializeDscNodeConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeConfigurationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DscNodeConfigurationListResult.DeserializeDscNodeConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeConfigurationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DscNodeConfigurationListResult.DeserializeDscNodeConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeConfigurationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DscNodeConfigurationListResult.DeserializeDscNodeConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeConfigurationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DscNodeConfigurationListResult.DeserializeDscNodeConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

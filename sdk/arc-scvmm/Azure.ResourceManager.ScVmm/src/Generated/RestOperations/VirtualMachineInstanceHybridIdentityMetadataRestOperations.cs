@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         ScVmmHybridIdentityMetadataData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScVmmHybridIdentityMetadataData.DeserializeScVmmHybridIdentityMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         ScVmmHybridIdentityMetadataData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScVmmHybridIdentityMetadataData.DeserializeScVmmHybridIdentityMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         VmInstanceHybridIdentityMetadataList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VmInstanceHybridIdentityMetadataList.DeserializeVmInstanceHybridIdentityMetadataList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         VmInstanceHybridIdentityMetadataList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VmInstanceHybridIdentityMetadataList.DeserializeVmInstanceHybridIdentityMetadataList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         VmInstanceHybridIdentityMetadataList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VmInstanceHybridIdentityMetadataList.DeserializeVmInstanceHybridIdentityMetadataList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         VmInstanceHybridIdentityMetadataList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VmInstanceHybridIdentityMetadataList.DeserializeVmInstanceHybridIdentityMetadataList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

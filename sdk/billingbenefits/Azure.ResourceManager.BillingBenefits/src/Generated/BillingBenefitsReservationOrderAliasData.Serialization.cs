@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBillingBenefitsReservationOrderAliasData(document.RootElement, options);
                     }
                 default:

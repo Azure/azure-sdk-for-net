@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 201:
                     {
                         ExtensionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExtensionData.DeserializeExtensionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 201:
                     {
                         ExtensionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExtensionData.DeserializeExtensionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         ExtensionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExtensionData.DeserializeExtensionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         ExtensionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExtensionData.DeserializeExtensionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         ExtensionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExtensionData.DeserializeExtensionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         ExtensionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExtensionData.DeserializeExtensionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         ExtensionListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExtensionListResponse.DeserializeExtensionListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         ExtensionListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExtensionListResponse.DeserializeExtensionListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         ExtensionListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExtensionListResponse.DeserializeExtensionListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         ExtensionListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExtensionListResponse.DeserializeExtensionListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

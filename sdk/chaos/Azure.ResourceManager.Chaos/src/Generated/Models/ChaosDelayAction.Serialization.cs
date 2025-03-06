@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeChaosDelayAction(document.RootElement, options);
                     }
                 default:

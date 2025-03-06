@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         EvidenceResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EvidenceResourceListResult.DeserializeEvidenceResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         EvidenceResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EvidenceResourceListResult.DeserializeEvidenceResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         AppComplianceReportEvidenceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppComplianceReportEvidenceData.DeserializeAppComplianceReportEvidenceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         AppComplianceReportEvidenceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppComplianceReportEvidenceData.DeserializeAppComplianceReportEvidenceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 201:
                     {
                         AppComplianceReportEvidenceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppComplianceReportEvidenceData.DeserializeAppComplianceReportEvidenceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 201:
                     {
                         AppComplianceReportEvidenceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppComplianceReportEvidenceData.DeserializeAppComplianceReportEvidenceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         EvidenceFileDownloadResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EvidenceFileDownloadResult.DeserializeEvidenceFileDownloadResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         EvidenceFileDownloadResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EvidenceFileDownloadResult.DeserializeEvidenceFileDownloadResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         EvidenceResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EvidenceResourceListResult.DeserializeEvidenceResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         EvidenceResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EvidenceResourceListResult.DeserializeEvidenceResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

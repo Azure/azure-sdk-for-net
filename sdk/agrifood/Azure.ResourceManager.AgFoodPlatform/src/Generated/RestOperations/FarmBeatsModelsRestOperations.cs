@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         FarmBeatData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FarmBeatData.DeserializeFarmBeatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         FarmBeatData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FarmBeatData.DeserializeFarmBeatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 201:
                     {
                         FarmBeatData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FarmBeatData.DeserializeFarmBeatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 201:
                     {
                         FarmBeatData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FarmBeatData.DeserializeFarmBeatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         FarmBeatsListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FarmBeatsListResponse.DeserializeFarmBeatsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         FarmBeatsListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FarmBeatsListResponse.DeserializeFarmBeatsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         FarmBeatsListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FarmBeatsListResponse.DeserializeFarmBeatsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         FarmBeatsListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FarmBeatsListResponse.DeserializeFarmBeatsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         ArmAsyncOperation value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ArmAsyncOperation.DeserializeArmAsyncOperation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         ArmAsyncOperation value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ArmAsyncOperation.DeserializeArmAsyncOperation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         FarmBeatsListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FarmBeatsListResponse.DeserializeFarmBeatsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         FarmBeatsListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FarmBeatsListResponse.DeserializeFarmBeatsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -859,7 +859,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         FarmBeatsListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FarmBeatsListResponse.DeserializeFarmBeatsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case 200:
                     {
                         FarmBeatsListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FarmBeatsListResponse.DeserializeFarmBeatsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

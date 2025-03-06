@@ -70,7 +70,7 @@ namespace Azure.Communication.CallAutomation
                 case 200:
                     {
                         CallConnectionPropertiesInternal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CallConnectionPropertiesInternal.DeserializeCallConnectionPropertiesInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -97,7 +97,7 @@ namespace Azure.Communication.CallAutomation
                 case 200:
                     {
                         CallConnectionPropertiesInternal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CallConnectionPropertiesInternal.DeserializeCallConnectionPropertiesInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -272,7 +272,7 @@ namespace Azure.Communication.CallAutomation
                 case 202:
                     {
                         TransferCallToParticipantResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TransferCallToParticipantResult.DeserializeTransferCallToParticipantResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -304,7 +304,7 @@ namespace Azure.Communication.CallAutomation
                 case 202:
                     {
                         TransferCallToParticipantResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TransferCallToParticipantResult.DeserializeTransferCallToParticipantResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -347,7 +347,7 @@ namespace Azure.Communication.CallAutomation
                 case 200:
                     {
                         GetParticipantsResponseInternal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GetParticipantsResponseInternal.DeserializeGetParticipantsResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -374,7 +374,7 @@ namespace Azure.Communication.CallAutomation
                 case 200:
                     {
                         GetParticipantsResponseInternal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GetParticipantsResponseInternal.DeserializeGetParticipantsResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -428,7 +428,7 @@ namespace Azure.Communication.CallAutomation
                 case 202:
                     {
                         AddParticipantResponseInternal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AddParticipantResponseInternal.DeserializeAddParticipantResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -460,7 +460,7 @@ namespace Azure.Communication.CallAutomation
                 case 202:
                     {
                         AddParticipantResponseInternal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AddParticipantResponseInternal.DeserializeAddParticipantResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -514,7 +514,7 @@ namespace Azure.Communication.CallAutomation
                 case 202:
                     {
                         RemoveParticipantResponseInternal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RemoveParticipantResponseInternal.DeserializeRemoveParticipantResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -546,7 +546,7 @@ namespace Azure.Communication.CallAutomation
                 case 202:
                     {
                         RemoveParticipantResponseInternal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RemoveParticipantResponseInternal.DeserializeRemoveParticipantResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -600,7 +600,7 @@ namespace Azure.Communication.CallAutomation
                 case 200:
                     {
                         MuteParticipantResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MuteParticipantResult.DeserializeMuteParticipantResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -632,7 +632,7 @@ namespace Azure.Communication.CallAutomation
                 case 200:
                     {
                         MuteParticipantResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MuteParticipantResult.DeserializeMuteParticipantResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -686,7 +686,7 @@ namespace Azure.Communication.CallAutomation
                 case 200:
                     {
                         UnmuteParticipantResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UnmuteParticipantResult.DeserializeUnmuteParticipantResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -718,7 +718,7 @@ namespace Azure.Communication.CallAutomation
                 case 200:
                     {
                         UnmuteParticipantResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UnmuteParticipantResult.DeserializeUnmuteParticipantResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -772,7 +772,7 @@ namespace Azure.Communication.CallAutomation
                 case 202:
                     {
                         CancelAddParticipantResponseInternal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CancelAddParticipantResponseInternal.DeserializeCancelAddParticipantResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -804,7 +804,7 @@ namespace Azure.Communication.CallAutomation
                 case 202:
                     {
                         CancelAddParticipantResponseInternal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CancelAddParticipantResponseInternal.DeserializeCancelAddParticipantResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -853,7 +853,7 @@ namespace Azure.Communication.CallAutomation
                 case 200:
                     {
                         CallParticipantInternal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CallParticipantInternal.DeserializeCallParticipantInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -885,7 +885,7 @@ namespace Azure.Communication.CallAutomation
                 case 200:
                     {
                         CallParticipantInternal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CallParticipantInternal.DeserializeCallParticipantInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -930,7 +930,7 @@ namespace Azure.Communication.CallAutomation
                 case 200:
                     {
                         GetParticipantsResponseInternal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GetParticipantsResponseInternal.DeserializeGetParticipantsResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -962,7 +962,7 @@ namespace Azure.Communication.CallAutomation
                 case 200:
                     {
                         GetParticipantsResponseInternal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GetParticipantsResponseInternal.DeserializeGetParticipantsResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

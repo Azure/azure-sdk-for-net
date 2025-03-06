@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         EdgeDeviceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EdgeDeviceListResult.DeserializeEdgeDeviceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         EdgeDeviceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EdgeDeviceListResult.DeserializeEdgeDeviceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         HciEdgeDeviceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HciEdgeDeviceData.DeserializeHciEdgeDeviceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         HciEdgeDeviceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HciEdgeDeviceData.DeserializeHciEdgeDeviceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         EdgeDeviceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EdgeDeviceListResult.DeserializeEdgeDeviceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         EdgeDeviceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EdgeDeviceListResult.DeserializeEdgeDeviceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
