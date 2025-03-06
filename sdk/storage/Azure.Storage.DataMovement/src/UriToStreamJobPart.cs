@@ -207,8 +207,7 @@ namespace Azure.Storage.DataMovement
 
                 if (!_sourceResource.Length.HasValue)
                 {
-                    // Queue all the work to the chunk channel directly
-                    await QueueChunkToChannelAsync(UnknownLengthDownloadInternal).ConfigureAwait(false);
+                    await UnknownLengthDownloadInternal().ConfigureAwait(false);
                 }
                 else
                 {
@@ -249,7 +248,7 @@ namespace Azure.Storage.DataMovement
                 // length is 0 bytes.
                 if (initialResult == default || (initialLength ?? 0) == 0)
                 {
-                    await CreateZeroLengthDownload().ConfigureAwait(false);
+                    await QueueChunkToChannelAsync(CreateZeroLengthDownload).ConfigureAwait(false);
                     return;
                 }
 
@@ -297,7 +296,7 @@ namespace Azure.Storage.DataMovement
             {
                 await QueueChunkToChannelAsync(
                     async () =>
-                    await DownloadChunkSingle(totalLength).ConfigureAwait(false))
+                    await DownloadSingle(totalLength).ConfigureAwait(false))
                     .ConfigureAwait(false);
             }
             // Download in chunks
@@ -307,7 +306,6 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        #region PartitionedDownloader
         private async Task QueueChunksToChannel(long initialLength, long totalLength)
         {
             // Create Download Chunk event handler to manage when the ranges finish downloading
@@ -331,7 +329,7 @@ namespace Azure.Storage.DataMovement
                     // return before it's completed downloading)
                     await QueueChunkToChannelAsync(
                         async () =>
-                        await DownloadChunkPartitioned(range: httpRange).ConfigureAwait(false))
+                        await DownloadChunk(range: httpRange).ConfigureAwait(false))
                         .ConfigureAwait(false);
                     chunkCount++;
                 }
@@ -368,7 +366,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal async Task DownloadChunkSingle(long totalLength)
+        private async Task DownloadSingle(long totalLength)
         {
             // To prevent requesting a range that is invalid when
             // we already know the length we can just make one get blob request.
@@ -392,12 +390,11 @@ namespace Azure.Storage.DataMovement
             if (successfulCopy)
             {
                 await ReportBytesWrittenAsync(downloadLength).ConfigureAwait(false);
-                // Queue the work to end the download
-                await QueueCompleteFileDownload().ConfigureAwait(false);
+                await CompleteFileDownload().ConfigureAwait(false);
             }
         }
 
-        internal async Task DownloadChunkPartitioned(HttpRange range)
+        private async Task DownloadChunk(HttpRange range)
         {
             try
             {
@@ -496,7 +493,6 @@ namespace Azure.Storage.DataMovement
                 yield return new HttpRange(offset, Math.Min(totalLength - offset, rangeSize));
             }
         }
-        #endregion PartitionedDownloader
 
         public override async Task InvokeSkippedArgAsync()
         {
@@ -528,8 +524,7 @@ namespace Azure.Storage.DataMovement
                 initial: true).ConfigureAwait(false);
             if (successfulCreation)
             {
-                // Queue the work to end the download
-                await QueueCompleteFileDownload().ConfigureAwait(false);
+                await CompleteFileDownload().ConfigureAwait(false);
             }
             else
             {
