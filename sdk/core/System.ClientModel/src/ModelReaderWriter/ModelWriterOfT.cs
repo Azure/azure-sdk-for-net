@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.IO;
 using System.Text.Json;
 
 namespace System.ClientModel.Internal;
@@ -33,5 +34,12 @@ internal partial class ModelWriter<T>
         _model.Write(jsonWriter, _options);
         jsonWriter.Flush();
         return sequenceWriter.ExtractReader();
+    }
+
+    public void WriteTo(Stream stream)
+    {
+        using var jsonWriter = new Utf8JsonWriter(stream);
+        _model.Write(jsonWriter, _options);
+        jsonWriter.Flush();
     }
 }

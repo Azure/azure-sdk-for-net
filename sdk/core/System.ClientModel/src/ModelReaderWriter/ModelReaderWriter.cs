@@ -16,28 +16,6 @@ public static class ModelReaderWriter
     /// <summary>
     /// Writes the model into the provided <see cref="Stream"/>.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="model"></param>
-    /// <param name="stream"></param>
-    /// <param name="options"></param>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static void Write<T>(T model, Stream stream, ModelReaderWriterOptions? options = default)
-        where T : IStreamModel<T>
-    {
-        if (model is null)
-        {
-            throw new ArgumentNullException(nameof(model));
-        }
-
-        options ??= ModelReaderWriterOptions.Json;
-
-        model.Write(stream, options);
-        return;
-    }
-
-    /// <summary>
-    /// Writes the model into the provided <see cref="Stream"/>.
-    /// </summary>
     /// <param name="model"></param>
     /// <param name="stream"></param>
     /// <param name="options"></param>
@@ -63,6 +41,61 @@ public static class ModelReaderWriter
         }
 
         iModel.Write(stream, options);
+    }
+
+    /// <summary>
+    /// Writes the model into the provided <see cref="Stream"/>.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="model"></param>
+    /// <param name="stream"></param>
+    /// <param name="options"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static void Write<T>(T model, Stream stream, ModelReaderWriterOptions? options = default)
+        where T : IStreamModel<T>
+    {
+        WriteInternal(model, out _, stream, options);
+    }
+
+    private static void WriteInternal<T>(
+        T model,
+        out BinaryData? data,
+        Stream? stream = default,
+        ModelReaderWriterOptions? options = default)
+        where T : IStreamModel<T>
+    {
+        if (model is null)
+        {
+            throw new ArgumentNullException(nameof(model));
+        }
+
+        options ??= ModelReaderWriterOptions.Json;
+        data = null;
+
+        if (ShouldWriteAsJson(model, options, out IJsonModel<T>? jsonModel))
+        {
+            var modelWriter = new ModelWriter<T>(jsonModel, options);
+            if (stream != null)
+            {
+                modelWriter.WriteTo(stream);
+                return;
+            }
+
+            using (UnsafeBufferSequence.Reader reader = modelWriter.ExtractReader())
+            {
+                data = reader.ToBinaryData();
+            }
+        }
+        else
+        {
+            if (stream != null)
+            {
+                model.Write(stream, options);
+                return;
+            }
+
+            data = model.Write(options);
+        }
     }
 
     /// <summary>
