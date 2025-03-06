@@ -5,7 +5,6 @@ using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
-using System.Collections.Generic;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
 {
@@ -19,6 +18,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         private ResourceProviderData_Info? _resourceProviderData_Info;
         private UnknownBaseModel_Info? _unknownBaseModel_Info;
         private ModelY_Info? _modelY_Info;
+        private ModelWithXmlAndJson_Info? _modelWithXmlAndJson_Info;
 
         public override ModelInfo? GetModelInfo(Type type)
         {
@@ -32,6 +32,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 Type t when t == typeof(ResourceProviderData) => _resourceProviderData_Info ??= new(),
                 Type t when t == typeof(UnknownBaseModel) => _unknownBaseModel_Info ??= new(),
                 Type t when t == typeof(ModelY) => _modelY_Info ??= new(),
+                Type t when t == typeof(ModelWithXmlAndJson) => _modelWithXmlAndJson_Info ??= new(),
                 _ => null
             };
         }
@@ -74,6 +75,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         private class AvailabilitySetData_Info : ModelInfo
         {
             public override object CreateObject() => new AvailabilitySetData();
+        }
+
+        private class ModelWithXmlAndJson_Info : ModelInfo
+        {
+            public override object CreateObject() => new ModelWithXmlAndJson();
         }
     }
 }
