@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input;
@@ -24,9 +25,13 @@ namespace Azure.Generator
             var result = new List<TypeProvider>();
             foreach (var client in AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients)
             {
-                // A resource client should contain the decorator "Azure.ResourceManager.@armProviderNamespace".
-                if (client.Decorators.Any(d => d.Name.Equals("Azure.ResourceManager.@armProviderNamespace")))
+                // A resource client should contain the decorator "Azure.ResourceManager.@armResourceOperations"
+                // and it should contain a get operation, which contains the decorator "Azure.ResourceManager.@armResourceRead"
+                if (client.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmResourceOperations))
+                    && client.Operations.Any(operation => operation.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmResourceRead))))
                 {
+                    var resource = CreateResourceCore(client);
+                    AzureClientPlugin.Instance.AddTypeToKeep(resource.Name);
                     result.Add(CreateResourceCore(client));
                 }
             }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -17,9 +18,8 @@ namespace Azure.Generator
         public ResourceVisitor()
         {
             _resourceNames = AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients
-                .Where(client => client.Decorators.Any(d => d.Name.Equals("Azure.ResourceManager.@armProviderNamespace")))
-                .Select(client => client.Operations.First(operation => operation.Decorators.Any(d => d.Name.Equals("Azure.ResourceManager.@armResourceRead")))
-                    .Responses.First(r => r.BodyType != null).BodyType!.Name).ToHashSet();
+                .Where(client => client.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmResourceOperations)) && client.Operations.Any(operation => operation.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmResourceRead))))
+                .Select(client => client.Operations.First(operation => operation.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmResourceRead))).Responses.First(r => r.BodyType != null).BodyType!.Name).ToHashSet();
         }
 
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)

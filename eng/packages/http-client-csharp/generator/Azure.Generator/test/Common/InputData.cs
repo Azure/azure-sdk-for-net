@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
 using System.Collections.Generic;
 
@@ -22,8 +23,8 @@ namespace Azure.Generator.Tests.Common
                         ]);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
             var testNameParameter = InputFactory.Parameter("testName", InputPrimitiveType.String, location: RequestLocation.Path);
-            var operation = InputFactory.Operation(name: "Get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: [new InputDecoratorInfo("Azure.ResourceManager.@armResourceRead", null)]);
-            var client = InputFactory.Client(TestClientName, operations: [operation], decorators: [new InputDecoratorInfo("Azure.ResourceManager.@armProviderNamespace", null)]);
+            var operation = InputFactory.Operation(name: "Get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: [new InputDecoratorInfo(KnownDecorators.ArmResourceRead, null)]);
+            var client = InputFactory.Client(TestClientName, operations: [operation], decorators: [new InputDecoratorInfo(KnownDecorators.ArmResourceOperations, null), new InputDecoratorInfo(KnownDecorators.ArmProviderNamespace, null)]);
             return (client, [responseModel]);
         }
     }

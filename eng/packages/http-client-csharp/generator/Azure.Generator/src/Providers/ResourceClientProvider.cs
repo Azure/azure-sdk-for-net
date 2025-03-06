@@ -48,14 +48,14 @@ namespace Azure.Generator.Providers
 
         public ResourceClientProvider(InputClient inputClient)
         {
-            var getResourceOperation = inputClient.Operations.First(operation => operation.Decorators.Any(d => d.Name.Equals("Azure.ResourceManager.@armResourceRead")));
+            var getResourceOperation = inputClient.Operations.First(operation => operation.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmResourceRead)));
             var resourceModel = (InputModelType)getResourceOperation.Responses.First(r => r.BodyType != null).BodyType!;
-            var requestPath = getResourceOperation.GetHttpPath();
+            var requestPath = new RequestPath(getResourceOperation.Path);
 
-            _resourceOperations = inputClient.Operations.Where(operation => operation.GetHttpPath().Equals(requestPath)).ToList();
+            _resourceOperations = inputClient.Operations.Where(operation => operation.Path.Equals(requestPath)).ToList();
             SpecName = resourceModel.Name;
             ResourceData = AzureClientPlugin.Instance.TypeFactory.CreateModel(resourceModel)!;
-            _isSingleton = resourceModel.Decorators.Any(d => d.Name.Equals("Azure.ResourceManager.@singleton"));
+            _isSingleton = resourceModel.Decorators.Any(d => d.Name.Equals(KnownDecorators.Singleton));
             _clientProvider = AzureClientPlugin.Instance.TypeFactory.CreateClient(inputClient)!;
             _contextualParameters = GetContextualParameters(requestPath);
 

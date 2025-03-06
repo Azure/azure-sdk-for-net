@@ -10,6 +10,7 @@ using System;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
+using Azure.Generator.Primitives;
 
 namespace Azure.Generator;
 
@@ -72,5 +73,5 @@ public class AzureClientPlugin : ScmCodeModelPlugin
     /// <summary>
     /// Identify if the input is generated for Azure ARM.
     /// </summary>
-    internal Lazy<bool> IsAzureArm => new Lazy<bool>(() => InputLibrary.InputNamespace.Clients.Any(c => c.Decorators.Any(d => d.Name.Equals("Azure.ResourceManager.@armProviderNamespace"))));
+    internal Lazy<bool> IsAzureArm => new Lazy<bool>(() => InputLibrary.InputNamespace.Clients.Any(c => c.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmProviderNamespace))));
 }
