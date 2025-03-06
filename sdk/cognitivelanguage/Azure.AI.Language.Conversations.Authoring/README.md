@@ -183,7 +183,7 @@ try
 {
     string invalidProjectName = "InvalidProject";
     ConversationAuthoringProject projectClient = client.GetProject(invalidProjectName);
-    CreateProjectDetails projectData = new CreateProjectDetails(
+    ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
       projectKind: "Conversation",
       language: "invalid-lang"
     )

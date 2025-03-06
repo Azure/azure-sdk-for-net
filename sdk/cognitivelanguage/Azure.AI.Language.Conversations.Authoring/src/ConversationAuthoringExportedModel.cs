@@ -14,8 +14,8 @@ namespace Azure.AI.Language.Conversations.Authoring
     [CodeGenSuppress("GetExportedModel", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetExportedModelJobStatusAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetExportedModelJobStatus", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("CreateOrUpdateExportedModelAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(ExportedModelDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("CreateOrUpdateExportedModel", typeof(WaitUntil), typeof(string), typeof(string), typeof(ExportedModelDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateOrUpdateExportedModelAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(ConversationAuthoringExportedModelDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateOrUpdateExportedModel", typeof(WaitUntil), typeof(string), typeof(string), typeof(ConversationAuthoringExportedModelDetails), typeof(CancellationToken))]
     [CodeGenSuppress("GetExportedModelAsync", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("GetExportedModel", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("GetExportedModelJobStatusAsync", typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
@@ -59,7 +59,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Gets the details of an exported model. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ExportedTrainedModel>> GetExportedModelAsync(
+        public virtual async Task<Response<ConversationAuthoringExportedTrainedModel>> GetExportedModelAsync(
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -67,12 +67,12 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetExportedModelAsync(context).ConfigureAwait(false);
-            return Response.FromValue(ExportedTrainedModel.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringExportedTrainedModel.FromResponse(response), response);
         }
 
         /// <summary> Gets the details of an exported model. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExportedTrainedModel> GetExportedModel(
+        public virtual Response<ConversationAuthoringExportedTrainedModel> GetExportedModel(
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -80,13 +80,13 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetExportedModel(context);
-            return Response.FromValue(ExportedTrainedModel.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringExportedTrainedModel.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for an existing job to create or update an exported model. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ExportedModelOperationState>> GetExportedModelJobStatusAsync(
+        public virtual async Task<Response<ConversationAuthoringExportedModelState>> GetExportedModelJobStatusAsync(
             string jobId,
             CancellationToken cancellationToken = default)
         {
@@ -96,13 +96,13 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetExportedModelJobStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(ExportedModelOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringExportedModelState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for an existing job to create or update an exported model. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExportedModelOperationState> GetExportedModelJobStatus(
+        public virtual Response<ConversationAuthoringExportedModelState> GetExportedModelJobStatus(
             string jobId,
             CancellationToken cancellationToken = default)
         {
@@ -112,7 +112,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetExportedModelJobStatus(jobId, context);
-            return Response.FromValue(ExportedModelOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringExportedModelState.FromResponse(response), response);
         }
 
         /// <summary> Creates a new exported model or replaces an existing one. </summary>
@@ -121,7 +121,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Operation> CreateOrUpdateExportedModelAsync(
             WaitUntil waitUntil,
-            ExportedModelDetails details,
+            ConversationAuthoringExportedModelDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -139,7 +139,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Operation CreateOrUpdateExportedModel(
             WaitUntil waitUntil,
-            ExportedModelDetails details,
+            ConversationAuthoringExportedModelDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -409,7 +409,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateOrUpdateExportedModelAsync(WaitUntil,ExportedModelDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateOrUpdateExportedModelAsync(WaitUntil,ConversationAuthoringExportedModelDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -449,7 +449,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateOrUpdateExportedModel(WaitUntil,ExportedModelDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateOrUpdateExportedModel(WaitUntil,ConversationAuthoringExportedModelDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

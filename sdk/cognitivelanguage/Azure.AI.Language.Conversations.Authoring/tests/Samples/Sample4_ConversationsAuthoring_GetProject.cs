@@ -4,7 +4,6 @@
 using System;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
-using Azure.AI.Language.Conversations.Authoring.Models;
 using Azure.AI.Language.Conversations.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -26,8 +25,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             string projectName = "MySampleProject";
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-            Response<ProjectMetadata> response = projectClient.GetProject();
-            ProjectMetadata projectMetadata = response.Value;
+            Response<ConversationAuthoringProjectMetadata> response = projectClient.GetProject();
+            ConversationAuthoringProjectMetadata projectMetadata = response.Value;
 
             Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");
             Console.WriteLine($"Last Modified DateTime: {projectMetadata.LastModifiedOn}");

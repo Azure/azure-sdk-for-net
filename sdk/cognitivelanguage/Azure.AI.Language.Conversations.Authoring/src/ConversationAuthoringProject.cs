@@ -34,18 +34,18 @@ namespace Azure.AI.Language.Conversations.Authoring
     [CodeGenSuppress("GetCopyProjectStatus", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("DeleteProjectAsync", typeof(WaitUntil), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("DeleteProject", typeof(WaitUntil), typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("ImportAsync", typeof(WaitUntil), typeof(string), typeof(ExportedProject), typeof(ConversationAuthoringExportedProjectFormat?), typeof(CancellationToken))]
-    [CodeGenSuppress("Import", typeof(WaitUntil), typeof(string), typeof(ExportedProject), typeof(ConversationAuthoringExportedProjectFormat?), typeof(CancellationToken))]
+    [CodeGenSuppress("ImportAsync", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringExportedProject), typeof(ConversationAuthoringExportedProjectFormat?), typeof(CancellationToken))]
+    [CodeGenSuppress("Import", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringExportedProject), typeof(ConversationAuthoringExportedProjectFormat?), typeof(CancellationToken))]
     [CodeGenSuppress("ImportAsync", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("Import", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("CopyProjectAsync", typeof(WaitUntil), typeof(string), typeof(CopyProjectDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("CopyProject", typeof(WaitUntil), typeof(string), typeof(CopyProjectDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("CopyProjectAsync", typeof(WaitUntil), typeof(string), typeof(CopyProjectDetails), typeof(RequestContext))]
-    [CodeGenSuppress("CopyProject", typeof(WaitUntil), typeof(string), typeof(CopyProjectDetails), typeof(RequestContext))]
+    [CodeGenSuppress("CopyProjectAsync", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringCopyProjectDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("CopyProject", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringCopyProjectDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("CopyProjectAsync", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringCopyProjectDetails), typeof(RequestContext))]
+    [CodeGenSuppress("CopyProject", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringCopyProjectDetails), typeof(RequestContext))]
     [CodeGenSuppress("GetTrainingStatusAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetTrainingStatus", typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("TrainAsync", typeof(WaitUntil), typeof(string), typeof(TrainingJobDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("Train", typeof(WaitUntil), typeof(string), typeof(TrainingJobDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("TrainAsync", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringTrainingJobDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("Train", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringTrainingJobDetails), typeof(CancellationToken))]
     [CodeGenSuppress("CancelTrainingJobAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("CancelTrainingJob", typeof(WaitUntil), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetTrainingConfigVersionsAsync", typeof(ConversationAuthoringProjectKind), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
@@ -66,16 +66,16 @@ namespace Azure.AI.Language.Conversations.Authoring
     [CodeGenSuppress("CancelTrainingJob", typeof(WaitUntil), typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("GetSwapDeploymentsStatusAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetSwapDeploymentsStatus", typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("SwapDeploymentsAsync", typeof(WaitUntil), typeof(string), typeof(SwapDeploymentsDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("SwapDeployments", typeof(WaitUntil), typeof(string), typeof(SwapDeploymentsDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("SwapDeploymentsAsync", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringSwapDeploymentsDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("SwapDeployments", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringSwapDeploymentsDetails), typeof(CancellationToken))]
     [CodeGenSuppress("GetAssignDeploymentResourcesStatusAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetAssignDeploymentResourcesStatus", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetUnassignDeploymentResourcesStatusAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetUnassignDeploymentResourcesStatus", typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("AssignDeploymentResourcesAsync", typeof(WaitUntil), typeof(string), typeof(AssignDeploymentResourcesDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("AssignDeploymentResources", typeof(WaitUntil), typeof(string), typeof(AssignDeploymentResourcesDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("UnassignDeploymentResourcesAsync", typeof(WaitUntil), typeof(string), typeof(UnassignDeploymentResourcesDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("UnassignDeploymentResources", typeof(WaitUntil), typeof(string), typeof(UnassignDeploymentResourcesDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("AssignDeploymentResourcesAsync", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringAssignDeploymentResourcesDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("AssignDeploymentResources", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringAssignDeploymentResourcesDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("UnassignDeploymentResourcesAsync", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringUnassignDeploymentResourcesDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("UnassignDeploymentResources", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringUnassignDeploymentResourcesDetails), typeof(CancellationToken))]
     [CodeGenSuppress("GetSwapDeploymentsStatusAsync", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("GetSwapDeploymentsStatus", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("GetAssignDeploymentResourcesStatusAsync", typeof(string), typeof(string), typeof(RequestContext))]
@@ -119,27 +119,27 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Gets the status of an existing swap deployment job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SwapDeploymentsOperationState>> GetSwapDeploymentsStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConversationAuthoringSwapDeploymentsState>> GetSwapDeploymentsStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetSwapDeploymentsStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(SwapDeploymentsOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringSwapDeploymentsState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing swap deployment job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SwapDeploymentsOperationState> GetSwapDeploymentsStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<ConversationAuthoringSwapDeploymentsState> GetSwapDeploymentsStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetSwapDeploymentsStatus(jobId, context);
-            return Response.FromValue(SwapDeploymentsOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringSwapDeploymentsState.FromResponse(response), response);
         }
 
         /// <summary> Swaps two existing deployments with each other. </summary>
@@ -148,7 +148,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Operation> SwapDeploymentsAsync(
             WaitUntil waitUntil,
-            SwapDeploymentsDetails details,
+            ConversationAuthoringSwapDeploymentsDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -165,7 +165,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Operation SwapDeployments(
             WaitUntil waitUntil,
-            SwapDeploymentsDetails details,
+            ConversationAuthoringSwapDeploymentsDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -262,7 +262,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="SwapDeploymentsAsync(WaitUntil,SwapDeploymentsDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="SwapDeploymentsAsync(WaitUntil,ConversationAuthoringSwapDeploymentsDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -301,7 +301,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="SwapDeployments(WaitUntil,SwapDeploymentsDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="SwapDeployments(WaitUntil,ConversationAuthoringSwapDeploymentsDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -332,27 +332,27 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Gets the details of a project. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ProjectMetadata>> GetProjectAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConversationAuthoringProjectMetadata>> GetProjectAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetProjectAsync(context).ConfigureAwait(false); // Using the member variable
-            return Response.FromValue(ProjectMetadata.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringProjectMetadata.FromResponse(response), response);
         }
 
         /// <summary> Gets the details of a project. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ProjectMetadata> GetProject(CancellationToken cancellationToken = default)
+        public virtual Response<ConversationAuthoringProjectMetadata> GetProject(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetProject(context); // Using the member variable
-            return Response.FromValue(ProjectMetadata.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringProjectMetadata.FromResponse(response), response);
         }
 
         /// <summary> Creates a new project or replaces an existing one. </summary>
         /// <param name="details"> The new deployment info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> CreateProjectAsync(
-            CreateProjectDetails details,
+            ConversationAuthoringCreateProjectDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -368,7 +368,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="details"> The new deployment info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response CreateProject(
-            CreateProjectDetails details,
+            ConversationAuthoringCreateProjectDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -437,13 +437,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ExportProjectOperationState>> GetExportStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConversationAuthoringExportProjectState>> GetExportStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetExportStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(ExportProjectOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringExportProjectState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an export job. Once job completes, returns the project metadata, and assets. </summary>
@@ -451,13 +451,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ExportProjectOperationState> GetExportStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<ConversationAuthoringExportProjectState> GetExportStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetExportStatus(jobId, context);
-            return Response.FromValue(ExportProjectOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringExportProjectState.FromResponse(response), response);
         }
 
         /// <summary> Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced. </summary>
@@ -465,7 +465,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="exportedProject"> The project data to import. </param>
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, ExportedProject exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, ConversationAuthoringExportedProject exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(exportedProject, nameof(exportedProject));
@@ -480,7 +480,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="exportedProject"> The project data to import. </param>
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Operation Import(WaitUntil waitUntil, ExportedProject exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
+        public virtual Operation Import(WaitUntil waitUntil, ConversationAuthoringExportedProject exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(exportedProject, nameof(exportedProject));
@@ -500,7 +500,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ImportAsync(WaitUntil,ExportedProject,ConversationAuthoringExportedProjectFormat?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ImportAsync(WaitUntil,ConversationAuthoringExportedProject,ConversationAuthoringExportedProjectFormat?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -540,7 +540,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Import(WaitUntil,ExportedProject,ConversationAuthoringExportedProjectFormat?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Import(WaitUntil,ConversationAuthoringExportedProject,ConversationAuthoringExportedProjectFormat?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -575,13 +575,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ImportProjectOperationState>> GetImportStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConversationAuthoringImportProjectState>> GetImportStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetImportStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(ImportProjectOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringImportProjectState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for an import. </summary>
@@ -589,13 +589,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ImportProjectOperationState> GetImportStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<ConversationAuthoringImportProjectState> GetImportStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetImportStatus(jobId, context);
-            return Response.FromValue(ImportProjectOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringImportProjectState.FromResponse(response), response);
         }
 
         /// <summary> Generates a copy project operation authorization to the current target Azure resource. </summary>
@@ -603,12 +603,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="storageInputContainerName"> The name of the storage container. </param>
         /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CopyProjectDetails>> AuthorizeProjectCopyAsync(ConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConversationAuthoringCopyProjectDetails>> AuthorizeProjectCopyAsync(ConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
         {
             CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AuthorizeProjectCopyAsync(copyProjectAuthorizationRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(CopyProjectDetails.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringCopyProjectDetails.FromResponse(response), response);
         }
 
         /// <summary> Generates a copy project operation authorization to the current target Azure resource. </summary>
@@ -616,12 +616,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="storageInputContainerName"> The name of the storage container. </param>
         /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CopyProjectDetails> AuthorizeProjectCopy(ConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
+        public virtual Response<ConversationAuthoringCopyProjectDetails> AuthorizeProjectCopy(ConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
         {
             CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AuthorizeProjectCopy(copyProjectAuthorizationRequest.ToRequestContent(), context);
-            return Response.FromValue(CopyProjectDetails.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringCopyProjectDetails.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing copy project job. </summary>
@@ -629,13 +629,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<CopyProjectOperationState>> GetCopyProjectStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConversationAuthoringCopyProjectState>> GetCopyProjectStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetCopyProjectStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(CopyProjectOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringCopyProjectState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing copy project job. </summary>
@@ -643,13 +643,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<CopyProjectOperationState> GetCopyProjectStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<ConversationAuthoringCopyProjectState> GetCopyProjectStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetCopyProjectStatus(jobId, context);
-            return Response.FromValue(CopyProjectOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringCopyProjectState.FromResponse(response), response);
         }
 
         /// <summary> [Protocol Method] Deletes a project. </summary>
@@ -828,7 +828,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="details"> The copy project info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Operation> CopyProjectAsync(WaitUntil waitUntil, CopyProjectDetails details, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> CopyProjectAsync(WaitUntil waitUntil, ConversationAuthoringCopyProjectDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(details, nameof(details));
 
@@ -841,7 +841,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="details"> The copy project info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Operation CopyProject(WaitUntil waitUntil, CopyProjectDetails details, CancellationToken cancellationToken = default)
+        public virtual Operation CopyProject(WaitUntil waitUntil, ConversationAuthoringCopyProjectDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(details, nameof(details));
 
@@ -853,7 +853,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Gets the status for a training job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TrainingOperationState>> GetTrainingStatusAsync(
+        public virtual async Task<Response<ConversationAuthoringTrainingState>> GetTrainingStatusAsync(
             string jobId,
             CancellationToken cancellationToken = default)
         {
@@ -862,13 +862,13 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTrainingStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(TrainingOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringTrainingState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for a training job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TrainingOperationState> GetTrainingStatus(
+        public virtual Response<ConversationAuthoringTrainingState> GetTrainingStatus(
             string jobId,
             CancellationToken cancellationToken = default)
         {
@@ -877,16 +877,16 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTrainingStatus(jobId, context);
-            return Response.FromValue(TrainingOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringTrainingState.FromResponse(response), response);
         }
 
         /// <summary> Triggers a training job for a project. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="details"> The training input parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Operation<TrainingJobResult>> TrainAsync(
+        public virtual async Task<Operation<ConversationAuthoringTrainingJobResult>> TrainAsync(
             WaitUntil waitUntil,
-            TrainingJobDetails details,
+            ConversationAuthoringTrainingJobDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -895,16 +895,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await TrainAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchTrainingJobResultFromTrainingOperationState, ClientDiagnostics, "ConversationAuthoringTraining.Train");
+            return ProtocolOperationHelpers.Convert(response, FetchConversationAuthoringTrainingJobResultFromConversationAuthoringTrainingState, ClientDiagnostics, "ConversationAuthoringTraining.Train");
         }
 
         /// <summary> Triggers a training job for a project. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="details"> The training input parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Operation<TrainingJobResult> Train(
+        public virtual Operation<ConversationAuthoringTrainingJobResult> Train(
             WaitUntil waitUntil,
-            TrainingJobDetails details,
+            ConversationAuthoringTrainingJobDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -913,14 +913,14 @@ namespace Azure.AI.Language.Conversations.Authoring
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = Train(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, FetchTrainingJobResultFromTrainingOperationState, ClientDiagnostics, "ConversationAuthoringTraining.Train");
+            return ProtocolOperationHelpers.Convert(response, FetchConversationAuthoringTrainingJobResultFromConversationAuthoringTrainingState, ClientDiagnostics, "ConversationAuthoringTraining.Train");
         }
 
         /// <summary> Triggers a cancellation for a running training job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Operation<TrainingJobResult>> CancelTrainingJobAsync(
+        public virtual async Task<Operation<ConversationAuthoringTrainingJobResult>> CancelTrainingJobAsync(
             WaitUntil waitUntil,
             string jobId,
             CancellationToken cancellationToken = default)
@@ -930,14 +930,14 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await CancelTrainingJobAsync(waitUntil, jobId, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchTrainingJobResultFromTrainingOperationState, ClientDiagnostics, "ConversationAuthoringTraining.CancelTrainingJob");
+            return ProtocolOperationHelpers.Convert(response, FetchConversationAuthoringTrainingJobResultFromConversationAuthoringTrainingState, ClientDiagnostics, "ConversationAuthoringTraining.CancelTrainingJob");
         }
 
         /// <summary> Triggers a cancellation for a running training job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Operation<TrainingJobResult> CancelTrainingJob(
+        public virtual Operation<ConversationAuthoringTrainingJobResult> CancelTrainingJob(
             WaitUntil waitUntil,
             string jobId,
             CancellationToken cancellationToken = default)
@@ -947,7 +947,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = CancelTrainingJob(waitUntil, jobId, context);
-            return ProtocolOperationHelpers.Convert(response, FetchTrainingJobResultFromTrainingOperationState, ClientDiagnostics, "ConversationAuthoringTraining.CancelTrainingJob");
+            return ProtocolOperationHelpers.Convert(response, FetchConversationAuthoringTrainingJobResultFromConversationAuthoringTrainingState, ClientDiagnostics, "ConversationAuthoringTraining.CancelTrainingJob");
         }
 
         /// <summary>
@@ -1035,7 +1035,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="TrainAsync(WaitUntil,TrainingJobDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="TrainAsync(WaitUntil,ConversationAuthoringTrainingJobDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1074,7 +1074,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Train(WaitUntil,TrainingJobDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Train(WaitUntil,ConversationAuthoringTrainingJobDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1567,7 +1567,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CopyProjectAsync(WaitUntil,CopyProjectDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CopyProjectAsync(WaitUntil,ConversationAuthoringCopyProjectDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1606,7 +1606,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CopyProject(WaitUntil,CopyProjectDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CopyProject(WaitUntil,ConversationAuthoringCopyProjectDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1640,14 +1640,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DeploymentResourcesOperationState>> GetAssignDeploymentResourcesStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConversationAuthoringDeploymentResourcesState>> GetAssignDeploymentResourcesStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetAssignDeploymentResourcesStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(DeploymentResourcesOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringDeploymentResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing assign deployment resources job. </summary>
@@ -1655,14 +1655,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DeploymentResourcesOperationState> GetAssignDeploymentResourcesStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<ConversationAuthoringDeploymentResourcesState> GetAssignDeploymentResourcesStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetAssignDeploymentResourcesStatus(jobId, context);
-            return Response.FromValue(DeploymentResourcesOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringDeploymentResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing unassign deployment resources job. </summary>
@@ -1670,14 +1670,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DeploymentResourcesOperationState>> GetUnassignDeploymentResourcesStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConversationAuthoringDeploymentResourcesState>> GetUnassignDeploymentResourcesStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetUnassignDeploymentResourcesStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(DeploymentResourcesOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringDeploymentResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing unassign deployment resources job. </summary>
@@ -1685,14 +1685,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DeploymentResourcesOperationState> GetUnassignDeploymentResourcesStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<ConversationAuthoringDeploymentResourcesState> GetUnassignDeploymentResourcesStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetUnassignDeploymentResourcesStatus(jobId, context);
-            return Response.FromValue(DeploymentResourcesOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringDeploymentResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. </summary>
@@ -1701,7 +1701,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Operation> AssignDeploymentResourcesAsync(
             WaitUntil waitUntil,
-            AssignDeploymentResourcesDetails details,
+            ConversationAuthoringAssignDeploymentResourcesDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -1718,7 +1718,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Operation AssignDeploymentResources(
             WaitUntil waitUntil,
-            AssignDeploymentResourcesDetails details,
+            ConversationAuthoringAssignDeploymentResourcesDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -1735,7 +1735,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Operation> UnassignDeploymentResourcesAsync(
             WaitUntil waitUntil,
-            UnassignDeploymentResourcesDetails details,
+            ConversationAuthoringUnassignDeploymentResourcesDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -1752,7 +1752,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Operation UnassignDeploymentResources(
             WaitUntil waitUntil,
-            UnassignDeploymentResourcesDetails details,
+            ConversationAuthoringUnassignDeploymentResourcesDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -1925,7 +1925,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AssignDeploymentResourcesAsync(WaitUntil,AssignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AssignDeploymentResourcesAsync(WaitUntil,ConversationAuthoringAssignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1964,7 +1964,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AssignDeploymentResources(WaitUntil,AssignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AssignDeploymentResources(WaitUntil,ConversationAuthoringAssignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2003,7 +2003,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UnassignDeploymentResourcesAsync(WaitUntil,UnassignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UnassignDeploymentResourcesAsync(WaitUntil,ConversationAuthoringUnassignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2042,7 +2042,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UnassignDeploymentResources(WaitUntil,UnassignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UnassignDeploymentResources(WaitUntil,ConversationAuthoringUnassignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

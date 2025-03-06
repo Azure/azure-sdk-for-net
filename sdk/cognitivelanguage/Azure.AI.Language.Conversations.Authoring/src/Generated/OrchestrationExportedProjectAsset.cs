@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Represents the assets of an orchestration project. </summary>
-    public partial class OrchestrationExportedProjectAsset : ExportedProjectAsset
+    public partial class OrchestrationExportedProjectAsset : ConversationAuthoringExportedProjectAsset
     {
         /// <summary> Initializes a new instance of <see cref="OrchestrationExportedProjectAsset"/>. </summary>
         public OrchestrationExportedProjectAsset()

@@ -254,10 +254,10 @@ namespace Azure.AI.Language.Conversations.Authoring
         private static ResponseClassifier _responseClassifier202;
         private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
-        private EvaluationJobResult FetchEvaluationJobResultFromEvaluationOperationState(Response response)
+        private ConversationAuthoringEvaluationJobResult FetchConversationAuthoringEvaluationJobResultFromConversationAuthoringEvaluationState(Response response)
         {
             var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
-            return EvaluationJobResult.DeserializeEvaluationJobResult(resultJsonElement);
+            return ConversationAuthoringEvaluationJobResult.DeserializeConversationAuthoringEvaluationJobResult(resultJsonElement);
         }
     }
 }

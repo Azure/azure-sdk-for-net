@@ -24,7 +24,7 @@ string projectName = "MyProject";
 string trainedModelLabel = "YourTrainedModelLabel";
 ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
-Response<EvaluationSummary> evaluationSummaryResponse = await trainedModelClient.GetModelEvaluationSummaryAsync();
+Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = await trainedModelClient.GetModelEvaluationSummaryAsync();
 
 // Print entities evaluation summary
 EntitiesEvaluationSummary entitiesEval = evaluationSummaryResponse.Value.EntitiesEvaluation;
@@ -32,7 +32,7 @@ Console.WriteLine($"Entities - Micro F1: {entitiesEval.MicroF1}, Micro Precision
 Console.WriteLine($"Entities - Macro F1: {entitiesEval.MacroF1}, Macro Precision: {entitiesEval.MacroPrecision}, Macro Recall: {entitiesEval.MacroRecall}");
 
 // Print detailed metrics per entity
-foreach (KeyValuePair<string, EntityEvaluationSummary> entity in entitiesEval.Entities)
+foreach (KeyValuePair<string, ConversationAuthoringEntityEvalSummary> entity in entitiesEval.Entities)
 {
     Console.WriteLine($"Entity '{entity.Key}': F1 = {entity.Value.F1}, Precision = {entity.Value.Precision}, Recall = {entity.Value.Recall}");
     Console.WriteLine($"  True Positives: {entity.Value.TruePositiveCount}, True Negatives: {entity.Value.TrueNegativeCount}");

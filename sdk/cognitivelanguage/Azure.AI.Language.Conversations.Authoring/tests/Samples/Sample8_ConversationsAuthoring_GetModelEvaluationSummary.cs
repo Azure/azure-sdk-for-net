@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
-using Azure.AI.Language.Conversations.Authoring.Models;
 using Azure.AI.Language.Conversations.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -28,7 +27,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             string trainedModelLabel = "YourTrainedModelLabel";
             ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
-            Response<EvaluationSummary> evaluationSummaryResponse = trainedModelClient.GetModelEvaluationSummary();
+            Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = trainedModelClient.GetModelEvaluationSummary();
 
             // Print entities evaluation summary
             EntitiesEvaluationSummary entitiesEval = evaluationSummaryResponse.Value.EntitiesEvaluation;
@@ -36,7 +35,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Console.WriteLine($"Entities - Macro F1: {entitiesEval.MacroF1}, Macro Precision: {entitiesEval.MacroPrecision}, Macro Recall: {entitiesEval.MacroRecall}");
 
             // Print detailed metrics per entity
-            foreach (KeyValuePair<string, EntityEvaluationSummary> entity in entitiesEval.Entities)
+            foreach (KeyValuePair<string, ConversationAuthoringEntityEvalSummary> entity in entitiesEval.Entities)
             {
                 Console.WriteLine($"Entity '{entity.Key}': F1 = {entity.Value.F1}, Precision = {entity.Value.Precision}, Recall = {entity.Value.Recall}");
                 Console.WriteLine($"  True Positives: {entity.Value.TruePositiveCount}, True Negatives: {entity.Value.TrueNegativeCount}");

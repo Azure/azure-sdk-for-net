@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
-using Azure.AI.Language.Conversations.Authoring.Models;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -28,7 +27,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             string deploymentName2 = "deployment2";
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-            SwapDeploymentsDetails swapDetails = new SwapDeploymentsDetails(deploymentName1, deploymentName2);
+            ConversationAuthoringSwapDeploymentsDetails swapDetails = new ConversationAuthoringSwapDeploymentsDetails(deploymentName1, deploymentName2);
 
             Operation operation = await projectClient.SwapDeploymentsAsync(
                 waitUntil: WaitUntil.Completed,
