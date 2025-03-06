@@ -34,11 +34,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                     });
 
             // Instantiate the Time Series Insights client
-            TimeSeriesInsightsClient tsiClient = GetTimeSeriesInsightsClient(
-                options.TenantId,
-                options.ClientId,
-                options.ClientSecret,
-                options.TsiEnvironmentFqdn);
+            TimeSeriesInsightsClient tsiClient = GetTimeSeriesInsightsClient(options.TsiEnvironmentFqdn);
 
             // Instantiate an IoT Hub device client client in order to send telemetry to the hub
             DeviceClient deviceClient = await GetDeviceClientAsync(options.IoTHubConnectionString).ConfigureAwait(false);
@@ -62,7 +58,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             var tsiHierarchiesSamples = new HierarchiesSamples();
             await tsiHierarchiesSamples.RunSamplesAsync(tsiClient);
-            
+
             var tsiModelSettingsSamples = new ModelSettingsSamples();
             await tsiModelSettingsSamples.RunSamplesAsync(tsiClient);
 
@@ -75,13 +71,8 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
         /// implementation of <see cref="Azure.Core.TokenCredential"/>.
         /// </summary>
         /// <param name="tsiEndpoint">The endpoint of the Time Series Insights instance.</param>
-        private static TimeSeriesInsightsClient GetTimeSeriesInsightsClient(string tenantId, string clientId, string clientSecret, string tsiEndpoint)
+        private static TimeSeriesInsightsClient GetTimeSeriesInsightsClient(string tsiEndpoint)
         {
-            // These environment variables are necessary for DefaultAzureCredential to use application Id and client secret to login.
-            Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", clientSecret);
-            Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", clientId);
-            Environment.SetEnvironmentVariable("AZURE_TENANT_ID", tenantId);
-
             #region Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret
 
             // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based on the environment it is executing in.
