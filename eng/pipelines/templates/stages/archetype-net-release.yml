@@ -27,8 +27,6 @@ stages:
               artifactName: ${{parameters.ArtifactName}}-signed
 
         steps:
-          - checkout: self
-            fetchDepth: 1
           - checkout: azure-sdk-build-tools
             path: azure-sdk-build-tools
           - download: current
