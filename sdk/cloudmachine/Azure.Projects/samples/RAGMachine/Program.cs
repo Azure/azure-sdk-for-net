@@ -28,7 +28,7 @@ var app = builder.Build();
 app.MapRazorPages();
 app.UseStaticFiles();
 
-EmbeddingsVectorbase vectorDb = new(client.GetAzureOpenAIEmbeddingClient());
+EmbeddingsVectorbase vectorDb = new(client.GetOpenAIEmbeddingClient());
 List<ChatMessage> prompt = [];
 
 // Register the vector db to be updated when a new file is uploaded
@@ -46,7 +46,7 @@ app.MapPost("/chat", async (HttpRequest request) =>
         prompt.Add(related);
         prompt.Add(ChatMessage.CreateUserMessage(message));
 
-        ChatClient chat = client.GetAzureOpenAIChatClient();
+        ChatClient chat = client.GetOpenAIChatClient();
         ChatCompletion completion = await chat.CompleteChatAsync(prompt);
         switch (completion.FinishReason)
         {

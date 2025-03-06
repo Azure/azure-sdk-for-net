@@ -23,7 +23,7 @@ public static partial class AzureOpenAIExtensions
     /// <param name="provider"></param>
     /// <param name="deploymentName"></param>
     /// <returns></returns>
-    public static ChatClient GetAzureOpenAIChatClient(this ConnectionProvider provider, string? deploymentName = null)
+    public static ChatClient GetOpenAIChatClient(this ConnectionProvider provider, string? deploymentName = null)
     {
         AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(() => CreateAzureOpenAIClient(provider), null!);
         ChatClient chatClient = provider.Subclients.GetClient(() =>
@@ -40,7 +40,7 @@ public static partial class AzureOpenAIExtensions
     /// <param name="provider"></param>
     /// <param name="deploymentName"></param>
     /// <returns></returns>
-    public static EmbeddingClient GetAzureOpenAIEmbeddingClient(this ConnectionProvider provider, string? deploymentName = null)
+    public static EmbeddingClient GetOpenAIEmbeddingClient(this ConnectionProvider provider, string? deploymentName = null)
     {
         AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(() => CreateAzureOpenAIClient(provider), null!);
         EmbeddingClient embeddingClient = provider.Subclients.GetClient(() =>

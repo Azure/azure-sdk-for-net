@@ -16,6 +16,6 @@ if (args.Length > 0 && args[0] == "-bicep")
 }
 
 ProjectClient project = new();
-ChatClient chat = project.GetAzureOpenAIChatClient();
+ChatClient chat = project.GetOpenAIChatClient();
 Console.WriteLine(chat.CompleteChat("list all noble gasses.").AsText());
 

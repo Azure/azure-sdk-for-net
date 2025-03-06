@@ -20,8 +20,8 @@ ProjectClient project = new();
 List<ChatMessage> conversation = [];
 
 ChatProcessor processor = new(
-    project.GetAzureOpenAIChatClient(),
-    project.GetAzureOpenAIEmbeddingClient(),
+    project.GetOpenAIChatClient(),
+    project.GetOpenAIEmbeddingClient(),
     tools
 );
 

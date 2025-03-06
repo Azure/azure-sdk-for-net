@@ -23,7 +23,7 @@ public class E2ETests
         if (infra.TryExecuteCommand([arg])) return;
 
         ProjectClient project = new();
-        ChatClient chat = project.GetAzureOpenAIChatClient();
+        ChatClient chat = project.GetOpenAIChatClient();
     }
 
     [TestCase("-bicep")]

@@ -15,8 +15,8 @@ infrastructure.AddFeature(new OpenAIEmbeddingFeature("text-embedding-ada-002", "
 if (infrastructure.TryExecuteCommand(args)) return;
 
 ProjectClient project = new();
-ChatClient chat = project.GetAzureOpenAIChatClient();
-EmbeddingClient embeddings = project.GetAzureOpenAIEmbeddingClient();
+ChatClient chat = project.GetOpenAIChatClient();
+EmbeddingClient embeddings = project.GetOpenAIEmbeddingClient();
 EmbeddingsVectorbase vectorDb = new(embeddings);
 List<ChatMessage> conversation = [];
 ChatTools tools = new ChatTools(typeof(Tools));

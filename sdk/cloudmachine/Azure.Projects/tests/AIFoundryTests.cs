@@ -37,8 +37,8 @@ public partial class AIFoundryTests : SamplesBase<AzureProjectsTestEnvironment>
         EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
 
         // Azure OpenAI Clients using connections API
-        ChatClient openAIChatClient = client.GetAzureOpenAIChatClient("gpt-4o-mini");
-        EmbeddingClient openAIEmbeddingsClient = client.GetAzureOpenAIEmbeddingClient("text-embedding-ada-002");
+        ChatClient openAIChatClient = client.GetOpenAIChatClient("gpt-4o-mini");
+        EmbeddingClient openAIEmbeddingsClient = client.GetOpenAIEmbeddingClient("text-embedding-ada-002");
 
         // Azure AI Search Clients using connections API
         SearchClient searchClient = client.GetSearchClient("index");
@@ -129,7 +129,7 @@ public partial class AIFoundryTests : SamplesBase<AzureProjectsTestEnvironment>
     {
         var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         AIFoundryClient client = new AIFoundryClient(connectionString);
-        ChatClient chatClient = client.GetAzureOpenAIChatClient("gpt-4o-mini");
+        ChatClient chatClient = client.GetOpenAIChatClient("gpt-4o-mini");
 
         ChatCompletion completion = chatClient.CompleteChat(
             [
@@ -159,8 +159,8 @@ public partial class AIFoundryTests : SamplesBase<AzureProjectsTestEnvironment>
         EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
 
         // Azure OpenAI Clients using connections API
-        ChatClient openAIChatClient = client.GetAzureOpenAIChatClient("gpt-4o-mini");
-        EmbeddingClient openAIEmbeddingsClient = client.GetAzureOpenAIEmbeddingClient("text-embedding-ada-002");
+        ChatClient openAIChatClient = client.GetOpenAIChatClient("gpt-4o-mini");
+        EmbeddingClient openAIEmbeddingsClient = client.GetOpenAIEmbeddingClient("text-embedding-ada-002");
 
         // Azure AI Search Clients using connections API
         SearchClient searchClient = client.GetSearchClient("index");
