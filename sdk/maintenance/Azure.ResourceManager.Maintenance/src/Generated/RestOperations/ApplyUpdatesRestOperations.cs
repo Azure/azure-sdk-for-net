@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 200:
                     {
                         MaintenanceApplyUpdateData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 200:
                     {
                         MaintenanceApplyUpdateData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 200:
                     {
                         MaintenanceApplyUpdateData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 200:
                     {
                         MaintenanceApplyUpdateData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 201:
                     {
                         MaintenanceApplyUpdateData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 201:
                     {
                         MaintenanceApplyUpdateData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 201:
                     {
                         MaintenanceApplyUpdateData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 201:
                     {
                         MaintenanceApplyUpdateData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 201:
                     {
                         MaintenanceApplyUpdateData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 201:
                     {
                         MaintenanceApplyUpdateData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 200:
                     {
                         MaintenanceApplyUpdateListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MaintenanceApplyUpdateListResult.DeserializeMaintenanceApplyUpdateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 200:
                     {
                         MaintenanceApplyUpdateListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MaintenanceApplyUpdateListResult.DeserializeMaintenanceApplyUpdateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

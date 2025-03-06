@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 200:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 200:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 201:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 201:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 200:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 200:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 200:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 200:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 201:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 201:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 200:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 200:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 200:
                     {
                         MaintenanceConfigurationAssignmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MaintenanceConfigurationAssignmentListResult.DeserializeMaintenanceConfigurationAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 200:
                     {
                         MaintenanceConfigurationAssignmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MaintenanceConfigurationAssignmentListResult.DeserializeMaintenanceConfigurationAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1002,7 +1002,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 200:
                     {
                         MaintenanceConfigurationAssignmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MaintenanceConfigurationAssignmentListResult.DeserializeMaintenanceConfigurationAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1035,7 +1035,7 @@ namespace Azure.ResourceManager.Maintenance
                 case 200:
                     {
                         MaintenanceConfigurationAssignmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MaintenanceConfigurationAssignmentListResult.DeserializeMaintenanceConfigurationAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

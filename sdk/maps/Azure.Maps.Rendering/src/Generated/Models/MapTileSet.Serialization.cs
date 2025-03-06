@@ -187,7 +187,7 @@ namespace Azure.Maps.Rendering
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static MapTileSet FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeMapTileSet(document.RootElement);
         }
     }

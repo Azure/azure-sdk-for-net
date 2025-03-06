@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.HealthBot
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHealthBotData(document.RootElement, options);
                     }
                 default:

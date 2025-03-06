@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.HybridCompute
     {
         MachineAssessPatchesResult IOperationSource<MachineAssessPatchesResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return MachineAssessPatchesResult.DeserializeMachineAssessPatchesResult(document.RootElement);
         }
 
         async ValueTask<MachineAssessPatchesResult> IOperationSource<MachineAssessPatchesResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return MachineAssessPatchesResult.DeserializeMachineAssessPatchesResult(document.RootElement);
         }
     }
