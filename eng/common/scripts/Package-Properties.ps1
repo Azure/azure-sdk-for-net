@@ -207,9 +207,11 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     # To avoid this without wonky changes to the detection algorithm, we simply sort our files by their depth, so we will always
     # detect direct package changes first!
     $targetedFiles = $targetedFiles | Sort-Object { ($_.Split("/").Count) } -Descending
+    $pkgCounter = 1
 
     # this is the primary loop that identifies the packages that have changes
     foreach ($pkg in $allPackageProperties) {
+        Write-Host "Processing changed files against $($pkg.Name). $pkgCounter of $($allPackageProperties.Count)."
         $pkgDirectory = Resolve-Path "$($pkg.DirectoryPath)"
         $lookupKey = ($pkg.DirectoryPath).Replace($RepoRoot, "").TrimStart('\/')
         $lookup[$lookupKey] = $pkg
@@ -315,6 +317,8 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                 break
             }
         }
+
+        $pkgCounter++
     }
 
     # add all of the packages that were added purely for validation purposes
