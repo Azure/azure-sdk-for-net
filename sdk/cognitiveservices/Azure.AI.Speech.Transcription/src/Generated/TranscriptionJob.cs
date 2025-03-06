@@ -128,8 +128,6 @@ namespace Azure.AI.Speech.Transcription
         public TranscriptionLinks Links { get; set; }
         /// <summary> TranscriptionProperties. </summary>
         public TranscriptionProperties Properties { get; set; }
-        /// <summary> The id of this entity. </summary>
-        public string Id { get; }
         /// <summary> The location of this entity. </summary>
         public Uri Self { get; }
         /// <summary> EntityReference. </summary>
