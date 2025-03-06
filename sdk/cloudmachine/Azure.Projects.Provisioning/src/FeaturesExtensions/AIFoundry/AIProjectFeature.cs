@@ -2,13 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using Azure.Projects.Core;
-using Azure.Core;
 using Azure.Identity;
+using Azure.Projects.Core;
 using Azure.Provisioning.AIFoundry;
 using Azure.Provisioning.Primitives;
-using System.ClientModel.Primitives;
 
 namespace Azure.Projects.AIFoundry
 {
@@ -47,18 +46,10 @@ namespace Azure.Projects.AIFoundry
 
         public List<ClientConnection> Connections { get; set; } = new List<ClientConnection>();
 
-        /// <summary>
-        /// Emit the Foundry connection(s) into the shared <see cref="ConnectionCollection"/>.
-        /// </summary>
-        /// <param name="connections">The global collection of <see cref="ClientConnection"/> objects for this project. </param>
-        /// <param name="cmId">The unique AzureProject ID</param>
-        protected internal override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
+        private  void EmitConnections(ICollection<ClientConnection> connections, string cmId)
         {
             if (_connectionString != null)
             {
-                const string foundryId = "Azure.AI.Projects.AIProjectClient";
-                connections.Add(new ClientConnection(foundryId, _connectionString));
-
                 var foundryConnections = new AIFoundryConnections(_connectionString, new DefaultAzureCredential());
 
                 // Add OpenAI connections
@@ -80,22 +71,28 @@ namespace Azure.Projects.AIFoundry
         /// <summary>
         /// Emit any necessary resources for provisioning (currently no-op).
         /// </summary>
-        /// <param name="cm">The ProjectInfrastructure context.</param>
+        /// <param name="infrastructure">The ProjectInfrastructure context.</param>
         /// <returns>A placeholder or no-op resource, as provisioning is out-of-band for now.</returns>
-        protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
+        protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
         {
-            var cmId = cm.ProjectId;
+            var cmId = infrastructure.ProjectId;
             AIFoundryHubCdk hub = new($"{cmId}_hub", $"{cmId}_hub");
             AIFoundryProjectCdk project = new($"{cmId}_project", $"{cmId}_project", hub);
 
-            cm.AddResource(hub);
-            cm.AddResource(project);
+            infrastructure.AddConstruct(hub);
+            infrastructure.AddConstruct(project);
 
+            EmitConnections(Connections, cmId);
             for (int i = 0; i < Connections.Count; i++)
             {
                 ClientConnection connection = Connections[i];
                 AIFoundryConnectionCdk connectionCdk = new($"{cmId}connection{i}", connection.Id, connection.Locator, project);
-                cm.AddResource(connectionCdk);
+                infrastructure.AddConstruct(connectionCdk);
+            }
+
+            if (_connectionString != null)
+            {
+                EmitConnection(infrastructure, "Azure.AI.Projects.AIProjectClient", _connectionString);
             }
 
             return project;

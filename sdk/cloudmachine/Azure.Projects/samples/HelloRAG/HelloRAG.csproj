@@ -14,5 +14,11 @@
     <ProjectReference Include="..\..\src\Azure.Projects.csproj" />
     <ProjectReference Include="..\..\..\Azure.Projects.Provisioning\src\Azure.Projects.Provisioning.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   
 </Project>

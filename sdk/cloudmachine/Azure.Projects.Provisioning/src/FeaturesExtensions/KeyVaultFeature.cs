@@ -1,13 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using Azure.Projects.Core;
-using Azure.Core;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.KeyVault;
 using Azure.Provisioning.Primitives;
-using System.ClientModel.Primitives;
 
 namespace Azure.Projects.KeyVault;
 
@@ -21,15 +18,10 @@ public class KeyVaultFeature : AzureProjectFeature
         Sku = sku;
     }
 
-    protected internal override void EmitConnections(ICollection<System.ClientModel.Primitives.ClientConnection> connections, string cmId)
-    {
-        connections.Add(new ClientConnection("Azure.Security.KeyVault.Secrets.SecretClient", $"https://{cmId}.vault.azure.net/"));
-    }
-
     protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
         // Add a KeyVault to the infrastructure.
-        KeyVaultService keyVaultResource = new("cm_kv")
+        KeyVaultService kv = new("cm_kv")
         {
             Name = infrastructure.ProjectId,
             Properties =
@@ -49,11 +41,19 @@ public class KeyVaultFeature : AzureProjectFeature
                     ]
                 },
         };
-        infrastructure.AddResource(keyVaultResource);
+        infrastructure.AddConstruct(kv);
 
-        FeatureRole kvAdmin = new(KeyVaultBuiltInRole.GetBuiltInRoleName(KeyVaultBuiltInRole.KeyVaultAdministrator), KeyVaultBuiltInRole.KeyVaultAdministrator.ToString());
-        RequiredSystemRoles.Add(keyVaultResource, [kvAdmin]);
+        infrastructure.AddSystemRole(
+            kv,
+            KeyVaultBuiltInRole.GetBuiltInRoleName(KeyVaultBuiltInRole.KeyVaultAdministrator),
+            KeyVaultBuiltInRole.KeyVaultAdministrator.ToString()
+        );
 
-        return keyVaultResource;
+        EmitConnection(infrastructure,
+            "Azure.Security.KeyVault.Secrets.SecretClient",
+            $"https://{infrastructure.ProjectId}.vault.azure.net/"
+        );
+
+        return kv;
     }
 }

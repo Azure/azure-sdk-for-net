@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using System.Linq;
 using Azure.Provisioning;
+using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
-using Azure.Provisioning.Expressions;
-using System.Linq;
 
 namespace Azure.Projects;
 
@@ -19,12 +19,6 @@ public static class Azd
 {
     private const string MainBicepName = "main";
     private const string ResourceGroupVersion = "2024-03-01";
-
-    public static void Init(ProjectClient client, string? infraDirectory = default)
-    {
-        ProjectInfrastructure infra = client.GetInfrastructure();
-        Init(infra, infraDirectory);
-    }
 
     public static void Init(ProjectInfrastructure infra, string? infraDirectory = default)
     {

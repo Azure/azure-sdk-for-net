@@ -16,6 +16,7 @@ using Azure.Search.Documents.Indexes;
 using NUnit.Framework;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
+using Azure.AI.OpenAI;
 
 namespace Azure.Projects.Tests;
 
@@ -36,8 +37,8 @@ public partial class AIFoundryTests : SamplesBase<AzureProjectsTestEnvironment>
         EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
 
         // Azure OpenAI Clients using connections API
-        ChatClient openAIChatClient = client.GetOpenAIChatClient("gpt-4o-mini");
-        EmbeddingClient openAIEmbeddingsClient = client.GetOpenAIEmbeddingsClient("text-embedding-ada-002");
+        ChatClient openAIChatClient = client.GetAzureOpenAIChatClient("gpt-4o-mini");
+        EmbeddingClient openAIEmbeddingsClient = client.GetAzureOpenAIEmbeddingClient("text-embedding-ada-002");
 
         // Azure AI Search Clients using connections API
         SearchClient searchClient = client.GetSearchClient("index");
@@ -128,7 +129,7 @@ public partial class AIFoundryTests : SamplesBase<AzureProjectsTestEnvironment>
     {
         var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         AIFoundryClient client = new AIFoundryClient(connectionString);
-        ChatClient chatClient = client.GetOpenAIChatClient("gpt-4o-mini");
+        ChatClient chatClient = client.GetAzureOpenAIChatClient("gpt-4o-mini");
 
         ChatCompletion completion = chatClient.CompleteChat(
             [
@@ -147,7 +148,7 @@ public partial class AIFoundryTests : SamplesBase<AzureProjectsTestEnvironment>
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         infra.AddFeature(new AIProjectFeature(connectionString));
 
-        ProjectClient client = infra.GetClient();
+        ProjectClient client = new();
 
         // Azure AI Project clients
         AgentsClient agents = client.GetAgentsClient();
@@ -158,8 +159,8 @@ public partial class AIFoundryTests : SamplesBase<AzureProjectsTestEnvironment>
         EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
 
         // Azure OpenAI Clients using connections API
-        ChatClient openAIChatClient = client.GetOpenAIChatClient("gpt-4o-mini");
-        EmbeddingClient openAIEmbeddingsClient = client.GetOpenAIEmbeddingsClient("text-embedding-ada-002");
+        ChatClient openAIChatClient = client.GetAzureOpenAIChatClient("gpt-4o-mini");
+        EmbeddingClient openAIEmbeddingsClient = client.GetAzureOpenAIEmbeddingClient("text-embedding-ada-002");
 
         // Azure AI Search Clients using connections API
         SearchClient searchClient = client.GetSearchClient("index");
