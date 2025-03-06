@@ -16,6 +16,10 @@
 - The new InterruptAudioAnnounce API now allows for the interruption of hold audio
 - With the InterruptHoldAudio option in PlayOptions, it is now possible to interrupt the hold audio.
 - Events now include ResultInformation, which provides more details on the success or failure of the events.
+- Added support for Teams multipersona users in add participant, transfer, and redirect scenarios in OPS calls
+- Added ability to send custom calling context when answering calls
+- Added TeamsAppSource for use when creating outbound OPS calls
+- Recording with the call connection ID is now supported. OPS calls can be recorded using the call connection ID.
 
 ### Breaking Changes
 
