@@ -85,6 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                     ? path
                     : path + queryString;
 
+            // TODO: THIS NEEDS TO BE INVETIGATED. DISTRO SHOULD BE DISABLING REDACTION.
             string expectedQueryString = queryString is null
                     ? string.Empty
 #if NET9_0_OR_GREATER //Starting with .NET 9, HttpClient library performs redaction by default
