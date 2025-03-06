@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
-#if NET6_0_OR_GREATER
+#if NET
 // "Source Generation" is feature added to System.Text.Json in .NET 6.0.
 // This is a performance optimization that avoids runtime reflection when performing serialization.
 // Serialization metadata will be computed at compile-time and included in the assembly.

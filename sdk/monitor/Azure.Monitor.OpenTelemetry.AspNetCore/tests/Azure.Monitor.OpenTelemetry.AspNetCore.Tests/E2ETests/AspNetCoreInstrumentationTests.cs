@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#if !NETFRAMEWORK
+#if NET
 using System;
 using System.Collections.Generic;
 using System.Data;
