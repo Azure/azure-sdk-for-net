@@ -45,6 +45,7 @@ namespace Microsoft.Azure.WebJobs
         private readonly string _tableName;
         private readonly string _partitionKey;
         private readonly string _rowKey;
+        private readonly string _enableRowKeyForDynamicObject;
 
         /// <summary>Initializes a new instance of the <see cref="TableAttribute"/> class.</summary>
         /// <param name="tableName">The name of the table to which to bind.</param>
@@ -71,6 +72,19 @@ namespace Microsoft.Azure.WebJobs
             _tableName = tableName;
             _partitionKey = partitionKey;
             _rowKey = rowKey;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="TableAttribute"/> class.</summary>
+        /// <param name="tableName">The name of the table containing the entity.</param>
+        /// <param name="partitionKey">The partition key of the entity.</param>
+        /// <param name="rowKey">The row key of the entity.</param>
+        /// <param name="enableRowKeyForDynamicObject">The row key of the entity.</param>
+        public TableAttribute(string tableName, string partitionKey, string rowKey, string enableRowKeyForDynamicObject)
+        {
+            _tableName = tableName;
+            _partitionKey = partitionKey;
+            _rowKey = rowKey;
+            _enableRowKeyForDynamicObject = enableRowKeyForDynamicObject;
         }
 
         /// <summary>Gets the name of the table to which to bind.</summary>
@@ -127,5 +141,11 @@ namespace Microsoft.Azure.WebJobs
         /// Gets or sets the app setting name that contains the Azure Storage or Azure Cosmos connection string.
         /// </summary>
         public string Connection { get; set; }
+
+        /// <summary>
+        /// Gets or sets the value to consider row key for dynamic object.
+        /// </summary>
+        [AutoResolve]
+        public string enableRowKeyForDynamicObject => _enableRowKeyForDynamicObject;
     }
 }
