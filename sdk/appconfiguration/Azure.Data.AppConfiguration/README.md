@@ -113,6 +113,10 @@ The following sections provide several code snippets covering some of the most c
 * [Archive a Snapshot](#archive-a-snapshot)
 * [Recover a snapshot](#recover-a-snapshot)
 * [Retrieve all Snapshots](#retrieve-all-snapshots)
+* [Create a Feature Flag](#create-a-feature-flag)
+* [Retrieve a Feature Flag](#retrieve-a-feature-flag)
+* [Update an existing Feature Flag](#update-an-existing-feature-flag)
+* [Delete a Feature Flag](#delete-a-feature-flag)
 
 ### Create a Configuration Setting
 
@@ -214,6 +218,51 @@ foreach (var item in client.GetSnapshots(new SnapshotSelector()))
     Console.WriteLine($"Retrieved configuration snapshot: {item.Name}, status {item.Status}");
 }
 Console.WriteLine($"Total number of snapshots retrieved: {count}");
+```
+
+### Create a Feature Flag
+
+Create a Feature Flag to be stored in the Configuration Store.
+
+```C# Snippet:CreateFeatureFlag
+string connectionString = "<connection_string>";
+var client = new ConfigurationClient(connectionString);
+var featureFlagToCreate = new FeatureFlag() {
+    Id = "my_flag"
+};
+FeatureFlag featureFlag = client.AddOrReplaceFeatureFlag(featureFlagToCreate);
+```
+
+### Retrieve a Feature Flag
+
+Retrieve a previously stored FeatureFlag by calling GetFeatureFlag.  This snippet assumes the flag "my_flag" exists in the configuration store.
+
+```C# Snippet:GetFeatureFlag
+string connectionString = "<connection_string>";
+var client = new ConfigurationClient(connectionString);
+FeatureFlag featureFlag = client.GetFeatureFlag("my_flag");
+```
+
+### Enable an existing Feature Flag
+
+Update an existing FeatureFlag by calling AddOrReplaceFeatureFlag.  This snippet assumes the flag "my_flag" exists in the configuration store.
+
+```C# Snippet:UpdateFeatureFlag
+string connectionString = "<connection_string>";
+var client = new ConfigurationClient(connectionString);
+FeatureFlag featureFlag = client.GetFeatureFlag("my_flag");
+featureFlag.Enabled = true;
+featureFlag = client.AddOrReplaceFeatureFlag(featureFlag);
+```
+
+### Delete a Feature Flag
+
+Delete an existing Feature Flag by calling DeleteFeatureFlag.  This snippet assumes the flag "my_flag" exists in the configuration store.
+
+```C# Snippet:DeleteFeatureFlag
+string connectionString = "<connection_string>";
+var client = new ConfigurationClient(connectionString);
+client.DeleteFeatureFlag("my_flag");
 ```
 
 ## Troubleshooting
