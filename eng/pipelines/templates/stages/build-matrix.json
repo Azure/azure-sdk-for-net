@@ -2,7 +2,7 @@
   "displayNames": {},
   "matrix": {
     "Agent": {
-      "PRBatch": {
+      "PR": {
         "OSVmImage": "env:WINDOWSVMIMAGE",
         "Pool": "env:WINDOWSPOOL"
       }
