@@ -77,7 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             Assert.True(dependencyDocument.Extension_IsSuccess);
         }
 
-#if !NET462
+#if NET
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
