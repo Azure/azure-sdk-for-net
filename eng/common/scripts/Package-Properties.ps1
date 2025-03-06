@@ -198,6 +198,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
 
     $additionalValidationPackages = @()
     $lookup = @{}
+    $directoryIndex = @{}
 
     # Sort so that we very quickly find any directly changed packages before hitting service level changes.
     # This is important because due to the way we traverse the changed files, the instant we evaluate a pkg
@@ -279,7 +280,15 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                     break
                 }
 
-                $soleCIYml = (Get-ChildItem -Path $directory -Filter "ci*.yml" -File).Count -eq 1
+                # this GCI is very expensive, so we want to cache the result
+                $soleCIYml = $true
+                if ($directoryIndex[$directory]) {
+                    $soleCIYml = $directoryIndex[$directory]
+                }
+                else {
+                    $soleCIYml = (Get-ChildItem -Path $directory -Filter "ci*.yml" -File).Count -eq 1
+                    $directoryIndex[$directory] = $soleCIYml
+                }
 
                 if ($soleCIYml -and $filePath.Replace("`\", "/").StartsWith($directory)) {
                     if (-not $shouldInclude) {
