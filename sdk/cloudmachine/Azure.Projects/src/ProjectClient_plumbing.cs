@@ -20,5 +20,5 @@ public partial class ProjectClient
 
     /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override string ToString() => Id;
+    public override string ToString() => ProjectId;
 }

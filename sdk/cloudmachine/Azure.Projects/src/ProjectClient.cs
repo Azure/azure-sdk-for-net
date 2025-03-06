@@ -3,7 +3,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.Data.AppConfiguration;
@@ -17,24 +16,26 @@ namespace Azure.Projects;
 public partial class ProjectClient : ConnectionProvider
 {
     private readonly ConfigurationClient _config;
+    private readonly TokenCredential _credential = BuildCredential(default);
 
     /// <summary>
     /// The project ID.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public string Id { get; }
-
-    private readonly TokenCredential Credential = BuildCredential(default);
+    public string ProjectId { get; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ProjectClient"/> class for mocking purposes..
+    /// Initializes a new instance of the <see cref="ProjectClient"/>.
     /// </summary>
     public ProjectClient()
     {
-        Id = ReadOrCreateProjectId();
+        // TODO: should it ever create?
+        ProjectId = ReadOrCreateProjectId();
+
+        _config = new(new Uri($"https://{ProjectId}.azconfig.io"), _credential);
+
         Messaging = new MessagingServices(this);
         Storage = new StorageServices(this);
-        _config = new(new Uri($"https://{Id}.azconfig.io"), Credential);
     }
 
     /// <summary>

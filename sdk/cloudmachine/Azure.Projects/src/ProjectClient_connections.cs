@@ -5,9 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
 using Azure.Data.AppConfiguration;
-using Azure.Identity;
 
 namespace Azure.Projects;
 
@@ -36,7 +34,7 @@ public partial class ProjectClient : ConnectionProvider
         {
             ConfigurationSetting setting = _config.GetConfigurationSetting(connectionId);
             string value = setting.Value;
-            ClientConnection connetion = new(connectionId, value, Credential);
+            ClientConnection connetion = new(connectionId, value, _credential);
             _connectionCache.Add(connetion);
             return connetion;
         }
