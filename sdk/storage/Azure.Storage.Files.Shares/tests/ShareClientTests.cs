@@ -119,6 +119,28 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
+        [Test]
+        public void Ctor_ConnectionString_CustomUri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var blobEndpoint = new Uri("http://customdomain/" + accountName);
+            var blobSecondaryEndpoint = new Uri("http://customdomain/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+
+            var filesystemName = "filesystemName";
+
+            ShareClient share = new ShareClient(connectionString.ToString(true), filesystemName);
+
+            Assert.AreEqual(filesystemName, builder.ShareName);
+            Assert.AreEqual("", builder.ShareName);
+            Assert.AreEqual(filesystemName, share.Name);
+            Assert.AreEqual(accountName, share.AccountName);
+        }
+
         [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {

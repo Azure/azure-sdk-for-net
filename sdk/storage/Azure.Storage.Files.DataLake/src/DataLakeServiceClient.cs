@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -177,6 +176,7 @@ namespace Azure.Storage.Files.DataLake
                 customerProvidedKey: options.CustomerProvidedKey);
 
             _uri = conn.BlobEndpoint;
+            _accountName = conn.AccountName;
             _blobUri = new DataLakeUriBuilder(_uri).ToBlobUri();
 
             _blobServiceClient = BlobServiceClientInternals.Create(

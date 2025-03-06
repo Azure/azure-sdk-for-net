@@ -4,19 +4,15 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.DataLake.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using System.Text.Json;
 using System.Collections.Generic;
-using Azure.Storage.Shared;
 using Azure.Storage.Sas;
 using System.ComponentModel;
-using static Azure.Storage.Constants.Sas;
 using Azure.Storage.Common;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -237,6 +233,7 @@ namespace Azure.Storage.Files.DataLake
             _uri = uriBuilder.ToUri();
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
+            _accountName = conn.AccountName;
 
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
@@ -594,8 +591,8 @@ namespace Azure.Storage.Files.DataLake
             if (_name == null || _accountName == null)
             {
                 var builder = new DataLakeUriBuilder(Uri);
-                _name = builder.FileSystemName;
-                _accountName = builder.AccountName;
+                _name ??= builder.FileSystemName;
+                _accountName ??= builder.AccountName;
             }
         }
 

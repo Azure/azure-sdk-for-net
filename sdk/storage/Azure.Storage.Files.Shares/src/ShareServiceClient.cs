@@ -130,6 +130,7 @@ namespace Azure.Storage.Files.Shares
             options ??= new ShareClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
             _uri = conn.FileEndpoint;
+            _accountName = conn.AccountName;
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,

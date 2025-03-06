@@ -40,7 +40,24 @@ namespace Azure.Storage.Files.Shares.Tests
 
             Assert.AreEqual("", builder.ShareName);
             Assert.AreEqual("", builder.DirectoryOrFilePath);
-            //Assert.AreEqual("accountName", builder.AccountName);
+            Assert.AreEqual(accountName, builder.AccountName);
+        }
+
+        [Test]
+        public void Ctor_ConnectionString_CustomUri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var fileEndpoint = new Uri("http://customdomain/" + accountName);
+            var fileSecondaryEndpoint = new Uri("http://customdomain/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
+
+            ShareServiceClient service = new ShareServiceClient(connectionString.ToString(true));
+
+            Assert.AreEqual(accountName, service.AccountName);
         }
 
         [RecordedTest]
