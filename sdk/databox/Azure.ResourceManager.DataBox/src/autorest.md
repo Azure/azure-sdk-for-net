@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: DataBox
 namespace: Azure.ResourceManager.DataBox
-require: https://github.com/Azure/azure-rest-api-specs/blob/8e20af0463637085b47a018ec9c8372a2242bdac/specification/databox/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/8a0168458930c86636a76bcd7acfdc9c81291bfc/specification/databox/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -143,6 +143,8 @@ rename-mapping:
   JobSecrets.dcAccessSecurityCode: DataCenterAccessSecurityCode
   MarkDevicesShippedRequest.deliverToDcPackageDetails: DeliverToDataCenterPackageDetails
   LastMitigationActionOnJob.actionDateTimeInUtc: ActionPerformedOn
+  TransportAvailabilityRequest: TransportAvailabilityContent
+  DeviceCapabilityRequest: DeviceCapabilityContent
 
 override-operation-name:
   Service_ListAvailableSkusByResourceGroup: GetAvailableSkus

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataCenterAddressContent : IUtf8JsonSerializable, IJsonModel<DataCenterAddressContent>
+    public partial class TransportAvailabilityContent : IUtf8JsonSerializable, IJsonModel<TransportAvailabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCenterAddressContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TransportAvailabilityContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DataCenterAddressContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TransportAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,16 +28,17 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCenterAddressContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TransportAvailabilityContent)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("storageLocation"u8);
-            writer.WriteStringValue(StorageLocation);
-            writer.WritePropertyName("skuName"u8);
-            writer.WriteStringValue(SkuName.ToSerialString());
+            if (Optional.IsDefined(SkuName))
+            {
+                writer.WritePropertyName("skuName"u8);
+                writer.WriteStringValue(SkuName.Value.ToSerialString());
+            }
             if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
@@ -60,19 +61,19 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataCenterAddressContent IJsonModel<DataCenterAddressContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TransportAvailabilityContent IJsonModel<TransportAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCenterAddressContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TransportAvailabilityContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataCenterAddressContent(document.RootElement, options);
+            return DeserializeTransportAvailabilityContent(document.RootElement, options);
         }
 
-        internal static DataCenterAddressContent DeserializeDataCenterAddressContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TransportAvailabilityContent DeserializeTransportAvailabilityContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,20 +81,18 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            AzureLocation storageLocation = default;
-            DataBoxSkuName skuName = default;
+            DataBoxSkuName? skuName = default;
             ModelName? model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageLocation"u8))
-                {
-                    storageLocation = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("skuName"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     skuName = property.Value.GetString().ToDataBoxSkuName();
                     continue;
                 }
@@ -112,38 +111,38 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataCenterAddressContent(storageLocation, skuName, model, serializedAdditionalRawData);
+            return new TransportAvailabilityContent(skuName, model, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DataCenterAddressContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TransportAvailabilityContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCenterAddressContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransportAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DataCenterAddressContent IPersistableModel<DataCenterAddressContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TransportAvailabilityContent IPersistableModel<TransportAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDataCenterAddressContent(document.RootElement, options);
+                        return DeserializeTransportAvailabilityContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCenterAddressContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransportAvailabilityContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DataCenterAddressContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TransportAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> Capacity of the sku. </summary>
-    public partial class DataBoxSkuCapacity
+    /// <summary> Device capabilities for given sku in a region. </summary>
+    internal partial class DeviceCapabilityResponse
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,22 @@ namespace Azure.ResourceManager.DataBox.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxSkuCapacity"/>. </summary>
-        internal DataBoxSkuCapacity()
+        /// <summary> Initializes a new instance of <see cref="DeviceCapabilityResponse"/>. </summary>
+        internal DeviceCapabilityResponse()
         {
+            DeviceCapabilityDetails = new ChangeTrackingList<DeviceCapabilityDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxSkuCapacity"/>. </summary>
-        /// <param name="usable"> Usable capacity in TB. </param>
-        /// <param name="maximum"> Maximum capacity in TB. </param>
-        /// <param name="individualSkuUsable"> Maximum capacity per device in TB. </param>
+        /// <summary> Initializes a new instance of <see cref="DeviceCapabilityResponse"/>. </summary>
+        /// <param name="deviceCapabilityDetails"> List of device capabilities available for a given region and a given sku. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxSkuCapacity(string usable, string maximum, string individualSkuUsable, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeviceCapabilityResponse(IReadOnlyList<DeviceCapabilityDetails> deviceCapabilityDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Usable = usable;
-            Maximum = maximum;
-            IndividualSkuUsable = individualSkuUsable;
+            DeviceCapabilityDetails = deviceCapabilityDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Usable capacity in TB. </summary>
-        public string Usable { get; }
-        /// <summary> Maximum capacity in TB. </summary>
-        public string Maximum { get; }
-        /// <summary> Maximum capacity per device in TB. </summary>
-        public string IndividualSkuUsable { get; }
+        /// <summary> List of device capabilities available for a given region and a given sku. </summary>
+        public IReadOnlyList<DeviceCapabilityDetails> DeviceCapabilityDetails { get; }
     }
 }

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class TransportAvailabilityRequest : IUtf8JsonSerializable, IJsonModel<TransportAvailabilityRequest>
+    public partial class DeviceCapabilityContent : IUtf8JsonSerializable, IJsonModel<DeviceCapabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TransportAvailabilityRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceCapabilityContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TransportAvailabilityRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeviceCapabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,16 +28,21 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceCapabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransportAvailabilityRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceCapabilityContent)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(SkuName))
             {
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Model))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(Model.Value.ToSerialString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,19 +61,19 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        TransportAvailabilityRequest IJsonModel<TransportAvailabilityRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeviceCapabilityContent IJsonModel<DeviceCapabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceCapabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransportAvailabilityRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceCapabilityContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTransportAvailabilityRequest(document.RootElement, options);
+            return DeserializeDeviceCapabilityContent(document.RootElement, options);
         }
 
-        internal static TransportAvailabilityRequest DeserializeTransportAvailabilityRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DeviceCapabilityContent DeserializeDeviceCapabilityContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataBoxSkuName? skuName = default;
+            ModelName? model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,44 +96,53 @@ namespace Azure.ResourceManager.DataBox.Models
                     skuName = property.Value.GetString().ToDataBoxSkuName();
                     continue;
                 }
+                if (property.NameEquals("model"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    model = property.Value.GetString().ToModelName();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TransportAvailabilityRequest(skuName, serializedAdditionalRawData);
+            return new DeviceCapabilityContent(skuName, model, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<TransportAvailabilityRequest>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeviceCapabilityContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceCapabilityContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TransportAvailabilityRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceCapabilityContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TransportAvailabilityRequest IPersistableModel<TransportAvailabilityRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DeviceCapabilityContent IPersistableModel<DeviceCapabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceCapabilityContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeTransportAvailabilityRequest(document.RootElement, options);
+                        return DeserializeDeviceCapabilityContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TransportAvailabilityRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceCapabilityContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TransportAvailabilityRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeviceCapabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

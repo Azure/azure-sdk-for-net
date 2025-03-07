@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> Capacity of the sku. </summary>
-    public partial class DataBoxSkuCapacity
+    /// <summary> Job Delay Notification details. </summary>
+    public partial class JobDelayDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,37 @@ namespace Azure.ResourceManager.DataBox.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxSkuCapacity"/>. </summary>
-        internal DataBoxSkuCapacity()
+        /// <summary> Initializes a new instance of <see cref="JobDelayDetails"/>. </summary>
+        internal JobDelayDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxSkuCapacity"/>. </summary>
-        /// <param name="usable"> Usable capacity in TB. </param>
-        /// <param name="maximum"> Maximum capacity in TB. </param>
-        /// <param name="individualSkuUsable"> Maximum capacity per device in TB. </param>
+        /// <summary> Initializes a new instance of <see cref="JobDelayDetails"/>. </summary>
+        /// <param name="status"> Status of notification. </param>
+        /// <param name="errorCode"> Delay Error code. </param>
+        /// <param name="description"> Description of the delay. </param>
+        /// <param name="startOn"> Timestamp when the delay notification was created. </param>
+        /// <param name="resolutionOn"> Timestamp when the delay notification was resolved. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxSkuCapacity(string usable, string maximum, string individualSkuUsable, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal JobDelayDetails(DelayNotificationStatus? status, PortalDelayErrorCode? errorCode, string description, DateTimeOffset? startOn, DateTimeOffset? resolutionOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Usable = usable;
-            Maximum = maximum;
-            IndividualSkuUsable = individualSkuUsable;
+            Status = status;
+            ErrorCode = errorCode;
+            Description = description;
+            StartOn = startOn;
+            ResolutionOn = resolutionOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Usable capacity in TB. </summary>
-        public string Usable { get; }
-        /// <summary> Maximum capacity in TB. </summary>
-        public string Maximum { get; }
-        /// <summary> Maximum capacity per device in TB. </summary>
-        public string IndividualSkuUsable { get; }
+        /// <summary> Status of notification. </summary>
+        public DelayNotificationStatus? Status { get; }
+        /// <summary> Delay Error code. </summary>
+        public PortalDelayErrorCode? ErrorCode { get; }
+        /// <summary> Description of the delay. </summary>
+        public string Description { get; }
+        /// <summary> Timestamp when the delay notification was created. </summary>
+        public DateTimeOffset? StartOn { get; }
+        /// <summary> Timestamp when the delay notification was resolved. </summary>
+        public DateTimeOffset? ResolutionOn { get; }
     }
 }
