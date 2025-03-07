@@ -1,16 +1,25 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (2025-03-06)
 
 ### Features Added
 
-### Breaking Changes
+- Added new connection management types in the `System.ClientModel.Primitives` namespace:
+  - `ConnectionProvider`: Abstract base class for managing client connections, including retrieval of connection settings and subclient caching.
+  - `ClientConnection`: Readonly struct that encapsulates connection options with support for API key, token, or no authentication.
+  - `ConnectionCollection`: A keyed collection of client connections, supporting JSON serialization and providing an enhanced debugger view.
+  - `ClientCache`: Implements an LRU-based cache for efficient reuse of client instances and optimized retrieval.
 
 ### Bugs Fixed
 
-### Other Changes
+- Removed debugging statement in pipeline creation when applying the `ClientLoggingOptions.AllowedHeaderNames` option.
 
 ## 1.3.0 (2025-02-11)
+
+### Features Added
+
+- Added default logging with sanitization to Event Source.
+  - Added new logging options type to configure logging behavior, disable all logging, or opt to use ILogger instead.
 
 ### Other Changes
 
