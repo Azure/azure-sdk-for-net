@@ -1,7 +1,8 @@
 param (
     [string] $ProjectNames,
     [string] $OutputPath,
-    [string] $PackageInfoFolder
+    [string] $PackageInfoFolder,
+    [bool] $SetOverrideFile
 )
 
 . $PSScriptRoot/generate-dependency-functions.ps1
@@ -27,15 +28,13 @@ $projectsForGeneration = ($changedProjects | ForEach-Object { "`$(RepoRoot)$_" }
 $projectGroups = @()
 $projectGroups += ,$projectsForGeneration
 
-# todo: refactor write-test-dependency-group to take in a list of project files only and generate a single project file
-$outputFile = (Write-Test-Dependency-Group-To-Files -ProjectFileConfigName "packages" -ProjectGroups $projectGroups -MatrixOutputFolder $OutputPath)[0]
-
-# debug, will remove
-Get-ChildItem -Recurse $OutputPath | ForEach-Object { Write-Host "Dumping $($_.FullName)"; Get-Content -Raw -Path $_.FullName | Write-Host }
-
-# the projectlistoverride file must be provided as a relative path
-$relativeOutputPath = [System.IO.Path]::GetRelativePath($RepoRoot, "$OutputPath/$outputFile")
-
-Write-Host "##vso[task.setvariable variable=ProjectListOverrideFile;]$relativeOutputPath"
+if ($SetOverrideFile) {
+    # todo: refactor write-test-dependency-group to take in a list of project files only and generate a single project file
+    $outputFile = (Write-Test-Dependency-Group-To-Files -ProjectFileConfigName "packages" -ProjectGroups $projectGroups -MatrixOutputFolder $OutputPath)[0]
+    Get-ChildItem -Recurse $OutputPath | ForEach-Object { Write-Host "Dumping $($_.FullName)"; Get-Content -Raw -Path $_.FullName | Write-Host }
+    # the projectlistoverride file must be provided as a relative path
+    $relativeOutputPath = [System.IO.Path]::GetRelativePath($RepoRoot, "$OutputPath/$outputFile")
+    Write-Host "##vso[task.setvariable variable=ProjectListOverrideFile;]$relativeOutputPath"
+}
 Write-Host "##vso[task.setvariable variable=ChangedServices;]$changedServices"
 Write-Host "This run is targeting: $ProjectNames in [$changedServices]"
