@@ -128,12 +128,35 @@ class PackageProps {
             if ($ciArtifactResult) {
                 $this.ArtifactDetails = [Hashtable]$ciArtifactResult.ArtifactConfig
 
+                $repoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
+                $ciYamlPath = (Resolve-Path -Path $ciArtifactResult.Location -Relative -RelativeBasePath $repoRoot).TrimStart(".").Replace("`\", "/")
+                $relRoot = [System.IO.Path]::GetDirectoryName($ciYamlPath).Replace("`\", "/")
+
                 if (-not $this.ArtifactDetails["triggeringPaths"]) {
                     $this.ArtifactDetails["triggeringPaths"] = @()
                 }
-                $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
-                $relativePath = (Resolve-Path -Path $ciArtifactResult.Location -Relative -RelativeBasePath $RepoRoot).TrimStart(".").Replace("`\", "/")
-                $this.ArtifactDetails["triggeringPaths"] += $relativePath
+                else {
+                    $adjustedPaths = @()
+
+                    # we need to convert relative references to absolute references within the repo
+                    # this will make it extremely easy to compare triggering paths to files in the deleted+changed file list.
+                    for ($i = 0; $i -lt $this.ArtifactDetails["triggeringPaths"].Count; $i++) {
+                        $currentPath = $this.ArtifactDetails["triggeringPaths"][$i]
+                        $newPath = Join-Path $repoRoot $currentPath
+                        if (!$currentPath.StartsWith("/")) {
+                            $newPath = Join-Path $repoRoot $relRoot $currentPath
+                        }
+                        # it is a possibility that users may have a triggerPath dependency on a file that no longer exists.
+                        # before we resolve it to get rid of possible relative references, we should check if the file exists
+                        # if it doesn't, we should just leave it as is. Otherwise we would _crash_ here when a user accidentally
+                        # left a triggeringPath on a file that had been deleted
+                        if (Test-Path $newPath) {
+                            $adjustedPaths += (Resolve-Path -Path $newPath -Relative -RelativeBasePath $repoRoot).TrimStart(".").Replace("`\", "/")
+                        }
+                    }
+                    $this.ArtifactDetails["triggeringPaths"] = $adjustedPaths
+                }
+                $this.ArtifactDetails["triggeringPaths"] += $ciYamlPath
 
                 $this.CIParameters["CIMatrixConfigs"] = @()
 
@@ -301,20 +324,12 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
             # handle changes to files that are RELATED to each package
             foreach($triggerPath in $triggeringPaths) {
                 $resolvedRelativePath = (Join-Path $RepoRoot $triggerPath)
-                if (!$triggerPath.StartsWith("/")){
-                    $resolvedRelativePath = (Join-Path $RepoRoot "sdk" "$($pkg.ServiceDirectory)" $triggerPath)
+                $includedForValidation = $filePath -like (Join-Path "$resolvedRelativePath" "*")
+                $shouldInclude = $shouldInclude -or $includedForValidation
+                if ($includedForValidation) {
+                    $pkg.IncludedForValidation = $true
                 }
-
-                # if we are including this package due to one of its additional trigger paths, we need
-                # to ensure we're counting it as included for validation, not as an actual package change
-                if ($resolvedRelativePath) {
-                    $includedForValidation = $filePath -like (Join-Path "$resolvedRelativePath" "*")
-                    $shouldInclude = $shouldInclude -or $includedForValidation
-                    if ($includedForValidation) {
-                        $pkg.IncludedForValidation = $true
-                    }
-                    break
-                }
+                break
             }
 
             # handle service-level changes to the ci.yml files
