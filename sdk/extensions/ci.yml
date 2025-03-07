@@ -40,4 +40,4 @@ extends:
     CheckAOTCompat: true
     AOTTestInputs:
     - ArtifactName: Microsoft.Extensions.Azure
-      ExpectedWarningsFilepath: /Microsoft.Extensions.Azure/tests/compatibility/ExpectedAotWarnings.txt
+      ExpectedWarningsFilepath: None

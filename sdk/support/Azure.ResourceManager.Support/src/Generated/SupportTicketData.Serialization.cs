@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.Support
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSupportTicketData(document.RootElement, options);
                     }
                 default:

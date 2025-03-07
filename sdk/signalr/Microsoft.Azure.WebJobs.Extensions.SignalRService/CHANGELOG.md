@@ -1,8 +1,16 @@
 # Release History
 
-## 2.0.0-beta.1 (Unreleased)
+## 2.1.0-beta.1 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 2.0.0 (2025-03-11)
 
 ### Breaking Changes
 * Modify `AddDefaultAuth` method in `SignalRFunctionsHostBuilderExtensions.cs` to use `IServiceCollection` instead of `IFunctionsHostBuilder` to remove the dependency for legacy package `Microsoft.Azure.Functions.Extensions`.

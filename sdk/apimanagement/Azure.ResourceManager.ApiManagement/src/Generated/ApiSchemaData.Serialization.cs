@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Definitions);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Definitions))
+                using (JsonDocument document = JsonDocument.Parse(Definitions, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Components);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Components))
+                using (JsonDocument document = JsonDocument.Parse(Components, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeApiSchemaData(document.RootElement, options);
                     }
                 default:

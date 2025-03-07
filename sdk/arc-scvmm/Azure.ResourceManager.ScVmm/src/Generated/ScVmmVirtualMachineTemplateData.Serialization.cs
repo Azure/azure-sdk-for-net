@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.ScVmm
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeScVmmVirtualMachineTemplateData(document.RootElement, options);
                     }
                 default:
