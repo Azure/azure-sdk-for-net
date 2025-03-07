@@ -326,65 +326,67 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         }
 
         foreach ($file in $targetedFiles) {
-            $pathComponents = $file -split "/"
-
             $filePath = (Join-Path $RepoRoot $file)
 
             # handle direct changes to packages
             $shouldInclude = $filePath -like (Join-Path "$pkgDirectory" "*")
 
-            # handle changes to files that are RELATED to each package
-            foreach($triggerPath in $triggeringPaths) {
-                $resolvedRelativePath = (Join-Path $RepoRoot $triggerPath)
-                $includedForValidation = $filePath -like (Join-Path "$resolvedRelativePath" "*")
-                $shouldInclude = $shouldInclude -or $includedForValidation
-                if ($includedForValidation) {
-                    $pkg.IncludedForValidation = $true
-                }
-                break
-            }
-
-            # handle service-level changes to the ci.yml files
-            # we are using the ci.yml file being added automatically to each artifactdetails as the input
-            # for this task. This is because we can resolve a service directory from the ci.yml, and if
-            # there is a single ci.yml in that directory, we can assume that any file change in that directory
-            # will apply to all packages that exist in that directory.
-            $triggeringCIYmls = $triggeringPaths | Where-Object { $_ -like "*ci*.yml" }
-
-            foreach($yml in $triggeringCIYmls) {
-                # given that this path is coming from the populated triggering paths in the artifact,
-                # we can assume that the path to the ci.yml will successfully resolve.
-                $ciYml = Join-Path $RepoRoot $yml
-                # ensure we terminate the service directory with a /
-                $directory = [System.IO.Path]::GetDirectoryName($ciYml).Replace("`\", "/")
-
-                # we should only continue with this check if the file being changed is "in the service directory"
-                $serviceDirectoryChange = (Split-Path $filePath -Parent).Replace("`\", "/") -eq $directory
-                if (!$serviceDirectoryChange) {
-                    break
-                }
-
-                # this GCI is very expensive, so we want to cache the result
-                $soleCIYml = $true
-                if ($directoryIndex[$directory]) {
-                    $soleCIYml = $directoryIndex[$directory]
-                }
-                else {
-                    $soleCIYml = (Get-ChildItem -Path $directory -Filter "ci*.yml" -File).Count -eq 1
-                    $directoryIndex[$directory] = $soleCIYml
-                }
-
-                if ($soleCIYml -and $filePath.Replace("`\", "/").StartsWith($directory)) {
-                    if (-not $shouldInclude) {
+            # we only need to do additional work for indirect packages if we haven't already decided
+            # to include this package due to this file
+            if (-not $shouldInclude) {
+                # handle changes to files that are RELATED to each package
+                foreach($triggerPath in $triggeringPaths) {
+                    $resolvedRelativePath = (Join-Path $RepoRoot $triggerPath)
+                    $includedForValidation = $filePath -like (Join-Path "$resolvedRelativePath" "*")
+                    $shouldInclude = $shouldInclude -or $includedForValidation
+                    if ($includedForValidation) {
                         $pkg.IncludedForValidation = $true
-                        $shouldInclude = $true
                     }
                     break
                 }
-                else {
-                    # if the ci.yml is not the only file in the directory, we cannot assume that any file changed within the directory that isn't the ci.yml
-                    # should trigger this package
-                    Write-Host "Skipping adding package for file `"$file`" because the ci yml `"$yml`" is not the only file in the service directory `"$directory`""
+
+                # handle service-level changes to the ci.yml files
+                # we are using the ci.yml file being added automatically to each artifactdetails as the input
+                # for this task. This is because we can resolve a service directory from the ci.yml, and if
+                # there is a single ci.yml in that directory, we can assume that any file change in that directory
+                # will apply to all packages that exist in that directory.
+                $triggeringCIYmls = $triggeringPaths | Where-Object { $_ -like "*ci*.yml" }
+
+                foreach($yml in $triggeringCIYmls) {
+                    # given that this path is coming from the populated triggering paths in the artifact,
+                    # we can assume that the path to the ci.yml will successfully resolve.
+                    $ciYml = Join-Path $RepoRoot $yml
+                    # ensure we terminate the service directory with a /
+                    $directory = [System.IO.Path]::GetDirectoryName($ciYml).Replace("`\", "/")
+
+                    # we should only continue with this check if the file being changed is "in the service directory"
+                    $serviceDirectoryChange = (Split-Path $filePath -Parent).Replace("`\", "/") -eq $directory
+                    if (!$serviceDirectoryChange) {
+                        break
+                    }
+
+                    # this GCI is very expensive, so we want to cache the result
+                    $soleCIYml = $true
+                    if ($directoryIndex[$directory]) {
+                        $soleCIYml = $directoryIndex[$directory]
+                    }
+                    else {
+                        $soleCIYml = (Get-ChildItem -Path $directory -Filter "ci*.yml" -File).Count -eq 1
+                        $directoryIndex[$directory] = $soleCIYml
+                    }
+
+                    if ($soleCIYml -and $filePath.Replace("`\", "/").StartsWith($directory)) {
+                        if (-not $shouldInclude) {
+                            $pkg.IncludedForValidation = $true
+                            $shouldInclude = $true
+                        }
+                        break
+                    }
+                    else {
+                        # if the ci.yml is not the only file in the directory, we cannot assume that any file changed within the directory that isn't the ci.yml
+                        # should trigger this package
+                        Write-Host "Skipping adding package for file `"$file`" because the ci yml `"$yml`" is not the only file in the service directory `"$directory`""
+                    }
                 }
             }
 
