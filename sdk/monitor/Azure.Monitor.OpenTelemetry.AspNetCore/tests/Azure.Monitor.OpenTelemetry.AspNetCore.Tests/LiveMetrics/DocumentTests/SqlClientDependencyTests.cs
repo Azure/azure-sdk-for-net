@@ -99,7 +99,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
                 .AddSqlClientInstrumentation(options =>
                 {
                     options.SetDbStatementForText = true;
-                    options.SetDbStatementForStoredProcedure = true;
+                    //options.SetDbStatementForStoredProcedure = true; // TODO: THIS WAS REMOVED: https://github.com/open-telemetry/opentelemetry-dotnet-contrib/pull/2284
                 })
                 .AddInMemoryExporter(exportedActivities)
                 .Build())
@@ -170,7 +170,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
                 .AddSqlClientInstrumentation(options =>
                 {
                     options.SetDbStatementForText = true;
-                    options.SetDbStatementForStoredProcedure = true;
+                    //options.SetDbStatementForStoredProcedure = true;  // TODO: THIS WAS REMOVED: https://github.com/open-telemetry/opentelemetry-dotnet-contrib/pull/2284
                     options.RecordException = recordException;
                 })
                 .AddInMemoryExporter(exportedActivities)
