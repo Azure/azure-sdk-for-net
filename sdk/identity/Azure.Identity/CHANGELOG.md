@@ -1,10 +1,6 @@
 # Release History
 
-## 1.14.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.14.0-beta.2 (2025-03-11)
 
 ### Bugs Fixed
 - `VisualStudioCredential` will now correctly fall through to the next credential in the chain when no account is found by Visual Studio. ([#48464](https://github.com/Azure/azure-sdk-for-net/issues/48464))
