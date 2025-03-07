@@ -6664,8 +6664,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="retryHistory"> Gets the retry histories. </param>
         /// <param name="iterationCount"></param>
         /// <param name="repetitionIndexes"> The repetition indexes. </param>
+        /// <param name="etag"> Etag is property returned in Create/Update/Get response of the workflow, so that customer can supply it in the header to ensure optimistic updates. </param>
         /// <returns> A new <see cref="AppService.WorkflowRunActionRepetitionDefinitionData"/> instance for mocking. </returns>
-        public static WorkflowRunActionRepetitionDefinitionData WorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, WebAppRunActionCorrelation correlation = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string trackingId = null, BinaryData inputs = null, WebAppContentLink inputsLink = null, BinaryData outputs = null, WebAppContentLink outputsLink = null, BinaryData trackedProperties = null, IEnumerable<WebAppRetryHistory> retryHistory = null, int? iterationCount = null, IEnumerable<WorkflowRunActionRepetitionIndex> repetitionIndexes = null)
+        public static WorkflowRunActionRepetitionDefinitionData WorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, WebAppRunActionCorrelation correlation = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string trackingId = null, BinaryData inputs = null, WebAppContentLink inputsLink = null, BinaryData outputs = null, WebAppContentLink outputsLink = null, BinaryData trackedProperties = null, IEnumerable<WebAppRetryHistory> retryHistory = null, int? iterationCount = null, IEnumerable<WorkflowRunActionRepetitionIndex> repetitionIndexes = null, string etag = null)
         {
             tags ??= new Dictionary<string, string>();
             retryHistory ??= new List<WebAppRetryHistory>();
@@ -6693,6 +6694,7 @@ namespace Azure.ResourceManager.AppService.Models
                 retryHistory?.ToList(),
                 iterationCount,
                 repetitionIndexes?.ToList(),
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -6704,8 +6706,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The request history properties. </param>
+        /// <param name="etag"> Etag is property returned in Create/Update/Get response of the workflow, so that customer can supply it in the header to ensure optimistic updates. </param>
         /// <returns> A new <see cref="AppService.WebAppRequestHistoryData"/> instance for mocking. </returns>
-        public static WebAppRequestHistoryData WebAppRequestHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WebAppRequestHistoryProperties properties = null)
+        public static WebAppRequestHistoryData WebAppRequestHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WebAppRequestHistoryProperties properties = null, string etag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -6717,6 +6720,7 @@ namespace Azure.ResourceManager.AppService.Models
                 tags,
                 location,
                 properties,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -6918,8 +6922,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="definition"> The definition. </param>
         /// <param name="parameters"> The parameters. </param>
         /// <param name="kind"> The workflow kind. </param>
+        /// <param name="etag"> Etag is property returned in Create/Update/Get response of the workflow, so that customer can supply it in the header to ensure optimistic updates. </param>
         /// <returns> A new <see cref="Models.WorkflowData"/> instance for mocking. </returns>
-        public static WorkflowData WorkflowData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, WorkflowProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, WorkflowState? state = null, string version = null, string accessEndpoint = null, FlowEndpointsConfiguration endpointsConfiguration = null, FlowAccessControlConfiguration accessControl = null, WorkflowSku sku = null, WorkflowResourceReference integrationAccount = null, WorkflowResourceReference integrationServiceEnvironment = null, BinaryData definition = null, IDictionary<string, WorkflowContent> parameters = null, AppServiceKind? kind = null)
+        public static WorkflowData WorkflowData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, WorkflowProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, WorkflowState? state = null, string version = null, string accessEndpoint = null, FlowEndpointsConfiguration endpointsConfiguration = null, FlowAccessControlConfiguration accessControl = null, WorkflowSku sku = null, WorkflowResourceReference integrationAccount = null, WorkflowResourceReference integrationServiceEnvironment = null, BinaryData definition = null, IDictionary<string, WorkflowContent> parameters = null, AppServiceKind? kind = null, string etag = null)
         {
             tags ??= new Dictionary<string, string>();
             parameters ??= new Dictionary<string, WorkflowContent>();
@@ -6946,6 +6951,7 @@ namespace Azure.ResourceManager.AppService.Models
                 definition,
                 parameters,
                 kind,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -6977,8 +6983,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="integrationAccount"> The integration account. </param>
         /// <param name="definition"> The definition. </param>
         /// <param name="parameters"> The parameters. </param>
+        /// <param name="etag"> Etag is property returned in Create/Update/Get response of the workflow, so that customer can supply it in the header to ensure optimistic updates. </param>
         /// <returns> A new <see cref="AppService.WorkflowVersionData"/> instance for mocking. </returns>
-        public static WorkflowVersionData WorkflowVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WorkflowProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, WorkflowState? state = null, string version = null, string accessEndpoint = null, FlowEndpointsConfiguration endpointsConfiguration = null, FlowAccessControlConfiguration accessControl = null, WorkflowSku sku = null, WorkflowResourceReference integrationAccount = null, BinaryData definition = null, IDictionary<string, WorkflowContent> parameters = null)
+        public static WorkflowVersionData WorkflowVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WorkflowProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, WorkflowState? state = null, string version = null, string accessEndpoint = null, FlowEndpointsConfiguration endpointsConfiguration = null, FlowAccessControlConfiguration accessControl = null, WorkflowSku sku = null, WorkflowResourceReference integrationAccount = null, BinaryData definition = null, IDictionary<string, WorkflowContent> parameters = null, string etag = null)
         {
             tags ??= new Dictionary<string, string>();
             parameters ??= new Dictionary<string, WorkflowContent>();
@@ -7002,6 +7009,7 @@ namespace Azure.ResourceManager.AppService.Models
                 integrationAccount,
                 definition,
                 parameters,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -7023,6 +7031,105 @@ namespace Azure.ResourceManager.AppService.Models
                 privateLinkServiceConnectionState,
                 kind,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="startOn"> The start time of the workflow scope repetition. </param>
+        /// <param name="endOn"> The end time of the workflow scope repetition. </param>
+        /// <param name="correlation"> The correlation properties. </param>
+        /// <param name="status"> The status of the workflow scope repetition. </param>
+        /// <param name="code"> The workflow scope repetition code. </param>
+        /// <param name="error"> Anything. </param>
+        /// <param name="trackingId"> Gets the tracking id. </param>
+        /// <param name="inputs"> Gets the inputs. </param>
+        /// <param name="inputsLink"> Gets the link to inputs. </param>
+        /// <param name="outputs"> Gets the outputs. </param>
+        /// <param name="outputsLink"> Gets the link to outputs. </param>
+        /// <param name="trackedProperties"> Gets the tracked properties. </param>
+        /// <param name="retryHistory"> Gets the retry histories. </param>
+        /// <param name="iterationCount"></param>
+        /// <param name="repetitionIndexes"> The repetition indexes. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WorkflowRunActionRepetitionDefinitionData WorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? startOn, DateTimeOffset? endOn, WebAppRunActionCorrelation correlation, WorkflowStatus? status, string code, BinaryData error, string trackingId, BinaryData inputs, WebAppContentLink inputsLink, BinaryData outputs, WebAppContentLink outputsLink, BinaryData trackedProperties, IEnumerable<WebAppRetryHistory> retryHistory, int? iterationCount, IEnumerable<WorkflowRunActionRepetitionIndex> repetitionIndexes)
+        {
+            return WorkflowRunActionRepetitionDefinitionData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, startOn: startOn, endOn: endOn, correlation: correlation, status: status, code: code, error: error, trackingId: trackingId, inputs: inputs, inputsLink: inputsLink, outputs: outputs, outputsLink: outputsLink, trackedProperties: trackedProperties, retryHistory: retryHistory, iterationCount: iterationCount, repetitionIndexes: repetitionIndexes, etag: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.AppService.WebAppRequestHistoryData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The request history properties. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.AppService.WebAppRequestHistoryData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WebAppRequestHistoryData WebAppRequestHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebAppRequestHistoryProperties properties)
+        {
+            return WebAppRequestHistoryData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, properties: properties, etag: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.AppService.Models.WorkflowData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> Managed service identity. </param>
+        /// <param name="provisioningState"> Gets the provisioning state. </param>
+        /// <param name="createdOn"> Gets the created time. </param>
+        /// <param name="changedOn"> Gets the changed time. </param>
+        /// <param name="state"> The state. </param>
+        /// <param name="version"> Gets the version. </param>
+        /// <param name="accessEndpoint"> Gets the access endpoint. </param>
+        /// <param name="endpointsConfiguration"> The endpoints configuration. </param>
+        /// <param name="accessControl"> The access control configuration. </param>
+        /// <param name="sku"> The sku. </param>
+        /// <param name="integrationAccount"> The integration account. </param>
+        /// <param name="integrationServiceEnvironment"> The integration service environment. </param>
+        /// <param name="definition"> The definition. </param>
+        /// <param name="parameters"> The parameters. </param>
+        /// <param name="kind"> The workflow kind. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.AppService.Models.WorkflowData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WorkflowData WorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, WorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, WorkflowSku sku, WorkflowResourceReference integrationAccount, WorkflowResourceReference integrationServiceEnvironment, BinaryData definition, IDictionary<string, WorkflowContent> parameters, AppServiceKind? kind)
+        {
+            return WorkflowData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: identity, provisioningState: provisioningState, createdOn: createdOn, changedOn: changedOn, state: state, version: version, accessEndpoint: accessEndpoint, endpointsConfiguration: endpointsConfiguration, accessControl: accessControl, sku: sku, integrationAccount: integrationAccount, integrationServiceEnvironment: integrationServiceEnvironment, definition: definition, parameters: parameters, kind: kind, etag: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.AppService.WorkflowVersionData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="createdOn"> Gets the created time. </param>
+        /// <param name="changedOn"> Gets the changed time. </param>
+        /// <param name="state"> The state. </param>
+        /// <param name="version"> Gets the version. </param>
+        /// <param name="accessEndpoint"> Gets the access endpoint. </param>
+        /// <param name="endpointsConfiguration"> The endpoints configuration. </param>
+        /// <param name="accessControl"> The access control configuration. </param>
+        /// <param name="sku"> The sku. </param>
+        /// <param name="integrationAccount"> The integration account. </param>
+        /// <param name="definition"> The definition. </param>
+        /// <param name="parameters"> The parameters. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.AppService.WorkflowVersionData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WorkflowVersionData WorkflowVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, WorkflowSku sku, WorkflowResourceReference integrationAccount, BinaryData definition, IDictionary<string, WorkflowContent> parameters)
+        {
+            return WorkflowVersionData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, createdOn: createdOn, changedOn: changedOn, state: state, version: version, accessEndpoint: accessEndpoint, endpointsConfiguration: endpointsConfiguration, accessControl: accessControl, sku: sku, integrationAccount: integrationAccount, definition: definition, parameters: parameters, etag: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.AppService.WebSiteData" />. </summary>
