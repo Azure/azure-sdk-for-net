@@ -107,7 +107,7 @@ namespace Azure.Developer.LoadTesting
                 return GetRawResponse();
             }
 
-            _response = _client.GetTestFile(_testId, _fileName);
+            _response = _client.GetTestFile(_testId, _fileName).GetRawResponse();
             _value = _response.Content;
 
             return GetCompletionResponse();
@@ -125,7 +125,8 @@ namespace Azure.Developer.LoadTesting
 
             try
             {
-                _response = await _client.GetTestFileAsync(_testId, _fileName).ConfigureAwait(false);
+                var initialResponse = await _client.GetTestFileAsync(_testId, _fileName).ConfigureAwait(false);
+                _response = initialResponse.GetRawResponse();
                 _value = _response.Content;
             }
             catch
@@ -156,7 +157,7 @@ namespace Azure.Developer.LoadTesting
             }
             catch
             {
-                throw new RequestFailedException("No property validationStatus in reposne JSON: " + _value.ToString());
+                throw new RequestFailedException("No property validationStatus in response JSON: " + _value.ToString());
             }
 
             if (_terminalStatus.Contains(fileValidationStatus))
