@@ -1098,7 +1098,12 @@ namespace Azure.Identity.Tests
             var assertionAudience = assertionAudienceBuilder.ToString();
             var assertionCertPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             string tokenFilePath = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
+
+#if NET9_0_OR_GREATER
+            var assertionCert = X509CertificateLoader.LoadPkcs12FromFile(assertionCertPath, null);
+#else
             var assertionCert = new X509Certificate2(assertionCertPath);
+#endif
 
             File.WriteAllText(tokenFilePath, ManagedIdentityCredentialFederatedTokenLiveTests.CreateClientAssertionJWT(clientId, assertionAudience, assertionCert));
 
@@ -1134,6 +1139,47 @@ namespace Azure.Identity.Tests
 
             Assert.AreEqual(ExpectedToken, actualToken.Token);
             Assert.That(messages, Does.Contain(string.Format(AzureIdentityEventSource.ManagedIdentitySourceAttemptedMessage, "TokenExchangeManagedIdentitySource", true)));
+        }
+
+        private static IEnumerable<TestCaseData> ManagedIdentityIds()
+        {
+            yield return new TestCaseData([ManagedIdentityId.SystemAssigned, string.Format(AzureIdentityEventSource.ManagedIdentityCredentialSelectedMessage, "DefaultToImds", "SystemAssigned")]);
+            yield return new TestCaseData([ManagedIdentityId.FromUserAssignedClientId("mock-client-id"), string.Format(AzureIdentityEventSource.ManagedIdentityCredentialSelectedMessage, "DefaultToImds", "ClientId mock-client-id")]);
+            yield return new TestCaseData([ManagedIdentityId.FromUserAssignedObjectId("mock-object-id"), string.Format(AzureIdentityEventSource.ManagedIdentityCredentialSelectedMessage, "DefaultToImds", "ObjectId mock-object-id")]);
+            yield return new TestCaseData([ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier("mock-resource-id")), string.Format(AzureIdentityEventSource.ManagedIdentityCredentialSelectedMessage, "DefaultToImds", "ResourceId mock-resource-id")]);
+        }
+
+        [NonParallelizable]
+        [TestCaseSource(nameof(ManagedIdentityIds))]
+        public async Task VerifyManagedIdentityIdIsLogged(ManagedIdentityId managedIdentityId, string expectedMessage)
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            var response = CreateMockResponse(200, ExpectedToken);
+            var mockTransport = new MockTransport(response);
+            var options = new TokenCredentialOptions { Transport = mockTransport };
+            var expectedObjectId = Guid.NewGuid().ToString();
+
+            List<string> messages = new();
+            using AzureEventSourceListener listener = new AzureEventSourceListener(
+                (_, message) => messages.Add(message),
+                EventLevel.Informational);
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(
+                new ManagedIdentityClient(
+                    new ManagedIdentityClientOptions()
+                    {
+                        Pipeline = CredentialPipeline.GetInstance(options),
+                        ManagedIdentityId = managedIdentityId,
+                        IsForceRefreshEnabled = true,
+                        Options = options
+                    })
+            ));
+
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            Assert.AreEqual(ExpectedToken, actualToken.Token);
+
+            Assert.That(messages, Does.Contain(expectedMessage));
         }
 
         private static IEnumerable<TestCaseData> ResourceAndClientIds()

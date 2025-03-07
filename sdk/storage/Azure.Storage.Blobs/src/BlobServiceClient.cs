@@ -574,6 +574,7 @@ namespace Azure.Storage.Blobs
             new BlobContainerClient(
                 Uri.AppendToPath(blobContainerName),
                 ClientConfiguration,
+                AuthenticationPolicy,
                 ClientSideEncryption);
 
         #region protected static accessors for Azure.Storage.Blobs.Batch
@@ -644,6 +645,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Pageable<BlobContainerItem> GetBlobContainers(
             BlobContainerTraits traits = BlobContainerTraits.None,
@@ -680,6 +683,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -721,6 +726,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual AsyncPageable<BlobContainerItem> GetBlobContainersAsync(
             BlobContainerTraits traits = BlobContainerTraits.None,
@@ -757,6 +764,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -818,6 +827,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         internal async Task<Response<ListContainersSegmentResponse>> GetBlobContainersInternal(
             string continuationToken,
@@ -925,6 +936,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<AccountInfo> GetAccountInfo(
             CancellationToken cancellationToken = default) =>
@@ -951,6 +964,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<AccountInfo>> GetAccountInfoAsync(
             CancellationToken cancellationToken = default) =>
@@ -980,6 +995,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response<AccountInfo>> GetAccountInfoInternal(
             bool async,
@@ -1048,6 +1065,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<BlobServiceProperties> GetProperties(
             CancellationToken cancellationToken = default) =>
@@ -1076,6 +1095,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<BlobServiceProperties>> GetPropertiesAsync(
             CancellationToken cancellationToken = default) =>
@@ -1107,6 +1128,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response<BlobServiceProperties>> GetPropertiesInternal(
             bool async,
@@ -1179,6 +1202,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Response SetProperties(
@@ -1214,6 +1239,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual async Task<Response> SetPropertiesAsync(
@@ -1252,6 +1279,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response> SetPropertiesInternal(
             BlobServiceProperties properties,
@@ -1327,6 +1356,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<BlobServiceStatistics> GetStatistics(
             CancellationToken cancellationToken = default) =>
@@ -1357,6 +1388,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<BlobServiceStatistics>> GetStatisticsAsync(
             CancellationToken cancellationToken = default) =>
@@ -1390,6 +1423,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response<BlobServiceStatistics>> GetStatisticsInternal(
             bool async,
@@ -1466,6 +1501,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Response<UserDelegationKey> GetUserDelegationKey(
@@ -1507,6 +1544,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
@@ -1549,6 +1588,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response<UserDelegationKey>> GetUserDelegationKeyInternal(
             DateTimeOffset? startsOn,
@@ -1656,6 +1697,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<BlobContainerClient> CreateBlobContainer(
@@ -1708,6 +1751,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<BlobContainerClient>> CreateBlobContainerAsync(
@@ -1748,6 +1793,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response DeleteBlobContainer(
@@ -1784,6 +1831,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteBlobContainerAsync(
@@ -1820,6 +1869,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<BlobContainerClient> UndeleteBlobContainer(
             string deletedContainerName,
@@ -1854,6 +1905,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<BlobContainerClient>> UndeleteBlobContainerAsync(
             string deletedContainerName,
@@ -1892,6 +1945,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobContainerClient> UndeleteBlobContainer(
@@ -1932,6 +1987,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobContainerClient>> UndeleteBlobContainerAsync(
@@ -1975,6 +2032,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         internal async Task<Response<BlobContainerClient>> UndeleteBlobContainerInternal(
             string deletedContainerName,
@@ -2068,6 +2127,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         internal virtual Response<BlobContainerClient> RenameBlobContainer(
             string sourceContainerName,
@@ -2107,6 +2168,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         internal virtual async Task<Response<BlobContainerClient>> RenameBlobContainerAsync(
             string sourceContainerName,
@@ -2147,6 +2210,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         internal async Task<Response<BlobContainerClient>> RenameBlobContainerInternal(
             string sourceContainerName,
@@ -2245,6 +2310,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Pageable<TaggedBlobItem> FindBlobsByTags(
             string tagFilterSqlExpression,
@@ -2277,6 +2344,8 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual AsyncPageable<TaggedBlobItem> FindBlobsByTagsAsync(
             string tagFilterSqlExpression,

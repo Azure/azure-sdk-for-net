@@ -331,9 +331,15 @@ rename-mapping:
   Pipeline: PipelineGroupServicePipeline
   PipelineType: PipelineGroupServicePipelineType
   PersistenceConfigurations: PipelineGroupServicePersistenceConfigurations
+  PersistenceConfigurationsUpdate: PipelineGroupServicePersistenceConfigurationsUpdate
   NetworkingConfiguration: PipelineGroupNetworkingConfiguration
   NetworkingRoute: PipelineGroupNetworkingRoute
   ExternalNetworkingMode: PipelineGroupExternalNetworkingMode
+  JsonArrayMapper: PipelineGroupJsonArrayMapper
+  JsonMapperDestinationField: PipelineGroupJsonMapperDestinationField
+  JsonMapperElement: PipelineGroupJsonMapperElement
+  JsonMapperSourceField: PipelineGroupJsonMapperSourceField
+  ServiceUpdate: PipelineGroupServiceUpdate
   AzureResourceManagerCommonTypesExtendedLocation: Azure.ResourceManager.CommonTypes.ExtendedLocation
   AzureMonitorWorkspaceLogsApiConfig: MonitorWorkspaceLogsApiConfig
   AzureMonitorWorkspaceLogsExporter: MonitorWorkspaceLogsExporter
@@ -516,6 +522,10 @@ directive:
             "read"
           ]
         };
+  # 2024-10-01-preview and later versions of pipeline group APIs are defined in pipelineGroups.json
+  # Removing older ones from azuremonitor.json to avoid conflicts
+  - from: azuremonitor.json
+    remove-operation-match: /.*pipelineGroups.*/i
 ```
 
 ## Tag: package-2024-10-01-preview
@@ -551,5 +561,6 @@ input-file:
 - https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-01/dataCollectionRuleAssociations_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-01/dataCollectionRules_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/azuremonitor.json
+- https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Monitor/PipelineGroups/preview/2024-10-01-preview/pipelineGroups.json
 # - https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Monitor/stable/2023-04-03/operations_API.json # we do not need to support this
 ```

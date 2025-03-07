@@ -18,9 +18,4 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="SessionRecords\" />
-    <Folder Include="SessionRecords\ConversationsAuthoringClientLiveTest\" />
-  </ItemGroup>
 </Project>

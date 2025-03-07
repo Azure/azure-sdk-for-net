@@ -1,4 +1,4 @@
-# Azure CloudMachine client library for .NET
+# Azure Projects client library for .NET
 
 Write Azure apps in 5 minutes
 
@@ -9,7 +9,7 @@ Write Azure apps in 5 minutes
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.CloudMachine.All --prerelease
+dotnet add package Azure.Projects.All --prerelease
 ```
 
 ### Authenticate the Client
@@ -40,21 +40,21 @@ cd server
 dotnet new web
 ```
 
-Add `Azure.CloudMachine.All` package
+Add `Azure.Projects.All` package
 ```dotnetcli
-dotnet add package Azure.CloudMachine.All --prerelease
+dotnet add package Azure.Projects.All --prerelease
 ```
-#### Use Azure Developer CLI to provision CloudMachine
+#### Use Azure Developer CLI to provision Projects
 
 Open `Program.cs` file and add the following two lines of code to the top of the file
 ```csharp
-using Azure.CloudMachine;
+using Azure.Projects;
 
 ProjectInfrastructure infrastructure = new();
 if (infrastructure.TryExecuteCommand(args)) return;
 ```
 
-The `TryExecuteCommand` call allows running the app with a `-init` switch, which will generate bicep files required to provision CloudMachine resources in Azure. Let's generate these bicep files now.
+The `TryExecuteCommand` call allows running the app with a `-init` switch, which will generate bicep files required to provision project resources in Azure. Let's generate these bicep files now.
 ```dotnetcli
 dotnet run -init
 ```
@@ -76,7 +76,7 @@ And if you go to your Azure portal, or execute the following az command, you can
 az resource list --resource-group <resource_group_from_command_line> --output table
 ```
 
-#### Use CDK to add resources to the CloudMachine
+#### Use CDK to add resources to the Project
 
 Since we are writing an AI application, we need to provision Azure OpenAI resources. To do this, add the following line of code right below where the infrastructure instance is created:
 ```csharp
@@ -91,9 +91,9 @@ azd provision
 #### Add ProjectClient to ASP.NET DI Container
 You will be using `ProjectClient` to access resources provisioned in the cloud machine. Let's add such client to the DI container such that it is avaliable to ASP.NET handlers
 ```dotnetcli
-builder.AddCloudMachine(infrastructure);
+builder.AddAzureProjectClient(infrastructure);
 ```
-#### Call CloudMachine APIs
+#### Call ProjectClient APIs
 
 You are now ready to call Azure OpenAI service from the app. To do this, change the line of code that maps the application root to the following:
 
@@ -103,15 +103,15 @@ app.MapGet("/", (ProjectClient client) => client.GetOpenAIChatClient().CompleteC
 
 The full program should now look like the following:
 ```csharp
-using Azure.CloudMachine;
-using Azure.CloudMachine.OpenAI;
+using Azure.Projects;
+using Azure.Projects.OpenAI;
 
 ProjectInfrastructure infrastructure = new();
 infrastructure.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
 if (infrastructure.TryExecuteCommand(args)) return;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.AddCloudMachine(infrastructure);
+builder.AddAzureProjectClient(infrastructure);
 
 var app = builder.Build();
 

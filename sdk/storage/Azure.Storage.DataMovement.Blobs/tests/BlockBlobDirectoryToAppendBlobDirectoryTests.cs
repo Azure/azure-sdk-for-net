@@ -61,7 +61,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Stream contents = null,
             TransferPropertiesTestType propertiesTestType = TransferPropertiesTestType.Default,
             CancellationToken cancellationToken = default)
-            => CreateBlockBlobAsync(container, objectName, contents, cancellationToken);
+            => CreateBlockBlobAsync(container, objectLength, objectName, contents, cancellationToken);
 
         protected override StorageResourceContainer GetDestinationStorageResourceContainer(
             BlobContainerClient containerClient,
