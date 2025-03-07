@@ -207,11 +207,11 @@ namespace Azure.Storage.DataMovement
 
                 if (!_sourceResource.Length.HasValue)
                 {
-                    await UnknownLengthDownloadInternal().ConfigureAwait(false);
+                    await UnknownLengthDownloadAsync().ConfigureAwait(false);
                 }
                 else
                 {
-                    await KnownLengthDownloadInternal().ConfigureAwait(false);
+                    await KnownLengthDownloadAsync().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -221,7 +221,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal async Task UnknownLengthDownloadInternal()
+        internal async Task UnknownLengthDownloadAsync()
         {
             try
             {
@@ -248,7 +248,7 @@ namespace Azure.Storage.DataMovement
                 // length is 0 bytes.
                 if (initialResult == default || (initialLength ?? 0) == 0)
                 {
-                    await QueueChunkToChannelAsync(CreateZeroLengthDownload).ConfigureAwait(false);
+                    await QueueChunkToChannelAsync(ZeroLengthDownloadAsync).ConfigureAwait(false);
                     return;
                 }
 
@@ -284,19 +284,19 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal async Task KnownLengthDownloadInternal()
+        internal async Task KnownLengthDownloadAsync()
         {
             long totalLength = _sourceResource.Length.Value;
             if (totalLength == 0)
             {
-                await QueueChunkToChannelAsync(CreateZeroLengthDownload).ConfigureAwait(false);
+                await QueueChunkToChannelAsync(ZeroLengthDownloadAsync).ConfigureAwait(false);
             }
             // Download with a single GET
             else if (_initialTransferSize >= totalLength)
             {
                 await QueueChunkToChannelAsync(
                     async () =>
-                    await DownloadSingle(totalLength).ConfigureAwait(false))
+                    await DownloadSingleAsync(totalLength).ConfigureAwait(false))
                     .ConfigureAwait(false);
             }
             // Download in chunks
@@ -329,7 +329,7 @@ namespace Azure.Storage.DataMovement
                     // return before it's completed downloading)
                     await QueueChunkToChannelAsync(
                         async () =>
-                        await DownloadChunk(range: httpRange).ConfigureAwait(false))
+                        await DownloadChunkAsync(range: httpRange).ConfigureAwait(false))
                         .ConfigureAwait(false);
                     chunkCount++;
                 }
@@ -343,7 +343,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal async Task CompleteFileDownload()
+        internal async Task CompleteFileDownloadAsync()
         {
             try
             {
@@ -366,7 +366,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        private async Task DownloadSingle(long totalLength)
+        private async Task DownloadSingleAsync(long totalLength)
         {
             // To prevent requesting a range that is invalid when
             // we already know the length we can just make one get blob request.
@@ -390,11 +390,11 @@ namespace Azure.Storage.DataMovement
             if (successfulCopy)
             {
                 await ReportBytesWrittenAsync(downloadLength).ConfigureAwait(false);
-                await CompleteFileDownload().ConfigureAwait(false);
+                await CompleteFileDownloadAsync().ConfigureAwait(false);
             }
         }
 
-        private async Task DownloadChunk(HttpRange range)
+        private async Task DownloadChunkAsync(HttpRange range)
         {
             try
             {
@@ -483,7 +483,7 @@ namespace Azure.Storage.DataMovement
 
         private Task QueueCompleteFileDownload()
         {
-            return QueueChunkToChannelAsync(CompleteFileDownload);
+            return QueueChunkToChannelAsync(CompleteFileDownloadAsync);
         }
 
         private static IEnumerable<HttpRange> GetRanges(long initialLength, long totalLength, long rangeSize)
@@ -513,7 +513,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        private async Task CreateZeroLengthDownload()
+        private async Task ZeroLengthDownloadAsync()
         {
             // We just need to at minimum create the file
             bool successfulCreation = await CopyToStreamInternal(
@@ -524,7 +524,7 @@ namespace Azure.Storage.DataMovement
                 initial: true).ConfigureAwait(false);
             if (successfulCreation)
             {
-                await CompleteFileDownload().ConfigureAwait(false);
+                await CompleteFileDownloadAsync().ConfigureAwait(false);
             }
             else
             {
