@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePeriodicModeBackupPolicy(document.RootElement, options);
                     }
                 default:

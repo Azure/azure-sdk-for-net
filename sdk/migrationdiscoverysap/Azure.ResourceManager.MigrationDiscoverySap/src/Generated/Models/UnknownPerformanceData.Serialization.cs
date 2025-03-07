@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePerformanceDetail(document.RootElement, options);
                     }
                 default:

@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkTapRuleData(document.RootElement, options);
                     }
                 default:

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AzureDevOpsOrgListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureDevOpsOrgListResponse.DeserializeAzureDevOpsOrgListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AzureDevOpsOrgListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureDevOpsOrgListResponse.DeserializeAzureDevOpsOrgListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AzureDevOpsOrgListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureDevOpsOrgListResponse.DeserializeAzureDevOpsOrgListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AzureDevOpsOrgListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureDevOpsOrgListResponse.DeserializeAzureDevOpsOrgListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DevOpsOrgData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevOpsOrgData.DeserializeDevOpsOrgData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DevOpsOrgData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevOpsOrgData.DeserializeDevOpsOrgData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AzureDevOpsOrgListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureDevOpsOrgListResponse.DeserializeAzureDevOpsOrgListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AzureDevOpsOrgListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureDevOpsOrgListResponse.DeserializeAzureDevOpsOrgListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSystemAssignedIdentityData(document.RootElement, options);
                     }
                 default:
