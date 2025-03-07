@@ -217,6 +217,10 @@ namespace System.ClientModel.Primitives
         string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
         System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
     }
+    public partial interface IStreamModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
+    {
+        void Write(System.IO.Stream stream, System.ClientModel.Primitives.ModelReaderWriterOptions options);
+    }
     public partial class JsonModelConverter : System.Text.Json.Serialization.JsonConverter<System.ClientModel.Primitives.IJsonModel<object>>
     {
         public JsonModelConverter() { }
@@ -247,8 +251,12 @@ namespace System.ClientModel.Primitives
         public static T? Read<T>(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public static System.BinaryData Write(object model, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
         public static System.BinaryData Write(object model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
+        public static void Write(object model, System.IO.Stream stream, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { }
+        public static void Write(object model, System.IO.Stream stream, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { }
         public static System.BinaryData Write<T>(T model, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
         public static System.BinaryData Write<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
+        public static void Write<T>(T model, System.IO.Stream stream, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { }
+        public static void Write<T>(T model, System.IO.Stream stream, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IStreamModel<T> { }
     }
     public abstract partial class ModelReaderWriterContext
     {
@@ -261,6 +269,15 @@ namespace System.ClientModel.Primitives
         public string Format { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
+    }
+    public partial class MultiPartFile
+    {
+        public MultiPartFile(System.BinaryData contents, string? filename = null, string? contentType = null) { }
+        public MultiPartFile(System.IO.Stream contents, string? filename = null, string? contentType = null) { }
+        public System.BinaryData? Contents { get { throw null; } }
+        public string ContentType { get { throw null; } }
+        public System.IO.Stream? File { get { throw null; } }
+        public string? Filename { get { throw null; } }
     }
     public abstract partial class OperationResult
     {
