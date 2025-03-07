@@ -346,7 +346,7 @@ namespace Azure.Storage.Shared
             base.Dispose(disposing);
         }
 
-#if NETCOREAPP3_0_OR_GREATER
+#if NETCOREAPP3_0_OR_GREATER || NETCORESTANDARD2_1_OR_GREATER
         public override async ValueTask DisposeAsync()
         {
             if (_disposed)

@@ -11,9 +11,9 @@
 - Fixed bug to ensure that the accumulated disposables within the internal `StorageWriteStream` are disposed properly in the event that an exception is thrown during the disposal process. (#47781)
 - Fixed bug to Redact SAS credentials from Error.SasCredentialRequiresUriWithoutSas message.
 - Fixed bug where LazyLoadingReadOnlyStream overprovisions the default buffer memory for OpenRead
-- Fixed bug to implement IAsyncDisposable in StorageWriteStream
 
 ### Other Changes
+- Implemented IAsyncDisposable in StorageWriteStream
 
 ## 12.23.0-beta.1 (2025-02-11)
 
