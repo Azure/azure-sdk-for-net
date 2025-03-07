@@ -117,3 +117,100 @@ function Process-ReviewStatusCode($statusCode, $packageName, $apiApprovalStatus,
   $packageNameStatus.IsApproved = $packageNameApproved
   $packageNameStatus.Details = $packageNameApprovalDetails
 }
+
+function Set-ApiViewCommentForRelatedIssues {
+  param (
+    [Parameter(Mandatory = $true)]
+    [string]$Commitish,
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $AuthToken
+  )
+  . ${PSScriptRoot}\..\common.ps1
+  $issuesForCommit = $null
+  try {
+    $issuesForCommit = Search-GitHubIssues -CommitHash $Commitish
+    if ($issuesForCommit.items.Count -eq 0) {
+      LogError "No issues found for commit: $commitish"
+      exit 1
+    }
+  } catch {
+    LogError "No issues found for commit: $commitish"
+    exit 1
+  }
+  $issuesForCommit.items | ForEach-Object {
+    $urlParts = $_.url -split "/"
+    Set-ApiViewCommentForPR -RepoOwner $urlParts[4] -RepoName $urlParts[5] -PrNumber $urlParts[7] -Commitish $Commitish -AuthToken $AuthToken
+  }
+}
+
+function Set-ApiViewCommentForPR {
+  param (
+    [Parameter(Mandatory = $true)]
+    [string]$RepoOwner,
+    [Parameter(Mandatory = $true)]
+    [string]$RepoName,
+    [Parameter(Mandatory = $true)]
+    [string]$PrNumber,
+    [Parameter(Mandatory = $true)]
+    [string]$Commitish,
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $AuthToken
+  )
+
+  $repoFullName = "$RepoOwner/$RepoName"
+  $apiviewEndpoint = "https://apiviewstagingtest.com/api/pullrequests?pullRequestNumber=$PrNumber&repoName=$repoFullName&commitSHA=$Commitish"
+  LogDebug "Get APIView information for PR using endpoint: $apiviewEndpoint"
+
+  $commentText = @()
+  $commentText += "**API Change Check**"
+  try {
+    $response = Invoke-RestMethod -Uri $apiviewEndpoint -Method Get -MaximumRetryCount 3
+    if ($response.Count -eq 0) {
+      LogWarning "API changes are not detected in this pull request."
+      $commentText += "API changes are not detected in this pull request."
+    }
+    else {
+      LogSuccess "APIView identified API level changes in this PR and created $($response.Count) API reviews"
+      $commentText += "APIView identified API level changes in this PR and created the following API reviews"
+      $commentText += ""
+      $commentText += "| Language | APIView |"
+      $commentText += "|----------|---------|"
+      $response | ForEach-Object {
+        $commentText += "| $($_.language) | [$($_.packageName)]($($_.url)) |"
+      }
+    }
+  } catch [System.Net.WebException] {
+    LogError "Failed to get API View information for PR: $PrNumber in repo: $repoFullName with commitSHA: $Commitish. Error: $_"
+    exit 1
+  }
+
+  $commentText = $commentText -join "`r`n"
+  $existingComment = $null;
+  $existingAPIViewComment = $null;
+
+  try {
+    $existingComment = Get-GitHubIssueComments -RepoOwner $RepoOwner -RepoName $RepoName -IssueNumber $RrNumber -AuthToken $AuthToken
+    $existingAPIViewComment = $existingComment | Where-Object { $_.body.StartsWith("**API Change Check**", [StringComparison]::OrdinalIgnoreCase) }
+  } catch {
+    LogWarning "Failed to get comments from Pull Request: $PrNumber in repo: $repoFullName"
+  }
+  
+  try {
+    if ($existingAPIViewComment) {
+      LogDebug "Updating existing APIView comment..."
+      Update-GitHubIssueComment -RepoOwner $RepoOwner -RepoName $RepoName `
+                                -CommentId $existingAPIViewComment.id -Comment $commentText `
+                                -AuthToken $AuthToken
+    } else {
+      LogDebug "Creating new APIView comment..."
+      Add-GitHubIssueComment -RepoOwner $RepoOwner -RepoName $RepoName `
+                             -IssueNumber $PrNumber -Comment $commentText `
+                             -AuthToken $AuthToken
+    }
+  } catch {
+    LogError "Failed to set PR comment for APIView. Error: $_"
+    exit 1
+  }
+}
