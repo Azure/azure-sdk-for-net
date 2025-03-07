@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure.Projects.Core;
-using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ServiceBus;
-using System.ClientModel.Primitives;
 
 namespace Azure.Projects.ServiceBus;
 
@@ -33,13 +32,10 @@ internal class ServiceBusTopicFeature : AzureProjectFeature
             Status = ServiceBusMessagingEntityStatus.Active
         };
 
-        infrastructure.AddResource(topic);
-        return topic;
-    }
+        infrastructure.AddConstruct(topic);
 
-    protected internal override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
-    {
-        connections.Add(new ClientConnection(Name, Name));
+        EmitConnection(infrastructure, Name, Name);
+        return topic;
     }
 
     /// <summary>

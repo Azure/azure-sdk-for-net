@@ -37,31 +37,57 @@ resource cm_app_config_project_identity_AppConfigurationDataOwner 'Microsoft.Aut
   scope: cm_app_config
 }
 
-resource cm0c420d2f21084cd_hub 'Microsoft.MachineLearningServices/workspaces@2023-08-01-preview' = {
-  name: 'cm0c420d2f21084cd_hub'
+resource cm_kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
+  name: 'cm0c420d2f21084cd'
   location: location
-  kind: 'hub'
-  identity: {
-    type: 'SystemAssigned'
-  }
   properties: {
-    friendlyName: 'cm0c420d2f21084cd_hub'
-    publicNetworkAccess: 'Enabled'
+    tenantId: subscription().tenantId
+    sku: {
+      family: 'A'
+      name: 'standard'
+    }
+    accessPolicies: [
+      {
+        tenantId: project_identity.properties.tenantId
+        objectId: principalId
+        permissions: {
+          secrets: [
+            'get'
+            'set'
+          ]
+        }
+      }
+    ]
+    enabledForDeployment: true
   }
 }
 
-resource cm0c420d2f21084cd_project 'Microsoft.MachineLearningServices/workspaces@2023-08-01-preview' = {
-  name: 'cm0c420d2f21084cd_project'
-  location: location
-  kind: 'Project'
-  identity: {
-    type: 'SystemAssigned'
-  }
+resource cm_kv_1_KeyVaultAdministrator 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('cm_kv', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483'))
   properties: {
-    friendlyName: 'cm0c420d2f21084cd_project'
-    hubResourceId: cm0c420d2f21084cd_hub.id
-    publicNetworkAccess: 'Enabled'
+    principalId: principalId
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483')
+    principalType: 'User'
   }
+  scope: cm_kv
+}
+
+resource cm_kv_project_identity_KeyVaultAdministrator 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('cm_kv', project_identity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483'))
+  properties: {
+    principalId: project_identity.properties.principalId
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483')
+    principalType: 'ServicePrincipal'
+  }
+  scope: cm_kv
+}
+
+resource cm_connection_1 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'Azure.Security.KeyVault.Secrets.SecretClient'
+  properties: {
+    value: 'https://cm0c420d2f21084cd.vault.azure.net/'
+  }
+  parent: cm_app_config
 }
 
 output project_identity_id string = project_identity.id

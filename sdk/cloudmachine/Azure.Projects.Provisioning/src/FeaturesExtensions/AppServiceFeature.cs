@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Provisioning.Expressions;
+using Azure.Projects.Core;
 using Azure.Provisioning.AppService;
+using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
-using Azure.Projects.Core;
 
 namespace Azure.Projects.AppService;
 
@@ -27,7 +27,7 @@ public class AppServiceFeature : AzureProjectFeature
             Sku = Sku,
             Kind = "app"
         };
-        infrastructure.AddResource(hostingPlan);
+        infrastructure.AddConstruct(hostingPlan);
 
         WebSite appService = new("cm_website")
         {
@@ -59,7 +59,7 @@ public class AppServiceFeature : AzureProjectFeature
                 ]
             }
         };
-        infrastructure.AddResource(appService);
+        infrastructure.AddConstruct(appService);
 
         return appService;
     }

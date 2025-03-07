@@ -1,14 +1,14 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.ComponentModel;
 
-namespace Azure.Projects;
+namespace Azure.Projects.Core;
 
-public partial class ProjectInfrastructure
+public abstract partial class AzureProjectFeature
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override string ToString() => ProjectId;
+    public override string ToString() => base.ToString()!;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override int GetHashCode() => base.GetHashCode();

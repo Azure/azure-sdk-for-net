@@ -1,31 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
+using System;
+using System.Linq;
 using Azure.Projects.Core;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.AppConfiguration;
 using Azure.Provisioning.Primitives;
-using System.ClientModel.Primitives;
 
-namespace Azure.Projects.KeyVault;
+namespace Azure.Projects.AppConfiguration;
 
-public class AppConfigurationFeature : AzureProjectFeature
+internal class AppConfigurationFeature : AzureProjectFeature
 {
     public AppConfigurationFeature()
-    {
-    }
-
-    protected internal override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
-    {
-        ClientConnection connection = new(
-            "Azure.Data.AppConfiguration.ConfigurationClient",
-            $"https://{cmId}.azconfig.io",
-            ClientAuthenticationMethod.Credential
-        );
-
-        connections.Add(connection);
-    }
+    {}
 
     protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
@@ -34,11 +21,59 @@ public class AppConfigurationFeature : AzureProjectFeature
             Name = infrastructure.ProjectId,
             SkuName = "Free",
         };
-        infrastructure.AddResource(appConfigResource);
+        infrastructure.AddConstruct(appConfigResource);
 
-        FeatureRole appConfigAdmin = new(AppConfigurationBuiltInRole.GetBuiltInRoleName(AppConfigurationBuiltInRole.AppConfigurationDataOwner), AppConfigurationBuiltInRole.AppConfigurationDataOwner.ToString());
-        RequiredSystemRoles.Add(appConfigResource, [appConfigAdmin]);
+        infrastructure.AddSystemRole(
+            appConfigResource,
+            AppConfigurationBuiltInRole.GetBuiltInRoleName(AppConfigurationBuiltInRole.AppConfigurationDataOwner),
+            AppConfigurationBuiltInRole.AppConfigurationDataOwner.ToString()
+        );
 
         return appConfigResource;
+    }
+}
+
+public class AppConfigurationSettingFeature : AzureProjectFeature
+{
+    public AppConfigurationSettingFeature(string key, string value, string bicepIdentifier = "cm_config_setting")
+    {
+        Key = key;
+        Value = value;
+        BicepIdentifier = bicepIdentifier;
+    }
+
+    public string Key { get; }
+    public string Value { get; }
+    private string BicepIdentifier { get; }
+
+    internal AppConfigurationFeature? Store { get; set; }
+
+    protected internal override void AddImplicitFeatures(FeatureCollection features, string projectId)
+    {
+        AppConfigurationFeature? account = features.FindAll<AppConfigurationFeature>().FirstOrDefault();
+        if (account == default)
+        {
+            account = new();
+            features.Append(account);
+        }
+        Store = account;
+    }
+
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
+    {
+        if (Store == null)
+        {
+            throw new InvalidOperationException("Parent AppConfigurationFeature is not set.");
+        }
+
+        string bicepIdentifier = infrastructure.CreateUniqueBicepIdentifier(BicepIdentifier);
+        AppConfigurationKeyValue kvp = new(bicepIdentifier)
+        {
+            Name = this.Key,
+            Value = this.Value,
+            Parent = (AppConfigurationStore)Store.Resource
+        };
+        infrastructure.AddConstruct(kvp);
+        return kvp;
     }
 }
