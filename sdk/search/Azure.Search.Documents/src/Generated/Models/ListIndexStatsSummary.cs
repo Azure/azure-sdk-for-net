@@ -11,7 +11,7 @@ using System.Linq;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Response from a request to retrieve stats summary of all indexes. If successful, it includes the stats of each index in the service. </summary>
-    internal partial class ListIndexStatsSummary
+    public partial class ListIndexStatsSummary
     {
         /// <summary> Initializes a new instance of <see cref="ListIndexStatsSummary"/>. </summary>
         /// <param name="indexesStatistics"> The Statistics summary of all indexes in the Search service. </param>

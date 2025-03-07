@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    internal partial class ListIndexStatsSummary
+    public partial class ListIndexStatsSummary
     {
         internal static ListIndexStatsSummary DeserializeListIndexStatsSummary(JsonElement element)
         {
