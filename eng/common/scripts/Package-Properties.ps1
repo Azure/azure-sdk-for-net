@@ -180,6 +180,27 @@ function Get-PkgProperties {
     return $null
 }
 
+
+function Get-TriggerPaths([PSCustomObject]$AllPackageProperties) {
+    # todo: resolve the triggerPath to include the service directory instead of just having the relative path
+    # this should occur in the populating of package properties I'm thinking.
+    $existingTriggeringPaths = @()
+    $AllPackageProperties | ForEach-Object {
+        if ($_.ArtifactDetails) {
+            $pathsForArtifact = $_.ArtifactDetails["triggeringPaths"]
+            foreach ($triggerPath in $pathsForArtifact){
+                # we only care about triggering paths that are actual files, not directories
+                # go by by the assumption that if the triggerPath has an extension, it's a file :)
+                if ([System.IO.Path]::HasExtension($triggerPath)) {
+                    $existingTriggeringPaths += $triggerPath
+                }
+            }
+        }
+    }
+
+    return ($existingTriggeringPaths | Select-Object -Unique)
+}
+
 function Get-PrPkgProperties([string]$InputDiffJson) {
     $packagesWithChanges = @()
 
@@ -199,6 +220,40 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     $additionalValidationPackages = @()
     $lookup = @{}
     $directoryIndex = @{}
+
+    $existingTriggeringPaths = Get-TriggerPaths $allPackageProperties
+
+    # now we simply loop through the files a single time, keeping all the files that are a triggeringPath
+    # for the rest of the files, simply group by what directory they belong to
+    # the new targetedFiles array will contain only the changed directories + the files that actually aligned to a triggeringPath
+    $processedFiles = @()
+    foreach ($file in $targetedFiles) {
+        $isExistingTriggerPath = $false
+
+        # these are fully resolved files by the time we get to this point. we can definitely compare them directly
+        foreach ($triggerPath in $existingTriggeringPaths) {
+            if ($triggerPath -and $file -eq "$triggerPath") {
+                $isExistingTriggerPath = $true
+                break
+            }
+        }
+
+        if ($isExistingTriggerPath) {
+            $processedFiles += $file
+        }
+        else {
+            # Get directory path by removing the filename
+            $directoryPath = Split-Path -Path $file -Parent
+            if ($directoryPath) {
+                $processedFiles += $directoryPath
+            } else {
+                # In case there's no parent directory (root file), keep the original
+                $processedFiles += $file
+            }
+        }
+    }
+
+    $targetedFiles = $processedFiles | Select-Object -Unique
 
     # Sort so that we very quickly find any directly changed packages before hitting service level changes.
     # This is important because due to the way we traverse the changed files, the instant we evaluate a pkg
