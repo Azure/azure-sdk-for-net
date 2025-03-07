@@ -205,8 +205,6 @@ function Get-PkgProperties {
 
 
 function Get-TriggerPaths([PSCustomObject]$AllPackageProperties) {
-    # todo: resolve the triggerPath to include the service directory instead of just having the relative path
-    # this should occur in the populating of package properties I'm thinking.
     $existingTriggeringPaths = @()
     $AllPackageProperties | ForEach-Object {
         if ($_.ArtifactDetails) {
@@ -260,7 +258,7 @@ function Update-TargetedFilesForTriggerPaths([string[]]$TargetedFiles, [string[]
         }
     }
 
-    return $processedFiles | Select-Object -Unique
+    return ($processedFiles | Select-Object -Unique)
 }
 
 function Update-TargetedFilesForExclude([string[]]$TargetedFiles, [string[]]$ExcludePaths) {
@@ -290,7 +288,6 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     $diff = Get-Content $InputDiffJson | ConvertFrom-Json
     $targetedFiles = $diff.ChangedFiles
 
-
     if ($diff.DeletedFiles) {
         if (-not $targetedFiles) {
             $targetedFiles = @()
@@ -301,8 +298,6 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     $existingTriggeringPaths = Get-TriggerPaths $allPackageProperties
     $targetedFiles = Update-TargetedFilesForExclude $targetedFiles $diff.ExcludePaths
     $targetedFiles = Update-TargetedFilesForTriggerPaths $targetedFiles $existingTriggeringPaths
-
-    $targetedFiles = $processedFiles | Select-Object -Unique
 
     # Sort so that we very quickly find any directly changed packages before hitting service level changes.
     # This is important because due to the way we traverse the changed files, the instant we evaluate a pkg
