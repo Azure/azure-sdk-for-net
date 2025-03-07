@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure.Projects.Core;
-using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ServiceBus;
-using System.ClientModel.Primitives;
 
 namespace Azure.Projects.ServiceBus;
 
@@ -14,7 +13,7 @@ public class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = Ser
 {
     protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
-        var _serviceBusNamespace = new ServiceBusNamespace("cm_servicebus")
+        var sb = new ServiceBusNamespace("cm_servicebus")
         {
             Sku = new ServiceBusSku
             {
@@ -23,24 +22,27 @@ public class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = Ser
             },
             Name = name,
         };
-        infrastructure.AddResource(_serviceBusNamespace);
-        infrastructure.AddResource(
+        infrastructure.AddConstruct(sb);
+
+        infrastructure.AddConstruct(
             new ServiceBusNamespaceAuthorizationRule("cm_servicebus_auth_rule", "2021-11-01")
             {
-                Parent = _serviceBusNamespace,
+                Parent = sb,
                 Rights = [ServiceBusAccessRight.Listen, ServiceBusAccessRight.Send, ServiceBusAccessRight.Manage]
             }
         );
 
-        FeatureRole dataOwner = new(
+        infrastructure.AddSystemRole(
+            sb,
             ServiceBusBuiltInRole.GetBuiltInRoleName(ServiceBusBuiltInRole.AzureServiceBusDataOwner),
             ServiceBusBuiltInRole.AzureServiceBusDataOwner.ToString()
         );
-        RequiredSystemRoles.Add(_serviceBusNamespace, [dataOwner]);
 
-        return _serviceBusNamespace;
+        EmitConnection(infrastructure,
+            "Azure.Messaging.ServiceBus.ServiceBusClient",
+            $"https://{infrastructure.ProjectId}.servicebus.windows.net/"
+        );
+
+        return sb;
     }
-
-    protected internal override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
-        => connections.Add(ProjectConnections.CreateDefaultServiceBusConnection(cmId));
 }
