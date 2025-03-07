@@ -28,7 +28,6 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="Polly" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
-    <PackageReference Include="System.Memory.Data" />
     <PackageReference Include="Azure.Storage.Blobs" />
   </ItemGroup>
 
