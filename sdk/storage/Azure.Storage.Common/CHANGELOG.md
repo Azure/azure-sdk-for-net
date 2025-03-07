@@ -13,6 +13,7 @@
 - Fixed bug where LazyLoadingReadOnlyStream overprovisions the default buffer memory for OpenRead
 
 ### Other Changes
+- Implemented IAsyncDisposable in StorageWriteStream
 
 ## 12.23.0-beta.1 (2025-02-11)
 
