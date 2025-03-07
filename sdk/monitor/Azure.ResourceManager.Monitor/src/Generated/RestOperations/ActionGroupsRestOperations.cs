@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor
                 case 201:
                     {
                         ActionGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ActionGroupData.DeserializeActionGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor
                 case 201:
                     {
                         ActionGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ActionGroupData.DeserializeActionGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         ActionGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ActionGroupData.DeserializeActionGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         ActionGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ActionGroupData.DeserializeActionGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         ActionGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ActionGroupData.DeserializeActionGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         ActionGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ActionGroupData.DeserializeActionGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         NotificationStatus value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NotificationStatus.DeserializeNotificationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         NotificationStatus value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NotificationStatus.DeserializeNotificationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         ActionGroupList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ActionGroupList.DeserializeActionGroupList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         ActionGroupList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ActionGroupList.DeserializeActionGroupList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         ActionGroupList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ActionGroupList.DeserializeActionGroupList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         ActionGroupList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ActionGroupList.DeserializeActionGroupList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

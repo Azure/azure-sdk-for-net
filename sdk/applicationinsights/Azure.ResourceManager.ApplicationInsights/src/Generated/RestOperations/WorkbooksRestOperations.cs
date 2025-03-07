@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkbooksListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkbooksListResult.DeserializeWorkbooksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkbooksListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkbooksListResult.DeserializeWorkbooksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkbooksListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkbooksListResult.DeserializeWorkbooksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkbooksListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkbooksListResult.DeserializeWorkbooksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsWorkbookData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationInsightsWorkbookData.DeserializeApplicationInsightsWorkbookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsWorkbookData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationInsightsWorkbookData.DeserializeApplicationInsightsWorkbookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 201:
                     {
                         ApplicationInsightsWorkbookData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationInsightsWorkbookData.DeserializeApplicationInsightsWorkbookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 201:
                     {
                         ApplicationInsightsWorkbookData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationInsightsWorkbookData.DeserializeApplicationInsightsWorkbookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 201:
                     {
                         ApplicationInsightsWorkbookData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationInsightsWorkbookData.DeserializeApplicationInsightsWorkbookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 201:
                     {
                         ApplicationInsightsWorkbookData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationInsightsWorkbookData.DeserializeApplicationInsightsWorkbookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkbooksListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkbooksListResult.DeserializeWorkbooksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkbooksListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkbooksListResult.DeserializeWorkbooksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsWorkbookData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationInsightsWorkbookData.DeserializeApplicationInsightsWorkbookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsWorkbookData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationInsightsWorkbookData.DeserializeApplicationInsightsWorkbookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -914,7 +914,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkbooksListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkbooksListResult.DeserializeWorkbooksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkbooksListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkbooksListResult.DeserializeWorkbooksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -999,7 +999,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkbooksListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkbooksListResult.DeserializeWorkbooksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1032,7 +1032,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkbooksListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkbooksListResult.DeserializeWorkbooksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1085,7 +1085,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkbooksListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkbooksListResult.DeserializeWorkbooksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1116,7 +1116,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkbooksListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkbooksListResult.DeserializeWorkbooksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

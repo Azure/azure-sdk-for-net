@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.MySql
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMySqlRecommendationActionData(document.RootElement, options);
                     }
                 default:

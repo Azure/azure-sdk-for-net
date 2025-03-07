@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                     {
                         DaprComponentsCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DaprComponentsCollection.DeserializeDaprComponentsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                     {
                         DaprComponentsCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DaprComponentsCollection.DeserializeDaprComponentsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                     {
                         ContainerAppDaprComponentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                     {
                         ContainerAppDaprComponentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                     {
                         ContainerAppDaprComponentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                     {
                         ContainerAppDaprComponentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                     {
                         DaprSecretsCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DaprSecretsCollection.DeserializeDaprSecretsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                     {
                         DaprSecretsCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DaprSecretsCollection.DeserializeDaprSecretsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                     {
                         DaprComponentsCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DaprComponentsCollection.DeserializeDaprComponentsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.AppContainers
                 case 200:
                     {
                         DaprComponentsCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DaprComponentsCollection.DeserializeDaprComponentsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

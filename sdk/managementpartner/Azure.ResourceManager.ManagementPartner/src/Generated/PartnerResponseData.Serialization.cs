@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ManagementPartner
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePartnerResponseData(document.RootElement, options);
                     }
                 default:
