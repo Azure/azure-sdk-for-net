@@ -3,7 +3,6 @@
 
 using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
-using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Azure.Monitor.OpenTelemetry.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Xunit;
