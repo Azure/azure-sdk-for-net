@@ -49,6 +49,23 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(accountName, builder2.AccountName);
         }
 
+        [Test]
+        public void Ctor_ConnectionString_CustomUri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var fileEndpoint = new Uri("http://customdomain/" + accountName);
+            var fileSecondaryEndpoint = new Uri("http://customdomain/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
+
+            QueueServiceClient service = new QueueServiceClient(connectionString.ToString(true));
+
+            Assert.AreEqual(accountName, service.AccountName);
+        }
+
         [RecordedTest]
         public void Ctor_TokenCredential_Http()
         {

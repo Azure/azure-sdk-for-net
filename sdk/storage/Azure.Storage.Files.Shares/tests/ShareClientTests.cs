@@ -131,13 +131,11 @@ namespace Azure.Storage.Files.Shares.Tests
 
             var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
 
-            var filesystemName = "filesystemName";
+            var shareName = "shareName";
 
-            ShareClient share = new ShareClient(connectionString.ToString(true), filesystemName);
+            ShareClient share = new ShareClient(connectionString.ToString(true), shareName);
 
-            Assert.AreEqual(filesystemName, builder.ShareName);
-            Assert.AreEqual("", builder.ShareName);
-            Assert.AreEqual(filesystemName, share.Name);
+            Assert.AreEqual(shareName, share.Name);
             Assert.AreEqual(accountName, share.AccountName);
         }
 
