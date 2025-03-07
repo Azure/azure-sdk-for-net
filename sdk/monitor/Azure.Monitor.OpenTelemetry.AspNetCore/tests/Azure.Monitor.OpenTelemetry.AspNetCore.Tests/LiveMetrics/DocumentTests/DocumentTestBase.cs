@@ -10,6 +10,8 @@ using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 using Xunit;
 using Xunit.Abstractions;
 
+//using DocumentIngress = Azure.Monitor.OpenTelemetry.LiveMetrics.Models.DocumentIngress;
+
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
 {
     public abstract class DocumentTestBase
