@@ -542,6 +542,43 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         Assert.That(completion, Is.Not.Null);
     }
 
+    [RecordedTest]
+    [TestCase("chat", false)]
+    [TestCase("chat_o1", true)]
+    [TestCase("chat_o3-mini", true)]
+    public async Task MaxOutputTokensWorksAcrossModels(string testConfigName, bool useNewProperty)
+    {
+        IConfiguration testConfig = TestConfig.GetConfig(testConfigName)!;
+        ChatClient client = GetTestClient(testConfig);
+
+        ChatCompletionOptions options = new()
+        {
+            MaxOutputTokenCount = 16,
+        };
+
+        if (useNewProperty)
+        {
+            options.SetNewMaxCompletionTokensPropertyEnabled();
+        }
+
+        ChatCompletion completion = await client.CompleteChatAsync(
+            ["Hello, world! Please write a funny haiku to greet me."],
+            options);
+        Assert.That(completion.FinishReason, Is.EqualTo(ChatFinishReason.Length));
+
+        string serializedOptionsAfterUse = ModelReaderWriter.Write(options).ToString();
+
+        if (useNewProperty)
+        {
+            Assert.That(serializedOptionsAfterUse, Does.Contain("max_completion_tokens"));
+            Assert.That(serializedOptionsAfterUse, Does.Not.Contain("max_tokens"));
+        }
+        else
+        {
+            Assert.That(serializedOptionsAfterUse, Does.Not.Contain("max_completion_tokens"));
+            Assert.That(serializedOptionsAfterUse, Does.Contain("max_tokens"));
+        }
+    }
     #endregion
 
     #region Streaming chat completion tests

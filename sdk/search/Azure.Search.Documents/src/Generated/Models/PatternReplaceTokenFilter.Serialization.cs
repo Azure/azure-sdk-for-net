@@ -66,7 +66,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new PatternReplaceTokenFilter FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePatternReplaceTokenFilter(document.RootElement);
         }
 

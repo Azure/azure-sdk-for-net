@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.IotOperations
                 case 200:
                     {
                         IotOperationsBrokerAuthorizationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotOperationsBrokerAuthorizationData.DeserializeIotOperationsBrokerAuthorizationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.IotOperations
                 case 200:
                     {
                         IotOperationsBrokerAuthorizationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotOperationsBrokerAuthorizationData.DeserializeIotOperationsBrokerAuthorizationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.IotOperations
                 case 200:
                     {
                         BrokerAuthorizationResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BrokerAuthorizationResourceListResult.DeserializeBrokerAuthorizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.IotOperations
                 case 200:
                     {
                         BrokerAuthorizationResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BrokerAuthorizationResourceListResult.DeserializeBrokerAuthorizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.IotOperations
                 case 200:
                     {
                         BrokerAuthorizationResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BrokerAuthorizationResourceListResult.DeserializeBrokerAuthorizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.IotOperations
                 case 200:
                     {
                         BrokerAuthorizationResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BrokerAuthorizationResourceListResult.DeserializeBrokerAuthorizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

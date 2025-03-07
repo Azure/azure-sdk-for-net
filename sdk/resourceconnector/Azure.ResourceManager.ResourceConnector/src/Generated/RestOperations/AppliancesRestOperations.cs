@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplianceListResult.DeserializeApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplianceListResult.DeserializeApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceTelemetryConfigResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplianceTelemetryConfigResult.DeserializeApplianceTelemetryConfigResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceTelemetryConfigResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplianceTelemetryConfigResult.DeserializeApplianceTelemetryConfigResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplianceListResult.DeserializeApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplianceListResult.DeserializeApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ResourceConnectorApplianceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ResourceConnectorApplianceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ResourceConnectorApplianceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ResourceConnectorApplianceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceClusterUserCredentialResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplianceClusterUserCredentialResult.DeserializeApplianceClusterUserCredentialResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceClusterUserCredentialResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplianceClusterUserCredentialResult.DeserializeApplianceClusterUserCredentialResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceClusterUserKeysResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplianceClusterUserKeysResult.DeserializeApplianceClusterUserKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceClusterUserKeysResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplianceClusterUserKeysResult.DeserializeApplianceClusterUserKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -908,7 +908,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceUpgradeGraph value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplianceUpgradeGraph.DeserializeApplianceUpgradeGraph(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -939,7 +939,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceUpgradeGraph value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplianceUpgradeGraph.DeserializeApplianceUpgradeGraph(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplianceListResult.DeserializeApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1015,7 +1015,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplianceListResult.DeserializeApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1066,7 +1066,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplianceListResult.DeserializeApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplianceListResult.DeserializeApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

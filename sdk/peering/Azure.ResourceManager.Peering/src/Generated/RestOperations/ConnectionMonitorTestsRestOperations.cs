@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         ConnectionMonitorTestData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConnectionMonitorTestData.DeserializeConnectionMonitorTestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         ConnectionMonitorTestData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConnectionMonitorTestData.DeserializeConnectionMonitorTestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Peering
                 case 201:
                     {
                         ConnectionMonitorTestData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConnectionMonitorTestData.DeserializeConnectionMonitorTestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Peering
                 case 201:
                     {
                         ConnectionMonitorTestData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConnectionMonitorTestData.DeserializeConnectionMonitorTestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         ConnectionMonitorTestListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConnectionMonitorTestListResult.DeserializeConnectionMonitorTestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         ConnectionMonitorTestListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConnectionMonitorTestListResult.DeserializeConnectionMonitorTestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         ConnectionMonitorTestListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConnectionMonitorTestListResult.DeserializeConnectionMonitorTestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         ConnectionMonitorTestListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConnectionMonitorTestListResult.DeserializeConnectionMonitorTestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

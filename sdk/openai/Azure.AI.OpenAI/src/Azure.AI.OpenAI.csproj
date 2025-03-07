@@ -34,7 +34,7 @@
     <Otherwise>
       <PropertyGroup>
         <VersionPrefix>2.2.0</VersionPrefix>
-        <VersionSuffix>beta.1</VersionSuffix>
+        <VersionSuffix>beta.2</VersionSuffix>
       </PropertyGroup>
     </Otherwise>
   </Choose>
@@ -54,6 +54,7 @@
     <Otherwise>
       <ItemGroup>
         <PackageReference Include="Azure.Core" />
+        <PackageReference Include="System.ClientModel" VersionOverride="1.4.0-beta.1" />
       </ItemGroup>
     </Otherwise>
   </Choose>

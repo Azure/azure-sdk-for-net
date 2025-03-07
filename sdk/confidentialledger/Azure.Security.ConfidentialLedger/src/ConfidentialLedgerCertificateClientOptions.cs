@@ -13,7 +13,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate
     /// <summary> Client options for ConfidentialLedger library clients. </summary>
     public partial class ConfidentialLedgerCertificateClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_01_26_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_08_22_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
@@ -22,6 +22,8 @@ namespace Azure.Security.ConfidentialLedger.Certificate
             V2022_05_13 = 1,
             /// <summary> Service version "2024-01-26-Preview". </summary>
             V2024_01_26_Preview = 2,
+            /// <summary> Service version "2024-08-22-Preview". </summary>
+            V2024_08_22_Preview = 3,
         }
 
         internal string Version { get; }
@@ -33,6 +35,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate
             {
                 ServiceVersion.V2022_05_13 => "2022-05-13",
                 ServiceVersion.V2024_01_26_Preview => "2024-01-26-Preview",
+                ServiceVersion.V2024_08_22_Preview => "2024-08-22-Preview",
                 _ => throw new NotSupportedException()
             };
         }

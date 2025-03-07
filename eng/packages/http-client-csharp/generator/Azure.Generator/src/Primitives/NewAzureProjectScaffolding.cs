@@ -23,10 +23,10 @@ namespace Azure.Generator.Primitives
         {
             var builder = new CSharpProjectWriter()
             {
-                Description = $"This is the {AzureClientPlugin.Instance.TypeFactory.RootNamespace} client library for developing .NET applications with rich experience.",
-                AssemblyTitle = $"SDK Code Generation {AzureClientPlugin.Instance.TypeFactory.RootNamespace}",
+                Description = $"This is the {AzureClientPlugin.Instance.TypeFactory.PackageName} client library for developing .NET applications with rich experience.",
+                AssemblyTitle = $"SDK Code Generation {AzureClientPlugin.Instance.TypeFactory.PackageName}",
                 Version = "1.0.0-beta.1",
-                PackageTags = AzureClientPlugin.Instance.TypeFactory.RootNamespace,
+                PackageTags = AzureClientPlugin.Instance.TypeFactory.PackageName,
                 GenerateDocumentationFile = true,
             };
 
@@ -36,7 +36,7 @@ namespace Azure.Generator.Primitives
             }
 
             int pathSegmentCount = GetPathSegmentCount();
-            if (AzureClientPlugin.Instance.InputLibrary.InputNamespace.Auth.ApiKey is not null)
+            if (AzureClientPlugin.Instance.InputLibrary.InputNamespace.Auth?.ApiKey is not null)
             {
                 builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), "Shared/Core"));
             }
@@ -133,36 +133,5 @@ namespace Azure.Generator.Primitives
                 new("System.ClientModel"),
                 new("System.Text.Json")
             ];
-
-        /// <inheritdoc/>
-        protected override string GetSolutionFileContent()
-        {
-            string slnContent = @"Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.10.35201.131
-MinimumVisualStudioVersion = 10.0.40219.1
-Project(""{{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}}"") = ""{0}"", ""src\{0}.csproj"", ""{{28FF4005-4467-4E36-92E7-DEA27DEB1519}}""
-EndProject
-Global
-    GlobalSection(SolutionConfigurationPlatforms) = preSolution
-        Debug|Any CPU = Debug|Any CPU
-        Release|Any CPU = Release|Any CPU
-    EndGlobalSection
-    GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {{28FF4005-4467-4E36-92E7-DEA27DEB1519}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {{28FF4005-4467-4E36-92E7-DEA27DEB1519}}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {{28FF4005-4467-4E36-92E7-DEA27DEB1519}}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {{28FF4005-4467-4E36-92E7-DEA27DEB1519}}.Release|Any CPU.Build.0 = Release|Any CPU
-    EndGlobalSection
-    GlobalSection(SolutionProperties) = preSolution
-        HideSolutionNode = FALSE
-    EndGlobalSection
-    GlobalSection(ExtensibilityGlobals) = postSolution
-        SolutionGuid = {{A97F4B90-2591-4689-B1F8-5F21FE6D6CAE}}
-    EndGlobalSection
-EndGlobal
-";
-            return string.Format(slnContent, AzureClientPlugin.Instance.TypeFactory.RootNamespace);
-        }
     }
 }

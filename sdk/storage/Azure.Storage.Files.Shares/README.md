@@ -201,6 +201,8 @@ using (FileStream stream = File.OpenWrite(localFilePath))
 All Azure Storage File Shares service operations will throw a
 [RequestFailedException][RequestFailedException] on failure with
 helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
+If multiple failures occur, an [AggregateException][AggregateException] will be thrown,
+containing each failure instance.
 
 ```C# Snippet:Azure_Storage_Files_Shares_Samples_Sample01a_HelloWorld_Errors
 // Connect to the existing share
@@ -263,3 +265,4 @@ additional questions or comments.
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
+[AggregateException]: https://learn.microsoft.com/dotnet/api/system.aggregateexception?view=net-9.0

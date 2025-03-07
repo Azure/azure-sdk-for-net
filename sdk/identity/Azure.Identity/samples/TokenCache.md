@@ -20,7 +20,7 @@ The in-memory token cache provided by the Azure Identity library is thread-safe.
 
 #### Disable caching
 
-As there are many levels of cache, it's not possible to disable in-memory caching. However, the in-memory cache may be cleared by creating a new credential instance.
+As there are many levels of cache, it's not possible to disable in-memory caching. However, the in-memory cache may be cleared by creating a new credential instance. The exception is `ManagedIdentityCredential`, which uses a static instance of in-memory cache by default. This means that the cache can be reused by multiple instances of a credential within the same application instance.
 
 ## Persistent token caching
 

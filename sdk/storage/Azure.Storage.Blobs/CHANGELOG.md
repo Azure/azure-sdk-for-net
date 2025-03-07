@@ -3,11 +3,11 @@
 ## 12.24.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added the following Client Builders: `AddBlobServiceClient(Uri, Azure.SasCredential)`, `AddBlobServiceClient(Uri, TokenCredential)`
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed ContentRange is null in BlobDownloadDetails when calling DownloadStreamingAsync with HttpRange "0-" #47882
 
 ### Other Changes
 

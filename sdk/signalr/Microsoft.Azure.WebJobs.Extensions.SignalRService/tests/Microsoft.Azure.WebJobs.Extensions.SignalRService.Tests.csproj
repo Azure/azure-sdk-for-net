@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Functions.Extensions" />
     <PackageReference Include="Microsoft.Azure.SignalR.Management" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Http" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />

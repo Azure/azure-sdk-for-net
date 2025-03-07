@@ -483,6 +483,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Response<UserDelegationKey> GetUserDelegationKey(
@@ -544,6 +546,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
@@ -612,6 +616,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Pageable<FileSystemItem> GetFileSystems(
@@ -652,6 +658,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual AsyncPageable<FileSystemItem> GetFileSystemsAsync(
@@ -689,6 +697,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -728,6 +738,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -767,6 +779,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<DataLakeFileSystemClient> CreateFileSystem(
             string fileSystemName,
@@ -823,6 +837,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<DataLakeFileSystemClient>> CreateFileSystemAsync(
             string fileSystemName,
@@ -891,6 +907,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -964,6 +982,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -1002,9 +1022,7 @@ namespace Azure.Storage.Files.DataLake
         #region Delete File System
         /// <summary>
         /// The <see cref="DeleteFileSystem"/> operation marks the
-        /// specified file system for deletion. The file system and any paths
-        /// contained within it are later deleted during garbage collection
-        /// which could take several minutes.
+        /// specified file system for deletion.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1027,6 +1045,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response DeleteFileSystem(
             string fileSystemName,
@@ -1057,9 +1077,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="DeleteFileSystemAsync"/> operation marks the
-        /// specified file system for deletion. The file system and any paths
-        /// contained within it are later deleted during garbage collection
-        /// which could take several minutes.
+        /// specified file system for deletion.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1082,6 +1100,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response> DeleteFileSystemAsync(
             string fileSystemName,
@@ -1134,6 +1154,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<DataLakeFileSystemClient> UndeleteFileSystem(
             string deletedFileSystemName,
@@ -1191,6 +1213,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<DataLakeFileSystemClient>> UndeleteFileSystemAsync(
             string deletedFileSystemName,
@@ -1546,6 +1570,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<DataLakeServiceProperties> GetProperties(
             CancellationToken cancellationToken = default)
@@ -1590,6 +1616,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<DataLakeServiceProperties>> GetPropertiesAsync(
             CancellationToken cancellationToken = default)
@@ -1641,6 +1669,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Response SetProperties(
@@ -1690,6 +1720,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual async Task<Response> SetPropertiesAsync(

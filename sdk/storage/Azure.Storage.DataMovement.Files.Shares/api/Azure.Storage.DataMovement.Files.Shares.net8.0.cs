@@ -8,6 +8,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
     }
     public partial class ShareFilesStorageResourceProvider : Azure.Storage.DataMovement.StorageResourceProvider
     {
+        public ShareFilesStorageResourceProvider() { }
         public ShareFilesStorageResourceProvider(Azure.AzureSasCredential credential) { }
         public ShareFilesStorageResourceProvider(Azure.Core.TokenCredential credential) { }
         public ShareFilesStorageResourceProvider(Azure.Storage.StorageSharedKeyCredential credential) { }

@@ -44,6 +44,22 @@ namespace Azure.Storage.DataMovement.Files.Shares
         #region ctors
         /// <summary>
         /// <para>
+        /// Constructs this provider to use no credentials when making a new Blob Storage
+        /// <see cref="StorageResource"/>.
+        /// </para>
+        /// <para>
+        /// This instance will NOT use any credential when constructing the underlying
+        /// Azure.Storage.Blobs client, e.g. <see cref="ShareFileClient(Uri, ShareClientOptions)"/>.
+        /// This is for the purpose of either anonymous access when constructing the client.
+        /// </para>
+        /// </summary>
+        public ShareFilesStorageResourceProvider()
+        {
+            _credentialType = CredentialType.None;
+        }
+
+        /// <summary>
+        /// <para>
         /// Constructs this provider to use the given credential when making a new File Share
         /// <see cref="StorageResource"/>.
         /// </para>
