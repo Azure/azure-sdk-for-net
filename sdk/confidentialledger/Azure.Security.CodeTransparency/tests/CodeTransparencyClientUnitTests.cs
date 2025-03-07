@@ -3,6 +3,8 @@
 
 using System;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -12,6 +14,8 @@ namespace Azure.Security.CodeTransparency.Tests
 {
     public class CodeTransparencyClientUnitTests : ClientTestBase
     {
+        private string _fileQualifierPrefix;
+
         /// <summary>
         /// A canned service identity response. But with a parseable cert.
         /// </summary>
@@ -21,6 +25,29 @@ namespace Azure.Security.CodeTransparency.Tests
             "ledgerId": "cts-canary"
         }
         """;
+
+        private byte[] readFileBytes(string name)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            using (Stream stream = assembly.GetManifestResourceStream(_fileQualifierPrefix + name))
+            using (MemoryStream mem = new())
+            {
+                if (stream == null)
+                    throw new FileNotFoundException("Resource not found: " + _fileQualifierPrefix + name);
+                stream.CopyTo(mem);
+                return mem.ToArray();
+            }
+        }
+
+        [SetUp]
+        public void BaseSetUp()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            string mustExistFilename = "transparent_statement.cose";
+            string resourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith(mustExistFilename));
+            Assert.IsNotNull(resourceName);
+            _fileQualifierPrefix = resourceName.Split(new String[] { mustExistFilename }, StringSplitOptions.None)[0];
+        }
 
         private MockResponse createValidIdentityResponse()
         {
@@ -228,7 +255,7 @@ namespace Azure.Security.CodeTransparency.Tests
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
-            byte[] transparentStatementCoseSign1Bytes = new byte[] { /* invalid bytes */ };
+            byte[] transparentStatementCoseSign1Bytes = new byte[] { 0x01, 0x02, 0x03 /* invalid bytes */ };
             byte[] signedStatement = readFileBytes("input_signed_claims");
 
             Assert.Throws<CryptographicException>(() => client.RunTransparentStatementVerification(transparentStatementCoseSign1Bytes, signedStatement));
@@ -236,7 +263,7 @@ namespace Azure.Security.CodeTransparency.Tests
         }
 
         [Test]
-        public void Verify_TransparentStatement_success()
+        public void RunTransparentStatementVerification_success()
         {
 #if NET462
             Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
@@ -265,13 +292,65 @@ namespace Azure.Security.CodeTransparency.Tests
 #endif
         }
 
-        private byte[] readFileBytes(string name)
+        [Test]
+        public void RunTransparentStatementVerification_InvalidCurve_InvalidOperationException()
         {
-            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestFiles", name);
-            if (!File.Exists(filePath))
-                throw new FileNotFoundException("File not found: " + name);
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            var content = new MockResponse(200);
+            content.SetContent("{\"keys\":" +
+                "[{\"crv\": \"P-512\"," +
+                "\"kid\":\"1dd54f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
+                "\"kty\":\"EC\"," +
+                "\"x\": \"WAHDpC-ECgc7LvCxlaOPsY-xVYF9iStcEPU3XGF8dlhtb6dMHZSYVPMs2gliK-gc\"," +
+                "\"y\": \"EaDFUcuR-aQrWctpV4Kp_x16w3ZcG8957U3sLTRdeihO0vjfHBtW11xaIfAU0qAX\"" +
+                "}]}");
 
-            return File.ReadAllBytes(filePath);
+            var mockTransport = new MockTransport(content);
+            var options = new CodeTransparencyClientOptions
+            {
+                Transport = mockTransport,
+                IdentityClientEndpoint = "https://foo.bar.com"
+            };
+            var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
+
+            byte[] inputSignedStatement = readFileBytes("input_signed_claims");
+            byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
+
+            var exception = Assert.Throws<AggregateException>(() => client.RunTransparentStatementVerification(transparentStatementBytes, inputSignedStatement));
+            Assert.AreEqual("The ECDsa key uses the wrong algorithm. Expected -39 Found -35", exception.InnerExceptions[0].Message);
+#endif
+        }
+
+        [Test]
+        public void RunTransparentStatementVerification_Invalidkid_InvalidOperationException()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            var content = new MockResponse(200);
+            content.SetContent("{\"keys\":" +
+                "[{\"crv\": \"P-384\"," +
+                "\"kid\":\"99954f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
+                "\"kty\":\"EC\"," +
+                "\"x\": \"WAHDpC-ECgc7LvCxlaOPsY-xVYF9iStcEPU3XGF8dlhtb6dMHZSYVPMs2gliK-gc\"," +
+                "\"y\": \"EaDFUcuR-aQrWctpV4Kp_x16w3ZcG8957U3sLTRdeihO0vjfHBtW11xaIfAU0qAX\"" +
+                "}]}");
+
+            var mockTransport = new MockTransport(content);
+            var options = new CodeTransparencyClientOptions
+            {
+                Transport = mockTransport,
+                IdentityClientEndpoint = "https://foo.bar.com"
+            };
+            var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
+
+            byte[] inputSignedStatement = readFileBytes("input_signed_claims");
+            byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
+
+            Assert.Throws<AggregateException>(() => client.RunTransparentStatementVerification(transparentStatementBytes, inputSignedStatement));
+#endif
         }
     }
 }
