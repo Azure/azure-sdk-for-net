@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WorkflowRunActionRepetitionDefinitionCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkflowRunActionRepetitionDefinitionCollection.DeserializeWorkflowRunActionRepetitionDefinitionCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WorkflowRunActionRepetitionDefinitionCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkflowRunActionRepetitionDefinitionCollection.DeserializeWorkflowRunActionRepetitionDefinitionCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WorkflowRunActionRepetitionDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkflowRunActionRepetitionDefinitionData.DeserializeWorkflowRunActionRepetitionDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WorkflowRunActionRepetitionDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkflowRunActionRepetitionDefinitionData.DeserializeWorkflowRunActionRepetitionDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WorkflowRunActionRepetitionDefinitionCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkflowRunActionRepetitionDefinitionCollection.DeserializeWorkflowRunActionRepetitionDefinitionCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WorkflowRunActionRepetitionDefinitionCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkflowRunActionRepetitionDefinitionCollection.DeserializeWorkflowRunActionRepetitionDefinitionCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

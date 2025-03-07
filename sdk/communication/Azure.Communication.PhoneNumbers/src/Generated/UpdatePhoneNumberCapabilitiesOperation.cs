@@ -57,13 +57,13 @@ namespace Azure.Communication.PhoneNumbers
 
         PurchasedPhoneNumber IOperationSource<PurchasedPhoneNumber>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return PurchasedPhoneNumber.DeserializePurchasedPhoneNumber(document.RootElement);
         }
 
         async ValueTask<PurchasedPhoneNumber> IOperationSource<PurchasedPhoneNumber>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return PurchasedPhoneNumber.DeserializePurchasedPhoneNumber(document.RootElement);
         }
     }

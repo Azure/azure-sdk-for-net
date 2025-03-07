@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         MonitoringMetricConfigurationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitoringMetricConfigurationList.DeserializeMonitoringMetricConfigurationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         MonitoringMetricConfigurationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitoringMetricConfigurationList.DeserializeMonitoringMetricConfigurationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         MonitoringMetricConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitoringMetricConfigurationData.DeserializeMonitoringMetricConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         MonitoringMetricConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitoringMetricConfigurationData.DeserializeMonitoringMetricConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         MonitoringMetricConfigurationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitoringMetricConfigurationList.DeserializeMonitoringMetricConfigurationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         MonitoringMetricConfigurationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitoringMetricConfigurationList.DeserializeMonitoringMetricConfigurationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

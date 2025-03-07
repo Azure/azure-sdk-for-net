@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LibraryListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LibraryListResponse.DeserializeLibraryListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -81,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LibraryListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LibraryListResponse.DeserializeLibraryListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -185,14 +185,14 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LibraryResource value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LibraryResource.DeserializeLibraryResource(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 202:
                     {
                         OperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OperationResult.DeserializeOperationResult(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
@@ -219,14 +219,14 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LibraryResource value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LibraryResource.DeserializeLibraryResource(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 202:
                     {
                         OperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OperationResult.DeserializeOperationResult(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
@@ -331,7 +331,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LibraryResource value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LibraryResource.DeserializeLibraryResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -360,7 +360,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LibraryResource value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LibraryResource.DeserializeLibraryResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -541,7 +541,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LibraryListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LibraryListResponse.DeserializeLibraryListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -568,7 +568,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LibraryListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LibraryListResponse.DeserializeLibraryListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

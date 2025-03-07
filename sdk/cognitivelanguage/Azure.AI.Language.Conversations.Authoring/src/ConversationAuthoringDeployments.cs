@@ -3,7 +3,6 @@
 
 using System.Threading;
 using Azure.Core;
-using Azure.AI.Language.Conversations.Authoring.Models;
 using System.Threading.Tasks;
 using System;
 using Azure.Core.Pipeline;
@@ -15,10 +14,10 @@ namespace Azure.AI.Language.Conversations.Authoring
     [CodeGenSuppress("GetDeploymentDeleteFromResourcesStatus", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetDeploymentStatusAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetDeploymentStatus", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("DeployProjectAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(CreateDeploymentDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("DeployProject", typeof(WaitUntil), typeof(string), typeof(string), typeof(CreateDeploymentDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("DeleteDeploymentFromResourcesAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(DeleteDeploymentDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("DeleteDeploymentFromResources", typeof(WaitUntil), typeof(string), typeof(string), typeof(DeleteDeploymentDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("DeployProjectAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(ConversationAuthoringCreateDeploymentDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("DeployProject", typeof(WaitUntil), typeof(string), typeof(string), typeof(ConversationAuthoringCreateDeploymentDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteDeploymentFromResourcesAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(ConversationAuthoringDeleteDeploymentDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteDeploymentFromResources", typeof(WaitUntil), typeof(string), typeof(string), typeof(ConversationAuthoringDeleteDeploymentDetails), typeof(CancellationToken))]
     [CodeGenSuppress("GetDeploymentAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetDeployment", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("DeleteDeploymentAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(RequestContext))]
@@ -68,26 +67,26 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Gets the details of a deployment. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ProjectDeployment>> GetDeploymentAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConversationAuthoringProjectDeployment>> GetDeploymentAsync(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDeploymentAsync(context).ConfigureAwait(false);
-            return Response.FromValue(ProjectDeployment.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringProjectDeployment.FromResponse(response), response);
         }
 
         /// <summary> Gets the details of a deployment. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ProjectDeployment> GetDeployment(CancellationToken cancellationToken = default)
+        public virtual Response<ConversationAuthoringProjectDeployment> GetDeployment(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDeployment(context);
-            return Response.FromValue(ProjectDeployment.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringProjectDeployment.FromResponse(response), response);
         }
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
@@ -161,7 +160,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Gets the status of an existing delete deployment from specific resources job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeploymentDeleteFromResourcesOperationState>> GetDeploymentDeleteFromResourcesStatusAsync(
+        public virtual async Task<Response<ConversationAuthoringDeploymentDeleteFromResourcesState>> GetDeploymentDeleteFromResourcesStatusAsync(
             string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -170,13 +169,13 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDeploymentDeleteFromResourcesStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(DeploymentDeleteFromResourcesOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringDeploymentDeleteFromResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing delete deployment from specific resources job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeploymentDeleteFromResourcesOperationState> GetDeploymentDeleteFromResourcesStatus(
+        public virtual Response<ConversationAuthoringDeploymentDeleteFromResourcesState> GetDeploymentDeleteFromResourcesStatus(
             string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -185,13 +184,13 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDeploymentDeleteFromResourcesStatus(jobId, context);
-            return Response.FromValue(DeploymentDeleteFromResourcesOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringDeploymentDeleteFromResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing deployment job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeploymentOperationState>> GetDeploymentStatusAsync(
+        public virtual async Task<Response<ConversationAuthoringDeploymentState>> GetDeploymentStatusAsync(
             string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -200,13 +199,13 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDeploymentStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(DeploymentOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringDeploymentState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing deployment job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeploymentOperationState> GetDeploymentStatus(
+        public virtual Response<ConversationAuthoringDeploymentState> GetDeploymentStatus(
             string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -215,7 +214,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDeploymentStatus(jobId, context);
-            return Response.FromValue(DeploymentOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringDeploymentState.FromResponse(response), response);
         }
 
         /// <summary> Creates a new deployment or replaces an existing one. </summary>
@@ -224,7 +223,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Operation> DeployProjectAsync(
             WaitUntil waitUntil,
-            CreateDeploymentDetails details,
+            ConversationAuthoringCreateDeploymentDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -242,7 +241,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Operation DeployProject(
             WaitUntil waitUntil,
-            CreateDeploymentDetails details,
+            ConversationAuthoringCreateDeploymentDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -260,7 +259,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Operation> DeleteDeploymentFromResourcesAsync(
             WaitUntil waitUntil,
-            DeleteDeploymentDetails details,
+            ConversationAuthoringDeleteDeploymentDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -278,7 +277,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Operation DeleteDeploymentFromResources(
             WaitUntil waitUntil,
-            DeleteDeploymentDetails details,
+            ConversationAuthoringDeleteDeploymentDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -558,7 +557,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeployProjectAsync(WaitUntil,CreateDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeployProjectAsync(WaitUntil,ConversationAuthoringCreateDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -598,7 +597,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeployProject(WaitUntil,CreateDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeployProject(WaitUntil,ConversationAuthoringCreateDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -638,7 +637,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeleteDeploymentFromResourcesAsync(WaitUntil, DeleteDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeleteDeploymentFromResourcesAsync(WaitUntil, ConversationAuthoringDeleteDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -678,7 +677,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeleteDeploymentFromResources(WaitUntil,DeleteDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeleteDeploymentFromResources(WaitUntil,ConversationAuthoringDeleteDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

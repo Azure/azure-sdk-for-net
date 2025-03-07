@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LinkConnectionListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LinkConnectionListResponse.DeserializeLinkConnectionListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LinkConnectionListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LinkConnectionListResponse.DeserializeLinkConnectionListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -131,7 +131,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LinkConnectionResource value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LinkConnectionResource.DeserializeLinkConnectionResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -163,7 +163,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LinkConnectionResource value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LinkConnectionResource.DeserializeLinkConnectionResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -205,7 +205,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LinkConnectionResource value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LinkConnectionResource.DeserializeLinkConnectionResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -232,7 +232,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LinkConnectionResource value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LinkConnectionResource.DeserializeLinkConnectionResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -530,7 +530,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LinkConnectionDetailedStatus value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LinkConnectionDetailedStatus.DeserializeLinkConnectionDetailedStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -557,7 +557,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LinkConnectionDetailedStatus value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LinkConnectionDetailedStatus.DeserializeLinkConnectionDetailedStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -600,7 +600,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LinkTableListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LinkTableListResponse.DeserializeLinkTableListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -627,7 +627,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LinkTableListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LinkTableListResponse.DeserializeLinkTableListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -679,7 +679,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LinkConnectionQueryTableStatus value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LinkConnectionQueryTableStatus.DeserializeLinkConnectionQueryTableStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -711,7 +711,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LinkConnectionQueryTableStatus value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LinkConnectionQueryTableStatus.DeserializeLinkConnectionQueryTableStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -945,7 +945,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LinkConnectionListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LinkConnectionListResponse.DeserializeLinkConnectionListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -972,7 +972,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         LinkConnectionListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LinkConnectionListResponse.DeserializeLinkConnectionListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

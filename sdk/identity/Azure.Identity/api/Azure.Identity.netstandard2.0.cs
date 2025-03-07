@@ -332,6 +332,7 @@ namespace Azure.Identity
         public static Azure.Identity.ManagedIdentityId FromUserAssignedClientId(string id) { throw null; }
         public static Azure.Identity.ManagedIdentityId FromUserAssignedObjectId(string id) { throw null; }
         public static Azure.Identity.ManagedIdentityId FromUserAssignedResourceId(Azure.Core.ResourceIdentifier id) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class OnBehalfOfCredential : Azure.Core.TokenCredential
     {

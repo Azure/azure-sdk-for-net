@@ -117,7 +117,7 @@ namespace Azure.Maps.TimeZones
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static TimeZoneId FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTimeZoneId(document.RootElement);
         }
     }

@@ -4,7 +4,6 @@
 using System;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
-using Azure.AI.Language.Conversations.Authoring.Models;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
