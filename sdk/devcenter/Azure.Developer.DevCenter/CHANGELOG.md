@@ -1,16 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2025-03-11)
 
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0 (2024-04-03)
 This Azure DevCenter library release uses the 2023-04-01 GA API.
