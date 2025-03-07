@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// This identifies the latest API Version under test: 2024-08-22-preview
+// This identifies the latest API Version under test: 2024-12-09-preview
 #define API_V3
 
 using System;
@@ -328,16 +328,16 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
             Console.WriteLine(resp.Content);
 
-            //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
+            var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
             string programContent = File.ReadAllText(filePath);
             Assert.AreEqual(Regex.Replace(programContent, @"\s", ""), Regex.Replace(resp.Content.ToString(), @"\s", ""));
 
             // Verify Response by Querying endpt
             /// TODO: Investigate InternalServerError
-            //ConfidentialLedgerHelperHttpClient helperHttpClient = new ConfidentialLedgerHelperHttpClient(TestEnvironment.ConfidentialLedgerUrl, Credential);
-            //(var statusCode, var response) = await helperHttpClient.QueryUserDefinedContentEndpointAsync("/app/content");
-            //Assert.AreEqual((int)HttpStatusCode.OK, statusCode);
-            //Assert.AreEqual("Test content", response);
+            ConfidentialLedgerHelperHttpClient helperHttpClient = new ConfidentialLedgerHelperHttpClient(TestEnvironment.ConfidentialLedgerUrl, Credential);
+            (var statusCode, var response) = await helperHttpClient.QueryUserDefinedContentEndpointAsync("/app/content");
+            Assert.AreEqual((int)HttpStatusCode.OK, statusCode);
+            Assert.AreEqual("Test content", response);
 
             // Deploy Empty JS Bundle to remove JS App
             programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create());
@@ -349,7 +349,6 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [RecordedTest]
-        [Ignore("This test cannot be run until we fix the endpoint to match the rest spec.")]
         public async Task JSRuntimeOptionsTest()
         {
             // Get Default JS Runtime Options

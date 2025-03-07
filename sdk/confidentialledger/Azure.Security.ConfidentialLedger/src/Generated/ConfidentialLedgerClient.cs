@@ -1180,21 +1180,21 @@ namespace Azure.Security.ConfidentialLedger
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="module"> module name of the user defined endpoint. </param>
+        /// <param name="moduleName"> module name of the user defined endpoint. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="module"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedEndpointsModuleAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetUserDefinedEndpointsModuleAsync(string module, RequestContext context = null)
+        public virtual async Task<Response> GetUserDefinedEndpointsModuleAsync(string moduleName, RequestContext context = null)
         {
-            Argument.AssertNotNull(module, nameof(module));
+            Argument.AssertNotNull(moduleName, nameof(moduleName));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUserDefinedEndpointsModule");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUserDefinedEndpointsModuleRequest(module, context);
+                using HttpMessage message = CreateGetUserDefinedEndpointsModuleRequest(moduleName, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1214,21 +1214,307 @@ namespace Azure.Security.ConfidentialLedger
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="module"> module name of the user defined endpoint. </param>
+        /// <param name="moduleName"> module name of the user defined endpoint. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="module"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedEndpointsModule(string,RequestContext)']/*" />
-        public virtual Response GetUserDefinedEndpointsModule(string module, RequestContext context = null)
+        public virtual Response GetUserDefinedEndpointsModule(string moduleName, RequestContext context = null)
         {
-            Argument.AssertNotNull(module, nameof(module));
+            Argument.AssertNotNull(moduleName, nameof(moduleName));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUserDefinedEndpointsModule");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUserDefinedEndpointsModuleRequest(module, context);
+                using HttpMessage message = CreateGetUserDefinedEndpointsModuleRequest(moduleName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a user defined function from the Confidential Ledger.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="functionId"> Identifies a user defined function. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='DeleteUserDefinedFunctionAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteUserDefinedFunctionAsync(string functionId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(functionId, nameof(functionId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUserDefinedFunction");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteUserDefinedFunctionRequest(functionId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a user defined function from the Confidential Ledger.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="functionId"> Identifies a user defined function. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='DeleteUserDefinedFunction(string,RequestContext)']/*" />
+        public virtual Response DeleteUserDefinedFunction(string functionId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(functionId, nameof(functionId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUserDefinedFunction");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteUserDefinedFunctionRequest(functionId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a user defined function.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="functionId"> Identifies a user defined function. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedFunctionAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetUserDefinedFunctionAsync(string functionId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(functionId, nameof(functionId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUserDefinedFunction");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetUserDefinedFunctionRequest(functionId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a user defined function.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="functionId"> Identifies a user defined function. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedFunction(string,RequestContext)']/*" />
+        public virtual Response GetUserDefinedFunction(string functionId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(functionId, nameof(functionId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUserDefinedFunction");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetUserDefinedFunctionRequest(functionId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a user defined function.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="functionId"> Identifies a user defined function. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateUserDefinedFunctionAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateUserDefinedFunctionAsync(string functionId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(functionId, nameof(functionId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateUserDefinedFunction");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateUserDefinedFunctionRequest(functionId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a user defined function.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="functionId"> Identifies a user defined function. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateUserDefinedFunction(string,RequestContent,RequestContext)']/*" />
+        public virtual Response CreateUserDefinedFunction(string functionId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(functionId, nameof(functionId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateUserDefinedFunction");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateUserDefinedFunctionRequest(functionId, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Executes a user defined function.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="functionId"> Identifies a user defined function. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='ExecuteUserDefinedFunctionAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> ExecuteUserDefinedFunctionAsync(string functionId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(functionId, nameof(functionId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.ExecuteUserDefinedFunction");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateExecuteUserDefinedFunctionRequest(functionId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Executes a user defined function.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="functionId"> Identifies a user defined function. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='ExecuteUserDefinedFunction(string,RequestContent,RequestContext)']/*" />
+        public virtual Response ExecuteUserDefinedFunction(string functionId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(functionId, nameof(functionId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.ExecuteUserDefinedFunction");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateExecuteUserDefinedFunctionRequest(functionId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1726,6 +2012,48 @@ namespace Azure.Security.ConfidentialLedger
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetLedgerUsers", "ledgerUsers", "nextLink", context);
         }
 
+        /// <summary>
+        /// [Protocol Method] Retrieves a list of user defined functions present in the Confidential Ledger
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedFunctionsAsync(RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetUserDefinedFunctionsAsync(RequestContext context = null)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUserDefinedFunctionsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUserDefinedFunctionsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetUserDefinedFunctions", "functions", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves a list of user defined functions present in the Confidential Ledger
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedFunctions(RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetUserDefinedFunctions(RequestContext context = null)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUserDefinedFunctionsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUserDefinedFunctionsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetUserDefinedFunctions", "functions", "nextLink", context);
+        }
+
         internal HttpMessage CreateGetConstitutionRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2056,7 +2384,7 @@ namespace Azure.Security.ConfidentialLedger
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/app/userDefinedEndpoints/runTimeOptions", false);
+            uri.AppendPath("/app/userDefinedEndpoints/runtimeOptions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2070,7 +2398,7 @@ namespace Azure.Security.ConfidentialLedger
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/app/userDefinedEndpoints/runTimeOptions", false);
+            uri.AppendPath("/app/userDefinedEndpoints/runtimeOptions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2079,7 +2407,7 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateGetUserDefinedEndpointsModuleRequest(string module, RequestContext context)
+        internal HttpMessage CreateGetUserDefinedEndpointsModuleRequest(string moduleName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2087,10 +2415,89 @@ namespace Azure.Security.ConfidentialLedger
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/app/userDefinedEndpoints/modules", false);
-            uri.AppendQuery("module", module, false);
+            uri.AppendQuery("module_name", moduleName, false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetUserDefinedFunctionsRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/app/userDefinedFunctions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteUserDefinedFunctionRequest(string functionId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/app/userDefinedFunctions/", false);
+            uri.AppendPath(functionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetUserDefinedFunctionRequest(string functionId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/app/userDefinedFunctions/", false);
+            uri.AppendPath(functionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateUserDefinedFunctionRequest(string functionId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/app/userDefinedFunctions/", false);
+            uri.AppendPath(functionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateExecuteUserDefinedFunctionRequest(string functionId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/app/userDefinedFunctions/", false);
+            uri.AppendPath(functionId, true);
+            uri.AppendPath(":execute", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
             return message;
         }
 
@@ -2221,11 +2628,26 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
+        internal HttpMessage CreateGetUserDefinedFunctionsNextPageRequest(string nextLink, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
         private static ResponseClassifier _responseClassifier204;
         private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
         private static ResponseClassifier _responseClassifier201;
         private static ResponseClassifier ResponseClassifier201 => _responseClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
+        private static ResponseClassifier _responseClassifier200201;
+        private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
     }
 }
