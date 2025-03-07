@@ -1,0 +1,99 @@
+{
+  "title": "ElasticSans_Create",
+  "operationId": "ElasticSans_Create",
+  "parameters": {
+    "subscriptionId": "subscriptionid",
+    "resourceGroupName": "resourcegroupname",
+    "elasticSanName": "elasticsanname",
+    "parameters": {
+      "properties": {
+        "sku": {
+          "name": "Premium_LRS"
+        },
+        "baseSizeTiB": 15,
+        "extendedCapacitySizeTiB": 27
+      },
+      "location": "France Central"
+    },
+    "api-version": "2024-05-01"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "properties": {
+          "sku": {
+            "name": "Premium_LRS",
+            "tier": "Premium"
+          },
+          "availabilityZones": [
+            "1"
+          ],
+          "provisioningState": "Succeeded",
+          "baseSizeTiB": 15,
+          "extendedCapacitySizeTiB": 6,
+          "totalVolumeSizeGiB": 15,
+          "volumeGroupCount": 24,
+          "totalIops": 22,
+          "totalMBps": 4,
+          "totalSizeTiB": 27,
+          "publicNetworkAccess": "Enabled"
+        },
+        "systemData": {
+          "createdBy": "otfifnrahdshqombvtg",
+          "createdByType": "User",
+          "createdAt": "2023-07-03T09:59:45.919Z",
+          "lastModifiedBy": "jnaxavnlhrboshtidtib",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-07-03T09:59:45.919Z"
+        },
+        "tags": {
+          "key5002": "lhag"
+        },
+        "location": "France Central",
+        "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}",
+        "name": "vfoatmakv",
+        "type": "Microsoft.ElasticSan/ElasticSans"
+      }
+    },
+    "201": {
+      "headers": {
+        "location": "https://contoso.com/operationstatus"
+      },
+      "body": {
+        "properties": {
+          "sku": {
+            "name": "Premium_LRS",
+            "tier": "Premium"
+          },
+          "availabilityZones": [
+            "1"
+          ],
+          "provisioningState": "Succeeded",
+          "baseSizeTiB": 15,
+          "extendedCapacitySizeTiB": 6,
+          "totalVolumeSizeGiB": 15,
+          "volumeGroupCount": 24,
+          "totalIops": 22,
+          "totalMBps": 4,
+          "totalSizeTiB": 27,
+          "publicNetworkAccess": "Enabled"
+        },
+        "systemData": {
+          "createdBy": "otfifnrahdshqombvtg",
+          "createdByType": "User",
+          "createdAt": "2023-07-03T09:59:45.919Z",
+          "lastModifiedBy": "jnaxavnlhrboshtidtib",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-07-03T09:59:45.919Z"
+        },
+        "tags": {
+          "key5002": "lhag"
+        },
+        "location": "France Central",
+        "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}",
+        "name": "vfoatmakv",
+        "type": "Microsoft.ElasticSan/ElasticSans"
+      }
+    }
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Common types",
+    "version": "6.0"
+  },
+  "paths": {},
+  "definitions": {
+    "ManagedServiceIdentity": {
+      "type": "object",
+      "description": "Managed service identity (system assigned and/or user assigned identities)",
+      "properties": {
+        "principalId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.",
+          "readOnly": true
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.",
+          "readOnly": true
+        },
+        "type": {
+          "$ref": "#/definitions/ManagedServiceIdentityType"
+        },
+        "userAssignedIdentities": {
+          "type": "object",
+          "description": "The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.",
+          "additionalProperties": {
+            "$ref": "#/definitions/UserAssignedIdentity",
+            "x-nullable": true
+          }
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "ManagedServiceIdentityType": {
+      "type": "string",
+      "description": "Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).",
+      "enum": [
+        "None",
+        "SystemAssigned",
+        "UserAssigned",
+        "SystemAssigned,UserAssigned"
+      ],
+      "x-ms-enum": {
+        "name": "ManagedServiceIdentityType",
+        "modelAsString": true
+      }
+    },
+    "SystemAssignedServiceIdentity": {
+      "type": "object",
+      "description": "Managed service identity (either system assigned, or none)",
+      "properties": {
+        "principalId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.",
+          "readOnly": true
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.",
+          "readOnly": true
+        },
+        "type": {
+          "$ref": "#/definitions/SystemAssignedServiceIdentityType"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "SystemAssignedServiceIdentityType": {
+      "type": "string",
+      "description": "Type of managed service identity (either system assigned, or none).",
+      "enum": [
+        "None",
+        "SystemAssigned"
+      ],
+      "x-ms-enum": {
+        "name": "SystemAssignedServiceIdentityType",
+        "modelAsString": true
+      }
+    },
+    "UserAssignedIdentity": {
+      "type": "object",
+      "description": "User assigned identity properties",
+      "properties": {
+        "principalId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The principal ID of the assigned identity.",
+          "readOnly": true
+        },
+        "clientId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The client ID of the assigned identity.",
+          "readOnly": true
+        }
+      }
+    }
+  }
+}

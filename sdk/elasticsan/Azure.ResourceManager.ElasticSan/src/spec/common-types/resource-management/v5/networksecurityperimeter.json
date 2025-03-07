@@ -1,0 +1,433 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Network security perimeter common type definitions",
+    "version": "0000-00-00",
+    "description": "Common types for network security perimeters based on a shared API specification. These common, versioned type definitions are intended for resource providers (RPs, except Network RP) to use, and reuse, for defining their own API versions that share a set of type definitions that is consistent across providers.",
+    "contact": {}
+  },
+  "schemes": [
+    "https"
+  ],
+  "host": "management.azure.com",
+  "paths": {},
+  "definitions": {
+    "AccessRule": {
+      "type": "object",
+      "description": "Access rule in a network security perimeter configuration profile",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the access rule"
+        },
+        "properties": {
+          "$ref": "#/definitions/AccessRuleProperties"
+        }
+      }
+    },
+    "AccessRuleDirection": {
+      "type": "string",
+      "description": "Direction of Access Rule",
+      "enum": [
+        "Inbound",
+        "Outbound"
+      ],
+      "x-ms-enum": {
+        "name": "AccessRuleDirection",
+        "modelAsString": true,
+        "values": [
+          {
+            "value": "Inbound",
+            "description": "Applies to inbound network traffic to the secured resources."
+          },
+          {
+            "value": "Outbound",
+            "description": "Applies to outbound network traffic from the secured resources"
+          }
+        ]
+      }
+    },
+    "AccessRuleProperties": {
+      "type": "object",
+      "description": "Properties of Access Rule",
+      "properties": {
+        "direction": {
+          "$ref": "#/definitions/AccessRuleDirection"
+        },
+        "addressPrefixes": {
+          "type": "array",
+          "description": "Address prefixes in the CIDR format for inbound rules",
+          "items": {
+            "type": "string",
+            "description": "An IP address prefix (CIDR) for inbound rules"
+          }
+        },
+        "subscriptions": {
+          "type": "array",
+          "description": "Subscriptions for inbound rules",
+          "items": {
+            "type": "object",
+            "description": "Subscription identifiers",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "arm-id",
+                "description": "The fully qualified Azure resource ID of the subscription e.g. ('/subscriptions/00000000-0000-0000-0000-000000000000') "
+              }
+            }
+          }
+        },
+        "networkSecurityPerimeters": {
+          "type": "array",
+          "description": "Network security perimeters for inbound rules",
+          "items": {
+            "$ref": "#/definitions/NetworkSecurityPerimeter"
+          }
+        },
+        "fullyQualifiedDomainNames": {
+          "type": "array",
+          "description": "Fully qualified domain names (FQDN) for outbound rules",
+          "items": {
+            "type": "string",
+            "description": "A fully qualified domain name (FQDN)"
+          }
+        },
+        "emailAddresses": {
+          "type": "array",
+          "description": "Email addresses for outbound rules",
+          "items": {
+            "type": "string",
+            "description": "An email address"
+          }
+        },
+        "phoneNumbers": {
+          "type": "array",
+          "description": "Phone numbers for outbound rules",
+          "items": {
+            "type": "string",
+            "description": "A phone number"
+          }
+        }
+      }
+    },
+    "NetworkSecurityPerimeter": {
+      "type": "object",
+      "description": "Information about a network security perimeter (NSP)",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "arm-id",
+          "description": "Fully qualified Azure resource ID of the NSP resource",
+          "x-ms-arm-id-details": {
+            "allowedResources": [
+              {
+                "resourceType": "Microsoft.Network/networkSecurityPerimeters"
+              }
+            ]
+          }
+        },
+        "perimeterGuid": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Universal unique ID (UUID) of the network security perimeter"
+        },
+        "location": {
+          "type": "string",
+          "description": "Location of the network security perimeter",
+          "x-ms-mutability": [
+            "create",
+            "read"
+          ]
+        }
+      }
+    },
+    "NetworkSecurityPerimeterConfiguration": {
+      "type": "object",
+      "description": "Network security perimeter (NSP) configuration resource",
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/NetworkSecurityPerimeterConfigurationProperties"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "./types.json#/definitions/ProxyResource"
+        }
+      ]
+    },
+    "NetworkSecurityPerimeterConfigurationListResult": {
+      "type": "object",
+      "description": "Result of a list NSP (network security perimeter) configurations request.",
+      "properties": {
+        "value": {
+          "type": "array",
+          "description": "Array of network security perimeter results.",
+          "items": {
+            "$ref": "#/definitions/NetworkSecurityPerimeterConfiguration"
+          }
+        },
+        "nextLink": {
+          "type": "string",
+          "format": "uri",
+          "description": "The link used to get the next page of results."
+        }
+      }
+    },
+    "NetworkSecurityPerimeterConfigurationProperties": {
+      "type": "object",
+      "description": "Network security configuration properties.",
+      "properties": {
+        "provisioningState": {
+          "$ref": "#/definitions/NetworkSecurityPerimeterConfigurationProvisioningState",
+          "readOnly": true
+        },
+        "provisioningIssues": {
+          "type": "array",
+          "description": "List of provisioning issues, if any",
+          "items": {
+            "$ref": "#/definitions/ProvisioningIssue"
+          },
+          "readOnly": true,
+          "x-ms-identifiers": []
+        },
+        "networkSecurityPerimeter": {
+          "$ref": "#/definitions/NetworkSecurityPerimeter"
+        },
+        "resourceAssociation": {
+          "$ref": "#/definitions/ResourceAssociation"
+        },
+        "profile": {
+          "$ref": "#/definitions/NetworkSecurityProfile"
+        }
+      }
+    },
+    "NetworkSecurityPerimeterConfigurationProvisioningState": {
+      "type": "string",
+      "description": "Provisioning state of a network security perimeter configuration that is being created or updated.",
+      "enum": [
+        "Succeeded",
+        "Creating",
+        "Updating",
+        "Deleting",
+        "Accepted",
+        "Failed",
+        "Canceled"
+      ],
+      "x-ms-enum": {
+        "name": "NetworkSecurityPerimeterConfigurationProvisioningState",
+        "modelAsString": true
+      },
+      "readOnly": true
+    },
+    "NetworkSecurityProfile": {
+      "type": "object",
+      "description": "Network security perimeter configuration profile",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the profile"
+        },
+        "accessRulesVersion": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Current access rules version"
+        },
+        "accessRules": {
+          "type": "array",
+          "description": "List of Access Rules",
+          "items": {
+            "$ref": "#/definitions/AccessRule"
+          },
+          "x-ms-identifiers": [
+            "name"
+          ]
+        },
+        "diagnosticSettingsVersion": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Current diagnostic settings version"
+        },
+        "enabledLogCategories": {
+          "type": "array",
+          "description": "List of log categories that are enabled",
+          "items": {
+            "type": "string",
+            "description": "Log category"
+          }
+        }
+      }
+    },
+    "ProvisioningIssue": {
+      "type": "object",
+      "description": "Describes a provisioning issue for a network security perimeter configuration",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the issue",
+          "readOnly": true
+        },
+        "properties": {
+          "$ref": "#/definitions/ProvisioningIssueProperties"
+        }
+      },
+      "readOnly": true
+    },
+    "ProvisioningIssueProperties": {
+      "type": "object",
+      "description": "Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules",
+      "properties": {
+        "issueType": {
+          "type": "string",
+          "description": "Type of issue",
+          "enum": [
+            "Unknown",
+            "ConfigurationPropagationFailure",
+            "MissingPerimeterConfiguration",
+            "MissingIdentityConfiguration"
+          ],
+          "x-ms-enum": {
+            "name": "IssueType",
+            "modelAsString": true,
+            "values": [
+              {
+                "value": "Unknown",
+                "description": "Unknown issue type"
+              },
+              {
+                "value": "ConfigurationPropagationFailure",
+                "description": "An error occurred while applying the network security perimeter (NSP) configuration."
+              },
+              {
+                "value": "MissingPerimeterConfiguration",
+                "description": "A network connectivity issue is happening on the resource which could be addressed either by adding new resources to the network security perimeter (NSP) or by modifying access rules."
+              },
+              {
+                "value": "MissingIdentityConfiguration",
+                "description": "An managed identity hasn't been associated with the resource. The resource will still be able to validate inbound traffic from the network security perimeter (NSP) or matching inbound access rules, but it won't be able to perform outbound access as a member of the NSP."
+              }
+            ]
+          },
+          "readOnly": true
+        },
+        "severity": {
+          "type": "string",
+          "description": "Severity of the issue.",
+          "enum": [
+            "Warning",
+            "Error"
+          ],
+          "x-ms-enum": {
+            "name": "Severity",
+            "modelAsString": true
+          },
+          "readOnly": true
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the issue",
+          "readOnly": true
+        },
+        "suggestedResourceIds": {
+          "type": "array",
+          "description": "Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue.",
+          "items": {
+            "type": "string",
+            "format": "arm-id",
+            "description": "Fully qualified resource ID of the suggested resource",
+            "readOnly": true
+          },
+          "readOnly": true
+        },
+        "suggestedAccessRules": {
+          "type": "array",
+          "description": "Access rules that can be added to the network security profile (NSP) to remediate the issue.",
+          "items": {
+            "$ref": "#/definitions/AccessRule"
+          },
+          "readOnly": true,
+          "x-ms-identifiers": []
+        }
+      },
+      "readOnly": true
+    },
+    "PublicNetworkAccess": {
+      "type": "string",
+      "description": "Allow, disallow, or let network security perimeter configuration control public network access to the protected resource. Value is optional but if passed in, it must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'.",
+      "enum": [
+        "Enabled",
+        "Disabled",
+        "SecuredByPerimeter"
+      ],
+      "x-ms-enum": {
+        "name": "PublicNetworkAccess",
+        "modelAsString": true,
+        "values": [
+          {
+            "value": "Enabled",
+            "description": "Allows public network access to the resource"
+          },
+          {
+            "value": "Disabled",
+            "description": "Disallows public network access to the resource"
+          },
+          {
+            "value": "SecuredByPerimeter",
+            "description": "The network security perimeter configuration rules allow or disallow public network access to the resource. Requires an associated network security perimeter."
+          }
+        ]
+      }
+    },
+    "ResourceAssociation": {
+      "type": "object",
+      "description": "Information about resource association",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the resource association"
+        },
+        "accessMode": {
+          "$ref": "#/definitions/ResourceAssociationAccessMode"
+        }
+      }
+    },
+    "ResourceAssociationAccessMode": {
+      "type": "string",
+      "description": "Access mode of the resource association",
+      "enum": [
+        "Enforced",
+        "Learning",
+        "Audit"
+      ],
+      "x-ms-enum": {
+        "name": "ResourceAssociationAccessMode",
+        "modelAsString": true,
+        "values": [
+          {
+            "value": "Enforced",
+            "description": "Enforced access mode - traffic to the resource that failed access checks is blocked"
+          },
+          {
+            "value": "Learning",
+            "description": "Learning access mode - traffic to the resource is enabled for analysis but not blocked"
+          },
+          {
+            "value": "Audit",
+            "description": "Audit access mode - traffic to the resource that fails access checks is logged but not blocked"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "NetworkSecurityPerimeterConfigurationNameParameter": {
+      "name": "networkSecurityPerimeterConfigurationName",
+      "in": "path",
+      "description": "The name for a network security perimeter configuration",
+      "required": true,
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "x-ms-parameter-location": "method"
+    }
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "title": "VolumeGroups_ListByElasticSan",
+  "operationId": "VolumeGroups_ListByElasticSan",
+  "parameters": {
+    "subscriptionId": "subscriptionid",
+    "resourceGroupName": "resourcegroupname",
+    "elasticSanName": "elasticsanname",
+    "api-version": "2024-05-01"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "identity": {
+              "principalId": "uqclmeopt",
+              "tenantId": "qvhlvbvgodtycsfjhamstlrusktly",
+              "type": "None",
+              "userAssignedIdentities": {
+                "key1006": {
+                  "principalId": "pcbbifvgblsrhzmpdt",
+                  "clientId": "hsfmzocbkqpxspqwamdqjknd"
+                }
+              }
+            },
+            "properties": {
+              "provisioningState": "Invalid",
+              "protocolType": "Iscsi",
+              "encryption": "EncryptionAtRestWithPlatformKey",
+              "encryptionProperties": {
+                "keyVaultProperties": {
+                  "keyName": "lunpapamzeimppgobraxjt",
+                  "keyVersion": "oemygbnfmqhijmonkqfqmy",
+                  "keyVaultUri": "https://microsoft.com/a",
+                  "currentVersionedKeyIdentifier": "giyyriknaomjipru",
+                  "lastKeyRotationTimestamp": "2024-07-09T08:26:49.141Z",
+                  "currentVersionedKeyExpirationTimestamp": "2024-07-09T08:26:49.141Z"
+                },
+                "identity": {
+                  "userAssignedIdentity": "gfhkfbozahmmwluqndfgxunssafa"
+                }
+              },
+              "networkAcls": {
+                "virtualNetworkRules": [
+                  {
+                    "id": "bkhwaiqvvaguymsmnzzbzz",
+                    "action": "Allow"
+                  }
+                ]
+              },
+              "privateEndpointConnections": [
+                {
+                  "properties": {
+                    "provisioningState": "Invalid",
+                    "privateEndpoint": {
+                      "id": "kdvywmjnrvqksyvxgosjorlzjk"
+                    },
+                    "privateLinkServiceConnectionState": {
+                      "status": "Pending",
+                      "description": "hqsksvdlhacbmawvhlhhfmcyv",
+                      "actionsRequired": "xvnopczgivazrjlzirhtww"
+                    },
+                    "groupIds": [
+                      "ftdxwynrey"
+                    ]
+                  },
+                  "id": "utnp",
+                  "name": "duzwhl",
+                  "type": "mzwnrqbkzgk",
+                  "systemData": {
+                    "createdBy": "iskcypymrroqhmdwccwqzdclpyutpb",
+                    "createdByType": "User",
+                    "createdAt": "2024-07-09T08:26:45.352Z",
+                    "lastModifiedBy": "ujpptnmvqtzudoiaihbgrvnagxh",
+                    "lastModifiedByType": "User",
+                    "lastModifiedAt": "2024-07-09T08:26:45.352Z"
+                  }
+                }
+              ],
+              "enforceDataIntegrityCheckForIscsi": true
+            },
+            "id": "cgwmakehxvhv",
+            "name": "qymuqyvdlpshrna",
+            "type": "wwkffcgidqktzuzo",
+            "systemData": {
+              "createdBy": "iskcypymrroqhmdwccwqzdclpyutpb",
+              "createdByType": "User",
+              "createdAt": "2024-07-09T08:26:45.352Z",
+              "lastModifiedBy": "ujpptnmvqtzudoiaihbgrvnagxh",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2024-07-09T08:26:45.352Z"
+            }
+          }
+        ],
+        "nextLink": "xhokenxyibcglczppcoqlnvwblwx"
+      }
+    }
+  }
+}

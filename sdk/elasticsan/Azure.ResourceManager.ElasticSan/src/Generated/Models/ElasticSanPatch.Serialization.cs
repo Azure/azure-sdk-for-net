@@ -62,11 +62,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(AutoScaleProperties))
-            {
-                writer.WritePropertyName("autoScaleProperties"u8);
-                writer.WriteObjectValue(AutoScaleProperties, options);
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +104,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
             long? baseSizeTiB = default;
             long? extendedCapacitySizeTiB = default;
             ElasticSanPublicNetworkAccess? publicNetworkAccess = default;
-            AutoScaleProperties autoScaleProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,15 +158,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                             publicNetworkAccess = new ElasticSanPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("autoScaleProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            autoScaleProperties = AutoScaleProperties.DeserializeAutoScaleProperties(property0.Value, options);
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -182,13 +167,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ElasticSanPatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                baseSizeTiB,
-                extendedCapacitySizeTiB,
-                publicNetworkAccess,
-                autoScaleProperties,
-                serializedAdditionalRawData);
+            return new ElasticSanPatch(tags ?? new ChangeTrackingDictionary<string, string>(), baseSizeTiB, extendedCapacitySizeTiB, publicNetworkAccess, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanPatch>.Write(ModelReaderWriterOptions options)

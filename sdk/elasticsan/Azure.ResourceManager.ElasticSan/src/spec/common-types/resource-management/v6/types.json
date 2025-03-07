@@ -1,0 +1,681 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Common types",
+    "version": "6.0"
+  },
+  "paths": {},
+  "definitions": {
+    "AzureEntityResource": {
+      "type": "object",
+      "title": "Entity Resource",
+      "description": "The resource model definition for an Azure Resource Manager resource with an etag.",
+      "properties": {
+        "etag": {
+          "type": "string",
+          "description": "Resource Etag.",
+          "readOnly": true
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/Resource"
+        }
+      ],
+      "x-ms-client-name": "AzureEntityResource"
+    },
+    "CheckNameAvailabilityRequest": {
+      "type": "object",
+      "description": "The check availability request body.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the resource for which availability needs to be checked."
+        },
+        "type": {
+          "type": "string",
+          "description": "The resource type."
+        }
+      }
+    },
+    "CheckNameAvailabilityResponse": {
+      "type": "object",
+      "description": "The check availability result.",
+      "properties": {
+        "nameAvailable": {
+          "type": "boolean",
+          "description": "Indicates if the resource name is available."
+        },
+        "reason": {
+          "type": "string",
+          "description": "The reason why the given name is not available.",
+          "enum": [
+            "Invalid",
+            "AlreadyExists"
+          ],
+          "x-ms-enum": {
+            "name": "CheckNameAvailabilityReason",
+            "modelAsString": true
+          }
+        },
+        "message": {
+          "type": "string",
+          "description": "Detailed reason why the given name is available."
+        }
+      }
+    },
+    "ErrorAdditionalInfo": {
+      "type": "object",
+      "description": "The resource management error additional info.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The additional info type.",
+          "readOnly": true
+        },
+        "info": {
+          "type": "object",
+          "description": "The additional info.",
+          "readOnly": true
+        }
+      }
+    },
+    "ErrorDetail": {
+      "type": "object",
+      "description": "The error detail.",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "The error code.",
+          "readOnly": true
+        },
+        "message": {
+          "type": "string",
+          "description": "The error message.",
+          "readOnly": true
+        },
+        "target": {
+          "type": "string",
+          "description": "The error target.",
+          "readOnly": true
+        },
+        "details": {
+          "type": "array",
+          "description": "The error details.",
+          "items": {
+            "$ref": "#/definitions/ErrorDetail"
+          },
+          "readOnly": true,
+          "x-ms-identifiers": [
+            "message",
+            "target"
+          ]
+        },
+        "additionalInfo": {
+          "type": "array",
+          "description": "The error additional info.",
+          "items": {
+            "$ref": "#/definitions/ErrorAdditionalInfo"
+          },
+          "readOnly": true,
+          "x-ms-identifiers": []
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "title": "Error response",
+      "description": "Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.).",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/ErrorDetail",
+          "description": "The error object."
+        }
+      }
+    },
+    "KeyVaultProperties": {
+      "type": "object",
+      "properties": {
+        "keyIdentifier": {
+          "type": "string",
+          "description": "Key vault uri to access the encryption key."
+        },
+        "identity": {
+          "type": "string",
+          "description": "The client ID of the identity which will be used to access key vault."
+        }
+      }
+    },
+    "Operation": {
+      "type": "object",
+      "title": "REST API Operation",
+      "description": "Details of a REST API operation, returned from the Resource Provider Operations API",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the operation, as per Resource-Based Access Control (RBAC). Examples: \"Microsoft.Compute/virtualMachines/write\", \"Microsoft.Compute/virtualMachines/capture/action\"",
+          "readOnly": true
+        },
+        "isDataAction": {
+          "type": "boolean",
+          "description": "Whether the operation applies to data-plane. This is \"true\" for data-plane operations and \"false\" for ARM/control-plane operations.",
+          "readOnly": true
+        },
+        "display": {
+          "type": "object",
+          "description": "Localized display information for this particular operation.",
+          "properties": {
+            "provider": {
+              "type": "string",
+              "description": "The localized friendly form of the resource provider name, e.g. \"Microsoft Monitoring Insights\" or \"Microsoft Compute\".",
+              "readOnly": true
+            },
+            "resource": {
+              "type": "string",
+              "description": "The localized friendly name of the resource type related to this operation. E.g. \"Virtual Machines\" or \"Job Schedule Collections\".",
+              "readOnly": true
+            },
+            "operation": {
+              "type": "string",
+              "description": "The concise, localized friendly name for the operation; suitable for dropdowns. E.g. \"Create or Update Virtual Machine\", \"Restart Virtual Machine\".",
+              "readOnly": true
+            },
+            "description": {
+              "type": "string",
+              "description": "The short, localized friendly description of the operation; suitable for tool tips and detailed views.",
+              "readOnly": true
+            }
+          }
+        },
+        "origin": {
+          "type": "string",
+          "description": "The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is \"user,system\"",
+          "enum": [
+            "user",
+            "system",
+            "user,system"
+          ],
+          "x-ms-enum": {
+            "name": "Origin",
+            "modelAsString": true
+          },
+          "readOnly": true
+        },
+        "actionType": {
+          "type": "string",
+          "description": "Enum. Indicates the action type. \"Internal\" refers to actions that are for internal only APIs.",
+          "enum": [
+            "Internal"
+          ],
+          "x-ms-enum": {
+            "name": "ActionType",
+            "modelAsString": true
+          },
+          "readOnly": true
+        }
+      }
+    },
+    "OperationListResult": {
+      "type": "object",
+      "description": "A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results.",
+      "properties": {
+        "value": {
+          "type": "array",
+          "description": "List of operations supported by the resource provider",
+          "items": {
+            "$ref": "#/definitions/Operation"
+          },
+          "readOnly": true,
+          "x-ms-identifiers": [
+            "name"
+          ]
+        },
+        "nextLink": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to get the next set of operation list results (if there are any).",
+          "readOnly": true
+        }
+      }
+    },
+    "OperationStatusResult": {
+      "type": "object",
+      "description": "The current status of an async operation.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "arm-id",
+          "description": "Fully qualified ID for the async operation."
+        },
+        "resourceId": {
+          "type": "string",
+          "format": "arm-id",
+          "description": "Fully qualified ID of the resource against which the original async operation was started.",
+          "readOnly": true
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the async operation."
+        },
+        "status": {
+          "type": "string",
+          "description": "Operation status."
+        },
+        "percentComplete": {
+          "type": "number",
+          "description": "Percent of the operation that is complete.",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "startTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The start time of the operation."
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The end time of the operation."
+        },
+        "operations": {
+          "type": "array",
+          "description": "The operations list.",
+          "items": {
+            "$ref": "#/definitions/OperationStatusResult"
+          }
+        },
+        "error": {
+          "$ref": "#/definitions/ErrorDetail",
+          "description": "If present, details of the operation error."
+        }
+      },
+      "required": [
+        "status"
+      ]
+    },
+    "Plan": {
+      "type": "object",
+      "description": "Plan for the resource.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "A user defined name of the 3rd Party Artifact that is being procured."
+        },
+        "publisher": {
+          "type": "string",
+          "description": "The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic"
+        },
+        "product": {
+          "type": "string",
+          "description": "The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding. "
+        },
+        "promotionCode": {
+          "type": "string",
+          "description": "A publisher provided promotion code as provisioned in Data Market for the said product/artifact."
+        },
+        "version": {
+          "type": "string",
+          "description": "The version of the desired product/artifact."
+        }
+      },
+      "required": [
+        "name",
+        "publisher",
+        "product"
+      ]
+    },
+    "ProxyResource": {
+      "type": "object",
+      "title": "Proxy Resource",
+      "description": "The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Resource"
+        }
+      ]
+    },
+    "Resource": {
+      "type": "object",
+      "title": "Resource",
+      "description": "Common fields that are returned in the response for all Azure Resource Manager resources",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "arm-id",
+          "description": "Fully qualified resource ID for the resource. E.g. \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}\"",
+          "readOnly": true
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the resource",
+          "readOnly": true
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
+          "readOnly": true
+        },
+        "systemData": {
+          "$ref": "#/definitions/systemData",
+          "description": "Azure Resource Manager metadata containing createdBy and modifiedBy information.",
+          "readOnly": true
+        }
+      },
+      "x-ms-azure-resource": true
+    },
+    "ResourceModelWithAllowedPropertySet": {
+      "type": "object",
+      "description": "The resource model definition containing the full set of allowed properties for a resource. Except properties bag, there cannot be a top level property outside of this set.",
+      "properties": {
+        "managedBy": {
+          "type": "string",
+          "description": "The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource.",
+          "x-ms-mutability": [
+            "read",
+            "create",
+            "update"
+          ]
+        },
+        "kind": {
+          "type": "string",
+          "description": "Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value.",
+          "pattern": "^[-\\w\\._,\\(\\)]+$",
+          "x-ms-mutability": [
+            "read",
+            "create"
+          ]
+        },
+        "etag": {
+          "type": "string",
+          "description": "The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. ",
+          "readOnly": true
+        },
+        "identity": {
+          "$ref": "./managedidentity.json#/definitions/ManagedServiceIdentity"
+        },
+        "sku": {
+          "$ref": "#/definitions/Sku"
+        },
+        "plan": {
+          "$ref": "#/definitions/Plan"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/TrackedResource"
+        }
+      ],
+      "x-ms-azure-resource": true
+    },
+    "Sku": {
+      "type": "object",
+      "description": "The resource model definition representing SKU",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the SKU. E.g. P3. It is typically a letter+number code"
+        },
+        "tier": {
+          "$ref": "#/definitions/SkuTier"
+        },
+        "size": {
+          "type": "string",
+          "description": "The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. "
+        },
+        "family": {
+          "type": "string",
+          "description": "If the service has different generations of hardware, for the same SKU, then that can be captured here."
+        },
+        "capacity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted."
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "SkuTier": {
+      "type": "string",
+      "description": "This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT.",
+      "enum": [
+        "Free",
+        "Basic",
+        "Standard",
+        "Premium"
+      ],
+      "x-ms-enum": {
+        "name": "SkuTier",
+        "modelAsString": false
+      }
+    },
+    "TrackedResource": {
+      "type": "object",
+      "title": "Tracked Resource",
+      "description": "The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'",
+      "properties": {
+        "tags": {
+          "type": "object",
+          "description": "Resource tags.",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-ms-mutability": [
+            "read",
+            "create",
+            "update"
+          ]
+        },
+        "location": {
+          "type": "string",
+          "description": "The geo-location where the resource lives",
+          "x-ms-mutability": [
+            "read",
+            "create"
+          ]
+        }
+      },
+      "required": [
+        "location"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/Resource"
+        }
+      ]
+    },
+    "encryptionProperties": {
+      "type": "object",
+      "description": "Configuration of key for data encryption",
+      "properties": {
+        "status": {
+          "type": "string",
+          "description": "Indicates whether or not the encryption is enabled for container registry.",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-ms-enum": {
+            "name": "EncryptionStatus",
+            "modelAsString": true
+          }
+        },
+        "keyVaultProperties": {
+          "$ref": "#/definitions/KeyVaultProperties",
+          "description": "Key vault properties."
+        }
+      }
+    },
+    "locationData": {
+      "type": "object",
+      "description": "Metadata pertaining to the geographic location of the resource.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "A canonical name for the geographic or physical location.",
+          "maxLength": 256
+        },
+        "city": {
+          "type": "string",
+          "description": "The city or locality where the resource is located."
+        },
+        "district": {
+          "type": "string",
+          "description": "The district, state, or province where the resource is located."
+        },
+        "countryOrRegion": {
+          "type": "string",
+          "description": "The country or region where the resource is located"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "systemData": {
+      "type": "object",
+      "description": "Metadata pertaining to creation and last modification of the resource.",
+      "properties": {
+        "createdBy": {
+          "type": "string",
+          "description": "The identity that created the resource."
+        },
+        "createdByType": {
+          "type": "string",
+          "description": "The type of identity that created the resource.",
+          "enum": [
+            "User",
+            "Application",
+            "ManagedIdentity",
+            "Key"
+          ],
+          "x-ms-enum": {
+            "name": "createdByType",
+            "modelAsString": true
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp of resource creation (UTC)."
+        },
+        "lastModifiedBy": {
+          "type": "string",
+          "description": "The identity that last modified the resource."
+        },
+        "lastModifiedByType": {
+          "type": "string",
+          "description": "The type of identity that last modified the resource.",
+          "enum": [
+            "User",
+            "Application",
+            "ManagedIdentity",
+            "Key"
+          ],
+          "x-ms-enum": {
+            "name": "createdByType",
+            "modelAsString": true
+          }
+        },
+        "lastModifiedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp of resource last modification (UTC)"
+        }
+      },
+      "readOnly": true
+    }
+  },
+  "parameters": {
+    "ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "description": "The API version to use for this operation.",
+      "required": true,
+      "type": "string",
+      "minLength": 1
+    },
+    "If-Match": {
+      "name": "ifMatch",
+      "in": "header",
+      "description": "The If-Match header that makes a request conditional.",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "If-None-Match": {
+      "name": "ifNoneMatch",
+      "in": "header",
+      "description": "The If-None-Match header that makes a request conditional.",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "LocationParameter": {
+      "name": "location",
+      "in": "path",
+      "description": "The name of the Azure region.",
+      "required": true,
+      "type": "string",
+      "minLength": 1,
+      "x-ms-parameter-location": "method"
+    },
+    "ManagementGroupNameParameter": {
+      "name": "managementGroupName",
+      "in": "path",
+      "description": "The name of the management group. The name is case insensitive.",
+      "required": true,
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 90,
+      "x-ms-parameter-location": "method"
+    },
+    "OperationIdParameter": {
+      "name": "operationId",
+      "in": "path",
+      "description": "The ID of an ongoing async operation.",
+      "required": true,
+      "type": "string",
+      "minLength": 1,
+      "x-ms-parameter-location": "method"
+    },
+    "ResourceGroupNameParameter": {
+      "name": "resourceGroupName",
+      "in": "path",
+      "description": "The name of the resource group. The name is case insensitive.",
+      "required": true,
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 90,
+      "x-ms-parameter-location": "method"
+    },
+    "ScopeParameter": {
+      "name": "scope",
+      "in": "path",
+      "description": "The scope at which the operation is performed.",
+      "required": true,
+      "type": "string",
+      "minLength": 1,
+      "x-ms-parameter-location": "method",
+      "x-ms-skip-url-encoding": true
+    },
+    "SubscriptionIdParameter": {
+      "name": "subscriptionId",
+      "in": "path",
+      "description": "The ID of the target subscription. The value must be an UUID.",
+      "required": true,
+      "type": "string",
+      "format": "uuid"
+    },
+    "TenantIdParameter": {
+      "name": "tenantId",
+      "in": "path",
+      "description": "The Azure tenant ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000)",
+      "required": true,
+      "type": "string",
+      "format": "uuid",
+      "x-ms-parameter-location": "method"
+    }
+  }
+}

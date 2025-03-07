@@ -1,0 +1,20 @@
+{
+  "title": "PrivateEndpointConnections_Delete",
+  "operationId": "PrivateEndpointConnections_Delete",
+  "parameters": {
+    "subscriptionId": "subscriptionid",
+    "resourceGroupName": "resourcegroupname",
+    "elasticSanName": "elasticsanname",
+    "privateEndpointConnectionName": "privateendpointconnectionname",
+    "api-version": "2024-05-01"
+  },
+  "responses": {
+    "200": {},
+    "202": {
+      "headers": {
+        "location": "https://contoso.com/operationstatus"
+      }
+    },
+    "204": {}
+  }
+}

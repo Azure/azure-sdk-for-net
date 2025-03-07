@@ -1,0 +1,28 @@
+{
+  "title": "Operations_List",
+  "operationId": "Operations_List",
+  "parameters": {
+    "api-version": "2024-05-01"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "name": "zgtqmglizaqlsx",
+            "isDataAction": true,
+            "display": {
+              "provider": "apbqaoiegbmipkbqdczsuvlak",
+              "resource": "hjyuuxkj",
+              "operation": "yumtqbnawcvunwda",
+              "description": "pmkjqzjverubmslnrcadqur"
+            },
+            "origin": "user",
+            "actionType": "Internal"
+          }
+        ],
+        "nextLink": "ljqzljjgtxaytxufbermmlkrmpy"
+      }
+    }
+  }
+}

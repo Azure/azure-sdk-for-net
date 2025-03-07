@@ -1,0 +1,14 @@
+# This file configures spell checking. Items in "words" were initially populated
+# with words that might be spelling errors. Review these words and take
+# appropriate action. For more information, see: https://aka.ms/ci-fix#spell-check
+
+# Spell checking is not case sensitive
+# Keep word lists in alphabetical order so the file is easier to manage
+version: '0.2'
+import:
+  - ../../cspell.yaml
+words:
+  - mobo
+  - pkix
+  - unversioned
+

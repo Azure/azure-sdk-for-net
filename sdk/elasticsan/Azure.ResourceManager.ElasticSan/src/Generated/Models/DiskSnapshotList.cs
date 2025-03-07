@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    /// <summary> The auto scale settings on Elastic San Appliance. </summary>
-    internal partial class AutoScaleProperties
+    /// <summary> object to hold array of Disk Snapshot ARM IDs. </summary>
+    public partial class DiskSnapshotList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +46,22 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AutoScaleProperties"/>. </summary>
-        public AutoScaleProperties()
+        /// <summary> Initializes a new instance of <see cref="DiskSnapshotList"/>. </summary>
+        public DiskSnapshotList()
         {
+            DiskSnapshotIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutoScaleProperties"/>. </summary>
-        /// <param name="scaleUpProperties"> Scale up settings on Elastic San Appliance. </param>
+        /// <summary> Initializes a new instance of <see cref="DiskSnapshotList"/>. </summary>
+        /// <param name="diskSnapshotIds"> array of DiskSnapshot ARM IDs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoScaleProperties(ScaleUpProperties scaleUpProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiskSnapshotList(IList<ResourceIdentifier> diskSnapshotIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ScaleUpProperties = scaleUpProperties;
+            DiskSnapshotIds = diskSnapshotIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Scale up settings on Elastic San Appliance. </summary>
-        public ScaleUpProperties ScaleUpProperties { get; set; }
+        /// <summary> array of DiskSnapshot ARM IDs. </summary>
+        public IList<ResourceIdentifier> DiskSnapshotIds { get; }
     }
 }

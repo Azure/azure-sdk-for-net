@@ -1,0 +1,87 @@
+{
+  "title": "PrivateEndpointConnections_Create",
+  "operationId": "PrivateEndpointConnections_Create",
+  "parameters": {
+    "subscriptionId": "subscriptionid",
+    "resourceGroupName": "resourcegroupname",
+    "elasticSanName": "elasticsanname",
+    "privateEndpointConnectionName": "privateendpointconnectionname",
+    "parameters": {
+      "properties": {
+        "privateEndpoint": {},
+        "privateLinkServiceConnectionState": {
+          "status": "Pending",
+          "description": "dxl",
+          "actionsRequired": "jhjdpwvyzipggtn"
+        },
+        "groupIds": [
+          "jdwrzpemdjrpiwzvy"
+        ]
+      }
+    },
+    "api-version": "2024-05-01"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "properties": {
+          "provisioningState": "Succeeded",
+          "privateEndpoint": {
+            "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}"
+          },
+          "privateLinkServiceConnectionState": {
+            "status": "Pending",
+            "description": "Auto-Approved",
+            "actionsRequired": "None"
+          },
+          "groupIds": [
+            "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}"
+          ]
+        },
+        "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections/{privateEndpointConnectionName}",
+        "name": "{privateEndpointConnectionName}",
+        "type": "Microsoft.ElasticSan/elasticSans/privateEndpointConnections",
+        "systemData": {
+          "createdBy": "bgurjvijz",
+          "createdByType": "User",
+          "createdAt": "2023-08-25T17:40:52.453Z",
+          "lastModifiedBy": "uvexylihjrtinzkeluohusnaxatfqh",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-08-25T17:40:52.453Z"
+        }
+      }
+    },
+    "201": {
+      "headers": {
+        "location": "https://contoso.com/operationstatus"
+      },
+      "body": {
+        "properties": {
+          "provisioningState": "Succeeded",
+          "privateEndpoint": {
+            "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}"
+          },
+          "privateLinkServiceConnectionState": {
+            "status": "Pending",
+            "description": "Auto-Approved",
+            "actionsRequired": "None"
+          },
+          "groupIds": [
+            "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}"
+          ]
+        },
+        "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections/{privateEndpointConnectionName}",
+        "name": "{privateEndpointConnectionName}",
+        "type": "Microsoft.ElasticSan/elasticSans/privateEndpointConnections",
+        "systemData": {
+          "createdBy": "bgurjvijz",
+          "createdByType": "User",
+          "createdAt": "2023-08-25T17:40:52.453Z",
+          "lastModifiedBy": "uvexylihjrtinzkeluohusnaxatfqh",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-08-25T17:40:52.453Z"
+        }
+      }
+    }
+  }
+}

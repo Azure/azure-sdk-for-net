@@ -1,0 +1,37 @@
+{
+  "title": "VolumeSnapshots_Get",
+  "operationId": "VolumeSnapshots_Get",
+  "parameters": {
+    "subscriptionId": "subscriptionid",
+    "resourceGroupName": "resourcegroupname",
+    "elasticSanName": "elasticsanname",
+    "volumeGroupName": "volumegroupname",
+    "snapshotName": "snapshotname",
+    "api-version": "2024-05-01"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "properties": {
+          "creationData": {
+            "sourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}"
+          },
+          "provisioningState": "Succeeded",
+          "sourceVolumeSizeGiB": 28,
+          "volumeName": "volumename"
+        },
+        "id": "bbqqgzxagggqgkdgjqq",
+        "name": "qukfugetqthsufp",
+        "type": "Microsoft.ElasticSan/elasticSans/volumeGroups/snapshots",
+        "systemData": {
+          "createdBy": "f",
+          "createdByType": "User",
+          "createdAt": "2023-09-06T06:58:45.864Z",
+          "lastModifiedBy": "wifrlzeszzcckvdzdwxhvservlvarp",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-09-06T06:58:45.864Z"
+        }
+      }
+    }
+  }
+}

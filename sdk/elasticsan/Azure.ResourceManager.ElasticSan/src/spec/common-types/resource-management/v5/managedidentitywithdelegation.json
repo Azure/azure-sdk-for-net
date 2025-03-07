@@ -1,0 +1,54 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Common types",
+    "version": "5.0"
+  },
+  "paths": {},
+  "definitions": {
+    "DelegatedResource": {
+      "type": "object",
+      "description": "Delegated resource properties - internal use only.",
+      "properties": {
+        "resourceId": {
+          "type": "string",
+          "description": "The ARM resource id of the delegated resource - internal use only."
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The tenant id of the delegated resource - internal use only."
+        },
+        "referralResource": {
+          "type": "string",
+          "description": "The delegation id of the referral delegation (optional) - internal use only."
+        },
+        "location": {
+          "type": "string",
+          "description": "The source resource location - internal use only."
+        }
+      }
+    },
+    "DelegatedResources": {
+      "type": "object",
+      "description": "The set of delegated resources. The delegated resources dictionary keys will be source resource internal ids - internal use only.",
+      "additionalProperties": {
+        "$ref": "#/definitions/DelegatedResource"
+      }
+    },
+    "ManagedServiceIdentityWithDelegation": {
+      "type": "object",
+      "description": "Managed service identity (system assigned and/or user assigned identities and/or delegated identities) - internal use only.",
+      "properties": {
+        "delegatedResources": {
+          "$ref": "#/definitions/DelegatedResources"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "managedidentity.json#/definitions/ManagedServiceIdentity"
+        }
+      ]
+    }
+  }
+}
