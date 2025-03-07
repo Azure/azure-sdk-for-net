@@ -224,37 +224,18 @@ function Get-TriggerPaths([PSCustomObject]$AllPackageProperties) {
     return ($existingTriggeringPaths | Select-Object -Unique)
 }
 
-function Get-PrPkgProperties([string]$InputDiffJson) {
-    $packagesWithChanges = @()
-
-    $allPackageProperties = Get-AllPkgProperties
-    $diff = Get-Content $InputDiffJson | ConvertFrom-Json
-    $targetedFiles = $diff.ChangedFiles
-
-    if ($diff.DeletedFiles) {
-        if (-not $targetedFiles) {
-            $targetedFiles = @()
-        }
-        $targetedFiles += $diff.DeletedFiles
-    }
-
-    $excludePaths = $diff.ExcludePaths
-
-    $additionalValidationPackages = @()
-    $lookup = @{}
-    $directoryIndex = @{}
-
-    $existingTriggeringPaths = Get-TriggerPaths $allPackageProperties
-
+function Update-TargetedFilesForTriggerPaths([string[]]$TargetedFiles, [string[]]$TriggeringPaths) {
     # now we simply loop through the files a single time, keeping all the files that are a triggeringPath
     # for the rest of the files, simply group by what directory they belong to
-    # the new targetedFiles array will contain only the changed directories + the files that actually aligned to a triggeringPath
+    # the new TargetedFiles array will contain only the changed directories + the files that actually aligned to a triggeringPath
     $processedFiles = @()
-    foreach ($file in $targetedFiles) {
+    $Triggers = [System.Collections.ArrayList]$TriggeringPaths
+    $i = 0
+    foreach ($file in $TargetedFiles) {
         $isExistingTriggerPath = $false
 
-        # these are fully resolved files by the time we get to this point. we can definitely compare them directly
-        foreach ($triggerPath in $existingTriggeringPaths) {
+        for ($i = 0; $i -lt $Triggers.Length; $i++) {
+            $triggerPath = $Triggers[$i]
             if ($triggerPath -and $file -eq "$triggerPath") {
                 $isExistingTriggerPath = $true
                 break
@@ -262,6 +243,9 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         }
 
         if ($isExistingTriggerPath) {
+            # we know that we should have a valid $i that we can use to remove the triggerPath from the list
+            # so that it gets smaller as we find items
+            $Triggers.RemoveAt($i)
             $processedFiles += $file
         }
         else {
@@ -275,6 +259,48 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
             }
         }
     }
+
+    return $processedFiles | Select-Object -Unique
+}
+
+function Update-TargetedFilesForExclude([string[]]$TargetedFiles, [string[]]$ExcludePaths) {
+    $files = @()
+    foreach ($file in $TargetedFiles) {
+        $shouldExclude = $false
+        foreach ($exclude in $ExcludePaths) {
+            if (!$file.StartsWith($exclude,'CurrentCultureIgnoreCase')) {
+                $shouldExclude = $true
+                break
+            }
+        }
+        if (!$shouldExclude) {
+            $files += $file
+        }
+    }
+    return ,$files
+}
+
+function Get-PrPkgProperties([string]$InputDiffJson) {
+    $packagesWithChanges = @()
+    $additionalValidationPackages = @()
+    $lookup = @{}
+    $directoryIndex = @{}
+
+    $allPackageProperties = Get-AllPkgProperties
+    $diff = Get-Content $InputDiffJson | ConvertFrom-Json
+    $targetedFiles = $diff.ChangedFiles
+
+
+    if ($diff.DeletedFiles) {
+        if (-not $targetedFiles) {
+            $targetedFiles = @()
+        }
+        $targetedFiles += $diff.DeletedFiles
+    }
+
+    $existingTriggeringPaths = Get-TriggerPaths $allPackageProperties
+    $targetedFiles = Update-TargetedFilesForExclude $targetedFiles $diff.ExcludePaths
+    $targetedFiles = Update-TargetedFilesForTriggerPaths $targetedFiles $existingTriggeringPaths
 
     $targetedFiles = $processedFiles | Select-Object -Unique
 
@@ -306,16 +332,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
 
         foreach ($file in $targetedFiles) {
             $pathComponents = $file -split "/"
-            $shouldExclude = $false
-            foreach ($exclude in $excludePaths) {
-                if ($file.StartsWith($exclude,'CurrentCultureIgnoreCase')) {
-                    $shouldExclude = $true
-                    break
-                }
-            }
-            if ($shouldExclude) {
-                continue
-            }
+
             $filePath = (Join-Path $RepoRoot $file)
 
             # handle direct changes to packages
