@@ -53,11 +53,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterPoolUpgradeProfileUpgradesItem"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="isPreview"> Whether the Kubernetes version is currently in preview. </param>
+        /// <param name="isOutOfSupport"> Whether the Kubernetes version is out of support. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterPoolUpgradeProfileUpgradesItem(string kubernetesVersion, bool? isPreview, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterPoolUpgradeProfileUpgradesItem(string kubernetesVersion, bool? isPreview, bool? isOutOfSupport, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KubernetesVersion = kubernetesVersion;
             IsPreview = isPreview;
+            IsOutOfSupport = isOutOfSupport;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -67,5 +69,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Whether the Kubernetes version is currently in preview. </summary>
         [WirePath("isPreview")]
         public bool? IsPreview { get; }
+        /// <summary> Whether the Kubernetes version is out of support. </summary>
+        [WirePath("isOutOfSupport")]
+        public bool? IsOutOfSupport { get; }
     }
 }

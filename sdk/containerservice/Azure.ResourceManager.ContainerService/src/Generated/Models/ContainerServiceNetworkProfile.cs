@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkProfile"/>. </summary>
         /// <param name="networkPlugin"> Network plugin used for building the Kubernetes network. </param>
-        /// <param name="networkPluginMode"> The mode the network plugin should use. </param>
+        /// <param name="networkPluginMode"> Network plugin mode used for building the Kubernetes network. </param>
         /// <param name="networkPolicy"> Network policy used for building the Kubernetes network. </param>
         /// <param name="networkMode"> This cannot be specified if networkPlugin is anything other than 'azure'. </param>
         /// <param name="networkDataplane"> Network dataplane used in the Kubernetes cluster. </param>
@@ -66,11 +66,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="loadBalancerSku"> The default is 'standard'. See [Azure Load Balancer SKUs](https://docs.microsoft.com/azure/load-balancer/skus) for more information about the differences between load balancer SKUs. </param>
         /// <param name="loadBalancerProfile"> Profile of the cluster load balancer. </param>
         /// <param name="natGatewayProfile"> Profile of the cluster NAT gateway. </param>
+        /// <param name="staticEgressGatewayProfile"> The profile for Static Egress Gateway addon. For more details about Static Egress Gateway, see https://aka.ms/aks/static-egress-gateway. </param>
         /// <param name="podCidrs"> One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </param>
         /// <param name="serviceCidrs"> One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. They must not overlap with any Subnet IP ranges. </param>
         /// <param name="ipFamilies"> IP families are used to determine single-stack or dual-stack clusters. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </param>
+        /// <param name="podLinkLocalAccess"> Defines access to special link local addresses (Azure Instance Metadata Service, aka IMDS) for pods with hostNetwork=false. if not specified, the default is 'IMDS'. </param>
+        /// <param name="kubeProxyConfig"> Holds configuration customizations for kube-proxy. Any values not defined will use the kube-proxy defaulting behavior. See https://v&lt;version&gt;.docs.kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/ where &lt;version&gt; is represented by a &lt;major version&gt;-&lt;minor version&gt; string. Kubernetes version 1.23 would be '1-23'. </param>
+        /// <param name="advancedNetworking"> Advanced Networking profile for enabling observability and security feature suite on a cluster. For more information see aka.ms/aksadvancednetworking. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, NetworkDataplane? networkDataplane, string podCidr, string serviceCidr, string dnsServiceIP, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, ManagedClusterNatGatewayProfile natGatewayProfile, IList<string> podCidrs, IList<string> serviceCidrs, IList<IPFamily> ipFamilies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, NetworkDataplane? networkDataplane, string podCidr, string serviceCidr, string dnsServiceIP, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, ManagedClusterNatGatewayProfile natGatewayProfile, ManagedClusterStaticEgressGatewayProfile staticEgressGatewayProfile, IList<string> podCidrs, IList<string> serviceCidrs, IList<IPFamily> ipFamilies, PodLinkLocalAccess? podLinkLocalAccess, ContainerServiceNetworkProfileKubeProxyConfig kubeProxyConfig, AdvancedNetworking advancedNetworking, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkPlugin = networkPlugin;
             NetworkPluginMode = networkPluginMode;
@@ -84,16 +88,20 @@ namespace Azure.ResourceManager.ContainerService.Models
             LoadBalancerSku = loadBalancerSku;
             LoadBalancerProfile = loadBalancerProfile;
             NatGatewayProfile = natGatewayProfile;
+            StaticEgressGatewayProfile = staticEgressGatewayProfile;
             PodCidrs = podCidrs;
             ServiceCidrs = serviceCidrs;
             IPFamilies = ipFamilies;
+            PodLinkLocalAccess = podLinkLocalAccess;
+            KubeProxyConfig = kubeProxyConfig;
+            AdvancedNetworking = advancedNetworking;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Network plugin used for building the Kubernetes network. </summary>
         [WirePath("networkPlugin")]
         public ContainerServiceNetworkPlugin? NetworkPlugin { get; set; }
-        /// <summary> The mode the network plugin should use. </summary>
+        /// <summary> Network plugin mode used for building the Kubernetes network. </summary>
         [WirePath("networkPluginMode")]
         public ContainerServiceNetworkPluginMode? NetworkPluginMode { get; set; }
         /// <summary> Network policy used for building the Kubernetes network. </summary>
@@ -126,6 +134,21 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Profile of the cluster NAT gateway. </summary>
         [WirePath("natGatewayProfile")]
         public ManagedClusterNatGatewayProfile NatGatewayProfile { get; set; }
+        /// <summary> The profile for Static Egress Gateway addon. For more details about Static Egress Gateway, see https://aka.ms/aks/static-egress-gateway. </summary>
+        internal ManagedClusterStaticEgressGatewayProfile StaticEgressGatewayProfile { get; set; }
+        /// <summary> Indicates if Static Egress Gateway addon is enabled or not. </summary>
+        [WirePath("staticEgressGatewayProfile.enabled")]
+        public bool? StaticEgressGatewayProfileEnabled
+        {
+            get => StaticEgressGatewayProfile is null ? default : StaticEgressGatewayProfile.Enabled;
+            set
+            {
+                if (StaticEgressGatewayProfile is null)
+                    StaticEgressGatewayProfile = new ManagedClusterStaticEgressGatewayProfile();
+                StaticEgressGatewayProfile.Enabled = value;
+            }
+        }
+
         /// <summary> One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </summary>
         [WirePath("podCidrs")]
         public IList<string> PodCidrs { get; }
@@ -135,5 +158,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> IP families are used to determine single-stack or dual-stack clusters. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </summary>
         [WirePath("ipFamilies")]
         public IList<IPFamily> IPFamilies { get; }
+        /// <summary> Defines access to special link local addresses (Azure Instance Metadata Service, aka IMDS) for pods with hostNetwork=false. if not specified, the default is 'IMDS'. </summary>
+        [WirePath("podLinkLocalAccess")]
+        public PodLinkLocalAccess? PodLinkLocalAccess { get; set; }
+        /// <summary> Holds configuration customizations for kube-proxy. Any values not defined will use the kube-proxy defaulting behavior. See https://v&lt;version&gt;.docs.kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/ where &lt;version&gt; is represented by a &lt;major version&gt;-&lt;minor version&gt; string. Kubernetes version 1.23 would be '1-23'. </summary>
+        [WirePath("kubeProxyConfig")]
+        public ContainerServiceNetworkProfileKubeProxyConfig KubeProxyConfig { get; set; }
+        /// <summary> Advanced Networking profile for enabling observability and security feature suite on a cluster. For more information see aka.ms/aksadvancednetworking. </summary>
+        [WirePath("advancedNetworking")]
+        public AdvancedNetworking AdvancedNetworking { get; set; }
     }
 }

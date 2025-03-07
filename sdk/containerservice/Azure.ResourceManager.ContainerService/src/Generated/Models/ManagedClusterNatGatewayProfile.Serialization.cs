@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("managedOutboundIPProfile"u8);
                 writer.WriteObjectValue(ManagedOutboundIPProfile, options);
             }
-            if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {
                 writer.WritePropertyName("effectiveOutboundIPs"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile = default;
-            IList<WritableSubResource> effectiveOutboundIPs = default;
+            IReadOnlyList<WritableSubResource> effectiveOutboundIPs = default;
             int? idleTimeoutInMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();

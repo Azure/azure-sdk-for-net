@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class ManagedClusterAzureMonitorProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterAzureMonitorProfile>
+    public partial class ManagedClusterAzureMonitorProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterAzureMonitorProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterAzureMonitorProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -39,6 +39,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteObjectValue(Metrics, options);
+            }
+            if (Optional.IsDefined(ContainerInsights))
+            {
+                writer.WritePropertyName("containerInsights"u8);
+                writer.WriteObjectValue(ContainerInsights, options);
+            }
+            if (Optional.IsDefined(AppMonitoring))
+            {
+                writer.WritePropertyName("appMonitoring"u8);
+                writer.WriteObjectValue(AppMonitoring, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -78,6 +88,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             ManagedClusterMonitorProfileMetrics metrics = default;
+            ManagedClusterAzureMonitorProfileContainerInsights containerInsights = default;
+            ManagedClusterAzureMonitorProfileAppMonitoring appMonitoring = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,13 +103,31 @@ namespace Azure.ResourceManager.ContainerService.Models
                     metrics = ManagedClusterMonitorProfileMetrics.DeserializeManagedClusterMonitorProfileMetrics(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("containerInsights"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    containerInsights = ManagedClusterAzureMonitorProfileContainerInsights.DeserializeManagedClusterAzureMonitorProfileContainerInsights(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("appMonitoring"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    appMonitoring = ManagedClusterAzureMonitorProfileAppMonitoring.DeserializeManagedClusterAzureMonitorProfileAppMonitoring(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedClusterAzureMonitorProfile(metrics, serializedAdditionalRawData);
+            return new ManagedClusterAzureMonitorProfile(metrics, containerInsights, appMonitoring, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -123,6 +153,36 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     builder.Append("  metrics: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Metrics, options, 2, false, "  metrics: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerInsights), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  containerInsights: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerInsights))
+                {
+                    builder.Append("  containerInsights: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ContainerInsights, options, 2, false, "  containerInsights: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppMonitoring), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  appMonitoring: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AppMonitoring))
+                {
+                    builder.Append("  appMonitoring: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AppMonitoring, options, 2, false, "  appMonitoring: ");
                 }
             }
 

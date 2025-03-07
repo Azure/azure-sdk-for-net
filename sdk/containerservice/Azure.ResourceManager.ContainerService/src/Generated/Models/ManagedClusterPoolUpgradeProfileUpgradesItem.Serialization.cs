@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
+            if (Optional.IsDefined(IsOutOfSupport))
+            {
+                writer.WritePropertyName("isOutOfSupport"u8);
+                writer.WriteBooleanValue(IsOutOfSupport.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -84,6 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             string kubernetesVersion = default;
             bool? isPreview = default;
+            bool? isOutOfSupport = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,13 +108,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                     isPreview = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("isOutOfSupport"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isOutOfSupport = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedClusterPoolUpgradeProfileUpgradesItem(kubernetesVersion, isPreview, serializedAdditionalRawData);
+            return new ManagedClusterPoolUpgradeProfileUpgradesItem(kubernetesVersion, isPreview, isOutOfSupport, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -157,6 +172,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     builder.Append("  isPreview: ");
                     var boolValue = IsPreview.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsOutOfSupport), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isOutOfSupport: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsOutOfSupport))
+                {
+                    builder.Append("  isOutOfSupport: ");
+                    var boolValue = IsOutOfSupport.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

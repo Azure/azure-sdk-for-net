@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("outboundIPs"u8);
                 writer.WriteObjectValue(OutboundIPs, options);
             }
-            if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {
                 writer.WritePropertyName("effectiveOutboundIPs"u8);
                 writer.WriteStartArray();
@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("backendPoolType"u8);
                 writer.WriteStringValue(BackendPoolType.Value.ToString());
+            }
+            if (Optional.IsDefined(ClusterServiceLoadBalancerHealthProbeMode))
+            {
+                writer.WritePropertyName("clusterServiceLoadBalancerHealthProbeMode"u8);
+                writer.WriteStringValue(ClusterServiceLoadBalancerHealthProbeMode.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -122,11 +127,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs = default;
             ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes = default;
             ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs = default;
-            IList<WritableSubResource> effectiveOutboundIPs = default;
+            IReadOnlyList<WritableSubResource> effectiveOutboundIPs = default;
             int? allocatedOutboundPorts = default;
             int? idleTimeoutInMinutes = default;
             bool? enableMultipleStandardLoadBalancers = default;
             ManagedClusterLoadBalancerBackendPoolType? backendPoolType = default;
+            ClusterServiceLoadBalancerHealthProbeMode? clusterServiceLoadBalancerHealthProbeMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,6 +214,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                     backendPoolType = new ManagedClusterLoadBalancerBackendPoolType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("clusterServiceLoadBalancerHealthProbeMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterServiceLoadBalancerHealthProbeMode = new ClusterServiceLoadBalancerHealthProbeMode(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -223,6 +238,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 idleTimeoutInMinutes,
                 enableMultipleStandardLoadBalancers,
                 backendPoolType,
+                clusterServiceLoadBalancerHealthProbeMode,
                 serializedAdditionalRawData);
         }
 
@@ -369,6 +385,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     builder.Append("  backendPoolType: ");
                     builder.AppendLine($"'{BackendPoolType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterServiceLoadBalancerHealthProbeMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clusterServiceLoadBalancerHealthProbeMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClusterServiceLoadBalancerHealthProbeMode))
+                {
+                    builder.Append("  clusterServiceLoadBalancerHealthProbeMode: ");
+                    builder.AppendLine($"'{ClusterServiceLoadBalancerHealthProbeMode.Value.ToString()}'");
                 }
             }
 

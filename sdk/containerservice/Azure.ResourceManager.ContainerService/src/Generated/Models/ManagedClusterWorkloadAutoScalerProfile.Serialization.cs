@@ -144,14 +144,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsVpaEnabled", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VerticalPodAutoscaler), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  verticalPodAutoscaler: ");
-                builder.AppendLine("{");
-                builder.Append("    enabled: ");
                 builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
             }
             else
             {

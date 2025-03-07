@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Specifies on which week of the month the dayOfWeek applies. </summary>
+    /// <summary> Specifies on which instance of the allowed days specified in daysOfWeek the maintenance occurs. </summary>
     public readonly partial struct ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex : IEquatable<ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex>
     {
         private readonly string _value;
@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string FourthValue = "Fourth";
         private const string LastValue = "Last";
 
-        /// <summary> First week of the month. </summary>
+        /// <summary> First. </summary>
         public static ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex First { get; } = new ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex(FirstValue);
-        /// <summary> Second week of the month. </summary>
+        /// <summary> Second. </summary>
         public static ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex Second { get; } = new ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex(SecondValue);
-        /// <summary> Third week of the month. </summary>
+        /// <summary> Third. </summary>
         public static ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex Third { get; } = new ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex(ThirdValue);
-        /// <summary> Fourth week of the month. </summary>
+        /// <summary> Fourth. </summary>
         public static ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex Fourth { get; } = new ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex(FourthValue);
-        /// <summary> Last week of the month. </summary>
+        /// <summary> Last. </summary>
         public static ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex Last { get; } = new ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex(LastValue);
         /// <summary> Determines if two <see cref="ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex left, ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex right) => left.Equals(right);

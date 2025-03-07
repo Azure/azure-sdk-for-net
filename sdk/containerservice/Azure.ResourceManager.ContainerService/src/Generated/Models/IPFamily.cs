@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The IP version to use for cluster networking and IP assignment. </summary>
+    /// <summary> To determine if address belongs IPv4 or IPv6 family. </summary>
     public readonly partial struct IPFamily : IEquatable<IPFamily>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string IPv4Value = "IPv4";
         private const string IPv6Value = "IPv6";
 
-        /// <summary> IPv4. </summary>
+        /// <summary> IPv4 family. </summary>
         public static IPFamily IPv4 { get; } = new IPFamily(IPv4Value);
-        /// <summary> IPv6. </summary>
+        /// <summary> IPv6 family. </summary>
         public static IPFamily IPv6 { get; } = new IPFamily(IPv6Value);
         /// <summary> Determines if two <see cref="IPFamily"/> values are the same. </summary>
         public static bool operator ==(IPFamily left, IPFamily right) => left.Equals(right);

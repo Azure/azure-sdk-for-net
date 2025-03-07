@@ -55,6 +55,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(ComponentsByReleases))
+            {
+                writer.WritePropertyName("componentsByReleases"u8);
+                writer.WriteStartArray();
+                foreach (var item in ComponentsByReleases)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -96,6 +106,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string name = default;
             ContainerServiceOSType osType = default;
             IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades = default;
+            IReadOnlyList<ComponentsByRelease> componentsByReleases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,13 +140,33 @@ namespace Azure.ResourceManager.ContainerService.Models
                     upgrades = array;
                     continue;
                 }
+                if (property.NameEquals("componentsByReleases"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ComponentsByRelease> array = new List<ComponentsByRelease>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ComponentsByRelease.DeserializeComponentsByRelease(item, options));
+                    }
+                    componentsByReleases = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedClusterPoolUpgradeProfile(kubernetesVersion, name, osType, upgrades ?? new ChangeTrackingList<ManagedClusterPoolUpgradeProfileUpgradesItem>(), serializedAdditionalRawData);
+            return new ManagedClusterPoolUpgradeProfile(
+                kubernetesVersion,
+                name,
+                osType,
+                upgrades ?? new ChangeTrackingList<ManagedClusterPoolUpgradeProfileUpgradesItem>(),
+                componentsByReleases ?? new ChangeTrackingList<ComponentsByRelease>(),
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -224,6 +255,29 @@ namespace Azure.ResourceManager.ContainerService.Models
                         foreach (var item in Upgrades)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  upgrades: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComponentsByReleases), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  componentsByReleases: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ComponentsByReleases))
+                {
+                    if (ComponentsByReleases.Any())
+                    {
+                        builder.Append("  componentsByReleases: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ComponentsByReleases)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  componentsByReleases: ");
                         }
                         builder.AppendLine("  ]");
                     }

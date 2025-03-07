@@ -156,14 +156,11 @@ namespace Azure.ResourceManager.ContainerService.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsEnabled", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiskCsiDriver), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  diskCSIDriver: ");
-                builder.AppendLine("{");
-                builder.Append("    enabled: ");
                 builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
             }
             else
             {

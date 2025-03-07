@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterWorkloadAutoScalerProfile"/>. </summary>
         /// <param name="keda"> KEDA (Kubernetes Event-driven Autoscaling) settings for the workload auto-scaler profile. </param>
-        /// <param name="verticalPodAutoscaler"> VPA (Vertical Pod Autoscaler) settings for the workload auto-scaler profile. </param>
+        /// <param name="verticalPodAutoscaler"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterWorkloadAutoScalerProfile(ManagedClusterWorkloadAutoScalerProfileKeda keda, ManagedClusterVerticalPodAutoscaler verticalPodAutoscaler, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,17 +74,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        /// <summary> VPA (Vertical Pod Autoscaler) settings for the workload auto-scaler profile. </summary>
-        internal ManagedClusterVerticalPodAutoscaler VerticalPodAutoscaler { get; set; }
-        /// <summary> Whether to enable VPA. Default value is false. </summary>
-        [WirePath("verticalPodAutoscaler.enabled")]
-        public bool? IsVpaEnabled
-        {
-            get => VerticalPodAutoscaler is null ? default(bool?) : VerticalPodAutoscaler.IsVpaEnabled;
-            set
-            {
-                VerticalPodAutoscaler = value.HasValue ? new ManagedClusterVerticalPodAutoscaler(value.Value) : null;
-            }
-        }
+        /// <summary> Gets or sets the vertical pod autoscaler. </summary>
+        [WirePath("verticalPodAutoscaler")]
+        public ManagedClusterVerticalPodAutoscaler VerticalPodAutoscaler { get; set; }
     }
 }

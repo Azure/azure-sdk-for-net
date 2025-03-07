@@ -56,6 +56,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(EffectiveNoProxy))
+            {
+                writer.WritePropertyName("effectiveNoProxy"u8);
+                writer.WriteStartArray();
+                foreach (var item in EffectiveNoProxy)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(TrustedCA))
             {
                 writer.WritePropertyName("trustedCa"u8);
@@ -101,6 +111,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string httpProxy = default;
             string httpsProxy = default;
             IList<string> noProxy = default;
+            IReadOnlyList<string> effectiveNoProxy = default;
             string trustedCA = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -130,6 +141,20 @@ namespace Azure.ResourceManager.ContainerService.Models
                     noProxy = array;
                     continue;
                 }
+                if (property.NameEquals("effectiveNoProxy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    effectiveNoProxy = array;
+                    continue;
+                }
                 if (property.NameEquals("trustedCa"u8))
                 {
                     trustedCA = property.Value.GetString();
@@ -141,7 +166,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedClusterHttpProxyConfig(httpProxy, httpsProxy, noProxy ?? new ChangeTrackingList<string>(), trustedCA, serializedAdditionalRawData);
+            return new ManagedClusterHttpProxyConfig(
+                httpProxy,
+                httpsProxy,
+                noProxy ?? new ChangeTrackingList<string>(),
+                effectiveNoProxy ?? new ChangeTrackingList<string>(),
+                trustedCA,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -216,6 +247,42 @@ namespace Azure.ResourceManager.ContainerService.Models
                         builder.Append("  noProxy: ");
                         builder.AppendLine("[");
                         foreach (var item in NoProxy)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EffectiveNoProxy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  effectiveNoProxy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EffectiveNoProxy))
+                {
+                    if (EffectiveNoProxy.Any())
+                    {
+                        builder.Append("  effectiveNoProxy: ");
+                        builder.AppendLine("[");
+                        foreach (var item in EffectiveNoProxy)
                         {
                             if (item == null)
                             {

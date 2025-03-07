@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         private const string SystemValue = "System";
         private const string UserValue = "User";
+        private const string GatewayValue = "Gateway";
 
         /// <summary> System agent pools are primarily for hosting critical system pods such as CoreDNS and metrics-server. System agent pools osType must be Linux. System agent pools VM SKU must have at least 2vCPUs and 4GB of memory. </summary>
         public static AgentPoolMode System { get; } = new AgentPoolMode(SystemValue);
         /// <summary> User agent pools are primarily for hosting your application pods. </summary>
         public static AgentPoolMode User { get; } = new AgentPoolMode(UserValue);
+        /// <summary> Gateway agent pools are dedicated to providing static egress IPs to pods. For more details, see https://aka.ms/aks/static-egress-gateway. </summary>
+        public static AgentPoolMode Gateway { get; } = new AgentPoolMode(GatewayValue);
         /// <summary> Determines if two <see cref="AgentPoolMode"/> values are the same. </summary>
         public static bool operator ==(AgentPoolMode left, AgentPoolMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentPoolMode"/> values are not the same. </summary>

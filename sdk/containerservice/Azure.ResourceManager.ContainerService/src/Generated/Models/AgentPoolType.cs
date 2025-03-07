@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         private const string VirtualMachineScaleSetsValue = "VirtualMachineScaleSets";
         private const string AvailabilitySetValue = "AvailabilitySet";
+        private const string VirtualMachinesValue = "VirtualMachines";
 
         /// <summary> Create an Agent Pool backed by a Virtual Machine Scale Set. </summary>
         public static AgentPoolType VirtualMachineScaleSets { get; } = new AgentPoolType(VirtualMachineScaleSetsValue);
         /// <summary> Use of this is strongly discouraged. </summary>
         public static AgentPoolType AvailabilitySet { get; } = new AgentPoolType(AvailabilitySetValue);
+        /// <summary> Create an Agent Pool backed by a Single Instance VM orchestration mode. </summary>
+        public static AgentPoolType VirtualMachines { get; } = new AgentPoolType(VirtualMachinesValue);
         /// <summary> Determines if two <see cref="AgentPoolType"/> values are the same. </summary>
         public static bool operator ==(AgentPoolType left, AgentPoolType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentPoolType"/> values are not the same. </summary>

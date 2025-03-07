@@ -96,6 +96,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("podMaxPids"u8);
                 writer.WriteNumberValue(PodMaxPids.Value);
             }
+            if (Optional.IsDefined(SeccompDefault))
+            {
+                writer.WritePropertyName("seccompDefault"u8);
+                writer.WriteStringValue(SeccompDefault.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -144,6 +149,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             int? containerLogMaxSizeMB = default;
             int? containerLogMaxFiles = default;
             int? podMaxPids = default;
+            SeccompDefault? seccompDefault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,6 +246,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                     podMaxPids = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("seccompDefault"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    seccompDefault = new SeccompDefault(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -258,6 +273,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 containerLogMaxSizeMB,
                 containerLogMaxFiles,
                 podMaxPids,
+                seccompDefault,
                 serializedAdditionalRawData);
         }
 
@@ -481,6 +497,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     builder.Append("  podMaxPids: ");
                     builder.AppendLine($"{PodMaxPids.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SeccompDefault), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  seccompDefault: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SeccompDefault))
+                {
+                    builder.Append("  seccompDefault: ");
+                    builder.AppendLine($"'{SeccompDefault.Value.ToString()}'");
                 }
             }
 

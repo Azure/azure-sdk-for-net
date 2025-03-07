@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -55,6 +56,26 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("imageCleaner"u8);
                 writer.WriteObjectValue(ImageCleaner, options);
             }
+            if (Optional.IsDefined(ImageIntegrity))
+            {
+                writer.WritePropertyName("imageIntegrity"u8);
+                writer.WriteObjectValue(ImageIntegrity, options);
+            }
+            if (Optional.IsDefined(NodeRestriction))
+            {
+                writer.WritePropertyName("nodeRestriction"u8);
+                writer.WriteObjectValue(NodeRestriction, options);
+            }
+            if (Optional.IsCollectionDefined(CustomCATrustCertificates))
+            {
+                writer.WritePropertyName("customCATrustCertificates"u8);
+                writer.WriteStartArray();
+                foreach (var item in CustomCATrustCertificates)
+                {
+                    writer.WriteBase64StringValue(item, "D");
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -96,6 +117,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms = default;
             ManagedClusterSecurityProfileWorkloadIdentity workloadIdentity = default;
             ManagedClusterSecurityProfileImageCleaner imageCleaner = default;
+            ManagedClusterSecurityProfileImageIntegrity imageIntegrity = default;
+            ManagedClusterSecurityProfileNodeRestriction nodeRestriction = default;
+            IList<byte[]> customCATrustCertificates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,13 +160,53 @@ namespace Azure.ResourceManager.ContainerService.Models
                     imageCleaner = ManagedClusterSecurityProfileImageCleaner.DeserializeManagedClusterSecurityProfileImageCleaner(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("imageIntegrity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    imageIntegrity = ManagedClusterSecurityProfileImageIntegrity.DeserializeManagedClusterSecurityProfileImageIntegrity(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("nodeRestriction"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nodeRestriction = ManagedClusterSecurityProfileNodeRestriction.DeserializeManagedClusterSecurityProfileNodeRestriction(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("customCATrustCertificates"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<byte[]> array = new List<byte[]>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetBytesFromBase64("D"));
+                    }
+                    customCATrustCertificates = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedClusterSecurityProfile(defender, azureKeyVaultKms, workloadIdentity, imageCleaner, serializedAdditionalRawData);
+            return new ManagedClusterSecurityProfile(
+                defender,
+                azureKeyVaultKms,
+                workloadIdentity,
+                imageCleaner,
+                imageIntegrity,
+                nodeRestriction,
+                customCATrustCertificates ?? new ChangeTrackingList<byte[]>(),
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -216,6 +280,70 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     builder.Append("  imageCleaner: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ImageCleaner, options, 2, false, "  imageCleaner: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ImageIntegrityEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  imageIntegrity: ");
+                builder.AppendLine("{");
+                builder.Append("    enabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ImageIntegrity))
+                {
+                    builder.Append("  imageIntegrity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ImageIntegrity, options, 2, false, "  imageIntegrity: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("NodeRestrictionEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nodeRestriction: ");
+                builder.AppendLine("{");
+                builder.Append("    enabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(NodeRestriction))
+                {
+                    builder.Append("  nodeRestriction: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, NodeRestriction, options, 2, false, "  nodeRestriction: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomCATrustCertificates), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customCATrustCertificates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CustomCATrustCertificates))
+                {
+                    if (CustomCATrustCertificates.Any())
+                    {
+                        builder.Append("  customCATrustCertificates: ");
+                        builder.AppendLine("[");
+                        foreach (var item in CustomCATrustCertificates)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 

@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("securityMonitoring"u8);
                 writer.WriteObjectValue(SecurityMonitoring, options);
             }
+            if (Optional.IsDefined(SecurityGating))
+            {
+                writer.WritePropertyName("securityGating"u8);
+                writer.WriteObjectValue(SecurityGating, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -84,6 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             ResourceIdentifier logAnalyticsWorkspaceResourceId = default;
             ManagedClusterSecurityProfileDefenderSecurityMonitoring securityMonitoring = default;
+            ManagedClusterSecurityProfileDefenderSecurityGating securityGating = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,13 +112,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                     securityMonitoring = ManagedClusterSecurityProfileDefenderSecurityMonitoring.DeserializeManagedClusterSecurityProfileDefenderSecurityMonitoring(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("securityGating"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityGating = ManagedClusterSecurityProfileDefenderSecurityGating.DeserializeManagedClusterSecurityProfileDefenderSecurityGating(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedClusterSecurityProfileDefender(logAnalyticsWorkspaceResourceId, securityMonitoring, serializedAdditionalRawData);
+            return new ManagedClusterSecurityProfileDefender(logAnalyticsWorkspaceResourceId, securityMonitoring, securityGating, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -156,6 +171,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     builder.Append("  securityMonitoring: ");
                     BicepSerializationHelpers.AppendChildObject(builder, SecurityMonitoring, options, 2, false, "  securityMonitoring: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecurityGating), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  securityGating: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecurityGating))
+                {
+                    builder.Append("  securityGating: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SecurityGating, options, 2, false, "  securityGating: ");
                 }
             }
 

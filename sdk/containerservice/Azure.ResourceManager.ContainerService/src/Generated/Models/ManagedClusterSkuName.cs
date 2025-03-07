@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         private const string BaseValue = "Base";
+        private const string AutomaticValue = "Automatic";
 
         /// <summary> Base option for the AKS control plane. </summary>
         public static ManagedClusterSkuName Base { get; } = new ManagedClusterSkuName(BaseValue);
+        /// <summary> Automatic clusters are optimized to run most production workloads with configuration that follows AKS best practices and recommendations for cluster and workload setup, scalability, and security. For more details about Automatic clusters see aka.ms/aks/automatic. </summary>
+        public static ManagedClusterSkuName Automatic { get; } = new ManagedClusterSkuName(AutomaticValue);
         /// <summary> Determines if two <see cref="ManagedClusterSkuName"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterSkuName left, ManagedClusterSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterSkuName"/> values are not the same. </summary>
