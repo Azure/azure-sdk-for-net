@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.1-beta.1 (2025-03-11)
+## 1.2.1-beta.1 (2025-03-08)
 
 ### Features Added
 
@@ -84,7 +84,7 @@ Polishing since last public beta release:
 
 ### Breaking Changes
 
-- Fix the issue that readonly `systemData` is also serialized by unflattening its properties. 
+- Fix the issue that readonly `systemData` is also serialized by unflattening its properties.
 
 ### Features Added
 

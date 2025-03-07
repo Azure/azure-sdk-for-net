@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.1-beta.1 (2025-03-11)
+## 1.3.1-beta.1 (2025-03-08)
 
 ### Features Added
 
@@ -19,7 +19,7 @@
 - Use DeepCreatedCustomDomain for CDN Endpoint API to replace CustomDomain
 - Add secretSource support for AzureFirstPartyManagedCertificateProperties
 - Fix ManagedRuleGroupOverrideSetting error in comment
-- Add ProfileChangeSkuWafMapping 
+- Add ProfileChangeSkuWafMapping
 - Add ManagedServiceIdentity support for profile
 - Add ValidateSecret
 

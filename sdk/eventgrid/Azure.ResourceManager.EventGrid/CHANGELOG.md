@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.6 (2025-03-11)
+## 1.1.0-beta.6 (2025-03-08)
 
 ### Features Added
 
@@ -16,7 +16,7 @@
     - ExpirationTimeUtc for namespace topic eventsubscription
     - Add EventSubscriptionDestination to PushInfo
     - CustomJwtAuthentication
-    - One on the NSP properties (subscriptions) returning list of class rather than list of string. 
+    - One on the NSP properties (subscriptions) returning list of class rather than list of string.
 - Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
