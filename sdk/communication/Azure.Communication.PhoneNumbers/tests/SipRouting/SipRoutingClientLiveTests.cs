@@ -287,5 +287,22 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             Assert.IsNotNull(newRoutes);
             Assert.IsEmpty(newRoutes);
         }
+
+        [Test]
+        public async Task TestRoutesWithNumbersTest()
+        {
+            if (SkipSipConfigurationLiveTest)
+            {
+                Assert.Ignore("Skip sip configuration flag is on.");
+            }
+
+            var client = CreateClient();
+            var response = await client.TestRoutesWithNumberAsync(TestData!.TestPhoneNumber, new List<SipTrunkRoute>()).ConfigureAwait(false);
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            var routesForNumber = response.Value;
+            Assert.IsNotNull(routesForNumber);
+            Assert.AreEqual(0, routesForNumber.MatchingRoutes.Count);
+            Assert.IsEmpty(routesForNumber.MatchingRoutes);
+        }
     }
 }

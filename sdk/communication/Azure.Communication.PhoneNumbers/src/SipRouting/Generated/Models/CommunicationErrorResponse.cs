@@ -22,5 +22,8 @@ namespace Azure.Communication.PhoneNumbers
 
             Error = error;
         }
+
+        /// <summary> The Communication Services error. </summary>
+        public SipRouting.CommunicationError Error { get; }
     }
 }

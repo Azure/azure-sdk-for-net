@@ -39,11 +39,37 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             Routes = routes.ToList().AsReadOnly();
         }
 
+        internal SipConfiguration(IDictionary<string, SipDomain> domains, IDictionary<string, SipTrunk> trunks, IEnumerable<SipTrunkRoute> routes) {
+            Domains = new ReadOnlyDictionary<string, SipDomain>(domains);
+            Trunks = new ReadOnlyDictionary<string, SipTrunk>(trunks);
+            Routes = routes.ToList().AsReadOnly();
+        }
+
         // <summary> Initializes a new instance of SipConfiguration. </summary>
         /// <param name="writer"> JSON writer to write out the configuration. </param>
         internal void Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+
+            if (Domains != null)
+            {
+                writer.WritePropertyName("domains");
+                writer.WriteStartObject();
+
+                foreach (KeyValuePair<string, SipDomain> item in Domains)
+                {
+                    if (item.Value != null)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    else
+                    {
+                        writer.WriteNull(item.Key);
+                    }
+                }
+                writer.WriteEndObject();
+            }
             if (Trunks != null)
             {
                 writer.WritePropertyName("trunks");

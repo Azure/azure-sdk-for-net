@@ -726,7 +726,9 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             scope.Start();
             try
             {
-                var config = new SipConfiguration(routes);
+                IReadOnlyDictionary<string, SipDomain> domains = new Dictionary<string, SipDomain>();
+                IReadOnlyDictionary<string, SipTrunk> trunks = new Dictionary<string, SipTrunk>();
+                var config = new SipConfiguration(domains, trunks, routes);
                 return _restClient.TestRoutesWithNumber(targetPhoneNumber, config, cancellationToken);
             }
             catch (Exception ex)
@@ -748,7 +750,9 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             scope.Start();
             try
             {
-                var config = new SipConfiguration(routes);
+                IReadOnlyDictionary<string, SipDomain> domains = new Dictionary<string, SipDomain>();
+                IReadOnlyDictionary<string, SipTrunk> trunks = new Dictionary<string, SipTrunk>();
+                var config = new SipConfiguration(domains, trunks, routes);
                 return await _restClient.TestRoutesWithNumberAsync(targetPhoneNumber, config, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
