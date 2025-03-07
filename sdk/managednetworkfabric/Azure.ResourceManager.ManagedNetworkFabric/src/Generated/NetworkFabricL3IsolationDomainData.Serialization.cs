@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkFabricL3IsolationDomainData(document.RootElement, options);
                     }
                 default:

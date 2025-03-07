@@ -115,7 +115,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new MetricChangePointFeedback FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeMetricChangePointFeedback(document.RootElement);
         }
 

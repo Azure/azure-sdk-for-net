@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisUpgradeNotificationListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisUpgradeNotificationListResponse.DeserializeRedisUpgradeNotificationListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisUpgradeNotificationListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisUpgradeNotificationListResponse.DeserializeRedisUpgradeNotificationListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisData.DeserializeRedisData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisData.DeserializeRedisData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisListResult.DeserializeRedisListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisListResult.DeserializeRedisListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisListResult.DeserializeRedisListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisListResult.DeserializeRedisListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisAccessKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisAccessKeys.DeserializeRedisAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisAccessKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisAccessKeys.DeserializeRedisAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -896,7 +896,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisAccessKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisAccessKeys.DeserializeRedisAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -927,7 +927,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisAccessKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisAccessKeys.DeserializeRedisAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -998,7 +998,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisForceRebootResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisForceRebootResult.DeserializeRedisForceRebootResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1029,7 +1029,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisForceRebootResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisForceRebootResult.DeserializeRedisForceRebootResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1361,7 +1361,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisUpgradeNotificationListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisUpgradeNotificationListResponse.DeserializeRedisUpgradeNotificationListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1393,7 +1393,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisUpgradeNotificationListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisUpgradeNotificationListResponse.DeserializeRedisUpgradeNotificationListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1444,7 +1444,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisListResult.DeserializeRedisListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1473,7 +1473,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisListResult.DeserializeRedisListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1522,7 +1522,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisListResult.DeserializeRedisListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1549,7 +1549,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisListResult.DeserializeRedisListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

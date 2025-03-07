@@ -60,13 +60,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ProjectDeletionOperationState>> GetProjectDeletionStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConversationAuthoringProjectDeletionState>> GetProjectDeletionStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetProjectDeletionStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(ProjectDeletionOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringProjectDeletionState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for a project deletion job. </summary>
@@ -74,13 +74,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ProjectDeletionOperationState> GetProjectDeletionStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<ConversationAuthoringProjectDeletionState> GetProjectDeletionStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetProjectDeletionStatus(jobId, context);
-            return Response.FromValue(ProjectDeletionOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringProjectDeletionState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -557,10 +557,10 @@ namespace Azure.AI.Language.Conversations.Authoring
         private static ResponseClassifier _responseClassifier200201;
         private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
 
-        private TrainingJobResult FetchTrainingJobResultFromTrainingOperationState(Response response)
+        private ConversationAuthoringTrainingJobResult FetchConversationAuthoringTrainingJobResultFromConversationAuthoringTrainingState(Response response)
         {
             var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
-            return TrainingJobResult.DeserializeTrainingJobResult(resultJsonElement);
+            return ConversationAuthoringTrainingJobResult.DeserializeConversationAuthoringTrainingJobResult(resultJsonElement);
         }
     }
 }

@@ -22,7 +22,7 @@ To create a new project synchronously, call CreateProject on the `ConversationAu
 ```C# Snippet:Sample1_ConversationsAuthoring_CreateProject
 string projectName = "MyNewProject";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
-CreateProjectDetails projectData = new CreateProjectDetails(
+ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
       projectKind: "Conversation",
       language: "en-us"
     )
