@@ -28,7 +28,7 @@ var app = builder.Build();
 app.MapRazorPages();
 app.UseStaticFiles();
 
-EmbeddingsVectorbase vectorDb = new(client.GetOpenAIEmbeddingClient());
+EmbeddingsStore vectorDb = new(client.GetOpenAIEmbeddingClient());
 List<ChatMessage> prompt = [];
 
 // Register the vector db to be updated when a new file is uploaded

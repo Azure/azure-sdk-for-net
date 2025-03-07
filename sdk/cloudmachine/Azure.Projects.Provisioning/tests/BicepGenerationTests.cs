@@ -57,7 +57,9 @@ public class BicepGenerationTests
     public void OfxProject()
     {
         ProjectInfrastructure infra = new("cm0c420d2f21084cd");
-        infra.AddOfx();
+        infra.AddBlobsContainer();
+        infra.AddServiceBus();
+
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
         File.WriteAllText("d:\\ofx.bicep", actualBicep);
         string expectedBicep = LoadTestFile("ofx.bicep");

@@ -35,22 +35,8 @@ public partial class ProjectInfrastructure
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ProvisioningParameter PrincipalIdParameter => new("principalId", typeof(string));
 
-    public FeatureCollection Features => _features;
-
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public void AddSystemRole(Provisionable provisionable, string roleName, string roleId)
-    {
-        FeatureRole role = new(roleName, roleId);
-
-        if (!_requiredSystemRoles.TryGetValue(provisionable, out List<FeatureRole>? roles))
-        {
-            _requiredSystemRoles.Add(provisionable, [role]);
-        }
-        else
-        {
-            roles.Add(role);
-        }
-    }
+    public FeatureCollection Features => _features;
 
     public ProjectInfrastructure(string? projectId = default)
     {
@@ -93,6 +79,21 @@ public partial class ProjectInfrastructure
     public void AddConstruct(NamedProvisionableConstruct construct)
     {
         _constrcuts.Add(construct);
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void AddSystemRole(Provisionable provisionable, string roleName, string roleId)
+    {
+        FeatureRole role = new(roleName, roleId);
+
+        if (!_requiredSystemRoles.TryGetValue(provisionable, out List<FeatureRole>? roles))
+        {
+            _requiredSystemRoles.Add(provisionable, [role]);
+        }
+        else
+        {
+            roles.Add(role);
+        }
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
