@@ -57,8 +57,6 @@ jobs:
           Path: eng/pipelines/templates/stages/build-matrix.json
           Selection: sparse
           GenerateVMJobs: true
-        CloudConfig:
-          Cloud: public
         SparseCheckoutPaths:
           - "/*"
           - "!SessionRecords"
@@ -87,10 +85,11 @@ jobs:
         os: windows
 
       variables:
-        Codeql.Enabled: true
-        Codeql.BuildIdentifier: ${{ parameters.ServiceDirectory }}
-        Codeql.SkipTaskAutoInjection: false
-        SDKType: ${{ parameters.SDKType }}
+      - template: /eng/pipelines/templates/variables/codeql.yml
+      - name: Codeql.BuildIdentifier
+        value: ${{ parameters.ServiceDirectory }}
+      - name: SDKType
+        value: ${{ parameters.SDKType }}
 
       steps:
         - template: /eng/pipelines/templates/steps/build.yml

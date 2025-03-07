@@ -111,17 +111,6 @@ steps:
           $(DiagnosticArguments)
       displayName: "Build and Package for PR"
   - ${{ else }}:
-    - pwsh: |
-        $variableSet = $env:ProjectListOverrideFile -ne "`$`(ProjectListOverrideFile`)"
-        if ($variableSet -and (Test-Path $env:ProjectListOverrideFile)) {
-          Write-Host "Clearing $env:ProjectListOverrideFile"
-          rm $env:ProjectListOverrideFile
-        }
-        Write-Host '##vso[task.setvariable variable=ProjectListOverrideFile;]'
-      env:
-        ProjectListOverrideFile: $(ProjectListOverrideFile)
-      displayName: Cleanup Props File
-
     - script: >-
         dotnet pack eng/service.proj -warnaserror
         /p:ValidateRunApiCompat=true
@@ -132,7 +121,7 @@ steps:
         /p:Configuration=$(BuildConfiguration)
         /p:CommitSHA=$(Build.SourceVersion)
         /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
-        /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
+        /p:ProjectListOverrideFile=""
         $(DiagnosticArguments)
       displayName: "Build and Package Service Directory"
 

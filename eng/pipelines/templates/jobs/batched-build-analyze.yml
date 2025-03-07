@@ -20,7 +20,6 @@ parameters:
   - name: BuildSnippets
     type: boolean
     default: true
-
   - name: DependsOn
     type: string
     default: ''
@@ -44,10 +43,11 @@ jobs:
       matrix: $[ ${{ parameters.Matrix }} ]
 
     variables:
-      Codeql.Enabled: true
-      Codeql.BuildIdentifier: ${{ parameters.ServiceDirectory }}
-      Codeql.SkipTaskAutoInjection: false
-      SDKType: ${{ parameters.SDKType }}
+    - template: /eng/pipelines/templates/variables/codeql.yml
+    - name: Codeql.BuildIdentifier
+      value: ${{ parameters.ServiceDirectory }}
+    - name: SDKType
+      value: ${{ parameters.SDKType }}
 
     pool:
       # 1es pipeline templates converts `image` to demands: ImageOverride under the hood
@@ -76,7 +76,6 @@ jobs:
     displayName: "Analyze"
     dependsOn: ${{ parameters.DependsOn }}
     condition: and(succeededOrFailed(), ne(${{ parameters.Matrix }}, '{}'))
-
 
     # allow duplication of the job by matrix
     strategy:

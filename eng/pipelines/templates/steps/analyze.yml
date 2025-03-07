@@ -85,7 +85,6 @@ steps:
     parameters:
       LogFilePath: $(Build.ArtifactStagingDirectory)/rebuild.binlog
 
-  # todo, refactor to using the projectlistoverridefile
   - pwsh: |
       $failed = $false
       if ("$(ProjectNames)") {
