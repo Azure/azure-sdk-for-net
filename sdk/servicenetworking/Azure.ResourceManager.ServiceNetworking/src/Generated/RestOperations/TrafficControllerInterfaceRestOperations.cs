@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         TrafficControllerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TrafficControllerData.DeserializeTrafficControllerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         TrafficControllerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TrafficControllerData.DeserializeTrafficControllerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         TrafficControllerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TrafficControllerData.DeserializeTrafficControllerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         TrafficControllerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TrafficControllerData.DeserializeTrafficControllerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         TrafficControllerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TrafficControllerListResult.DeserializeTrafficControllerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         TrafficControllerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TrafficControllerListResult.DeserializeTrafficControllerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         TrafficControllerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TrafficControllerListResult.DeserializeTrafficControllerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         TrafficControllerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TrafficControllerListResult.DeserializeTrafficControllerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         TrafficControllerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TrafficControllerListResult.DeserializeTrafficControllerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         TrafficControllerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TrafficControllerListResult.DeserializeTrafficControllerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         TrafficControllerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TrafficControllerListResult.DeserializeTrafficControllerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case 200:
                     {
                         TrafficControllerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TrafficControllerListResult.DeserializeTrafficControllerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

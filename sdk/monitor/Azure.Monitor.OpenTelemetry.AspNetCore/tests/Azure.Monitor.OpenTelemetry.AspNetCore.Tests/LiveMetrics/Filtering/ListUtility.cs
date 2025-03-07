@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
 {

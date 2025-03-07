@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         WebhookResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WebhookResourceListResult.DeserializeWebhookResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         WebhookResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WebhookResourceListResult.DeserializeWebhookResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         AppComplianceReportWebhookData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppComplianceReportWebhookData.DeserializeAppComplianceReportWebhookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         AppComplianceReportWebhookData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppComplianceReportWebhookData.DeserializeAppComplianceReportWebhookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 201:
                     {
                         AppComplianceReportWebhookData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppComplianceReportWebhookData.DeserializeAppComplianceReportWebhookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 201:
                     {
                         AppComplianceReportWebhookData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppComplianceReportWebhookData.DeserializeAppComplianceReportWebhookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         AppComplianceReportWebhookData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppComplianceReportWebhookData.DeserializeAppComplianceReportWebhookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         AppComplianceReportWebhookData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppComplianceReportWebhookData.DeserializeAppComplianceReportWebhookData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         WebhookResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WebhookResourceListResult.DeserializeWebhookResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         WebhookResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WebhookResourceListResult.DeserializeWebhookResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

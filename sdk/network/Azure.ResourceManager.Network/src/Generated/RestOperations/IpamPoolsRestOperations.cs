@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         IpamPoolList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IpamPoolList.DeserializeIpamPoolList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         IpamPoolList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IpamPoolList.DeserializeIpamPoolList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         IpamPoolData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IpamPoolData.DeserializeIpamPoolData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         IpamPoolData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IpamPoolData.DeserializeIpamPoolData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         IpamPoolData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IpamPoolData.DeserializeIpamPoolData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         IpamPoolData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IpamPoolData.DeserializeIpamPoolData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         IpamPoolUsage value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IpamPoolUsage.DeserializeIpamPoolUsage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         IpamPoolUsage value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IpamPoolUsage.DeserializeIpamPoolUsage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         PoolAssociationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PoolAssociationList.DeserializePoolAssociationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         PoolAssociationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PoolAssociationList.DeserializePoolAssociationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -837,7 +837,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         IpamPoolList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IpamPoolList.DeserializeIpamPoolList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         IpamPoolList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IpamPoolList.DeserializeIpamPoolList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         PoolAssociationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PoolAssociationList.DeserializePoolAssociationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -961,7 +961,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         PoolAssociationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PoolAssociationList.DeserializePoolAssociationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

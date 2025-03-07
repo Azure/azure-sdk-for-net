@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServiceAlertData(document.RootElement, options);
                     }
                 default:
