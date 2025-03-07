@@ -1,13 +1,13 @@
 Service: storage-datamovement-blob
 
-# Project: sdk/storage/Azure.Storage.DataMovement.Blobs/perf/Azure.Storage.DataMovement.Blobs.Perf/Azure.Storage.DataMovement.Blobs.Perf.csproj
+Project: sdk/storage/Azure.Storage.DataMovement.Blobs/perf/Azure.Storage.DataMovement.Blobs.Perf/Azure.Storage.DataMovement.Blobs.Perf.csproj
 # For Track1, comment above line, uncomment next line
-Project: sdk/storage/Azure.Storage.DataMovement.Blobs/perf/Microsoft.Azure.Storage.DataMovement.Perf/Microsoft.Azure.Storage.DataMovement.Perf.csproj
+# Project: sdk/storage/Azure.Storage.DataMovement.Blobs/perf/Microsoft.Azure.Storage.DataMovement.Perf/Microsoft.Azure.Storage.DataMovement.Perf.csproj
 
 PackageVersions:
-# - Azure.Storage.DataMovement.Blobs: source
+- Azure.Storage.DataMovement.Blobs: source
 # For Track1, comment above line, uncomment next line
-- Microsoft.Azure.Storage.DataMovement: 2.0.5
+# - Microsoft.Azure.Storage.DataMovement: 2.0.5
 
 Tests:
 - Test: download
