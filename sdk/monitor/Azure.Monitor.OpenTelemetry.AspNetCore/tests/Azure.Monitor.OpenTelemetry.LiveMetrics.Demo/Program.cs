@@ -98,7 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                         catch (Exception ex)
                         {
                             activity?.SetStatus(ActivityStatusCode.Error);
-                            activity?.RecordException(ex, new TagList { { "customKey1", "customValue1" } });
+                            activity?.AddException(ex, new TagList { { "customKey1", "customValue1" } });
                         }
                     }
                     else
@@ -127,7 +127,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                         catch (Exception ex)
                         {
                             activity?.SetStatus(ActivityStatusCode.Error);
-                            activity?.RecordException(ex, new TagList { { "customKey1", "customValue1" } });
+                            activity?.AddException(ex, new TagList { { "customKey1", "customValue1" } });
                         }
                     }
 
