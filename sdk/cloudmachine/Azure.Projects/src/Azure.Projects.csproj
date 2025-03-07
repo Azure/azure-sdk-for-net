@@ -27,8 +27,4 @@
     <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\core\System.ClientModel\src\System.ClientModel.csproj" />
-  </ItemGroup>
-
 </Project>
