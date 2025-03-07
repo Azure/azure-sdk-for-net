@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.StorageSync
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageSyncServerEndpointData(document.RootElement, options);
                     }
                 default:
