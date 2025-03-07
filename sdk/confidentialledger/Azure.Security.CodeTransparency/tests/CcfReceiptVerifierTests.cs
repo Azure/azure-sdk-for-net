@@ -7,7 +7,6 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Text.Json;
 using Azure.Security.CodeTransparency.Receipt;
 using NUnit.Framework;
 
@@ -120,74 +119,6 @@ namespace Azure.Security.CodeTransparency.Tests
             byte[] receiptBytes = readFileBytes("sbom.descriptor.2022-12-10.embedded.2023-02-13.cose");
             var pem = readFileBytes("service.2022-11.cert.pem");
             CcfReceiptVerifier.RunVerification(certFromPem(pem), receiptBytes);
-        }
-
-        [Test]
-        public void Verify_embedded_receipt_is_missing_did_issuer()
-        {
-            byte[] receiptBytes = readFileBytes("sbom.descriptor.2022-12-10.embedded.2023-02-13.cose");
-            var didDocBytes = readFileBytes("service.2022-11.did.json");
-            var didDoc = DidDocument.DeserializeDidDocument(JsonDocument.Parse(didDocBytes).RootElement);
-            var ex = Assert.Throws<AggregateException>(() => CcfReceiptVerifier.RunVerification(receiptBytes, null, didRef => didDoc));
-#if NETFRAMEWORK
-            Assert.True(ex.Message.Contains("One or more errors occurred"));
-#else
-            Assert.That(ex.Message, Contains.Substring("invalid did:web issuer: null"));
-#endif
-        }
-
-        [Test]
-        public void Verify_embedded_receipt_with_did_issuer()
-        {
-            byte[] receiptBytes = readFileBytes("sbom.descriptor.2022-12-10.embedded.did.2023-02-13.cose");
-            var didDocBytes = readFileBytes("service.2023-03.did.json");
-            var didDoc = DidDocument.DeserializeDidDocument(JsonDocument.Parse(didDocBytes).RootElement);
-            CcfReceiptVerifier.RunVerification(receiptBytes, null, didRef => {
-                Assert.AreEqual("https://preview-test.scitt.azure.net/.well-known/did.json", didRef.DidDocUrl.ToString());
-                return didDoc;
-            });
-        }
-
-        [Test]
-        public void Verify_Using_DID_Success_Test()
-        {
-            byte[] receiptBytes = readFileBytes("artifact.2023-03-03.receipt.did.2023-03-03.cbor");
-            byte[] coseSign1Bytes = readFileBytes("artifact.2023-03-03.cose");
-            var didDocBytes = readFileBytes("service.2023-02.did.json");
-            var didDoc = DidDocument.DeserializeDidDocument(JsonDocument.Parse(didDocBytes).RootElement);
-            CcfReceiptVerifier.RunVerification(receiptBytes, coseSign1Bytes, didRef => {
-                Assert.AreEqual("https://127.0.0.1:42399/.well-known/did.json", didRef.DidDocUrl.ToString());
-                return didDoc;
-            });
-        }
-
-        [Test]
-        public void Verify_Using_DID_2_Success_Test()
-        {
-            byte[] receiptBytes = readFileBytes("artifact.2023-03-15.receipt.did.2023-03-15.cbor");
-            byte[] coseSign1Bytes = readFileBytes("artifact.2023-03-15.cose");
-            var didDocBytes = readFileBytes("service.2023-03.did.json");
-            var didDoc = DidDocument.DeserializeDidDocument(JsonDocument.Parse(didDocBytes).RootElement);
-            CcfReceiptVerifier.RunVerification(receiptBytes, coseSign1Bytes, didRef => {
-                Assert.AreEqual("https://preview-test.scitt.azure.net/.well-known/did.json", didRef.DidDocUrl.ToString());
-                return didDoc;
-            });
-        }
-
-        [Test]
-        public void Verify_Using_invalid_DID_failure_Test()
-        {
-            byte[] receiptBytes = readFileBytes("artifact.2023-03-15.receipt.did.2023-03-15.cbor");
-            byte[] coseSign1Bytes = readFileBytes("artifact.2023-03-15.cose");
-            var didDocBytes = readFileBytes("service.did.invalid.json");
-            var didDoc = DidDocument.DeserializeDidDocument(JsonDocument.Parse(didDocBytes).RootElement);
-            var ex = Assert.Throws<AggregateException>(() => CcfReceiptVerifier.RunVerification(receiptBytes, coseSign1Bytes, didRef => didDoc));
-            // in net462 the exception message is different
-#if NETFRAMEWORK
-            Assert.True(ex.Message.Contains("One or more errors occurred"));
-#else
-            Assert.True(ex.Message.Contains("Missing cert chain in x5c"));
-#endif
         }
 
         [Test]

@@ -2,15 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
+using System.IO;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Security.CodeTransparency.Tests
 {
-    public class CodeTransparencyClientUnitTests: ClientTestBase
+    public class CodeTransparencyClientUnitTests : ClientTestBase
     {
         /// <summary>
         /// A canned service identity response. But with a parseable cert.
@@ -47,10 +47,11 @@ namespace Azure.Security.CodeTransparency.Tests
         }
 
         [Test]
-        public async Task CreateEntryAsync_sendsBytes_receives_json()
+        public async Task CreateEntryAsync_sendsBytes_receives_bytes()
         {
-            var mockedResponse = new MockResponse(200);
-            mockedResponse.SetContent("{\"operationId\": \"foobar\"}");
+            var mockedResponse = new MockResponse(201);
+            mockedResponse.AddHeader("Content-Type", "application/cose");
+            mockedResponse.SetContent(BinaryData.FromString("{\"operationId\": \"foobar\"}").ToArray());
             var mockTransport = new MockTransport(mockedResponse);
             var options = new CodeTransparencyClientOptions
             {
@@ -60,11 +61,10 @@ namespace Azure.Security.CodeTransparency.Tests
 
             CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             BinaryData content = BinaryData.FromString("Hello World!");
-            Operation<GetOperationResult> response = await client.CreateEntryAsync(content);
+            Response<BinaryData> response = await client.CreateEntryAsync(content);
 
-            Assert.AreEqual("https://foo.bar.com/entries?api-version=2024-01-11-preview", mockTransport.Requests[0].Uri.ToString());
-            Assert.AreEqual(false, response.HasCompleted);
-            Assert.AreEqual("foobar", response.Id);
+            Assert.AreEqual("https://foo.bar.com/entries?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
+            Assert.AreEqual("{\"operationId\": \"foobar\"}", response.Value.ToString());
         }
 
         [Test]
@@ -81,18 +81,18 @@ namespace Azure.Security.CodeTransparency.Tests
 
             CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             BinaryData content = BinaryData.FromString("Hello World!");
-            Operation<GetOperationResult> response = await client.CreateEntryAsync(content);
+            Response<BinaryData> response = await client.CreateEntryAsync(content);
 
-            Assert.AreEqual("https://foo.bar.com/entries?api-version=2024-01-11-preview", mockTransport.Requests[0].Uri.ToString());
-            Assert.AreEqual(false, response.HasCompleted);
-            Assert.AreEqual("foobar", response.Id);
+            Assert.AreEqual("https://foo.bar.com/entries?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
+            Assert.AreEqual(1, mockTransport.Requests.Count);
+            Assert.AreEqual("{\"operationId\": \"foobar\"}", response.Value.ToString());
         }
 
         [Test]
-        public async Task CreateEntryAsync_retries_unsuccessful_post()
+        public async Task CreateEntryAsync_unsuccessful_post()
         {
             var mockedResponse = new MockResponse(200);
-            mockedResponse.SetContent("{\"operationId\": \"foobar\"}");
+            mockedResponse.SetContent(BinaryData.FromString("{\"operationId\": \"foobar\"}").ToArray());
             var mockTransport = new MockTransport(new MockResponse(503), mockedResponse);
             var options = new CodeTransparencyClientOptions
             {
@@ -101,88 +101,14 @@ namespace Azure.Security.CodeTransparency.Tests
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             BinaryData content = BinaryData.FromString("Hello World!");
-            Operation<GetOperationResult> response = await client.CreateEntryAsync(content);
-            Assert.AreEqual("https://foo.bar.com/entries?api-version=2024-01-11-preview", mockTransport.Requests[0].Uri.ToString());
-            Assert.AreEqual("foobar", response.Id);
+            Response<BinaryData> response = await client.CreateEntryAsync(content);
+
+            Assert.AreEqual("https://foo.bar.com/entries?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
+            Assert.AreEqual(503, response.GetRawResponse().Status);
         }
 
         [Test]
-        public async Task CreateEntryAsync_waits_for_operation_success()
-        {
-            var createResponse = new MockResponse(200);
-            createResponse.SetContent("{\"operationId\": \"foobar\"}");
-            var pendingResponse = new MockResponse(200);
-            pendingResponse.SetContent("{\"operationId\": \"foobar\", \"status\": \"running\"}");
-            var operationResponse = new MockResponse(200);
-            operationResponse.SetContent("{\"operationId\": \"foobar\", \"entryId\": \"123.23\", \"status\": \"succeeded\"}");
-
-            var mockTransport = new MockTransport(createResponse, pendingResponse, operationResponse);
-            var options = new CodeTransparencyClientOptions
-            {
-                Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
-            };
-            var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-            BinaryData content = BinaryData.FromString("Hello World!");
-            Operation<GetOperationResult> operation = await client.CreateEntryAsync(content);
-            Assert.AreEqual("https://foo.bar.com/entries?api-version=2024-01-11-preview", mockTransport.Requests[0].Uri.ToString());
-            Assert.AreEqual("foobar", operation.Id);
-            Response<GetOperationResult> response = await operation.WaitForCompletionAsync();
-            GetOperationResult value = response.Value;
-            Assert.AreEqual("123.23", value.EntryId);
-            Assert.AreEqual(OperationStatus.Succeeded, value.Status);
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
-        }
-
-         [Test]
-        public async Task CreateEntryAsync_stops_on_operation_failure()
-        {
-            var createResponse = new MockResponse(200);
-            createResponse.SetContent("{\"operationId\": \"foobar\"}");
-            var pendingResponse = new MockResponse(200);
-            pendingResponse.SetContent("{\"operationId\": \"foobar\", \"status\": \"running\"}");
-            var operationResponse = new MockResponse(200);
-            operationResponse.SetContent("{\"operationId\": \"foobar\", \"status\": \"failed\"}");
-
-            var mockTransport = new MockTransport(createResponse, pendingResponse, operationResponse);
-            var options = new CodeTransparencyClientOptions
-            {
-                Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
-            };
-            var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-            BinaryData content = BinaryData.FromString("Hello World!");
-            Operation<GetOperationResult> operation = await client.CreateEntryAsync(content);
-            Assert.AreEqual("https://foo.bar.com/entries?api-version=2024-01-11-preview", mockTransport.Requests[0].Uri.ToString());
-            Assert.AreEqual("foobar", operation.Id);
-
-            Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
-        }
-
-        [Test]
-        public async Task GetEntryStatusAsync_gets_entryId()
-        {
-            var mockedResponse = new MockResponse(200);
-            mockedResponse.SetContent("{\"status\": \"succeeded\", \"entryId\": \"2.35\"}");
-            var mockTransport = new MockTransport(mockedResponse);
-            var options = new CodeTransparencyClientOptions
-            {
-                Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
-            };
-            var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-            Response<GetOperationResult> response = await client.GetEntryStatusAsync("operationId");
-            Assert.AreEqual("https://foo.bar.com/operations/operationId?api-version=2024-01-11-preview", mockTransport.Requests[0].Uri.ToString());
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(OperationStatus.Succeeded, response.Value.Status);
-            Assert.AreEqual("2.35", response.Value.EntryId);
-        }
-
-        [Test]
-        public async Task GetEntryAsync_gets_entry_bytes_after_retry()
+        public async Task GetEntryAsync_unsuccessful_get()
         {
             var mockedResponse = new MockResponse(200);
             mockedResponse.AddHeader("Content-Type", "application/cose");
@@ -195,13 +121,13 @@ namespace Azure.Security.CodeTransparency.Tests
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             Response<BinaryData> response = await client.GetEntryAsync("4.44");
-            Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2024-01-11-preview", mockTransport.Requests[1].Uri.ToString());
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(new byte[] { 0x01, 0x02, 0x03 }, response.Value.ToArray());
+
+            Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
+            Assert.AreEqual(503, response.GetRawResponse().Status);
         }
 
         [Test]
-        public async Task GetEntryAsync_gets_entry_bytes_with_embedded_receipt()
+        public async Task GetEntryAsync_gets_entry_bytes()
         {
             var mockedResponse = new MockResponse(200);
             mockedResponse.AddHeader("Content-Type", "application/cose");
@@ -213,59 +139,139 @@ namespace Azure.Security.CodeTransparency.Tests
                 IdentityClientEndpoint = "https://foo.bar.com"
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-            Response<BinaryData> response = await client.GetEntryAsync("4.44", true);
-            Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2024-01-11-preview&embedReceipt=true", mockTransport.Requests[0].Uri.ToString());
+            Response<BinaryData> response = await client.GetEntryAsync("4.44");
+            Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(new byte[] { 0x01, 0x02, 0x03 }, response.Value.ToArray());
         }
 
         [Test]
-        public async Task GetEntryReceiptAsync_gets_receipt_bytes_after_retry()
+        public async Task GetTransparencyConfigCborAsync_ShouldReturnResponse()
         {
-            var mockedResponse = new MockResponse(200);
-            mockedResponse.AddHeader("Content-Type", "application/cbor");
-            mockedResponse.SetContent(new byte[] { 0x01, 0x02, 0x03 });
-            var mockTransport = new MockTransport(new MockResponse(503), mockedResponse);
+            var responseMock = new MockResponse(200);
+            responseMock.SetContent(BinaryData.FromString("test-content").ToArray());
+            var mockTransport = new MockTransport(responseMock);
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
                 IdentityClientEndpoint = "https://foo.bar.com"
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-            Response<BinaryData> response = await client.GetEntryReceiptAsync("4.44");
 
-            Assert.AreEqual("https://foo.bar.com/entries/4.44/receipt?api-version=2024-01-11-preview", mockTransport.Requests[1].Uri.ToString());
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(new byte[] { 0x01, 0x02, 0x03 }, response.Value.ToArray());
+            var result = await client.GetTransparencyConfigCborAsync();
+
+            Assert.NotNull(result);
+            Assert.AreEqual("test-content", result.Value.ToString());
+            Assert.AreEqual("https://foo.bar.com/.well-known/transparency-configuration?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
         }
 
         [Test]
-        public async Task GetEntryIdsAsync_gets_entry_ids()
+        public async Task CreateEntryAsync_ShouldReturnResponse()
         {
-            var page1 = new MockResponse(200);
-            page1.SetContent("{\"transactionIds\": [ \"2.1\",\"2.2\",\"2.3\" ], \"nextLink\":\"/entries/txIds?from=3&to=6\"}");
-            var page2 = new MockResponse(200);
-            page2.SetContent("{\"transactionIds\": [ \"3.4\",\"3.5\",\"3.6\" ], \"nextLink\":\"/entries/txIds?from=7\"}");
-            var page3 = new MockResponse(200);
-            page3.SetContent("{\"transactionIds\": [ \"4.7\" ]}");
-            var mockTransport = new MockTransport(page1, page2, page3);
+            var responseMock = new MockResponse(201);
+            responseMock.SetContent(BinaryData.FromString("test-content").ToArray());
+            var mockTransport = new MockTransport(responseMock);
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
                 IdentityClientEndpoint = "https://foo.bar.com"
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-            AsyncPageable<string> response = client.GetEntryIdsAsync();
-            List<string> ids = new();
-            await foreach (Page<string> page in response.AsPages())
-            {
-                ids.AddRange(page.Values);
-            }
-            Assert.AreEqual("https://foo.bar.com/entries/txIds?api-version=2024-01-11-preview", mockTransport.Requests[0].Uri.ToString());
-            Assert.AreEqual("https://foo.bar.com/entries/txIds?from=3&to=6", mockTransport.Requests[1].Uri.ToString());
-            Assert.AreEqual("https://foo.bar.com/entries/txIds?from=7", mockTransport.Requests[2].Uri.ToString());
 
-            Assert.That(ids, Is.EquivalentTo(new string[] { "2.1", "2.2", "2.3", "3.4", "3.5", "3.6", "4.7" }));
+            var result = await client.CreateEntryAsync(BinaryData.FromString("test-body"));
+
+            Assert.NotNull(result);
+            Assert.AreEqual("test-content", result.Value.ToString());
+            Assert.AreEqual("https://foo.bar.com/entries?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
+        }
+
+        [Test]
+        public void CreateEntry_ShouldReturnResponse()
+        {
+            var responseMock = new MockResponse(201);
+            responseMock.SetContent(BinaryData.FromString("test-content").ToArray());
+            var mockTransport = new MockTransport(responseMock);
+            var options = new CodeTransparencyClientOptions
+            {
+                Transport = mockTransport,
+                IdentityClientEndpoint = "https://foo.bar.com"
+            };
+            var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
+
+            var result = client.CreateEntry(BinaryData.FromString("test-body"));
+
+            Assert.NotNull(result);
+            Assert.AreEqual("test-content", result.Value.ToString());
+            Assert.AreEqual("https://foo.bar.com/entries?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
+        }
+
+        [Test]
+        public void RunTransparentStatementVerification_InvalidParameters_ShouldThrowCryptographicException()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            var content = new MockResponse(200);
+            content.SetContent("{\"keys\":" +
+                "[{\"crv\": \"P-384\"," +
+                "\"kid\":\"1dd54f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
+                "\"kty\":\"EC\"," +
+                "\"x\": \"WAHDpC-ECgc7LvCxlaOPsY-xVYF9iStcEPU3XGF8dlhtb6dMHZSYVPMs2gliK-gc\"," +
+                "\"y\": \"EaDFUcuR-aQrWctpV4Kp_x16w3ZcG8957U3sLTRdeihO0vjfHBtW11xaIfAU0qAX\"" +
+                "}]}");
+
+            var mockTransport = new MockTransport(content);
+            var options = new CodeTransparencyClientOptions
+            {
+                Transport = mockTransport,
+                IdentityClientEndpoint = "https://foo.bar.com"
+            };
+            var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
+
+            byte[] transparentStatementCoseSign1Bytes = new byte[] { /* invalid bytes */ };
+            byte[] signedStatement = readFileBytes("input_signed_claims");
+
+            Assert.Throws<CryptographicException>(() => client.RunTransparentStatementVerification(transparentStatementCoseSign1Bytes, signedStatement));
+#endif
+        }
+
+        [Test]
+        public void Verify_TransparentStatement_success()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            var content = new MockResponse(200);
+            content.SetContent("{\"keys\":" +
+                "[{\"crv\": \"P-384\"," +
+                "\"kid\":\"1dd54f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
+                "\"kty\":\"EC\"," +
+                "\"x\": \"WAHDpC-ECgc7LvCxlaOPsY-xVYF9iStcEPU3XGF8dlhtb6dMHZSYVPMs2gliK-gc\"," +
+                "\"y\": \"EaDFUcuR-aQrWctpV4Kp_x16w3ZcG8957U3sLTRdeihO0vjfHBtW11xaIfAU0qAX\"" +
+                "}]}");
+
+            var mockTransport = new MockTransport(content);
+            var options = new CodeTransparencyClientOptions
+            {
+                Transport = mockTransport,
+                IdentityClientEndpoint = "https://foo.bar.com"
+            };
+            var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
+
+            byte[] inputSignedStatement = readFileBytes("input_signed_claims");
+            byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
+
+            client.RunTransparentStatementVerification(transparentStatementBytes, inputSignedStatement);
+#endif
+        }
+
+        private byte[] readFileBytes(string name)
+        {
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestFiles", name);
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException("File not found: " + name);
+
+            return File.ReadAllBytes(filePath);
         }
     }
 }

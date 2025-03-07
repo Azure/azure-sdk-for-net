@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Security.CodeTransparency
 {
-    public partial class DidDocument : IUtf8JsonSerializable, IJsonModel<DidDocument>
+    public partial class JwksDocument : IUtf8JsonSerializable, IJsonModel<JwksDocument>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DidDocument>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JwksDocument>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DidDocument>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<JwksDocument>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,17 +28,15 @@ namespace Azure.Security.CodeTransparency
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DidDocument>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<JwksDocument>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DidDocument)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(JwksDocument)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
-            writer.WritePropertyName("assertionMethod"u8);
+            writer.WritePropertyName("keys"u8);
             writer.WriteStartArray();
-            foreach (var item in AssertionMethod)
+            foreach (var item in Keys)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -60,19 +58,19 @@ namespace Azure.Security.CodeTransparency
             }
         }
 
-        DidDocument IJsonModel<DidDocument>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        JwksDocument IJsonModel<JwksDocument>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DidDocument>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<JwksDocument>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DidDocument)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(JwksDocument)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDidDocument(document.RootElement, options);
+            return DeserializeJwksDocument(document.RootElement, options);
         }
 
-        internal static DidDocument DeserializeDidDocument(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static JwksDocument DeserializeJwksDocument(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,25 +78,19 @@ namespace Azure.Security.CodeTransparency
             {
                 return null;
             }
-            string id = default;
-            IReadOnlyList<DidDocumentKey> assertionMethod = default;
+            IReadOnlyList<JsonWebKey> keys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (property.NameEquals("keys"u8))
                 {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("assertionMethod"u8))
-                {
-                    List<DidDocumentKey> array = new List<DidDocumentKey>();
+                    List<JsonWebKey> array = new List<JsonWebKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DidDocumentKey.DeserializeDidDocumentKey(item, options));
+                        array.Add(JsonWebKey.DeserializeJsonWebKey(item, options));
                     }
-                    assertionMethod = array;
+                    keys = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,46 +99,46 @@ namespace Azure.Security.CodeTransparency
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DidDocument(id, assertionMethod, serializedAdditionalRawData);
+            return new JwksDocument(keys, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DidDocument>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<JwksDocument>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DidDocument>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<JwksDocument>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DidDocument)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JwksDocument)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DidDocument IPersistableModel<DidDocument>.Create(BinaryData data, ModelReaderWriterOptions options)
+        JwksDocument IPersistableModel<JwksDocument>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DidDocument>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<JwksDocument>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDidDocument(document.RootElement, options);
+                        return DeserializeJwksDocument(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DidDocument)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JwksDocument)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DidDocument>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<JwksDocument>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DidDocument FromResponse(Response response)
+        internal static JwksDocument FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDidDocument(document.RootElement);
+            return DeserializeJwksDocument(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
