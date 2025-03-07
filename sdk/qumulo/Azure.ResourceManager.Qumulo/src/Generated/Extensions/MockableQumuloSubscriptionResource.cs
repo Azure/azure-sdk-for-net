@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Qumulo.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableQumuloSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _qumuloFileSystemResourceFileSystemsClientDiagnostics;
-        private FileSystemsRestOperations _qumuloFileSystemResourceFileSystemsRestClient;
+        private ClientDiagnostics _fileSystemResourceFileSystemsClientDiagnostics;
+        private FileSystemsRestOperations _fileSystemResourceFileSystemsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableQumuloSubscriptionResource"/> class for mocking. </summary>
         protected MockableQumuloSubscriptionResource()
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         {
         }
 
-        private ClientDiagnostics QumuloFileSystemResourceFileSystemsClientDiagnostics => _qumuloFileSystemResourceFileSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Qumulo", QumuloFileSystemResource.ResourceType.Namespace, Diagnostics);
-        private FileSystemsRestOperations QumuloFileSystemResourceFileSystemsRestClient => _qumuloFileSystemResourceFileSystemsRestClient ??= new FileSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(QumuloFileSystemResource.ResourceType));
+        private ClientDiagnostics FileSystemResourceFileSystemsClientDiagnostics => _fileSystemResourceFileSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Qumulo", FileSystemResource.ResourceType.Namespace, Diagnostics);
+        private FileSystemsRestOperations FileSystemResourceFileSystemsRestClient => _fileSystemResourceFileSystemsRestClient ??= new FileSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(FileSystemResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -48,25 +48,25 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_ListBySubscription</description>
+        /// <description>FileSystemResource_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-12</description>
+        /// <description>2024-06-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// <description><see cref="FileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="QumuloFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QumuloFileSystemResource> GetQumuloFileSystemResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FileSystemResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FileSystemResource> GetFileSystemResourcesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => QumuloFileSystemResourceFileSystemsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QumuloFileSystemResourceFileSystemsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QumuloFileSystemResource(Client, QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(e)), QumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, "MockableQumuloSubscriptionResource.GetQumuloFileSystemResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FileSystemResourceFileSystemsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FileSystemResourceFileSystemsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FileSystemResource(Client, FileSystemResourceData.DeserializeFileSystemResourceData(e)), FileSystemResourceFileSystemsClientDiagnostics, Pipeline, "MockableQumuloSubscriptionResource.GetFileSystemResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -78,25 +78,25 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_ListBySubscription</description>
+        /// <description>FileSystemResource_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-12</description>
+        /// <description>2024-06-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// <description><see cref="FileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="QumuloFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QumuloFileSystemResource> GetQumuloFileSystemResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FileSystemResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FileSystemResource> GetFileSystemResources(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => QumuloFileSystemResourceFileSystemsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QumuloFileSystemResourceFileSystemsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QumuloFileSystemResource(Client, QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(e)), QumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, "MockableQumuloSubscriptionResource.GetQumuloFileSystemResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FileSystemResourceFileSystemsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FileSystemResourceFileSystemsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FileSystemResource(Client, FileSystemResourceData.DeserializeFileSystemResourceData(e)), FileSystemResourceFileSystemsClientDiagnostics, Pipeline, "MockableQumuloSubscriptionResource.GetFileSystemResources", "value", "nextLink", cancellationToken);
         }
     }
 }

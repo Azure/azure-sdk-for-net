@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Qumulo.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of QumuloFileSystemResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of QumuloFileSystemResources and their operations over a QumuloFileSystemResource. </returns>
-        public virtual QumuloFileSystemResourceCollection GetQumuloFileSystemResources()
+        /// <summary> Gets a collection of FileSystemResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of FileSystemResources and their operations over a FileSystemResource. </returns>
+        public virtual FileSystemResourceCollection GetFileSystemResources()
         {
-            return GetCachedClient(client => new QumuloFileSystemResourceCollection(client, Id));
+            return GetCachedClient(client => new FileSystemResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_Get</description>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-12</description>
+        /// <description>2024-06-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// <description><see cref="FileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<QumuloFileSystemResource>> GetQumuloFileSystemResourceAsync(string fileSystemName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileSystemResource>> GetFileSystemResourceAsync(string fileSystemName, CancellationToken cancellationToken = default)
         {
-            return await GetQumuloFileSystemResources().GetAsync(fileSystemName, cancellationToken).ConfigureAwait(false);
+            return await GetFileSystemResources().GetAsync(fileSystemName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_Get</description>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-12</description>
+        /// <description>2024-06-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// <description><see cref="FileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<QumuloFileSystemResource> GetQumuloFileSystemResource(string fileSystemName, CancellationToken cancellationToken = default)
+        public virtual Response<FileSystemResource> GetFileSystemResource(string fileSystemName, CancellationToken cancellationToken = default)
         {
-            return GetQumuloFileSystemResources().Get(fileSystemName, cancellationToken);
+            return GetFileSystemResources().Get(fileSystemName, cancellationToken);
         }
     }
 }

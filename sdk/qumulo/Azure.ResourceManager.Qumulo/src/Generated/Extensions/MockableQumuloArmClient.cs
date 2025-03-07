@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="QumuloFileSystemResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="QumuloFileSystemResource.CreateResourceIdentifier" /> to create a <see cref="QumuloFileSystemResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="FileSystemResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FileSystemResource.CreateResourceIdentifier" /> to create a <see cref="FileSystemResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="QumuloFileSystemResource"/> object. </returns>
-        public virtual QumuloFileSystemResource GetQumuloFileSystemResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FileSystemResource"/> object. </returns>
+        public virtual FileSystemResource GetFileSystemResource(ResourceIdentifier id)
         {
-            QumuloFileSystemResource.ValidateResourceId(id);
-            return new QumuloFileSystemResource(Client, id);
+            FileSystemResource.ValidateResourceId(id);
+            return new FileSystemResource(Client, id);
         }
     }
 }
