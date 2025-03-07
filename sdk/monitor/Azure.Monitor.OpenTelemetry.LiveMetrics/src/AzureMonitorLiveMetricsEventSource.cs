@@ -8,7 +8,9 @@ using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 {
-#if LIVE_METRICS_PROJECT
+// TODO: NEXT PR WILL REFACTOR EVENTSOURCE CLASSES
+
+//#if LIVE_METRICS_PROJECT
     /// <summary>
     /// EventSource for the AzureMonitor LiveMetrics Client.
     /// EventSource Guid at Runtime: TODO.
@@ -259,5 +261,5 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
         [Event(25, Message = "Polling Interval received from LiveMetrics service: {0}", Level = EventLevel.Informational)]
         public void LiveMetricsPolingIntervalReceived(int pollingInterval) => WriteEvent(25, pollingInterval);
     }
-#endif
+//#endif
 }
