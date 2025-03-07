@@ -7,7 +7,7 @@ using Azure.Projects.Storage;
 
 namespace Azure.Projects;
 
-public static class ProjectFeatures
+public static class FeatureExtensions
 {
     public static BlobContainerFeature AddBlobsContainer(this ProjectInfrastructure infrastructure, string? containerName = default, bool enableEvents = true)
     {
