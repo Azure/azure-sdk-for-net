@@ -1,0 +1,22 @@
+<Project>
+
+  <PropertyGroup>
+    <TargetFrameworks Condition="'$(TargetFramework)' != ''">$(TargetFramework)</TargetFrameworks>
+  </PropertyGroup>
+
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.targets))\Directory.Build.targets"
+          Condition="'$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.targets))' != ''" />
+
+  <!-- Canonicalize NoWarn: https://github.com/dotnet/runtime/issues/91965 -->
+  <ItemGroup>
+    <_NoWarn Include="$(NoWarn)" />
+  </ItemGroup>
+  <PropertyGroup>
+    <NoWarn>@(_NoWarn)</NoWarn>
+  </PropertyGroup>
+
+  <!-- Disable targets not necessary for samples -->
+  <Target Name="ValidateTargetFrameworks" />
+  <Target Name="VerifyProjectReferencesReferences" />
+
+</Project>
