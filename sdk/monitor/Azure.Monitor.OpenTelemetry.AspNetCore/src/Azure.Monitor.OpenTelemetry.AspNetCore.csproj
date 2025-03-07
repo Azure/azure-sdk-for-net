@@ -54,11 +54,5 @@
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SemanticConventions.cs" LinkBase="Shared\Exporter" />
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\StringExtensions.cs" LinkBase="Shared\Exporter" />
   </ItemGroup>
-
-  <!-- Shared sources from Azure.Monitor.OpenTelemetry.LiveMetrics -->
-  <!--<ItemGroup>
-    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\**\*.cs" LinkBase="Shared\LiveMetrics" />
-    <Compile Remove="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\Properties\AssemblyInfo.cs" />
-  </ItemGroup>-->
   
 </Project>
