@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.MixedReality
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRemoteRenderingAccountData(document.RootElement, options);
                     }
                 default:

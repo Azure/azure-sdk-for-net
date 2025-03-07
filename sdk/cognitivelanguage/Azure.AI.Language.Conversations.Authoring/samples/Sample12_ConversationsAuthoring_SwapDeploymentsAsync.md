@@ -23,7 +23,7 @@ string deploymentName1 = "deployment1";
 string deploymentName2 = "deployment2";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-SwapDeploymentsDetails swapDetails = new SwapDeploymentsDetails(deploymentName1, deploymentName2);
+ConversationAuthoringSwapDeploymentsDetails swapDetails = new ConversationAuthoringSwapDeploymentsDetails(deploymentName1, deploymentName2);
 
 Operation operation = await projectClient.SwapDeploymentsAsync(
     waitUntil: WaitUntil.Completed,

@@ -2,13 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.ClientModel.Primitives;
 using Azure.Projects.Core;
-using Azure.Core;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.Primitives;
-using System.ClientModel.Primitives;
 
 namespace Azure.Projects.OpenAI;
 
@@ -40,7 +37,7 @@ public class OpenAIModelFeature : AzureProjectFeature
     public string ModelVersion { get; }
     private AIModelKind Kind { get; }
 
-    internal OpenAIFeature Account { get; set; } = default!;
+    internal OpenAIAccountFeature Account { get; set; } = default!;
 
     /// <summary>
     /// Creates client connection for the resource.
@@ -58,40 +55,18 @@ public class OpenAIModelFeature : AzureProjectFeature
     /// </summary>
     /// <param name="features"></param>
     /// <param name="cmId"></param>
-    protected override void EmitFeatures(FeatureCollection features, string cmId)
+    protected override void AddImplicitFeatures(FeatureCollection features, string cmId)
     {
         // TODO: is it OK that we return the first one?
-        OpenAIFeature? openAI = features.FindAll<OpenAIFeature>().FirstOrDefault();
-        if (openAI == default)
-        {
-            openAI = new OpenAIFeature(); // TODO: we need to add connection
-            features.Add(openAI);
-        }
-        Account = openAI;
-        features.Add(this);
-    }
 
-    /// <summary>
-    /// Emit the connections.
-    /// </summary>
-    /// <param name="connections"></param>
-    /// <param name="cmId"></param>
-    /// <exception cref="NotImplementedException"></exception>
-    protected override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
-    {
-        Account.EmitConnectionsInternal(connections, cmId);
-        // add connections
-        switch (Kind)
+        if (!features.TryGet(out OpenAIAccountFeature? openAI))
         {
-            case AIModelKind.Chat:
-                connections.Add(new ClientConnection("OpenAI.Chat.ChatClient", $"{cmId}_chat"));
-                break;
-            case AIModelKind.Embedding:
-                connections.Add(new ClientConnection("OpenAI.Embeddings.EmbeddingClient", $"{cmId}_embedding"));
-                break;
-            default:
-                throw new NotImplementedException();
+            openAI = new OpenAIAccountFeature();
+            features.Append(openAI);
         }
+
+        Account = openAI!;
+        features.Append(this);
     }
 
     /// <summary>
@@ -145,7 +120,12 @@ public class OpenAIModelFeature : AzureProjectFeature
             deployment.DependsOn.Add(previousDeployment);
         }
 
-        cm.AddResource(deployment);
+        cm.AddConstruct(deployment);
+
+        string key = Kind == AIModelKind.Chat ? "OpenAI.Chat.ChatClient" : "OpenAI.Embeddings.EmbeddingClient";
+        string locator = Kind == AIModelKind.Chat ? $"{cm.ProjectId}_chat" : $"{cm.ProjectId}_embedding";
+        EmitConnection(cm, key, locator);
+
         return deployment;
 
         OpenAIModelFeature? FindPrevious(ProjectInfrastructure cm, OpenAIModelFeature current)
@@ -176,4 +156,36 @@ public enum AIModelKind
     /// Embedding model.
     /// </summary>
     Embedding,
+}
+
+/// <summary>
+/// OpenAI feature for Azure OpenAI.
+/// </summary>
+public class OpenAIChatFeature : OpenAIModelFeature
+{
+    /// <summary>
+    /// Create a new OpenAI chat model deployment.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="modelVersion"></param>
+    public OpenAIChatFeature(string model, string modelVersion)
+        : base(model, modelVersion)
+    {
+    }
+}
+
+/// <summary>
+/// OpenAI feature for Azure OpenAI.
+/// </summary>
+public class OpenAIEmbeddingFeature : OpenAIModelFeature
+{
+    /// <summary>
+    /// Create a new OpenAI embedding model deployment.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="modelVersion"></param>
+    public OpenAIEmbeddingFeature(string model, string modelVersion)
+        : base(model, modelVersion, AIModelKind.Embedding)
+    {
+    }
 }

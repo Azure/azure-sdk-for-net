@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
-using Azure.AI.Language.Conversations.Authoring.Models;
 using Azure.AI.Language.Conversations.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -29,12 +28,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             string projectName = "MyImportedProjectAsync";
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-            CreateProjectDetails projectMetadata = new CreateProjectDetails(
+            ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
                 projectKind: "Conversation",
                 language: "en"
             )
             {
-                Settings = new ProjectSettings(0.7F),
+                Settings = new ConversationAuthoringProjectSettings(0.7F),
                 Multilingual = true,
                 Description = "Trying out CLU with assets"
             };
@@ -70,7 +69,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 Dataset = "dataset1"
             });
 
-            ExportedProject exportedProject = new ExportedProject(
+            ConversationAuthoringExportedProject exportedProject = new ConversationAuthoringExportedProject(
                 projectFileVersion: "2023-10-01",
                 stringIndexType: StringIndexType.Utf16CodeUnit,
                 metadata: projectMetadata

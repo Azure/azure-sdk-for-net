@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>An OpenTelemetry .NET distro that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry ASP.NET Core Distro</AssemblyTitle>
@@ -6,7 +6,7 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.2.0</ApiCompatVersion>
     <PackageTags>Azure Monitor OpenTelemetry Exporter Distro ApplicationInsights</PackageTags>
-    <TargetFrameworks>net6.0;$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <NoWarn>SA1636;AZC0011</NoWarn>
     <DefineConstants>$(DefineConstants);ASP_NET_CORE_DISTRO;</DefineConstants>
@@ -53,6 +53,11 @@
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SdkVersionUtils.cs" LinkBase="Shared\Exporter" />
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SemanticConventions.cs" LinkBase="Shared\Exporter" />
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\StringExtensions.cs" LinkBase="Shared\Exporter" />
+  </ItemGroup>
+
+  <!-- Shared sources from Azure.Monitor.OpenTelemetry.LiveMetrics -->
+  <ItemGroup>
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\**\*.cs" LinkBase="Shared\LiveMetrics" />
   </ItemGroup>
   
 </Project>

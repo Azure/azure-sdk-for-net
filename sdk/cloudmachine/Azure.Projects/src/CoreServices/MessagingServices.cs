@@ -68,14 +68,14 @@ public readonly struct MessagingServices
     private ServiceBusClient GetServiceBusClient()
     {
         MessagingServices messagingServices = this;
-        ServiceBusClient client = _cm.Subclients.GetClient(() => messagingServices.CreateClient());
+        ServiceBusClient client = _cm.Subclients.GetClient(() => messagingServices.CreateClient(), null);
         return client;
     }
 
     private ServiceBusSender GetServiceBusSender()
     {
         MessagingServices messagingServices = this;
-        ServiceBusSender sender = _cm.Subclients.GetClient(() => messagingServices.CreateSender());
+        ServiceBusSender sender = _cm.Subclients.GetClient(() => messagingServices.CreateSender(), null);
         return sender;
     }
 

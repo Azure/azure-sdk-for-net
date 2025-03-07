@@ -3,7 +3,6 @@
 
 using System.Threading;
 using Azure.Core;
-using Azure.AI.Language.Conversations.Authoring.Models;
 using System.Threading.Tasks;
 using System;
 using Azure.Core.Pipeline;
