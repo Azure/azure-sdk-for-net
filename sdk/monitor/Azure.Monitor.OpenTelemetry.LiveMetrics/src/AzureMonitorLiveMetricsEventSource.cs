@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 {
     /// <summary>
     /// EventSource for the AzureMonitor LiveMetrics Client.
-    /// EventSource Guid at Runtime: TODO.
+    /// EventSource Guid at Runtime: 72f5588f-fa1c-502e-0627-e13dd2bd67c9.
     /// (This guid can be found by debugging this class and inspecting the "Log" singleton and reading the "Guid" property).
     /// </summary>
     /// <remarks>
@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
     /// </list>
     /// Logman Instructions:
     /// <list type="number">
-    /// <item>Create a text file containing providers: <code>echo "{TODO}" > providers.txt</code></item>
+    /// <item>Create a text file containing providers: <code>echo "{72f5588f-fa1c-502e-0627-e13dd2bd67c9}" > providers.txt</code></item>
     /// <item>Start collecting: <code>logman -start exporter -pf providers.txt -ets -bs 1024 -nb 100 256</code></item>
     /// <item>Stop collecting: <code>logman -stop exporter -ets</code></item>
     /// </list>
