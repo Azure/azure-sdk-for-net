@@ -121,7 +121,9 @@ function Process-ReviewStatusCode($statusCode, $packageName, $apiApprovalStatus,
 function Set-ApiViewCommentForRelatedIssues {
   param (
     [Parameter(Mandatory = $true)]
-    [string]$Commitish,
+    [string]$SourceCommish,
+    [Parameter(Mandatory = $true)]
+    [string]$HeadCommitish,
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)]
     $AuthToken
@@ -129,18 +131,18 @@ function Set-ApiViewCommentForRelatedIssues {
   . ${PSScriptRoot}\..\common.ps1
   $issuesForCommit = $null
   try {
-    $issuesForCommit = Search-GitHubIssues -CommitHash $Commitish
+    $issuesForCommit = Search-GitHubIssues -CommitHash $HeadCommitish
     if ($issuesForCommit.items.Count -eq 0) {
-      LogError "No issues found for commit: $commitish"
+      LogError "No issues found for commit: $HeadCommitish"
       exit 1
     }
   } catch {
-    LogError "No issues found for commit: $commitish"
+    LogError "No issues found for commit: $HeadCommitish"
     exit 1
   }
   $issuesForCommit.items | ForEach-Object {
     $urlParts = $_.url -split "/"
-    Set-ApiViewCommentForPR -RepoOwner $urlParts[4] -RepoName $urlParts[5] -PrNumber $urlParts[7] -Commitish $Commitish -AuthToken $AuthToken
+    Set-ApiViewCommentForPR -RepoOwner $urlParts[4] -RepoName $urlParts[5] -PrNumber $urlParts[7] -SourceCommish $SourceCommish -AuthToken $AuthToken
   }
 }
 
@@ -153,14 +155,13 @@ function Set-ApiViewCommentForPR {
     [Parameter(Mandatory = $true)]
     [string]$PrNumber,
     [Parameter(Mandatory = $true)]
-    [string]$Commitish,
+    [string]$SourceCommish,
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)]
     $AuthToken
   )
-
   $repoFullName = "$RepoOwner/$RepoName"
-  $apiviewEndpoint = "https://apiviewstagingtest.com/api/pullrequests?pullRequestNumber=$PrNumber&repoName=$repoFullName&commitSHA=$Commitish"
+  $apiviewEndpoint = "https://apiview.dev/api/pullrequests?pullRequestNumber=$PrNumber&repoName=$repoFullName&commitSHA=$SourceCommish"
   LogDebug "Get APIView information for PR using endpoint: $apiviewEndpoint"
 
   $commentText = @()
@@ -169,10 +170,12 @@ function Set-ApiViewCommentForPR {
     $response = Invoke-RestMethod -Uri $apiviewEndpoint -Method Get -MaximumRetryCount 3
     if ($response.Count -eq 0) {
       LogWarning "API changes are not detected in this pull request."
+      $commentText += ""
       $commentText += "API changes are not detected in this pull request."
     }
     else {
       LogSuccess "APIView identified API level changes in this PR and created $($response.Count) API reviews"
+      $commentText += ""
       $commentText += "APIView identified API level changes in this PR and created the following API reviews"
       $commentText += ""
       $commentText += "| Language | APIView |"
@@ -181,7 +184,7 @@ function Set-ApiViewCommentForPR {
         $commentText += "| $($_.language) | [$($_.packageName)]($($_.url)) |"
       }
     }
-  } catch [System.Net.WebException] {
+  } catch{
     LogError "Failed to get API View information for PR: $PrNumber in repo: $repoFullName with commitSHA: $Commitish. Error: $_"
     exit 1
   }
@@ -191,7 +194,7 @@ function Set-ApiViewCommentForPR {
   $existingAPIViewComment = $null;
 
   try {
-    $existingComment = Get-GitHubIssueComments -RepoOwner $RepoOwner -RepoName $RepoName -IssueNumber $RrNumber -AuthToken $AuthToken
+    $existingComment = Get-GitHubIssueComments -RepoOwner $RepoOwner -RepoName $RepoName -IssueNumber $PrNumber -AuthToken $AuthToken
     $existingAPIViewComment = $existingComment | Where-Object { $_.body.StartsWith("**API Change Check**", [StringComparison]::OrdinalIgnoreCase) }
   } catch {
     LogWarning "Failed to get comments from Pull Request: $PrNumber in repo: $repoFullName"
