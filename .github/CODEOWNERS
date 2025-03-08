@@ -581,7 +581,7 @@
 
 # ServiceLabel: %KeyVault
 # AzureSdkOwners:                                                  @JonathanCrd
-# ServiceOwners:                                                   @RandalliLama
+# ServiceOwners:                                                   @cheathamb36 @chen-karen @lgonsoulin
 
 # ServiceLabel: %Kubernetes Configuration
 # ServiceOwners:                                                   @NarayanThiru
