@@ -20,17 +20,8 @@ $changedServicesArray = $packageProperties | Where-Object { $packageSet -contain
 | ForEach-Object { $_.ServiceDirectory } | Get-Unique
 $changedServices = $changedServicesArray -join ","
 
-$changedProjects = $packageProperties | Where-Object { $packageSet -contains $_.ArtifactName }
-| ForEach-Object { "$($_.DirectoryPath)/**/*.csproj"; }
+$outputFile = Write-PkgInfoToDependencyGroupFile -OutputPath $OutputPath -PackageInfoFolder $PackageInfoFolder -ProjectNames $ProjectNames
 
-$projectsForGeneration = ($changedProjects | ForEach-Object { "`$(RepoRoot)$_" } | Sort-Object)
-$projectGroups = @()
-$projectGroups += ,$projectsForGeneration
-
-# todo: refactor write-test-dependency-group to take in a list of project files only and generate a single project file
-$outputFile = (Write-Test-Dependency-Group-To-Files -ProjectFileConfigName "packages" -ProjectGroups $projectGroups -MatrixOutputFolder $OutputPath)[0]
-
-# debug, will remove
 Get-ChildItem -Recurse $OutputPath | ForEach-Object { Write-Host "Dumping $($_.FullName)"; Get-Content -Raw -Path $_.FullName | Write-Host }
 
 # the projectlistoverride file must be provided as a relative path
