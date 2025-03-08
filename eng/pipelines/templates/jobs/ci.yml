@@ -94,7 +94,7 @@ jobs:
         parameters:
           PackageInfo: '$(Build.ArtifactStagingDirectory)/PackageInfo'
           Artifacts: ${{ parameters.Artifacts }}
-          IncludeIndirect: false
+          IncludeIndirect: true
 
       - pwsh: |
           # Reset SkipDevBuildNumber as empty
@@ -200,6 +200,7 @@ jobs:
           parameters:
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
             AOTTestInputs: ${{ parameters.AOTTestInputs }}
+            PackageInfoFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
 
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: "Component Detection"
@@ -259,7 +260,7 @@ jobs:
         parameters:
           PackageInfo: '$(Build.ArtifactStagingDirectory)/PackageInfo'
           Artifacts: ${{ parameters.Artifacts }}
-          IncludeIndirect: false
+          IncludeIndirect: true
 
       - template: /eng/common/pipelines/templates/steps/verify-samples.yml
         parameters:
@@ -268,7 +269,7 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-readmes.yml
         parameters:
           PackagePropertiesFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
-          IncludeIndirect: false
+          IncludeIndirect: true
 
       - task: NodeTool@0
         inputs:
@@ -314,34 +315,17 @@ jobs:
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/rebuild.binlog
 
-      # todo, refactor to using the projectlistoverridefile
-      - pwsh: |
-          $failed = $false
-          if ("$(ProjectNames)") {
-            $services = "$(ChangedServices)" -split ","
-
-            foreach ($service in $services) {
-              Write-Host "building $service"
-              dotnet build eng/service.proj -warnaserror `
-                /t:rebuild `
-                /p:DebugType=none `
-                /p:SDKType=${{ parameters.SDKType }} `
-                /p:ServiceDirectory=$service `
-                /p:IncludePerf=false `
-                /p:IncludeStress=false `
-                /p:PublicSign=false `
-                /p:Configuration=$(BuildConfiguration) `
-                /p:EnableSourceLink=false `
-                /p:ProjectListOverrideFile="" `
-                /p:BuildSnippets=true `
-                $(DiagnosticArguments)
-            }
-          }
-          else {
-            Write-Host "No services were directly changed. Skipping snippet build."
-          }
+      - task: Powershell@2
         displayName: Build snippets
         condition: and(succeeded(), eq(${{ parameters.BuildSnippets }}, true))
+        inputs:
+          filePath: /eng/scripts/Build-Snippets.ps1
+          arguments: >
+            -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo"
+            -SdkType "${{ parameters.SDKType }}"
+            -DiagnosticArguments "$(DiagnosticArguments)"
+            -ProjectNames "$(ProjectNames)"
+          pwsh: true
 
   # For some pipelines like mgmt which are tested in aggregate we want to limit the pipeline to no tests or
   # other stages that are aggregate in nature as those are tested in another aggregate pipeline

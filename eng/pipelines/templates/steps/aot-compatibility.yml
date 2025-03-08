@@ -1,16 +1,29 @@
 parameters:
   ServiceDirectory: ''
+  PackageInfoFolder: ''
   AOTTestInputs: []
 
 steps:
-- ${{ each aotTestInput in parameters.AOTTestInputs }}:
+
+- ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
   - task: Powershell@2
-    displayName: Check for AOT compatibility regressions in ${{ aotTestInput.ArtifactName }}
+    displayName: Check for AOT compatibility regressions for PR
     inputs:
       targetType: filepath
-      filePath: $(Build.SourcesDirectory)/eng/scripts/compatibility/Check-AOT-Compatibility.ps1
+      filePath: $(Build.SourcesDirectory)/eng/scripts/compatibility/Check-AOT-Compatibility-For-PR.ps1
       arguments: >-
-        -ServiceDirectory ${{ parameters.ServiceDirectory }}
-        -PackageName ${{ aotTestInput.ArtifactName }}
-        -ExpectedWarningsFilePath ${{ aotTestInput.ExpectedWarningsFilePath }}
+        -PackageInfoFolder "${{ parameters.PackageInfoFolder }}"
+        -ProjectNames "$(ProjectNames)"
       workingDirectory: $(Build.SourcesDirectory)/eng/scripts/compatibility
+- ${{ else }}:
+  - ${{ each aotTestInput in parameters.AOTTestInputs }}:
+    - task: Powershell@2
+      displayName: Check for AOT compatibility regressions in ${{ aotTestInput.ArtifactName }}
+      inputs:
+        targetType: filepath
+        filePath: $(Build.SourcesDirectory)/eng/scripts/compatibility/Check-AOT-Compatibility.ps1
+        arguments: >-
+          -ServiceDirectory ${{ parameters.ServiceDirectory }}
+          -PackageName ${{ aotTestInput.ArtifactName }}
+          -ExpectedWarningsFilePath ${{ aotTestInput.ExpectedWarningsFilePath }}
+        workingDirectory: $(Build.SourcesDirectory)/eng/scripts/compatibility
