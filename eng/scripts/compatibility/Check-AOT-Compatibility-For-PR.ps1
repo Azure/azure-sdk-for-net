@@ -12,7 +12,6 @@ The comma-separated list of project names targeted for the current batch.
 param(
     [Parameter(Mandatory=$true)]
     [string]$PackageInfoFolder,
-    [Parameter(Mandatory=$true)]
     [string]$ProjectNames
 )
 
@@ -27,7 +26,7 @@ if ($ProjectNames) {
 }
 else {
     Write-Error "ProjectNames paramter doesn't target any packages. Please provide a comma-separated list of project names."
-    exit 1
+    exit 0
 }
 
 $filteredPackages = Get-ChildItem -Path $PackageInfoFolder -Filter "*.json" -File `

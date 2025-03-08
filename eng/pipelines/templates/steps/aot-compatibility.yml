@@ -12,7 +12,7 @@ steps:
       targetType: filepath
       filePath: $(Build.SourcesDirectory)/eng/scripts/compatibility/Check-AOT-Compatibility-For-PR.ps1
       arguments: >-
-        -PackageInfoFolder "${{ parameters.PackageInfoFolder }} "
+        -PackageInfoFolder "${{ parameters.PackageInfoFolder }}"
         -ProjectNames "$(ProjectNames)"
       workingDirectory: $(Build.SourcesDirectory)/eng/scripts/compatibility
 - ${{ else }}:
