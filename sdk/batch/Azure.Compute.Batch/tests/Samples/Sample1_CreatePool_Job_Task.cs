@@ -10,7 +10,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Batch;
 using Azure.ResourceManager.Batch.Models;
 
-namespace Azure.Compute.Batch.Tests.Snippets
+namespace Azure.Compute.Batch.Tests.Samples
 {
     /// <summary>
     ///   Class is used as code base for Sample1_CreatePool_Job_Task
@@ -27,20 +27,20 @@ namespace Azure.Compute.Batch.Tests.Snippets
             #region Snippet:Batch_Sample01_CreateBatchClient
 
             var credential = new DefaultAzureCredential();
-            BatchClient _batchClient = new BatchClient(
+            BatchClient batchClient = new BatchClient(
             new Uri("https://examplebatchaccount.eastus.batch.azure.com"), credential);
             #endregion
 
             #region Snippet:Batch_Sample01_CreateBatchJob
-            await _batchClient.CreateJobAsync(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
+            await batchClient.CreateJobAsync(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
             #endregion
 
             #region Snippet:Batch_Sample01_CreateBatchTask
-            await _batchClient.CreateTaskAsync("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
+            await batchClient.CreateTaskAsync("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
             #endregion
 
             #region Snippet:Batch_Sample01_GetTasks
-            var completedTasks = _batchClient.GetTasksAsync("jobId", filter: "state eq 'completed'");
+            var completedTasks = batchClient.GetTasksAsync("jobId", filter: "state eq 'completed'");
             await foreach (BatchTask t in completedTasks)
             {
                 var outputFileName = t.ExecutionInfo.ExitCode == 0 ? "stdout.txt" : "stderr.txt";
@@ -48,7 +48,7 @@ namespace Azure.Compute.Batch.Tests.Snippets
                 Console.WriteLine("Task {0} exited with code {1}. Output ({2}):",
                     t.Id, t.ExecutionInfo.ExitCode, outputFileName);
 
-                BinaryData fileContents = await _batchClient.GetTaskFileAsync("jobId", t.Id, outputFileName);
+                BinaryData fileContents = await batchClient.GetTaskFileAsync("jobId", t.Id, outputFileName);
                 using (var reader = new StreamReader(fileContents.ToStream()))
                 {
                     Console.WriteLine(await reader.ReadLineAsync());

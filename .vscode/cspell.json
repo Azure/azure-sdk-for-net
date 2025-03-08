@@ -274,8 +274,10 @@
       "filename": "**/sdk/batch/**/*.cs",
       "words": [
         "cifs",
+        "Cleanedup",
         "ocpdate",
         "Reimage",
+        "Reimaged",
         "Reimaging",
         "reimaging",
         "SSDLRS"
