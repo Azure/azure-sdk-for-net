@@ -2,28 +2,33 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using Azure.Projects.Core;
-using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ServiceBus;
 
 namespace Azure.Projects.ServiceBus;
 
 internal class ServiceBusTopicFeature : AzureProjectFeature
 {
+    /// <summary>
+    /// The name of the topic.
+    /// </summary>
+    public string Name { get; }
+
+    private ServiceBusNamespaceFeature _parent;
+
     public ServiceBusTopicFeature(string name, ServiceBusNamespaceFeature parent)
     {
         Name = name;
         _parent = parent;
     }
 
-    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
     {
+        ServiceBusNamespace serviceBusNamespace = infrastructure.GetConstruct<ServiceBusNamespace>(_parent.Id);
         var topic = new ServiceBusTopic(Name, "2021-11-01")
         {
             Name = Name,
-            Parent = EnsureEmits<ServiceBusNamespace>(_parent),
+            Parent = serviceBusNamespace,
             MaxMessageSizeInKilobytes = 256,
             DefaultMessageTimeToLive = TimeSpan.FromDays(14),
             RequiresDuplicateDetection = false,
@@ -32,16 +37,8 @@ internal class ServiceBusTopicFeature : AzureProjectFeature
             Status = ServiceBusMessagingEntityStatus.Active
         };
 
-        infrastructure.AddConstruct(topic);
+        infrastructure.AddConstruct(Id, topic);
 
         EmitConnection(infrastructure, Name, Name);
-        return topic;
     }
-
-    /// <summary>
-    /// The name of the topic.
-    /// </summary>
-    public string Name { get; }
-
-    private ServiceBusNamespaceFeature _parent;
 }

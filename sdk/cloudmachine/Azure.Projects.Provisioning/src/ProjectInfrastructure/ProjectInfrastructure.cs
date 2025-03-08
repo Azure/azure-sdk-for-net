@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading;
 using Azure.Projects.AppConfiguration;
 using Azure.Projects.Core;
@@ -17,7 +17,7 @@ namespace Azure.Projects;
 public partial class ProjectInfrastructure
 {
     private readonly Infrastructure _infrastructure = new("project");
-    private readonly List<NamedProvisionableConstruct> _constrcuts = [];
+    private readonly Dictionary<string, NamedProvisionableConstruct> _constrcuts = [];
     private readonly Dictionary<Provisionable, List<FeatureRole>> _requiredSystemRoles = new();
     private readonly FeatureCollection _features = new();
 
@@ -76,9 +76,19 @@ public partial class ProjectInfrastructure
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public void AddConstruct(NamedProvisionableConstruct construct)
+    public void AddConstruct(string id, NamedProvisionableConstruct construct)
     {
-        _constrcuts.Add(construct);
+        _constrcuts.Add(id, construct);
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public T GetConstruct<T>(string id) where T : NamedProvisionableConstruct
+    {
+        if (_constrcuts.TryGetValue(id, out NamedProvisionableConstruct? construct))
+        {
+            return (T)construct;
+        }
+        throw new InvalidOperationException($"Construct of type {typeof(T).Name} not found.");
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -102,11 +112,11 @@ public partial class ProjectInfrastructure
         // emit features
         foreach (AzureProjectFeature feature in Features)
         {
-            feature.Emit(this);
+            feature.EmitResources(this);
         }
 
         // add constructs to infrastructure
-        foreach (NamedProvisionableConstruct construct in _constrcuts)
+        foreach (NamedProvisionableConstruct construct in _constrcuts.Values)
         {
             _infrastructure.Add(construct);
         }

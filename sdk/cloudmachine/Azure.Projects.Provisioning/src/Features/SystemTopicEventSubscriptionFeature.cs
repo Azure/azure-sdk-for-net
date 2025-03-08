@@ -6,19 +6,20 @@ using Azure.Projects.ServiceBus;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.EventGrid;
 using Azure.Provisioning.Expressions;
-using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ServiceBus;
 
 namespace Azure.Projects.EventGrid;
 
 internal class SystemTopicEventSubscriptionFeature(string name, EventGridSystemTopicFeature parent, ServiceBusTopicFeature destination, ServiceBusNamespaceFeature parentNamespace) : AzureProjectFeature
 {
-    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
     {
-        ServiceBusNamespace serviceBusNamespace = EnsureEmits<ServiceBusNamespace>(parentNamespace);
+        ServiceBusNamespace serviceBusNamespace = infrastructure.GetConstruct<ServiceBusNamespace>(parentNamespace.Id);
+        SystemTopic parentTopic = infrastructure.GetConstruct<SystemTopic>(parent.Id);
+        ServiceBusTopic destinationTopic = infrastructure.GetConstruct<ServiceBusTopic>(destination.Id);
 
         ServiceBusBuiltInRole role = ServiceBusBuiltInRole.AzureServiceBusDataSender;
-        var roleAssignment = new RoleAssignment($"cm_servicebus_{EnsureEmits<SystemTopic>(parent).Name.Value}_role")
+        var roleAssignment = new RoleAssignment($"cm_servicebus_{parentTopic.Name.Value}_role")
         {
             Name = BicepFunction.CreateGuid(serviceBusNamespace.Id, infrastructure.Identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
             Scope = new IdentifierExpression(serviceBusNamespace.BicepIdentifier),
@@ -27,11 +28,10 @@ internal class SystemTopicEventSubscriptionFeature(string name, EventGridSystemT
             PrincipalId = infrastructure.Identity.PrincipalId,
         };
 
-        SystemTopic systemTopic = EnsureEmits<SystemTopic>(parent);
         var subscription = new SystemTopicEventSubscription("cm_eventgrid_subscription_blob", "2022-06-15")
         {
             Name = name,
-            Parent = systemTopic,
+            Parent = parentTopic,
             DeliveryWithResourceIdentity = new DeliveryWithResourceIdentity
             {
                 Identity = new EventSubscriptionIdentity
@@ -41,7 +41,7 @@ internal class SystemTopicEventSubscriptionFeature(string name, EventGridSystemT
                 },
                 Destination = new ServiceBusTopicEventSubscriptionDestination
                 {
-                    ResourceId = EnsureEmits<ServiceBusTopic>(destination).Id
+                    ResourceId = destinationTopic.Id,
                 }
             },
             Filter = new EventSubscriptionFilter
@@ -63,8 +63,7 @@ internal class SystemTopicEventSubscriptionFeature(string name, EventGridSystemT
         };
         subscription.DependsOn.Add(roleAssignment);
 
-        infrastructure.AddConstruct(subscription);
-        infrastructure.AddConstruct(roleAssignment);
-        return subscription;
+        infrastructure.AddConstruct(Id + "_subscription", subscription);
+        infrastructure.AddConstruct(Id + "_role", roleAssignment);
     }
 }

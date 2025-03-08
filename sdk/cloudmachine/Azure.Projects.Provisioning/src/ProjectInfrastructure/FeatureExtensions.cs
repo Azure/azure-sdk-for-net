@@ -9,13 +9,13 @@ namespace Azure.Projects;
 
 public static class FeatureExtensions
 {
-    public static BlobContainerFeature AddBlobsContainer(this ProjectInfrastructure infrastructure, string? containerName = default, bool enableEvents = true)
+    public static BlobContainerFeature AddBlobContainer(this ProjectInfrastructure infrastructure, string? containerName = default, bool isObservable = false)
     {
         StorageAccountFeature account = infrastructure.AddStorageAccount();
         var blobs = infrastructure.AddFeature(new BlobServiceFeature() { Account = account });
         var defaultContainer = infrastructure.AddFeature(new BlobContainerFeature() { Service = blobs });
 
-        if (enableEvents)
+        if (isObservable)
         {
             var sb = infrastructure.AddServiceBusNamespace();
             var sbTopicPrivate = infrastructure.AddFeature(new ServiceBusTopicFeature("cm_servicebus_topic_private", sb));
@@ -36,6 +36,7 @@ public static class FeatureExtensions
         return sb;
     }
 
+    // TDOO: get rid of this.
     private static ServiceBusNamespaceFeature AddServiceBusNamespace(this ProjectInfrastructure infrastructure)
     {
         if (!infrastructure.Features.TryGet(out ServiceBusNamespaceFeature? serviceBusNamespace))
@@ -45,6 +46,7 @@ public static class FeatureExtensions
         return serviceBusNamespace!;
     }
 
+    // TDOO: get rid of this.
     private static StorageAccountFeature AddStorageAccount(this ProjectInfrastructure infrastructure)
     {
         if (!infrastructure.Features.TryGet(out StorageAccountFeature? storageAccount))

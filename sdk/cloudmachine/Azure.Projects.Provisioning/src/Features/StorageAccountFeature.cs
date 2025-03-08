@@ -2,12 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Linq;
 using Azure.Projects.Core;
 using Azure.Provisioning.Expressions;
-using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 
@@ -24,9 +21,9 @@ public class StorageAccountFeature : AzureProjectFeature
         Name = accountName;
     }
 
-    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
     {
-        var storage = new StorageAccount("cm_storage", StorageAccount.ResourceVersions.V2023_01_01)
+        var storageAccount = new StorageAccount("cm_storage", StorageAccount.ResourceVersions.V2023_01_01)
         {
             Name = Name,
             Kind = StorageKind.StorageV2,
@@ -40,20 +37,18 @@ public class StorageAccountFeature : AzureProjectFeature
                 UserAssignedIdentities = { { BicepFunction.Interpolate($"{infrastructure.Identity.Id}").Compile().ToString(), new UserAssignedIdentityDetails() } }
             }
         };
-        infrastructure.AddConstruct(storage);
+        infrastructure.AddConstruct(Id, storageAccount);
 
         infrastructure.AddSystemRole(
-            storage,
+            storageAccount,
             StorageBuiltInRole.GetBuiltInRoleName(StorageBuiltInRole.StorageBlobDataContributor),
             StorageBuiltInRole.StorageBlobDataContributor.ToString()
         );
         infrastructure.AddSystemRole(
-            storage,
+            storageAccount,
             StorageBuiltInRole.GetBuiltInRoleName(StorageBuiltInRole.StorageTableDataContributor),
             StorageBuiltInRole.StorageTableDataContributor.ToString()
         );
-
-        return storage;
     }
 }
 
@@ -63,6 +58,7 @@ public class BlobServiceFeature : AzureProjectFeature
 
     protected internal override void AddImplicitFeatures(FeatureCollection features, string projectId)
     {
+        // This should use feature.Id, just like GetConstruct<T>
         StorageAccountFeature? account = features.FindAll<StorageAccountFeature>().FirstOrDefault();
         if (account == default)
         {
@@ -72,19 +68,19 @@ public class BlobServiceFeature : AzureProjectFeature
         Account = account;
     }
 
-    protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
+    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
     {
         if (Account == null)
         {
-            throw new InvalidOperationException("Parent StorageAccountFeature is not set.");
+            throw new InvalidOperationException("Account is not set.");
         }
+        StorageAccount storageAccount = infrastructure.GetConstruct<StorageAccount>(Account.Id);
 
-        BlobService blobs = new("cm_storage_blobs")
+        BlobService blobService = new("cm_storage_blobs")
         {
-            Parent = (StorageAccount)Account.Resource,
+            Parent = storageAccount
         };
-        cm.AddConstruct(blobs);
-        return blobs;
+        infrastructure.AddConstruct(Id, blobService);
     }
 }
 
@@ -101,42 +97,40 @@ public class BlobContainerFeature : AzureProjectFeature
     protected internal override void AddImplicitFeatures(FeatureCollection features, string projectId)
     {
         // TODO: is it OK that we return the first one?
-        BlobServiceFeature? service = features.FindAll<BlobServiceFeature>().FirstOrDefault();
-        if (service == default)
+        BlobServiceFeature? blobBervice = features.FindAll<BlobServiceFeature>().FirstOrDefault();
+        if (blobBervice == default)
         {
-            StorageAccountFeature? account = features.FindAll<StorageAccountFeature>().FirstOrDefault();
-            if (account == default)
+            StorageAccountFeature? storageAccount = features.FindAll<StorageAccountFeature>().FirstOrDefault();
+            if (storageAccount == default)
             {
-                account = new(projectId);
-                features.Append(account);
+                storageAccount = new(projectId);
+                features.Append(storageAccount);
             }
 
-            service = new BlobServiceFeature() { Account = account };
-            features.Append(service);
+            blobBervice = new BlobServiceFeature() { Account = storageAccount };
+            features.Append(blobBervice);
         }
-        Service = service;
-        features.Append(this);
+        Service = blobBervice;
     }
 
-    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
     {
         if (Service == null || Service.Account == null)
         {
             throw new InvalidOperationException("Service or Account is not set.");
         }
 
-        BlobContainer container = new($"cm_storage_blobs_container_{ContainerName}", "2023-01-01")
+        BlobService blobService = infrastructure.GetConstruct<BlobService>(Service.Id);
+        BlobContainer blobContainer = new($"cm_storage_blobs_container_{ContainerName}", "2023-01-01")
         {
-            Parent = (BlobService)Service.Resource,
+            Parent = blobService,
             Name = ContainerName
         };
-        infrastructure.AddConstruct(container);
+        infrastructure.AddConstruct(Id, blobContainer);
 
         EmitConnection(infrastructure,
             $"Azure.Storage.Blobs.BlobContainerClient@{ContainerName}",
             $"https://{Service.Account.Name}.blob.core.windows.net/{ContainerName}"
         );
-
-        return container;
     }
 }

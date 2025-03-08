@@ -2,22 +2,21 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using Azure.Projects.Core;
-using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ServiceBus;
 
 namespace Azure.Projects.ServiceBus;
 
 internal class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature parent) : AzureProjectFeature
 {
-    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
     {
+        ServiceBusTopic serviceBusTopic = infrastructure.GetConstruct<ServiceBusTopic>(parent.Id);
+
         var subscription = new ServiceBusSubscription(name, "2021-11-01")
         {
             Name = name,
-            Parent = EnsureEmits<ServiceBusTopic>(parent),
+            Parent = serviceBusTopic,
             IsClientAffine = false,
             LockDuration = TimeSpan.FromSeconds(30),
             RequiresSession = false,
@@ -29,9 +28,8 @@ internal class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature
             Status = ServiceBusMessagingEntityStatus.Active
         };
 
-        infrastructure.AddConstruct(subscription);
+        infrastructure.AddConstruct(Id, subscription);
 
         EmitConnection(infrastructure, name, $"{parent.Name}/{name}");
-        return subscription;
     }
 }

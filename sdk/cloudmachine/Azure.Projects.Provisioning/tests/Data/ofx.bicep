@@ -237,35 +237,6 @@ resource cm_servicebus_subscription_private 'Microsoft.ServiceBus/namespaces/top
   parent: cm_servicebus_topic_private
 }
 
-resource cm_servicebus_default_topic 'Microsoft.ServiceBus/namespaces/topics@2021-11-01' = {
-  name: 'cm_servicebus_default_topic'
-  properties: {
-    defaultMessageTimeToLive: 'P14D'
-    enableBatchedOperations: true
-    maxMessageSizeInKilobytes: 256
-    requiresDuplicateDetection: false
-    status: 'Active'
-    supportOrdering: true
-  }
-  parent: cm_servicebus
-}
-
-resource cm_servicebus_subscription_default 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2021-11-01' = {
-  name: 'cm_servicebus_subscription_default'
-  properties: {
-    deadLetteringOnFilterEvaluationExceptions: true
-    deadLetteringOnMessageExpiration: true
-    defaultMessageTimeToLive: 'P14D'
-    enableBatchedOperations: true
-    isClientAffine: false
-    lockDuration: 'PT30S'
-    maxDeliveryCount: 10
-    requiresSession: false
-    status: 'Active'
-  }
-  parent: cm_servicebus_default_topic
-}
-
 resource cm_connection_1 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Storage.Blobs.BlobContainerClient@default'
   properties: {
@@ -294,22 +265,6 @@ resource cm_connection_4 'Microsoft.AppConfiguration/configurationStores/keyValu
   name: 'cm_servicebus_subscription_private'
   properties: {
     value: 'cm_servicebus_topic_private/cm_servicebus_subscription_private'
-  }
-  parent: cm_app_config
-}
-
-resource cm_connection_5 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
-  name: 'cm_servicebus_default_topic'
-  properties: {
-    value: 'cm_servicebus_default_topic'
-  }
-  parent: cm_app_config
-}
-
-resource cm_connection_6 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
-  name: 'cm_servicebus_subscription_default'
-  properties: {
-    value: 'cm_servicebus_default_topic/cm_servicebus_subscription_default'
   }
   parent: cm_app_config
 }

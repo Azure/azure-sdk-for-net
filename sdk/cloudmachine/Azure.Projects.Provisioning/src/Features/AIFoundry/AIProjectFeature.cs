@@ -72,30 +72,27 @@ namespace Azure.Projects.AIFoundry
         /// Emit any necessary resources for provisioning (currently no-op).
         /// </summary>
         /// <param name="infrastructure">The ProjectInfrastructure context.</param>
-        /// <returns>A placeholder or no-op resource, as provisioning is out-of-band for now.</returns>
-        protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
+        protected internal override void EmitResources(ProjectInfrastructure infrastructure)
         {
             var cmId = infrastructure.ProjectId;
             AIFoundryHubCdk hub = new($"{cmId}_hub", $"{cmId}_hub");
             AIFoundryProjectCdk project = new($"{cmId}_project", $"{cmId}_project", hub);
 
-            infrastructure.AddConstruct(hub);
-            infrastructure.AddConstruct(project);
+            infrastructure.AddConstruct(Id + "_hub", hub);
+            infrastructure.AddConstruct(Id + "_project", project);
 
             EmitConnections(Connections, cmId);
             for (int i = 0; i < Connections.Count; i++)
             {
                 ClientConnection connection = Connections[i];
                 AIFoundryConnectionCdk connectionCdk = new($"{cmId}connection{i}", connection.Id, connection.Locator, project);
-                infrastructure.AddConstruct(connectionCdk);
+                infrastructure.AddConstruct(Id + "_connection" + i, connectionCdk);
             }
 
             if (_connectionString != null)
             {
                 EmitConnection(infrastructure, "Azure.AI.Projects.AIProjectClient", _connectionString);
             }
-
-            return project;
         }
     }
 }

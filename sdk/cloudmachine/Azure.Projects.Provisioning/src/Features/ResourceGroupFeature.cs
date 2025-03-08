@@ -19,11 +19,10 @@ internal sealed class ResourceGroupFeature : AzureProjectFeature
 
     public string? Name { get; }
 
-    protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
+    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
     {
-        string name = (Name == null) ? cm.ProjectId : Name;
+        string name = (Name == null) ? infrastructure.ProjectId : Name;
         var rg = new ResourceGroup(name);
-        cm.AddConstruct(rg);
-        return rg;
+        infrastructure.AddConstruct(Id, rg);
     }
 }

@@ -14,22 +14,20 @@ internal class AppConfigurationFeature : AzureProjectFeature
     public AppConfigurationFeature()
     {}
 
-    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
     {
         AppConfigurationStore appConfigResource = new("cm_app_config")
         {
             Name = infrastructure.ProjectId,
             SkuName = "Free",
         };
-        infrastructure.AddConstruct(appConfigResource);
+        infrastructure.AddConstruct(this.Id, appConfigResource);
 
         infrastructure.AddSystemRole(
             appConfigResource,
             AppConfigurationBuiltInRole.GetBuiltInRoleName(AppConfigurationBuiltInRole.AppConfigurationDataOwner),
             AppConfigurationBuiltInRole.AppConfigurationDataOwner.ToString()
         );
-
-        return appConfigResource;
     }
 }
 
@@ -59,21 +57,21 @@ public class AppConfigurationSettingFeature : AzureProjectFeature
         Store = account;
     }
 
-    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
     {
         if (Store == null)
         {
-            throw new InvalidOperationException("Parent AppConfigurationFeature is not set.");
+            throw new InvalidOperationException("AppConfigurationFeature must be added to the project before AppConfigurationSettingFeature.");
         }
+        AppConfigurationStore store = infrastructure.GetConstruct<AppConfigurationStore>(Store.Id);
 
         string bicepIdentifier = infrastructure.CreateUniqueBicepIdentifier(BicepIdentifier);
         AppConfigurationKeyValue kvp = new(bicepIdentifier)
         {
             Name = this.Key,
             Value = this.Value,
-            Parent = (AppConfigurationStore)Store.Resource
+            Parent = store
         };
-        infrastructure.AddConstruct(kvp);
-        return kvp;
+        infrastructure.AddConstruct(Id, kvp);
     }
 }

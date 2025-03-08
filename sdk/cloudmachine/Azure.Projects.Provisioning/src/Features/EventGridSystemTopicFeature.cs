@@ -4,7 +4,6 @@
 using Azure.Projects.Core;
 using Azure.Provisioning.EventGrid;
 using Azure.Provisioning.Expressions;
-using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 
@@ -14,12 +13,14 @@ internal class EventGridSystemTopicFeature(string topicName, AzureProjectFeature
 {
     internal const string EventGridTopicVersion = "2022-06-15";
 
-    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
     {
+        StorageAccount storage = infrastructure.GetConstruct<StorageAccount>(source.Id);
+
         var topic = new SystemTopic("cm_eventgrid_topic", EventGridTopicVersion)
         {
             TopicType = topicType,
-            Source = EnsureEmits<StorageAccount>(source).Id,
+            Source = storage.Id,
             Identity = new()
             {
                 ManagedServiceIdentityType = ManagedServiceIdentityType.UserAssigned,
@@ -28,7 +29,6 @@ internal class EventGridSystemTopicFeature(string topicName, AzureProjectFeature
             Name = topicName
         };
 
-        infrastructure.AddConstruct(topic);
-        return topic;
+        infrastructure.AddConstruct(Id, topic);
     }
 }

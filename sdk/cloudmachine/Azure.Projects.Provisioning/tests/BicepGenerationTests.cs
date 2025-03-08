@@ -6,7 +6,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using Azure.Projects.AppConfiguration;
 using Azure.Projects.AppService;
 using Azure.Projects.KeyVault;
 using Azure.Projects.OpenAI;
@@ -43,6 +42,18 @@ public class BicepGenerationTests
     }
 
     [Test]
+    public void ObservableContainer()
+    {
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
+        infra.AddBlobContainer(isObservable: true); // TODO: this should be done through feature
+
+        string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        File.WriteAllText("d:\\ofx.bicep", actualBicep);
+        string expectedBicep = LoadTestFile("ofx.bicep");
+        Assert.AreEqual(expectedBicep, actualBicep);
+    }
+
+    [Test]
     public void KeyVault()
     {
         ProjectInfrastructure infra = new("cm0c420d2f21084cd");
@@ -50,19 +61,6 @@ public class BicepGenerationTests
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
         File.WriteAllText("d:\\kv.bicep", actualBicep);
         string expectedBicep = LoadTestFile("kv.bicep");
-        Assert.AreEqual(expectedBicep, actualBicep);
-    }
-
-    [Test]
-    public void OfxProject()
-    {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
-        infra.AddBlobsContainer();
-        infra.AddServiceBus();
-
-        string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\ofx.bicep", actualBicep);
-        string expectedBicep = LoadTestFile("ofx.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 

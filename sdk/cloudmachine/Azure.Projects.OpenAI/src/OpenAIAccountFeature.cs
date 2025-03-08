@@ -1,16 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.Projects.Core;
 using Azure.Provisioning.CognitiveServices;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Projects.OpenAI;
 
 internal class OpenAIAccountFeature : AzureProjectFeature
 {
-    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
+    protected override void EmitResources(ProjectInfrastructure infrastructure)
     {
         CognitiveServicesAccount cognitiveServices = new("openai")
         {
@@ -24,7 +22,7 @@ internal class OpenAIAccountFeature : AzureProjectFeature
             },
         };
 
-        infrastructure.AddConstruct(cognitiveServices);
+        infrastructure.AddConstruct(Id, cognitiveServices);
 
         infrastructure.AddSystemRole(
             cognitiveServices,
@@ -33,7 +31,5 @@ internal class OpenAIAccountFeature : AzureProjectFeature
         );
 
         EmitConnection(infrastructure, "Azure.AI.OpenAI.AzureOpenAIClient", $"https://{infrastructure.ProjectId}.openai.azure.com");
-
-        return cognitiveServices;
     }
 }
