@@ -8,6 +8,7 @@
   {
    "$id": "2",
    "Name": "ConditionalRequestClient",
+   "ClientNamespace": "SpecialHeaders.ConditionalRequest",
    "Doc": "Illustrates conditional request headers",
    "Operations": [
     {

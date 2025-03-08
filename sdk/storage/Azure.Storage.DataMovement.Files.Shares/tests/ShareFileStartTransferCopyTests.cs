@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 extern alias BaseShares;
+extern alias DMShare;
 
 using System;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ using System.Threading;
 using BaseShares::Azure.Storage.Files.Shares.Specialized;
 using BaseShares::Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {

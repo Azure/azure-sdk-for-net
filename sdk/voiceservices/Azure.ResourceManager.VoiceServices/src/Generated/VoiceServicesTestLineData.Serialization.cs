@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVoiceServicesTestLineData(document.RootElement, options);
                     }
                 default:

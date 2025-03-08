@@ -164,8 +164,7 @@ namespace Azure.Storage.Blobs.Specialized
         #region DeleteBlob
         /// <summary>
         /// The <see cref="DeleteBlob(string, string, DeleteSnapshotsOption, BlobRequestConditions)"/>
-        /// operation marks the specified blob or snapshot for  deletion. The
-        /// blob is later deleted during garbage collection which could take several minutes.
+        /// operation marks the specified blob or snapshot for deletion.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -214,8 +213,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="DeleteBlob(string, string, BatchDeleteBlobOptions)"/>
-        /// operation marks the specified blob or snapshot for  deletion. The
-        /// blob is later deleted during garbage collection which could take several minutes.
+        /// operation marks the specified blob or snapshot for deletion.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -278,8 +276,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="DeleteBlob(Uri, DeleteSnapshotsOption, BlobRequestConditions)"/>
-        /// operation marks the specified blob or snapshot for deletion. The
-        /// blob is later deleted during garbage collection which could take several minutes.
+        /// operation marks the specified blob or snapshot for deletion.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using

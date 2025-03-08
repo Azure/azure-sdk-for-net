@@ -7,14 +7,84 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.Inference
 {
     /// <summary> The EmbedRequest. </summary>
     internal partial class EmbedRequest
     {
+        /// <summary> Initializes a new instance of <see cref="EmbedRequest"/>. </summary>
+        /// <param name="input">
+        /// Input text to embed, encoded as a string or array of tokens.
+        /// To embed multiple inputs in a single request, pass an array
+        /// of strings or array of token arrays.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        internal EmbedRequest(IEnumerable<string> input)
+        {
+            Argument.AssertNotNull(input, nameof(input));
+
+            Input = input.ToList();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmbedRequest"/>. </summary>
+        /// <param name="input">
+        /// Input text to embed, encoded as a string or array of tokens.
+        /// To embed multiple inputs in a single request, pass an array
+        /// of strings or array of token arrays.
+        /// </param>
+        /// <param name="dimensions">
+        /// Optional. The number of dimensions the resulting output embeddings should have.
+        /// Passing null causes the model to use its default value.
+        /// Returns a 422 error if the model doesn't support the value or parameter.
+        /// </param>
+        /// <param name="encodingFormat"> Optional. The desired format for the returned embeddings. </param>
+        /// <param name="inputType">
+        /// Optional. The type of the input.
+        /// Returns a 422 error if the model doesn't support the value or parameter.
+        /// </param>
+        /// <param name="model"> ID of the specific AI model to use, if more than one model is available on the endpoint. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal EmbedRequest(IReadOnlyList<string> input, int? dimensions, EmbeddingEncodingFormat? encodingFormat, EmbeddingInputType? inputType, string model, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        {
+            Input = input;
+            Dimensions = dimensions;
+            EncodingFormat = encodingFormat;
+            InputType = inputType;
+            Model = model;
+            AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmbedRequest"/> for deserialization. </summary>
+        internal EmbedRequest()
+        {
+        }
+
         /// <summary>
-        /// Keeps track of any properties unknown to the library.
+        /// Input text to embed, encoded as a string or array of tokens.
+        /// To embed multiple inputs in a single request, pass an array
+        /// of strings or array of token arrays.
+        /// </summary>
+        public IReadOnlyList<string> Input { get; }
+        /// <summary>
+        /// Optional. The number of dimensions the resulting output embeddings should have.
+        /// Passing null causes the model to use its default value.
+        /// Returns a 422 error if the model doesn't support the value or parameter.
+        /// </summary>
+        public int? Dimensions { get; }
+        /// <summary> Optional. The desired format for the returned embeddings. </summary>
+        public EmbeddingEncodingFormat? EncodingFormat { get; }
+        /// <summary>
+        /// Optional. The type of the input.
+        /// Returns a 422 error if the model doesn't support the value or parameter.
+        /// </summary>
+        public EmbeddingInputType? InputType { get; }
+        /// <summary> ID of the specific AI model to use, if more than one model is available on the endpoint. </summary>
+        public string Model { get; }
+        /// <summary>
+        /// Additional Properties
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -43,33 +113,6 @@ namespace Azure.AI.Inference
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="EmbedRequest"/>. </summary>
-        /// <param name="embeddingsOptions"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="embeddingsOptions"/> is null. </exception>
-        internal EmbedRequest(EmbeddingsOptions embeddingsOptions)
-        {
-            Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
-
-            EmbeddingsOptions = embeddingsOptions;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EmbedRequest"/>. </summary>
-        /// <param name="embeddingsOptions"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EmbedRequest(EmbeddingsOptions embeddingsOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            EmbeddingsOptions = embeddingsOptions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EmbedRequest"/> for deserialization. </summary>
-        internal EmbedRequest()
-        {
-        }
-
-        /// <summary> Gets the embeddings options. </summary>
-        public EmbeddingsOptions EmbeddingsOptions { get; }
+        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

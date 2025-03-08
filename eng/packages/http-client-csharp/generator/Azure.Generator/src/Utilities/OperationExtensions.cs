@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Generator.CSharp.Input;
+using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Linq;
 

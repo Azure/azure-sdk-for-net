@@ -102,6 +102,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "Client.Structure.Service",
    "isFixed": true,
    "isFlags": false,
    "usage": "Input",
@@ -113,6 +114,7 @@
   {
    "$id": "14",
    "Name": "ServiceClient",
+   "ClientNamespace": "Client.Structure.Service",
    "Doc": "Test that we can use @client and @operationGroup decorators to customize client side code structure, such as:\n1. have everything as default.\n2. to rename client or operation group\n3. one client can have more than one operations groups\n4. split one interface into two clients\n5. have two clients with operations come from different interfaces\n6. have two clients with a hierarchy relation.",
    "Operations": [
     {
@@ -219,6 +221,7 @@
   {
    "$id": "23",
    "Name": "Baz",
+   "ClientNamespace": "Client.Structure.Service.Baz",
    "Operations": [],
    "Protocol": {
     "$id": "24"
@@ -270,6 +273,7 @@
   {
    "$id": "28",
    "Name": "BazFoo",
+   "ClientNamespace": "Client.Structure.Service.Baz",
    "Operations": [
     {
      "$id": "29",
@@ -349,6 +353,7 @@
   {
    "$id": "35",
    "Name": "Qux",
+   "ClientNamespace": "Client.Structure.Service.Qux",
    "Operations": [
     {
      "$id": "36",
@@ -428,6 +433,7 @@
   {
    "$id": "42",
    "Name": "QuxBar",
+   "ClientNamespace": "Client.Structure.Service.Qux",
    "Operations": [
     {
      "$id": "43",
@@ -507,6 +513,7 @@
   {
    "$id": "49",
    "Name": "Foo",
+   "ClientNamespace": "Client.Structure.Service",
    "Operations": [
     {
      "$id": "50",
@@ -613,6 +620,7 @@
   {
    "$id": "58",
    "Name": "Bar",
+   "ClientNamespace": "Client.Structure.Service",
    "Operations": [
     {
      "$id": "59",

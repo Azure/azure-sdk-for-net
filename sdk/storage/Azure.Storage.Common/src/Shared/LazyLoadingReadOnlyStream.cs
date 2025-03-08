@@ -139,7 +139,7 @@ namespace Azure.Storage
             GetPropertiesAsync getPropertiesFunc,
             DownloadTransferValidationOptions transferValidation,
             bool allowModifications,
-            long initialLenght,
+            long initialLength,
             long position = 0,
             int? bufferSize = default,
             PredictEncryptedRangeAdjustment rangePredictionFunc = default)
@@ -148,12 +148,17 @@ namespace Azure.Storage
             _getPropertiesInternalFunc = getPropertiesFunc;
             _predictEncryptedRangeAdjustment = rangePredictionFunc ?? (range => range);
             _position = position;
-            _bufferSize = bufferSize ?? Constants.DefaultStreamingDownloadSize;
+
+            // If the blob cannot be modified and the total blob size is less than the default streaming size,
+            // the buffer size should be limited to the total blob size.
+            int maxBufferSize = allowModifications ? Constants.DefaultStreamingDownloadSize : (int)Math.Min(initialLength, Constants.DefaultStreamingDownloadSize);
+            _bufferSize = bufferSize ?? maxBufferSize;
+
             _buffer = ArrayPool<byte>.Shared.Rent(_bufferSize);
             _allowBlobModifications = allowModifications;
             _bufferPosition = 0;
             _bufferLength = 0;
-            _length = initialLenght;
+            _length = initialLength;
             _bufferInvalidated = false;
 
             // the caller to this stream cannot defer validation, as they cannot access a returned hash

@@ -8,6 +8,7 @@
   {
    "$id": "2",
    "Name": "NotDefinedClient",
+   "ClientNamespace": "Server.Endpoint.NotDefined",
    "Doc": "Illustrates server doesn't define endpoint. Client should automatically add an endpoint to let user pass in.",
    "Operations": [
     {

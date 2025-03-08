@@ -8,6 +8,7 @@
    "$id": "2",
    "kind": "model",
    "name": "JsonEncodedNameModel",
+   "clientNamespace": "Serialization.EncodedName.Json.Property",
    "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.JsonEncodedNameModel",
    "usage": "Input,Output,Json",
    "decorators": [],
@@ -30,28 +31,36 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.JsonEncodedNameModel.defaultName"
+     "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.JsonEncodedNameModel.defaultName",
+     "serializationOptions": {
+      "$id": "5",
+      "json": {
+       "$id": "6",
+       "name": "wireName"
+      }
+     }
     }
    ]
   }
  ],
  "Clients": [
   {
-   "$id": "5",
+   "$id": "7",
    "Name": "JsonClient",
+   "ClientNamespace": "Serialization.EncodedName.Json",
    "Doc": "Projection",
    "Operations": [],
    "Protocol": {
-    "$id": "6"
+    "$id": "8"
    },
    "Parameters": [
     {
-     "$id": "7",
+     "$id": "9",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
      "Doc": "Service host",
      "Type": {
-      "$id": "8",
+      "$id": "10",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -66,9 +75,9 @@
      "Explode": false,
      "Kind": "Client",
      "DefaultValue": {
-      "$id": "9",
+      "$id": "11",
       "Type": {
-       "$id": "10",
+       "$id": "12",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
@@ -80,25 +89,26 @@
    "Decorators": []
   },
   {
-   "$id": "11",
+   "$id": "13",
    "Name": "Property",
+   "ClientNamespace": "Serialization.EncodedName.Json.Property",
    "Operations": [
     {
-     "$id": "12",
+     "$id": "14",
      "Name": "send",
      "ResourceName": "Property",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "13",
+       "$id": "15",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Doc": "Body parameter's content type. Known values are application/json",
        "Type": {
-        "$id": "14",
+        "$id": "16",
         "kind": "constant",
         "valueType": {
-         "$id": "15",
+         "$id": "17",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -118,7 +128,7 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "16",
+       "$id": "18",
        "Name": "body",
        "NameInRequest": "body",
        "Type": {
@@ -137,7 +147,7 @@
      ],
      "Responses": [
       {
-       "$id": "17",
+       "$id": "19",
        "StatusCodes": [
         204
        ],
@@ -160,20 +170,20 @@
      "Decorators": []
     },
     {
-     "$id": "18",
+     "$id": "20",
      "Name": "get",
      "ResourceName": "Property",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "19",
+       "$id": "21",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "20",
+        "$id": "22",
         "kind": "constant",
         "valueType": {
-         "$id": "21",
+         "$id": "23",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -195,7 +205,7 @@
      ],
      "Responses": [
       {
-       "$id": "22",
+       "$id": "24",
        "StatusCodes": [
         200
        ],
@@ -222,17 +232,17 @@
     }
    ],
    "Protocol": {
-    "$id": "23"
+    "$id": "25"
    },
    "Parent": "JsonClient",
    "Parameters": [
     {
-     "$id": "24",
+     "$id": "26",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
      "Doc": "Service host",
      "Type": {
-      "$id": "25",
+      "$id": "27",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -247,9 +257,9 @@
      "Explode": false,
      "Kind": "Client",
      "DefaultValue": {
-      "$id": "26",
+      "$id": "28",
       "Type": {
-       "$id": "27",
+       "$id": "29",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"

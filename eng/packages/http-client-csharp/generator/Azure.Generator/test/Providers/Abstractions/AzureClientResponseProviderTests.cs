@@ -3,10 +3,10 @@
 
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
-using Microsoft.Generator.CSharp.ClientModel.Providers;
 using System.Linq;
 using NUnit.Framework;
 using Azure.Generator.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 
 namespace Azure.Generator.Tests.Providers.Abstractions
 {
@@ -49,7 +49,7 @@ namespace Azure.Generator.Tests.Providers.Abstractions
 
         private static ClientProvider CreateMockClientProvider()
         {
-            var client = InputFactory.Client("TestClient", [InputFactory.Operation("foo")]);
+            var client = InputFactory.Client("TestClient", operations: [InputFactory.Operation("foo")]);
             MockHelpers.LoadMockPlugin(clientResponseApi: AzureClientResponseProvider.Instance);
             var clientProvider = AzureClientPlugin.Instance.TypeFactory.CreateClient(client)!;
             return clientProvider;

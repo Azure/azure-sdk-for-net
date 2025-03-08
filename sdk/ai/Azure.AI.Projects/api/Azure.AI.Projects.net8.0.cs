@@ -457,18 +457,18 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.ThreadMessage ThreadMessage(string id = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), string threadId = null, Azure.AI.Projects.MessageStatus status = default(Azure.AI.Projects.MessageStatus), Azure.AI.Projects.MessageIncompleteDetails incompleteDetails = null, System.DateTimeOffset? completedAt = default(System.DateTimeOffset?), System.DateTimeOffset? incompleteAt = default(System.DateTimeOffset?), Azure.AI.Projects.MessageRole role = default(Azure.AI.Projects.MessageRole), System.Collections.Generic.IEnumerable<Azure.AI.Projects.MessageContent> contentItems = null, string agentId = null, string runId = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.MessageAttachment> attachments = null, System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
         public static Azure.AI.Projects.ThreadRun ThreadRun(string id = null, string threadId = null, string agentId = null, Azure.AI.Projects.RunStatus status = default(Azure.AI.Projects.RunStatus), Azure.AI.Projects.RequiredAction requiredAction = null, Azure.AI.Projects.RunError lastError = null, string model = null, string instructions = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.ToolDefinition> tools = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset? expiresAt = default(System.DateTimeOffset?), System.DateTimeOffset? startedAt = default(System.DateTimeOffset?), System.DateTimeOffset? completedAt = default(System.DateTimeOffset?), System.DateTimeOffset? cancelledAt = default(System.DateTimeOffset?), System.DateTimeOffset? failedAt = default(System.DateTimeOffset?), Azure.AI.Projects.IncompleteRunDetails incompleteDetails = null, Azure.AI.Projects.RunCompletionUsage usage = null, float? temperature = default(float?), float? topP = default(float?), int? maxPromptTokens = default(int?), int? maxCompletionTokens = default(int?), Azure.AI.Projects.TruncationObject truncationStrategy = null, System.BinaryData toolChoice = null, System.BinaryData responseFormat = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, Azure.AI.Projects.UpdateToolResourcesOptions toolResources = null, bool? parallelToolCalls = default(bool?)) { throw null; }
     }
-    public partial class AIProjectClient
+    public partial class AIProjectClient : System.ClientModel.Primitives.ConnectionProvider
     {
         protected AIProjectClient() { }
-        public AIProjectClient(string connectionString, Azure.Core.TokenCredential credential) { }
+        public AIProjectClient(string connectionString, Azure.Core.TokenCredential credential = null) { }
         public AIProjectClient(string connectionString, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
         public AIProjectClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential) { }
         public AIProjectClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.AI.Projects.AgentsClient GetAgentsClient(string apiVersion = "2024-07-01-preview") { throw null; }
-        public virtual Azure.AI.Inference.ChatCompletionsClient GetChatCompletionsClient() { throw null; }
+        public override System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections() { throw null; }
+        public override System.ClientModel.Primitives.ClientConnection GetConnection(string connectionId) { throw null; }
         public virtual Azure.AI.Projects.ConnectionsClient GetConnectionsClient(string apiVersion = "2024-07-01-preview") { throw null; }
-        public virtual Azure.AI.Inference.EmbeddingsClient GetEmbeddingsClient() { throw null; }
         public virtual Azure.AI.Projects.EvaluationsClient GetEvaluationsClient(string apiVersion = "2024-07-01-preview") { throw null; }
         public virtual Azure.AI.Projects.TelemetryClient GetTelemetryClient(string apiVersion = "2024-07-01-preview") { throw null; }
     }
@@ -528,7 +528,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.RunStepDeltaCodeInterpreterLogOutput RunStepDeltaCodeInterpreterLogOutput(int index = 0, string logs = null) { throw null; }
         public static Azure.AI.Projects.RunStepDeltaCodeInterpreterOutput RunStepDeltaCodeInterpreterOutput(int index = 0, string type = null) { throw null; }
         public static Azure.AI.Projects.RunStepDeltaCodeInterpreterToolCall RunStepDeltaCodeInterpreterToolCall(int index = 0, string id = null, Azure.AI.Projects.RunStepDeltaCodeInterpreterDetailItemObject codeInterpreter = null) { throw null; }
-        public static Azure.AI.Projects.RunStepDeltaFileSearchToolCall RunStepDeltaFileSearchToolCall(int index = 0, string id = null, System.Collections.Generic.IReadOnlyDictionary<string, string> fileSearch = null) { throw null; }
+        public static Azure.AI.Projects.RunStepDeltaFileSearchToolCall RunStepDeltaFileSearchToolCall(int index = 0, string id = null, Azure.AI.Projects.RunStepFileSearchToolCallResults fileSearch = null) { throw null; }
         public static Azure.AI.Projects.RunStepDeltaFunction RunStepDeltaFunction(string name = null, string arguments = null, string output = null) { throw null; }
         public static Azure.AI.Projects.RunStepDeltaFunctionToolCall RunStepDeltaFunctionToolCall(int index = 0, string id = null, Azure.AI.Projects.RunStepDeltaFunction function = null) { throw null; }
         public static Azure.AI.Projects.RunStepDeltaMessageCreation RunStepDeltaMessageCreation(Azure.AI.Projects.RunStepDeltaMessageCreationObject messageCreation = null) { throw null; }
@@ -2070,7 +2070,7 @@ namespace Azure.AI.Projects
     public partial class RunStepDeltaFileSearchToolCall : Azure.AI.Projects.RunStepDeltaToolCall, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.RunStepDeltaFileSearchToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.RunStepDeltaFileSearchToolCall>
     {
         internal RunStepDeltaFileSearchToolCall() : base (default(int), default(string)) { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> FileSearch { get { throw null; } }
+        public Azure.AI.Projects.RunStepFileSearchToolCallResults FileSearch { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Projects.RunStepDeltaFileSearchToolCall System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.RunStepDeltaFileSearchToolCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.RunStepDeltaFileSearchToolCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceProviderManifest value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceProviderManifest.DeserializeResourceProviderManifest(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceProviderManifest value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceProviderManifest.DeserializeResourceProviderManifest(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         CheckinManifestInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CheckinManifestInfo.DeserializeCheckinManifestInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         CheckinManifestInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CheckinManifestInfo.DeserializeCheckinManifestInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -13,6 +13,9 @@ global using OpenAI.Images;
 global using OpenAI.Models;
 global using OpenAI.Moderations;
 global using OpenAI.VectorStores;
+#if !AZURE_OPENAI_GA
+global using OpenAI.RealtimeConversation;
+#endif
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
@@ -27,7 +30,6 @@ using Azure.AI.OpenAI.Images;
 using Azure.Core;
 
 #if !AZURE_OPENAI_GA
-global using OpenAI.RealtimeConversation;
 using Azure.AI.OpenAI.Assistants;
 using Azure.AI.OpenAI.FineTuning;
 using Azure.AI.OpenAI.RealtimeConversation;

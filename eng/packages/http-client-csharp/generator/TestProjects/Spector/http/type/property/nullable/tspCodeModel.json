@@ -8,6 +8,7 @@
    "$id": "2",
    "kind": "model",
    "name": "CollectionsStringProperty",
+   "clientNamespace": "Type.Property.Nullable",
    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty",
    "usage": "Input,Output,JsonMergePatch,Json",
    "doc": "Model with collection string properties",
@@ -31,23 +32,30 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty.requiredProperty"
+     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty.requiredProperty",
+     "serializationOptions": {
+      "$id": "5",
+      "json": {
+       "$id": "6",
+       "name": "requiredProperty"
+      }
+     }
     },
     {
-     "$id": "5",
+     "$id": "7",
      "kind": "property",
      "name": "nullableProperty",
      "serializedName": "nullableProperty",
      "doc": "Property",
      "type": {
-      "$id": "6",
+      "$id": "8",
       "kind": "nullable",
       "type": {
-       "$id": "7",
+       "$id": "9",
        "kind": "array",
        "name": "Array",
        "valueType": {
-        "$id": "8",
+        "$id": "10",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -55,34 +63,43 @@
        },
        "crossLanguageDefinitionId": "TypeSpec.Array",
        "decorators": []
-      }
+      },
+      "clientNamespace": ""
      },
      "optional": false,
      "readOnly": false,
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty.nullableProperty"
+     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty.nullableProperty",
+     "serializationOptions": {
+      "$id": "11",
+      "json": {
+       "$id": "12",
+       "name": "nullableProperty"
+      }
+     }
     }
    ]
   },
   {
-   "$id": "9",
+   "$id": "13",
    "kind": "model",
    "name": "CollectionsModelProperty",
+   "clientNamespace": "Type.Property.Nullable",
    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty",
    "usage": "Input,Output,JsonMergePatch,Json",
    "doc": "Model with collection models properties",
    "decorators": [],
    "properties": [
     {
-     "$id": "10",
+     "$id": "14",
      "kind": "property",
      "name": "requiredProperty",
      "serializedName": "requiredProperty",
      "doc": "Required property",
      "type": {
-      "$id": "11",
+      "$id": "15",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -93,38 +110,46 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty.requiredProperty"
+     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty.requiredProperty",
+     "serializationOptions": {
+      "$id": "16",
+      "json": {
+       "$id": "17",
+       "name": "requiredProperty"
+      }
+     }
     },
     {
-     "$id": "12",
+     "$id": "18",
      "kind": "property",
      "name": "nullableProperty",
      "serializedName": "nullableProperty",
      "doc": "Property",
      "type": {
-      "$id": "13",
+      "$id": "19",
       "kind": "nullable",
       "type": {
-       "$id": "14",
+       "$id": "20",
        "kind": "array",
        "name": "ArrayInnerModel",
        "valueType": {
-        "$id": "15",
+        "$id": "21",
         "kind": "model",
         "name": "InnerModel",
+        "clientNamespace": "Type.Property.Nullable",
         "crossLanguageDefinitionId": "Type.Property.Nullable.InnerModel",
         "usage": "Input,Output,JsonMergePatch,Json",
         "doc": "Inner model used in collections model property",
         "decorators": [],
         "properties": [
          {
-          "$id": "16",
+          "$id": "22",
           "kind": "property",
           "name": "property",
           "serializedName": "property",
           "doc": "Inner model property",
           "type": {
-           "$id": "17",
+           "$id": "23",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -135,43 +160,59 @@
           "discriminator": false,
           "flatten": false,
           "decorators": [],
-          "crossLanguageDefinitionId": "Type.Property.Nullable.InnerModel.property"
+          "crossLanguageDefinitionId": "Type.Property.Nullable.InnerModel.property",
+          "serializationOptions": {
+           "$id": "24",
+           "json": {
+            "$id": "25",
+            "name": "property"
+           }
+          }
          }
         ]
        },
        "crossLanguageDefinitionId": "TypeSpec.Array",
        "decorators": []
-      }
+      },
+      "clientNamespace": ""
      },
      "optional": false,
      "readOnly": false,
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty.nullableProperty"
+     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty.nullableProperty",
+     "serializationOptions": {
+      "$id": "26",
+      "json": {
+       "$id": "27",
+       "name": "nullableProperty"
+      }
+     }
     }
    ]
   },
   {
-   "$ref": "15"
+   "$ref": "21"
   },
   {
-   "$id": "18",
+   "$id": "28",
    "kind": "model",
    "name": "CollectionsByteProperty",
+   "clientNamespace": "Type.Property.Nullable",
    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByteProperty",
    "usage": "Input,Output,JsonMergePatch,Json",
    "doc": "Model with collection bytes properties",
    "decorators": [],
    "properties": [
     {
-     "$id": "19",
+     "$id": "29",
      "kind": "property",
      "name": "requiredProperty",
      "serializedName": "requiredProperty",
      "doc": "Required property",
      "type": {
-      "$id": "20",
+      "$id": "30",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -182,23 +223,30 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByteProperty.requiredProperty"
+     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByteProperty.requiredProperty",
+     "serializationOptions": {
+      "$id": "31",
+      "json": {
+       "$id": "32",
+       "name": "requiredProperty"
+      }
+     }
     },
     {
-     "$id": "21",
+     "$id": "33",
      "kind": "property",
      "name": "nullableProperty",
      "serializedName": "nullableProperty",
      "doc": "Property",
      "type": {
-      "$id": "22",
+      "$id": "34",
       "kind": "nullable",
       "type": {
-       "$id": "23",
+       "$id": "35",
        "kind": "array",
        "name": "Array",
        "valueType": {
-        "$id": "24",
+        "$id": "36",
         "kind": "bytes",
         "name": "bytes",
         "encode": "base64",
@@ -207,150 +255,33 @@
        },
        "crossLanguageDefinitionId": "TypeSpec.Array",
        "decorators": []
+      },
+      "clientNamespace": ""
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByteProperty.nullableProperty",
+     "serializationOptions": {
+      "$id": "37",
+      "json": {
+       "$id": "38",
+       "name": "nullableProperty"
       }
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByteProperty.nullableProperty"
-    }
-   ]
-  },
-  {
-   "$id": "25",
-   "kind": "model",
-   "name": "DurationProperty",
-   "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty",
-   "usage": "Input,Output,JsonMergePatch,Json",
-   "doc": "Model with a duration property",
-   "decorators": [],
-   "properties": [
-    {
-     "$id": "26",
-     "kind": "property",
-     "name": "requiredProperty",
-     "serializedName": "requiredProperty",
-     "doc": "Required property",
-     "type": {
-      "$id": "27",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty.requiredProperty"
-    },
-    {
-     "$id": "28",
-     "kind": "property",
-     "name": "nullableProperty",
-     "serializedName": "nullableProperty",
-     "doc": "Property",
-     "type": {
-      "$id": "29",
-      "kind": "nullable",
-      "type": {
-       "$id": "30",
-       "kind": "duration",
-       "name": "duration",
-       "encode": "ISO8601",
-       "wireType": {
-        "$id": "31",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-       },
-       "crossLanguageDefinitionId": "TypeSpec.duration",
-       "decorators": []
-      }
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty.nullableProperty"
-    }
-   ]
-  },
-  {
-   "$id": "32",
-   "kind": "model",
-   "name": "DatetimeProperty",
-   "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty",
-   "usage": "Input,Output,JsonMergePatch,Json",
-   "doc": "Model with a datetime property",
-   "decorators": [],
-   "properties": [
-    {
-     "$id": "33",
-     "kind": "property",
-     "name": "requiredProperty",
-     "serializedName": "requiredProperty",
-     "doc": "Required property",
-     "type": {
-      "$id": "34",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty.requiredProperty"
-    },
-    {
-     "$id": "35",
-     "kind": "property",
-     "name": "nullableProperty",
-     "serializedName": "nullableProperty",
-     "doc": "Property",
-     "type": {
-      "$id": "36",
-      "kind": "nullable",
-      "type": {
-       "$id": "37",
-       "kind": "utcDateTime",
-       "name": "utcDateTime",
-       "encode": "rfc3339",
-       "wireType": {
-        "$id": "38",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-       },
-       "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
-       "decorators": []
-      }
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty.nullableProperty"
+     }
     }
    ]
   },
   {
    "$id": "39",
    "kind": "model",
-   "name": "BytesProperty",
-   "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty",
+   "name": "DurationProperty",
+   "clientNamespace": "Type.Property.Nullable",
+   "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty",
    "usage": "Input,Output,JsonMergePatch,Json",
-   "doc": "Template type for testing models with nullable property. Pass in the type of the property you are looking for",
+   "doc": "Model with a duration property",
    "decorators": [],
    "properties": [
     {
@@ -371,52 +302,75 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty.requiredProperty"
+     "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty.requiredProperty",
+     "serializationOptions": {
+      "$id": "42",
+      "json": {
+       "$id": "43",
+       "name": "requiredProperty"
+      }
+     }
     },
     {
-     "$id": "42",
+     "$id": "44",
      "kind": "property",
      "name": "nullableProperty",
      "serializedName": "nullableProperty",
      "doc": "Property",
      "type": {
-      "$id": "43",
+      "$id": "45",
       "kind": "nullable",
       "type": {
-       "$id": "44",
-       "kind": "bytes",
-       "name": "bytes",
-       "encode": "base64",
-       "crossLanguageDefinitionId": "TypeSpec.bytes",
+       "$id": "46",
+       "kind": "duration",
+       "name": "duration",
+       "encode": "ISO8601",
+       "wireType": {
+        "$id": "47",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "crossLanguageDefinitionId": "TypeSpec.duration",
        "decorators": []
-      }
+      },
+      "clientNamespace": ""
      },
      "optional": false,
      "readOnly": false,
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty.nullableProperty"
+     "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty.nullableProperty",
+     "serializationOptions": {
+      "$id": "48",
+      "json": {
+       "$id": "49",
+       "name": "nullableProperty"
+      }
+     }
     }
    ]
   },
   {
-   "$id": "45",
+   "$id": "50",
    "kind": "model",
-   "name": "StringProperty",
-   "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty",
+   "name": "DatetimeProperty",
+   "clientNamespace": "Type.Property.Nullable",
+   "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty",
    "usage": "Input,Output,JsonMergePatch,Json",
-   "doc": "Template type for testing models with nullable property. Pass in the type of the property you are looking for",
+   "doc": "Model with a datetime property",
    "decorators": [],
    "properties": [
     {
-     "$id": "46",
+     "$id": "51",
      "kind": "property",
      "name": "requiredProperty",
      "serializedName": "requiredProperty",
      "doc": "Required property",
      "type": {
-      "$id": "47",
+      "$id": "52",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -427,52 +381,219 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty.requiredProperty"
+     "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty.requiredProperty",
+     "serializationOptions": {
+      "$id": "53",
+      "json": {
+       "$id": "54",
+       "name": "requiredProperty"
+      }
+     }
     },
     {
-     "$id": "48",
+     "$id": "55",
      "kind": "property",
      "name": "nullableProperty",
      "serializedName": "nullableProperty",
      "doc": "Property",
      "type": {
-      "$id": "49",
+      "$id": "56",
       "kind": "nullable",
       "type": {
-       "$id": "50",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string",
+       "$id": "57",
+       "kind": "utcDateTime",
+       "name": "utcDateTime",
+       "encode": "rfc3339",
+       "wireType": {
+        "$id": "58",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
        "decorators": []
-      }
+      },
+      "clientNamespace": ""
      },
      "optional": false,
      "readOnly": false,
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty.nullableProperty"
+     "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty.nullableProperty",
+     "serializationOptions": {
+      "$id": "59",
+      "json": {
+       "$id": "60",
+       "name": "nullableProperty"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "$id": "61",
+   "kind": "model",
+   "name": "BytesProperty",
+   "clientNamespace": "Type.Property.Nullable",
+   "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty",
+   "usage": "Input,Output,JsonMergePatch,Json",
+   "doc": "Template type for testing models with nullable property. Pass in the type of the property you are looking for",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "62",
+     "kind": "property",
+     "name": "requiredProperty",
+     "serializedName": "requiredProperty",
+     "doc": "Required property",
+     "type": {
+      "$id": "63",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty.requiredProperty",
+     "serializationOptions": {
+      "$id": "64",
+      "json": {
+       "$id": "65",
+       "name": "requiredProperty"
+      }
+     }
+    },
+    {
+     "$id": "66",
+     "kind": "property",
+     "name": "nullableProperty",
+     "serializedName": "nullableProperty",
+     "doc": "Property",
+     "type": {
+      "$id": "67",
+      "kind": "nullable",
+      "type": {
+       "$id": "68",
+       "kind": "bytes",
+       "name": "bytes",
+       "encode": "base64",
+       "crossLanguageDefinitionId": "TypeSpec.bytes",
+       "decorators": []
+      },
+      "clientNamespace": ""
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty.nullableProperty",
+     "serializationOptions": {
+      "$id": "69",
+      "json": {
+       "$id": "70",
+       "name": "nullableProperty"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "$id": "71",
+   "kind": "model",
+   "name": "StringProperty",
+   "clientNamespace": "Type.Property.Nullable",
+   "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty",
+   "usage": "Input,Output,JsonMergePatch,Json",
+   "doc": "Template type for testing models with nullable property. Pass in the type of the property you are looking for",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "72",
+     "kind": "property",
+     "name": "requiredProperty",
+     "serializedName": "requiredProperty",
+     "doc": "Required property",
+     "type": {
+      "$id": "73",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty.requiredProperty",
+     "serializationOptions": {
+      "$id": "74",
+      "json": {
+       "$id": "75",
+       "name": "requiredProperty"
+      }
+     }
+    },
+    {
+     "$id": "76",
+     "kind": "property",
+     "name": "nullableProperty",
+     "serializedName": "nullableProperty",
+     "doc": "Property",
+     "type": {
+      "$id": "77",
+      "kind": "nullable",
+      "type": {
+       "$id": "78",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "clientNamespace": ""
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty.nullableProperty",
+     "serializationOptions": {
+      "$id": "79",
+      "json": {
+       "$id": "80",
+       "name": "nullableProperty"
+      }
+     }
     }
    ]
   }
  ],
  "Clients": [
   {
-   "$id": "51",
+   "$id": "81",
    "Name": "NullableClient",
+   "ClientNamespace": "Type.Property.Nullable",
    "Doc": "Illustrates models with nullable properties.",
    "Operations": [],
    "Protocol": {
-    "$id": "52"
+    "$id": "82"
    },
    "Parameters": [
     {
-     "$id": "53",
+     "$id": "83",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
      "Doc": "Service host",
      "Type": {
-      "$id": "54",
+      "$id": "84",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -487,9 +608,9 @@
      "Explode": false,
      "Kind": "Client",
      "DefaultValue": {
-      "$id": "55",
+      "$id": "85",
       "Type": {
-       "$id": "56",
+       "$id": "86",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
@@ -501,25 +622,26 @@
    "Decorators": []
   },
   {
-   "$id": "57",
+   "$id": "87",
    "Name": "String",
+   "ClientNamespace": "Type.Property.Nullable",
    "Operations": [
     {
-     "$id": "58",
+     "$id": "88",
      "Name": "getNonNull",
      "ResourceName": "String",
      "Doc": "Get models that will return all properties in the model",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "59",
+       "$id": "89",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "60",
+        "$id": "90",
         "kind": "constant",
         "valueType": {
-         "$id": "61",
+         "$id": "91",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -541,12 +663,12 @@
      ],
      "Responses": [
       {
-       "$id": "62",
+       "$id": "92",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "45"
+        "$ref": "71"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -567,21 +689,21 @@
      "Decorators": []
     },
     {
-     "$id": "63",
+     "$id": "93",
      "Name": "getNull",
      "ResourceName": "String",
      "Doc": "Get models that will return the default object",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "64",
+       "$id": "94",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "65",
+        "$id": "95",
         "kind": "constant",
         "valueType": {
-         "$id": "66",
+         "$id": "96",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -603,12 +725,12 @@
      ],
      "Responses": [
       {
-       "$id": "67",
+       "$id": "97",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "45"
+        "$ref": "71"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -629,22 +751,22 @@
      "Decorators": []
     },
     {
-     "$id": "68",
+     "$id": "98",
      "Name": "patchNonNull",
      "ResourceName": "String",
      "Doc": "Put a body with all properties present.",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "69",
+       "$id": "99",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Doc": "content-type is application/merge-patch+json",
        "Type": {
-        "$id": "70",
+        "$id": "100",
         "kind": "constant",
         "valueType": {
-         "$id": "71",
+         "$id": "101",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -664,11 +786,11 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "72",
+       "$id": "102",
        "Name": "body",
        "NameInRequest": "body",
        "Type": {
-        "$ref": "45"
+        "$ref": "71"
        },
        "Location": "Body",
        "IsApiVersion": false,
@@ -683,7 +805,7 @@
      ],
      "Responses": [
       {
-       "$id": "73",
+       "$id": "103",
        "StatusCodes": [
         204
        ],
@@ -706,22 +828,22 @@
      "Decorators": []
     },
     {
-     "$id": "74",
+     "$id": "104",
      "Name": "patchNull",
      "ResourceName": "String",
      "Doc": "Put a body with default properties.",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "75",
+       "$id": "105",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Doc": "content-type is application/merge-patch+json",
        "Type": {
-        "$id": "76",
+        "$id": "106",
         "kind": "constant",
         "valueType": {
-         "$id": "77",
+         "$id": "107",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -741,11 +863,11 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "78",
+       "$id": "108",
        "Name": "body",
        "NameInRequest": "body",
        "Type": {
-        "$ref": "45"
+        "$ref": "71"
        },
        "Location": "Body",
        "IsApiVersion": false,
@@ -760,7 +882,7 @@
      ],
      "Responses": [
       {
-       "$id": "79",
+       "$id": "109",
        "StatusCodes": [
         204
        ],
@@ -784,17 +906,17 @@
     }
    ],
    "Protocol": {
-    "$id": "80"
+    "$id": "110"
    },
    "Parent": "NullableClient",
    "Parameters": [
     {
-     "$id": "81",
+     "$id": "111",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
      "Doc": "Service host",
      "Type": {
-      "$id": "82",
+      "$id": "112",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -809,9 +931,9 @@
      "Explode": false,
      "Kind": "Client",
      "DefaultValue": {
-      "$id": "83",
+      "$id": "113",
       "Type": {
-       "$id": "84",
+       "$id": "114",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
@@ -823,25 +945,26 @@
    "Decorators": []
   },
   {
-   "$id": "85",
+   "$id": "115",
    "Name": "Bytes",
+   "ClientNamespace": "Type.Property.Nullable",
    "Operations": [
     {
-     "$id": "86",
+     "$id": "116",
      "Name": "getNonNull",
      "ResourceName": "Bytes",
      "Doc": "Get models that will return all properties in the model",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "87",
+       "$id": "117",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "88",
+        "$id": "118",
         "kind": "constant",
         "valueType": {
-         "$id": "89",
+         "$id": "119",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -863,12 +986,12 @@
      ],
      "Responses": [
       {
-       "$id": "90",
+       "$id": "120",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "39"
+        "$ref": "61"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -889,21 +1012,21 @@
      "Decorators": []
     },
     {
-     "$id": "91",
+     "$id": "121",
      "Name": "getNull",
      "ResourceName": "Bytes",
      "Doc": "Get models that will return the default object",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "92",
+       "$id": "122",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "93",
+        "$id": "123",
         "kind": "constant",
         "valueType": {
-         "$id": "94",
+         "$id": "124",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -925,12 +1048,12 @@
      ],
      "Responses": [
       {
-       "$id": "95",
+       "$id": "125",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "39"
+        "$ref": "61"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -951,22 +1074,22 @@
      "Decorators": []
     },
     {
-     "$id": "96",
+     "$id": "126",
      "Name": "patchNonNull",
      "ResourceName": "Bytes",
      "Doc": "Put a body with all properties present.",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "97",
+       "$id": "127",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Doc": "content-type is application/merge-patch+json",
        "Type": {
-        "$id": "98",
+        "$id": "128",
         "kind": "constant",
         "valueType": {
-         "$id": "99",
+         "$id": "129",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -986,11 +1109,11 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "100",
+       "$id": "130",
        "Name": "body",
        "NameInRequest": "body",
        "Type": {
-        "$ref": "39"
+        "$ref": "61"
        },
        "Location": "Body",
        "IsApiVersion": false,
@@ -1005,7 +1128,7 @@
      ],
      "Responses": [
       {
-       "$id": "101",
+       "$id": "131",
        "StatusCodes": [
         204
        ],
@@ -1028,22 +1151,22 @@
      "Decorators": []
     },
     {
-     "$id": "102",
+     "$id": "132",
      "Name": "patchNull",
      "ResourceName": "Bytes",
      "Doc": "Put a body with default properties.",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "103",
+       "$id": "133",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Doc": "content-type is application/merge-patch+json",
        "Type": {
-        "$id": "104",
+        "$id": "134",
         "kind": "constant",
         "valueType": {
-         "$id": "105",
+         "$id": "135",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1063,11 +1186,11 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "106",
+       "$id": "136",
        "Name": "body",
        "NameInRequest": "body",
        "Type": {
-        "$ref": "39"
+        "$ref": "61"
        },
        "Location": "Body",
        "IsApiVersion": false,
@@ -1082,7 +1205,7 @@
      ],
      "Responses": [
       {
-       "$id": "107",
+       "$id": "137",
        "StatusCodes": [
         204
        ],
@@ -1106,17 +1229,17 @@
     }
    ],
    "Protocol": {
-    "$id": "108"
+    "$id": "138"
    },
    "Parent": "NullableClient",
    "Parameters": [
     {
-     "$id": "109",
+     "$id": "139",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
      "Doc": "Service host",
      "Type": {
-      "$id": "110",
+      "$id": "140",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1131,9 +1254,9 @@
      "Explode": false,
      "Kind": "Client",
      "DefaultValue": {
-      "$id": "111",
+      "$id": "141",
       "Type": {
-       "$id": "112",
+       "$id": "142",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1145,25 +1268,26 @@
    "Decorators": []
   },
   {
-   "$id": "113",
+   "$id": "143",
    "Name": "Datetime",
+   "ClientNamespace": "Type.Property.Nullable",
    "Operations": [
     {
-     "$id": "114",
+     "$id": "144",
      "Name": "getNonNull",
      "ResourceName": "Datetime",
      "Doc": "Get models that will return all properties in the model",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "115",
+       "$id": "145",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "116",
+        "$id": "146",
         "kind": "constant",
         "valueType": {
-         "$id": "117",
+         "$id": "147",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1185,12 +1309,12 @@
      ],
      "Responses": [
       {
-       "$id": "118",
+       "$id": "148",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "32"
+        "$ref": "50"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -1211,21 +1335,21 @@
      "Decorators": []
     },
     {
-     "$id": "119",
+     "$id": "149",
      "Name": "getNull",
      "ResourceName": "Datetime",
      "Doc": "Get models that will return the default object",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "120",
+       "$id": "150",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "121",
+        "$id": "151",
         "kind": "constant",
         "valueType": {
-         "$id": "122",
+         "$id": "152",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1247,12 +1371,12 @@
      ],
      "Responses": [
       {
-       "$id": "123",
+       "$id": "153",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "32"
+        "$ref": "50"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -1273,22 +1397,22 @@
      "Decorators": []
     },
     {
-     "$id": "124",
+     "$id": "154",
      "Name": "patchNonNull",
      "ResourceName": "Datetime",
      "Doc": "Put a body with all properties present.",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "125",
+       "$id": "155",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Doc": "content-type is application/merge-patch+json",
        "Type": {
-        "$id": "126",
+        "$id": "156",
         "kind": "constant",
         "valueType": {
-         "$id": "127",
+         "$id": "157",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1308,11 +1432,11 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "128",
+       "$id": "158",
        "Name": "body",
        "NameInRequest": "body",
        "Type": {
-        "$ref": "32"
+        "$ref": "50"
        },
        "Location": "Body",
        "IsApiVersion": false,
@@ -1327,7 +1451,7 @@
      ],
      "Responses": [
       {
-       "$id": "129",
+       "$id": "159",
        "StatusCodes": [
         204
        ],
@@ -1350,22 +1474,22 @@
      "Decorators": []
     },
     {
-     "$id": "130",
+     "$id": "160",
      "Name": "patchNull",
      "ResourceName": "Datetime",
      "Doc": "Put a body with default properties.",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "131",
+       "$id": "161",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Doc": "content-type is application/merge-patch+json",
        "Type": {
-        "$id": "132",
+        "$id": "162",
         "kind": "constant",
         "valueType": {
-         "$id": "133",
+         "$id": "163",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1385,11 +1509,11 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "134",
+       "$id": "164",
        "Name": "body",
        "NameInRequest": "body",
        "Type": {
-        "$ref": "32"
+        "$ref": "50"
        },
        "Location": "Body",
        "IsApiVersion": false,
@@ -1404,7 +1528,7 @@
      ],
      "Responses": [
       {
-       "$id": "135",
+       "$id": "165",
        "StatusCodes": [
         204
        ],
@@ -1428,17 +1552,17 @@
     }
    ],
    "Protocol": {
-    "$id": "136"
+    "$id": "166"
    },
    "Parent": "NullableClient",
    "Parameters": [
     {
-     "$id": "137",
+     "$id": "167",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
      "Doc": "Service host",
      "Type": {
-      "$id": "138",
+      "$id": "168",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1453,9 +1577,9 @@
      "Explode": false,
      "Kind": "Client",
      "DefaultValue": {
-      "$id": "139",
+      "$id": "169",
       "Type": {
-       "$id": "140",
+       "$id": "170",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1467,25 +1591,26 @@
    "Decorators": []
   },
   {
-   "$id": "141",
+   "$id": "171",
    "Name": "Duration",
+   "ClientNamespace": "Type.Property.Nullable",
    "Operations": [
     {
-     "$id": "142",
+     "$id": "172",
      "Name": "getNonNull",
      "ResourceName": "Duration",
      "Doc": "Get models that will return all properties in the model",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "143",
+       "$id": "173",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "144",
+        "$id": "174",
         "kind": "constant",
         "valueType": {
-         "$id": "145",
+         "$id": "175",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1507,12 +1632,12 @@
      ],
      "Responses": [
       {
-       "$id": "146",
+       "$id": "176",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "25"
+        "$ref": "39"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -1533,21 +1658,21 @@
      "Decorators": []
     },
     {
-     "$id": "147",
+     "$id": "177",
      "Name": "getNull",
      "ResourceName": "Duration",
      "Doc": "Get models that will return the default object",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "148",
+       "$id": "178",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "149",
+        "$id": "179",
         "kind": "constant",
         "valueType": {
-         "$id": "150",
+         "$id": "180",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1569,12 +1694,12 @@
      ],
      "Responses": [
       {
-       "$id": "151",
+       "$id": "181",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "25"
+        "$ref": "39"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -1595,22 +1720,22 @@
      "Decorators": []
     },
     {
-     "$id": "152",
+     "$id": "182",
      "Name": "patchNonNull",
      "ResourceName": "Duration",
      "Doc": "Put a body with all properties present.",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "153",
+       "$id": "183",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Doc": "content-type is application/merge-patch+json",
        "Type": {
-        "$id": "154",
+        "$id": "184",
         "kind": "constant",
         "valueType": {
-         "$id": "155",
+         "$id": "185",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1630,11 +1755,11 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "156",
+       "$id": "186",
        "Name": "body",
        "NameInRequest": "body",
        "Type": {
-        "$ref": "25"
+        "$ref": "39"
        },
        "Location": "Body",
        "IsApiVersion": false,
@@ -1649,7 +1774,7 @@
      ],
      "Responses": [
       {
-       "$id": "157",
+       "$id": "187",
        "StatusCodes": [
         204
        ],
@@ -1672,22 +1797,22 @@
      "Decorators": []
     },
     {
-     "$id": "158",
+     "$id": "188",
      "Name": "patchNull",
      "ResourceName": "Duration",
      "Doc": "Put a body with default properties.",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "159",
+       "$id": "189",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Doc": "content-type is application/merge-patch+json",
        "Type": {
-        "$id": "160",
+        "$id": "190",
         "kind": "constant",
         "valueType": {
-         "$id": "161",
+         "$id": "191",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1707,11 +1832,11 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "162",
+       "$id": "192",
        "Name": "body",
        "NameInRequest": "body",
        "Type": {
-        "$ref": "25"
+        "$ref": "39"
        },
        "Location": "Body",
        "IsApiVersion": false,
@@ -1726,7 +1851,7 @@
      ],
      "Responses": [
       {
-       "$id": "163",
+       "$id": "193",
        "StatusCodes": [
         204
        ],
@@ -1750,17 +1875,17 @@
     }
    ],
    "Protocol": {
-    "$id": "164"
+    "$id": "194"
    },
    "Parent": "NullableClient",
    "Parameters": [
     {
-     "$id": "165",
+     "$id": "195",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
      "Doc": "Service host",
      "Type": {
-      "$id": "166",
+      "$id": "196",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1775,9 +1900,9 @@
      "Explode": false,
      "Kind": "Client",
      "DefaultValue": {
-      "$id": "167",
+      "$id": "197",
       "Type": {
-       "$id": "168",
+       "$id": "198",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1789,25 +1914,26 @@
    "Decorators": []
   },
   {
-   "$id": "169",
+   "$id": "199",
    "Name": "CollectionsByte",
+   "ClientNamespace": "Type.Property.Nullable",
    "Operations": [
     {
-     "$id": "170",
+     "$id": "200",
      "Name": "getNonNull",
      "ResourceName": "CollectionsByte",
      "Doc": "Get models that will return all properties in the model",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "171",
+       "$id": "201",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "172",
+        "$id": "202",
         "kind": "constant",
         "valueType": {
-         "$id": "173",
+         "$id": "203",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1829,12 +1955,12 @@
      ],
      "Responses": [
       {
-       "$id": "174",
+       "$id": "204",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "18"
+        "$ref": "28"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -1855,21 +1981,21 @@
      "Decorators": []
     },
     {
-     "$id": "175",
+     "$id": "205",
      "Name": "getNull",
      "ResourceName": "CollectionsByte",
      "Doc": "Get models that will return the default object",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "176",
+       "$id": "206",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "177",
+        "$id": "207",
         "kind": "constant",
         "valueType": {
-         "$id": "178",
+         "$id": "208",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1891,12 +2017,12 @@
      ],
      "Responses": [
       {
-       "$id": "179",
+       "$id": "209",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "18"
+        "$ref": "28"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -1917,22 +2043,22 @@
      "Decorators": []
     },
     {
-     "$id": "180",
+     "$id": "210",
      "Name": "patchNonNull",
      "ResourceName": "CollectionsByte",
      "Doc": "Put a body with all properties present.",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "181",
+       "$id": "211",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Doc": "content-type is application/merge-patch+json",
        "Type": {
-        "$id": "182",
+        "$id": "212",
         "kind": "constant",
         "valueType": {
-         "$id": "183",
+         "$id": "213",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1952,11 +2078,11 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "184",
+       "$id": "214",
        "Name": "body",
        "NameInRequest": "body",
        "Type": {
-        "$ref": "18"
+        "$ref": "28"
        },
        "Location": "Body",
        "IsApiVersion": false,
@@ -1971,7 +2097,7 @@
      ],
      "Responses": [
       {
-       "$id": "185",
+       "$id": "215",
        "StatusCodes": [
         204
        ],
@@ -1994,22 +2120,22 @@
      "Decorators": []
     },
     {
-     "$id": "186",
+     "$id": "216",
      "Name": "patchNull",
      "ResourceName": "CollectionsByte",
      "Doc": "Put a body with default properties.",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "187",
+       "$id": "217",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Doc": "content-type is application/merge-patch+json",
        "Type": {
-        "$id": "188",
+        "$id": "218",
         "kind": "constant",
         "valueType": {
-         "$id": "189",
+         "$id": "219",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2029,11 +2155,11 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "190",
+       "$id": "220",
        "Name": "body",
        "NameInRequest": "body",
        "Type": {
-        "$ref": "18"
+        "$ref": "28"
        },
        "Location": "Body",
        "IsApiVersion": false,
@@ -2048,7 +2174,7 @@
      ],
      "Responses": [
       {
-       "$id": "191",
+       "$id": "221",
        "StatusCodes": [
         204
        ],
@@ -2072,17 +2198,17 @@
     }
    ],
    "Protocol": {
-    "$id": "192"
+    "$id": "222"
    },
    "Parent": "NullableClient",
    "Parameters": [
     {
-     "$id": "193",
+     "$id": "223",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
      "Doc": "Service host",
      "Type": {
-      "$id": "194",
+      "$id": "224",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -2097,9 +2223,9 @@
      "Explode": false,
      "Kind": "Client",
      "DefaultValue": {
-      "$id": "195",
+      "$id": "225",
       "Type": {
-       "$id": "196",
+       "$id": "226",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2111,25 +2237,26 @@
    "Decorators": []
   },
   {
-   "$id": "197",
+   "$id": "227",
    "Name": "CollectionsModel",
+   "ClientNamespace": "Type.Property.Nullable",
    "Operations": [
     {
-     "$id": "198",
+     "$id": "228",
      "Name": "getNonNull",
      "ResourceName": "CollectionsModel",
      "Doc": "Get models that will return all properties in the model",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "199",
+       "$id": "229",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "200",
+        "$id": "230",
         "kind": "constant",
         "valueType": {
-         "$id": "201",
+         "$id": "231",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2151,12 +2278,12 @@
      ],
      "Responses": [
       {
-       "$id": "202",
+       "$id": "232",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "9"
+        "$ref": "13"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -2177,21 +2304,21 @@
      "Decorators": []
     },
     {
-     "$id": "203",
+     "$id": "233",
      "Name": "getNull",
      "ResourceName": "CollectionsModel",
      "Doc": "Get models that will return the default object",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "204",
+       "$id": "234",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "205",
+        "$id": "235",
         "kind": "constant",
         "valueType": {
-         "$id": "206",
+         "$id": "236",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2213,12 +2340,12 @@
      ],
      "Responses": [
       {
-       "$id": "207",
+       "$id": "237",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "9"
+        "$ref": "13"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -2239,22 +2366,22 @@
      "Decorators": []
     },
     {
-     "$id": "208",
+     "$id": "238",
      "Name": "patchNonNull",
      "ResourceName": "CollectionsModel",
      "Doc": "Put a body with all properties present.",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "209",
+       "$id": "239",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Doc": "content-type is application/merge-patch+json",
        "Type": {
-        "$id": "210",
+        "$id": "240",
         "kind": "constant",
         "valueType": {
-         "$id": "211",
+         "$id": "241",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2274,11 +2401,11 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "212",
+       "$id": "242",
        "Name": "body",
        "NameInRequest": "body",
        "Type": {
-        "$ref": "9"
+        "$ref": "13"
        },
        "Location": "Body",
        "IsApiVersion": false,
@@ -2293,7 +2420,7 @@
      ],
      "Responses": [
       {
-       "$id": "213",
+       "$id": "243",
        "StatusCodes": [
         204
        ],
@@ -2316,22 +2443,22 @@
      "Decorators": []
     },
     {
-     "$id": "214",
+     "$id": "244",
      "Name": "patchNull",
      "ResourceName": "CollectionsModel",
      "Doc": "Put a body with default properties.",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "215",
+       "$id": "245",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Doc": "content-type is application/merge-patch+json",
        "Type": {
-        "$id": "216",
+        "$id": "246",
         "kind": "constant",
         "valueType": {
-         "$id": "217",
+         "$id": "247",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2351,11 +2478,11 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "218",
+       "$id": "248",
        "Name": "body",
        "NameInRequest": "body",
        "Type": {
-        "$ref": "9"
+        "$ref": "13"
        },
        "Location": "Body",
        "IsApiVersion": false,
@@ -2370,7 +2497,7 @@
      ],
      "Responses": [
       {
-       "$id": "219",
+       "$id": "249",
        "StatusCodes": [
         204
        ],
@@ -2394,17 +2521,17 @@
     }
    ],
    "Protocol": {
-    "$id": "220"
+    "$id": "250"
    },
    "Parent": "NullableClient",
    "Parameters": [
     {
-     "$id": "221",
+     "$id": "251",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
      "Doc": "Service host",
      "Type": {
-      "$id": "222",
+      "$id": "252",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -2419,9 +2546,9 @@
      "Explode": false,
      "Kind": "Client",
      "DefaultValue": {
-      "$id": "223",
+      "$id": "253",
       "Type": {
-       "$id": "224",
+       "$id": "254",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2433,25 +2560,26 @@
    "Decorators": []
   },
   {
-   "$id": "225",
+   "$id": "255",
    "Name": "CollectionsString",
+   "ClientNamespace": "Type.Property.Nullable",
    "Operations": [
     {
-     "$id": "226",
+     "$id": "256",
      "Name": "getNonNull",
      "ResourceName": "CollectionsString",
      "Doc": "Get models that will return all properties in the model",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "227",
+       "$id": "257",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "228",
+        "$id": "258",
         "kind": "constant",
         "valueType": {
-         "$id": "229",
+         "$id": "259",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2473,7 +2601,7 @@
      ],
      "Responses": [
       {
-       "$id": "230",
+       "$id": "260",
        "StatusCodes": [
         200
        ],
@@ -2499,21 +2627,21 @@
      "Decorators": []
     },
     {
-     "$id": "231",
+     "$id": "261",
      "Name": "getNull",
      "ResourceName": "CollectionsString",
      "Doc": "Get models that will return the default object",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "232",
+       "$id": "262",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "233",
+        "$id": "263",
         "kind": "constant",
         "valueType": {
-         "$id": "234",
+         "$id": "264",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2535,7 +2663,7 @@
      ],
      "Responses": [
       {
-       "$id": "235",
+       "$id": "265",
        "StatusCodes": [
         200
        ],
@@ -2561,22 +2689,22 @@
      "Decorators": []
     },
     {
-     "$id": "236",
+     "$id": "266",
      "Name": "patchNonNull",
      "ResourceName": "CollectionsString",
      "Doc": "Put a body with all properties present.",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "237",
+       "$id": "267",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Doc": "content-type is application/merge-patch+json",
        "Type": {
-        "$id": "238",
+        "$id": "268",
         "kind": "constant",
         "valueType": {
-         "$id": "239",
+         "$id": "269",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2596,7 +2724,7 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "240",
+       "$id": "270",
        "Name": "body",
        "NameInRequest": "body",
        "Type": {
@@ -2615,7 +2743,7 @@
      ],
      "Responses": [
       {
-       "$id": "241",
+       "$id": "271",
        "StatusCodes": [
         204
        ],
@@ -2638,22 +2766,22 @@
      "Decorators": []
     },
     {
-     "$id": "242",
+     "$id": "272",
      "Name": "patchNull",
      "ResourceName": "CollectionsString",
      "Doc": "Put a body with default properties.",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "243",
+       "$id": "273",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Doc": "content-type is application/merge-patch+json",
        "Type": {
-        "$id": "244",
+        "$id": "274",
         "kind": "constant",
         "valueType": {
-         "$id": "245",
+         "$id": "275",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2673,7 +2801,7 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "246",
+       "$id": "276",
        "Name": "body",
        "NameInRequest": "body",
        "Type": {
@@ -2692,7 +2820,7 @@
      ],
      "Responses": [
       {
-       "$id": "247",
+       "$id": "277",
        "StatusCodes": [
         204
        ],
@@ -2716,17 +2844,17 @@
     }
    ],
    "Protocol": {
-    "$id": "248"
+    "$id": "278"
    },
    "Parent": "NullableClient",
    "Parameters": [
     {
-     "$id": "249",
+     "$id": "279",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
      "Doc": "Service host",
      "Type": {
-      "$id": "250",
+      "$id": "280",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -2741,9 +2869,9 @@
      "Explode": false,
      "Kind": "Client",
      "DefaultValue": {
-      "$id": "251",
+      "$id": "281",
       "Type": {
-       "$id": "252",
+       "$id": "282",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"

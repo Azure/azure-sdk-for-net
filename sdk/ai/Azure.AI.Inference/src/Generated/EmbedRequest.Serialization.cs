@@ -34,22 +34,44 @@ namespace Azure.AI.Inference
                 throw new FormatException($"The model {nameof(EmbedRequest)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("embeddingsOptions"u8);
-            writer.WriteObjectValue(EmbeddingsOptions, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            writer.WritePropertyName("input"u8);
+            writer.WriteStartArray();
+            foreach (var item in Input)
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(Dimensions))
+            {
+                writer.WritePropertyName("dimensions"u8);
+                writer.WriteNumberValue(Dimensions.Value);
+            }
+            if (Optional.IsDefined(EncodingFormat))
+            {
+                writer.WritePropertyName("encoding_format"u8);
+                writer.WriteStringValue(EncodingFormat.Value.ToString());
+            }
+            if (Optional.IsDefined(InputType))
+            {
+                writer.WritePropertyName("input_type"u8);
+                writer.WriteStringValue(InputType.Value.ToString());
+            }
+            if (Optional.IsDefined(Model))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(Model);
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
         }
 
@@ -73,23 +95,67 @@ namespace Azure.AI.Inference
             {
                 return null;
             }
-            EmbeddingsOptions embeddingsOptions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            IReadOnlyList<string> input = default;
+            int? dimensions = default;
+            EmbeddingEncodingFormat? encodingFormat = default;
+            EmbeddingInputType? inputType = default;
+            string model = default;
+            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("embeddingsOptions"u8))
+                if (property.NameEquals("input"u8))
                 {
-                    embeddingsOptions = EmbeddingsOptions.DeserializeEmbeddingsOptions(property.Value, options);
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    input = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if (property.NameEquals("dimensions"u8))
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dimensions = property.Value.GetInt32();
+                    continue;
                 }
+                if (property.NameEquals("encoding_format"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encodingFormat = new EmbeddingEncodingFormat(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("input_type"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    inputType = new EmbeddingInputType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("model"u8))
+                {
+                    model = property.Value.GetString();
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new EmbedRequest(embeddingsOptions, serializedAdditionalRawData);
+            additionalProperties = additionalPropertiesDictionary;
+            return new EmbedRequest(
+                input,
+                dimensions,
+                encodingFormat,
+                inputType,
+                model,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<EmbedRequest>.Write(ModelReaderWriterOptions options)
@@ -113,7 +179,7 @@ namespace Azure.AI.Inference
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEmbedRequest(document.RootElement, options);
                     }
                 default:
@@ -127,7 +193,7 @@ namespace Azure.AI.Inference
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static EmbedRequest FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeEmbedRequest(document.RootElement);
         }
 

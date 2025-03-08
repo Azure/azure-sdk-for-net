@@ -5,14 +5,14 @@ using Azure.Generator.InputTransformation;
 using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Azure.Generator.Providers.Abstraction;
-using Microsoft.Generator.CSharp.ClientModel;
-using Microsoft.Generator.CSharp.ClientModel.Providers;
-using Microsoft.Generator.CSharp.Expressions;
-using Microsoft.Generator.CSharp.Input;
-using Microsoft.Generator.CSharp.Primitives;
-using Microsoft.Generator.CSharp.Providers;
-using Microsoft.Generator.CSharp.Snippets;
-using Microsoft.Generator.CSharp.Statements;
+using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -120,30 +120,6 @@ namespace Azure.Generator
 
             var transformedClient = InputClientTransformer.TransformInputClient(inputClient);
             return transformedClient is null ? null : base.CreateClientCore(transformedClient);
-        }
-
-        /// <inheritdoc/>
-        protected override IReadOnlyList<TypeProvider> CreateSerializationsCore(InputType inputType, TypeProvider typeProvider)
-        {
-            if (inputType is InputModelType inputModel
-                && typeProvider is ModelProvider modelProvider
-                && AzureClientPlugin.Instance.OutputLibrary.IsResource(inputType.Name)
-                && inputModel.Usage.HasFlag(InputModelTypeUsage.Json))
-            {
-                return [new ResourceDataSerializationProvider(inputModel, modelProvider)];
-            }
-
-            return base.CreateSerializationsCore(inputType, typeProvider);
-        }
-
-        /// <inheritdoc/>
-        protected override ModelProvider? CreateModelCore(InputModelType model)
-        {
-            if (AzureClientPlugin.Instance.OutputLibrary.IsResource(model.Name))
-            {
-                return new ResourceDataProvider(model);
-            }
-            return base.CreateModelCore(model);
         }
 
         /// <inheritdoc/>

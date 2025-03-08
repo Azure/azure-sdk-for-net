@@ -3,7 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Mgmt.Models;
-using Microsoft.Generator.CSharp.Input;
+using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
@@ -113,7 +113,10 @@ namespace Azure.Generator.Utilities
                     return true;
                 }
 
-                switch (property.SerializedName)
+                var serializationName = property.SerializationOptions?.Json?.Name;
+                if (serializationName is null)
+                    continue;
+                switch (serializationName)
                 {
                     case "id":
                         if (property.Type.GetImplementType() is InputPrimitiveType { Kind: InputPrimitiveTypeKind.String } inputPrimitiveType)

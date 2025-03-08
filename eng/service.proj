@@ -9,6 +9,7 @@
     <IncludeSamples Condition="'$(IncludeSamples)' == ''">true</IncludeSamples>
     <IncludePerf Condition="'$(IncludePerf)' == ''">true</IncludePerf>
     <IncludeStress Condition="'$(IncludeStress)' == ''">true</IncludeStress>
+    <IncludeIntegrationTests Condition="'$(IncludeIntegrationTests)' == ''">true</IncludeIntegrationTests>
     <IncludeSamplesApplications Condition="'$(IncludeSamplesApplications)' == ''">true</IncludeSamplesApplications>
     <IncludeSamplesApplications Condition="'$(ServiceDirectory)' != '*' or '$(IncludeSamples)' == 'false'">false</IncludeSamplesApplications>
   </PropertyGroup>
@@ -61,12 +62,6 @@
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
   <Import Project="$(RepoRoot)$(ProjectListOverrideFile)" Condition="'$(ProjectListOverrideFile)' != '' " />
 
-  <!-- Remove all track1 SDKs from Regen -->
-  <ItemGroup Condition="'$(ProjectListOverrideFile)' != '' ">
-    <Track1ProjectsToRemove Include="$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.*.Management.*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*mgmt*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.Azure.*\**\*.csproj" />
-    <ProjectReference Remove="@(Track1ProjectsToRemove)" />
-  </ItemGroup>
-
   <ItemGroup Condition="'$(ProjectListOverrideFile)' != '' and '$(EnableOverrideExclusions)' != ''">
     <TestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\tests\**\*.csproj" Exclude="@(MgmtExcludePaths)" />
     <SamplesProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\samples\**\*.csproj;..\sdk\$(ServiceDirectory)\samples\**\*.csproj" Exclude="@(MgmtExcludePaths)" />
@@ -82,7 +77,7 @@
     <ProjectReference Remove="@(StressProjects)" Condition="'$(IncludeStress)' == 'false'" />
     <ProjectReference Remove="@(SampleApplications)" Condition="'$(IncludeSamplesApplications)' == 'false'"/>
     <ProjectReference Remove="@(SrcProjects)" Condition="'$(IncludeSrc)' == 'false'" />
-    <ProjectReference Remove="@(IntegrationTestProjects)" Condition="'$(IncludeSrc)' == 'false'" />
+    <ProjectReference Remove="@(IntegrationTestProjects)" Condition="'$(IncludeIntegrationTests)' == 'false'" />
     <ProjectReference Remove="@(SharedProjects)" Condition="'$(IncludeSrc)' == 'false'" />
   </ItemGroup>
 
@@ -97,6 +92,7 @@
     <Error Condition="'$(Scope)' == '' and '@(ProjectReference)' == ''"
         Text="No Projects found with patttern [..\sdk\$(ServiceDirectory)\$(Project)\*.csproj], please make sure you have passed in the correct ServiceDirectory." />
   </Target>
+
 
   <Target Name="GenerateCode">
     <MSBuild Projects="@(ProjectReference)"

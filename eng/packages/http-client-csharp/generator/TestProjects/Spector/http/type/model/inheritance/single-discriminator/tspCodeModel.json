@@ -8,6 +8,7 @@
    "$id": "2",
    "kind": "model",
    "name": "Bird",
+   "clientNamespace": "Type.Model.Inheritance.SingleDiscriminator",
    "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Bird",
    "usage": "Input,Output,Json",
    "doc": "This is base model for polymorphic single level inheritance with a discriminator.",
@@ -29,19 +30,26 @@
     "discriminator": true,
     "flatten": false,
     "decorators": [],
-    "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Bird.kind"
+    "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Bird.kind",
+    "serializationOptions": {
+     "$id": "5",
+     "json": {
+      "$id": "6",
+      "name": "kind"
+     }
+    }
    },
    "properties": [
     {
      "$ref": "3"
     },
     {
-     "$id": "5",
+     "$id": "7",
      "kind": "property",
      "name": "wingspan",
      "serializedName": "wingspan",
      "type": {
-      "$id": "6",
+      "$id": "8",
       "kind": "int32",
       "name": "int32",
       "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -52,59 +60,27 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Bird.wingspan"
+     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Bird.wingspan",
+     "serializationOptions": {
+      "$id": "9",
+      "json": {
+       "$id": "10",
+       "name": "wingspan"
+      }
+     }
     }
    ],
    "discriminatedSubtypes": {
-    "$id": "7",
+    "$id": "11",
     "seagull": {
-     "$id": "8",
+     "$id": "12",
      "kind": "model",
      "name": "SeaGull",
+     "clientNamespace": "Type.Model.Inheritance.SingleDiscriminator",
      "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.SeaGull",
      "usage": "Input,Output,Json",
      "doc": "The second level model in polymorphic single level inheritance.",
      "discriminatorValue": "seagull",
-     "decorators": [],
-     "baseModel": {
-      "$ref": "2"
-     },
-     "properties": [
-      {
-       "$id": "9",
-       "kind": "property",
-       "name": "kind",
-       "serializedName": "kind",
-       "type": {
-        "$id": "10",
-        "kind": "constant",
-        "valueType": {
-         "$id": "11",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "seagull",
-        "decorators": []
-       },
-       "optional": false,
-       "readOnly": false,
-       "discriminator": true,
-       "flatten": false,
-       "decorators": [],
-       "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.SeaGull.kind"
-      }
-     ]
-    },
-    "sparrow": {
-     "$id": "12",
-     "kind": "model",
-     "name": "Sparrow",
-     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Sparrow",
-     "usage": "Input,Output,Json",
-     "doc": "The second level model in polymorphic single level inheritance.",
-     "discriminatorValue": "sparrow",
      "decorators": [],
      "baseModel": {
       "$ref": "2"
@@ -125,6 +101,54 @@
          "crossLanguageDefinitionId": "TypeSpec.string",
          "decorators": []
         },
+        "value": "seagull",
+        "decorators": []
+       },
+       "optional": false,
+       "readOnly": false,
+       "discriminator": true,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.SeaGull.kind",
+       "serializationOptions": {
+        "$id": "16",
+        "json": {
+         "$id": "17",
+         "name": "kind"
+        }
+       }
+      }
+     ]
+    },
+    "sparrow": {
+     "$id": "18",
+     "kind": "model",
+     "name": "Sparrow",
+     "clientNamespace": "Type.Model.Inheritance.SingleDiscriminator",
+     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Sparrow",
+     "usage": "Input,Output,Json",
+     "doc": "The second level model in polymorphic single level inheritance.",
+     "discriminatorValue": "sparrow",
+     "decorators": [],
+     "baseModel": {
+      "$ref": "2"
+     },
+     "properties": [
+      {
+       "$id": "19",
+       "kind": "property",
+       "name": "kind",
+       "serializedName": "kind",
+       "type": {
+        "$id": "20",
+        "kind": "constant",
+        "valueType": {
+         "$id": "21",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
         "value": "sparrow",
         "decorators": []
        },
@@ -133,14 +157,22 @@
        "discriminator": true,
        "flatten": false,
        "decorators": [],
-       "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Sparrow.kind"
+       "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Sparrow.kind",
+       "serializationOptions": {
+        "$id": "22",
+        "json": {
+         "$id": "23",
+         "name": "kind"
+        }
+       }
       }
      ]
     },
     "goose": {
-     "$id": "16",
+     "$id": "24",
      "kind": "model",
      "name": "Goose",
+     "clientNamespace": "Type.Model.Inheritance.SingleDiscriminator",
      "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Goose",
      "usage": "Input,Output,Json",
      "doc": "The second level model in polymorphic single level inheritance.",
@@ -151,15 +183,15 @@
      },
      "properties": [
       {
-       "$id": "17",
+       "$id": "25",
        "kind": "property",
        "name": "kind",
        "serializedName": "kind",
        "type": {
-        "$id": "18",
+        "$id": "26",
         "kind": "constant",
         "valueType": {
-         "$id": "19",
+         "$id": "27",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -173,14 +205,22 @@
        "discriminator": true,
        "flatten": false,
        "decorators": [],
-       "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Goose.kind"
+       "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Goose.kind",
+       "serializationOptions": {
+        "$id": "28",
+        "json": {
+         "$id": "29",
+         "name": "kind"
+        }
+       }
       }
      ]
     },
     "eagle": {
-     "$id": "20",
+     "$id": "30",
      "kind": "model",
      "name": "Eagle",
+     "clientNamespace": "Type.Model.Inheritance.SingleDiscriminator",
      "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Eagle",
      "usage": "Input,Output,Json",
      "doc": "The second level model in polymorphic single levels inheritance which contains references to other polymorphic instances.",
@@ -191,15 +231,15 @@
      },
      "properties": [
       {
-       "$id": "21",
+       "$id": "31",
        "kind": "property",
        "name": "kind",
        "serializedName": "kind",
        "type": {
-        "$id": "22",
+        "$id": "32",
         "kind": "constant",
         "valueType": {
-         "$id": "23",
+         "$id": "33",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -213,15 +253,22 @@
        "discriminator": true,
        "flatten": false,
        "decorators": [],
-       "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Eagle.kind"
+       "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Eagle.kind",
+       "serializationOptions": {
+        "$id": "34",
+        "json": {
+         "$id": "35",
+         "name": "kind"
+        }
+       }
       },
       {
-       "$id": "24",
+       "$id": "36",
        "kind": "property",
        "name": "friends",
        "serializedName": "friends",
        "type": {
-        "$id": "25",
+        "$id": "37",
         "kind": "array",
         "name": "ArrayBird",
         "valueType": {
@@ -235,18 +282,25 @@
        "discriminator": false,
        "flatten": false,
        "decorators": [],
-       "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Eagle.friends"
+       "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Eagle.friends",
+       "serializationOptions": {
+        "$id": "38",
+        "json": {
+         "$id": "39",
+         "name": "friends"
+        }
+       }
       },
       {
-       "$id": "26",
+       "$id": "40",
        "kind": "property",
        "name": "hate",
        "serializedName": "hate",
        "type": {
-        "$id": "27",
+        "$id": "41",
         "kind": "dict",
         "keyType": {
-         "$id": "28",
+         "$id": "42",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -262,10 +316,17 @@
        "discriminator": false,
        "flatten": false,
        "decorators": [],
-       "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Eagle.hate"
+       "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Eagle.hate",
+       "serializationOptions": {
+        "$id": "43",
+        "json": {
+         "$id": "44",
+         "name": "hate"
+        }
+       }
       },
       {
-       "$id": "29",
+       "$id": "45",
        "kind": "property",
        "name": "partner",
        "serializedName": "partner",
@@ -277,40 +338,48 @@
        "discriminator": false,
        "flatten": false,
        "decorators": [],
-       "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Eagle.partner"
+       "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Eagle.partner",
+       "serializationOptions": {
+        "$id": "46",
+        "json": {
+         "$id": "47",
+         "name": "partner"
+        }
+       }
       }
      ]
     }
    }
   },
   {
-   "$ref": "8"
-  },
-  {
    "$ref": "12"
   },
   {
-   "$ref": "16"
+   "$ref": "18"
   },
   {
-   "$ref": "20"
+   "$ref": "24"
   },
   {
-   "$id": "30",
+   "$ref": "30"
+  },
+  {
+   "$id": "48",
    "kind": "model",
    "name": "Dinosaur",
+   "clientNamespace": "Type.Model.Inheritance.SingleDiscriminator",
    "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Dinosaur",
    "usage": "Output,Json",
    "doc": "Define a base class in the legacy way. Discriminator property is not explicitly defined in the model.",
    "decorators": [],
    "discriminatorProperty": {
-    "$id": "31",
+    "$id": "49",
     "kind": "property",
     "name": "kind",
     "serializedName": "kind",
     "doc": "Discriminator property for Dinosaur.",
     "type": {
-     "$id": "32",
+     "$id": "50",
      "kind": "string",
      "name": "string",
      "crossLanguageDefinitionId": "TypeSpec.string",
@@ -321,19 +390,26 @@
     "discriminator": true,
     "flatten": false,
     "decorators": [],
-    "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Dinosaur.kind"
+    "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Dinosaur.kind",
+    "serializationOptions": {
+     "$id": "51",
+     "json": {
+      "$id": "52",
+      "name": "kind"
+     }
+    }
    },
    "properties": [
     {
-     "$ref": "31"
+     "$ref": "49"
     },
     {
-     "$id": "33",
+     "$id": "53",
      "kind": "property",
      "name": "size",
      "serializedName": "size",
      "type": {
-      "$id": "34",
+      "$id": "54",
       "kind": "int32",
       "name": "int32",
       "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -344,34 +420,42 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Dinosaur.size"
+     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Dinosaur.size",
+     "serializationOptions": {
+      "$id": "55",
+      "json": {
+       "$id": "56",
+       "name": "size"
+      }
+     }
     }
    ],
    "discriminatedSubtypes": {
-    "$id": "35",
+    "$id": "57",
     "t-rex": {
-     "$id": "36",
+     "$id": "58",
      "kind": "model",
      "name": "TRex",
+     "clientNamespace": "Type.Model.Inheritance.SingleDiscriminator",
      "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.TRex",
      "usage": "Output,Json",
      "doc": "The second level legacy model in polymorphic single level inheritance.",
      "discriminatorValue": "t-rex",
      "decorators": [],
      "baseModel": {
-      "$ref": "30"
+      "$ref": "48"
      },
      "properties": [
       {
-       "$id": "37",
+       "$id": "59",
        "kind": "property",
        "name": "kind",
        "serializedName": "kind",
        "type": {
-        "$id": "38",
+        "$id": "60",
         "kind": "constant",
         "valueType": {
-         "$id": "39",
+         "$id": "61",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -385,37 +469,45 @@
        "discriminator": true,
        "flatten": false,
        "decorators": [],
-       "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.TRex.kind"
+       "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.TRex.kind",
+       "serializationOptions": {
+        "$id": "62",
+        "json": {
+         "$id": "63",
+         "name": "kind"
+        }
+       }
       }
      ]
     }
    }
   },
   {
-   "$ref": "36"
+   "$ref": "58"
   }
  ],
  "Clients": [
   {
-   "$id": "40",
+   "$id": "64",
    "Name": "SingleDiscriminatorClient",
+   "ClientNamespace": "Type.Model.Inheritance.SingleDiscriminator",
    "Doc": "Illustrates inheritance with single discriminator.",
    "Operations": [
     {
-     "$id": "41",
+     "$id": "65",
      "Name": "getModel",
      "ResourceName": "SingleDiscriminator",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "42",
+       "$id": "66",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "43",
+        "$id": "67",
         "kind": "constant",
         "valueType": {
-         "$id": "44",
+         "$id": "68",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -437,7 +529,7 @@
      ],
      "Responses": [
       {
-       "$id": "45",
+       "$id": "69",
        "StatusCodes": [
         200
        ],
@@ -463,21 +555,21 @@
      "Decorators": []
     },
     {
-     "$id": "46",
+     "$id": "70",
      "Name": "putModel",
      "ResourceName": "SingleDiscriminator",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "47",
+       "$id": "71",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Doc": "Body parameter's content type. Known values are application/json",
        "Type": {
-        "$id": "48",
+        "$id": "72",
         "kind": "constant",
         "valueType": {
-         "$id": "49",
+         "$id": "73",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -497,7 +589,7 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "50",
+       "$id": "74",
        "Name": "input",
        "NameInRequest": "input",
        "Type": {
@@ -516,7 +608,7 @@
      ],
      "Responses": [
       {
-       "$id": "51",
+       "$id": "75",
        "StatusCodes": [
         204
        ],
@@ -539,20 +631,20 @@
      "Decorators": []
     },
     {
-     "$id": "52",
+     "$id": "76",
      "Name": "getRecursiveModel",
      "ResourceName": "SingleDiscriminator",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "53",
+       "$id": "77",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "54",
+        "$id": "78",
         "kind": "constant",
         "valueType": {
-         "$id": "55",
+         "$id": "79",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -574,7 +666,7 @@
      ],
      "Responses": [
       {
-       "$id": "56",
+       "$id": "80",
        "StatusCodes": [
         200
        ],
@@ -600,21 +692,21 @@
      "Decorators": []
     },
     {
-     "$id": "57",
+     "$id": "81",
      "Name": "putRecursiveModel",
      "ResourceName": "SingleDiscriminator",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "58",
+       "$id": "82",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Doc": "Body parameter's content type. Known values are application/json",
        "Type": {
-        "$id": "59",
+        "$id": "83",
         "kind": "constant",
         "valueType": {
-         "$id": "60",
+         "$id": "84",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -634,7 +726,7 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "61",
+       "$id": "85",
        "Name": "input",
        "NameInRequest": "input",
        "Type": {
@@ -653,7 +745,7 @@
      ],
      "Responses": [
       {
-       "$id": "62",
+       "$id": "86",
        "StatusCodes": [
         204
        ],
@@ -676,20 +768,20 @@
      "Decorators": []
     },
     {
-     "$id": "63",
+     "$id": "87",
      "Name": "getMissingDiscriminator",
      "ResourceName": "SingleDiscriminator",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "64",
+       "$id": "88",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "65",
+        "$id": "89",
         "kind": "constant",
         "valueType": {
-         "$id": "66",
+         "$id": "90",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -711,7 +803,7 @@
      ],
      "Responses": [
       {
-       "$id": "67",
+       "$id": "91",
        "StatusCodes": [
         200
        ],
@@ -737,20 +829,20 @@
      "Decorators": []
     },
     {
-     "$id": "68",
+     "$id": "92",
      "Name": "getWrongDiscriminator",
      "ResourceName": "SingleDiscriminator",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "69",
+       "$id": "93",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "70",
+        "$id": "94",
         "kind": "constant",
         "valueType": {
-         "$id": "71",
+         "$id": "95",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -772,7 +864,7 @@
      ],
      "Responses": [
       {
-       "$id": "72",
+       "$id": "96",
        "StatusCodes": [
         200
        ],
@@ -798,20 +890,20 @@
      "Decorators": []
     },
     {
-     "$id": "73",
+     "$id": "97",
      "Name": "getLegacyModel",
      "ResourceName": "SingleDiscriminator",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "74",
+       "$id": "98",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "75",
+        "$id": "99",
         "kind": "constant",
         "valueType": {
-         "$id": "76",
+         "$id": "100",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -833,12 +925,12 @@
      ],
      "Responses": [
       {
-       "$id": "77",
+       "$id": "101",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "30"
+        "$ref": "48"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -860,16 +952,16 @@
     }
    ],
    "Protocol": {
-    "$id": "78"
+    "$id": "102"
    },
    "Parameters": [
     {
-     "$id": "79",
+     "$id": "103",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
      "Doc": "Service host",
      "Type": {
-      "$id": "80",
+      "$id": "104",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -884,9 +976,9 @@
      "Explode": false,
      "Kind": "Client",
      "DefaultValue": {
-      "$id": "81",
+      "$id": "105",
       "Type": {
-       "$id": "82",
+       "$id": "106",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"

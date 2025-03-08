@@ -137,15 +137,22 @@ jobs:
               /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory) `
               /p:ServiceDirectory=* `
               /p:ProjectListOverrideFile=$(ProjectListOverrideFile) `
+              /p:IncludePerf=false `
+              /p:IncludeStress=false `
+              /p:IncludeIntegrationTests=false `
+              /p:EnableOverrideExclusions=true `
               $(DiagnosticArguments)
-          displayName: "Build and Package"
+          displayName: "Build and Package for PR"
       - ${{ else }}:
         - pwsh: |
-            if (Test-Path "$(ProjectListOverrideFile)") {
-              Write-Host "Clearing $(ProjectListOverrideFile)"
-              rm "$(ProjectListOverrideFile)"
-              Write-Host "##vso[task.setvariable variable=ProjectListOverrideFile;]"
+            $variableSet = $env:ProjectListOverrideFile -ne "`$`(ProjectListOverrideFile`)"
+            if ($variableSet -and (Test-Path $env:ProjectListOverrideFile)) {
+              Write-Host "Clearing $env:ProjectListOverrideFile"
+              rm $env:ProjectListOverrideFile
             }
+            Write-Host '##vso[task.setvariable variable=ProjectListOverrideFile;]'
+          env:
+            ProjectListOverrideFile: $(ProjectListOverrideFile)
           displayName: Cleanup Props File
 
         - script: >-
@@ -160,7 +167,7 @@ jobs:
             /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
             /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
             $(DiagnosticArguments)
-          displayName: "Build and Package"
+          displayName: "Build and Package Service Directory"
 
       # save package properties again, this time honoring the dev version number
       - ${{ if ne(parameters.ServiceDirectory, 'auto') }}:
@@ -240,6 +247,8 @@ jobs:
                 - "/*"
                 - "!SessionRecords"
 
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
       - template: /eng/common/pipelines/templates/steps/cache-ps-modules.yml
 
       - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
@@ -265,8 +274,6 @@ jobs:
         inputs:
           versionSpec: 18.x
         displayName: 'Use Node 18.x'
-
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
       - task: DotNetCoreCLI@2
         displayName: 'Install Snippet Generator Tool'
@@ -325,6 +332,7 @@ jobs:
                 /p:PublicSign=false `
                 /p:Configuration=$(BuildConfiguration) `
                 /p:EnableSourceLink=false `
+                /p:ProjectListOverrideFile="" `
                 /p:BuildSnippets=true `
                 $(DiagnosticArguments)
             }
@@ -396,6 +404,8 @@ jobs:
             - script: |
                 echo "##vso[task.setvariable variable=DISCOVER_DEPENDENT_PACKAGES]1"
               displayName: Enable AdditionalDependency Calculation
+
+            - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
             - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
               parameters:
