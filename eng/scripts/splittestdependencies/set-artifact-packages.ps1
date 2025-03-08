@@ -29,7 +29,6 @@ $projectGroups = @()
 $projectGroups += ,$projectsForGeneration
 
 if ($SetOverrideFile) {
-    # todo: refactor write-test-dependency-group to take in a list of project files only and generate a single project file
     $outputFile = (Write-Test-Dependency-Group-To-Files -ProjectFileConfigName "packages" -ProjectGroups $projectGroups -MatrixOutputFolder $OutputPath)[0]
     Get-ChildItem -Recurse $OutputPath | ForEach-Object { Write-Host "Dumping $($_.FullName)"; Get-Content -Raw -Path $_.FullName | Write-Host }
     # the projectlistoverride file must be provided as a relative path
