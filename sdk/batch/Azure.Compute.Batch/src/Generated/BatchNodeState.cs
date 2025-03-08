@@ -36,6 +36,8 @@ namespace Azure.Compute.Batch
         private const string OfflineValue = "offline";
         private const string PreemptedValue = "preempted";
         private const string UpgradingOSValue = "upgradingos";
+        private const string DeallocatedValue = "deallocated";
+        private const string DeallocatingValue = "deallocating";
 
         /// <summary> The Compute Node is not currently running a Task. </summary>
         public static BatchNodeState Idle { get; } = new BatchNodeState(IdleValue);
@@ -65,6 +67,10 @@ namespace Azure.Compute.Batch
         public static BatchNodeState Preempted { get; } = new BatchNodeState(PreemptedValue);
         /// <summary> The Compute Node is undergoing an OS upgrade operation. </summary>
         public static BatchNodeState UpgradingOS { get; } = new BatchNodeState(UpgradingOSValue);
+        /// <summary> The Compute Node is deallocated. </summary>
+        public static BatchNodeState Deallocated { get; } = new BatchNodeState(DeallocatedValue);
+        /// <summary> The Compute Node is deallocating. </summary>
+        public static BatchNodeState Deallocating { get; } = new BatchNodeState(DeallocatingValue);
         /// <summary> Determines if two <see cref="BatchNodeState"/> values are the same. </summary>
         public static bool operator ==(BatchNodeState left, BatchNodeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchNodeState"/> values are not the same. </summary>

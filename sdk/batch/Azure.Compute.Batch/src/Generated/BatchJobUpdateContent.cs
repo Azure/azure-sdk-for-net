@@ -59,8 +59,9 @@ namespace Azure.Compute.Batch
         /// <param name="poolInfo"> The Pool on which the Batch service runs the Job's Tasks. You may change the Pool for a Job only when the Job is disabled. The Patch Job call will fail if you include the poolInfo element and the Job is not disabled. If you specify an autoPoolSpecification in the poolInfo, only the keepAlive property of the autoPoolSpecification can be updated, and then only if the autoPoolSpecification has a poolLifetimeOption of Job (other job properties can be updated as normal). If omitted, the Job continues to run on its current Pool. </param>
         /// <param name="onAllTasksComplete"> The action the Batch service should take when all Tasks in the Job are in the completed state. If omitted, the completion behavior is left unchanged. You may not change the value from terminatejob to noaction - that is, once you have engaged automatic Job termination, you cannot turn it off again. If you try to do this, the request fails with an 'invalid property value' error response; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
         /// <param name="metadata"> A list of name-value pairs associated with the Job as metadata. If omitted, the existing Job metadata is left unchanged. </param>
+        /// <param name="networkConfiguration"> The network configuration for the Job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobUpdateContent(int? priority, bool? allowTaskPreemption, int? maxParallelTasks, BatchJobConstraints constraints, BatchPoolInfo poolInfo, OnAllBatchTasksComplete? onAllTasksComplete, IList<MetadataItem> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchJobUpdateContent(int? priority, bool? allowTaskPreemption, int? maxParallelTasks, BatchJobConstraints constraints, BatchPoolInfo poolInfo, OnAllBatchTasksComplete? onAllTasksComplete, IList<MetadataItem> metadata, BatchJobNetworkConfiguration networkConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Priority = priority;
             AllowTaskPreemption = allowTaskPreemption;
@@ -69,6 +70,7 @@ namespace Azure.Compute.Batch
             PoolInfo = poolInfo;
             OnAllTasksComplete = onAllTasksComplete;
             Metadata = metadata;
+            NetworkConfiguration = networkConfiguration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -86,5 +88,7 @@ namespace Azure.Compute.Batch
         public OnAllBatchTasksComplete? OnAllTasksComplete { get; set; }
         /// <summary> A list of name-value pairs associated with the Job as metadata. If omitted, the existing Job metadata is left unchanged. </summary>
         public IList<MetadataItem> Metadata { get; }
+        /// <summary> The network configuration for the Job. </summary>
+        public BatchJobNetworkConfiguration NetworkConfiguration { get; set; }
     }
 }
