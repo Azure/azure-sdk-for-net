@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         OSOptionProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OSOptionProfileData.DeserializeOSOptionProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         OSOptionProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OSOptionProfileData.DeserializeOSOptionProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         KubernetesVersionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KubernetesVersionListResult.DeserializeKubernetesVersionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         KubernetesVersionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KubernetesVersionListResult.DeserializeKubernetesVersionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedClusterListResult.DeserializeManagedClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedClusterListResult.DeserializeManagedClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedClusterListResult.DeserializeManagedClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedClusterListResult.DeserializeManagedClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterUpgradeProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedClusterUpgradeProfileData.DeserializeManagedClusterUpgradeProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterUpgradeProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedClusterUpgradeProfileData.DeserializeManagedClusterUpgradeProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterAccessProfile value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedClusterAccessProfile.DeserializeManagedClusterAccessProfile(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterAccessProfile value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedClusterAccessProfile.DeserializeManagedClusterAccessProfile(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterCredentials value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedClusterCredentials.DeserializeManagedClusterCredentials(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterCredentials value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedClusterCredentials.DeserializeManagedClusterCredentials(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterCredentials value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedClusterCredentials.DeserializeManagedClusterCredentials(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterCredentials value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedClusterCredentials.DeserializeManagedClusterCredentials(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterCredentials value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedClusterCredentials.DeserializeManagedClusterCredentials(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -895,7 +895,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterCredentials value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedClusterCredentials.DeserializeManagedClusterCredentials(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ContainerServiceManagedClusterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -989,7 +989,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ContainerServiceManagedClusterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2038,7 +2038,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterRunCommandResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedClusterRunCommandResult.DeserializeManagedClusterRunCommandResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2071,7 +2071,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterRunCommandResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedClusterRunCommandResult.DeserializeManagedClusterRunCommandResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2138,7 +2138,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         OutboundEnvironmentEndpointListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OutboundEnvironmentEndpointListResult.DeserializeOutboundEnvironmentEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2167,7 +2167,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         OutboundEnvironmentEndpointListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OutboundEnvironmentEndpointListResult.DeserializeOutboundEnvironmentEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2225,7 +2225,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         MeshRevisionProfileList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MeshRevisionProfileList.DeserializeMeshRevisionProfileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2251,7 +2251,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         MeshRevisionProfileList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MeshRevisionProfileList.DeserializeMeshRevisionProfileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2313,7 +2313,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         MeshRevisionProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MeshRevisionProfileData.DeserializeMeshRevisionProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2343,7 +2343,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         MeshRevisionProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MeshRevisionProfileData.DeserializeMeshRevisionProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2410,7 +2410,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         MeshUpgradeProfileList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MeshUpgradeProfileList.DeserializeMeshUpgradeProfileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2439,7 +2439,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         MeshUpgradeProfileList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MeshUpgradeProfileList.DeserializeMeshUpgradeProfileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2508,7 +2508,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         MeshUpgradeProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MeshUpgradeProfileData.DeserializeMeshUpgradeProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2541,7 +2541,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         MeshUpgradeProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MeshUpgradeProfileData.DeserializeMeshUpgradeProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2592,7 +2592,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedClusterListResult.DeserializeManagedClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2619,7 +2619,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedClusterListResult.DeserializeManagedClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2670,7 +2670,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedClusterListResult.DeserializeManagedClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2699,7 +2699,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         ManagedClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedClusterListResult.DeserializeManagedClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2752,7 +2752,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         OutboundEnvironmentEndpointListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OutboundEnvironmentEndpointListResult.DeserializeOutboundEnvironmentEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2783,7 +2783,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         OutboundEnvironmentEndpointListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OutboundEnvironmentEndpointListResult.DeserializeOutboundEnvironmentEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2833,7 +2833,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         MeshRevisionProfileList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MeshRevisionProfileList.DeserializeMeshRevisionProfileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2861,7 +2861,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         MeshRevisionProfileList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MeshRevisionProfileList.DeserializeMeshRevisionProfileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2914,7 +2914,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         MeshUpgradeProfileList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MeshUpgradeProfileList.DeserializeMeshUpgradeProfileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2945,7 +2945,7 @@ namespace Azure.ResourceManager.ContainerService
                 case 200:
                     {
                         MeshUpgradeProfileList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MeshUpgradeProfileList.DeserializeMeshUpgradeProfileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

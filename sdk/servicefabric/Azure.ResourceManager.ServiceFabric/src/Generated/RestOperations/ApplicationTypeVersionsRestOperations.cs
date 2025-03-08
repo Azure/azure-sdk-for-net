@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricApplicationTypeVersionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricApplicationTypeVersionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricApplicationTypeVersionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceFabricApplicationTypeVersionList.DeserializeServiceFabricApplicationTypeVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricApplicationTypeVersionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceFabricApplicationTypeVersionList.DeserializeServiceFabricApplicationTypeVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricApplicationTypeVersionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceFabricApplicationTypeVersionList.DeserializeServiceFabricApplicationTypeVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricApplicationTypeVersionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceFabricApplicationTypeVersionList.DeserializeServiceFabricApplicationTypeVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

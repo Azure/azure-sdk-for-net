@@ -27,15 +27,15 @@ Thank you to our developer community members who helped to make the Event Hubs c
   The long-based offset members will continue to work for Event Hubs namespaces that do not have GeoDR replication enabled, but are discouraged for use and have been marked as obsolete.
   
   Obsoleted properties:
-  - [EventData.Offset](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventdata.offset?view=azure-dotnet#azure-messaging-eventhubs-eventdata-offset)
-  - [LastEnqueuedEventProperties.Offset](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.lastenqueuedeventproperties.offset?view=azure-dotnet)
-  - [PartitionProperties.LastEnqueuedOffset](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.partitionproperties.lastenqueuedoffset?view=azure-dotnet)
+  - `EventData.Offset`
+  - `LastEnqueuedEventProperties.Offset`
+  - `PartitionProperties.LastEnqueuedOffset`
 
   Obsoleted method overloads:
-  - [EventPosition.FromOffset](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.eventposition.fromoffset?view=azure-dotnet)
-  - [EventHubsModelFactory.EventData](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsmodelfactory.eventdata?view=azure-dotnet)
-  - [BlobCheckpointStore.UpdateCheckpointAsync](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.blobcheckpointstore.updatecheckpointasync?view=azure-dotnet)
-  - [EventProcessorClient.UpdateCheckpointAsync](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclient.updatecheckpointasync?view=azure-dotnet)
+  - EventPosition.FromOffset
+  - EventHubsModelFactory.EventData
+  - BlobCheckpointStore.UpdateCheckpointAsync
+  - EventProcessorClient.UpdateCheckpointAsync
   
 ### Other Changes
 
@@ -44,6 +44,12 @@ Thank you to our developer community members who helped to make the Event Hubs c
 - Added Event Hub name to processor load balancing logs for additional context.  _(A community contribution, courtesy of [tovyhnal](https://github.com/tovyhnal))_
 
 - Updated the `Microsoft.Azure.Amqp` dependency to 2.6.9, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+
+## 5.11.6 (2025-02-11)
+
+### Other Changes
+
+- Bump `Azure.Messaging.EventHubs` dependency to 5.11.6, which includes bumps to several transitive dependencies.
 
 ## 5.11.5 (2024-08-14)
 

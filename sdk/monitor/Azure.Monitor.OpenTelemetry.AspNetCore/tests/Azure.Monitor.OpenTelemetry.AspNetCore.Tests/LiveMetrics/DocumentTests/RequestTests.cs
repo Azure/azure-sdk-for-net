@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#if !NETFRAMEWORK
+#if NET
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,8 +12,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.AspNetCore.Builder;

@@ -79,11 +79,17 @@ public partial class ChatTests
         DateTimeOffset? streamedExpiresAt = null;
         StringBuilder streamedTranscriptBuilder = new();
         using MemoryStream outputAudioStream = new();
+        ChatTokenUsage? streamedUsage = null;
         await foreach (StreamingChatCompletionUpdate update in client.CompleteChatStreamingAsync(messages, options))
         {
             Assert.That(update.ContentUpdate, Has.Count.EqualTo(0));
             StreamingChatOutputAudioUpdate outputAudioUpdate = update.OutputAudioUpdate;
 
+            if (update.Usage is not null)
+            {
+                Assert.That(streamedUsage, Is.Null);
+                streamedUsage = update.Usage;
+            }
             if (outputAudioUpdate is not null)
             {
                 string serializedOutputAudioUpdate = ModelReaderWriter.Write(outputAudioUpdate).ToString();
@@ -108,5 +114,7 @@ public partial class ChatTests
         Assert.That(streamedExpiresAt.HasValue, Is.True);
         Assert.That(streamedTranscriptBuilder.ToString(), Is.Not.Null.And.Not.Empty);
         Assert.That(outputAudioStream.Length, Is.GreaterThan(9000));
+        Assert.That(streamedUsage?.InputTokenDetails?.AudioTokenCount, Is.GreaterThan(0));
+        Assert.That(streamedUsage?.OutputTokenDetails?.AudioTokenCount, Is.GreaterThan(0));
     }
 }

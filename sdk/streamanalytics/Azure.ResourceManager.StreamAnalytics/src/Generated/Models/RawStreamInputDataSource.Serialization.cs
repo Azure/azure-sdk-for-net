@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Payload);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Payload))
+                using (JsonDocument document = JsonDocument.Parse(Payload, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRawStreamInputDataSource(document.RootElement, options);
                     }
                 default:

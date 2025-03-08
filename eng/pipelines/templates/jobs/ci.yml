@@ -139,16 +139,20 @@ jobs:
               /p:ProjectListOverrideFile=$(ProjectListOverrideFile) `
               /p:IncludePerf=false `
               /p:IncludeStress=false `
+              /p:IncludeIntegrationTests=false `
               /p:EnableOverrideExclusions=true `
               $(DiagnosticArguments)
           displayName: "Build and Package for PR"
       - ${{ else }}:
         - pwsh: |
-            if (Test-Path "$(ProjectListOverrideFile)") {
-              Write-Host "Clearing $(ProjectListOverrideFile)"
-              rm "$(ProjectListOverrideFile)"
-              Write-Host "##vso[task.setvariable variable=ProjectListOverrideFile;]"
+            $variableSet = $env:ProjectListOverrideFile -ne "`$`(ProjectListOverrideFile`)"
+            if ($variableSet -and (Test-Path $env:ProjectListOverrideFile)) {
+              Write-Host "Clearing $env:ProjectListOverrideFile"
+              rm $env:ProjectListOverrideFile
             }
+            Write-Host '##vso[task.setvariable variable=ProjectListOverrideFile;]'
+          env:
+            ProjectListOverrideFile: $(ProjectListOverrideFile)
           displayName: Cleanup Props File
 
         - script: >-
@@ -244,6 +248,8 @@ jobs:
                 - "/*"
                 - "!SessionRecords"
 
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
       - template: /eng/common/pipelines/templates/steps/cache-ps-modules.yml
 
       - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
@@ -269,8 +275,6 @@ jobs:
         inputs:
           versionSpec: 18.x
         displayName: 'Use Node 18.x'
-
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
       - task: DotNetCoreCLI@2
         displayName: 'Install Snippet Generator Tool'
@@ -322,11 +326,6 @@ jobs:
             -DiagnosticArguments "$(DiagnosticArguments)"
             -ProjectNames "$(ProjectNames)"
           pwsh: true
-
-      - pwsh: |
-
-        displayName: Build snippets
-        condition: and(succeeded(), eq(${{ parameters.BuildSnippets }}, true))
 
   # For some pipelines like mgmt which are tested in aggregate we want to limit the pipeline to no tests or
   # other stages that are aggregate in nature as those are tested in another aggregate pipeline
@@ -389,6 +388,8 @@ jobs:
             - script: |
                 echo "##vso[task.setvariable variable=DISCOVER_DEPENDENT_PACKAGES]1"
               displayName: Enable AdditionalDependency Calculation
+
+            - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
             - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
               parameters:

@@ -20,17 +20,17 @@ namespace MgmtTypeSpec.Models
         {
         }
 
-        internal UserAssignedIdentity(Guid? principalId, Guid? clientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserAssignedIdentity(Guid? clientId, Guid? principalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PrincipalId = principalId;
             ClientId = clientId;
+            PrincipalId = principalId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The principal ID of the assigned identity. </summary>
-        public Guid? PrincipalId { get; }
-
         /// <summary> The client ID of the assigned identity. </summary>
         public Guid? ClientId { get; }
+
+        /// <summary> The principal ID of the assigned identity. </summary>
+        public Guid? PrincipalId { get; }
     }
 }

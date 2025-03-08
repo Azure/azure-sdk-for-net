@@ -411,7 +411,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetLargePersonGroupsAsync(start, top, returnRecognitionModel, context).ConfigureAwait(false);
             IReadOnlyList<LargePersonGroup> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<LargePersonGroup> array = new List<LargePersonGroup>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -433,7 +433,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetLargePersonGroups(start, top, returnRecognitionModel, context);
             IReadOnlyList<LargePersonGroup> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<LargePersonGroup> array = new List<LargePersonGroup>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -962,7 +962,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetPersonsAsync(start, top, context).ConfigureAwait(false);
             IReadOnlyList<LargePersonGroupPerson> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<LargePersonGroupPerson> array = new List<LargePersonGroupPerson>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -983,7 +983,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetPersons(start, top, context);
             IReadOnlyList<LargePersonGroupPerson> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<LargePersonGroupPerson> array = new List<LargePersonGroupPerson>();
             foreach (var item in document.RootElement.EnumerateArray())
             {

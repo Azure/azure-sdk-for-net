@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Billing
     {
         BillingRoleAssignmentData IOperationSource<BillingRoleAssignmentData>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return BillingRoleAssignmentData.DeserializeBillingRoleAssignmentData(document.RootElement);
         }
 
         async ValueTask<BillingRoleAssignmentData> IOperationSource<BillingRoleAssignmentData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return BillingRoleAssignmentData.DeserializeBillingRoleAssignmentData(document.RootElement);
         }
     }

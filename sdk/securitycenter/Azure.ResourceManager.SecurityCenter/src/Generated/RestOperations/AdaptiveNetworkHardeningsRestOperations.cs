@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AdaptiveNetworkHardeningsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AdaptiveNetworkHardeningsList.DeserializeAdaptiveNetworkHardeningsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AdaptiveNetworkHardeningsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AdaptiveNetworkHardeningsList.DeserializeAdaptiveNetworkHardeningsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AdaptiveNetworkHardeningData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AdaptiveNetworkHardeningData.DeserializeAdaptiveNetworkHardeningData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AdaptiveNetworkHardeningData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AdaptiveNetworkHardeningData.DeserializeAdaptiveNetworkHardeningData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AdaptiveNetworkHardeningsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AdaptiveNetworkHardeningsList.DeserializeAdaptiveNetworkHardeningsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         AdaptiveNetworkHardeningsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AdaptiveNetworkHardeningsList.DeserializeAdaptiveNetworkHardeningsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

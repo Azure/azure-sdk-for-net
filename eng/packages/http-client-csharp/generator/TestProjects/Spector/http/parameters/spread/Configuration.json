@@ -1,5 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "Parameters.Spread",
-  "library-name": "Parameters.Spread"
+  "package-name": "Parameters.Spread"
 }

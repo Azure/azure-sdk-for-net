@@ -1,5 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "Type.Model.Empty",
-  "library-name": "Type.Model.Empty"
+  "package-name": "Type.Model.Empty"
 }

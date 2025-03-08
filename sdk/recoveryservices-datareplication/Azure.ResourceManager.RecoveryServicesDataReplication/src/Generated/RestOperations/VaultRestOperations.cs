@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         DataReplicationVaultData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataReplicationVaultData.DeserializeDataReplicationVaultData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         DataReplicationVaultData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataReplicationVaultData.DeserializeDataReplicationVaultData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         DataReplicationVaultListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataReplicationVaultListResult.DeserializeDataReplicationVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         DataReplicationVaultListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataReplicationVaultListResult.DeserializeDataReplicationVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         DataReplicationVaultListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataReplicationVaultListResult.DeserializeDataReplicationVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         DataReplicationVaultListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataReplicationVaultListResult.DeserializeDataReplicationVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         DataReplicationVaultListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataReplicationVaultListResult.DeserializeDataReplicationVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         DataReplicationVaultListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataReplicationVaultListResult.DeserializeDataReplicationVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         DataReplicationVaultListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataReplicationVaultListResult.DeserializeDataReplicationVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         DataReplicationVaultListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataReplicationVaultListResult.DeserializeDataReplicationVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
