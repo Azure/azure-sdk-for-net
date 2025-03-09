@@ -7,9 +7,24 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.TypeSpec;
+
+/// <summary>
+/// Writes TypeSpec code for a service.
+/// </summary>
 public static class TypeSpecWriter
 {
+    /// <summary>
+    /// Writes TypeSpec code for a service.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="output"></param>
     public static void WriteServer<T>(Stream output) => WriteServer(output, typeof(T));
+
+    /// <summary>
+    /// Writes TypeSpec code for a service.
+    /// </summary>
+    /// <param name="output"></param>
+    /// <param name="service"></param>
     public static void WriteServer(Stream output, Type service)
     {
         string name = service.Name;
@@ -52,7 +67,7 @@ public static class TypeSpecWriter
         writer.Flush();
     }
 
-    public static void WriteModel(Stream output, Type model)
+    internal static void WriteModel(Stream output, Type model)
     {
         StreamWriter writer = new(output);
 
@@ -67,7 +82,7 @@ public static class TypeSpecWriter
         writer.WriteLine();
         writer.Flush();
     }
-    public static void WriteModel<T>(Stream output)
+    internal static void WriteModel<T>(Stream output)
     {
         Type model = typeof(T);
         WriteModel(output, model);
