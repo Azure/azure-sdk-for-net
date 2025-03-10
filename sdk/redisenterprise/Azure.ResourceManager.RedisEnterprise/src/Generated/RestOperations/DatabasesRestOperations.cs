@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 case 200:
                     {
                         RedisEnterpriseDatabaseList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisEnterpriseDatabaseList.DeserializeRedisEnterpriseDatabaseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 case 200:
                     {
                         RedisEnterpriseDatabaseList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisEnterpriseDatabaseList.DeserializeRedisEnterpriseDatabaseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 case 200:
                     {
                         RedisEnterpriseDatabaseData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisEnterpriseDatabaseData.DeserializeRedisEnterpriseDatabaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 case 200:
                     {
                         RedisEnterpriseDatabaseData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisEnterpriseDatabaseData.DeserializeRedisEnterpriseDatabaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 case 200:
                     {
                         RedisEnterpriseDataAccessKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisEnterpriseDataAccessKeys.DeserializeRedisEnterpriseDataAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 case 200:
                     {
                         RedisEnterpriseDataAccessKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisEnterpriseDataAccessKeys.DeserializeRedisEnterpriseDataAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1376,7 +1376,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 case 200:
                     {
                         RedisEnterpriseDatabaseList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisEnterpriseDatabaseList.DeserializeRedisEnterpriseDatabaseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1407,7 +1407,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 case 200:
                     {
                         RedisEnterpriseDatabaseList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisEnterpriseDatabaseList.DeserializeRedisEnterpriseDatabaseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

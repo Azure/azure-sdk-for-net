@@ -168,9 +168,9 @@
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.9" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.4.0" />
-    <PackageReference Update="Microsoft.Identity.Client" Version="4.67.2" />
-    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.67.2" />
-    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.67.2" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.69.1" />
+    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.69.1" />
+    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.69.1" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.35.0" />
@@ -180,11 +180,11 @@
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
-    <PackageReference Update="OpenTelemetry" Version="1.9.0" />
-    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.9.0" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.9.0" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.9.0" />
-    <PackageReference Update="OpenTelemetry.PersistentStorage.FileSystem" Version="1.0.0" />
+    <PackageReference Update="OpenTelemetry" Version="1.11.2" />
+    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.11.2" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.11.1" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.11.1" />
+    <PackageReference Update="OpenTelemetry.PersistentStorage.FileSystem" Version="1.0.1" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Abstractions" Version="[2.1.1,6.0)" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Features" Version="[2.1.1,6.0)" />
   </ItemGroup>
@@ -199,9 +199,12 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.Contains('Azure.Projects'))">
-    <PackageReference Update="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0"/>
+    <PackageReference Update="Azure.Data.AppConfiguration" Version="1.5.0"/>
     <PackageReference Update="Azure.Provisioning.Deployment" Version="1.0.0-beta.2"/>
+    <PackageReference Update="Azure.Provisioning.AppConfiguration" Version="1.0.0"/>
+    <PackageReference Update="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0"/>
+    <PackageReference Update="System.Memory.Data" Version="8.0.1"/>
   </ItemGroup>
 
   <!--
@@ -224,7 +227,7 @@
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Rpc" Version="3.0.37" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Host.Storage" Version="5.0.0" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
-    <PackageReference Update="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Update="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <!-- Packages intended for Extensions libraries only -->
@@ -233,7 +236,7 @@
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.1.22" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
     <PackageReference Update="Microsoft.Azure.Functions.Worker.Extensions.Abstractions" Version="1.1.0" />
-    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.10.0" />
+    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.8.0" /> <!-- Latest confirmed as compatible by the Functions team. DO NOT BUMP-->
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
@@ -247,9 +250,10 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20250303.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20250309.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20250227.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
+    <!-- Note: Upgrading the .NET SDK version needs to be synchronized with the autorest.csharp repository -->
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.2" PrivateAssets="All" />
     <PackageReference Update="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20467.1" PrivateAssets="All" />
@@ -370,12 +374,12 @@
     <PackageReference Update="NSubstitute" Version="3.1.0" />
     <PackageReference Update="NUnit" Version="3.13.2" />
     <PackageReference Update="NUnit3TestAdapter" Version="4.4.2" />
-    <PackageReference Update="OpenTelemetry" Version="1.9.0" />
-    <PackageReference Update="OpenTelemetry.Exporter.Console" Version="1.9.0" />
-    <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.9.0" />
-    <PackageReference Update="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.9.0" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.9.0" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.SqlClient" Version="1.9.0-beta.1" />
+    <PackageReference Update="OpenTelemetry" Version="1.11.2" />
+    <PackageReference Update="OpenTelemetry.Exporter.Console" Version="1.11.2" />
+    <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.11.2" />
+    <PackageReference Update="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.11.2" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.11.1" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.SqlClient" Version="1.11.0-beta.2" />
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.9.0" />

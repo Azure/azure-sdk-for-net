@@ -1,16 +1,21 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using Azure.Projects.AppService;
 using Azure.Projects.OpenAI;
 using Azure.Projects;
 using OpenAI.Chat;
+using Azure.AI.OpenAI;
 
 ProjectInfrastructure infrastructure = new();
 infrastructure.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
 infrastructure.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
 infrastructure.AddFeature(new AppServiceFeature());
-ProjectClient client = infrastructure.GetClient();
 
 // the app can be called with -init switch to generate bicep and prepare for azd deployment.
 if (infrastructure.TryExecuteCommand(args)) return;
+
+ProjectClient client = new();
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
@@ -23,7 +28,7 @@ var app = builder.Build();
 app.MapRazorPages();
 app.UseStaticFiles();
 
-EmbeddingsVectorbase vectorDb = new(client.GetOpenAIEmbeddingsClient());
+EmbeddingsVectorbase vectorDb = new(client.GetOpenAIEmbeddingClient());
 List<ChatMessage> prompt = [];
 
 // Register the vector db to be updated when a new file is uploaded
