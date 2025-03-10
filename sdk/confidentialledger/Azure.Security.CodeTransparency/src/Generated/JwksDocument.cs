@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Security.CodeTransparency
 {
-    /// <summary> Response of entry submission containing the operationId. </summary>
-    public partial class CreateEntryResult
+    /// <summary> A JWKS like document. </summary>
+    public partial class JwksDocument
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +46,31 @@ namespace Azure.Security.CodeTransparency
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CreateEntryResult"/>. </summary>
-        /// <param name="operationId"> String representing the operation id submitted. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        internal CreateEntryResult(string operationId)
+        /// <summary> Initializes a new instance of <see cref="JwksDocument"/>. </summary>
+        /// <param name="keys"> List of public keys used for receipt verification. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keys"/> is null. </exception>
+        internal JwksDocument(IEnumerable<JsonWebKey> keys)
         {
-            Argument.AssertNotNull(operationId, nameof(operationId));
+            Argument.AssertNotNull(keys, nameof(keys));
 
-            OperationId = operationId;
+            Keys = keys.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateEntryResult"/>. </summary>
-        /// <param name="operationId"> String representing the operation id submitted. </param>
+        /// <summary> Initializes a new instance of <see cref="JwksDocument"/>. </summary>
+        /// <param name="keys"> List of public keys used for receipt verification. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateEntryResult(string operationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal JwksDocument(IReadOnlyList<JsonWebKey> keys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            OperationId = operationId;
+            Keys = keys;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateEntryResult"/> for deserialization. </summary>
-        internal CreateEntryResult()
+        /// <summary> Initializes a new instance of <see cref="JwksDocument"/> for deserialization. </summary>
+        internal JwksDocument()
         {
         }
 
-        /// <summary> String representing the operation id submitted. </summary>
-        public string OperationId { get; }
+        /// <summary> List of public keys used for receipt verification. </summary>
+        public IReadOnlyList<JsonWebKey> Keys { get; }
     }
 }

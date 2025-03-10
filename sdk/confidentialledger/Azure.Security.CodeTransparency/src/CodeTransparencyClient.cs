@@ -2,18 +2,23 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Formats.Cbor;
+using System.Security.Cryptography.Cose;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Security.CodeTransparency.Receipt;
 
 namespace Azure.Security.CodeTransparency
 {
-    [CodeGenSuppress("CreateEntry", typeof(RequestContent), typeof(RequestContext))]
-    [CodeGenSuppress("CreateEntryAsync", typeof(RequestContent), typeof(RequestContext))]
     public partial class CodeTransparencyClient
     {
+        private readonly string _serviceName;
+
         /// <summary>
         /// Initializes a new instance of CodeTransparencyClient. The client will download its own
         /// TLS CA cert to perform server cert authentication.
@@ -27,9 +32,9 @@ namespace Azure.Security.CodeTransparency
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new CodeTransparencyClientOptions();
-            string name = endpoint.Host.Split('.')[0];
+            _serviceName = endpoint.Host.Split('.')[0];
             CodeTransparencyCertificateClient certificateClient = options.CreateCertificateClient();
-            HttpPipelineTransportOptions transportOptions = CreateTlsCertAndTrustVerifier(name, certificateClient);
+            HttpPipelineTransportOptions transportOptions = CreateTlsCertAndTrustVerifier(_serviceName, certificateClient);
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
@@ -101,68 +106,122 @@ namespace Azure.Security.CodeTransparency
             return new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = args => CertValidationCheck(args.Certificate) };
         }
 
-        /// <summary> Post an entry to be registered on the CodeTransparency instance. The returned operation will have the entry id when it is complete. </summary>
-        /// <param name="body"> A raw CoseSign1 signature. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Operation<GetOperationResult> CreateEntry(BinaryData body, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Verify the receipt integrity against the COSE_Sign1 envelope
+        /// and check if receipt was endorsed by the given service certificate.
+        /// In the case of receipts being embedded in the signature then verify
+        /// all of them.
+        /// Calls <!-- see cref="CcfReceiptVerifier.VerifyTransparentStatementReceipt(JsonWebKey, byte[], byte[])"/> for each receipt found in the transparent statement.-->
+        /// </summary>
+        /// <param name="transparentStatementCoseSign1Bytes">Receipt cbor or Cose_Sign1 (with an embedded receipt) bytes.</param>
+        /// <param name="signedStatement">The input signed statement in Cose_Sign1 cbor bytes.</param>
+        public void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes, byte[] signedStatement)
         {
-            using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
-            RequestContext context = FromCancellationToken(cancellationToken);
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntry");
-            scope.Start();
-            try
+            List<Exception> failures = new List<Exception>();
+
+            CoseSign1Message coseSign1Message = CoseMessage.DecodeSign1(transparentStatementCoseSign1Bytes);
+
+            // Embedded receipt bytes contain receipt under the map with key as 394 and the value as the receipt bytes
+            // See https://www.ietf.org/archive/id/draft-ietf-scitt-architecture-10.html#name-transparent-statements
+            if (!coseSign1Message.UnprotectedHeaders.
+                TryGetValue(new CoseHeaderLabel(CcfReceipt.COSE_HEADER_EMBEDDED_RECEIPTS),
+                out CoseHeaderValue embeddedReceipts))
             {
-                using HttpMessage message = CreateCreateEntryRequest(content, context);
-                Response response = _pipeline.ProcessMessage(message, context, cancellationToken);
-                CreateEntryResult result = Response.FromValue(CreateEntryResult.FromResponse(response), response);
-                return new CreateEntryOperation(this, result.OperationId);
+                throw new InvalidOperationException("embeddedReceipts not found");
             }
-            catch (Exception e)
+
+            CborReader cborReader = new CborReader(embeddedReceipts.EncodedValue);
+            cborReader.ReadStartArray();
+
+            var receiptList = new List<byte[]>();
+            while (cborReader.PeekState() != CborReaderState.EndArray)
             {
-                scope.Failed(e);
-                throw;
+                receiptList.Add(cborReader.ReadByteString());
+            }
+            cborReader.ReadEndArray();
+
+            // Verify each receipt and keep failure counter
+            foreach (var receipt in receiptList)
+            {
+                try
+                {
+                    JsonWebKey jsonWebKey = GetServiceCertificateKey(receipt);
+                    CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, receipt, signedStatement);
+                }
+                catch (Exception e)
+                {
+                    failures.Add(e);
+                }
+            }
+            if (failures.Count > 0)
+            {
+                throw new AggregateException(failures);
             }
         }
 
-        /// <summary> Post an entry to be registered on the CodeTransparency instance. The returned operation will have the entry id when it is complete. </summary>
-        /// <param name="body"> A raw CoseSign1 signature. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Operation<GetOperationResult>> CreateEntryAsync(BinaryData body, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Get the service certificate key from the JWKs service endpoint.
+        /// </summary>
+        /// <param name="receiptBytes">the COSE receipt bytes,
+        /// see https://www.ietf.org/archive/id/draft-ietf-cose-merkle-tree-proofs-08.html#name-verifiable-data-structures-</param>
+        /// <returns>The service certificate key (JWK)</returns>
+        private JsonWebKey GetServiceCertificateKey(byte[] receiptBytes)
         {
-            using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
-            RequestContext context = FromCancellationToken(cancellationToken);
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntryAsync");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateEntryRequest(content, context);
-                Response response = await _pipeline.ProcessMessageAsync(message, context, cancellationToken).ConfigureAwait(false);
-                CreateEntryResult result = Response.FromValue(CreateEntryResult.FromResponse(response), response);
-                return new CreateEntryOperation(this, result.OperationId);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+            CoseSign1Message coseSign1Message = CoseMessage.DecodeSign1(receiptBytes);
 
-        internal HttpMessage CreateCreateEntryRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/entries", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("content-type", "application/cose");
-            request.Content = content;
-            return message;
+            if (!coseSign1Message.ProtectedHeaders.TryGetValue(new CoseHeaderLabel(CcfReceipt.COSE_RECEIPT_CWT_MAP_LABEL), out CoseHeaderValue cwtMap))
+            {
+                throw new InvalidOperationException("CWT-MAP not found in receipt.");
+            }
+
+            string issuer = string.Empty;
+
+            CborReader cborReader = new CborReader(cwtMap.EncodedValue.ToArray());
+            cborReader.ReadStartMap();
+            while (cborReader.PeekState() != CborReaderState.EndMap)
+            {
+                int key = cborReader.ReadInt32();
+                if (key == CcfReceipt.COSE_RECEIPT_CWT_ISS_LABEL)
+                    issuer = cborReader.ReadTextString();
+                else
+                    cborReader.SkipValue();
+            }
+            cborReader.ReadEndMap();
+
+            // Validate issuer and CTS instance are matching
+            if (!issuer.Equals(_serviceName, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException("Issuer and CTS instance name are not matching.");
+            }
+
+            // Get all the public keys from the JWKS endpoint
+            JwksDocument jwksDocument = GetPublicKeys().Value;
+
+            // Ensure there is at least one entry in the JWKS document
+            if (jwksDocument.Keys.Count == 0)
+            {
+                throw new InvalidOperationException("No keys found in JWKS document.");
+            }
+
+            // Store all the keys in a new Dictionary to simplify lookup
+            var keysDict = new Dictionary<string, JsonWebKey>();
+            foreach (JsonWebKey jsonWebKey in jwksDocument.Keys)
+            {
+                keysDict[jsonWebKey.Kid] = jsonWebKey;
+            }
+
+            if (!coseSign1Message.ProtectedHeaders.TryGetValue(CoseHeaderLabel.KeyIdentifier, out CoseHeaderValue receiptKid))
+            {
+                throw new InvalidOperationException("KID not found.");
+            }
+
+            string kidAsString = Encoding.UTF8.GetString(receiptKid.GetValueAsBytes());
+            if (!keysDict.TryGetValue(kidAsString, out JsonWebKey matchingKey))
+            {
+                throw new InvalidOperationException($"Key with ID '{kidAsString}' not found.");
+            }
+
+            return matchingKey;
         }
     }
 }
