@@ -31,7 +31,6 @@
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="..\..\..\Azure.Monitor.OpenTelemetry.Exporter\tests\Azure.Monitor.OpenTelemetry.Exporter.Tests\CommonTestFramework\EventSourceTestHelper.cs" LinkBase="CommonTestFramework" />
     <Compile Include="..\..\..\Azure.Monitor.OpenTelemetry.Exporter\tests\Azure.Monitor.OpenTelemetry.Exporter.Tests\CommonTestFramework\TestEventListener.cs" LinkBase="CommonTestFramework" />
-    <Compile Include="..\..\..\Azure.Monitor.OpenTelemetry.Exporter\tests\Azure.Monitor.OpenTelemetry.Exporter.Tests\CommonTestFramework\CustomXunitAttributes.cs" LinkBase="CommonTestFramework" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
