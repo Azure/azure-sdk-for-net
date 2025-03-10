@@ -194,6 +194,10 @@ namespace Azure.Communication.CallAutomation
                 case nameof(DialogLanguageChange):
                     return DialogLanguageChange.Deserialize(eventData);
                 #endregion
+                #region Incoming Call
+                case nameof(IncomingCall):
+                    return IncomingCall.Deserialize(eventData);
+                #endregion
                 default:
                     return null;
             }
