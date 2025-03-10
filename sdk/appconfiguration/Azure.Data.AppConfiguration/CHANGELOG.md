@@ -6,12 +6,6 @@
 
 - Added support for specifying the token credential's Microsoft Entra audience when creating a client.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.5.0 (2024-08-06)
 
 ### Features Added
