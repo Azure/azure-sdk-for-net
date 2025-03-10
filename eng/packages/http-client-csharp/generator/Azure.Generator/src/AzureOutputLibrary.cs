@@ -31,19 +31,19 @@ namespace Azure.Generator
                 {
                     continue;
                 }
-                var resource = CreateResourceCore(client);
+                var resource = CreateResourceClientCore(client);
                 AzureClientPlugin.Instance.AddTypeToKeep(resource.Name);
-                result.Add(CreateResourceCore(client));
+                result.Add(CreateResourceClientCore(client));
             }
             return result;
         }
 
         /// <summary>
-        /// Create a resource client provider
+        /// Create a resource client
         /// </summary>
         /// <param name="inputClient"></param>
         /// <returns></returns>
-        public virtual TypeProvider CreateResourceCore(InputClient inputClient) => new ResourceClientProvider(inputClient);
+        public virtual TypeProvider CreateResourceClientCore(InputClient inputClient) => new ResourceClientProvider(inputClient);
 
         /// <inheritdoc/>
         // TODO: generate collections

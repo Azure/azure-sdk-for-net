@@ -78,7 +78,7 @@ namespace Azure.Generator.Tests.TestHelpers
             if (createResourceCore is not null)
             {
                 Mock<AzureOutputLibrary> mockOutputLibrary = new Mock<AzureOutputLibrary>() { CallBase = true };
-                mockOutputLibrary.Setup(p => p.CreateResourceCore(It.IsAny<InputClient>())).Returns(
+                mockOutputLibrary.Setup(p => p.CreateResourceClientCore(It.IsAny<InputClient>())).Returns(
                     (InputClient inputClient) =>
                     {
                         return createResourceCore(inputClient);
