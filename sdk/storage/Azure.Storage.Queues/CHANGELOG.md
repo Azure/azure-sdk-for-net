@@ -1,17 +1,15 @@
 # Release History
 
-## 12.22.0-beta.2 (Unreleased)
+## 12.22.0 (2025-03-11)
 
 ### Features Added
+- Includes all features from 12.22.0-beta.1
 - Added the following Client Builders: `AddQueueServiceClient(Uri, Azure.SasCredential)`, `AddQueueServiceClient(Uri, TokenCredential)`
-
-### Breaking Changes
 
 ### Bugs Fixed
 - Fixed bug where a `QueueServiceClient`, `QueueClient` created with a connection string with an account name specified (e.g. "AccountName=..;"), the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
 - Fixed bug where a `QueueServiceClient`, `QueueClient` created with a `StorageSharedKeyCredential`, the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
 
-### Other Changes
 
 ## 12.22.0-beta.1 (2025-02-11)
 
