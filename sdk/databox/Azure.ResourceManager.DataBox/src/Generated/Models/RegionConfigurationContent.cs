@@ -76,19 +76,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// </summary>
         public ScheduleAvailabilityContent ScheduleAvailabilityRequest { get; set; }
         /// <summary> Request body to get the transport availability for given sku. </summary>
-        internal TransportAvailabilityContent TransportAvailabilityRequest { get; set; }
-        /// <summary> Type of the device. </summary>
-        public DataBoxSkuName? TransportAvailabilityRequestSkuName
-        {
-            get => TransportAvailabilityRequest is null ? default : TransportAvailabilityRequest.SkuName;
-            set
-            {
-                if (TransportAvailabilityRequest is null)
-                    TransportAvailabilityRequest = new TransportAvailabilityContent();
-                TransportAvailabilityRequest.SkuName = value;
-            }
-        }
-
+        public TransportAvailabilityContent TransportAvailabilityRequest { get; set; }
         /// <summary> Request body to get the datacenter address for given sku. </summary>
         public DataCenterAddressContent DataCenterAddressRequest { get; set; }
         /// <summary> Request body to get the device capabilities for a given sku. </summary>
