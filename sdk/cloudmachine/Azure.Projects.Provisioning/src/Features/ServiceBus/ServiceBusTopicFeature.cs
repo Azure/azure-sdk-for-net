@@ -22,7 +22,7 @@ internal class ServiceBusTopicFeature : AzureProjectFeature
         _parent = parent;
     }
 
-    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         ServiceBusNamespace serviceBusNamespace = infrastructure.GetConstruct<ServiceBusNamespace>(_parent.Id);
         var topic = new ServiceBusTopic(Name, "2021-11-01")
@@ -39,6 +39,6 @@ internal class ServiceBusTopicFeature : AzureProjectFeature
 
         infrastructure.AddConstruct(Id, topic);
 
-        EmitConnection(infrastructure, Name, Name);
+        EmitConnections(infrastructure, Name, Name);
     }
 }

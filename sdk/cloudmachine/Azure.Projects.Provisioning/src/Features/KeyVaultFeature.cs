@@ -18,7 +18,7 @@ public class KeyVaultFeature : AzureProjectFeature
         Sku = sku;
     }
 
-    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         // Add a KeyVault to the infrastructure.
         KeyVaultService kv = new("cm_kv")
@@ -49,7 +49,7 @@ public class KeyVaultFeature : AzureProjectFeature
             KeyVaultBuiltInRole.KeyVaultAdministrator.ToString()
         );
 
-        EmitConnection(infrastructure,
+        EmitConnections(infrastructure,
             "Azure.Security.KeyVault.Secrets.SecretClient",
             $"https://{infrastructure.ProjectId}.vault.azure.net/"
         );

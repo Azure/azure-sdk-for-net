@@ -70,7 +70,7 @@ public partial class ProjectInfrastructure
 
     public T AddFeature<T>(T feature) where T: AzureProjectFeature
     {
-        feature.AddImplicitFeatures(Features, ProjectId);
+        feature.EmitFeatures(Features, ProjectId);
         Features.Append(feature);
         return feature;
     }
@@ -112,7 +112,7 @@ public partial class ProjectInfrastructure
         // emit features
         foreach (AzureProjectFeature feature in Features)
         {
-            feature.EmitResources(this);
+            feature.EmitConstructs(this);
         }
 
         // add constructs to infrastructure

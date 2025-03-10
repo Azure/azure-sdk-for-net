@@ -21,8 +21,8 @@ public class BicepGenerationTests
     [Test]
     public void MinimalProject()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
-        string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
+        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         File.WriteAllText("d:\\minimal.bicep", actualBicep);
 
         string expectedBicep = LoadTestFile("minimal.bicep");
@@ -32,10 +32,10 @@ public class BicepGenerationTests
     [Test]
     public void Blobs()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
-        infra.AddFeature(new BlobContainerFeature("testcontainer"));
+        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
+        infrastructure.AddFeature(new BlobContainerFeature("testcontainer"));
 
-        string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         File.WriteAllText("d:\\blobs.bicep", actualBicep);
         string expectedBicep = LoadTestFile("blobs.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
@@ -44,10 +44,10 @@ public class BicepGenerationTests
     [Test]
     public void ObservableContainer()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
-        infra.AddBlobContainer(isObservable: true); // TODO: this should be done through feature
+        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
+        infrastructure.AddBlobContainer(isObservable: true); // TODO: this should be done through feature
 
-        string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         File.WriteAllText("d:\\ofx.bicep", actualBicep);
         string expectedBicep = LoadTestFile("ofx.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
@@ -56,9 +56,9 @@ public class BicepGenerationTests
     [Test]
     public void KeyVault()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
-        infra.AddFeature(new KeyVaultFeature());
-        string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
+        infrastructure.AddFeature(new KeyVaultFeature());
+        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         File.WriteAllText("d:\\kv.bicep", actualBicep);
         string expectedBicep = LoadTestFile("kv.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
@@ -67,9 +67,9 @@ public class BicepGenerationTests
     [Test]
     public void AIFoundry()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
-        infra.AddFeature(new AIFoundry.AIProjectFeature());
-        string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
+        infrastructure.AddFeature(new AIFoundry.AIProjectFeature());
+        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         File.WriteAllText("d:\\Foundry.bicep", actualBicep);
 
         string expectedBicep = LoadTestFile("Foundry.bicep");
@@ -79,11 +79,11 @@ public class BicepGenerationTests
     [Test]
     public void OpenAI()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
-        infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
-        infra.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
+        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
+        infrastructure.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
+        infrastructure.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
 
-        string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         File.WriteAllText("d:\\OpenAI.bicep", actualBicep);
 
         string expectedBicep = LoadTestFile("OpenAI.bicep");
@@ -93,13 +93,13 @@ public class BicepGenerationTests
     [Test]
     public void AppService()
     {
-        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
-        infra.AddFeature(new KeyVaultFeature());
-        infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
-        infra.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
-        infra.AddFeature(new AppServiceFeature());
+        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
+        infrastructure.AddFeature(new KeyVaultFeature());
+        infrastructure.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
+        infrastructure.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
+        infrastructure.AddFeature(new AppServiceFeature());
 
-        string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         File.WriteAllText("d:\\app.bicep", actualBicep);
         string expectedBicep = LoadTestFile("app.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);

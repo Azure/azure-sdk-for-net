@@ -21,7 +21,7 @@ public class StorageAccountFeature : AzureProjectFeature
         Name = accountName;
     }
 
-    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         var storageAccount = new StorageAccount("cm_storage", StorageAccount.ResourceVersions.V2023_01_01)
         {
@@ -56,7 +56,7 @@ public class BlobServiceFeature : AzureProjectFeature
 {
     public StorageAccountFeature? Account { get; set; }
 
-    protected internal override void AddImplicitFeatures(FeatureCollection features, string projectId)
+    protected internal override void EmitFeatures(FeatureCollection features, string projectId)
     {
         // This should use feature.Id, just like GetConstruct<T>
         StorageAccountFeature? account = features.FindAll<StorageAccountFeature>().FirstOrDefault();
@@ -68,7 +68,7 @@ public class BlobServiceFeature : AzureProjectFeature
         Account = account;
     }
 
-    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         if (Account == null)
         {
@@ -94,7 +94,7 @@ public class BlobContainerFeature : AzureProjectFeature
         ContainerName = containerName;
     }
 
-    protected internal override void AddImplicitFeatures(FeatureCollection features, string projectId)
+    protected internal override void EmitFeatures(FeatureCollection features, string projectId)
     {
         // TODO: is it OK that we return the first one?
         BlobServiceFeature? blobBervice = features.FindAll<BlobServiceFeature>().FirstOrDefault();
@@ -113,7 +113,7 @@ public class BlobContainerFeature : AzureProjectFeature
         Service = blobBervice;
     }
 
-    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         if (Service == null || Service.Account == null)
         {
@@ -128,7 +128,7 @@ public class BlobContainerFeature : AzureProjectFeature
         };
         infrastructure.AddConstruct(Id, blobContainer);
 
-        EmitConnection(infrastructure,
+        EmitConnections(infrastructure,
             $"Azure.Storage.Blobs.BlobContainerClient@{ContainerName}",
             $"https://{Service.Account.Name}.blob.core.windows.net/{ContainerName}"
         );

@@ -72,7 +72,7 @@ namespace Azure.Projects.AIFoundry
         /// Emit any necessary resources for provisioning (currently no-op).
         /// </summary>
         /// <param name="infrastructure">The ProjectInfrastructure context.</param>
-        protected internal override void EmitResources(ProjectInfrastructure infrastructure)
+        protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
         {
             var cmId = infrastructure.ProjectId;
             AIFoundryHubCdk hub = new($"{cmId}_hub", $"{cmId}_hub");
@@ -91,7 +91,7 @@ namespace Azure.Projects.AIFoundry
 
             if (_connectionString != null)
             {
-                EmitConnection(infrastructure, "Azure.AI.Projects.AIProjectClient", _connectionString);
+                EmitConnections(infrastructure, "Azure.AI.Projects.AIProjectClient", _connectionString);
             }
         }
     }

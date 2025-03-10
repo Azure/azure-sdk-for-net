@@ -19,7 +19,7 @@ internal sealed class ResourceGroupFeature : AzureProjectFeature
 
     public string? Name { get; }
 
-    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         string name = (Name == null) ? infrastructure.ProjectId : Name;
         var rg = new ResourceGroup(name);

@@ -12,7 +12,7 @@ namespace Azure.Projects.EventGrid;
 
 internal class SystemTopicEventSubscriptionFeature(string name, EventGridSystemTopicFeature parent, ServiceBusTopicFeature destination, ServiceBusNamespaceFeature parentNamespace) : AzureProjectFeature
 {
-    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         ServiceBusNamespace serviceBusNamespace = infrastructure.GetConstruct<ServiceBusNamespace>(parentNamespace.Id);
         SystemTopic parentTopic = infrastructure.GetConstruct<SystemTopic>(parent.Id);

@@ -54,7 +54,7 @@ public class OpenAIModelFeature : AzureProjectFeature
     /// </summary>
     /// <param name="features"></param>
     /// <param name="cmId"></param>
-    protected override void AddImplicitFeatures(FeatureCollection features, string cmId)
+    protected override void EmitFeatures(FeatureCollection features, string cmId)
     {
         // TODO: is it OK that we return the first one?
 
@@ -73,7 +73,7 @@ public class OpenAIModelFeature : AzureProjectFeature
     /// <param name="infrastructure"></param>
     /// <exception cref="InvalidOperationException"></exception>
     /// <exception cref="NotImplementedException"></exception>
-    protected override void EmitResources(ProjectInfrastructure infrastructure)
+    protected override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         string name = Kind switch
         {
@@ -117,7 +117,7 @@ public class OpenAIModelFeature : AzureProjectFeature
 
         string key = Kind == AIModelKind.Chat ? "OpenAI.Chat.ChatClient" : "OpenAI.Embeddings.EmbeddingClient";
         string locator = Kind == AIModelKind.Chat ? $"{infrastructure.ProjectId}_chat" : $"{infrastructure.ProjectId}_embedding";
-        EmitConnection(infrastructure, key, locator);
+        EmitConnections(infrastructure, key, locator);
 
         OpenAIModelFeature? FindPrevious(ProjectInfrastructure cm, OpenAIModelFeature current)
         {

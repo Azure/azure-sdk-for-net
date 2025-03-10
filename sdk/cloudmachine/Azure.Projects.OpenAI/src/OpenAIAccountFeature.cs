@@ -8,7 +8,7 @@ namespace Azure.Projects.OpenAI;
 
 internal class OpenAIAccountFeature : AzureProjectFeature
 {
-    protected override void EmitResources(ProjectInfrastructure infrastructure)
+    protected override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         CognitiveServicesAccount cognitiveServices = new("openai")
         {
@@ -30,6 +30,6 @@ internal class OpenAIAccountFeature : AzureProjectFeature
             CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor.ToString()
         );
 
-        EmitConnection(infrastructure, "Azure.AI.OpenAI.AzureOpenAIClient", $"https://{infrastructure.ProjectId}.openai.azure.com");
+        EmitConnections(infrastructure, "Azure.AI.OpenAI.AzureOpenAIClient", $"https://{infrastructure.ProjectId}.openai.azure.com");
     }
 }

@@ -14,7 +14,7 @@ internal class AppConfigurationFeature : AzureProjectFeature
     public AppConfigurationFeature()
     {}
 
-    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         AppConfigurationStore appConfigResource = new("cm_app_config")
         {
@@ -46,7 +46,7 @@ public class AppConfigurationSettingFeature : AzureProjectFeature
 
     internal AppConfigurationFeature? Store { get; set; }
 
-    protected internal override void AddImplicitFeatures(FeatureCollection features, string projectId)
+    protected internal override void EmitFeatures(FeatureCollection features, string projectId)
     {
         AppConfigurationFeature? account = features.FindAll<AppConfigurationFeature>().FirstOrDefault();
         if (account == default)
@@ -57,7 +57,7 @@ public class AppConfigurationSettingFeature : AzureProjectFeature
         Store = account;
     }
 
-    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         if (Store == null)
         {

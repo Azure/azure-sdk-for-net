@@ -9,7 +9,7 @@ namespace Azure.Projects.ServiceBus;
 
 public class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = ServiceBusSkuName.Standard, ServiceBusSkuTier tier = ServiceBusSkuTier.Standard) : AzureProjectFeature
 {
-    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         var sb = new ServiceBusNamespace("cm_servicebus")
         {
@@ -36,7 +36,7 @@ public class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = Ser
             ServiceBusBuiltInRole.AzureServiceBusDataOwner.ToString()
         );
 
-        EmitConnection(infrastructure,
+        EmitConnections(infrastructure,
             "Azure.Messaging.ServiceBus.ServiceBusClient",
             $"https://{infrastructure.ProjectId}.servicebus.windows.net/"
         );

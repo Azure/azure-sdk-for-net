@@ -11,13 +11,14 @@ namespace Azure.Projects.Core;
 
 public abstract partial class AzureProjectFeature
 {
+    // TODO: this should not be a guid. It should be a nice human readable name
     public string Id { get; } = Guid.NewGuid().ToString();
 
-    protected internal abstract void EmitResources(ProjectInfrastructure infrastructure);
+    protected internal virtual void EmitFeatures(FeatureCollection features, string projectId) { }
 
-    protected internal virtual void AddImplicitFeatures(FeatureCollection features, string projectId) { }
+    protected internal abstract void EmitConstructs(ProjectInfrastructure infrastructure);
 
-    protected void EmitConnection(ProjectInfrastructure infrastructure, string connectionId, string endpoint)
+    protected void EmitConnections(ProjectInfrastructure infrastructure, string connectionId, string endpoint)
     {
         AppConfigurationSettingFeature connection = new(connectionId, endpoint, "cm_connection");
         infrastructure.AddFeature(connection);

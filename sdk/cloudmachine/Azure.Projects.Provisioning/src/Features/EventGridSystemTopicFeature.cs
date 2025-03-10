@@ -13,7 +13,7 @@ internal class EventGridSystemTopicFeature(string topicName, AzureProjectFeature
 {
     internal const string EventGridTopicVersion = "2022-06-15";
 
-    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         StorageAccount storage = infrastructure.GetConstruct<StorageAccount>(source.Id);
 

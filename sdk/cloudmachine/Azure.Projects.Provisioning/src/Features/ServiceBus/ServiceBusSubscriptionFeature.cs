@@ -9,7 +9,7 @@ namespace Azure.Projects.ServiceBus;
 
 internal class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature parent) : AzureProjectFeature
 {
-    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         ServiceBusTopic serviceBusTopic = infrastructure.GetConstruct<ServiceBusTopic>(parent.Id);
 
@@ -30,6 +30,6 @@ internal class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature
 
         infrastructure.AddConstruct(Id, subscription);
 
-        EmitConnection(infrastructure, name, $"{parent.Name}/{name}");
+        EmitConnections(infrastructure, name, $"{parent.Name}/{name}");
     }
 }

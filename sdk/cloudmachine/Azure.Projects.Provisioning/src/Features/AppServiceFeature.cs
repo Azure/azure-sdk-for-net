@@ -18,7 +18,7 @@ public class AppServiceFeature : AzureProjectFeature
         Sku = new AppServiceSkuDescription { Tier = "Free", Name = "F1" };
     }
 
-    protected internal override void EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         //Add a App Service to the infrastructure.
         AppServicePlan hostingPlan = new("cm_hosting_plan")
