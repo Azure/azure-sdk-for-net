@@ -63,6 +63,19 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary> Initializes a new instance of <see cref="DataBoxShippingAddress"/>. </summary>
         /// <param name="streetAddress1"> Street Address line 1. </param>
+        /// <param name="country"> Name of the Country. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="streetAddress1"/> or <paramref name="country"/> is null. </exception>
+        public DataBoxShippingAddress(string streetAddress1, string country)
+        {
+            Argument.AssertNotNull(streetAddress1, nameof(streetAddress1));
+            Argument.AssertNotNull(country, nameof(country));
+
+            StreetAddress1 = streetAddress1;
+            Country = country;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxShippingAddress"/>. </summary>
+        /// <param name="streetAddress1"> Street Address line 1. </param>
         /// <param name="streetAddress2"> Street Address line 2. </param>
         /// <param name="streetAddress3"> Street Address line 3. </param>
         /// <param name="city"> Name of the City. </param>

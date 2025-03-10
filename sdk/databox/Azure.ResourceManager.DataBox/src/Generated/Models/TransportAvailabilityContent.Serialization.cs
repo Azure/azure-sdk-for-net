@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxSku : IUtf8JsonSerializable, IJsonModel<DataBoxSku>
+    public partial class TransportAvailabilityContent : IUtf8JsonSerializable, IJsonModel<TransportAvailabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TransportAvailabilityContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DataBoxSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TransportAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,23 +28,16 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxSku)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TransportAvailabilityContent)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name.ToSerialString());
-            if (Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(SkuName))
             {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            if (Optional.IsDefined(Family))
-            {
-                writer.WritePropertyName("family"u8);
-                writer.WriteStringValue(Family);
+                writer.WritePropertyName("skuName"u8);
+                writer.WriteStringValue(SkuName.Value.ToSerialString());
             }
             if (Optional.IsDefined(Model))
             {
@@ -68,19 +61,19 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataBoxSku IJsonModel<DataBoxSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TransportAvailabilityContent IJsonModel<TransportAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxSku)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TransportAvailabilityContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataBoxSku(document.RootElement, options);
+            return DeserializeTransportAvailabilityContent(document.RootElement, options);
         }
 
-        internal static DataBoxSku DeserializeDataBoxSku(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TransportAvailabilityContent DeserializeTransportAvailabilityContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -88,27 +81,19 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            DataBoxSkuName name = default;
-            string displayName = default;
-            string family = default;
+            DataBoxSkuName? skuName = default;
             ModelName? model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (property.NameEquals("skuName"u8))
                 {
-                    name = property.Value.GetString().ToDataBoxSkuName();
-                    continue;
-                }
-                if (property.NameEquals("displayName"u8))
-                {
-                    displayName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("family"u8))
-                {
-                    family = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    skuName = property.Value.GetString().ToDataBoxSkuName();
                     continue;
                 }
                 if (property.NameEquals("model"u8))
@@ -126,38 +111,38 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataBoxSku(name, displayName, family, model, serializedAdditionalRawData);
+            return new TransportAvailabilityContent(skuName, model, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DataBoxSku>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TransportAvailabilityContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxSku)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransportAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DataBoxSku IPersistableModel<DataBoxSku>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TransportAvailabilityContent IPersistableModel<TransportAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataBoxSku(document.RootElement, options);
+                        return DeserializeTransportAvailabilityContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxSku)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransportAvailabilityContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DataBoxSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TransportAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> Request body to get the datacenter address. </summary>
-    public partial class DataCenterAddressContent
+    /// <summary> Request body to get the device capabilities for given sku. </summary>
+    public partial class DeviceCapabilityContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,37 +45,24 @@ namespace Azure.ResourceManager.DataBox.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataCenterAddressContent"/>. </summary>
-        /// <param name="storageLocation"> Storage location. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
-        /// <param name="skuName"> Sku Name for which the data center address requested. </param>
-        public DataCenterAddressContent(AzureLocation storageLocation, DataBoxSkuName skuName)
+        /// <summary> Initializes a new instance of <see cref="DeviceCapabilityContent"/>. </summary>
+        public DeviceCapabilityContent()
         {
-            StorageLocation = storageLocation;
-            SkuName = skuName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataCenterAddressContent"/>. </summary>
-        /// <param name="storageLocation"> Storage location. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
-        /// <param name="skuName"> Sku Name for which the data center address requested. </param>
+        /// <summary> Initializes a new instance of <see cref="DeviceCapabilityContent"/>. </summary>
+        /// <param name="skuName"> Type of the device. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataCenterAddressContent(AzureLocation storageLocation, DataBoxSkuName skuName, ModelName? model, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeviceCapabilityContent(DataBoxSkuName? skuName, ModelName? model, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            StorageLocation = storageLocation;
             SkuName = skuName;
             Model = model;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataCenterAddressContent"/> for deserialization. </summary>
-        internal DataCenterAddressContent()
-        {
-        }
-
-        /// <summary> Storage location. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </summary>
-        public AzureLocation StorageLocation { get; }
-        /// <summary> Sku Name for which the data center address requested. </summary>
-        public DataBoxSkuName SkuName { get; }
+        /// <summary> Type of the device. </summary>
+        public DataBoxSkuName? SkuName { get; set; }
         /// <summary> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </summary>
         public ModelName? Model { get; set; }
     }

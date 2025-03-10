@@ -48,6 +48,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of <see cref="DataBoxJobStage"/>. </summary>
         internal DataBoxJobStage()
         {
+            DelayInformation = new ChangeTrackingList<JobDelayDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxJobStage"/>. </summary>
@@ -56,14 +57,16 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="stageStatus"> Status of the job stage. </param>
         /// <param name="stageTime"> Time for the job stage in UTC ISO 8601 format. </param>
         /// <param name="jobStageDetails"> Job Stage Details. </param>
+        /// <param name="delayInformation"> Delay information for the job stages. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxJobStage(DataBoxStageName? stageName, string displayName, DataBoxStageStatus? stageStatus, DateTimeOffset? stageTime, BinaryData jobStageDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataBoxJobStage(DataBoxStageName? stageName, string displayName, DataBoxStageStatus? stageStatus, DateTimeOffset? stageTime, BinaryData jobStageDetails, IReadOnlyList<JobDelayDetails> delayInformation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StageName = stageName;
             DisplayName = displayName;
             StageStatus = stageStatus;
             StageTime = stageTime;
             JobStageDetails = jobStageDetails;
+            DelayInformation = delayInformation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -104,5 +107,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// </para>
         /// </summary>
         public BinaryData JobStageDetails { get; }
+        /// <summary> Delay information for the job stages. </summary>
+        public IReadOnlyList<JobDelayDetails> DelayInformation { get; }
     }
 }
