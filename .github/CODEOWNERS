@@ -1114,3 +1114,9 @@
 
 #PRLabel: %CodeGen %Client
 /eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire
+
+# PRLabel: %Liftr-Lite
+/sdk/liftrpinecone/Azure.ResourceManager.*/                        @aggarwalsw @kanikataneja @jawt @mrigankchugh
+/sdk/liftrweightsandbiases/Azure.ResourceManager.*/                @aggarwalsw @kanikataneja @jawt @mrigankchugh
+/sdk/liftrarize/Azure.ResourceManager.*/                           @aggarwalsw @kanikataneja @jawt @mrigankchugh
+/sdk/liftrhyperexecute/Azure.ResourceManager.*/                    @aggarwalsw @kanikataneja @jawt @mrigankchugh
