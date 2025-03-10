@@ -1,16 +1,10 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.2.1-beta.1 (2025-03-08)
 
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.2.0 (2024-08-01)
 
@@ -90,7 +84,7 @@ Polishing since last public beta release:
 
 ### Breaking Changes
 
-- Fix the issue that readonly `systemData` is also serialized by unflattening its properties. 
+- Fix the issue that readonly `systemData` is also serialized by unflattening its properties.
 
 ### Features Added
 
