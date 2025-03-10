@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.Filtering
 {
     using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering;
     using Xunit;

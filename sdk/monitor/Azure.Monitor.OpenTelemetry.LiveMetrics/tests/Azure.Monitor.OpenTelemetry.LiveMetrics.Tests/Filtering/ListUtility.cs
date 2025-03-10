@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.Filtering
 {
     internal static class ListUtility
     {

@@ -7,11 +7,10 @@ using System.Diagnostics;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
-using OpenTelemetry.Trace;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 {
     public class ActivityEventTests : DocumentTestBase
     {

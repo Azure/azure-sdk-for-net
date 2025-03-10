@@ -14,7 +14,7 @@ using OpenTelemetry.Trace;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 {
     /// <summary>
     /// These tests and helper classes were initially copied from
@@ -99,7 +99,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
                 .AddSqlClientInstrumentation(options =>
                 {
                     options.SetDbStatementForText = true;
-                    options.SetDbStatementForStoredProcedure = true;
+                    //options.SetDbStatementForStoredProcedure = true;
                 })
                 .AddInMemoryExporter(exportedActivities)
                 .Build())
@@ -170,7 +170,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
                 .AddSqlClientInstrumentation(options =>
                 {
                     options.SetDbStatementForText = true;
-                    options.SetDbStatementForStoredProcedure = true;
+                    //options.SetDbStatementForStoredProcedure = true;
                     options.RecordException = recordException;
                 })
                 .AddInMemoryExporter(exportedActivities)
