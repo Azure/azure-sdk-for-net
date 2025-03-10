@@ -3,11 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
-    <IsShippingLibrary>false</IsShippingLibrary>
     <IsSamplesProject>true</IsSamplesProject>
-    <ExcludeFromCodeCoverage>true</ExcludeFromCodeCoverage>
-    <IsPackable>false</IsPackable>
-    <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
   </PropertyGroup>
 
   <!-- NU5104: Using a project reference to the client causes build warning/errors on build agents. -->
