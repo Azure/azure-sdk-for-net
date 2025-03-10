@@ -7,6 +7,7 @@ using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.ClientModel.Tests.ModelReaderWriterTests;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
@@ -49,11 +50,25 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("W")]
         public void CanSerializeTwoModelsWithSameConverter(string format)
         {
+            CanSerializeTwoModelsWithSameConverter(format, null);
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void CanSerializeTwoModelsWithSameConverter_WithContext(string format)
+        {
+            CanSerializeTwoModelsWithSameConverter(format, new TestClientModelReaderWriterContext());
+        }
+
+        private void CanSerializeTwoModelsWithSameConverter(string format, ModelReaderWriterContext? context)
+        {
             string modelYResponse = "{\"kind\":\"Y\",\"name\":\"ymodel\",\"yProperty\":\"100\",\"extra\":\"stuff\"}";
             string modelXResponse = "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}";
 
             var options = new JsonSerializerOptions();
-            options.Converters.Add(new JsonModelConverter(new ModelReaderWriterOptions(format)));
+            var mrwOptions = new ModelReaderWriterOptions(format);
+            var converter = context is null ? new JsonModelConverter(mrwOptions) : new JsonModelConverter(context, mrwOptions);
+            options.Converters.Add(converter);
             ModelY? modelY = JsonSerializer.Deserialize<ModelY>(modelYResponse, options);
             Assert.IsNotNull(modelY);
 
@@ -102,6 +117,36 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             Assert.AreEqual(expectedModelX, actualModelX);
         }
 
+        [Test]
+        public void NullContextThrows()
+        {
+            var ex = Assert.Throws<ArgumentNullException>(() => new JsonModelConverter(null!, ModelReaderWriterOptions.Json));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("context", ex!.ParamName);
+        }
+
+        [Test]
+        public void ConvertWithMissingInfo()
+        {
+            var options = new JsonSerializerOptions();
+            var converter = new JsonModelConverter(new TestClientModelReaderWriterContext());
+            options.Converters.Add(converter);
+            var ex = Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize("{}", typeof(PersistableModel), options));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("No model info found for PersistableModel.", ex!.Message);
+        }
+
+        [Test]
+        public void ConvertWithBadContext()
+        {
+            var options = new JsonSerializerOptions();
+            var converter = new JsonModelConverter(new BadContext());
+            options.Converters.Add(converter);
+            var ex = Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize("{}", typeof(PersistableModel), options));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("Either PersistableModel or the PersistableModelProxyAttribute defined needs to implement IJsonModel.", ex!.Message);
+        }
+
         private static Dictionary<string, BinaryData> GetRawData(object model)
         {
             Type modelType = model.GetType();
@@ -113,6 +158,44 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             var propertyInfo = modelType.GetField("_rawData", BindingFlags.Instance | BindingFlags.NonPublic);
             Assert.IsNotNull(propertyInfo);
             return (Dictionary<string, BinaryData>)propertyInfo!.GetValue(model)!;
+        }
+
+        private class BadContext : ModelReaderWriterContext
+        {
+            private PersistableModelInfo? _persistableModelInfo;
+
+            public override ModelInfo? GetModelInfo(Type type)
+            {
+                return type switch
+                {
+                    Type t when t == typeof(PersistableModel) => _persistableModelInfo ??= new(),
+                    _ => null
+                };
+            }
+
+            private class PersistableModelInfo : ModelInfo
+            {
+                public override object CreateObject() => new DoesNotImplementPersistableModel();
+            }
+        }
+
+        private class DoesNotImplementPersistableModel
+        {
+        }
+
+        private class PersistableModel : IJsonModel<PersistableModel>
+        {
+            public PersistableModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new();
+
+            public PersistableModel Create(BinaryData data, ModelReaderWriterOptions options) => new();
+
+            public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+            public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+            }
+
+            public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
         }
     }
 }

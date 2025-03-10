@@ -25,13 +25,13 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
         }
 
         /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
-        public string? Id { get; }
+        public string? Id { get; set; }
 
         /// <summary> The name of the resource. </summary>
-        public string? Name { get; }
+        public string? Name { get; set; }
 
         /// <summary> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </summary>
-        public string? ResourceType { get; }
+        public string? ResourceType { get; set; }
 
         /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
         public SystemData? SystemData { get; }
