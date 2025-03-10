@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VmInstanceGuestAgentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VmInstanceGuestAgentData.DeserializeVmInstanceGuestAgentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VmInstanceGuestAgentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VmInstanceGuestAgentData.DeserializeVmInstanceGuestAgentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VmInstanceGuestAgentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VmInstanceGuestAgentListResult.DeserializeVmInstanceGuestAgentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VmInstanceGuestAgentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VmInstanceGuestAgentListResult.DeserializeVmInstanceGuestAgentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VmInstanceGuestAgentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VmInstanceGuestAgentListResult.DeserializeVmInstanceGuestAgentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 200:
                     {
                         VmInstanceGuestAgentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VmInstanceGuestAgentListResult.DeserializeVmInstanceGuestAgentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

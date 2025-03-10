@@ -143,7 +143,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 200:
                     {
                         FullBackupDetailsInternal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -175,7 +175,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 200:
                     {
                         FullBackupDetailsInternal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -292,7 +292,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 200:
                     {
                         RestoreDetailsInternal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RestoreDetailsInternal.DeserializeRestoreDetailsInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -324,7 +324,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 200:
                     {
                         RestoreDetailsInternal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RestoreDetailsInternal.DeserializeRestoreDetailsInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

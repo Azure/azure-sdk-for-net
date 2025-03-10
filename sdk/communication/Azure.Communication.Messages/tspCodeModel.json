@@ -5063,7 +5063,6 @@
        "BodyType": {
         "$ref": "561"
        },
-       "BodyMediaType": "Json",
        "Headers": [
         {
          "$id": "633",
@@ -5102,7 +5101,6 @@
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/messages/notifications:send",
      "RequestMediaTypes": [
@@ -5245,7 +5243,6 @@
         "crossLanguageDefinitionId": "TypeSpec.bytes",
         "decorators": []
        },
-       "BodyMediaType": "Json",
        "Headers": [
         {
          "$id": "652",
@@ -5294,7 +5291,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/messages/streams/{id}",
      "BufferResponse": true,
@@ -5550,7 +5546,6 @@
        "BodyType": {
         "$ref": "601"
        },
-       "BodyMediaType": "Json",
        "Headers": [
         {
          "$id": "686",
@@ -5580,14 +5575,21 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/messages/channels/{channelId}/templates",
      "BufferResponse": true,
      "Paging": {
       "$id": "689",
-      "ItemName": "value",
-      "NextLinkName": "nextLink"
+      "ItemPropertySegments": [
+       "value"
+      ],
+      "NextLink": {
+       "$id": "690",
+       "ResponseSegments": [
+        "nextLink"
+       ],
+       "ResponseLocation": "Body"
+      }
      },
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
@@ -5596,16 +5598,16 @@
     }
    ],
    "Protocol": {
-    "$id": "690"
+    "$id": "691"
    },
    "Parameters": [
     {
-     "$id": "691",
+     "$id": "692",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
      "Doc": "The communication resource, for example https://my-resource.communication.azure.com",
      "Type": {
-      "$id": "692",
+      "$id": "693",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -5626,15 +5628,15 @@
   }
  ],
  "Auth": {
-  "$id": "693",
+  "$id": "694",
   "OAuth2": {
-   "$id": "694",
+   "$id": "695",
    "Scopes": [
     "https://communication.azure.com/.default"
    ]
   },
   "ApiKey": {
-   "$id": "695",
+   "$id": "696",
    "Name": "Authorization",
    "In": "header"
   }
