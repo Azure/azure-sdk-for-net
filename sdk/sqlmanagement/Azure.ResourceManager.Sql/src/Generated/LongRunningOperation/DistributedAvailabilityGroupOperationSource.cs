@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Sql
 
         DistributedAvailabilityGroupResource IOperationSource<DistributedAvailabilityGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DistributedAvailabilityGroupData.DeserializeDistributedAvailabilityGroupData(document.RootElement);
+            var data = ModelReaderWriter.Read<DistributedAvailabilityGroupData>(response.Content);
             return new DistributedAvailabilityGroupResource(_client, data);
         }
 
         async ValueTask<DistributedAvailabilityGroupResource> IOperationSource<DistributedAvailabilityGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DistributedAvailabilityGroupData.DeserializeDistributedAvailabilityGroupData(document.RootElement);
-            return new DistributedAvailabilityGroupResource(_client, data);
+            var data = ModelReaderWriter.Read<DistributedAvailabilityGroupData>(response.Content);
+            return await Task.FromResult(new DistributedAvailabilityGroupResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

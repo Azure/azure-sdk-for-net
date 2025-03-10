@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIotHubDescriptionData(document.RootElement, options);
                     }
                 default:

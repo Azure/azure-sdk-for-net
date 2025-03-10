@@ -49,13 +49,13 @@ extends:
     oneESTemplateTag: ${{ parameters.oneESTemplateTag }}
     ArtifactName: packages
     Artifacts:
-    - name: Azure.CloudMachine
-      safeName: AzureCloudMachine
-    - name: Azure.CloudMachine.All
-      safeName: AzureCloudMachineAll
-    - name: Azure.CloudMachine.Web
-      safeName: AzureCloudMachineWeb
-    - name: Azure.CloudMachine.OpenAI
-      safeName: AzureCloudMachineOpenAI
-    - name: Azure.Provisioning.CloudMachine
-      safeName: AzureProvisioningCloudMachine
+    - name: Azure.Projects
+      safeName: AzureProjects
+    - name: Azure.Projects.All
+      safeName: AzureProjectsAll
+    - name: Azure.Projects.Web
+      safeName: AzureProjectsWeb
+    - name: Azure.Projects.OpenAI
+      safeName: AzureProjectsOpenAI
+    - name: Azure.Projects.Provisioning
+      safeName: AzureProjectsProvisioning

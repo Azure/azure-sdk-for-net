@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ReplicationLinkListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ReplicationLinkListResult.DeserializeReplicationLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ReplicationLinkListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ReplicationLinkListResult.DeserializeReplicationLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SqlServerDatabaseReplicationLinkData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SqlServerDatabaseReplicationLinkData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ReplicationLinkListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ReplicationLinkListResult.DeserializeReplicationLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -854,7 +854,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ReplicationLinkListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ReplicationLinkListResult.DeserializeReplicationLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -909,7 +909,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ReplicationLinkListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ReplicationLinkListResult.DeserializeReplicationLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ReplicationLinkListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ReplicationLinkListResult.DeserializeReplicationLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -995,7 +995,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ReplicationLinkListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ReplicationLinkListResult.DeserializeReplicationLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1026,7 +1026,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ReplicationLinkListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ReplicationLinkListResult.DeserializeReplicationLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
