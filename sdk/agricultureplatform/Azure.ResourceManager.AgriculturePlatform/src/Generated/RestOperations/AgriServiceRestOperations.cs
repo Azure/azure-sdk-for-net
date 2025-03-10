@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 case 200:
                     {
                         AgricultureServiceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AgricultureServiceData.DeserializeAgricultureServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 case 200:
                     {
                         AgricultureServiceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AgricultureServiceData.DeserializeAgricultureServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 case 200:
                     {
                         AgriServiceResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AgriServiceResourceListResult.DeserializeAgriServiceResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 case 200:
                     {
                         AgriServiceResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AgriServiceResourceListResult.DeserializeAgriServiceResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 case 200:
                     {
                         AgriServiceResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AgriServiceResourceListResult.DeserializeAgriServiceResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 case 200:
                     {
                         AgriServiceResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AgriServiceResourceListResult.DeserializeAgriServiceResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 case 200:
                     {
                         AvailableAgriSolutionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvailableAgriSolutionListResult.DeserializeAvailableAgriSolutionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 case 200:
                     {
                         AvailableAgriSolutionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvailableAgriSolutionListResult.DeserializeAvailableAgriSolutionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 case 200:
                     {
                         AgriServiceResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AgriServiceResourceListResult.DeserializeAgriServiceResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 case 200:
                     {
                         AgriServiceResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AgriServiceResourceListResult.DeserializeAgriServiceResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 case 200:
                     {
                         AgriServiceResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AgriServiceResourceListResult.DeserializeAgriServiceResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 case 200:
                     {
                         AgriServiceResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AgriServiceResourceListResult.DeserializeAgriServiceResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.AgriculturePlatform
 
         AgricultureServiceResource IOperationSource<AgricultureServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AgricultureServiceData.DeserializeAgricultureServiceData(document.RootElement);
+            var data = ModelReaderWriter.Read<AgricultureServiceData>(response.Content);
             return new AgricultureServiceResource(_client, data);
         }
 
         async ValueTask<AgricultureServiceResource> IOperationSource<AgricultureServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AgricultureServiceData.DeserializeAgricultureServiceData(document.RootElement);
-            return new AgricultureServiceResource(_client, data);
+            var data = ModelReaderWriter.Read<AgricultureServiceData>(response.Content);
+            return await Task.FromResult(new AgricultureServiceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }
