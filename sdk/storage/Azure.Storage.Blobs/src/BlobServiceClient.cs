@@ -331,6 +331,7 @@ namespace Azure.Storage.Blobs
                   authentication,
                   options?._clientSideEncryptionOptions?.Clone())
         {
+            _accountName ??= storageSharedKeyCredential?.AccountName;
         }
 
         /// <summary>

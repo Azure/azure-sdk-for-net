@@ -161,6 +161,20 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var blobEndpoint = new Uri($"https://customdomain/");
+
+            DataLakeServiceClient service = new DataLakeServiceClient(blobEndpoint, credentials);
+
+            Assert.AreEqual(accountName, service.AccountName);
+        }
+
         [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {

@@ -191,6 +191,7 @@ namespace Azure.Storage.Queues
                   sasCredential: null,
                   tokenCredential: null)
         {
+            _accountName ??= credential?.AccountName;
         }
 
         /// <summary>

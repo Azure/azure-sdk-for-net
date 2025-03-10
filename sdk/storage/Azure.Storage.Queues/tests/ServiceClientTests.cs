@@ -94,6 +94,20 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(accountName, builder.AccountName);
         }
 
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var queueEndpoint = new Uri($"https://customdomain/");
+
+            QueueServiceClient service = new QueueServiceClient(queueEndpoint, credentials);
+
+            Assert.AreEqual(accountName, service.AccountName);
+        }
+
         [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {

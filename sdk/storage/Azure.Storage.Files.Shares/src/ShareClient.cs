@@ -224,6 +224,7 @@ namespace Azure.Storage.Files.Shares
                   sasCredential: default,
                   tokenCredential: default)
         {
+            _accountName ??= credential?.AccountName;
         }
 
         /// <summary>

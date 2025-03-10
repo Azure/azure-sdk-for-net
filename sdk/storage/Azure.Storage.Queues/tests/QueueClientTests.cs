@@ -154,6 +154,22 @@ namespace Azure.Storage.Queues.Test
                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var queueName = "queueName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var queueEndpoint = new Uri($"https://customdomain/{queueName}");
+
+            QueueClient queueClient = new QueueClient(queueEndpoint, credentials);
+
+            Assert.AreEqual(accountName, queueClient.AccountName);
+            Assert.AreEqual(queueName, queueClient.Name);
+        }
+
         [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {

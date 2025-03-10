@@ -139,6 +139,22 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(accountName, share.AccountName);
         }
 
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var shareName = "shareName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var shareEndpoint = new Uri($"https://customdomain/{shareName}");
+
+            ShareClient shareClient = new ShareClient(shareEndpoint, credentials);
+
+            Assert.AreEqual(accountName, shareClient.AccountName);
+            Assert.AreEqual(shareName, shareClient.Name);
+        }
+
         [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {
