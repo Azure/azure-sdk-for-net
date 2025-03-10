@@ -1,17 +1,11 @@
 # Release History
 
-## 3.0.0-preview.8 (Unreleased)
+## 3.0.0-preview.8 (2025-03-08)
 
 ### Features Added
 
 - Introduced model factory `Azure.AI.AnomalyDetector.AnomalyDetectorModelFactory` for mocking.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 3.0.0-preview.7 (2023-05-08)
 
