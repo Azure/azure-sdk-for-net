@@ -45,7 +45,7 @@ describe("Test Usage", () => {
                 @doc("create items")
                 addItems is ResourceAction<Foo, { @bodyRoot body: BatchCreateFooListItemsRequest }, BatchCreateTextListItemsResponse>;
             }
-      `, runner, { IsNamespaceNeeded: true, IsAzureCoreNeeded: true });
+      `, runner, { IsNamespaceNeeded: true });
         const context = createEmitterContext(program);
         const sdkContext = await createCSharpSdkContext(context);
         const root = createModel(sdkContext);
@@ -80,7 +80,7 @@ describe("Test Usage", () => {
                 @doc("create Foo")
                 createFoo is ResourceOperations.ResourceCreateOrUpdate<Foo>;
             }
-      `, runner, { IsNamespaceNeeded: true, IsAzureCoreNeeded: true });
+      `, runner, { IsNamespaceNeeded: true });
         const context = createEmitterContext(program);
         const sdkContext = await createCSharpSdkContext(context);
         const root = createModel(sdkContext);
@@ -129,7 +129,7 @@ describe("Test Usage", () => {
                 {}
                 >;
             }
-      `, runner, { IsNamespaceNeeded: true, IsAzureCoreNeeded: true });
+      `, runner, { IsNamespaceNeeded: true });
         const context = createEmitterContext(program);
         const sdkContext = await createCSharpSdkContext(context);
         const root = createModel(sdkContext);
@@ -190,7 +190,7 @@ describe("Test Usage", () => {
                 BaseModelWithDiscriminator
                 >;
             }
-      `, runner, { IsNamespaceNeeded: true, IsAzureCoreNeeded: true });
+      `, runner, { IsNamespaceNeeded: true });
         const context = createEmitterContext(program);
         const sdkContext = await createCSharpSdkContext(context);
         const root = createModel(sdkContext);
@@ -345,7 +345,6 @@ interface LegacyLro {
   }
       `, runner, {
             IsNamespaceNeeded: true,
-            IsAzureCoreNeeded: true,
             IsTCGCNeeded: true,
         });
         const context = createEmitterContext(program);
