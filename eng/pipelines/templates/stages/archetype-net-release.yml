@@ -156,11 +156,9 @@ stages:
                           artifactName: ${{artifact.name}}-symbols
 
                   steps:
-                    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-                      parameters:
-                        SkipCheckoutNone: true
+                    - checkout: self
+                      fetchDepth: 1
                     - checkout: azure-sdk-build-tools
-                      path: azure-sdk-build-tools
                     - download: current
                       artifact: ${{parameters.ArtifactName}}-signed
                     - template: /pipelines/steps/publish-symbols.yml@azure-sdk-build-tools
@@ -176,7 +174,6 @@ stages:
                         MarkPackageAsShipped: true
                         ArtifactName: ${{parameters.ArtifactName}}
                         PackageName: ${{artifact.name}}
-                        SourceRootPath: $(Agent.BuildDirectory)/s
 
               - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
                 - job: PublicDocsMS
