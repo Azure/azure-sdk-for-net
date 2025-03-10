@@ -33,10 +33,6 @@ namespace Azure.Generator.Providers
     /// </summary>
     internal class ResourceClientProvider : TypeProvider
     {
-        private const string ResourceGroupScopePrefix = "/subscriptions/{subscriptionId}/resourceGroups";
-        private const string SubscriptionScopePrefix = "/subscriptions";
-        private const string TenantScopePrefix = "/tenants";
-
         private IReadOnlyCollection<InputOperation> _resourceOperations;
         private ClientProvider _clientProvider;
         private readonly IReadOnlyList<string> _contextualParameters;
@@ -57,7 +53,8 @@ namespace Azure.Generator.Providers
 
             var crossLanguageDefinitionId = JsonDocument.Parse(resourceMetadata.Arguments?[KnownDecorators.ResourceModel]).RootElement.ToString();
             _isSingleton = resourceMetadata.Arguments?.TryGetValue("isSingleton", out var isSingleton) == true ? isSingleton.ToString() == "true" : false;
-            var resourceModel = AzureClientPlugin.Instance.InputLibrary.GetModelByCrossLanguageDefinitionId(crossLanguageDefinitionId)!;
+            var resourceType = JsonDocument.Parse(resourceMetadata.Arguments?[KnownDecorators.ResourceType]).RootElement.ToString();
+            _resourcetypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType)); var resourceModel = AzureClientPlugin.Instance.InputLibrary.GetModelByCrossLanguageDefinitionId(crossLanguageDefinitionId)!;
             SpecName = resourceModel.Name;
 
             // We should be able to assume that all operations in the resource client are for the same resource
@@ -70,36 +67,6 @@ namespace Azure.Generator.Providers
             _dataField = new FieldProvider(FieldModifiers.Private, ResourceData.Type, "_data", this);
             _clientDiagonosticsField = new FieldProvider(FieldModifiers.Private, typeof(ClientDiagnostics), $"_{SpecName.ToLower()}ClientDiagnostics", this);
             _restClientField = new FieldProvider(FieldModifiers.Private, _clientProvider.Type, $"_{SpecName.ToLower()}RestClient", this);
-            _resourcetypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(GetResourceTypeFromPath(requestPath)));
-        }
-
-        private static string GetResourceTypeFromPath(RequestPath requestPath)
-        {
-            var index = requestPath.IndexOfLastProviders;
-            if (index < 0)
-            {
-                if (requestPath.SerializedPath.StartsWith(ResourceGroupScopePrefix, StringComparison.OrdinalIgnoreCase))
-                {
-                    return "Microsoft.Resources/resourceGroups";
-                }
-                else if (requestPath.SerializedPath.StartsWith(SubscriptionScopePrefix, StringComparison.OrdinalIgnoreCase))
-                {
-                    return "Microsoft.Resources/subscriptions";
-                }
-                else if (requestPath.SerializedPath.StartsWith(TenantScopePrefix, StringComparison.OrdinalIgnoreCase))
-                {
-                    return "Microsoft.Resources/tenants";
-                }
-                throw new InvalidOperationException($"Cannot find resource type from path {requestPath}");
-            }
-
-            var left = new RequestPath(requestPath.SerializedPath.Substring(index + RequestPath.Providers.Length));
-            var result = new StringBuilder(left[0]);
-            for (int i = 1; i < left.Count; i += 2)
-            {
-                result.Append($"/{left[i]}");
-            }
-            return result.ToString();
         }
 
         private IReadOnlyList<string> GetContextualParameters(string contextualRequestPath)

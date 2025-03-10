@@ -21,6 +21,7 @@ import {
   singleton,
   resourceMetadata,
 } from "./knownDecorators.js";
+import { CalculateResourceTypeFromPath } from "./resource-type.js";
 
 export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
   const program = context.program
@@ -66,15 +67,20 @@ export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
     if (client.Decorators?.some(d => d.name == armResourceOperations) && client.Operations.some(op => op.Decorators?.some(d => d.name == armResourceRead || armResourceCreateOrUpdate))) {
       let resourceModel: InputModelType | undefined = undefined;
       let isSingleton: boolean = false;
+      let resourceType: string | undefined = undefined;
       // We will try to get resource metadata from put operation firstly, if not found, we will try to get it from get operation
       const putOperation = client.Operations.find(op => op.Decorators?.some(d => d.name == armResourceCreateOrUpdate));
       if (putOperation) {
+        const path = putOperation.Path;
+        resourceType = CalculateResourceTypeFromPath(path);
         resourceModel = putOperation.Responses.filter(r => r.BodyType)[0].BodyType as InputModelType;
         isSingleton = resourceModel.decorators?.some(d => d.name == singleton) ?? false;
       }
       else {
         const getOperation = client.Operations.find(op => op.Decorators?.some(d => d.name == armResourceRead));
         if (getOperation) {
+          const path = getOperation.Path;
+          resourceType = CalculateResourceTypeFromPath(path);
           resourceModel = getOperation.Responses.filter(r => r.BodyType)[0].BodyType as InputModelType;
           isSingleton = resourceModel.decorators?.some(d => d.name == singleton) ?? false;
         }
@@ -83,6 +89,7 @@ export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
       let resourceMetadataDecorator: DecoratorInfo = {name: resourceMetadata, arguments: {}};
       resourceMetadataDecorator.arguments["resourceModel"] = resourceModel?.crossLanguageDefinitionId;
       resourceMetadataDecorator.arguments["isSingleton"] = isSingleton.toString();
+      resourceMetadataDecorator.arguments["resourceType"] = resourceType;
       client.Decorators.push(resourceMetadataDecorator);
     }
   }

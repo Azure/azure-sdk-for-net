@@ -4329,7 +4329,8 @@
      "arguments": {
       "$id": "535",
       "resourceModel": "MgmtTypeSpec.Foo",
-      "isSingleton": "false"
+      "isSingleton": "false",
+      "resourceType": "MgmtTypeSpec/foos"
      }
     }
    ],

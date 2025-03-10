@@ -25,7 +25,12 @@ namespace Azure.Generator.Tests.Common
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
             var testNameParameter = InputFactory.Parameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
             var operation = InputFactory.Operation(name: "Get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: [new InputDecoratorInfo(KnownDecorators.ArmResourceRead, null)]);
-            var client = InputFactory.Client(TestClientName, operations: [operation], decorators: [new InputDecoratorInfo(KnownDecorators.ResourceMetadata, new Dictionary<string, BinaryData> { {KnownDecorators.ResourceModel, BinaryData.FromString($"\"{ResourceModelName}\"") } }), new InputDecoratorInfo(KnownDecorators.ArmProviderNamespace, null)]);
+            var resourceMetadataArguments = new Dictionary<string, BinaryData>
+            {
+                { KnownDecorators.ResourceModel, BinaryData.FromString($"\"{ResourceModelName}\"") },
+                { KnownDecorators.ResourceType, BinaryData.FromString("\"a/test\"") }
+            };
+            var client = InputFactory.Client(TestClientName, operations: [operation], decorators: [new InputDecoratorInfo(KnownDecorators.ResourceMetadata, resourceMetadataArguments), new InputDecoratorInfo(KnownDecorators.ArmProviderNamespace, null)]);
             return (client, [responseModel]);
         }
     }

@@ -8,8 +8,10 @@ namespace Azure.Generator.Primitives
         public const string ArmResourceOperations = "Azure.ResourceManager.@armResourceOperations";
         public const string ArmResourceRead = "Azure.ResourceManager.@armResourceRead";
         public const string ArmProviderNamespace = "Azure.ResourceManager.@armProviderNamespace";
-        public const string Singleton= "Azure.ResourceManager.@singleton";
         public const string ResourceMetadata = "Azure.ClientGenerator.Core.@resourceSchema";
+
         public const string ResourceModel = "resourceModel";
+        public const string ResourceType = "resourceType";
+        public const string IsSingleton = "isSingleton";
     }
 }
