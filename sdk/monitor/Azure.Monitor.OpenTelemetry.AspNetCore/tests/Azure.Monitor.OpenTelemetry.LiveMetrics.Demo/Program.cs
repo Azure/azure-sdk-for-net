@@ -61,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
             {
                 await GenerateTelemetry();
                 await GenerateMetrics();
-                System.Threading.Thread.Sleep(200);
+                Task.Delay(200).Wait();
             }
 
             Console.WriteLine("Key pressed. Exiting the loop.");

@@ -92,7 +92,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// a performance overhead due to extra data collection, processing, and networking calls. This overhead
         /// is only significant when the LiveMetrics portal is actively used in the UI. Once the portal is closed,
         /// LiveMetrics reverts to a 'silent' mode with minimal to no overhead.
-        /// <see href="https://learn.microsoft.com/azure/azure-monitor/app/live-stream?tabs=dotnet6"/>.
+        /// <see href="https://learn.microsoft.com/azure/azure-monitor/app/live-stream"/>.
         /// </summary>
         public bool EnableLiveMetrics { get; set; } = true;
 
