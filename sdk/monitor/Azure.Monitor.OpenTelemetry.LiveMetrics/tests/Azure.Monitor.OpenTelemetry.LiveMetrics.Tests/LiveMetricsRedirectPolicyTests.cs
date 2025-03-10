@@ -9,7 +9,7 @@ using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests
 {
     public class LiveMetricsRedirectPolicyTests
     {
@@ -18,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics
         {
             var mockTransport = new MockTransport(new MockResponse(200).AddHeader("x-ms-qps-service-endpoint-redirect-v2", "http://new.host/Service.svc"));
 
-            AzureMonitorOptions options = new AzureMonitorOptions
+            var options = new AzureMonitorLiveMetricsOptions
             {
                 Transport = mockTransport
             };

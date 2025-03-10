@@ -1,21 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
-using Microsoft.AspNetCore.Builder;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 {
     public class ManualDependencyTests : DocumentTestBase
     {

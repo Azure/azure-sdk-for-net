@@ -11,7 +11,7 @@ using OpenTelemetry.Logs;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 {
     public class LogTests : DocumentTestBase
     {

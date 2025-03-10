@@ -4,45 +4,30 @@
 #if NET
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
-using Azure.Monitor.OpenTelemetry.Exporter.Models;
-using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
-using OpenTelemetry.Instrumentation.AspNetCore;
-using OpenTelemetry.Instrumentation.SqlClient;
-using OpenTelemetry.Resources;
-using OpenTelemetry.Tests;
 using OpenTelemetry.Trace;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 {
     public class RequestTests : DocumentTestBase, IClassFixture<WebApplicationFactory<AspNetCoreTestApp.Program>>, IDisposable
     {
         private readonly WebApplicationFactory<AspNetCoreTestApp.Program> _factory;
-        private readonly TelemetryItemOutputHelper _telemetryOutput;
 
         public RequestTests(WebApplicationFactory<AspNetCoreTestApp.Program> factory, ITestOutputHelper output) : base(output)
         {
             _factory = factory;
-            _telemetryOutput = new TelemetryItemOutputHelper(output);
         }
 
         public void Dispose()
