@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWatcherData(document.RootElement, options);
                     }
                 default:

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.DatabaseWatcher
 
         SharedPrivateLinkResource IOperationSource<SharedPrivateLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SharedPrivateLinkResourceData.DeserializeSharedPrivateLinkResourceData(document.RootElement);
+            var data = ModelReaderWriter.Read<SharedPrivateLinkResourceData>(response.Content);
             return new SharedPrivateLinkResource(_client, data);
         }
 
         async ValueTask<SharedPrivateLinkResource> IOperationSource<SharedPrivateLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SharedPrivateLinkResourceData.DeserializeSharedPrivateLinkResourceData(document.RootElement);
-            return new SharedPrivateLinkResource(_client, data);
+            var data = ModelReaderWriter.Read<SharedPrivateLinkResourceData>(response.Content);
+            return await Task.FromResult(new SharedPrivateLinkResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

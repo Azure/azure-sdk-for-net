@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
-    /// <summary> The properties specific to elastic pool in Azure SQL Database. </summary>
+    /// <summary> The properties specific to an elastic pool in Azure SQL Database. </summary>
     public partial class SqlDbElasticPoolTargetProperties : TargetProperties
     {
         /// <summary> Initializes a new instance of <see cref="SqlDbElasticPoolTargetProperties"/>. </summary>
         /// <param name="targetAuthenticationType"> The type of authentication to use when connecting to a target. </param>
-        /// <param name="connectionServerName"> The server name to use in the connection string when connecting to a target. Port number and instance name must be specified separately. </param>
+        /// <param name="connectionServerName"> The FQDN host name of the server to use in the connection string when connecting to a target. For example, for an Azure SQL logical server in the Azure commercial cloud, the value might be 'sql-logical-server-22092780.database.windows.net'; for an Azure SQL managed instance in the Azure commercial cloud, the value might be 'sql-mi-39441134.767d5869f605.database.windows.net'. Port number and instance name must be specified separately. </param>
         /// <param name="sqlEpResourceId"> The Azure resource ID of an Azure SQL DB elastic pool target. </param>
         /// <param name="anchorDatabaseResourceId"> The Azure resource ID of the anchor database used to connect to an elastic pool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionServerName"/>, <paramref name="sqlEpResourceId"/> or <paramref name="anchorDatabaseResourceId"/> is null. </exception>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="targetType"> Discriminator property for TargetProperties. </param>
         /// <param name="targetAuthenticationType"> The type of authentication to use when connecting to a target. </param>
         /// <param name="targetVault"> To use SQL authentication when connecting to targets, specify the vault where the login name and password secrets are stored. </param>
-        /// <param name="connectionServerName"> The server name to use in the connection string when connecting to a target. Port number and instance name must be specified separately. </param>
+        /// <param name="connectionServerName"> The FQDN host name of the server to use in the connection string when connecting to a target. For example, for an Azure SQL logical server in the Azure commercial cloud, the value might be 'sql-logical-server-22092780.database.windows.net'; for an Azure SQL managed instance in the Azure commercial cloud, the value might be 'sql-mi-39441134.767d5869f605.database.windows.net'. Port number and instance name must be specified separately. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sqlEpResourceId"> The Azure resource ID of an Azure SQL DB elastic pool target. </param>

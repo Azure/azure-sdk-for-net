@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.DatabaseWatcher
 
         HealthValidationResource IOperationSource<HealthValidationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = HealthValidationData.DeserializeHealthValidationData(document.RootElement);
+            var data = ModelReaderWriter.Read<HealthValidationData>(response.Content);
             return new HealthValidationResource(_client, data);
         }
 
         async ValueTask<HealthValidationResource> IOperationSource<HealthValidationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = HealthValidationData.DeserializeHealthValidationData(document.RootElement);
-            return new HealthValidationResource(_client, data);
+            var data = ModelReaderWriter.Read<HealthValidationData>(response.Content);
+            return await Task.FromResult(new HealthValidationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

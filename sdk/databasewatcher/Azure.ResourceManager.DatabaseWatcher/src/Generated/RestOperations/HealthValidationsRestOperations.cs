@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 case 200:
                     {
                         HealthValidationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthValidationData.DeserializeHealthValidationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 case 200:
                     {
                         HealthValidationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthValidationData.DeserializeHealthValidationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 case 200:
                     {
                         HealthValidationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthValidationListResult.DeserializeHealthValidationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 case 200:
                     {
                         HealthValidationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthValidationListResult.DeserializeHealthValidationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 case 200:
                     {
                         HealthValidationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthValidationListResult.DeserializeHealthValidationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 case 200:
                     {
                         HealthValidationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthValidationListResult.DeserializeHealthValidationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSqlDbElasticPoolTargetProperties(document.RootElement, options);
                     }
                 default:

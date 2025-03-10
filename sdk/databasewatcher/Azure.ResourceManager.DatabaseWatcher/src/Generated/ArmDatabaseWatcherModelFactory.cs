@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="privateLinkResourceId"> The resource ID of the resource the shared private link resource is for. </param>
         /// <param name="groupId"> The group id from the provider of resource the shared private link resource is for. </param>
         /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
-        /// <param name="dnsZone"> The DNS zone to be included in the DNS name of the shared private link. Value is required for Azure Data Explorer clusters and SQL managed instances. The value to use is the second segment of the host FQDN name of the resource that the shared private link resource is for. </param>
+        /// <param name="dnsZone"> The DNS zone segment to be included in the DNS name of the shared private link. Value is required for Azure Data Explorer clusters and SQL managed instances, and must be omitted for SQL logical servers and key vaults. The value is the second segment of the host FQDN name of the resource that the shared private link resource is for. For example: if the host name is 'adx-cluster-21187695.eastus.kusto.windows.net', then the value is 'eastus'; if the host name is 'sql-mi-23961134.767d5869f605.database.windows.net', then the value is '767d5869f605'. </param>
         /// <param name="status"> Status of the shared private link resource. Can be Pending, Approved, Rejected or Disconnected. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.SharedPrivateLinkResourceProperties"/> instance for mocking. </returns>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="targetType"> Discriminator property for TargetProperties. </param>
         /// <param name="targetAuthenticationType"> The type of authentication to use when connecting to a target. </param>
         /// <param name="targetVault"> To use SQL authentication when connecting to targets, specify the vault where the login name and password secrets are stored. </param>
-        /// <param name="connectionServerName"> The server name to use in the connection string when connecting to a target. Port number and instance name must be specified separately. </param>
+        /// <param name="connectionServerName"> The FQDN host name of the server to use in the connection string when connecting to a target. For example, for an Azure SQL logical server in the Azure commercial cloud, the value might be 'sql-logical-server-22092780.database.windows.net'; for an Azure SQL managed instance in the Azure commercial cloud, the value might be 'sql-mi-39441134.767d5869f605.database.windows.net'. Port number and instance name must be specified separately. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.TargetProperties"/> instance for mocking. </returns>
         public static TargetProperties TargetProperties(string targetType = null, TargetAuthenticationType targetAuthenticationType = default, VaultSecret targetVault = null, string connectionServerName = null, ResourceProvisioningState? provisioningState = null)
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <summary> Initializes a new instance of <see cref="Models.SqlDbSingleDatabaseTargetProperties"/>. </summary>
         /// <param name="targetAuthenticationType"> The type of authentication to use when connecting to a target. </param>
         /// <param name="targetVault"> To use SQL authentication when connecting to targets, specify the vault where the login name and password secrets are stored. </param>
-        /// <param name="connectionServerName"> The server name to use in the connection string when connecting to a target. Port number and instance name must be specified separately. </param>
+        /// <param name="connectionServerName"> The FQDN host name of the server to use in the connection string when connecting to a target. For example, for an Azure SQL logical server in the Azure commercial cloud, the value might be 'sql-logical-server-22092780.database.windows.net'; for an Azure SQL managed instance in the Azure commercial cloud, the value might be 'sql-mi-39441134.767d5869f605.database.windows.net'. Port number and instance name must be specified separately. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="sqlDbResourceId"> The Azure resource ID of an Azure SQL DB single database target. </param>
+        /// <param name="sqlDbResourceId"> The Azure resource ID of an Azure SQL DB database target. </param>
         /// <param name="readIntent"> Set to true to monitor a high availability replica of specified target, if any. </param>
         /// <returns> A new <see cref="Models.SqlDbSingleDatabaseTargetProperties"/> instance for mocking. </returns>
         public static SqlDbSingleDatabaseTargetProperties SqlDbSingleDatabaseTargetProperties(TargetAuthenticationType targetAuthenticationType = default, VaultSecret targetVault = null, string connectionServerName = null, ResourceProvisioningState? provisioningState = null, ResourceIdentifier sqlDbResourceId = null, bool? readIntent = null)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <summary> Initializes a new instance of <see cref="Models.SqlDbElasticPoolTargetProperties"/>. </summary>
         /// <param name="targetAuthenticationType"> The type of authentication to use when connecting to a target. </param>
         /// <param name="targetVault"> To use SQL authentication when connecting to targets, specify the vault where the login name and password secrets are stored. </param>
-        /// <param name="connectionServerName"> The server name to use in the connection string when connecting to a target. Port number and instance name must be specified separately. </param>
+        /// <param name="connectionServerName"> The FQDN host name of the server to use in the connection string when connecting to a target. For example, for an Azure SQL logical server in the Azure commercial cloud, the value might be 'sql-logical-server-22092780.database.windows.net'; for an Azure SQL managed instance in the Azure commercial cloud, the value might be 'sql-mi-39441134.767d5869f605.database.windows.net'. Port number and instance name must be specified separately. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="sqlEpResourceId"> The Azure resource ID of an Azure SQL DB elastic pool target. </param>
         /// <param name="anchorDatabaseResourceId"> The Azure resource ID of the anchor database used to connect to an elastic pool. </param>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <summary> Initializes a new instance of <see cref="Models.SqlMiTargetProperties"/>. </summary>
         /// <param name="targetAuthenticationType"> The type of authentication to use when connecting to a target. </param>
         /// <param name="targetVault"> To use SQL authentication when connecting to targets, specify the vault where the login name and password secrets are stored. </param>
-        /// <param name="connectionServerName"> The server name to use in the connection string when connecting to a target. Port number and instance name must be specified separately. </param>
+        /// <param name="connectionServerName"> The FQDN host name of the server to use in the connection string when connecting to a target. For example, for an Azure SQL logical server in the Azure commercial cloud, the value might be 'sql-logical-server-22092780.database.windows.net'; for an Azure SQL managed instance in the Azure commercial cloud, the value might be 'sql-mi-39441134.767d5869f605.database.windows.net'. Port number and instance name must be specified separately. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="sqlMiResourceId"> The Azure resource ID of an Azure SQL Managed Instance target. </param>
         /// <param name="connectionTcpPort"> The TCP port number to optionally use in the connection string when connecting to an Azure SQL Managed Instance target. </param>

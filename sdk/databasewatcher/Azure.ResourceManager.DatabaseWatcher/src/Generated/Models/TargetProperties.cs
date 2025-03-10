@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
 
         /// <summary> Initializes a new instance of <see cref="TargetProperties"/>. </summary>
         /// <param name="targetAuthenticationType"> The type of authentication to use when connecting to a target. </param>
-        /// <param name="connectionServerName"> The server name to use in the connection string when connecting to a target. Port number and instance name must be specified separately. </param>
+        /// <param name="connectionServerName"> The FQDN host name of the server to use in the connection string when connecting to a target. For example, for an Azure SQL logical server in the Azure commercial cloud, the value might be 'sql-logical-server-22092780.database.windows.net'; for an Azure SQL managed instance in the Azure commercial cloud, the value might be 'sql-mi-39441134.767d5869f605.database.windows.net'. Port number and instance name must be specified separately. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionServerName"/> is null. </exception>
         protected TargetProperties(TargetAuthenticationType targetAuthenticationType, string connectionServerName)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="targetType"> Discriminator property for TargetProperties. </param>
         /// <param name="targetAuthenticationType"> The type of authentication to use when connecting to a target. </param>
         /// <param name="targetVault"> To use SQL authentication when connecting to targets, specify the vault where the login name and password secrets are stored. </param>
-        /// <param name="connectionServerName"> The server name to use in the connection string when connecting to a target. Port number and instance name must be specified separately. </param>
+        /// <param name="connectionServerName"> The FQDN host name of the server to use in the connection string when connecting to a target. For example, for an Azure SQL logical server in the Azure commercial cloud, the value might be 'sql-logical-server-22092780.database.windows.net'; for an Azure SQL managed instance in the Azure commercial cloud, the value might be 'sql-mi-39441134.767d5869f605.database.windows.net'. Port number and instance name must be specified separately. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TargetProperties(string targetType, TargetAuthenticationType targetAuthenticationType, VaultSecret targetVault, string connectionServerName, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public TargetAuthenticationType TargetAuthenticationType { get; set; }
         /// <summary> To use SQL authentication when connecting to targets, specify the vault where the login name and password secrets are stored. </summary>
         public VaultSecret TargetVault { get; set; }
-        /// <summary> The server name to use in the connection string when connecting to a target. Port number and instance name must be specified separately. </summary>
+        /// <summary> The FQDN host name of the server to use in the connection string when connecting to a target. For example, for an Azure SQL logical server in the Azure commercial cloud, the value might be 'sql-logical-server-22092780.database.windows.net'; for an Azure SQL managed instance in the Azure commercial cloud, the value might be 'sql-mi-39441134.767d5869f605.database.windows.net'. Port number and instance name must be specified separately. </summary>
         public string ConnectionServerName { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
         public ResourceProvisioningState? ProvisioningState { get; }
