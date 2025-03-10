@@ -1720,7 +1720,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public Azure.ResourceManager.DataBox.Models.DataCenterAddressContent DataCenterAddressRequest { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.DeviceCapabilityContent DeviceCapabilityRequest { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent ScheduleAvailabilityRequest { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBox.Models.DataBoxSkuName? TransportAvailabilityRequestSkuName { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBox.Models.TransportAvailabilityContent TransportAvailabilityRequest { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBox.Models.RegionConfigurationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.RegionConfigurationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.RegionConfigurationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
