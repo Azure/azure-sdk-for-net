@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         EndpointsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EndpointsList.DeserializeEndpointsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         EndpointsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EndpointsList.DeserializeEndpointsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         HybridConnectivityEndpointData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridConnectivityEndpointData.DeserializeHybridConnectivityEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         HybridConnectivityEndpointData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridConnectivityEndpointData.DeserializeHybridConnectivityEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         HybridConnectivityEndpointData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridConnectivityEndpointData.DeserializeHybridConnectivityEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         HybridConnectivityEndpointData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridConnectivityEndpointData.DeserializeHybridConnectivityEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         HybridConnectivityEndpointData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridConnectivityEndpointData.DeserializeHybridConnectivityEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         HybridConnectivityEndpointData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridConnectivityEndpointData.DeserializeHybridConnectivityEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         TargetResourceEndpointAccess value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TargetResourceEndpointAccess.DeserializeTargetResourceEndpointAccess(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         TargetResourceEndpointAccess value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TargetResourceEndpointAccess.DeserializeTargetResourceEndpointAccess(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         IngressGatewayAsset value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IngressGatewayAsset.DeserializeIngressGatewayAsset(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         IngressGatewayAsset value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IngressGatewayAsset.DeserializeIngressGatewayAsset(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         ManagedProxyAsset value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedProxyAsset.DeserializeManagedProxyAsset(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         ManagedProxyAsset value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedProxyAsset.DeserializeManagedProxyAsset(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         EndpointsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EndpointsList.DeserializeEndpointsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                     {
                         EndpointsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EndpointsList.DeserializeEndpointsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

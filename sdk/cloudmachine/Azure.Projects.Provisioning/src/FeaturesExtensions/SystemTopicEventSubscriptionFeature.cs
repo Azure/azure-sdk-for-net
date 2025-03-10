@@ -63,8 +63,8 @@ internal class SystemTopicEventSubscriptionFeature(string name, EventGridSystemT
         };
         subscription.DependsOn.Add(roleAssignment);
 
-        infrastructure.AddResource(subscription);
-        infrastructure.AddResource(roleAssignment);
+        infrastructure.AddConstruct(subscription);
+        infrastructure.AddConstruct(roleAssignment);
         return subscription;
     }
 }

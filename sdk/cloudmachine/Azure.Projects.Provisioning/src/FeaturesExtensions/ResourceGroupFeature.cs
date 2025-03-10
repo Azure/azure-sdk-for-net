@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Projects.Core;
-using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 
@@ -24,7 +23,7 @@ internal sealed class ResourceGroupFeature : AzureProjectFeature
     {
         string name = (Name == null) ? cm.ProjectId : Name;
         var rg = new ResourceGroup(name);
-        cm.AddResource(rg);
+        cm.AddConstruct(rg);
         return rg;
     }
 }

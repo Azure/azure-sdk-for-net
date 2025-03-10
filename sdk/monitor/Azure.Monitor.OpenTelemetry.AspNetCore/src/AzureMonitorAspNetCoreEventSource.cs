@@ -180,23 +180,23 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             }
         }
 
-        [NonEvent]
-        public void PingFailedWithServiceError(int statusCode, ServiceError serviceError)
-        {
-            if (IsEnabled(EventLevel.Error))
-            {
-                ServiceCallFailedWithServiceError(name: "Ping", statusCode, serviceError.Code, serviceError.Exception, serviceError.Message);
-            }
-        }
+        //[NonEvent]
+        //public void PingFailedWithServiceError(int statusCode, ServiceError serviceError)
+        //{
+        //    if (IsEnabled(EventLevel.Error))
+        //    {
+        //        ServiceCallFailedWithServiceError(name: "Ping", statusCode, serviceError.Code, serviceError.Exception, serviceError.Message);
+        //    }
+        //}
 
-        [NonEvent]
-        public void PostFailedWithServiceError(int statusCode, ServiceError serviceError)
-        {
-            if (IsEnabled(EventLevel.Error))
-            {
-                ServiceCallFailedWithServiceError(name: "Post", statusCode, serviceError.Code, serviceError.Exception, serviceError.Message);
-            }
-        }
+        //[NonEvent]
+        //public void PostFailedWithServiceError(int statusCode, ServiceError serviceError)
+        //{
+        //    if (IsEnabled(EventLevel.Error))
+        //    {
+        //        ServiceCallFailedWithServiceError(name: "Post", statusCode, serviceError.Code, serviceError.Exception, serviceError.Message);
+        //    }
+        //}
 
         [Event(15, Message = "Service call failed. Name: {0}. Status Code: {1} Reason: {2} Configured Endpoint: {3} Actual Endpoint: {4}", Level = EventLevel.Error)]
         public void ServiceCallFailed(string name, int statusCode, string reasonPhrase, string configuredEndpoint, string actualEndpoint) => WriteEvent(15, name, statusCode, reasonPhrase, configuredEndpoint, actualEndpoint);
@@ -219,14 +219,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         [Event(18, Message = "LiveMetrics State Machine failed with exception: {0}", Level = EventLevel.Error)]
         public void StateMachineFailedWithUnknownException(string exceptionMessage) => WriteEvent(18, exceptionMessage);
 
-        [NonEvent]
-        public void DroppedDocument(DocumentType documentType)
-        {
-            if (IsEnabled(EventLevel.Warning))
-            {
-                DroppedDocument(documentType.ToString());
-            }
-        }
+        //[NonEvent]
+        //public void DroppedDocument(DocumentType documentType)
+        //{
+        //    if (IsEnabled(EventLevel.Warning))
+        //    {
+        //        DroppedDocument(documentType.ToString());
+        //    }
+        //}
 
         [Event(19, Message = "Document was dropped. DocumentType: {0}. Not user actionable.", Level = EventLevel.Warning)]
         public void DroppedDocument(string documentType) => WriteEvent(19, documentType);

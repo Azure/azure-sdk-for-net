@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         RelationshipLinkResourceFormatData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RelationshipLinkResourceFormatData.DeserializeRelationshipLinkResourceFormatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         RelationshipLinkResourceFormatData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RelationshipLinkResourceFormatData.DeserializeRelationshipLinkResourceFormatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         RelationshipLinkListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RelationshipLinkListResult.DeserializeRelationshipLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         RelationshipLinkListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RelationshipLinkListResult.DeserializeRelationshipLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         RelationshipLinkListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RelationshipLinkListResult.DeserializeRelationshipLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         RelationshipLinkListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RelationshipLinkListResult.DeserializeRelationshipLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

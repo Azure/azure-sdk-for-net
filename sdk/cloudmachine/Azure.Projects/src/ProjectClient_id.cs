@@ -5,12 +5,20 @@ using System.IO;
 using System.Text.Json.Nodes;
 using System.Text.Json;
 using System;
+using System.ComponentModel;
 
 namespace Azure.Projects;
 
-internal static class AppConfigHelpers
+public partial class ProjectClient
 {
-    internal static string ReadOrCreateProjectId()
+    /// <summary>
+    /// Reads the project ID from the appsettings.json file. If the file does not exist, it creates a new one with a generated project ID.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static string ReadOrCreateProjectId()
     {
         string appsettings = Path.Combine(".", "appsettings.json");
 
