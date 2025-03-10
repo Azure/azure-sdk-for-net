@@ -1,6 +1,6 @@
-# Microsoft Azure DatabaseWatcher management client library for .NET
+# Microsoft Azure Database Watcher management client library for .NET
 
-**[Describe the service briefly first.]**
+Database watcher is a managed monitoring solution for database services in the Azure SQL family. It supports Azure SQL Database and Azure SQL Managed Instance.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -14,7 +14,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure DatabaseWatcher management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Database Watcher management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.DatabaseWatcher --prerelease
