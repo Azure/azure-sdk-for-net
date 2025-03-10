@@ -151,9 +151,9 @@ stages:
                     outputs:
                       - ${{if ne(artifact.skipSymbolsUpload, 'true')}}:
                         - output: pipelineArtifact
-                          displayName: 'Store converted symbols in ${{parameters.ArtifactName}}-symbols artifact'
+                          displayName: 'Store converted symbols in ${{artifact.name}}-symbols artifact'
                           targetPath: $(Build.ArtifactStagingDirectory)/symbols
-                          artifactName: ${{parameters.ArtifactName}}-symbols
+                          artifactName: ${{artifact.name}}-symbols
 
                   steps:
                     - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
