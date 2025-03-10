@@ -8,6 +8,8 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
     additionalDecorators: [
         // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-client-generator-core/README.md#usesystemtextjsonconverter
         "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter",
+        // TODO: add this decorator to TCGC
+        "Azure\\.ClientGenerator\\.Core\\.@resourceSchema",
         // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armprovidernamespace
         "Azure\\.ResourceManager\\.@armProviderNamespace",
         // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armresourceoperations

@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -48,14 +49,21 @@ namespace Azure.Generator.Providers
 
         public ResourceClientProvider(InputClient inputClient)
         {
-            var getResourceOperation = inputClient.Operations.First(operation => operation.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmResourceRead)));
-            var resourceModel = (InputModelType)getResourceOperation.Responses.First(r => r.BodyType != null).BodyType!;
-            var requestPath = new RequestPath(getResourceOperation.Path);
+            var resourceMetadata = inputClient.Decorators.FirstOrDefault(d => d.Name.Equals(KnownDecorators.ResourceMetadata));
+            if (resourceMetadata is null)
+            {
+                throw new InvalidOperationException($"The client {inputClient.Name} does not have the {KnownDecorators.ResourceMetadata} decorator.");
+            }
 
-            _resourceOperations = inputClient.Operations.Where(operation => operation.Path.Equals(requestPath)).ToList();
+            var crossLanguageDefinitionId = JsonDocument.Parse(resourceMetadata.Arguments?[KnownDecorators.ResourceModel]).RootElement.ToString();
+            _isSingleton = resourceMetadata.Arguments?.TryGetValue("isSingleton", out var isSingleton) == true ? isSingleton.ToString() == "true" : false;
+            var resourceModel = AzureClientPlugin.Instance.InputLibrary.GetModelByCrossLanguageDefinitionId(crossLanguageDefinitionId)!;
             SpecName = resourceModel.Name;
+
+            // We should be able to assume that all operations in the resource client are for the same resource
+            var requestPath = new RequestPath(inputClient.Operations.First().Path);
+            _resourceOperations = inputClient.Operations;
             ResourceData = AzureClientPlugin.Instance.TypeFactory.CreateModel(resourceModel)!;
-            _isSingleton = resourceModel.Decorators.Any(d => d.Name.Equals(KnownDecorators.Singleton));
             _clientProvider = AzureClientPlugin.Instance.TypeFactory.CreateClient(inputClient)!;
             _contextualParameters = GetContextualParameters(requestPath);
 
@@ -233,7 +241,8 @@ namespace Azure.Generator.Providers
             {
                 var convenienceMethod = GetCorrespondingConvenienceMethod(operation, false);
                 // exclude the List operations for resource, they will be in ResourceCollection
-                if (convenienceMethod.IsListMethod(out var itemType) && itemType.AreNamesEqual(ResourceData.Type))
+                var returnType = convenienceMethod.Signature.ReturnType!;
+                if ((returnType.IsFrameworkType && returnType.IsList) || operation.Paging?.ItemPropertySegments.Any() == true)
                 {
                     continue;
                 }
@@ -292,7 +301,7 @@ namespace Azure.Generator.Providers
             return result;
         }
 
-        private CSharpType GetOperationMethodReturnType(bool isAsync, bool isLongRunningOperation, IReadOnlyList<OperationResponse> operationResponses, out bool isGeneric)
+        private CSharpType GetOperationMethodReturnType(bool isAsync, bool isLongRunningOperation, IReadOnlyList<InputOperationResponse> operationResponses, out bool isGeneric)
         {
             isGeneric = false;
             if (isLongRunningOperation)

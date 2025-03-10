@@ -25,15 +25,15 @@ namespace Azure.Generator
             var result = new List<TypeProvider>();
             foreach (var client in AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients)
             {
-                // A resource client should contain the decorator "Azure.ResourceManager.@armResourceOperations"
-                // and it should contain a get operation, which contains the decorator "Azure.ResourceManager.@armResourceRead"
-                if (client.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmResourceOperations))
-                    && client.Operations.Any(operation => operation.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmResourceRead))))
+                // A resource client should contain the decorator "Azure.ResourceManager.@resourceMetadata"
+                var resourceMetadata = client.Decorators.FirstOrDefault(d => d.Name.Equals(KnownDecorators.ResourceMetadata));
+                if (resourceMetadata is null)
                 {
-                    var resource = CreateResourceCore(client);
-                    AzureClientPlugin.Instance.AddTypeToKeep(resource.Name);
-                    result.Add(CreateResourceCore(client));
+                    continue;
                 }
+                var resource = CreateResourceCore(client);
+                AzureClientPlugin.Instance.AddTypeToKeep(resource.Name);
+                result.Add(CreateResourceCore(client));
             }
             return result;
         }

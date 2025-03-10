@@ -8,38 +8,34 @@ using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 
 namespace Azure.Generator
 {
     internal class ResourceVisitor : ScmLibraryVisitor
     {
-        private HashSet<string> _resourceNames;
+        private HashSet<string> _resourceCrossLanguageDefinitionIds;
 
         public ResourceVisitor()
         {
-            _resourceNames = AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients
-                .Where(client => client.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmResourceOperations)) && client.Operations.Any(operation => operation.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmResourceRead))))
-                .Select(client => client.Operations.First(operation => operation.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmResourceRead))).Responses.First(r => r.BodyType != null).BodyType!.Name).ToHashSet();
+            _resourceCrossLanguageDefinitionIds = AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients
+                .Where(client => client.Decorators.Any(d => d.Name.Equals(KnownDecorators.ResourceMetadata)))
+                .Select(client => JsonDocument.Parse(client.Decorators.First(d => d.Name.Equals(KnownDecorators.ResourceMetadata)).Arguments?[KnownDecorators.ResourceModel]).RootElement.ToString())
+                .ToHashSet();
         }
 
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
         {
             if (type is not null)
             {
-                TransformResource(type);
+                TransformResource(model, type);
             }
             return type;
         }
 
-        protected override TypeProvider? VisitType(TypeProvider type)
+        private void TransformResource(InputModelType model, TypeProvider type)
         {
-            TransformResource(type);
-            return type;
-        }
-
-        private void TransformResource(TypeProvider type)
-        {
-            if (type is ModelProvider && _resourceNames.Contains(type.Name))
+            if (type is ModelProvider && _resourceCrossLanguageDefinitionIds.Contains(model.CrossLanguageDefinitionId))
             {
                 type.Update(relativeFilePath: TransformRelativeFilePath(type));
                 type.Type.Update(TransformName(type));

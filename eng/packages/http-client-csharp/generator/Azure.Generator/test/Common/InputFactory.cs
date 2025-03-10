@@ -65,7 +65,7 @@ namespace Azure.Generator.Tests.Common
             => Parameter(
                 "contentType",
                 Literal.String(contentType),
-                location: RequestLocation.Header,
+                location: InputRequestLocation.Header,
                 isRequired: true,
                 defaultValue: Constant.String(contentType),
                 nameInRequest: "Content-Type",
@@ -77,7 +77,7 @@ namespace Azure.Generator.Tests.Common
             InputType type,
             string? nameInRequest = null,
             InputConstant? defaultValue = null,
-            RequestLocation location = RequestLocation.Body,
+            InputRequestLocation location = InputRequestLocation.Body,
             bool isRequired = false,
             InputOperationParameterKind kind = InputOperationParameterKind.Method,
             bool isEndpoint = false,
@@ -220,7 +220,7 @@ namespace Azure.Generator.Tests.Common
             string name,
             string access = "public",
             IEnumerable<InputParameter>? parameters = null,
-            IEnumerable<OperationResponse>? responses = null,
+            IEnumerable<InputOperationResponse>? responses = null,
             IEnumerable<string>? requestMediaTypes = null,
             string? path = null,
             IReadOnlyList<InputDecoratorInfo>? decorators = null)
@@ -235,7 +235,6 @@ namespace Azure.Generator.Tests.Common
                 parameters is null ? [] : [.. parameters],
                 responses is null ? [OperationResponse()] : [.. responses],
                 "GET",
-                BodyMediaType.Json,
                 string.Empty,
                 path ?? string.Empty,
                 null,
@@ -255,22 +254,22 @@ namespace Azure.Generator.Tests.Common
             return operation;
         }
 
-        public static OperationResponse OperationResponse(IEnumerable<int>? statusCodes = null, InputType? bodytype = null)
+        public static InputOperationResponse OperationResponse(IEnumerable<int>? statusCodes = null, InputType? bodytype = null)
         {
-            return new OperationResponse(
+            return new InputOperationResponse(
                 statusCodes is null ? [200] : [.. statusCodes],
                 bodytype,
-                BodyMediaType.Json,
                 [],
                 false,
                 ["application/json"]);
         }
 
-        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputOperation>? operations = null, IEnumerable<InputParameter>? parameters = null, string? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null)
+        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputOperation>? operations = null, IEnumerable<InputParameter>? parameters = null, string? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null)
         {
             var client = new InputClient(
                 name,
                 clientNamespace,
+                crossLanguageDefinitionId ?? $"{clientNamespace}.{name}",
                 string.Empty,
                 doc ?? $"{name} description",
                 operations is null ? [] : [.. operations],

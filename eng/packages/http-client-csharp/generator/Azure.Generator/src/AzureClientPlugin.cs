@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.ResourceManager;
-using Azure.Generator.Utilities;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
@@ -31,6 +30,9 @@ public class AzureClientPlugin : ScmCodeModelPlugin
     /// <inheritdoc/>
     public override AzureOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
 
+    /// <inheritdoc/>
+    public override AzureInputLibrary InputLibrary { get; }
+
     /// <summary>
     /// The Azure client plugin to generate the Azure client SDK.
     /// </summary>
@@ -38,6 +40,7 @@ public class AzureClientPlugin : ScmCodeModelPlugin
     [ImportingConstructor]
     public AzureClientPlugin(GeneratorContext context) : base(context)
     {
+        InputLibrary = new AzureInputLibrary(Configuration.OutputDirectory);
         TypeFactory = new AzureTypeFactory();
         _instance = this;
     }
