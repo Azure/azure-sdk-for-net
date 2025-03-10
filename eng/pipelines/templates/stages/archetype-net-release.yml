@@ -176,7 +176,7 @@ stages:
                         MarkPackageAsShipped: true
                         ArtifactName: ${{parameters.ArtifactName}}
                         PackageName: ${{artifact.name}}
-                        SourceRootPath: $(Build.SourcesDirectory)
+                        SourceRootPath: $(Agent.BuildDirectory)/s
 
               - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
                 - job: PublicDocsMS
