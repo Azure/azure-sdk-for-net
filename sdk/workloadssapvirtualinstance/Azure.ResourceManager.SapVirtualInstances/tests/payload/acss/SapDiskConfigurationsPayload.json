@@ -1,0 +1,8 @@
+{
+    "appLocation": "eastus2",
+    "environment": "Prod",
+    "sapProduct": "S4HANA",
+    "databaseType": "HANA",
+    "deploymentType": "ThreeTier",
+    "dbVmSku": "Standard_M32ts"
+}
