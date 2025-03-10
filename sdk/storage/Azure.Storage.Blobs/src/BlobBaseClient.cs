@@ -207,6 +207,9 @@ namespace Azure.Storage.Blobs.Specialized
                     BlobName = blobName
                 };
             _uri = builder.ToUri();
+            _accountName = conn.AccountName;
+            _containerName = blobContainerName;
+            _name = blobName;
 
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
@@ -278,6 +281,7 @@ namespace Azure.Storage.Blobs.Specialized
                   sasCredential: null,
                   tokenCredential: null)
         {
+            _accountName ??= credential?.AccountName;
         }
 
         /// <summary>
@@ -605,9 +609,9 @@ namespace Azure.Storage.Blobs.Specialized
             if (_name == null || _containerName == null || _accountName == null)
             {
                 var builder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes);
-                _name = builder.BlobName;
-                _containerName = builder.BlobContainerName;
-                _accountName = builder.AccountName;
+                _name ??= builder.BlobName;
+                _containerName ??= builder.BlobContainerName;
+                _accountName ??= builder.AccountName;
             }
         }
 

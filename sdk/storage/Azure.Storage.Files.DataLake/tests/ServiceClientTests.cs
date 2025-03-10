@@ -127,6 +127,23 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
+        [Test]
+        public void Ctor_ConnectionString_CustomUri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var blobEndpoint = new Uri("http://customdomain/" + accountName);
+            var blobSecondaryEndpoint = new Uri("http://customdomain/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+
+            DataLakeServiceClient service = new DataLakeServiceClient(connectionString.ToString(true));
+
+            Assert.AreEqual(accountName, service.AccountName);
+        }
+
         [RecordedTest]
         public void Ctor_TokenCredential_Http()
         {

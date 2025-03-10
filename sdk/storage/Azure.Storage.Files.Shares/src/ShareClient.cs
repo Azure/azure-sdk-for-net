@@ -160,6 +160,8 @@ namespace Azure.Storage.Files.Shares
             var conn = StorageConnectionString.Parse(connectionString);
             ShareUriBuilder uriBuilder = new ShareUriBuilder(conn.FileEndpoint) { ShareName = shareName };
             _uri = uriBuilder.ToUri();
+            _accountName = conn.AccountName;
+            _name = shareName;
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
@@ -447,8 +449,8 @@ namespace Azure.Storage.Files.Shares
             if (_name == null || _accountName == null)
             {
                 var builder = new ShareUriBuilder(Uri);
-                _name = builder.ShareName;
-                _accountName = builder.AccountName;
+                _name ??= builder.ShareName;
+                _accountName ??= builder.AccountName;
             }
         }
 

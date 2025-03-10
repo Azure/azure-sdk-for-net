@@ -295,6 +295,8 @@ namespace Azure.Storage.Files.DataLake
             _uri = uriBuilder.ToUri();
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
+            _accountName = conn.AccountName;
+            _path = path;
 
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
@@ -763,10 +765,10 @@ namespace Azure.Storage.Files.DataLake
                 || _name == null)
             {
                 var builder = new DataLakeUriBuilder(Uri);
-                _fileSystemName = builder.FileSystemName;
-                _accountName = builder.AccountName;
-                _path = builder.DirectoryOrFilePath;
-                _name = builder.LastDirectoryOrFileName;
+                _fileSystemName ??= builder.FileSystemName;
+                _accountName ??= builder.AccountName;
+                _path ??= builder.DirectoryOrFilePath;
+                _name ??= builder.LastDirectoryOrFileName;
             }
         }
 

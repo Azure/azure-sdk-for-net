@@ -210,6 +210,9 @@ namespace Azure.Storage.Files.Shares
                     DirectoryOrFilePath = filePath
                 };
             _uri = uriBuilder.ToUri();
+            _accountName = conn.AccountName;
+            _shareName = shareName;
+            _path = filePath;
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
@@ -494,10 +497,10 @@ namespace Azure.Storage.Files.Shares
             if (_name == null || _shareName == null || _accountName == null || _path == null)
             {
                 var builder = new ShareUriBuilder(Uri);
-                _name = builder.LastDirectoryOrFileName;
-                _shareName = builder.ShareName;
-                _accountName = builder.AccountName;
-                _path = builder.DirectoryOrFilePath;
+                _name ??= builder.LastDirectoryOrFileName;
+                _shareName ??= builder.ShareName;
+                _accountName ??= builder.AccountName;
+                _path ??= builder.DirectoryOrFilePath;
             }
         }
 

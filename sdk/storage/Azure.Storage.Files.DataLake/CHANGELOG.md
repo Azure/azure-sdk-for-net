@@ -8,6 +8,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed bug where a `DataLakeServiceClient`, `DataLakeFileSystemClient`, `DataLakeDirectoryClient`, `DataLakeFileClient`, `DataLakePathClient` created with a connection string with an account name specified (e.g. "AccountName=..;"), the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
 
 ### Other Changes
 

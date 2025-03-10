@@ -11,6 +11,7 @@
 - Fixed bug to ensure that the accumulated disposables within the internal `StorageWriteStream` are disposed properly in the event that an exception is thrown during the disposal process. (#47781)
 - Fixed bug to Redact SAS credentials from Error.SasCredentialRequiresUriWithoutSas message.
 - Fixed bug where LazyLoadingReadOnlyStream overprovisions the default buffer memory for OpenRead
+- Fixed bug where a client created with a connection string with an account name specified (e.g. "AccountName=..;"), the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
 
 ### Other Changes
 - Implemented IAsyncDisposable in StorageWriteStream

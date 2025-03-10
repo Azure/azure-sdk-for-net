@@ -126,6 +126,7 @@ namespace Azure.Storage.Queues
         {
             var conn = StorageConnectionString.Parse(connectionString);
             _uri = conn.QueueEndpoint;
+            _accountName = conn.AccountName;
             options ??= new QueueClientOptions();
             _clientConfiguration = new QueueClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
