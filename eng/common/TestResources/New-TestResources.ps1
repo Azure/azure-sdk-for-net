@@ -533,7 +533,7 @@ try {
     # Some arm/bicep templates may want to change deployment settings like local auth in sandboxed TME tenants.
     # The pipeline account context does not have the .Tenant.Name property, so check against subscription via
     # naming convention instead.
-    $templateParameters.Add('supportsSafeSecretStandard', (-not $wellKnownTMETenants.Contains($TenantId)))
+    $templateParameters.Add('supportsSafeSecretStandard', (!$wellKnownTMETenants.Contains($TenantId)))
     $defaultCloudParameters = LoadCloudConfig $Environment
     MergeHashes $defaultCloudParameters $(Get-Variable templateParameters)
     MergeHashes $ArmTemplateParameters $(Get-Variable templateParameters)
