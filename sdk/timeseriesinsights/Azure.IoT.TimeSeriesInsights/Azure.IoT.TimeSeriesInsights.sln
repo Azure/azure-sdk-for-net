@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29709.97
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.IoT.TimeSeriesInsights", "src\Azure.IoT.TimeSeriesInsights.csproj", "{E33D09D9-D809-472C-82E6-6A26BDB86FC2}"
 EndProject
@@ -20,7 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\Update-TsiSnippets.ps1 = ..\Update-TsiSnippets.ps1
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeSeriesInsightsClientSample", "samples\TimeSeriesInsightsClientSample\TimeSeriesInsightsClientSample.csproj", "{D243481B-0944-4F60-9B1F-35EDFC7769BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.IoT.TimeSeriesInsights.Tests.ClientSample", "samples\TimeSeriesInsightsClientSample\Azure.IoT.TimeSeriesInsights.Tests.ClientSample.csproj", "{D243481B-0944-4F60-9B1F-35EDFC7769BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,10 +44,6 @@ Global
 		{D243481B-0944-4F60-9B1F-35EDFC7769BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D243481B-0944-4F60-9B1F-35EDFC7769BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D243481B-0944-4F60-9B1F-35EDFC7769BA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7FE9FA2F-7793-4EB9-B8D0-26696536508B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7FE9FA2F-7793-4EB9-B8D0-26696536508B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7FE9FA2F-7793-4EB9-B8D0-26696536508B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7FE9FA2F-7793-4EB9-B8D0-26696536508B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
