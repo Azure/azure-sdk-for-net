@@ -81,5 +81,16 @@ namespace Azure.ResourceManager.DataBox.Models
         public DataCenterAddressContent DataCenterAddressRequest { get; set; }
         /// <summary> Request body to get the device capabilities for a given sku. </summary>
         public DeviceCapabilityContent DeviceCapabilityRequest { get; set; }
+        /// <summary> Type of the device. </summary>
+        public DataBoxSkuName? TransportAvailabilityRequestSkuName
+        {
+            get => TransportAvailabilityRequest is null ? default : TransportAvailabilityRequest.SkuName;
+            set
+            {
+                if (TransportAvailabilityRequest is null)
+                    TransportAvailabilityRequest = new TransportAvailabilityContent();
+                TransportAvailabilityRequest.SkuName = value;
+            }
+        }
     }
 }
