@@ -69,7 +69,7 @@ namespace Azure.Communication
             UserId = userId;
             IsAnonymous = isAnonymous;
             Cloud = cloud ?? CommunicationCloudEnvironment.Public;
-            _rawId = rawId; // what if rawId conflicts with the other properties?
+            _rawId = rawId;
         }
 
         /// <inheritdoc />
