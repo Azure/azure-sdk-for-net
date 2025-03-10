@@ -17,7 +17,7 @@ using Azure.ResourceManager;
 
 namespace MgmtTypeSpec
 {
-    internal partial class MgmtTypeSpecArmOperation<T> : Azure.ResourceManager.ArmOperation<T>
+    internal partial class MgmtTypeSpecArmOperation<T> : ArmOperation<T>
     {
         private readonly OperationInternal<T> _operation;
         private readonly RehydrationToken? _completeRehydrationToken;

@@ -23,10 +23,10 @@ namespace Azure.Generator.Primitives
         {
             var builder = new CSharpProjectWriter()
             {
-                Description = $"This is the {AzureClientPlugin.Instance.TypeFactory.PackageName} client library for developing .NET applications with rich experience.",
-                AssemblyTitle = $"SDK Code Generation {AzureClientPlugin.Instance.TypeFactory.PackageName}",
+                Description = $"This is the {AzureClientPlugin.Instance.TypeFactory.PrimaryNamespace} client library for developing .NET applications with rich experience.",
+                AssemblyTitle = $"SDK Code Generation {AzureClientPlugin.Instance.TypeFactory.PrimaryNamespace}",
                 Version = "1.0.0-beta.1",
-                PackageTags = AzureClientPlugin.Instance.TypeFactory.PackageName,
+                PackageTags = AzureClientPlugin.Instance.TypeFactory.PrimaryNamespace,
                 GenerateDocumentationFile = true,
             };
 

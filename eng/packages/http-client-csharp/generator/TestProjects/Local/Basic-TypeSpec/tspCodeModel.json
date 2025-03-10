@@ -33,7 +33,7 @@
     }
    ],
    "crossLanguageDefinitionId": "",
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "doc": "The ThingModel_requiredLiteralString",
    "isFixed": false,
    "isFlags": false,
@@ -67,7 +67,7 @@
     }
    ],
    "crossLanguageDefinitionId": "",
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "doc": "The ThingModel_requiredLiteralInt",
    "isFixed": false,
    "isFlags": false,
@@ -101,7 +101,7 @@
     }
    ],
    "crossLanguageDefinitionId": "",
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "doc": "The ThingModel_requiredLiteralFloat",
    "isFixed": false,
    "isFlags": false,
@@ -135,7 +135,7 @@
     }
    ],
    "crossLanguageDefinitionId": "",
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "doc": "The ThingModel_optionalLiteralString",
    "isFixed": false,
    "isFlags": false,
@@ -169,7 +169,7 @@
     }
    ],
    "crossLanguageDefinitionId": "",
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "doc": "The ThingModel_optionalLiteralInt",
    "isFixed": false,
    "isFlags": false,
@@ -203,7 +203,7 @@
     }
    ],
    "crossLanguageDefinitionId": "",
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "doc": "The ThingModel_optionalLiteralFloat",
    "isFixed": false,
    "isFlags": false,
@@ -275,7 +275,7 @@
      "decorators": []
     }
    ],
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "doc": "Simple enum",
    "isFixed": true,
    "isFlags": false,
@@ -347,7 +347,7 @@
      "decorators": []
     }
    ],
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "doc": "Extensible enum",
    "isFixed": false,
    "isFlags": false,
@@ -419,7 +419,7 @@
      "decorators": []
     }
    ],
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "doc": "Int based extensible enum",
    "isFixed": false,
    "isFlags": false,
@@ -491,7 +491,7 @@
      "decorators": []
     }
    ],
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "doc": "Float based extensible enum",
    "isFixed": false,
    "isFlags": false,
@@ -563,7 +563,7 @@
      "decorators": []
     }
    ],
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "doc": "float fixed enum",
    "isFixed": false,
    "isFlags": false,
@@ -635,7 +635,7 @@
      "decorators": []
     }
    ],
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "doc": "float fixed enum",
    "isFixed": true,
    "isFlags": false,
@@ -707,7 +707,7 @@
      "decorators": []
     }
    ],
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "doc": "float fixed enum",
    "isFixed": true,
    "isFlags": false,
@@ -779,7 +779,7 @@
      "decorators": []
     }
    ],
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "doc": "int fixed enum",
    "isFixed": true,
    "isFlags": false,
@@ -834,7 +834,7 @@
      "decorators": []
     }
    ],
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "isFixed": true,
    "isFlags": false,
    "usage": "ApiVersionEnum",
@@ -846,7 +846,7 @@
    "$id": "90",
    "kind": "model",
    "name": "ThingModel",
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "crossLanguageDefinitionId": "BasicTypeSpec.ThingModel",
    "usage": "Input,Output,Spread,Json",
    "doc": "A model with a few properties of literal types",
@@ -919,7 +919,7 @@
         "decorators": []
        }
       ],
-      "clientNamespace": "",
+      "namespace": "",
       "decorators": []
      },
      "optional": false,
@@ -1226,7 +1226,7 @@
        "crossLanguageDefinitionId": "TypeSpec.Array",
        "decorators": []
       },
-      "clientNamespace": ""
+      "namespace": ""
      },
      "optional": true,
      "readOnly": false,
@@ -1265,7 +1265,7 @@
        "crossLanguageDefinitionId": "TypeSpec.Array",
        "decorators": []
       },
-      "clientNamespace": ""
+      "namespace": ""
      },
      "optional": false,
      "readOnly": false,
@@ -1287,7 +1287,7 @@
    "$id": "153",
    "kind": "model",
    "name": "RoundTripModel",
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "crossLanguageDefinitionId": "BasicTypeSpec.RoundTripModel",
    "usage": "Input,Output,Json",
    "doc": "this is a roundtrip model",
@@ -1936,7 +1936,7 @@
       "$id": "244",
       "kind": "model",
       "name": "ModelWithRequiredNullableProperties",
-      "clientNamespace": "BasicTypeSpec",
+      "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.ModelWithRequiredNullableProperties",
       "usage": "Input,Output,Json",
       "doc": "A model with a few required nullable properties",
@@ -1958,7 +1958,7 @@
           "crossLanguageDefinitionId": "TypeSpec.int32",
           "decorators": []
          },
-         "clientNamespace": ""
+         "namespace": ""
         },
         "optional": false,
         "readOnly": false,
@@ -1986,7 +1986,7 @@
          "type": {
           "$ref": "28"
          },
-         "clientNamespace": ""
+         "namespace": ""
         },
         "optional": false,
         "readOnly": false,
@@ -2014,7 +2014,7 @@
          "type": {
           "$ref": "20"
          },
-         "clientNamespace": ""
+         "namespace": ""
         },
         "optional": false,
         "readOnly": false,
@@ -2083,7 +2083,7 @@
    "$id": "264",
    "kind": "model",
    "name": "FriendModel",
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "crossLanguageDefinitionId": "BasicTypeSpec.NotFriend",
    "usage": "Output,Spread,Json",
    "doc": "this is not a friendly model but with a friendly name",
@@ -2122,7 +2122,7 @@
    "$id": "269",
    "kind": "model",
    "name": "ProjectedModel",
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "crossLanguageDefinitionId": "BasicTypeSpec.ModelWithProjectedName",
    "usage": "Output,Spread,Json",
    "doc": "this is a model with a projected name",
@@ -2161,7 +2161,7 @@
    "$id": "274",
    "kind": "model",
    "name": "ReturnsAnonymousModelResponse",
-   "clientNamespace": "BasicTypeSpec",
+   "namespace": "BasicTypeSpec",
    "crossLanguageDefinitionId": "BasicTypeSpec.returnsAnonymousModel.Response.anonymous",
    "usage": "Output,Json",
    "decorators": [],
@@ -2172,7 +2172,7 @@
   {
    "$id": "275",
    "Name": "BasicTypeSpecClient",
-   "ClientNamespace": "BasicTypeSpec",
+   "Namespace": "BasicTypeSpec",
    "Doc": "This is a sample typespec project.",
    "Operations": [
     {
@@ -2282,7 +2282,6 @@
        "BodyType": {
         "$ref": "90"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -2291,7 +2290,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{basicTypeSpecUrl}",
      "Path": "/hello",
      "BufferResponse": true,
@@ -2430,7 +2428,6 @@
        "BodyType": {
         "$ref": "153"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -2439,7 +2436,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "Json",
      "Uri": "{basicTypeSpecUrl}",
      "Path": "/againHi/{p2}",
      "RequestMediaTypes": [
@@ -2582,7 +2578,6 @@
        "BodyType": {
         "$ref": "153"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -2591,7 +2586,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "Json",
      "Uri": "{basicTypeSpecUrl}",
      "Path": "/noContentType/{p2}",
      "RequestMediaTypes": [
@@ -2647,7 +2641,6 @@
        "BodyType": {
         "$ref": "90"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -2656,7 +2649,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{basicTypeSpecUrl}",
      "Path": "/demoHi",
      "BufferResponse": true,
@@ -2754,7 +2746,6 @@
        "BodyType": {
         "$ref": "90"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -2763,7 +2754,6 @@
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "Json",
      "Uri": "{basicTypeSpecUrl}",
      "Path": "/literal",
      "RequestMediaTypes": [
@@ -2900,7 +2890,6 @@
        "BodyType": {
         "$ref": "90"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -2909,7 +2898,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{basicTypeSpecUrl}",
      "Path": "/helloLiteral/{p2}",
      "BufferResponse": true,
@@ -2991,7 +2979,6 @@
        "BodyType": {
         "$ref": "90"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -3000,7 +2987,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{basicTypeSpecUrl}",
      "Path": "/top/{action}",
      "BufferResponse": true,
@@ -3053,7 +3039,6 @@
        "BodyType": {
         "$ref": "90"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -3062,7 +3047,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{basicTypeSpecUrl}",
      "Path": "/top2",
      "BufferResponse": true,
@@ -3160,7 +3144,6 @@
        "BodyType": {
         "$ref": "90"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -3169,7 +3152,6 @@
       }
      ],
      "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
      "Uri": "{basicTypeSpecUrl}",
      "Path": "/patch",
      "RequestMediaTypes": [
@@ -3270,7 +3252,6 @@
        "BodyType": {
         "$ref": "90"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -3279,7 +3260,6 @@
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "Json",
      "Uri": "{basicTypeSpecUrl}",
      "Path": "/anonymousBody",
      "RequestMediaTypes": [
@@ -3380,7 +3360,6 @@
        "BodyType": {
         "$ref": "264"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -3389,7 +3368,6 @@
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "Json",
      "Uri": "{basicTypeSpecUrl}",
      "Path": "/friendlyName",
      "RequestMediaTypes": [
@@ -3443,13 +3421,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{basicTypeSpecUrl}",
      "Path": "/",
      "BufferResponse": true,
@@ -3547,7 +3523,6 @@
        "BodyType": {
         "$ref": "269"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -3556,7 +3531,6 @@
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "Json",
      "Uri": "{basicTypeSpecUrl}",
      "Path": "/projectedName",
      "RequestMediaTypes": [
@@ -3612,7 +3586,6 @@
        "BodyType": {
         "$ref": "274"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -3621,7 +3594,6 @@
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "None",
      "Uri": "{basicTypeSpecUrl}",
      "Path": "/returnsAnonymousModel",
      "BufferResponse": true,
@@ -3678,7 +3650,6 @@
         "value": "Sunday",
         "decorators": []
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -3694,7 +3665,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{basicTypeSpecUrl}",
      "Path": "/unknown-value",
      "BufferResponse": true,
@@ -3792,7 +3762,6 @@
        "BodyType": {
         "$ref": "90"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -3801,7 +3770,6 @@
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "Json",
      "Uri": "{basicTypeSpecUrl}",
      "Path": "/internalProtocol",
      "RequestMediaTypes": [
@@ -3826,13 +3794,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{basicTypeSpecUrl}",
      "Path": "/stillConvenient",
      "BufferResponse": true,
@@ -3876,13 +3842,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "HEAD",
-     "RequestBodyMediaType": "None",
      "Uri": "{basicTypeSpecUrl}",
      "Path": "/headAsBoolean/{id}",
      "BufferResponse": true,
@@ -3917,7 +3881,8 @@
      "Kind": "Client"
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "BasicTypeSpec"
   }
  ],
  "Auth": {
