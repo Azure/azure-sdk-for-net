@@ -52,11 +52,12 @@ namespace Azure.ResourceManager.DataBox.Samples
                     PhoneExtension = "",
                 })
                 {
-                    ShippingAddress = new DataBoxShippingAddress("XXXX XXXX", "XX", "00000")
+                    ShippingAddress = new DataBoxShippingAddress("XXXX XXXX", "XX")
                     {
                         StreetAddress2 = "XXXX XXXX",
                         City = "XXXX XXXX",
                         StateOrProvince = "XX",
+                        PostalCode = "00000",
                         CompanyName = "XXXX XXXX",
                         AddressType = DataBoxShippingAddressType.Commercial,
                     },
@@ -108,11 +109,12 @@ namespace Azure.ResourceManager.DataBox.Samples
                 })
                 {
                     DevicePassword = "<devicePassword>",
-                    ShippingAddress = new DataBoxShippingAddress("XXXX XXXX", "XX", "00000")
+                    ShippingAddress = new DataBoxShippingAddress("XXXX XXXX", "XX")
                     {
                         StreetAddress2 = "XXXX XXXX",
                         City = "XXXX XXXX",
                         StateOrProvince = "XX",
+                        PostalCode = "00000",
                         CompanyName = "XXXX XXXX",
                         AddressType = DataBoxShippingAddressType.Commercial,
                     },
@@ -166,11 +168,12 @@ SharePassword = "<sharePassword>",
                     PhoneExtension = "",
                 })
                 {
-                    ShippingAddress = new DataBoxShippingAddress("XXXX XXXX", "XX", "00000")
+                    ShippingAddress = new DataBoxShippingAddress("XXXX XXXX", "XX")
                     {
                         StreetAddress2 = "XXXX XXXX",
                         City = "XXXX XXXX",
                         StateOrProvince = "XX",
+                        PostalCode = "00000",
                         CompanyName = "XXXX XXXX",
                         AddressType = DataBoxShippingAddressType.Commercial,
                     },
@@ -228,11 +231,12 @@ SharePassword = "<sharePassword>",
                     PhoneExtension = "",
                 })
                 {
-                    ShippingAddress = new DataBoxShippingAddress("XXXX XXXX", "XX", "00000")
+                    ShippingAddress = new DataBoxShippingAddress("XXXX XXXX", "XX")
                     {
                         StreetAddress2 = "XXXX XXXX",
                         City = "XXXX XXXX",
                         StateOrProvince = "XX",
+                        PostalCode = "00000",
                         CompanyName = "XXXX XXXX",
                         AddressType = DataBoxShippingAddressType.Commercial,
                     },
@@ -290,11 +294,12 @@ TransferAllFiles = true,
                     PhoneExtension = "",
                 })
                 {
-                    ShippingAddress = new DataBoxShippingAddress("XXXX XXXX", "XX", "00000")
+                    ShippingAddress = new DataBoxShippingAddress("XXXX XXXX", "XX")
                     {
                         StreetAddress2 = "XXXX XXXX",
                         City = "XXXX XXXX",
                         StateOrProvince = "XX",
+                        PostalCode = "00000",
                         CompanyName = "XXXX XXXX",
                         AddressType = DataBoxShippingAddressType.Commercial,
                     },

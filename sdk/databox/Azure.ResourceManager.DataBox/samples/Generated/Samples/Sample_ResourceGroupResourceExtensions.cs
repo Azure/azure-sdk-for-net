@@ -75,11 +75,12 @@ new DataTransferDetailsValidationContent(DataBoxSkuName.DataBox, DataBoxJobTrans
 DataImportDetails = {new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourcegroups/YourResourceGroupName/providers/Microsoft.Storage/storageAccounts/YourStorageAccountName")))},
 Model = ModelName.DataBox,
 },
-new DataBoxValidateAddressContent(new DataBoxShippingAddress("XXXX XXXX", "XX", "00000")
+new DataBoxValidateAddressContent(new DataBoxShippingAddress("XXXX XXXX", "XX")
 {
 StreetAddress2 = "XXXX XXXX",
 City = "XXXX XXXX",
 StateOrProvince = "XX",
+PostalCode = "00000",
 CompanyName = "XXXX XXXX",
 AddressType = DataBoxShippingAddressType.Commercial,
 }, DataBoxSkuName.DataBox)
