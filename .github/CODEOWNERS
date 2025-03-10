@@ -1123,4 +1123,16 @@
 # AzureSdkOwners:                                                  @live1206 @ArcturusZhang
 
 #PRLabel: %CodeGen %Client
-/eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang
+/eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire
+
+# PRLabel: %Pinecone
+/sdk/liftrpinecone/Azure.ResourceManager.*/                        @aggarwalsw
+
+# PRLabel: %Weights & Biases
+/sdk/liftrweightsandbiases/Azure.ResourceManager.*/                @aggarwalsw
+
+# PRLabel: %Arize AI
+/sdk/liftrarize/Azure.ResourceManager.*/                           @aggarwalsw
+
+# PRLabel: %LambdaTest HyperExecute
+/sdk/liftrhyperexecute/Azure.ResourceManager.*/                    @aggarwalsw
