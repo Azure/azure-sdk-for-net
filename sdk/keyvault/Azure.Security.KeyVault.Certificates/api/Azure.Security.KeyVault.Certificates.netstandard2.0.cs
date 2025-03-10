@@ -58,7 +58,9 @@ namespace Azure.Security.KeyVault.Certificates
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>> RestoreCertificateBackupAsync(byte[] backup, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.CertificateContact>> SetContacts(System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Certificates.CertificateContact> contacts, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.CertificateContact>>> SetContactsAsync(System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Certificates.CertificateContact> contacts, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.KeyVault.Certificates.CertificateOperation StartCreateCertificate(string certificateName, Azure.Security.KeyVault.Certificates.CertificatePolicy policy, bool? enabled = default(bool?), System.Collections.Generic.IDictionary<string, string> tags = null, bool? preserveCertOrder = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.KeyVault.Certificates.CertificateOperation StartCreateCertificate(string certificateName, Azure.Security.KeyVault.Certificates.CertificatePolicy policy, bool? enabled = default(bool?), System.Collections.Generic.IDictionary<string, string> tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Certificates.CertificateOperation> StartCreateCertificateAsync(string certificateName, Azure.Security.KeyVault.Certificates.CertificatePolicy policy, bool? enabled = default(bool?), System.Collections.Generic.IDictionary<string, string> tags = null, bool? preserveCertOrder = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Certificates.CertificateOperation> StartCreateCertificateAsync(string certificateName, Azure.Security.KeyVault.Certificates.CertificatePolicy policy, bool? enabled = default(bool?), System.Collections.Generic.IDictionary<string, string> tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.KeyVault.Certificates.DeleteCertificateOperation StartDeleteCertificate(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Certificates.DeleteCertificateOperation> StartDeleteCertificateAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -73,7 +75,7 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class CertificateClientOptions : Azure.Core.ClientOptions
     {
-        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V7_5) { }
+        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V7_6_Preview_2) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -84,6 +86,7 @@ namespace Azure.Security.KeyVault.Certificates
             V7_3 = 3,
             V7_4 = 4,
             V7_5 = 5,
+            V7_6_Preview_2 = 6,
         }
     }
     public partial class CertificateContact
@@ -242,6 +245,7 @@ namespace Azure.Security.KeyVault.Certificates
         public System.Uri Id { get { throw null; } }
         public string IssuerName { get { throw null; } }
         public string Name { get { throw null; } }
+        public bool? PreserveCertOrder { get { throw null; } }
         public string RequestId { get { throw null; } }
         public string Status { get { throw null; } }
         public string StatusDetails { get { throw null; } }
@@ -268,6 +272,7 @@ namespace Azure.Security.KeyVault.Certificates
         public Azure.Security.KeyVault.Certificates.CertificateKeyType? KeyType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.CertificateKeyUsage> KeyUsage { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.LifetimeAction> LifetimeActions { get { throw null; } }
+        public bool? PreserveCertOrder { get { throw null; } set { } }
         public bool? ReuseKey { get { throw null; } set { } }
         public string Subject { get { throw null; } }
         public Azure.Security.KeyVault.Certificates.SubjectAlternativeNames SubjectAlternativeNames { get { throw null; } }
@@ -347,6 +352,7 @@ namespace Azure.Security.KeyVault.Certificates
         public string Name { get { throw null; } }
         public string Password { get { throw null; } set { } }
         public Azure.Security.KeyVault.Certificates.CertificatePolicy Policy { get { throw null; } set { } }
+        public bool? PreserveCertOrder { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class IssuerProperties
@@ -389,6 +395,7 @@ namespace Azure.Security.KeyVault.Certificates
     {
         internal KeyVaultCertificateWithPolicy() { }
         public Azure.Security.KeyVault.Certificates.CertificatePolicy Policy { get { throw null; } }
+        public bool? PreserveCertOrder { get { throw null; } }
     }
     public partial class LifetimeAction
     {
