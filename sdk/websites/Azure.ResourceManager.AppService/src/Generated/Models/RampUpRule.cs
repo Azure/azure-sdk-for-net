@@ -62,8 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="minReroutePercentage"> Specifies lower boundary above which ReroutePercentage will stay. </param>
         /// <param name="maxReroutePercentage"> Specifies upper boundary below which ReroutePercentage will stay. </param>
         /// <param name="changeDecisionCallbackUri">
-        /// Custom decision algorithm can be provided in TiPCallback site extension which URL can be specified. See TiPCallback site extension for the scaffold and contracts.
-        /// https://www.siteextensions.net/packages/TiPCallback/
+        /// Custom decision algorithm can be provided in TiPCallback site extension which URL can be specified.
         /// </param>
         /// <param name="name"> Name of the routing rule. The recommended name would be to point to the slot which will receive the traffic in the experiment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -103,8 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
         [WirePath("maxReroutePercentage")]
         public double? MaxReroutePercentage { get; set; }
         /// <summary>
-        /// Custom decision algorithm can be provided in TiPCallback site extension which URL can be specified. See TiPCallback site extension for the scaffold and contracts.
-        /// https://www.siteextensions.net/packages/TiPCallback/
+        /// Custom decision algorithm can be provided in TiPCallback site extension which URL can be specified.
         /// </summary>
         [WirePath("changeDecisionCallbackUrl")]
         public Uri ChangeDecisionCallbackUri { get; set; }
