@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-02-01-preview";
+            _apiVersion = apiVersion ?? "2024-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -399,6 +399,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(databaseName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -704,6 +705,7 @@ namespace Azure.ResourceManager.Sql
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -901,6 +903,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/move", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sqlResourceMoveDefinition, ModelSerializationExtensions.WireOptions);
@@ -1188,6 +1191,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/upgradeDataWarehouse", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }

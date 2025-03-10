@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheLongTermRetentionBackupOfAManagedDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ManagedInstanceLongTermRetentionBackupGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedInstanceLongTermRetentionBackupGet.json
             // this example is just showing the usage of "LongTermRetentionManagedInstanceBackups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SubscriptionLongTermRetentionManagedInstanceBackupCollection collection = subscriptionResource.GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
 
             // invoke the operation
-            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000";
+            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000;Archive";
             SubscriptionLongTermRetentionManagedInstanceBackupResource result = await collection.GetAsync(backupName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetAllLongTermRetentionBackupsUnderTheDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ManagedInstanceLongTermRetentionBackupListByDatabase.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedInstanceLongTermRetentionBackupListByDatabase.json
             // this example is just showing the usage of "LongTermRetentionManagedInstanceBackups_ListByDatabase" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetTheLongTermRetentionBackupOfAManagedDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ManagedInstanceLongTermRetentionBackupGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedInstanceLongTermRetentionBackupGet.json
             // this example is just showing the usage of "LongTermRetentionManagedInstanceBackups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SubscriptionLongTermRetentionManagedInstanceBackupCollection collection = subscriptionResource.GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
 
             // invoke the operation
-            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000";
+            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000;Archive";
             bool result = await collection.ExistsAsync(backupName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetTheLongTermRetentionBackupOfAManagedDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ManagedInstanceLongTermRetentionBackupGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedInstanceLongTermRetentionBackupGet.json
             // this example is just showing the usage of "LongTermRetentionManagedInstanceBackups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SubscriptionLongTermRetentionManagedInstanceBackupCollection collection = subscriptionResource.GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
 
             // invoke the operation
-            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000";
+            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000;Archive";
             NullableResponse<SubscriptionLongTermRetentionManagedInstanceBackupResource> response = await collection.GetIfExistsAsync(backupName);
             SubscriptionLongTermRetentionManagedInstanceBackupResource result = response.HasValue ? response.Value : null;
 

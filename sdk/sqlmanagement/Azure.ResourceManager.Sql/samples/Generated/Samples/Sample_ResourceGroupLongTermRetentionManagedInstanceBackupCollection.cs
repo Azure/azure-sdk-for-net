@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ResourceGroupBasedManagedInstanceLongTermRetentionBackupGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ResourceGroupBasedManagedInstanceLongTermRetentionBackupGet.json
             // this example is just showing the usage of "LongTermRetentionManagedInstanceBackups_GetByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ResourceGroupLongTermRetentionManagedInstanceBackupCollection collection = resourceGroupResource.GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
 
             // invoke the operation
-            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000";
+            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000;Archive";
             ResourceGroupLongTermRetentionManagedInstanceBackupResource result = await collection.GetAsync(backupName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetAllLongTermRetentionBackupsUnderTheDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ResourceGroupBasedManagedInstanceLongTermRetentionBackupListByDatabase.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ResourceGroupBasedManagedInstanceLongTermRetentionBackupListByDatabase.json
             // this example is just showing the usage of "LongTermRetentionManagedInstanceBackups_ListByResourceGroupDatabase" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ResourceGroupBasedManagedInstanceLongTermRetentionBackupGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ResourceGroupBasedManagedInstanceLongTermRetentionBackupGet.json
             // this example is just showing the usage of "LongTermRetentionManagedInstanceBackups_GetByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ResourceGroupLongTermRetentionManagedInstanceBackupCollection collection = resourceGroupResource.GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
 
             // invoke the operation
-            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000";
+            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000;Archive";
             bool result = await collection.ExistsAsync(backupName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ResourceGroupBasedManagedInstanceLongTermRetentionBackupGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ResourceGroupBasedManagedInstanceLongTermRetentionBackupGet.json
             // this example is just showing the usage of "LongTermRetentionManagedInstanceBackups_GetByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ResourceGroupLongTermRetentionManagedInstanceBackupCollection collection = resourceGroupResource.GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
 
             // invoke the operation
-            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000";
+            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000;Archive";
             NullableResponse<ResourceGroupLongTermRetentionManagedInstanceBackupResource> response = await collection.GetIfExistsAsync(backupName);
             ResourceGroupLongTermRetentionManagedInstanceBackupResource result = response.HasValue ? response.Value : null;
 
