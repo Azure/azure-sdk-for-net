@@ -1,6 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -19,8 +23,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <summary>
         /// Configures Azure Monitor Exporter for all signals.
         /// </summary>
-        /// <param name="builder"><see cref="OpenTelemetryBuilder"/>.</param>
-        /// <returns>The supplied <see cref="OpenTelemetryBuilder"/> for chaining calls.</returns>
+        /// <param name="builder"><see cref="IOpenTelemetryBuilder"/>.</param>
+        /// <returns>The supplied <see cref="IOpenTelemetryBuilder"/> for chaining calls.</returns>
         /// <remarks>
         /// <para>
         /// This method configures Azure Monitor for use with OpenTelemetry by adding the Azure Monitor exporter for logging,
@@ -28,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// parsed state values.
         /// </para>
         /// </remarks>
-        public static OpenTelemetryBuilder UseAzureMonitorExporter(this OpenTelemetryBuilder builder)
+        public static IOpenTelemetryBuilder UseAzureMonitorExporter(this IOpenTelemetryBuilder builder)
         {
             builder.Services.TryAddSingleton<IConfigureOptions<AzureMonitorExporterOptions>,
                         DefaultAzureMonitorExporterOptions>();
@@ -38,9 +42,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <summary>
         /// Configures Azure Monitor Exporter for logging, distributed tracing, and metrics.
         /// </summary>
-        /// <param name="builder"><see cref="OpenTelemetryBuilder"/>.</param>
+        /// <param name="builder"><see cref="IOpenTelemetryBuilder"/>.</param>
         /// <param name="configureAzureMonitor">Callback action for configuring <see cref="AzureMonitorExporterOptions"/>.</param>
-        /// <returns>The supplied <see cref="OpenTelemetryBuilder"/> for chaining calls.</returns>
+        /// <returns>The supplied <see cref="IOpenTelemetryBuilder"/> for chaining calls.</returns>
         /// <remarks>
         /// <para>
         /// This method configures Azure Monitor for use with OpenTelemetry by adding the Azure Monitor exporter for logging,
@@ -48,7 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// parsed state values.
         /// </para>
         /// </remarks>
-        public static OpenTelemetryBuilder UseAzureMonitorExporter(this OpenTelemetryBuilder builder, Action<AzureMonitorExporterOptions> configureAzureMonitor)
+        public static IOpenTelemetryBuilder UseAzureMonitorExporter(this IOpenTelemetryBuilder builder, Action<AzureMonitorExporterOptions> configureAzureMonitor)
         {
             if (builder.Services == null)
             {
@@ -69,6 +73,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 loggingOptions.IncludeFormattedMessage = true;
             });
+
+            // Register Manager as a singleton
+            builder.Services.AddSingleton<LiveMetricsClientManager>(sp =>
+            {
+                AzureMonitorExporterOptions exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
+                var azureMonitorLiveMetricsOptions = new AzureMonitorLiveMetricsOptions();
+                exporterOptions.SetValueToLiveMetricsOptions(azureMonitorLiveMetricsOptions);
+
+                return new LiveMetricsClientManager(azureMonitorLiveMetricsOptions, new DefaultPlatform());
+            });
+
+            builder.Services.AddOptions<AzureMonitorExporterOptions>()
+                .Configure<IConfiguration>((options, config) =>
+                {
+                    // If connection string is not set in the options, try to get it from configuration.
+                    if (string.IsNullOrWhiteSpace(options.ConnectionString) && config[EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING] != null)
+                    {
+                        options.ConnectionString = config[EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING];
+                    }
+                });
 
             builder.Services.AddHostedService(sp =>
             {

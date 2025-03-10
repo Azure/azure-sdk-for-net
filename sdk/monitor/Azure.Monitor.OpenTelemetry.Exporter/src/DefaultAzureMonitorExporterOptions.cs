@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -45,9 +46,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     options.ConnectionString = connectionStringFromEnvVar;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // AzureMonitorAspNetCoreEventSource.Log.ConfigureFailed(ex);
+                AzureMonitorExporterEventSource.Log.ConfigureFailed(ex);
             }
         }
     }
