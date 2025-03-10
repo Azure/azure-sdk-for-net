@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -177,6 +176,7 @@ namespace Azure.Storage.Files.DataLake
                 customerProvidedKey: options.CustomerProvidedKey);
 
             _uri = conn.BlobEndpoint;
+            _accountName = conn.AccountName;
             _blobUri = new DataLakeUriBuilder(_uri).ToBlobUri();
 
             _blobServiceClient = BlobServiceClientInternals.Create(
@@ -198,13 +198,7 @@ namespace Azure.Storage.Files.DataLake
         /// The shared key credential used to sign requests.
         /// </param>
         public DataLakeServiceClient(Uri serviceUri, StorageSharedKeyCredential credential)
-            : this(
-                  serviceUri,
-                  credential.AsPolicy(),
-                  options: null,
-                  storageSharedKeyCredential: credential,
-                  sasCredential: null,
-                  tokenCredential: null)
+            : this(serviceUri, credential, default)
         {
         }
 
@@ -232,6 +226,7 @@ namespace Azure.Storage.Files.DataLake
                   sasCredential: null,
                   tokenCredential: null)
         {
+            _accountName ??= credential?.AccountName;
         }
 
         /// <summary>
