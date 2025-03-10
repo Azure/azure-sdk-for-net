@@ -36,7 +36,7 @@ namespace Azure.Communication
         {
             get
             {
-                if (string.IsNullOrEmpty(_assertedId))
+                if (_assertedId == "")
                 {
                     return null;
                 }
