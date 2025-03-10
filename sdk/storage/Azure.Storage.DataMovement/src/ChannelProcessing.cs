@@ -12,7 +12,7 @@ namespace Azure.Storage.DataMovement;
 
 internal delegate Task ProcessAsync<T>(T item, CancellationToken cancellationToken);
 
-internal interface IProcessor<TItem> : IDisposable
+internal interface IProcessor<TItem> : IAsyncDisposable
 {
     ValueTask QueueAsync(TItem item, CancellationToken cancellationToken = default);
     bool TryComplete();
@@ -46,12 +46,13 @@ internal static class ChannelProcessing
             : new ParallelChannelProcessor<T>(channel, readers);
     }
 
-    private abstract class ChannelProcessor<TItem> : IProcessor<TItem>, IDisposable
+    private abstract class ChannelProcessor<TItem> : IProcessor<TItem>, IAsyncDisposable
     {
         /// <summary>
         /// Async channel reader task. Loops for lifetime of object.
         /// </summary>
         private Task _processorTask;
+        internal TaskCompletionSource<bool> _processorTaskCompletionSource;
 
         /// <summary>
         /// Channel of items to process.
@@ -83,6 +84,9 @@ internal static class ChannelProcessing
             Argument.AssertNotNull(channel, nameof(channel));
             _channel = channel;
             _cancellationTokenSource = new();
+            _processorTaskCompletionSource = new TaskCompletionSource<bool>(
+                false,
+                TaskCreationOptions.RunContinuationsAsynchronously);
         }
 
         public async ValueTask QueueAsync(TItem item, CancellationToken cancellationToken = default)
@@ -94,12 +98,14 @@ internal static class ChannelProcessing
 
         protected abstract ValueTask NotifyOfPendingItemProcessing();
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
+            _channel.Writer.TryComplete();
             if (!_cancellationTokenSource.IsCancellationRequested)
             {
                 _cancellationTokenSource.Cancel();
             }
+            await _processorTaskCompletionSource.Task.ConfigureAwait(false);
             GC.SuppressFinalize(this);
         }
     }
@@ -112,11 +118,21 @@ internal static class ChannelProcessing
 
         protected override async ValueTask NotifyOfPendingItemProcessing()
         {
-            // Process all available items in the queue.
-            while (await _channel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
+            try
             {
-                TItem item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
-                await Process(item, _cancellationToken).ConfigureAwait(false);
+                // Process all available items in the queue.
+                while (await _channel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
+                {
+                    TItem item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
+                    await Process(item, _cancellationToken).ConfigureAwait(false);
+                }
+            }
+            finally
+            {
+                // Since the channel has it's own dedicated CancellationTokenSource (only called at Dispose)
+                // we don't need a catch block to catch the exception since we know the cancellation either comes
+                // from successful completion or another failure that has been already invoked.
+                _processorTaskCompletionSource.TrySetResult(true);
             }
         }
     }
@@ -137,22 +153,32 @@ internal static class ChannelProcessing
         protected override async ValueTask NotifyOfPendingItemProcessing()
         {
             List<Task> chunkRunners = new List<Task>(_maxConcurrentProcessing);
-            while (await _channel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
+            try
             {
-                TItem item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
-                if (chunkRunners.Count >= _maxConcurrentProcessing)
+                while (await _channel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
                 {
-                    // Clear any completed blocks from the task list
-                    int removedRunners = chunkRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
-                    // If no runners have finished..
-                    if (removedRunners == 0)
+                    TItem item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
+                    if (chunkRunners.Count >= _maxConcurrentProcessing)
                     {
-                        // Wait for at least one runner to finish
-                        await Task.WhenAny(chunkRunners).ConfigureAwait(false);
-                        chunkRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
+                        // Clear any completed blocks from the task list
+                        int removedRunners = chunkRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
+                        // If no runners have finished..
+                        if (removedRunners == 0)
+                        {
+                            // Wait for at least one runner to finish
+                            await Task.WhenAny(chunkRunners).ConfigureAwait(false);
+                            chunkRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
+                        }
                     }
+                    chunkRunners.Add(Task.Run(async () => await Process(item, _cancellationToken).ConfigureAwait(false)));
                 }
-                chunkRunners.Add(Task.Run(async () => await Process(item, _cancellationToken).ConfigureAwait(false)));
+            }
+            finally
+            {
+                // Since the channel has it's own dedicated CancellationTokenSource (only called at Dispose)
+                // we don't need a catch block to catch the exception since we know the cancellation either comes
+                // from successful completion or another failure that has been already invoked.
+                _processorTaskCompletionSource.TrySetResult(true);
             }
         }
     }

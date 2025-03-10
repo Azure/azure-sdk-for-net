@@ -1,6 +1,6 @@
 # .NET Event Hubs Client: Track Two Proposal (Second Preview)
 
-Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers. This lets you process and analyze the massive amounts of data produced by your connected devices and applications. Once Event Hubs has collected the data, you can retrieve, transform and store it by using any real-time analytics provider or with batching/storage adapters. If you would like to know more about Azure Event Hubs, you may wish to review: [What is Event Hubs](https://docs.microsoft.com/azure/event-hubs/event-hubs-about)? 
+Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers. This lets you process and analyze the massive amounts of data produced by your connected devices and applications. Once Event Hubs has collected the data, you can retrieve, transform and store it by using any real-time analytics provider or with batching/storage adapters. If you would like to know more about Azure Event Hubs, you may wish to review: [What is Event Hubs](https://learn.microsoft.com/azure/event-hubs/event-hubs-about)? 
 
 ## Design Overview
 
@@ -12,7 +12,7 @@ This design is focused on the second preview of the track two Event Hubs client 
 
 - Continue to align the public API surface area to the guidance outlined in the [Azure SDK Design Guidelines for .NET](https://azuresdkspecs.z5.web.core.windows.net/DotNetSpec.html).
 
-- Design an exception hierarchy that follows the overall pattern used by the track one client, limiting changes and allowing the published [exception guidance](https://docs.microsoft.com/azure/event-hubs/event-hubs-messaging-exceptions) to remain as relevant as possible.
+- Design an exception hierarchy that follows the overall pattern used by the track one client, limiting changes and allowing the published [exception guidance](https://learn.microsoft.com/azure/event-hubs/event-hubs-messaging-exceptions) to remain as relevant as possible.
 
 - Streamline the design around timeouts and retries, making the common scenarios easier while allowing developers with advanced scenarios to customize.
 
@@ -64,11 +64,11 @@ This indicates that the Event Hubs service did not respond to an operation withi
 
 #### `MessageSizeExceededException` 
 
-Event data, both individual and in batches, have a maximum size allowed. This includes the data of the event, as well as any associated metadata and system overhead. The best approach for resolving this error is to reduce the number of events being sent in a batch or the size of data included in the message. Because size limits are subject to change, please refer to [Azure Event Hubs quotas and limits](https://docs.microsoft.com/azure/event-hubs/event-hubs-quotas) for specifics.
+Event data, both individual and in batches, have a maximum size allowed. This includes the data of the event, as well as any associated metadata and system overhead. The best approach for resolving this error is to reduce the number of events being sent in a batch or the size of data included in the message. Because size limits are subject to change, please refer to [Azure Event Hubs quotas and limits](https://learn.microsoft.com/azure/event-hubs/event-hubs-quotas) for specifics.
 
 #### `QuotaExceededException` 
 
-The messaging entity has reached its maximum allowable size. This exception can happen if the maximum number of consumers have already been created for a given partition and consumer group. Because  limits are subject to change, please refer to [Azure Event Hubs quotas and limits](https://docs.microsoft.com/azure/event-hubs/event-hubs-quotas) for specifics.
+The messaging entity has reached its maximum allowable size. This exception can happen if the maximum number of consumers have already been created for a given partition and consumer group. Because  limits are subject to change, please refer to [Azure Event Hubs quotas and limits](https://learn.microsoft.com/azure/event-hubs/event-hubs-quotas) for specifics.
 
 #### `DateTimeOffset`
 

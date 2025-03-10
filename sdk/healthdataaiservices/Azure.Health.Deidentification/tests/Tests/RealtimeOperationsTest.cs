@@ -31,7 +31,7 @@ namespace Azure.Health.Deidentification.Tests
             string input = "Hello, my name is John Smith.";
             DeidentificationContent content = new(input);
 
-            DeidentificationResult result = await client.DeidentifyAsync(content);
+            DeidentificationResult result = await client.DeidentifyTextAsync(content);
 
             Assert.IsNull(result.TaggerResult, "On Surrogate Operation, expect TaggerResult to be null.");
             Assert.IsNotNull(result.OutputText, "On Surrogate Operation, expect OutputText to be not null.");
@@ -46,14 +46,12 @@ namespace Azure.Health.Deidentification.Tests
             DeidentificationClient client = GetDeidClient();
 
             string input = "Hello, my name is John Smith.";
-            DeidentificationContent content = new(input, OperationType.Tag, null, null, null);
+            DeidentificationContent content = new(input, DeidentificationOperationType.Tag, null, null);
 
-            DeidentificationResult result = await client.DeidentifyAsync(content);
+            DeidentificationResult result = await client.DeidentifyTextAsync(content);
 
             Assert.IsNotNull(result.TaggerResult, "On Tag Operation, expect TaggerResult to be not null.");
             Assert.IsNull(result.OutputText, "On Tag Operation, expect OutputText to be null.");
-            Assert.IsNull(result.TaggerResult.Etag, "Expected Etag to be null.");
-            Assert.IsNull(result.TaggerResult.Path, "Expected Path to be null.");
 
             Assert.IsTrue(result.TaggerResult.Entities.Count > 0, "Expected TaggerResult to have at least one tag.");
             Assert.IsTrue(result.TaggerResult.Entities[0].Category == PhiCategory.Doctor || result.TaggerResult.Entities[0].Category == PhiCategory.Patient, "Expected first tag to be a patient/doctor.");

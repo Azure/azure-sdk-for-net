@@ -334,7 +334,8 @@ namespace Azure.Maps.Weather.Tests.Samples
                 Language = WeatherLanguage.EnglishUsa
             };
             Response<SevereWeatherAlertsResult> response = client.GetSevereWeatherAlerts(options);
-            if (response.Value.Results.Count > 0) {
+            if (response.Value.Results.Count > 0)
+            {
                 Console.WriteLine("Description: " + response.Value.Results[0].Description);
             }
             #endregion
@@ -351,7 +352,14 @@ namespace Azure.Maps.Weather.Tests.Samples
             MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetTropicalStormActive
             Response<ActiveStormResult> response = client.GetTropicalStormActive();
-            Console.WriteLine("Name: " + response.Value.ActiveStorms[0].Name);
+            if (response.Value.ActiveStorms.Count > 0)
+            {
+                Console.WriteLine("Name: " + response.Value.ActiveStorms[0].Name);
+            }
+            else
+            {
+                Console.WriteLine("No active storm");
+            }
             #endregion
         }
 
@@ -374,12 +382,22 @@ namespace Azure.Maps.Weather.Tests.Samples
                 IncludeGeometricDetails = true
             };
             Response<StormForecastResult> response = client.GetTropicalStormForecast(options);
-            if (response.Value.StormForecasts[0].WindRadiiSummary[0].RadiiGeometry is GeoPolygon geoPolygon) {
+
+            if (response.Value.StormForecasts.Count == 0)
+            {
+                Console.WriteLine("No storm forecast found.");
+                return;
+            }
+
+            if (response.Value.StormForecasts[0].WindRadiiSummary[0].RadiiGeometry is GeoPolygon geoPolygon)
+            {
                 Console.WriteLine("Geometry type: Polygon");
-                for (int i = 0; i < geoPolygon.Coordinates[0].Count; ++i) {
+                for (int i = 0; i < geoPolygon.Coordinates[0].Count; ++i)
+                {
                     Console.WriteLine("Point {0}: {1}", i, geoPolygon.Coordinates[0][i]);
                 }
             }
+
             Console.WriteLine(
                 "Windspeed: {0}{1}",
                 response.Value.StormForecasts[0].WindRadiiSummary[0].WindSpeed.Value,
@@ -405,11 +423,18 @@ namespace Azure.Maps.Weather.Tests.Samples
                 GovernmentStormId = 2
             };
             Response<StormLocationsResult> response = client.GetTropicalStormLocations(options);
-            Console.WriteLine(
-                "Coordinates(longitude, latitude): ({0}, {1})",
-                response.Value.StormLocations[0].Coordinates.Longitude,
-                response.Value.StormLocations[0].Coordinates.Latitude
-            );
+            if (response.Value.StormLocations.Count > 0)
+            {
+                Console.WriteLine(
+                    "Coordinates(longitude, latitude): ({0}, {1})",
+                    response.Value.StormLocations[0].Coordinates.Longitude,
+                    response.Value.StormLocations[0].Coordinates.Latitude
+                );
+            }
+            else
+            {
+                Console.WriteLine("No storm location found.");
+            }
             #endregion
         }
 
@@ -430,7 +455,14 @@ namespace Azure.Maps.Weather.Tests.Samples
                 GovernmentStormId = 2
             };
             Response<StormSearchResult> response = client.GetTropicalStormSearch(options);
-            Console.WriteLine("Name: " + response.Value.Storms[0].Name);
+            if (response.Value.Storms.Count > 0)
+            {
+                Console.WriteLine("Name: " + response.Value.Storms[0].Name);
+            }
+            else
+            {
+                Console.WriteLine("No storm found.");
+            }
             #endregion
         }
 
@@ -465,7 +497,14 @@ namespace Azure.Maps.Weather.Tests.Samples
                 query,
                 WeatherLanguage.EnglishUsa
             );
-            Console.WriteLine("Temperature: " + response.Value.Waypoints[0].Temperature.Value);
+            if (response.Value.Waypoints.Count > 0)
+            {
+                Console.WriteLine("Temperature of waypoints 0: " + response.Value.Waypoints[0].Temperature.Value);
+            }
+            else
+            {
+                Console.WriteLine("No weather information found.");
+            }
             #endregion
         }
     }

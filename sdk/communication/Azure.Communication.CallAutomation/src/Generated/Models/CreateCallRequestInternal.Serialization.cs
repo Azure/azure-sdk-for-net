@@ -49,10 +49,10 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("callIntelligenceOptions"u8);
                 writer.WriteObjectValue(CallIntelligenceOptions);
             }
-            if (Optional.IsDefined(OpsSource))
+            if (Optional.IsDefined(TeamsAppSource))
             {
-                writer.WritePropertyName("opsSource"u8);
-                writer.WriteObjectValue(OpsSource);
+                writer.WritePropertyName("teamsAppSource"u8);
+                writer.WriteObjectValue(TeamsAppSource);
             }
             if (Optional.IsDefined(CustomCallingContext))
             {

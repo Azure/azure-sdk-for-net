@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageCacheImportJobData(document.RootElement, options);
                     }
                 default:

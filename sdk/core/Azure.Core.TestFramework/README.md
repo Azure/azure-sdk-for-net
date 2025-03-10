@@ -581,7 +581,7 @@ To download and unpack all artifacts use the `Download-DevOpsRecordings.ps1` scr
 
 The `Download-DevOpsRecordings.ps1` would wait for active runs to finish before retrieving artifacts unless `-NoWait` switch is used.
 
-__NOTE:__ these scripts require being [signed in with Azure CLI](https://docs.microsoft.com/cli/azure/authenticate-azure-cli?view=azure-cli-latest) and access to the [internal DevOps project](https://dev.azure.com/azure-sdk/internal/).
+__NOTE:__ these scripts require being [signed in with Azure CLI](https://learn.microsoft.com/cli/azure/authenticate-azure-cli?view=azure-cli-latest) and access to the [internal DevOps project](https://dev.azure.com/azure-sdk/internal/).
 
 ### Note on private/non-virtual fields in your clients (such as _clientDiagnostics) and InternalsVisibleTo
 
@@ -647,7 +647,7 @@ using (var _ = new TestEnvVar("AZURE_TENANT_ID", "foo"))
 
 ### TestAppContextSwitch
 
-[TestAppContextSwitch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/TestAppContextSwitch.cs) allows you to wrap a block of code with a using statement inside which the configured [AppContext](https://docs.microsoft.com/dotnet/api/system.appcontext) switch will be set to your supplied values.
+[TestAppContextSwitch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/TestAppContextSwitch.cs) allows you to wrap a block of code with a using statement inside which the configured [AppContext](https://learn.microsoft.com/dotnet/api/system.appcontext) switch will be set to your supplied values.
 It ensures that the existing value of any configured switches are preserved before they are set them and restores them outside the scope of the using block.
 Note: Even if an `AppContext` switch was un-set prior to setting it via `TestAppContextSwitch`, it will be unset after leaving the scope of the using block.
 

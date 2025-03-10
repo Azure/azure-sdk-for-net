@@ -56,18 +56,18 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="name"> Name of the elastic filter. </param>
         /// <param name="description"> Description of the elastic filter. </param>
         /// <param name="region"> Region of the elastic filter. </param>
-        /// <param name="elasticTrafficFilterType"> Type of the elastic filter. </param>
-        /// <param name="includeByDefault"> IncludeByDefault for the elastic filter. </param>
+        /// <param name="filterType"> Type of the elastic filter. </param>
+        /// <param name="doesIncludeByDefault"> IncludeByDefault for the elastic filter. </param>
         /// <param name="rules"> Rules in the elastic filter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticTrafficFilter(string id, string name, string description, string region, ElasticModelType? elasticTrafficFilterType, bool? includeByDefault, IReadOnlyList<ElasticTrafficFilterRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticTrafficFilter(string id, string name, string description, string region, ElasticFilterType? filterType, bool? doesIncludeByDefault, IReadOnlyList<ElasticTrafficFilterRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             Description = description;
             Region = region;
-            ElasticTrafficFilterType = elasticTrafficFilterType;
-            IncludeByDefault = includeByDefault;
+            FilterType = filterType;
+            DoesIncludeByDefault = doesIncludeByDefault;
             Rules = rules;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <summary> Region of the elastic filter. </summary>
         public string Region { get; }
         /// <summary> Type of the elastic filter. </summary>
-        public ElasticModelType? ElasticTrafficFilterType { get; }
+        public ElasticFilterType? FilterType { get; }
         /// <summary> IncludeByDefault for the elastic filter. </summary>
-        public bool? IncludeByDefault { get; }
+        public bool? DoesIncludeByDefault { get; }
         /// <summary> Rules in the elastic filter. </summary>
         public IReadOnlyList<ElasticTrafficFilterRule> Rules { get; }
     }

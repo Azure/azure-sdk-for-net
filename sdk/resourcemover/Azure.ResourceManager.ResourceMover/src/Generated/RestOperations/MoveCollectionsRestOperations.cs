@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 201:
                     {
                         MoverResourceSetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MoverResourceSetData.DeserializeMoverResourceSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 201:
                     {
                         MoverResourceSetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MoverResourceSetData.DeserializeMoverResourceSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                     {
                         MoverResourceSetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MoverResourceSetData.DeserializeMoverResourceSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                     {
                         MoverResourceSetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MoverResourceSetData.DeserializeMoverResourceSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                     {
                         MoverResourceSetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MoverResourceSetData.DeserializeMoverResourceSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                     {
                         MoverResourceSetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MoverResourceSetData.DeserializeMoverResourceSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                     {
                         MoveCollectionResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MoveCollectionResultList.DeserializeMoveCollectionResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1050,7 +1050,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                     {
                         MoveCollectionResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MoveCollectionResultList.DeserializeMoveCollectionResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                     {
                         MoveCollectionResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MoveCollectionResultList.DeserializeMoveCollectionResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1136,7 +1136,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                     {
                         MoveCollectionResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MoveCollectionResultList.DeserializeMoveCollectionResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1205,7 +1205,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                     {
                         RequiredForResourcesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RequiredForResourcesList.DeserializeRequiredForResourcesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1236,7 +1236,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                     {
                         RequiredForResourcesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RequiredForResourcesList.DeserializeRequiredForResourcesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1285,7 +1285,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                     {
                         MoveCollectionResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MoveCollectionResultList.DeserializeMoveCollectionResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1312,7 +1312,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                     {
                         MoveCollectionResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MoveCollectionResultList.DeserializeMoveCollectionResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1363,7 +1363,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                     {
                         MoveCollectionResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MoveCollectionResultList.DeserializeMoveCollectionResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1392,7 +1392,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                     {
                         MoveCollectionResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MoveCollectionResultList.DeserializeMoveCollectionResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -20,7 +20,7 @@ private int ReleaseVMs(int vmsToRelease)
 
 ## Define method `UpdateAvailableVms`
 
-When `SetConfigurationSetting` is called with `onlyIfUnchanged: true`, it adds optional `If-Match` header to the HTTP request. Response will have HTTP status code equals to either 200 if client setting ETag matched the service one and setting has been successfully updated or 412 otherwise. See App Configuration [REST API](https://docs.microsoft.com/azure/azure-app-configuration/rest-api-key-value#get-conditionally) and [Azure API design](https://azure.github.io/azure-sdk/general_design.html#conditional-requests) for more information about conditional requests.
+When `SetConfigurationSetting` is called with `onlyIfUnchanged: true`, it adds optional `If-Match` header to the HTTP request. Response will have HTTP status code equals to either 200 if client setting ETag matched the service one and setting has been successfully updated or 412 otherwise. See App Configuration [REST API](https://learn.microsoft.com/azure/azure-app-configuration/rest-api-key-value#get-conditionally) and [Azure API design](https://azure.github.io/azure-sdk/general_design.html#conditional-requests) for more information about conditional requests.
 
 To increase the number of available VMs, we need to get current number of VMs, add the number of released ones and send this number back to the service. If the `available_vms` setting has been modified since the last time our client retrieved it from the service, we need to catch `RequestFailedException` exception and re-apply our update logic before attempting to set it again on the service. This logic can be encapsulates into a helper method that will return the number of available VMs after the update.
 

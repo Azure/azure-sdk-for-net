@@ -61,8 +61,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="debugSetting"> The debug setting of the deployment. </param>
         /// <param name="errorDeployment"> The deployment on error behavior. </param>
         /// <param name="expressionEvaluation"> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. Only applicable to nested templates. If not specified, default value is outer. </param>
+        /// <param name="validationLevel"> The validation level of the deployment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentProperties(BinaryData template, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode mode, DebugSetting debugSetting, ErrorDeployment errorDeployment, ExpressionEvaluationOptions expressionEvaluation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmDeploymentProperties(BinaryData template, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode mode, DebugSetting debugSetting, ErrorDeployment errorDeployment, ExpressionEvaluationOptions expressionEvaluation, ValidationLevel? validationLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Template = template;
             TemplateLink = templateLink;
@@ -72,6 +73,7 @@ namespace Azure.ResourceManager.Resources.Models
             DebugSetting = debugSetting;
             ErrorDeployment = errorDeployment;
             ExpressionEvaluation = expressionEvaluation;
+            ValidationLevel = validationLevel;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -185,5 +187,9 @@ namespace Azure.ResourceManager.Resources.Models
                 ExpressionEvaluation.Scope = value;
             }
         }
+
+        /// <summary> The validation level of the deployment. </summary>
+        [WirePath("validationLevel")]
+        public ValidationLevel? ValidationLevel { get; set; }
     }
 }

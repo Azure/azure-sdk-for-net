@@ -9,12 +9,8 @@ using static Azure.Storage.DataMovement.Tests.CheckpointerTesting;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    public class JobPartPlanHeaderTests : DataMovementTestBase
+    public class JobPartPlanHeaderTests
     {
-        public JobPartPlanHeaderTests(bool async) : base(async, default)
-        {
-        }
-
         [Test]
         public void Ctor()
         {
@@ -40,7 +36,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             JobPartPlanHeader header = CreateDefaultJobPartHeader();
-            string samplePath = Path.Combine("Resources", "SampleJobPartPlanFile.b3.ndmpart");
+            string samplePath = Path.Combine("Resources", "SampleJobPartPlanFile.1.ndmpart");
 
             using (MemoryStream headerStream = new MemoryStream())
             using (FileStream fileStream = File.OpenRead(samplePath))
@@ -84,42 +80,14 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public void Deserialize_File_Version_b1()
+        public void Deserialize_File_Version_1()
         {
             // Arrange
-            string samplePath = Path.Combine("Resources", "SampleJobPartPlanFile.steVb1");
+            string samplePath = Path.Combine("Resources", "SampleJobPartPlanFile.1.ndmpart");
             using (FileStream stream = File.OpenRead(samplePath))
             {
                 // Act / Assert
-                Assert.Catch<ArgumentException>(
-                    () => JobPartPlanHeader.Deserialize(stream),
-                    $"The checkpoint file schema version {DataMovementConstants.JobPartPlanFile.SchemaVersion_b1} is not supported by this version of the SDK.");
-            }
-        }
-
-        [Test]
-        public void Deserialize_File_Version_b2()
-        {
-            // Arrange
-            string samplePath = Path.Combine("Resources", "SampleJobPartPlanFile.steVb2");
-            using (FileStream stream = File.OpenRead(samplePath))
-            {
-                // Act / Assert
-                Assert.Catch<ArgumentException>(
-                    () => JobPartPlanHeader.Deserialize(stream),
-                    $"The checkpoint file schema version {DataMovementConstants.JobPartPlanFile.SchemaVersion_b2} is not supported by this version of the SDK.");
-            }
-        }
-
-        [Test]
-        public void Deserialize_File_Version_b3()
-        {
-            // Arrange
-            string samplePath = Path.Combine("Resources", "SampleJobPartPlanFile.b3.ndmpart");
-            using (FileStream stream = File.OpenRead(samplePath))
-            {
-                // Act / Assert
-                DeserializeAndVerify(stream, DataMovementConstants.JobPartPlanFile.SchemaVersion_b3);
+                DeserializeAndVerify(stream, DataMovementConstants.JobPartPlanFile.SchemaVersion_1);
             }
         }
 
@@ -133,7 +101,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         private void DeserializeAndVerify(
            Stream stream,
-           string schemaVersion)
+           int schemaVersion)
         {
             JobPartPlanHeader deserializedHeader = JobPartPlanHeader.Deserialize(stream);
 

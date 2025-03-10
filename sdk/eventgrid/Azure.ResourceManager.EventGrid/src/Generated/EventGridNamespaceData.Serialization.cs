@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEventGridNamespaceData(document.RootElement, options);
                     }
                 default:

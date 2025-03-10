@@ -16,7 +16,7 @@ namespace Azure.AI.OpenAI.Chat
         /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceModelIdVectorizationSource"/>. </summary>
         /// <param name="modelId"> The embedding model build ID to use for vectorization. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        internal InternalAzureChatDataSourceModelIdVectorizationSource(string modelId)
+        public InternalAzureChatDataSourceModelIdVectorizationSource(string modelId)
         {
             Argument.AssertNotNull(modelId, nameof(modelId));
 

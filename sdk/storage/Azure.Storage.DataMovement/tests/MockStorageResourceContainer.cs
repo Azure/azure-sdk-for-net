@@ -37,14 +37,14 @@ namespace Azure.Storage.DataMovement.Tests
             throw new NotImplementedException();
         }
 
-        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
-            return new MockResourceCheckpointData();
+            return new MockResourceCheckpointDetails();
         }
 
-        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new MockResourceCheckpointData();
+            return new MockResourceCheckpointDetails();
         }
 
         protected internal override StorageResourceItem GetStorageResourceReference(string path, string resourceId)

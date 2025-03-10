@@ -1,4 +1,11 @@
-trigger: none
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - eng/packages/http-client-csharp
+      - eng/scripts/typespec
 pr:
   branches:
     include:
@@ -9,6 +16,7 @@ pr:
   paths:
     include:
       - eng/packages/http-client-csharp
+      - eng/scripts/typespec
 
 parameters:
   - name: BuildPrereleaseVersion
@@ -40,13 +48,13 @@ extends:
   parameters:
     SparseCheckoutPaths:
       - /sdk/core/Azure.Core/src/Shared
+      - /sdk/core/Azure.Core.TestFramework/src
     BuildPrereleaseVersion: ${{ parameters.BuildPrereleaseVersion }}
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
       ShouldPublish: ${{ parameters.ShouldPublish }}
       PublishPublic: ${{ parameters.PublishPublic }}
       PublishDependsOnTest: ${{ parameters.PublishPublic }}
-
       ShouldRegenerate: ${{ parameters.ShouldRegenerate }}
       RegenerationJobCount: 5
       MinimumPerJob: 10
@@ -54,3 +62,4 @@ extends:
     TestMatrix:
       All:
         TestArguments: -UnitTests -GenerationChecks -Filter .NET
+        SpectorName: "http-client-csharp"

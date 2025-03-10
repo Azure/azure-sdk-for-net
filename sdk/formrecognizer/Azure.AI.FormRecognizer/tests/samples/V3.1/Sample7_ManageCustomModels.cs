@@ -6,12 +6,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
     public partial class FormRecognizerSamples
     {
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/47689")]
         public async Task ManageCustomModels()
         {
             string endpoint = TestEnvironment.Endpoint;

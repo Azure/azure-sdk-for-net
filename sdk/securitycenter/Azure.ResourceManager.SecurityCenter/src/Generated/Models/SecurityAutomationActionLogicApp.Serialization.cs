@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecurityAutomationActionLogicApp(document.RootElement, options);
                     }
                 default:

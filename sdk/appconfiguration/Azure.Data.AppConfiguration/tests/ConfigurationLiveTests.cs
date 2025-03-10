@@ -58,11 +58,12 @@ namespace Azure.Data.AppConfiguration.Tests
             return client;
         }
 
-        private ConfigurationClient GetAADClient()
+        private ConfigurationClient GetAADClient(ConfigurationClientOptions clientOptions = null)
         {
             string endpoint = TestEnvironment.Endpoint;
             TokenCredential credential = TestEnvironment.Credential;
-            ConfigurationClientOptions options = InstrumentClientOptions(new ConfigurationClientOptions(_serviceVersion));
+            ConfigurationClientOptions configurationClientOptions = clientOptions ?? new ConfigurationClientOptions(_serviceVersion);
+            ConfigurationClientOptions options = InstrumentClientOptions(configurationClientOptions);
             return InstrumentClient(new ConfigurationClient(new Uri(endpoint), credential, options));
         }
 
@@ -144,6 +145,48 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(new ConfigurationSetting(batchKey, label));
             }
             return label;
+        }
+
+        // This test validates that the correct token audience is parsed from the test endpoint
+        // when the client is created with no specified audience.
+        [RecordedTest]
+        public async Task TokenAudienceDefaultAudience()
+        {
+            ConfigurationClient service = GetAADClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
+            }
+        }
+
+        // This test validates that the client successfully authenticates and calls the service operation
+        // when the client is created with a specified audience. The audience is derived from the test endpoint.
+        [RecordedTest]
+        public async Task TokenAudienceSpecifiedAudience()
+        {
+            ConfigurationClientOptions options = new(_serviceVersion)
+            {
+                Audience = TestEnvironment.GetAudience()
+            };
+            ConfigurationClient service = GetAADClient(options);
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
+            }
         }
 
         [RecordedTest]

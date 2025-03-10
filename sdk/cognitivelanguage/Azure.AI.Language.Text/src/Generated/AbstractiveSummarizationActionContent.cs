@@ -56,16 +56,16 @@ namespace Azure.AI.Language.Text
         /// <param name="sentenceCount"> Controls the approximate number of sentences in the output summaries. </param>
         /// <param name="stringIndexType"> String index type. </param>
         /// <param name="summaryLength"> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </param>
-        /// <param name="query"> (Optional) If provided, the query will be used to generate the summary. </param>
+        /// <param name="instruction"> (Optional) If provided, the query will be used to generate the summary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AbstractiveSummarizationActionContent(bool? loggingOptOut, string modelVersion, int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength, string query, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AbstractiveSummarizationActionContent(bool? loggingOptOut, string modelVersion, int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength, string instruction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;
             SentenceCount = sentenceCount;
             StringIndexType = stringIndexType;
             SummaryLength = summaryLength;
-            Query = query;
+            Instruction = instruction;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -80,6 +80,6 @@ namespace Azure.AI.Language.Text
         /// <summary> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </summary>
         public SummaryLengthBucket? SummaryLength { get; set; }
         /// <summary> (Optional) If provided, the query will be used to generate the summary. </summary>
-        public string Query { get; set; }
+        public string Instruction { get; set; }
     }
 }

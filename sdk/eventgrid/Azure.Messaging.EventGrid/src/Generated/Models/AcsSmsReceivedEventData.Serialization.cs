@@ -22,6 +22,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             string message = default;
             DateTimeOffset? receivedTimestamp = default;
+            int segmentCount = default;
             string messageId = default;
             string @from = default;
             string to = default;
@@ -41,6 +42,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     receivedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("segmentCount"u8))
+                {
+                    segmentCount = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
@@ -57,14 +63,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsSmsReceivedEventData(messageId, @from, to, message, receivedTimestamp);
+            return new AcsSmsReceivedEventData(
+                messageId,
+                @from,
+                to,
+                message,
+                receivedTimestamp,
+                segmentCount);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AcsSmsReceivedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsSmsReceivedEventData(document.RootElement);
         }
 

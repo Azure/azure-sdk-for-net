@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         LatencyScorecard value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LatencyScorecard.DeserializeLatencyScorecard(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         LatencyScorecard value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LatencyScorecard.DeserializeLatencyScorecard(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontDoorTimeSeriesInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FrontDoorTimeSeriesInfo.DeserializeFrontDoorTimeSeriesInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontDoorTimeSeriesInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FrontDoorTimeSeriesInfo.DeserializeFrontDoorTimeSeriesInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

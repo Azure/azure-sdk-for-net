@@ -101,7 +101,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
                 // In case of duplicate keys, only the first occurence will be exported.
-#if NET6_0_OR_GREATER
+#if NET
                 destination.TryAdd(keyValuePair.Key, Convert.ToString(keyValuePair.Value, CultureInfo.InvariantCulture).Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
 #else
                 if (!destination.ContainsKey(keyValuePair.Key))
@@ -119,7 +119,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
                 // In case of duplicate keys, only the first occurence will be exported.
-#if NET6_0_OR_GREATER
+#if NET
                 destination.TryAdd(key, value.Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
 #else
                 if (!destination.ContainsKey(key))
@@ -316,7 +316,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
-            if (exceptionMessage == null || exceptionType == null)
+            if (string.IsNullOrEmpty(exceptionMessage) || exceptionType == null)
             {
                 return null;
             }

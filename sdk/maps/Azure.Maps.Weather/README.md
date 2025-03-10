@@ -2,7 +2,7 @@
 
 Azure Maps Weather is a library which contains Azure Maps Weather APIs.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Weather/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://docs.microsoft.com/rest/api/maps/weather) | [Product documentation](https://docs.microsoft.com/azure/azure-maps/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Weather/src) | [API reference documentation](https://learn.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://learn.microsoft.com/rest/api/maps/weather) | [Product documentation](https://learn.microsoft.com/azure/azure-maps/)
 
 ## Getting started
 
@@ -16,7 +16,7 @@ dotnet add package Azure.Maps.Weather --prerelease
 
 ### Prerequisites
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure Maps account](https://docs.microsoft.com/azure/azure-maps/quick-demo-map-app#create-an-azure-maps-account).
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure Maps account](https://learn.microsoft.com/azure/azure-maps/quick-demo-map-app#create-an-azure-maps-account).
 
 To create a new Azure Maps account, you can use the Azure Portal, Azure PowerShell, or the Azure CLI. Here's an example using the Azure CLI:
 
@@ -119,7 +119,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Weather/samples). 
+You can familiarize yourself with different APIs using our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Weather/samples).
 
 ### Get Air Quality Daily Forecasts
 
@@ -270,7 +270,8 @@ GetSevereWeatherAlertsOptions options = new GetSevereWeatherAlertsOptions()
     Language = WeatherLanguage.EnglishUsa
 };
 Response<SevereWeatherAlertsResult> response = client.GetSevereWeatherAlerts(options);
-if (response.Value.Results.Count > 0) {
+if (response.Value.Results.Count > 0)
+{
     Console.WriteLine("Description: " + response.Value.Results[0].Description);
 }
 ```
@@ -278,7 +279,14 @@ if (response.Value.Results.Count > 0) {
 
 ```C# Snippet:GetTropicalStormActive
 Response<ActiveStormResult> response = client.GetTropicalStormActive();
-Console.WriteLine("Name: " + response.Value.ActiveStorms[0].Name);
+if (response.Value.ActiveStorms.Count > 0)
+{
+    Console.WriteLine("Name: " + response.Value.ActiveStorms[0].Name);
+}
+else
+{
+    Console.WriteLine("No active storm");
+}
 ```
 ### Get Tropical Storm Forecast
 
@@ -292,12 +300,22 @@ GetTropicalStormForecastOptions options = new GetTropicalStormForecastOptions()
     IncludeGeometricDetails = true
 };
 Response<StormForecastResult> response = client.GetTropicalStormForecast(options);
-if (response.Value.StormForecasts[0].WindRadiiSummary[0].RadiiGeometry is GeoPolygon geoPolygon) {
+
+if (response.Value.StormForecasts.Count == 0)
+{
+    Console.WriteLine("No storm forecast found.");
+    return;
+}
+
+if (response.Value.StormForecasts[0].WindRadiiSummary[0].RadiiGeometry is GeoPolygon geoPolygon)
+{
     Console.WriteLine("Geometry type: Polygon");
-    for (int i = 0; i < geoPolygon.Coordinates[0].Count; ++i) {
+    for (int i = 0; i < geoPolygon.Coordinates[0].Count; ++i)
+    {
         Console.WriteLine("Point {0}: {1}", i, geoPolygon.Coordinates[0][i]);
     }
 }
+
 Console.WriteLine(
     "Windspeed: {0}{1}",
     response.Value.StormForecasts[0].WindRadiiSummary[0].WindSpeed.Value,
@@ -314,11 +332,18 @@ GetTropicalStormLocationsOptions options = new GetTropicalStormLocationsOptions(
     GovernmentStormId = 2
 };
 Response<StormLocationsResult> response = client.GetTropicalStormLocations(options);
-Console.WriteLine(
-    "Coordinates(longitude, latitude): ({0}, {1})",
-    response.Value.StormLocations[0].Coordinates.Longitude,
-    response.Value.StormLocations[0].Coordinates.Latitude
-);
+if (response.Value.StormLocations.Count > 0)
+{
+    Console.WriteLine(
+        "Coordinates(longitude, latitude): ({0}, {1})",
+        response.Value.StormLocations[0].Coordinates.Longitude,
+        response.Value.StormLocations[0].Coordinates.Latitude
+    );
+}
+else
+{
+    Console.WriteLine("No storm location found.");
+}
 ```
 ### Get Tropical Storm Search
 
@@ -330,7 +355,14 @@ GetTropicalStormSearchOptions options = new GetTropicalStormSearchOptions()
     GovernmentStormId = 2
 };
 Response<StormSearchResult> response = client.GetTropicalStormSearch(options);
-Console.WriteLine("Name: " + response.Value.Storms[0].Name);
+if (response.Value.Storms.Count > 0)
+{
+    Console.WriteLine("Name: " + response.Value.Storms[0].Name);
+}
+else
+{
+    Console.WriteLine("No storm found.");
+}
 ```
 ### Get Weather Along Route
 
@@ -356,7 +388,14 @@ Response<WeatherAlongRouteResult> response = client.GetWeatherAlongRoute(
     query,
     WeatherLanguage.EnglishUsa
 );
-Console.WriteLine("Temperature: " + response.Value.Waypoints[0].Temperature.Value);
+if (response.Value.Waypoints.Count > 0)
+{
+    Console.WriteLine("Temperature of waypoints 0: " + response.Value.Waypoints[0].Temperature.Value);
+}
+else
+{
+    Console.WriteLine("No weather information found.");
+}
 ```
 
 
@@ -365,7 +404,7 @@ Console.WriteLine("Temperature: " + response.Value.Waypoints[0].Temperature.Valu
 
 ### General
 
-When you interact with the Azure Maps services, errors returned by the service correspond to the same HTTP status codes returned for [REST API requests](https://docs.microsoft.com/rest/api/maps/weather).
+When you interact with the Azure Maps services, errors returned by the service correspond to the same HTTP status codes returned for [REST API requests](https://learn.microsoft.com/rest/api/maps/weather).
 
 For example, if you search with an invalid coordinate, an error is returned, indicating "Bad Request".400
 
@@ -383,5 +422,3 @@ This project welcomes contributions and suggestions. Most contributions require 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact <opencode@microsoft.com> with any additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/maps/Azure.Maps.Weather/README.png)

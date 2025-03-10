@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVMwareVCenterData(document.RootElement, options);
                     }
                 default:

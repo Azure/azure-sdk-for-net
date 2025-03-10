@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryIntegrationRuntimeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryIntegrationRuntimeListResult.DeserializeDataFactoryIntegrationRuntimeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryIntegrationRuntimeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryIntegrationRuntimeListResult.DeserializeDataFactoryIntegrationRuntimeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryIntegrationRuntimeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryIntegrationRuntimeData.DeserializeDataFactoryIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryIntegrationRuntimeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryIntegrationRuntimeData.DeserializeDataFactoryIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryIntegrationRuntimeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryIntegrationRuntimeData.DeserializeDataFactoryIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryIntegrationRuntimeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryIntegrationRuntimeData.DeserializeDataFactoryIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryIntegrationRuntimeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryIntegrationRuntimeData.DeserializeDataFactoryIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryIntegrationRuntimeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryIntegrationRuntimeData.DeserializeDataFactoryIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryIntegrationRuntimeStatusResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryIntegrationRuntimeStatusResult.DeserializeDataFactoryIntegrationRuntimeStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryIntegrationRuntimeStatusResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryIntegrationRuntimeStatusResult.DeserializeDataFactoryIntegrationRuntimeStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         IntegrationRuntimeOutboundNetworkDependenciesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationRuntimeOutboundNetworkDependenciesResult.DeserializeIntegrationRuntimeOutboundNetworkDependenciesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         IntegrationRuntimeOutboundNetworkDependenciesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationRuntimeOutboundNetworkDependenciesResult.DeserializeIntegrationRuntimeOutboundNetworkDependenciesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         IntegrationRuntimeConnectionInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationRuntimeConnectionInfo.DeserializeIntegrationRuntimeConnectionInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         IntegrationRuntimeConnectionInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationRuntimeConnectionInfo.DeserializeIntegrationRuntimeConnectionInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -930,7 +930,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         IntegrationRuntimeAuthKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationRuntimeAuthKeys.DeserializeIntegrationRuntimeAuthKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -963,7 +963,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         IntegrationRuntimeAuthKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationRuntimeAuthKeys.DeserializeIntegrationRuntimeAuthKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1034,7 +1034,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         IntegrationRuntimeAuthKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationRuntimeAuthKeys.DeserializeIntegrationRuntimeAuthKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1065,7 +1065,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         IntegrationRuntimeAuthKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationRuntimeAuthKeys.DeserializeIntegrationRuntimeAuthKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1416,7 +1416,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         IntegrationRuntimeMonitoringData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationRuntimeMonitoringData.DeserializeIntegrationRuntimeMonitoringData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1447,7 +1447,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         IntegrationRuntimeMonitoringData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationRuntimeMonitoringData.DeserializeIntegrationRuntimeMonitoringData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1716,7 +1716,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryIntegrationRuntimeStatusResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryIntegrationRuntimeStatusResult.DeserializeDataFactoryIntegrationRuntimeStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1749,7 +1749,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryIntegrationRuntimeStatusResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryIntegrationRuntimeStatusResult.DeserializeDataFactoryIntegrationRuntimeStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1802,7 +1802,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryIntegrationRuntimeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryIntegrationRuntimeListResult.DeserializeDataFactoryIntegrationRuntimeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1833,7 +1833,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryIntegrationRuntimeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryIntegrationRuntimeListResult.DeserializeDataFactoryIntegrationRuntimeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

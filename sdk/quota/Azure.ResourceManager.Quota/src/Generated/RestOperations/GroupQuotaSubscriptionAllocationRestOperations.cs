@@ -11,7 +11,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Quota.Models;
 
 namespace Azure.ResourceManager.Quota
 {
@@ -32,11 +31,11 @@ namespace Azure.ResourceManager.Quota
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-01-preview";
+            _apiVersion = apiVersion ?? "2025-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string managementGroupId, string subscriptionId, string groupQuotaName, string filter)
+        internal RequestUriBuilder CreateListRequestUri(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -46,13 +45,15 @@ namespace Azure.ResourceManager.Quota
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Quota/groupQuotas/", false);
             uri.AppendPath(groupQuotaName, true);
-            uri.AppendPath("/quotaAllocations", false);
+            uri.AppendPath("/resourceProviders/", false);
+            uri.AppendPath(resourceProviderName, true);
+            uri.AppendPath("/quotaAllocations/", false);
+            uri.AppendPath(location, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("$filter", filter, true);
             return uri;
         }
 
-        internal HttpMessage CreateListRequest(string managementGroupId, string subscriptionId, string groupQuotaName, string filter)
+        internal HttpMessage CreateListRequest(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,306 +66,80 @@ namespace Azure.ResourceManager.Quota
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Quota/groupQuotas/", false);
             uri.AppendPath(groupQuotaName, true);
-            uri.AppendPath("/quotaAllocations", false);
+            uri.AppendPath("/resourceProviders/", false);
+            uri.AppendPath(resourceProviderName, true);
+            uri.AppendPath("/quotaAllocations/", false);
+            uri.AppendPath(location, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("$filter", filter, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Gets all the quota allocated to a subscription for the specific Resource Provider, Location. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. Use the $filter parameter to filter out the specific resource based on the ResourceProvider/Location. $filter is a required parameter. </summary>
+        /// <summary> Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. </summary>
         /// <param name="managementGroupId"> Management Group Id. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="filter">
-        /// | Field | Supported operators
-        /// |---------------------|------------------------
-        ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
-        /// </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="subscriptionId"/> or <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SubscriptionQuotaAllocationsList>> ListAsync(string managementGroupId, string subscriptionId, string groupQuotaName, string filter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SubscriptionQuotaAllocationsListData>> ListAsync(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var message = CreateListRequest(managementGroupId, subscriptionId, groupQuotaName, filter);
+            using var message = CreateListRequest(managementGroupId, subscriptionId, groupQuotaName, resourceProviderName, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SubscriptionQuotaAllocationsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SubscriptionQuotaAllocationsList.DeserializeSubscriptionQuotaAllocationsList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets all the quota allocated to a subscription for the specific Resource Provider, Location. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. Use the $filter parameter to filter out the specific resource based on the ResourceProvider/Location. $filter is a required parameter. </summary>
-        /// <param name="managementGroupId"> Management Group Id. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="filter">
-        /// | Field | Supported operators
-        /// |---------------------|------------------------
-        ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="subscriptionId"/> or <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SubscriptionQuotaAllocationsList> List(string managementGroupId, string subscriptionId, string groupQuotaName, string filter, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            using var message = CreateListRequest(managementGroupId, subscriptionId, groupQuotaName, filter);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SubscriptionQuotaAllocationsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SubscriptionQuotaAllocationsList.DeserializeSubscriptionQuotaAllocationsList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceName, string filter)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
-            uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Quota/groupQuotas/", false);
-            uri.AppendPath(groupQuotaName, true);
-            uri.AppendPath("/quotaAllocations/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("$filter", filter, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceName, string filter)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
-            uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Quota/groupQuotas/", false);
-            uri.AppendPath(groupQuotaName, true);
-            uri.AppendPath("/quotaAllocations/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("$filter", filter, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets Quota allocated to a subscription for the specific Resource Provider, Location, ResourceName. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. </summary>
-        /// <param name="managementGroupId"> Management Group Id. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="resourceName"> Resource name. </param>
-        /// <param name="filter">
-        /// | Field | Supported operators
-        /// |---------------------|------------------------
-        ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceName"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SubscriptionQuotaAllocationData>> GetAsync(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceName, string filter, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            using var message = CreateGetRequest(managementGroupId, subscriptionId, groupQuotaName, resourceName, filter);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SubscriptionQuotaAllocationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SubscriptionQuotaAllocationData.DeserializeSubscriptionQuotaAllocationData(document.RootElement);
+                        SubscriptionQuotaAllocationsListData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SubscriptionQuotaAllocationsListData.DeserializeSubscriptionQuotaAllocationsListData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SubscriptionQuotaAllocationData)null, message.Response);
+                    return Response.FromValue((SubscriptionQuotaAllocationsListData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Gets Quota allocated to a subscription for the specific Resource Provider, Location, ResourceName. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. </summary>
+        /// <summary> Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. </summary>
         /// <param name="managementGroupId"> Management Group Id. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="resourceName"> Resource name. </param>
-        /// <param name="filter">
-        /// | Field | Supported operators
-        /// |---------------------|------------------------
-        ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
-        /// </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceName"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SubscriptionQuotaAllocationData> Get(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceName, string filter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SubscriptionQuotaAllocationsListData> List(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var message = CreateGetRequest(managementGroupId, subscriptionId, groupQuotaName, resourceName, filter);
+            using var message = CreateListRequest(managementGroupId, subscriptionId, groupQuotaName, resourceProviderName, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SubscriptionQuotaAllocationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SubscriptionQuotaAllocationData.DeserializeSubscriptionQuotaAllocationData(document.RootElement);
+                        SubscriptionQuotaAllocationsListData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SubscriptionQuotaAllocationsListData.DeserializeSubscriptionQuotaAllocationsListData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SubscriptionQuotaAllocationData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string managementGroupId, string subscriptionId, string groupQuotaName, string filter)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string managementGroupId, string subscriptionId, string groupQuotaName, string filter)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets all the quota allocated to a subscription for the specific Resource Provider, Location. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. Use the $filter parameter to filter out the specific resource based on the ResourceProvider/Location. $filter is a required parameter. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="managementGroupId"> Management Group Id. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="filter">
-        /// | Field | Supported operators
-        /// |---------------------|------------------------
-        ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="managementGroupId"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="subscriptionId"/> or <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SubscriptionQuotaAllocationsList>> ListNextPageAsync(string nextLink, string managementGroupId, string subscriptionId, string groupQuotaName, string filter, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            using var message = CreateListNextPageRequest(nextLink, managementGroupId, subscriptionId, groupQuotaName, filter);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SubscriptionQuotaAllocationsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SubscriptionQuotaAllocationsList.DeserializeSubscriptionQuotaAllocationsList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets all the quota allocated to a subscription for the specific Resource Provider, Location. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. Use the $filter parameter to filter out the specific resource based on the ResourceProvider/Location. $filter is a required parameter. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="managementGroupId"> Management Group Id. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="filter">
-        /// | Field | Supported operators
-        /// |---------------------|------------------------
-        ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="managementGroupId"/>, <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="subscriptionId"/> or <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SubscriptionQuotaAllocationsList> ListNextPage(string nextLink, string managementGroupId, string subscriptionId, string groupQuotaName, string filter, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            using var message = CreateListNextPageRequest(nextLink, managementGroupId, subscriptionId, groupQuotaName, filter);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SubscriptionQuotaAllocationsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SubscriptionQuotaAllocationsList.DeserializeSubscriptionQuotaAllocationsList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                    return Response.FromValue((SubscriptionQuotaAllocationsListData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

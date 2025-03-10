@@ -57,16 +57,16 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Properties and filters for ShareQuota. The request parameter is optional, if there are no filters specified. </param>
+        /// <param name="properties"> Properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotaEntityPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GroupQuotasEntityBasePatch properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal GroupQuotaEntityPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GroupQuotasEntityPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Properties and filters for ShareQuota. The request parameter is optional, if there are no filters specified. </summary>
+        /// <summary> Properties. </summary>
         [WirePath("properties")]
-        public GroupQuotasEntityBasePatch Properties { get; set; }
+        public GroupQuotasEntityPatchProperties Properties { get; set; }
     }
 }

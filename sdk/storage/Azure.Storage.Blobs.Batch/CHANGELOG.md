@@ -1,6 +1,17 @@
 # Release History
 
-## 12.21.0-beta.1 (Unreleased)
+## 12.21.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+- Fixed an issue where batch subrequests would not authenticate properly if using `TokenCredential` authentication when the `BlobBatchClient` was created from `BlobContianerClient.GetBlobBatchClient`.
+
+### Other Changes
+
+## 12.21.0-beta.1 (2025-02-11)
 
 ### Features Added
 - Added support for service version 2025-05-05.

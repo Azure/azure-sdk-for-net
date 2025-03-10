@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             {
                 Location = location,
 
-                AddressSpace = new AddressSpace()
+                AddressSpace = new VirtualNetworkAddressSpace()
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             {
                 Location = location,
 
-                AddressSpace = new AddressSpace()
+                AddressSpace = new VirtualNetworkAddressSpace()
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },

@@ -64,7 +64,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
             AnalyzeTextEntitiesResult entitiesTaskResult = (AnalyzeTextEntitiesResult)response.Value;
 
-            foreach (EntitiesDocumentResultWithMetadataDetectedLanguage nerResult in entitiesTaskResult.Results.Documents)
+            foreach (EntityActionResult nerResult in entitiesTaskResult.Results.Documents)
             {
                 Console.WriteLine($"Result for document with Id = \"{nerResult.Id}\":");
 
@@ -76,8 +76,13 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     Console.WriteLine($"    Offset: {entity.Offset}");
                     Console.WriteLine($"    Length: {entity.Length}");
                     Console.WriteLine($"    Category: {entity.Category}");
-                    if (!string.IsNullOrEmpty(entity.Subcategory))
-                        Console.WriteLine($"    SubCategory: {entity.Subcategory}");
+                    Console.WriteLine($"    Type: {entity.Type}");
+                    Console.WriteLine($"    Tags:");
+                    foreach (EntityTag tag in entity.Tags)
+                    {
+                        Console.WriteLine($"            TagName: {tag.Name}");
+                        Console.WriteLine($"            TagConfidenceScore: {tag.ConfidenceScore}");
+                    }
                     Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
                     Console.WriteLine();
                 }
@@ -106,7 +111,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             endpoint = TestEnvironment.Endpoint;
             credential = new(TestEnvironment.ApiKey);
 #endif
-            TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_11_15_Preview);
+            TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2024_11_15_Preview);
             var client = new TextAnalysisClient(endpoint, credential, options);
 
             string textA =
@@ -151,7 +156,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
             AnalyzeTextEntitiesResult entitiesTaskResult = (AnalyzeTextEntitiesResult)response.Value;
 
-            foreach (EntitiesDocumentResultWithMetadataDetectedLanguage nerResult in entitiesTaskResult.Results.Documents)
+            foreach (EntityActionResult nerResult in entitiesTaskResult.Results.Documents)
             {
                 Console.WriteLine($"Result for document with Id = \"{nerResult.Id}\":");
 

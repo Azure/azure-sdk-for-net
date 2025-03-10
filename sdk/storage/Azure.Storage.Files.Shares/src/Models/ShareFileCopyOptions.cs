@@ -69,5 +69,17 @@ namespace Azure.Storage.Files.Shares.Models
         /// Only applicable to NFS Files.  NFS properties to set on the destination file.
         /// </summary>
         public FilePosixProperties PosixProperties { get; set; }
+
+        /// <summary>
+        /// Optional, only applicable to NFS Files.
+        /// If not populated, the desination file will have the default File Mode.
+        /// </summary>
+        public ModeCopyMode? ModeCopyMode { get; set; }
+
+        /// <summary>
+        /// Optional, only applicable to NFS Files.
+        /// If not populated, the desination file will have the default Owner and Group.
+        /// </summary>
+        public OwnerCopyMode? OwnerCopyMode { get; set; }
     }
 }

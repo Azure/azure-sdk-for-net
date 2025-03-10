@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableOnlyIPv6Peering"> Whether only Ipv6 address space is peered for subnet peering. </param>
         /// <param name="localSubnetNames"> List of local subnet names that are subnet peered with remote virtual network. </param>
         /// <param name="remoteSubnetNames"> List of remote subnet names from remote virtual network that are subnet peered. </param>
-        internal VirtualNetworkPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, WritableSubResource remoteVirtualNetwork, AddressSpace localAddressSpace, AddressSpace localVirtualNetworkAddressSpace, AddressSpace remoteAddressSpace, AddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkEncryption remoteVirtualNetworkEncryption, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, Guid? resourceGuid, bool? areCompleteVnetsPeered, bool? enableOnlyIPv6Peering, IList<string> localSubnetNames, IList<string> remoteSubnetNames) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal VirtualNetworkPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, WritableSubResource remoteVirtualNetwork, VirtualNetworkAddressSpace localAddressSpace, VirtualNetworkAddressSpace localVirtualNetworkAddressSpace, VirtualNetworkAddressSpace remoteAddressSpace, VirtualNetworkAddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkEncryption remoteVirtualNetworkEncryption, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, Guid? resourceGuid, bool? areCompleteVnetsPeered, bool? enableOnlyIPv6Peering, IList<string> localSubnetNames, IList<string> remoteSubnetNames) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             AllowVirtualNetworkAccess = allowVirtualNetworkAccess;
@@ -102,57 +102,13 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The local address space of the local virtual network that is peered. </summary>
-        internal AddressSpace LocalAddressSpace { get; set; }
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> LocalAddressPrefixes
-        {
-            get
-            {
-                if (LocalAddressSpace is null)
-                    LocalAddressSpace = new AddressSpace();
-                return LocalAddressSpace.AddressPrefixes;
-            }
-        }
-
+        public VirtualNetworkAddressSpace LocalAddressSpace { get; set; }
         /// <summary> The current local address space of the local virtual network that is peered. </summary>
-        internal AddressSpace LocalVirtualNetworkAddressSpace { get; set; }
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> LocalVirtualNetworkAddressPrefixes
-        {
-            get
-            {
-                if (LocalVirtualNetworkAddressSpace is null)
-                    LocalVirtualNetworkAddressSpace = new AddressSpace();
-                return LocalVirtualNetworkAddressSpace.AddressPrefixes;
-            }
-        }
-
+        public VirtualNetworkAddressSpace LocalVirtualNetworkAddressSpace { get; set; }
         /// <summary> The reference to the address space peered with the remote virtual network. </summary>
-        internal AddressSpace RemoteAddressSpace { get; set; }
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> RemoteAddressPrefixes
-        {
-            get
-            {
-                if (RemoteAddressSpace is null)
-                    RemoteAddressSpace = new AddressSpace();
-                return RemoteAddressSpace.AddressPrefixes;
-            }
-        }
-
+        public VirtualNetworkAddressSpace RemoteAddressSpace { get; set; }
         /// <summary> The reference to the current address space of the remote virtual network. </summary>
-        internal AddressSpace RemoteVirtualNetworkAddressSpace { get; set; }
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> RemoteVirtualNetworkAddressPrefixes
-        {
-            get
-            {
-                if (RemoteVirtualNetworkAddressSpace is null)
-                    RemoteVirtualNetworkAddressSpace = new AddressSpace();
-                return RemoteVirtualNetworkAddressSpace.AddressPrefixes;
-            }
-        }
-
+        public VirtualNetworkAddressSpace RemoteVirtualNetworkAddressSpace { get; set; }
         /// <summary> The reference to the remote virtual network's Bgp Communities. </summary>
         public VirtualNetworkBgpCommunities RemoteBgpCommunities { get; set; }
         /// <summary> The reference to the remote virtual network's encryption. </summary>

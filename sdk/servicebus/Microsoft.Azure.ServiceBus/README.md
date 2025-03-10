@@ -16,13 +16,13 @@ Use the client library for Azure Service Bus to:
 
 - Implement complex workflows: message sessions support scenarios that require message ordering or message deferral.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Microsoft.Azure.ServiceBus/src) | [Package (NuGet)](https://www.nuget.org/packages/Microsoft.Azure.ServiceBus/) | [API reference documentation](https://docs.microsoft.com/dotnet/api/overview/azure/service-bus?view=azure-dotnet) | [Product documentation](https://docs.microsoft.com/azure/service-bus-messaging/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Microsoft.Azure.ServiceBus/src) | [Package (NuGet)](https://www.nuget.org/packages/Microsoft.Azure.ServiceBus/) | [API reference documentation](https://learn.microsoft.com/dotnet/api/overview/azure/service-bus?view=azure-dotnet) | [Product documentation](https://learn.microsoft.com/azure/service-bus-messaging/)
 
 ## Getting started
 
 The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads Page](https://azure.microsoft.com/downloads/?sdk=net) and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
 
-If you are not already familiar with Azure Service Bus, please review: [What is Azure Service Bus](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messaging-overview).
+If you are not already familiar with Azure Service Bus, please review: [What is Azure Service Bus](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-messaging-overview).
 
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
@@ -38,7 +38,7 @@ Code samples for the Azure Service Bus client library that detail how to get sta
 
 - [Azure Code Samples](https://azure.microsoft.com/resources/samples/?sort=0&service=service-bus&platform=dotnet)
 - [Azure Service Bus Sample Repository](https://github.com/Azure/azure-service-bus/tree/master/samples/)
-- [Azure Service Bus Documentation](https://docs.microsoft.com/azure/service-bus-messaging/)
+- [Azure Service Bus Documentation](https://learn.microsoft.com/azure/service-bus-messaging/)
 
 ## To build
 
@@ -76,8 +76,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 ## Additional documentation
 
-- [Azure Service Bus General Documentation](https://docs.microsoft.com/azure/service-bus-messaging/)
-- [Azure Service Bus REST API Reference](https://docs.microsoft.com/rest/api/servicebus/)
-- [Azure Service Bus SDK for .NET Documentation](https://docs.microsoft.com/dotnet/api/overview/azure/service-bus?view=azure-dotnet)
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fservicebus%2FMicrosoft.Azure.ServiceBus%2FREADME.png)
+- [Azure Service Bus General Documentation](https://learn.microsoft.com/azure/service-bus-messaging/)
+- [Azure Service Bus REST API Reference](https://learn.microsoft.com/rest/api/servicebus/)
+- [Azure Service Bus SDK for .NET Documentation](https://learn.microsoft.com/dotnet/api/overview/azure/service-bus?view=azure-dotnet)

@@ -3,7 +3,7 @@
   try {
     # Currently having issues downloading from github on windows 2022 so moved to a blob account
     # https://github.com/mono/api-doc-tools/releases/download/mdoc-5.7.4.9/mdoc-5.7.4.9.zip
-    Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://azuresdkdocs.blob.core.windows.net/tools/mdoc/5.7.4.9/mdoc-5.7.4.9.zip" `
+    Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://azuresdkartifacts.z5.web.core.windows.net/tools/mdoc/5.7.4.9/mdoc-5.7.4.9.zip" `
       -OutFile "mdoc.zip" | Wait-Process; Expand-Archive -Path "mdoc.zip" -DestinationPath "./mdoc/"
   } catch {
     $_.Exception | Format-List | Out-Host
@@ -14,7 +14,7 @@
   try {
     # Currently having issues downloading from github on windows 2022 so moved to a blob account
     # https://github.com/dotnet/docfx/releases/download/$(DocFxVersion)/docfx.zip
-    Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://azuresdkdocs.blob.core.windows.net/tools/docfx/$($env:DOCFXVERSION)/docfx.zip" `
+    Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://azuresdkartifacts.z5.web.core.windows.net/tools/docfx/$($env:DOCFXVERSION)/docfx.zip" `
     -OutFile "docfx.zip" | Wait-Process; Expand-Archive -Path "docfx.zip" -DestinationPath "./docfx/"
   } catch {
     $_.Exception | Format-List | Out-Host

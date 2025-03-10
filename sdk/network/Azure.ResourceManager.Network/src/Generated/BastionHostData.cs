@@ -49,7 +49,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableTunneling"> Enable/Disable Tunneling feature of the Bastion Host resource. </param>
         /// <param name="enableKerberos"> Enable/Disable Kerberos feature of the Bastion Host resource. </param>
         /// <param name="enableSessionRecording"> Enable/Disable Session Recording feature of the Bastion Host resource. </param>
-        internal BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> zones, ETag? etag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, WritableSubResource virtualNetwork, BastionHostPropertiesFormatNetworkAcls networkAcls, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos, bool? enableSessionRecording) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="enablePrivateOnlyBastion"> Enable/Disable Private Only feature of the Bastion Host resource. </param>
+        internal BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> zones, ETag? etag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, WritableSubResource virtualNetwork, BastionHostPropertiesFormatNetworkAcls networkAcls, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos, bool? enableSessionRecording, bool? enablePrivateOnlyBastion) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             Zones = zones;
             ETag = etag;
@@ -67,6 +68,7 @@ namespace Azure.ResourceManager.Network
             EnableTunneling = enableTunneling;
             EnableKerberos = enableKerberos;
             EnableSessionRecording = enableSessionRecording;
+            EnablePrivateOnlyBastion = enablePrivateOnlyBastion;
         }
 
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
@@ -136,5 +138,7 @@ namespace Azure.ResourceManager.Network
         public bool? EnableKerberos { get; set; }
         /// <summary> Enable/Disable Session Recording feature of the Bastion Host resource. </summary>
         public bool? EnableSessionRecording { get; set; }
+        /// <summary> Enable/Disable Private Only feature of the Bastion Host resource. </summary>
+        public bool? EnablePrivateOnlyBastion { get; set; }
     }
 }

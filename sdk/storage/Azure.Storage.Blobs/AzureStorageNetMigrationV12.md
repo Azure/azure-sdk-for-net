@@ -4,7 +4,7 @@ This guide intends to assist customers in migrating from legacy versions of the 
 While this guide is generally applicable to older versions of the SDK, it was written with v11 in mind as the starting point.
 It will focus on side-by-side comparisons for similar operations between the v12 package, [`Azure.Storage.Blobs`](https://www.nuget.org/packages/Azure.Storage.Blobs) and v11 package, [`Microsoft.Azure.Storage.Blob`](https://www.nuget.org/packages/Microsoft.Azure.Storage.Blob/).
 
-Familiarity with the legacy client library is assumed. For those new to the Azure Storage Blobs client library for .NET, please refer to the [Quickstart](https://docs.microsoft.com/azure/storage/blobs/storage-quickstart-blobs-dotnet) for the v12 library rather than this guide.
+Familiarity with the legacy client library is assumed. For those new to the Azure Storage Blobs client library for .NET, please refer to the [Quickstart](https://learn.microsoft.com/azure/storage/blobs/storage-quickstart-blobs-dotnet) for the v12 library rather than this guide.
 
 ## Table of contents
 
@@ -151,7 +151,7 @@ If you wish to rotate the key within your `BlobServiceClient` (and any derived c
 
 ### Shared Access Policies
 
-To learn more, visit our article [Create a Stored Access Policy with .NET](https://docs.microsoft.com/azure/storage/common/storage-stored-access-policy-define-dotnet) or take a look at the code comparison below.
+To learn more, visit our article [Create a Stored Access Policy with .NET](https://learn.microsoft.com/azure/storage/common/storage-stored-access-policy-define-dotnet) or take a look at the code comparison below.
 
 v11
 ```csharp
@@ -200,7 +200,7 @@ await containerClient.SetAccessPolicyAsync(permissions: signedIdentifiers);
 The modern SDK has taken a client-based approach. There are no objects designed to be representations of storage resources, but instead clients that act as your mechanism to interact with your storage resources in the cloud. **Clients hold no state of your resources.** This is most noticable when looking at [blob metadata](#managing-blob-metadata).
 
 The hierarchical structure of Azure Blob Storage can be understood by the following diagram:  
-![Blob Storage Hierarchy](https://docs.microsoft.com/en-us/azure/storage/blobs/media/storage-blobs-introduction/blob1.png)
+![Blob Storage Hierarchy](https://learn.microsoft.com/en-us/azure/storage/blobs/media/storage-blobs-introduction/blob1.png)
 
 In the interest of simplifying the API surface, v12 uses three top level clients to match this structure that can be used to interact with a majority of your resources: `BlobServiceClient`, `BlobContainerClient`, and `BlobClient`. Note that blob-type-specific operations can still be accessed by their specific clients, as in v11.
 
@@ -214,7 +214,7 @@ We recommend `BlobClient` as a starting place when migrating code that used v11'
 
 Note the absence of a v12 equivalent for v11's `CloudBlobDirectory`. Directories were an SDK-only concept that did not exist in Azure Blob Storage, and which were not brought forwards into the modern Storage SDK. As shown by the diagram in [Client Structure](#client-structure), containers only contain a flat list of blobs, but those blobs can be named and listed in ways that imply a folder-like structure. See our [Listing Blobs in a Container](#listing-blobs-in-a-container) migration samples later in this guide for more information.
 
-For those whose workloads revolve around manipulating directories and heavily relied on the leagacy SDKs abstraction of this structure, consider the [pros and cons of enabling hierarchical namespace](https://docs.microsoft.com/azure/storage/blobs/data-lake-storage-namespace) on your storage account, which would allow switching to the [Data Lake gen 2 SDK](https://docs.microsoft.com/dotnet/api/overview/azure/storage.files.datalake-readme), whose migration is not covered in this document.
+For those whose workloads revolve around manipulating directories and heavily relied on the leagacy SDKs abstraction of this structure, consider the [pros and cons of enabling hierarchical namespace](https://learn.microsoft.com/azure/storage/blobs/data-lake-storage-namespace) on your storage account, which would allow switching to the [Data Lake gen 2 SDK](https://learn.microsoft.com/dotnet/api/overview/azure/storage.files.datalake-readme), whose migration is not covered in this document.
 
 #### Class Conversion Reference
 
@@ -427,7 +427,7 @@ await foreach (Page<BlobItem> page in pages)
 
 #### Hierarchical Listing
 
-See the [list blobs documentation](https://docs.microsoft.com/azure/storage/blobs/storage-blobs-list?tabs=dotnet#flat-listing-versus-hierarchical-listing) for more information on what a hierarchical listing is.
+See the [list blobs documentation](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-list?tabs=dotnet#flat-listing-versus-hierarchical-listing) for more information on what a hierarchical listing is.
 
 While manual page iteration as described in the previous section is still applicable to a hierarchical listing, this section will only give examples using lazy enumerables.
 
@@ -510,7 +510,7 @@ blobClient.Upload(
 
 ### Generate a SAS
 
- There are various SAS tokens that may be generated. Visit our documentation pages to learn more: [Create a User Delegation SAS](https://docs.microsoft.com/azure/storage/blobs/storage-blob-user-delegation-sas-create-dotnet), [Create a Service SAS](https://docs.microsoft.com/azure/storage/blobs/storage-blob-service-sas-create-dotnet), or [Create an Account SAS](https://docs.microsoft.com/azure/storage/common/storage-account-sas-create-dotnet?toc=/azure/storage/blobs/toc.json).
+ There are various SAS tokens that may be generated. Visit our documentation pages to learn more: [Create a User Delegation SAS](https://learn.microsoft.com/azure/storage/blobs/storage-blob-user-delegation-sas-create-dotnet), [Create a Service SAS](https://learn.microsoft.com/azure/storage/blobs/storage-blob-service-sas-create-dotnet), or [Create an Account SAS](https://learn.microsoft.com/azure/storage/common/storage-account-sas-create-dotnet?toc=/azure/storage/blobs/toc.json).
 
 v11
 
@@ -821,10 +821,10 @@ await blobClient.DownloadToAsync(targetStream, cancellationTokenSource.Token);
 
 ### Samples
 More examples can be found at:
-- [Azure Storage samples using v12 .NET Client Libraries](https://docs.microsoft.com/azure/storage/common/storage-samples-dotnet?toc=/azure/storage/blobs/toc.json)
+- [Azure Storage samples using v12 .NET Client Libraries](https://learn.microsoft.com/azure/storage/common/storage-samples-dotnet?toc=/azure/storage/blobs/toc.json)
 
 ### Links and references
-- [Quickstart](https://docs.microsoft.com/azure/storage/blobs/storage-quickstart-blobs-dotnet)
-- [Samples](https://docs.microsoft.com/azure/storage/common/storage-samples-dotnet?toc=/azure/storage/blobs/toc.json)
-- [.NET SDK reference](https://docs.microsoft.com/dotnet/api/azure.storage.blobs?view=azure-dotnet)
+- [Quickstart](https://learn.microsoft.com/azure/storage/blobs/storage-quickstart-blobs-dotnet)
+- [Samples](https://learn.microsoft.com/azure/storage/common/storage-samples-dotnet?toc=/azure/storage/blobs/toc.json)
+- [.NET SDK reference](https://learn.microsoft.com/dotnet/api/azure.storage.blobs?view=azure-dotnet)
 - [Announcing the Azure Storage v12 Client Libraries](https://techcommunity.microsoft.com/t5/azure-storage/announcing-the-azure-storage-v12-client-libraries/ba-p/1482394) blog post

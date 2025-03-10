@@ -16,6 +16,8 @@
     <Compile Include="..\..\Shared\tests\CommunicationTestEnvironment.cs" LinkBase="Shared\Communication.Tests" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\samples\Sample2_OptOutsApi.md" Link="samples\Sample2_OptOutsApi.md" />
+    <None Include="..\samples\Sample2_OptOutsApiAsync.md" Link="samples\Sample2_OptOutsApiAsync.md" />
     <None Include="..\tests.yml" Link="\tests.yml" />
     <None Include="..\samples\README.md" Link="samples\README.md" />
     <None Include="..\samples\Sample1_SendSms.md" Link="samples\Sample1_SendSms.md" />

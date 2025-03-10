@@ -105,7 +105,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new HealthcareEntity FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeHealthcareEntity(document.RootElement);
         }
     }

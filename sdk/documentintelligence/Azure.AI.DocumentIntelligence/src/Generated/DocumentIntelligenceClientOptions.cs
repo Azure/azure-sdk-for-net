@@ -23,15 +23,5 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         internal string Version { get; }
-
-        /// <summary> Initializes new instance of DocumentIntelligenceClientOptions. </summary>
-        public DocumentIntelligenceClientOptions(ServiceVersion version = LatestVersion)
-        {
-            Version = version switch
-            {
-                ServiceVersion.V2024_11_30 => "2024-11-30",
-                _ => throw new NotSupportedException()
-            };
-        }
     }
 }

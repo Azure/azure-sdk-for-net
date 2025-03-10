@@ -12,22 +12,22 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
     internal static class ClientExtensions
     {
-        public static Task<Operation<AnalyzeResult>> AnalyzeDocumentAsync(this DocumentIntelligenceClient client, WaitUntil waitUntil, string modelId)
+        public static Task<Operation<AnalyzeResult>> AnalyzeDocumentAsync(this DocumentIntelligenceClient client, WaitUntil waitUntil, string modelId, AnalyzeDocumentOptions options)
         {
             return null;
         }
 
-        public static Operation<AnalyzeResult> AnalyzeDocument(this DocumentIntelligenceClient client, WaitUntil waitUntil, string modelId)
+        public static Operation<AnalyzeResult> AnalyzeDocument(this DocumentIntelligenceClient client, WaitUntil waitUntil, string modelId, AnalyzeDocumentOptions options)
         {
             return null;
         }
 
-        public static Task<Operation<AnalyzeBatchResult>> AnalyzeBatchDocumentsAsync(this DocumentIntelligenceClient client, WaitUntil waitUntil, string modelId)
+        public static Task<Operation<AnalyzeBatchResult>> AnalyzeBatchDocumentsAsync(this DocumentIntelligenceClient client, WaitUntil waitUntil, string modelId, AnalyzeBatchDocumentsOptions options)
         {
             return null;
         }
 
-        public static Operation<AnalyzeBatchResult> AnalyzeBatchDocuments(this DocumentIntelligenceClient client, WaitUntil waitUntil, string modelId)
+        public static Operation<AnalyzeBatchResult> AnalyzeBatchDocuments(this DocumentIntelligenceClient client, WaitUntil waitUntil, string modelId, AnalyzeBatchDocumentsOptions options)
         {
             return null;
         }

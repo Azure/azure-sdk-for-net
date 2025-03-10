@@ -3,14 +3,14 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Microsoft.Generator.CSharp.ClientModel.Providers;
-using Microsoft.Generator.CSharp.Expressions;
-using Microsoft.Generator.CSharp.Primitives;
-using Microsoft.Generator.CSharp.Providers;
-using Microsoft.Generator.CSharp.Snippets;
-using Microsoft.Generator.CSharp.Statements;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
 using System.Threading;
-using static Microsoft.Generator.CSharp.Snippets.Snippet;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers.Abstraction
 {
@@ -29,6 +29,10 @@ namespace Azure.Generator.Providers.Abstraction
 
         public override CSharpType PipelinePolicyType => typeof(HttpPipelinePolicy);
 
+        public override CSharpType? KeyCredentialType => typeof(AzureKeyCredential);
+
+        public override CSharpType? TokenCredentialType => typeof(TokenCredential);
+
         public override ValueExpression Create(ValueExpression options, ValueExpression perRetryPolicies)
             => Static(typeof(HttpPipelineBuilder)).Invoke(nameof(HttpPipelineBuilder.Build), [options, perRetryPolicies]);
 
@@ -38,8 +42,11 @@ namespace Azure.Generator.Providers.Abstraction
         public override ClientPipelineApi FromExpression(ValueExpression expression)
             => new HttpPipelineProvider(expression);
 
-        public override ValueExpression AuthorizationPolicy(params ValueExpression[] arguments)
-            => New.Instance(typeof(AzureKeyCredentialPolicy), arguments);
+        public override ValueExpression KeyAuthorizationPolicy(ValueExpression credential, ValueExpression headerName, ValueExpression? keyPrefix = null)
+            => New.Instance(typeof(AzureKeyCredentialPolicy), keyPrefix != null ? [credential, headerName, keyPrefix] : [credential, headerName]);
+
+        public override ValueExpression TokenAuthorizationPolicy(ValueExpression credential, ValueExpression scopes)
+            => New.Instance(typeof(BearerTokenAuthenticationPolicy), credential, scopes);
 
         public override ClientPipelineApi ToExpression() => this;
 

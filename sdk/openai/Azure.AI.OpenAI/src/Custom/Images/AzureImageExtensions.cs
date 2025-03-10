@@ -13,7 +13,7 @@ public static class AzureImageExtensions
     [Experimental("AOAI001")]
     public static RequestImageContentFilterResult GetRequestContentFilterResult(this GeneratedImage image)
     {
-        return AdditionalPropertyHelpers.GetAdditionalProperty<RequestImageContentFilterResult>(
+        return AdditionalPropertyHelpers.GetAdditionalPropertyAsRequestImageContentFilterResult(
             image.SerializedAdditionalRawData,
             "prompt_filter_results");
     }
@@ -21,7 +21,7 @@ public static class AzureImageExtensions
     [Experimental("AOAI001")]
     public static ResponseImageContentFilterResult GetResponseContentFilterResult(this GeneratedImage image)
     {
-        return AdditionalPropertyHelpers.GetAdditionalProperty<ResponseImageContentFilterResult>(
+        return AdditionalPropertyHelpers.GetAdditionalPropertyAsResponseImageContentFilterResult(
             image.SerializedAdditionalRawData,
             "content_filter_results");
     }

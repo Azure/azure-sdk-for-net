@@ -226,7 +226,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            var options = new AnalyzeDocumentOptions("prebuild-layout", uriSource)
+            var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource)
             {
                 Features = { DocumentAnalysisFeature.Barcodes }
             };

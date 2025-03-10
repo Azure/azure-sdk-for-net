@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="associatedIdentity"> The selection of the managed identity to use with this storage account container. The identity type must be either system assigned or user assigned. </param>
         /// <param name="containerUri"> The URL of the storage account container that is to be used by the specified identities. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommandOutputSettings(IdentitySelector associatedIdentity, Uri containerUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CommandOutputSettings(ManagedServiceIdentitySelector associatedIdentity, Uri containerUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssociatedIdentity = associatedIdentity;
             ContainerUri = containerUri;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The selection of the managed identity to use with this storage account container. The identity type must be either system assigned or user assigned. </summary>
-        public IdentitySelector AssociatedIdentity { get; set; }
+        public ManagedServiceIdentitySelector AssociatedIdentity { get; set; }
         /// <summary> The URL of the storage account container that is to be used by the specified identities. </summary>
         public Uri ContainerUri { get; set; }
     }

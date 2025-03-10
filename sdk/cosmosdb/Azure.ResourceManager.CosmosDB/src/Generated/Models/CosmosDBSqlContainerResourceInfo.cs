@@ -69,8 +69,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
         /// <param name="materializedViewDefinition"> The configuration for defining Materialized Views. This must be specified only for creating a Materialized View container. </param>
         /// <param name="computedProperties"> List of computed properties. </param>
+        /// <param name="vectorEmbeddingPolicy"> The vector embedding policy for the container. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, MaterializedViewDefinition materializedViewDefinition, IList<ComputedProperty> computedProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, MaterializedViewDefinition materializedViewDefinition, IList<ComputedProperty> computedProperties, VectorEmbeddingPolicy vectorEmbeddingPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContainerName = containerName;
             IndexingPolicy = indexingPolicy;
@@ -84,6 +85,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             CreateMode = createMode;
             MaterializedViewDefinition = materializedViewDefinition;
             ComputedProperties = computedProperties;
+            VectorEmbeddingPolicy = vectorEmbeddingPolicy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -139,5 +141,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> List of computed properties. </summary>
         [WirePath("computedProperties")]
         public IList<ComputedProperty> ComputedProperties { get; }
+        /// <summary> The vector embedding policy for the container. </summary>
+        internal VectorEmbeddingPolicy VectorEmbeddingPolicy { get; set; }
+        /// <summary> List of vector embeddings. </summary>
+        [WirePath("vectorEmbeddingPolicy.vectorEmbeddings")]
+        public IList<CosmosDBVectorEmbedding> VectorEmbeddings
+        {
+            get
+            {
+                if (VectorEmbeddingPolicy is null)
+                    VectorEmbeddingPolicy = new VectorEmbeddingPolicy();
+                return VectorEmbeddingPolicy.VectorEmbeddings;
+            }
+        }
     }
 }

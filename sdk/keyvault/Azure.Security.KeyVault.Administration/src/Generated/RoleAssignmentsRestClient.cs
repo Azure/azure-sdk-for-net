@@ -172,7 +172,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 201:
                     {
                         KeyVaultRoleAssignment value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -214,7 +214,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 201:
                     {
                         KeyVaultRoleAssignment value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -268,7 +268,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 200:
                     {
                         KeyVaultRoleAssignment value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -305,7 +305,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 200:
                     {
                         KeyVaultRoleAssignment value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -358,7 +358,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 200:
                     {
                         RoleAssignmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleAssignmentListResult.DeserializeRoleAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -391,7 +391,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 200:
                     {
                         RoleAssignmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleAssignmentListResult.DeserializeRoleAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -442,7 +442,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 200:
                     {
                         RoleAssignmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleAssignmentListResult.DeserializeRoleAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -480,7 +480,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 200:
                     {
                         RoleAssignmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleAssignmentListResult.DeserializeRoleAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

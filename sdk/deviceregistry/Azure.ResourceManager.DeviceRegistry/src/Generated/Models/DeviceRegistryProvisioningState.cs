@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
         private const string AcceptedValue = "Accepted";
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Resource has been created. </summary>
         public static DeviceRegistryProvisioningState Succeeded { get; } = new DeviceRegistryProvisioningState(SucceededValue);
@@ -35,6 +36,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public static DeviceRegistryProvisioningState Canceled { get; } = new DeviceRegistryProvisioningState(CanceledValue);
         /// <summary> Resource has been accepted by the server. </summary>
         public static DeviceRegistryProvisioningState Accepted { get; } = new DeviceRegistryProvisioningState(AcceptedValue);
+        /// <summary> Resource is deleting. </summary>
+        public static DeviceRegistryProvisioningState Deleting { get; } = new DeviceRegistryProvisioningState(DeletingValue);
         /// <summary> Determines if two <see cref="DeviceRegistryProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DeviceRegistryProvisioningState left, DeviceRegistryProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceRegistryProvisioningState"/> values are not the same. </summary>

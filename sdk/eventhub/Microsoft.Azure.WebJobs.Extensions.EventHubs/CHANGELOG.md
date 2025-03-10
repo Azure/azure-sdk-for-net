@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed a misspelling of "PartitionId" in the trigger input data passed to the function executor.  This caused function logs and metrics reported by AppInsights and the portal to reflect the wrong label.  To ensure that applications that rely on the misspelling are not impacted, a new member with the correct spelling was added.
+
 ### Other Changes
 
 ## 6.3.5 (2024-08-01)

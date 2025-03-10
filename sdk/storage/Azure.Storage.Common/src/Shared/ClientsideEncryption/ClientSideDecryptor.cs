@@ -243,7 +243,14 @@ namespace Azure.Storage.Cryptography
                     }
                     else
                     {
-                        ciphertext.Read(IV, 0, IV.Length);
+                        int totalRead = 0;
+                        while (totalRead < IV.Length)
+                        {
+                            //  Stream.Read may return fewer bytes than requested, resulting in unreliable code.
+                            var bytesRead = ciphertext.Read(IV, totalRead, IV.Length - totalRead);
+                            totalRead += bytesRead;
+                            if (bytesRead == 0) break;
+                        }
                     }
                     //read = IV.Length;
                 }

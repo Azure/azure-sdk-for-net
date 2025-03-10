@@ -1997,6 +1997,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [TestCase("%21%27%28%29%3B%5B%5D", "%2B%24%2C%23äÄöÖüÜß%3B")]
         [TestCase("directory", "my cool file")]
         [TestCase("directory", "file")]
+        [TestCase("  ", "  ")]
         [RetryOnException(5, typeof(RequestFailedException))]
         public async Task GetFileClient_SpecialCharacters(string directoryName, string fileName)
         {
@@ -2061,6 +2062,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [TestCase("%21%27%28", "%21%27%28%29%3B%5B%5D%40%26äÄöÖüÜß%3B")]
         [TestCase("directory", "my cool directory")]
         [TestCase("directory0", "directory1")]
+        [TestCase(" ", " ")]
         public async Task GetSubDirectoryClient_SpecialCharacters(string directoryName, string subDirectoryName)
         {
             await using DisposingShare test = await GetTestShareAsync();

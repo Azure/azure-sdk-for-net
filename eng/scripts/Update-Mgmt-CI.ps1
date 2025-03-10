@@ -3,7 +3,7 @@
 $packagesPath = "$PSScriptRoot/../../sdk"
 
 $track2MgmtDirs = Get-ChildItem -Path "$packagesPath" -Directory -Recurse -Depth 1 | Where-Object { $_.Name -match "(Azure.ResourceManager.)" -and $(Test-Path("$($_.FullName)/src")) }
-
+$newLine = [Environment]::NewLine
 function Update-CIFile() {
     param(
         [string]$mgmtCiFile = ""
@@ -13,7 +13,7 @@ function Update-CIFile() {
 
     $content = Get-Content $mgmtCiFile -Raw
 
-    if ($content -match "(?s)ServiceDirectory:\s*(?<sd>[^\r\n]+).*-\s*name:\s*(?<p>[^\r\n]+)")
+    if ($content -match "(?s)ServiceDirectory:\s*(?<sd>[^$newLine]+).*-\s*name:\s*(?<p>[^$newLine]+)")
     {
         $serviceDirectory = $matches["sd"]
         $packageName = $matches["p"]
@@ -39,12 +39,12 @@ pr:
     - $relPackageDir
 "@
 
-    $content = $content -replace "(?s)pr:[^\r\n]*(\r\n([ ]+[^\r\n]*|))*", "$prtriggers`r`n`r`n"
-    $content = $content -replace "(?s)trigger:[^\r\n]*(\r\n([ ]+[^\r\n]*|))*", "trigger: none`r`n"
+    $content = $content -replace "(?s)pr:[^$newLine]*($newLine([ ]+[^$newLine]*|))*", "$prtriggers$newLine$newLine"
+    $content = $content -replace "(?s)trigger:[^$newLine]*($newLine([ ]+[^$newLine]*|))*", "trigger: none$newLine"
 
     if ($content -notmatch "LimitForPullRequest: true")
     {
-        $content = $content -replace "(.*)Artifacts:", "`$1LimitForPullRequest: true`r`n`$1Artifacts:"
+        $content = $content -replace "(.*)Artifacts:", "`$1LimitForPullRequest: true$newLine`$1Artifacts:"
     }
 
     Set-Content -Path $mgmtCiFile $content -NoNewline
@@ -56,7 +56,7 @@ pr:
     {
         $ciContent = Get-Content $ciFile -Raw
 
-        $ciContent = $ciContent -replace "(?s)(paths:\r\n(\s+)include:\r\n(?:\s+-[^\r\n]*\r\n)*(?:\s+-\s+$relServiceDir/?\r\n)(?:\s+-[^\r\n]*\r\n)*)(?!\s+exclude:)", "`$1`$2exclude:`r`n`$2- $relPackageDir`r`n"
+        $ciContent = $ciContent -replace "(?s)(paths:$newLine(\s+)include:$newLine(?:\s+-[^$newLine]*$newLine)*(?:\s+-\s+$relServiceDir/?$newLine)(?:\s+-[^$newLine]*$newLine)*)(?!\s+exclude:)", "`$1`$2exclude:$newLine`$2- $relPackageDir$newLine"
 
         Set-Content -Path $ciFile $ciContent -NoNewline
     }

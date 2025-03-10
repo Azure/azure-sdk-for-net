@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CreateADefaultAdminRule()
+        public async Task CreateOrUpdate_CreateAAdminRuleWithNetworkGroupAsSourceOrDestination()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerDefaultAdminRulePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerAdminRulePut_NetworkGroupSource.json
             // this example is just showing the usage of "AdminRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -42,10 +42,26 @@ namespace Azure.ResourceManager.Network.Samples
             BaseAdminRuleCollection collection = adminRuleGroup.GetBaseAdminRules();
 
             // invoke the operation
-            string ruleName = "SampleDefaultAdminRule";
-            BaseAdminRuleData data = new NetworkDefaultAdminRule
+            string ruleName = "SampleAdminRule";
+            BaseAdminRuleData data = new NetworkAdminRule
             {
-                Flag = "AllowVnetInbound",
+                Description = "This is Sample Admin Rule",
+                Protocol = SecurityConfigurationRuleProtocol.Tcp,
+                Sources = {new AddressPrefixItem
+{
+AddressPrefix = "Internet",
+AddressPrefixType = AddressPrefixType.ServiceTag,
+}},
+                Destinations = {new AddressPrefixItem
+{
+AddressPrefix = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkManagers/testNetworkManager/networkGroups/ng1",
+AddressPrefixType = AddressPrefixType.NetworkGroup,
+}},
+                SourcePortRanges = { "0-65535" },
+                DestinationPortRanges = { "22" },
+                Access = SecurityConfigurationRuleAccess.Deny,
+                Priority = 1,
+                Direction = SecurityConfigurationRuleDirection.Inbound,
             };
             ArmOperation<BaseAdminRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data);
             BaseAdminRuleResource result = lro.Value;
@@ -61,7 +77,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAnAdminRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerAdminRulePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerAdminRulePut.json
             // this example is just showing the usage of "AdminRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -118,7 +134,7 @@ AddressPrefixType = AddressPrefixType.IPPrefix,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsSecurityAdminRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerAdminRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerAdminRuleGet.json
             // this example is just showing the usage of "AdminRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -154,7 +170,7 @@ AddressPrefixType = AddressPrefixType.IPPrefix,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsSecurityDefaultAdminRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerDefaultAdminRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerDefaultAdminRuleGet.json
             // this example is just showing the usage of "AdminRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -190,7 +206,7 @@ AddressPrefixType = AddressPrefixType.IPPrefix,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListSecurityAdminRules()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerAdminRuleList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerAdminRuleList.json
             // this example is just showing the usage of "AdminRules_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -228,7 +244,7 @@ AddressPrefixType = AddressPrefixType.IPPrefix,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsSecurityAdminRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerAdminRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerAdminRuleGet.json
             // this example is just showing the usage of "AdminRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -260,7 +276,7 @@ AddressPrefixType = AddressPrefixType.IPPrefix,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsSecurityDefaultAdminRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerDefaultAdminRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerDefaultAdminRuleGet.json
             // this example is just showing the usage of "AdminRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -292,7 +308,7 @@ AddressPrefixType = AddressPrefixType.IPPrefix,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsSecurityAdminRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerAdminRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerAdminRuleGet.json
             // this example is just showing the usage of "AdminRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -336,7 +352,7 @@ AddressPrefixType = AddressPrefixType.IPPrefix,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsSecurityDefaultAdminRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerDefaultAdminRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerDefaultAdminRuleGet.json
             // this example is just showing the usage of "AdminRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

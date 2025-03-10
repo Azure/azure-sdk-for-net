@@ -267,6 +267,7 @@ namespace Azure.ResourceManager.Storage
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.FileServiceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.FileServiceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Storage.FileServiceUsageResource GetFileServiceUsage() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.FileShareResource> GetFileShare(string shareName, string expand = null, string xMsSnapshot = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.FileShareResource>> GetFileShareAsync(string shareName, string expand = null, string xMsSnapshot = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Storage.FileShareCollection GetFileShares() { throw null; }
@@ -275,6 +276,32 @@ namespace Azure.ResourceManager.Storage
         Azure.ResourceManager.Storage.FileServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.FileServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.FileServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.FileServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FileServiceUsageData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.FileServiceUsageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.FileServiceUsageData>
+    {
+        public FileServiceUsageData() { }
+        public Azure.ResourceManager.Storage.Models.FileServiceUsageProperties Properties { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.FileServiceUsageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.FileServiceUsageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.FileServiceUsageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.FileServiceUsageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.FileServiceUsageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.FileServiceUsageData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.FileServiceUsageData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FileServiceUsageResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.FileServiceUsageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.FileServiceUsageData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected FileServiceUsageResource() { }
+        public virtual Azure.ResourceManager.Storage.FileServiceUsageData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Storage.FileServiceUsageResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.FileServiceUsageResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Storage.FileServiceUsageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.FileServiceUsageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.FileServiceUsageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.FileServiceUsageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.FileServiceUsageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.FileServiceUsageData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.FileServiceUsageData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class FileShareCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Storage.FileShareResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.FileShareResource>, System.Collections.IEnumerable
     {
@@ -304,12 +331,20 @@ namespace Azure.ResourceManager.Storage
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol? EnabledProtocol { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting FileSharePaidBursting { get { throw null; } set { } }
+        public int? IncludedBurstIops { get { throw null; } }
         public bool? IsDeleted { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.StorageLeaseDurationType? LeaseDuration { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.StorageLeaseState? LeaseState { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.StorageLeaseStatus? LeaseStatus { get { throw null; } }
+        public long? MaxBurstCreditsForIops { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public System.DateTimeOffset? NextAllowedProvisionedBandwidthDowngradeOn { get { throw null; } }
+        public System.DateTimeOffset? NextAllowedProvisionedIopsDowngradeOn { get { throw null; } }
+        public System.DateTimeOffset? NextAllowedQuotaDowngradeOn { get { throw null; } }
+        public int? ProvisionedBandwidthMibps { get { throw null; } set { } }
+        public int? ProvisionedIops { get { throw null; } set { } }
         public int? RemainingRetentionDays { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.RootSquashType? RootSquash { get { throw null; } set { } }
         public int? ShareQuota { get { throw null; } set { } }
@@ -454,6 +489,7 @@ namespace Azure.ResourceManager.Storage
         public ObjectReplicationPolicyData() { }
         public string DestinationAccount { get { throw null; } set { } }
         public System.DateTimeOffset? EnabledOn { get { throw null; } }
+        public bool? IsMetricsEnabled { get { throw null; } set { } }
         public string PolicyId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyRule> Rules { get { throw null; } }
         public string SourceAccount { get { throw null; } set { } }
@@ -836,6 +872,7 @@ namespace Azure.ResourceManager.Storage
         public static Azure.AsyncPageable<Azure.ResourceManager.Storage.DeletedAccountResource> GetDeletedAccountsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Storage.EncryptionScopeResource GetEncryptionScopeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Storage.FileServiceResource GetFileServiceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Storage.FileServiceUsageResource GetFileServiceUsageResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Storage.FileShareResource GetFileShareResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Storage.ImmutabilityPolicyResource GetImmutabilityPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Storage.NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1099,6 +1136,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         public virtual Azure.ResourceManager.Storage.DeletedAccountResource GetDeletedAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Storage.EncryptionScopeResource GetEncryptionScopeResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Storage.FileServiceResource GetFileServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Storage.FileServiceUsageResource GetFileServiceUsageResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Storage.FileShareResource GetFileShareResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Storage.ImmutabilityPolicyResource GetImmutabilityPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Storage.NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1236,11 +1274,21 @@ namespace Azure.ResourceManager.Storage.Models
         public static Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchema BlobInventoryPolicySchema(bool isEnabled = false, string destination = null, Azure.ResourceManager.Storage.Models.BlobInventoryRuleType ruleType = default(Azure.ResourceManager.Storage.Models.BlobInventoryRuleType), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.BlobInventoryPolicyRule> rules = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.BlobRestoreStatus BlobRestoreStatus(Azure.ResourceManager.Storage.Models.BlobRestoreProgressStatus? status = default(Azure.ResourceManager.Storage.Models.BlobRestoreProgressStatus?), string failureReason = null, string restoreId = null, Azure.ResourceManager.Storage.Models.BlobRestoreContent parameters = null) { throw null; }
         public static Azure.ResourceManager.Storage.BlobServiceData BlobServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Storage.Models.StorageSku sku = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageCorsRule> corsRules = null, string defaultServiceVersion = null, Azure.ResourceManager.Storage.Models.DeleteRetentionPolicy deleteRetentionPolicy = null, bool? isVersioningEnabled = default(bool?), bool? isAutomaticSnapshotPolicyEnabled = default(bool?), Azure.ResourceManager.Storage.Models.BlobServiceChangeFeed changeFeed = null, Azure.ResourceManager.Storage.Models.RestorePolicy restorePolicy = null, Azure.ResourceManager.Storage.Models.DeleteRetentionPolicy containerDeleteRetentionPolicy = null, Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.BurstingConstants BurstingConstants(int? burstFloorIops = default(int?), double? burstIOScalar = default(double?), int? burstTimeframeSeconds = default(int?)) { throw null; }
         public static Azure.ResourceManager.Storage.DeletedAccountData DeletedAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier storageAccountResourceId = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string restoreReference = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Storage.EncryptionScopeData EncryptionScopeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Storage.Models.EncryptionScopeSource? source = default(Azure.ResourceManager.Storage.Models.EncryptionScopeSource?), Azure.ResourceManager.Storage.Models.EncryptionScopeState? state = default(Azure.ResourceManager.Storage.Models.EncryptionScopeState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Storage.Models.EncryptionScopeKeyVaultProperties keyVaultProperties = null, bool? requireInfrastructureEncryption = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.EncryptionScopeKeyVaultProperties EncryptionScopeKeyVaultProperties(System.Uri keyUri = null, string currentVersionedKeyIdentifier = null, System.DateTimeOffset? lastKeyRotationTimestamp = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.FileServiceAccountLimits FileServiceAccountLimits(int? maxFileShares = default(int?), int? maxProvisionedStorageGiB = default(int?), int? maxProvisionedIops = default(int?), int? maxProvisionedBandwidthMiBPerSec = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.FileServiceAccountUsage FileServiceAccountUsage(Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements liveShares = null, Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements softDeletedShares = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements FileServiceAccountUsageElements(int? fileShareCount = default(int?), int? provisionedStorageGiB = default(int?), int? provisionedIops = default(int?), int? provisionedBandwidthMiBPerSec = default(int?)) { throw null; }
         public static Azure.ResourceManager.Storage.FileServiceData FileServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Storage.Models.StorageSku sku = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageCorsRule> corsRules = null, Azure.ResourceManager.Storage.Models.DeleteRetentionPolicy shareDeleteRetentionPolicy = null, Azure.ResourceManager.Storage.Models.SmbSetting protocolSmbSetting = null) { throw null; }
-        public static Azure.ResourceManager.Storage.FileShareData FileShareData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.Collections.Generic.IDictionary<string, string> metadata = null, int? shareQuota = default(int?), Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol? enabledProtocol = default(Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol?), Azure.ResourceManager.Storage.Models.RootSquashType? rootSquash = default(Azure.ResourceManager.Storage.Models.RootSquashType?), string version = null, bool? isDeleted = default(bool?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), int? remainingRetentionDays = default(int?), Azure.ResourceManager.Storage.Models.FileShareAccessTier? accessTier = default(Azure.ResourceManager.Storage.Models.FileShareAccessTier?), System.DateTimeOffset? accessTierChangeOn = default(System.DateTimeOffset?), string accessTierStatus = null, long? shareUsageBytes = default(long?), Azure.ResourceManager.Storage.Models.StorageLeaseStatus? leaseStatus = default(Azure.ResourceManager.Storage.Models.StorageLeaseStatus?), Azure.ResourceManager.Storage.Models.StorageLeaseState? leaseState = default(Azure.ResourceManager.Storage.Models.StorageLeaseState?), Azure.ResourceManager.Storage.Models.StorageLeaseDurationType? leaseDuration = default(Azure.ResourceManager.Storage.Models.StorageLeaseDurationType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageSignedIdentifier> signedIdentifiers = null, System.DateTimeOffset? snapshotOn = default(System.DateTimeOffset?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.Storage.FileServiceUsageData FileServiceUsageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Storage.Models.FileServiceUsageProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.FileServiceUsageProperties FileServiceUsageProperties(Azure.ResourceManager.Storage.Models.FileServiceAccountLimits storageAccountLimits = null, Azure.ResourceManager.Storage.Models.FileShareLimits fileShareLimits = null, Azure.ResourceManager.Storage.Models.FileShareRecommendations fileShareRecommendations = null, Azure.ResourceManager.Storage.Models.BurstingConstants burstingConstants = null, Azure.ResourceManager.Storage.Models.FileServiceAccountUsage storageAccountUsage = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Storage.FileShareData FileShareData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.DateTimeOffset? lastModifiedOn, System.Collections.Generic.IDictionary<string, string> metadata, int? shareQuota, Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol? enabledProtocol, Azure.ResourceManager.Storage.Models.RootSquashType? rootSquash, string version, bool? isDeleted, System.DateTimeOffset? deletedOn, int? remainingRetentionDays, Azure.ResourceManager.Storage.Models.FileShareAccessTier? accessTier, System.DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, Azure.ResourceManager.Storage.Models.StorageLeaseStatus? leaseStatus, Azure.ResourceManager.Storage.Models.StorageLeaseState? leaseState, Azure.ResourceManager.Storage.Models.StorageLeaseDurationType? leaseDuration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageSignedIdentifier> signedIdentifiers, System.DateTimeOffset? snapshotOn, Azure.ETag? etag) { throw null; }
+        public static Azure.ResourceManager.Storage.FileShareData FileShareData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.Collections.Generic.IDictionary<string, string> metadata = null, int? shareQuota = default(int?), int? provisionedIops = default(int?), int? provisionedBandwidthMibps = default(int?), int? includedBurstIops = default(int?), long? maxBurstCreditsForIops = default(long?), System.DateTimeOffset? nextAllowedQuotaDowngradeOn = default(System.DateTimeOffset?), System.DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn = default(System.DateTimeOffset?), System.DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn = default(System.DateTimeOffset?), Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol? enabledProtocol = default(Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol?), Azure.ResourceManager.Storage.Models.RootSquashType? rootSquash = default(Azure.ResourceManager.Storage.Models.RootSquashType?), string version = null, bool? isDeleted = default(bool?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), int? remainingRetentionDays = default(int?), Azure.ResourceManager.Storage.Models.FileShareAccessTier? accessTier = default(Azure.ResourceManager.Storage.Models.FileShareAccessTier?), System.DateTimeOffset? accessTierChangeOn = default(System.DateTimeOffset?), string accessTierStatus = null, long? shareUsageBytes = default(long?), Azure.ResourceManager.Storage.Models.StorageLeaseStatus? leaseStatus = default(Azure.ResourceManager.Storage.Models.StorageLeaseStatus?), Azure.ResourceManager.Storage.Models.StorageLeaseState? leaseState = default(Azure.ResourceManager.Storage.Models.StorageLeaseState?), Azure.ResourceManager.Storage.Models.StorageLeaseDurationType? leaseDuration = default(Azure.ResourceManager.Storage.Models.StorageLeaseDurationType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageSignedIdentifier> signedIdentifiers = null, System.DateTimeOffset? snapshotOn = default(System.DateTimeOffset?), Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting fileSharePaidBursting = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.FileShareLimits FileShareLimits(int? minProvisionedStorageGiB = default(int?), int? maxProvisionedStorageGiB = default(int?), int? minProvisionedIops = default(int?), int? maxProvisionedIops = default(int?), int? minProvisionedBandwidthMiBPerSec = default(int?), int? maxProvisionedBandwidthMiBPerSec = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.FileShareRecommendations FileShareRecommendations(int? baseIops = default(int?), double? ioScalar = default(double?), int? baseBandwidthMiBPerSec = default(int?), double? bandwidthScalar = default(double?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Storage.Models.GeoReplicationStatistics GeoReplicationStatistics(Azure.ResourceManager.Storage.Models.GeoReplicationStatus? status, System.DateTimeOffset? lastSyncOn, bool? canFailover) { throw null; }
         public static Azure.ResourceManager.Storage.Models.GeoReplicationStatistics GeoReplicationStatistics(Azure.ResourceManager.Storage.Models.GeoReplicationStatus? status = default(Azure.ResourceManager.Storage.Models.GeoReplicationStatus?), System.DateTimeOffset? lastSyncOn = default(System.DateTimeOffset?), bool? canFailover = default(bool?), bool? canPlannedFailover = default(bool?), Azure.ResourceManager.Storage.Models.PostFailoverRedundancy? postFailoverRedundancy = default(Azure.ResourceManager.Storage.Models.PostFailoverRedundancy?), Azure.ResourceManager.Storage.Models.PostPlannedFailoverRedundancy? postPlannedFailoverRedundancy = default(Azure.ResourceManager.Storage.Models.PostPlannedFailoverRedundancy?)) { throw null; }
@@ -1265,7 +1313,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueProperties NetworkSecurityPerimeterProvisioningIssueProperties(Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueType? issueType = default(Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueType?), Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueSeverity? severity = default(Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueSeverity?), string description = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.NspAccessRule NspAccessRule(string name = null, Azure.ResourceManager.Storage.Models.NspAccessRuleProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.NspAccessRuleProperties NspAccessRuleProperties(Azure.ResourceManager.Storage.Models.NspAccessRuleDirection? direction = default(Azure.ResourceManager.Storage.Models.NspAccessRuleDirection?), System.Collections.Generic.IEnumerable<string> addressPrefixes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> subscriptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeter> networkSecurityPerimeters = null, System.Collections.Generic.IEnumerable<string> fullyQualifiedDomainNames = null) { throw null; }
-        public static Azure.ResourceManager.Storage.ObjectReplicationPolicyData ObjectReplicationPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string policyId = null, System.DateTimeOffset? enabledOn = default(System.DateTimeOffset?), string sourceAccount = null, string destinationAccount = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyRule> rules = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Storage.ObjectReplicationPolicyData ObjectReplicationPolicyData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string policyId, System.DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyRule> rules) { throw null; }
+        public static Azure.ResourceManager.Storage.ObjectReplicationPolicyData ObjectReplicationPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string policyId = null, System.DateTimeOffset? enabledOn = default(System.DateTimeOffset?), string sourceAccount = null, string destinationAccount = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyRule> rules = null, bool? isMetricsEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.ProtectedAppendWritesHistory ProtectedAppendWritesHistory(bool? allowProtectedAppendWritesAll = default(bool?), System.DateTimeOffset? timestamp = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Storage.QueueServiceData QueueServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageCorsRule> corsRules = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.RestorePolicy RestorePolicy(bool isEnabled = false, int? days = default(int?), System.DateTimeOffset? lastEnabledOn = default(System.DateTimeOffset?), System.DateTimeOffset? minRestoreOn = default(System.DateTimeOffset?)) { throw null; }
@@ -1559,6 +1609,19 @@ namespace Azure.ResourceManager.Storage.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BlobServiceChangeFeed>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BlobServiceChangeFeed>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class BurstingConstants : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BurstingConstants>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BurstingConstants>
+    {
+        internal BurstingConstants() { }
+        public int? BurstFloorIops { get { throw null; } }
+        public double? BurstIOScalar { get { throw null; } }
+        public int? BurstTimeframeSeconds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.BurstingConstants System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BurstingConstants>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BurstingConstants>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.BurstingConstants System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BurstingConstants>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BurstingConstants>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BurstingConstants>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CorsRuleAllowedMethod : System.IEquatable<Azure.ResourceManager.Storage.Models.CorsRuleAllowedMethod>
     {
@@ -1850,6 +1913,61 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ExpirationAction left, Azure.ResourceManager.Storage.Models.ExpirationAction right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class FileServiceAccountLimits : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceAccountLimits>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceAccountLimits>
+    {
+        internal FileServiceAccountLimits() { }
+        public int? MaxFileShares { get { throw null; } }
+        public int? MaxProvisionedBandwidthMiBPerSec { get { throw null; } }
+        public int? MaxProvisionedIops { get { throw null; } }
+        public int? MaxProvisionedStorageGiB { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.FileServiceAccountLimits System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceAccountLimits>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceAccountLimits>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.FileServiceAccountLimits System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceAccountLimits>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceAccountLimits>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceAccountLimits>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FileServiceAccountUsage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsage>
+    {
+        internal FileServiceAccountUsage() { }
+        public Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements LiveShares { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements SoftDeletedShares { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.FileServiceAccountUsage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.FileServiceAccountUsage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FileServiceAccountUsageElements : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements>
+    {
+        internal FileServiceAccountUsageElements() { }
+        public int? FileShareCount { get { throw null; } }
+        public int? ProvisionedBandwidthMiBPerSec { get { throw null; } }
+        public int? ProvisionedIops { get { throw null; } }
+        public int? ProvisionedStorageGiB { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FileServiceUsageProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceUsageProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceUsageProperties>
+    {
+        internal FileServiceUsageProperties() { }
+        public Azure.ResourceManager.Storage.Models.BurstingConstants BurstingConstants { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.FileShareLimits FileShareLimits { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.FileShareRecommendations FileShareRecommendations { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.FileServiceAccountLimits StorageAccountLimits { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.FileServiceAccountUsage StorageAccountUsage { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.FileServiceUsageProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceUsageProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceUsageProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.FileServiceUsageProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceUsageProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceUsageProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceUsageProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FileShareAccessTier : System.IEquatable<Azure.ResourceManager.Storage.Models.FileShareAccessTier>
     {
@@ -1887,6 +2005,49 @@ namespace Azure.ResourceManager.Storage.Models
         public static implicit operator Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol left, Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class FileShareLimits : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileShareLimits>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileShareLimits>
+    {
+        internal FileShareLimits() { }
+        public int? MaxProvisionedBandwidthMiBPerSec { get { throw null; } }
+        public int? MaxProvisionedIops { get { throw null; } }
+        public int? MaxProvisionedStorageGiB { get { throw null; } }
+        public int? MinProvisionedBandwidthMiBPerSec { get { throw null; } }
+        public int? MinProvisionedIops { get { throw null; } }
+        public int? MinProvisionedStorageGiB { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.FileShareLimits System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileShareLimits>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileShareLimits>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.FileShareLimits System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileShareLimits>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileShareLimits>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileShareLimits>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FileSharePropertiesFileSharePaidBursting : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting>
+    {
+        public FileSharePropertiesFileSharePaidBursting() { }
+        public bool? PaidBurstingEnabled { get { throw null; } set { } }
+        public int? PaidBurstingMaxBandwidthMibps { get { throw null; } set { } }
+        public int? PaidBurstingMaxIops { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FileShareRecommendations : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileShareRecommendations>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileShareRecommendations>
+    {
+        internal FileShareRecommendations() { }
+        public double? BandwidthScalar { get { throw null; } }
+        public int? BaseBandwidthMiBPerSec { get { throw null; } }
+        public int? BaseIops { get { throw null; } }
+        public double? IoScalar { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.FileShareRecommendations System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileShareRecommendations>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileShareRecommendations>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.FileShareRecommendations System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileShareRecommendations>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileShareRecommendations>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileShareRecommendations>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class FilesIdentityBasedAuthentication : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication>
     {
@@ -3783,12 +3944,18 @@ namespace Azure.ResourceManager.Storage.Models
         private readonly int _dummyPrimitive;
         public StorageSkuName(string value) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageSkuName PremiumLrs { get { throw null; } }
+        public static Azure.ResourceManager.Storage.Models.StorageSkuName PremiumV2Lrs { get { throw null; } }
+        public static Azure.ResourceManager.Storage.Models.StorageSkuName PremiumV2Zrs { get { throw null; } }
         public static Azure.ResourceManager.Storage.Models.StorageSkuName PremiumZrs { get { throw null; } }
         public static Azure.ResourceManager.Storage.Models.StorageSkuName StandardGrs { get { throw null; } }
         public static Azure.ResourceManager.Storage.Models.StorageSkuName StandardGzrs { get { throw null; } }
         public static Azure.ResourceManager.Storage.Models.StorageSkuName StandardLrs { get { throw null; } }
         public static Azure.ResourceManager.Storage.Models.StorageSkuName StandardRagrs { get { throw null; } }
         public static Azure.ResourceManager.Storage.Models.StorageSkuName StandardRagzrs { get { throw null; } }
+        public static Azure.ResourceManager.Storage.Models.StorageSkuName StandardV2Grs { get { throw null; } }
+        public static Azure.ResourceManager.Storage.Models.StorageSkuName StandardV2Gzrs { get { throw null; } }
+        public static Azure.ResourceManager.Storage.Models.StorageSkuName StandardV2Lrs { get { throw null; } }
+        public static Azure.ResourceManager.Storage.Models.StorageSkuName StandardV2Zrs { get { throw null; } }
         public static Azure.ResourceManager.Storage.Models.StorageSkuName StandardZrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Storage.Models.StorageSkuName other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

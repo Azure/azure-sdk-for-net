@@ -141,6 +141,94 @@ namespace Azure.AI.DocumentIntelligence
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeOperation, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
         }
 
+        // CUSTOM CODE NOTE: adding overloads for common scenarios of the AnalyzeDocument method.
+
+        /// <summary> Analyzes document with document model. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="uriSource"> Document URL to analyze. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="uriSource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation<AnalyzeResult>> AnalyzeDocumentAsync(WaitUntil waitUntil, string modelId, Uri uriSource, CancellationToken cancellationToken = default)
+        {
+            var options = new AnalyzeDocumentOptions(modelId, uriSource);
+
+            return await AnalyzeDocumentAsync(waitUntil, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Analyzes document with document model. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="uriSource"> Document URL to analyze. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="uriSource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation<AnalyzeResult> AnalyzeDocument(WaitUntil waitUntil, string modelId, Uri uriSource, CancellationToken cancellationToken = default)
+        {
+            var options = new AnalyzeDocumentOptions(modelId, uriSource);
+
+            return AnalyzeDocument(waitUntil, options, cancellationToken);
+        }
+
+        /// <summary> Analyzes document with document model. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="bytesSource">
+        /// Bytes of the document to analyze.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
+        /// <description>Creates a payload of "AQID".</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="bytesSource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation<AnalyzeResult>> AnalyzeDocumentAsync(WaitUntil waitUntil, string modelId, BinaryData bytesSource, CancellationToken cancellationToken = default)
+        {
+            var options = new AnalyzeDocumentOptions(modelId, bytesSource);
+
+            return await AnalyzeDocumentAsync(waitUntil, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Analyzes document with document model. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="bytesSource">
+        /// Bytes of the document to analyze.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
+        /// <description>Creates a payload of "AQID".</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="bytesSource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation<AnalyzeResult> AnalyzeDocument(WaitUntil waitUntil, string modelId, BinaryData bytesSource, CancellationToken cancellationToken = default)
+        {
+            var options = new AnalyzeDocumentOptions(modelId, bytesSource);
+
+            return AnalyzeDocument(waitUntil, options, cancellationToken);
+        }
+
         // CUSTOM CODE NOTE: we're overwriting the behavior of the AnalyzeDocument,
         // AnalyzeBatchDocuments, and ClassifyDocument protocol methods to return an
         // instance of OperationWithId. This is a workaround since Operation.Id is not

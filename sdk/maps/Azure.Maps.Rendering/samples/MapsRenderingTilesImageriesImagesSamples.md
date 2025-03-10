@@ -26,7 +26,7 @@ var client = new MapsRouteClient(credential, clientId);
 
 ## Get correct tile index
 
-Rendering map tiles requires the knowledge about [zoom levels and tile grid system](https://docs.microsoft.com/azure/azure-maps/zoom-levels-and-tile-grid). We provide APIs for you to find out the correct tile index and zoom level they need.
+Rendering map tiles requires the knowledge about [zoom levels and tile grid system](https://learn.microsoft.com/azure/azure-maps/zoom-levels-and-tile-grid). We provide APIs for you to find out the correct tile index and zoom level they need.
 
 For example, if you wants to render a tile in Germany with a specific bounding box range, one can use utility function `PositionToTileXY` method from `TileMath`. With the desired coordinate, zoom level and tile size, one can get tile X and Y index:
 

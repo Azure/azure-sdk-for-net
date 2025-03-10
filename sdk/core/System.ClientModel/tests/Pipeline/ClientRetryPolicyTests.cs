@@ -47,7 +47,7 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
     {
         ClientPipelineOptions options = new()
         {
-            Transport = new MockPipelineTransport("Transport", i => 500)
+            Transport = new MockPipelineTransport("Transport", _ => new MockPipelineResponse(500))
         };
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -76,7 +76,7 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
         ClientPipelineOptions options = new()
         {
             RetryPolicy = new MockRetryPolicy(maxRetryCount, i => TimeSpan.FromMilliseconds(10)),
-            Transport = new MockPipelineTransport("Transport", i => 500)
+            Transport = new MockPipelineTransport("Transport", _ => new MockPipelineResponse(500))
         };
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -169,16 +169,17 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
     public async Task ShouldRetryIsCalledOnlyForErrors()
     {
         Exception retriableException = new IOException();
+        int retryCount = 0;
 
-        MockRetryPolicy retryPolicy = new MockRetryPolicy();
-        MockPipelineTransport transport = new MockPipelineTransport("Transport", responseFactory);
+        MockRetryPolicy retryPolicy = new();
+        MockPipelineTransport transport = new("Transport", responseFactory);
 
-        int responseFactory(int i)
-            => i switch
+        MockPipelineResponse responseFactory(PipelineMessage m)
+            => retryCount++ switch
             {
-                0 => 500,
+                0 => new MockPipelineResponse(500),
                 1 => throw retriableException,
-                2 => 200,
+                2 => new MockPipelineResponse(200),
                 _ => throw new InvalidOperationException(),
             };
 
@@ -190,9 +191,9 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
         // Validate the state of the retry policy at the transport.
-        transport.OnSendingRequest = i =>
+        transport.OnSendingRequest = _ =>
         {
-            switch (i)
+            switch (retryCount)
             {
                 case 0:
                     Assert.IsFalse(retryPolicy.ShouldRetryCalled);
@@ -237,16 +238,17 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
     public async Task CallbacksAreCalledForErrorResponseAndException()
     {
         Exception retriableException = new IOException();
+        int retryCount = 0;
 
-        MockRetryPolicy retryPolicy = new MockRetryPolicy();
-        MockPipelineTransport transport = new MockPipelineTransport("Transport", responseFactory);
+        MockRetryPolicy retryPolicy = new();
+        MockPipelineTransport transport = new("Transport", responseFactory);
 
-        int responseFactory(int i)
-            => i switch
+        MockPipelineResponse responseFactory(PipelineMessage m)
+            => retryCount++ switch
             {
-                0 => 500,
+                0 => new MockPipelineResponse(500),
                 1 => throw retriableException,
-                2 => 200,
+                2 => new MockPipelineResponse(200),
                 _ => throw new InvalidOperationException(),
             };
 
@@ -260,7 +262,7 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
         // Validate the state of the retry policy at the transport.
         transport.OnSendingRequest = i =>
         {
-            switch (i)
+            switch (retryCount)
             {
                 case 0:
                     Assert.IsTrue(retryPolicy.OnSendingRequestCalled);
@@ -338,17 +340,18 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
             new IOException(),
             new IOException(),
             new IOException() };
+        int retryCount = 0;
 
         MockRetryPolicy retryPolicy = new MockRetryPolicy();
         MockPipelineTransport transport = new MockPipelineTransport("Transport", responseFactory);
 
-        int responseFactory(int i)
-            => i switch
+        MockPipelineResponse responseFactory(PipelineMessage i)
+            => retryCount++ switch
             {
-                0 => throw exceptions[i],
-                1 => throw exceptions[i],
-                2 => throw exceptions[i],
-                3 => throw exceptions[i],
+                0 => throw exceptions[0],
+                1 => throw exceptions[1],
+                2 => throw exceptions[2],
+                3 => throw exceptions[3],
                 _ => throw new InvalidOperationException(),
             };
 

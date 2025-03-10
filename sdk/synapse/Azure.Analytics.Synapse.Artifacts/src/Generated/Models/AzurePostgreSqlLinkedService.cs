@@ -20,27 +20,128 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of <see cref="AzurePostgreSqlLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="connectionString"> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="server"> Server name for connection. Type: string. </param>
+        /// <param name="port"> The port for the connection. Type: integer. </param>
+        /// <param name="username"> Username for authentication. Type: string. </param>
+        /// <param name="database"> Database name for connection. Type: string. </param>
+        /// <param name="sslMode"> SSL mode for connection. Type: integer. 0: disable, 1:allow, 2: prefer, 3: require, 4: verify-ca, 5: verify-full. Type: integer. </param>
+        /// <param name="timeout"> The time to wait (in seconds) while trying to establish a connection before terminating the attempt and generating an error. Type: integer. </param>
+        /// <param name="commandTimeout"> The time to wait (in seconds) while trying to execute a command before terminating the attempt and generating an error. Set to zero for infinity. Type: integer. </param>
+        /// <param name="trustServerCertificate"> Whether to trust the server certificate without validating it. Type: boolean. </param>
+        /// <param name="readBufferSize"> Determines the size of the internal buffer uses when reading. Increasing may improve performance if transferring large values from the database. Type: integer. </param>
+        /// <param name="timezone"> Gets or sets the session timezone. Type: string. </param>
+        /// <param name="encoding"> Gets or sets the .NET encoding that will be used to encode/decode PostgreSQL string data. Type: string. </param>
         /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzurePostgreSqlLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, AzureKeyVaultSecretReference password, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against Azure Database for PostgreSQL Flexible server. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalKey">
+        /// The key of the service principal used to authenticate against Azure Database for PostgreSQL Flexible server.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
+        /// <param name="servicePrincipalCredentialType"> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalEmbeddedCert">
+        /// Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string).
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
+        /// <param name="servicePrincipalEmbeddedCertPassword">
+        /// Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string).
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
+        /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
+        /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal AzurePostgreSqlLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, object server, object port, object username, object database, object sslMode, object timeout, object commandTimeout, object trustServerCertificate, object readBufferSize, object timezone, object encoding, AzureKeyVaultSecretReference password, object encryptedCredential, object servicePrincipalId, SecretBase servicePrincipalKey, object servicePrincipalCredentialType, SecretBase servicePrincipalEmbeddedCert, SecretBase servicePrincipalEmbeddedCertPassword, object tenant, object azureCloudType, CredentialReference credential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
+            Server = server;
+            Port = port;
+            Username = username;
+            Database = database;
+            SslMode = sslMode;
+            Timeout = timeout;
+            CommandTimeout = commandTimeout;
+            TrustServerCertificate = trustServerCertificate;
+            ReadBufferSize = readBufferSize;
+            Timezone = timezone;
+            Encoding = encoding;
             Password = password;
             EncryptedCredential = encryptedCredential;
+            ServicePrincipalId = servicePrincipalId;
+            ServicePrincipalKey = servicePrincipalKey;
+            ServicePrincipalCredentialType = servicePrincipalCredentialType;
+            ServicePrincipalEmbeddedCert = servicePrincipalEmbeddedCert;
+            ServicePrincipalEmbeddedCertPassword = servicePrincipalEmbeddedCertPassword;
+            Tenant = tenant;
+            AzureCloudType = azureCloudType;
+            Credential = credential;
             Type = type ?? "AzurePostgreSql";
         }
 
         /// <summary> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public object ConnectionString { get; set; }
+        /// <summary> Server name for connection. Type: string. </summary>
+        public object Server { get; set; }
+        /// <summary> The port for the connection. Type: integer. </summary>
+        public object Port { get; set; }
+        /// <summary> Username for authentication. Type: string. </summary>
+        public object Username { get; set; }
+        /// <summary> Database name for connection. Type: string. </summary>
+        public object Database { get; set; }
+        /// <summary> SSL mode for connection. Type: integer. 0: disable, 1:allow, 2: prefer, 3: require, 4: verify-ca, 5: verify-full. Type: integer. </summary>
+        public object SslMode { get; set; }
+        /// <summary> The time to wait (in seconds) while trying to establish a connection before terminating the attempt and generating an error. Type: integer. </summary>
+        public object Timeout { get; set; }
+        /// <summary> The time to wait (in seconds) while trying to execute a command before terminating the attempt and generating an error. Set to zero for infinity. Type: integer. </summary>
+        public object CommandTimeout { get; set; }
+        /// <summary> Whether to trust the server certificate without validating it. Type: boolean. </summary>
+        public object TrustServerCertificate { get; set; }
+        /// <summary> Determines the size of the internal buffer uses when reading. Increasing may improve performance if transferring large values from the database. Type: integer. </summary>
+        public object ReadBufferSize { get; set; }
+        /// <summary> Gets or sets the session timezone. Type: string. </summary>
+        public object Timezone { get; set; }
+        /// <summary> Gets or sets the .NET encoding that will be used to encode/decode PostgreSQL string data. Type: string. </summary>
+        public object Encoding { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
         public AzureKeyVaultSecretReference Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
+        /// <summary> The ID of the service principal used to authenticate against Azure Database for PostgreSQL Flexible server. Type: string (or Expression with resultType string). </summary>
+        public object ServicePrincipalId { get; set; }
+        /// <summary>
+        /// The key of the service principal used to authenticate against Azure Database for PostgreSQL Flexible server.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
+        public SecretBase ServicePrincipalKey { get; set; }
+        /// <summary> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </summary>
+        public object ServicePrincipalCredentialType { get; set; }
+        /// <summary>
+        /// Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string).
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
+        public SecretBase ServicePrincipalEmbeddedCert { get; set; }
+        /// <summary>
+        /// Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string).
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
+        public SecretBase ServicePrincipalEmbeddedCertPassword { get; set; }
+        /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
+        public object Tenant { get; set; }
+        /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
+        public object AzureCloudType { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public CredentialReference Credential { get; set; }
     }
 }

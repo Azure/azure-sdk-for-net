@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BatchAccountData.DeserializeBatchAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BatchAccountData.DeserializeBatchAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BatchAccountData.DeserializeBatchAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BatchAccountData.DeserializeBatchAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BatchAccountListResult.DeserializeBatchAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BatchAccountListResult.DeserializeBatchAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BatchAccountListResult.DeserializeBatchAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BatchAccountListResult.DeserializeBatchAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchAccountKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BatchAccountKeys.DeserializeBatchAccountKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchAccountKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BatchAccountKeys.DeserializeBatchAccountKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchAccountKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BatchAccountKeys.DeserializeBatchAccountKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchAccountKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BatchAccountKeys.DeserializeBatchAccountKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -910,7 +910,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         DetectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DetectorListResult.DeserializeDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -939,7 +939,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         DetectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DetectorListResult.DeserializeDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1008,7 +1008,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchAccountDetectorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BatchAccountDetectorData.DeserializeBatchAccountDetectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1041,7 +1041,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchAccountDetectorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BatchAccountDetectorData.DeserializeBatchAccountDetectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1108,7 +1108,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         OutboundEnvironmentEndpointCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1137,7 +1137,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         OutboundEnvironmentEndpointCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1186,7 +1186,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BatchAccountListResult.DeserializeBatchAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1213,7 +1213,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BatchAccountListResult.DeserializeBatchAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1264,7 +1264,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BatchAccountListResult.DeserializeBatchAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1293,7 +1293,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BatchAccountListResult.DeserializeBatchAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1346,7 +1346,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         DetectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DetectorListResult.DeserializeDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1377,7 +1377,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         DetectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DetectorListResult.DeserializeDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1430,7 +1430,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         OutboundEnvironmentEndpointCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1461,7 +1461,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         OutboundEnvironmentEndpointCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

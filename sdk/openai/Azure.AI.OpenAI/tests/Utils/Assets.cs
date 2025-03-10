@@ -19,6 +19,15 @@ namespace Azure.AI.OpenAI.Tests
                 RelativePath = GetPath("hello_world.m4a"),
                 MimeType = "audio/m4a"
             };
+            HelloWorldMp3 = new()
+            {
+                Type = AssetType.Audio,
+                Language = "en",
+                Description = "Hello world",
+                Name = "audio_hello_world.mp3",
+                RelativePath = GetPath("audio_hello_world.mp3"),
+                MimeType = "audio/mp3"
+            };
             WhisperFrenchDescription = new()
             {
                 Type = AssetType.Audio,
@@ -47,12 +56,23 @@ namespace Azure.AI.OpenAI.Tests
                 RelativePath = GetPath("fine_tuning.jsonl"),
                 MimeType = "text/plain"
             };
+            AudioWhatsTheWeatherPcm16 = new()
+            {
+                Type = AssetType.Audio,
+                Language = "en",
+                Description = "Fine tuning data for Open AI to generate a JSON object based on sports headlines",
+                Name = "whats_the_weather_pcm16_24khz_mono.wav",
+                RelativePath = GetPath("whats_the_weather_pcm16_24khz_mono.wav"),
+                MimeType = "audio/wav"
+            };
         }
 
         public virtual AssetInfo HelloWorld { get; }
+        public virtual AssetInfo HelloWorldMp3 { get; }
         public virtual AssetInfo WhisperFrenchDescription { get; }
         public virtual AssetInfo DogAndCat { get; }
         public virtual AssetInfo FineTuning { get; }
+        public virtual AssetInfo AudioWhatsTheWeatherPcm16 { get; }
 
         protected virtual string GetPath(string assetName)
         {

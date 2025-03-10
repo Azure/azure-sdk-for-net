@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         IntegrationRuntimeListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationRuntimeListResponse.DeserializeIntegrationRuntimeListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         IntegrationRuntimeListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationRuntimeListResponse.DeserializeIntegrationRuntimeListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         IntegrationRuntimeResource value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationRuntimeResource.DeserializeIntegrationRuntimeResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -149,7 +149,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         IntegrationRuntimeResource value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationRuntimeResource.DeserializeIntegrationRuntimeResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

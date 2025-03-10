@@ -5,7 +5,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
 {
     using System;
     using System.Collections.Generic;
-    using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
+    using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
     internal class DocumentMock : DocumentIngress
     {

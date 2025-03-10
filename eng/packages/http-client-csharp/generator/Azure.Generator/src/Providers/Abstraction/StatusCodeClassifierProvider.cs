@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Microsoft.Generator.CSharp.ClientModel.Providers;
-using Microsoft.Generator.CSharp.Expressions;
-using Microsoft.Generator.CSharp.Primitives;
-using static Microsoft.Generator.CSharp.Snippets.Snippet;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Primitives;
+using System.Collections.Generic;
+using System.Linq;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers.Abstraction
 {
@@ -22,6 +24,12 @@ namespace Azure.Generator.Providers.Abstraction
 
         public override ValueExpression Create(int code)
             => New.Instance(typeof(StatusCodeClassifier), [New.Array(typeof(ushort), true, true, [Literal(code)])]);
+
+        public override ValueExpression Create(IEnumerable<int> codes)
+        {
+            var codeArgs = codes.Select(Literal).ToArray();
+            return New.Instance(typeof(StatusCodeClassifier), New.Array(typeof(ushort), true, true, codeArgs));
+        }
 
         public override StatusCodeClassifierApi FromExpression(ValueExpression original)
             => new StatusCodeClassifierProvider(original);

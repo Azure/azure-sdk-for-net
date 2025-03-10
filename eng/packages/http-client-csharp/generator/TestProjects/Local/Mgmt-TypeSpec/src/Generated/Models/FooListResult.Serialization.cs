@@ -40,7 +40,7 @@ namespace MgmtTypeSpec.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (Foo item in Value)
+            foreach (FooData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -88,17 +88,17 @@ namespace MgmtTypeSpec.Models
             {
                 return null;
             }
-            IList<Foo> value = default;
+            IList<FooData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<Foo> array = new List<Foo>();
+                    List<FooData> array = new List<FooData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Foo.DeserializeFoo(item, options));
+                        array.Add(FooData.DeserializeFooData(item, options));
                     }
                     value = array;
                     continue;

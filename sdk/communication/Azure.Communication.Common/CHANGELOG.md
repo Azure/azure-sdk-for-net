@@ -3,6 +3,7 @@
 ## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
+- Introduced support for `Azure.Core.TokenCredential` with `EntraCommunicationTokenCredentialOptions`, enabling Entra users to authorize Communication Services and allowing an Entra user with a Teams license to use Teams Phone Extensibility features through the Azure Communication Services resource.
 
 ### Breaking Changes
 

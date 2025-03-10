@@ -77,7 +77,7 @@ namespace Azure.AI.Projects
         public static AgentStreamEvent ThreadRunRequiresAction { get; } = new AgentStreamEvent(ThreadRunRequiresActionValue);
         /// <summary> Event sent when a run is completed. The data of this event is of type ThreadRun. </summary>
         public static AgentStreamEvent ThreadRunCompleted { get; } = new AgentStreamEvent(ThreadRunCompletedValue);
-        /// <summary> Event sent when a run ends incompleted. The data of this event is of type ThreadRun. </summary>
+        /// <summary> Event sent when a run ends incomplete. The data of this event is of type ThreadRun. </summary>
         public static AgentStreamEvent ThreadRunIncomplete { get; } = new AgentStreamEvent(ThreadRunIncompleteValue);
         /// <summary> Event sent when a run fails. The data of this event is of type ThreadRun. </summary>
         public static AgentStreamEvent ThreadRunFailed { get; } = new AgentStreamEvent(ThreadRunFailedValue);

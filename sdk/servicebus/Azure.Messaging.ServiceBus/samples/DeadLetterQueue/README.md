@@ -59,7 +59,7 @@ To build the sample:
 You can either run the executable you just build, or build and run the project at the same time. There are two ways to authenticate in the sample.
 
 ### Use Azure Activity Directory
-You can use any of the [authentication mechanisms](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet) that the `DefaultAzureCredential` from the Azure.Identity supports.
+You can use any of the [authentication mechanisms](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet) that the `DefaultAzureCredential` from the Azure.Identity supports.
 
 To run the sample using Azure Identity:
 

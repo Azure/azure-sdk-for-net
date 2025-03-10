@@ -5,7 +5,7 @@
       Package to integrate your Playwright test suite with Microsoft Playwright Testing
       service
     </Description>
-    <Version>1.0.0-beta.4</Version>
+    <Version>1.0.0-beta.5</Version>
     <IsClientLibrary>true</IsClientLibrary>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>

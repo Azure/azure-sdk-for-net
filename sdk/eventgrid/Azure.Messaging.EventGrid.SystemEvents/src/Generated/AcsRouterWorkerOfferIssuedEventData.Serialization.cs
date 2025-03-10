@@ -58,10 +58,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(item.Value);
             }
             writer.WriteEndObject();
-            writer.WritePropertyName("offeredOn"u8);
-            writer.WriteStringValue(OfferedOn, "O");
-            writer.WritePropertyName("expiresOn"u8);
-            writer.WriteStringValue(ExpiresOn, "O");
+            if (Optional.IsDefined(OfferedOn))
+            {
+                writer.WritePropertyName("offeredOn"u8);
+                writer.WriteStringValue(OfferedOn.Value, "O");
+            }
+            if (Optional.IsDefined(ExpiresOn))
+            {
+                writer.WritePropertyName("expiresOn"u8);
+                writer.WriteStringValue(ExpiresOn.Value, "O");
+            }
             writer.WritePropertyName("workerTags"u8);
             writer.WriteStartObject();
             foreach (var item in WorkerTags)
@@ -112,8 +118,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string offerId = default;
             int? jobPriority = default;
             IReadOnlyDictionary<string, string> workerLabels = default;
-            DateTimeOffset offeredOn = default;
-            DateTimeOffset expiresOn = default;
+            DateTimeOffset? offeredOn = default;
+            DateTimeOffset? expiresOn = default;
             IReadOnlyDictionary<string, string> workerTags = default;
             IReadOnlyDictionary<string, string> jobLabels = default;
             IReadOnlyDictionary<string, string> jobTags = default;
@@ -156,11 +162,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("offeredOn"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     offeredOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("expiresOn"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     expiresOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -258,7 +272,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsRouterWorkerOfferIssuedEventData(document.RootElement, options);
                     }
                 default:
@@ -272,7 +286,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AcsRouterWorkerOfferIssuedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsRouterWorkerOfferIssuedEventData(document.RootElement);
         }
 

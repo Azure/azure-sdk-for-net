@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeStoreAccountListResult.DeserializeDataLakeStoreAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeStoreAccountListResult.DeserializeDataLakeStoreAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeStoreAccountListResult.DeserializeDataLakeStoreAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeStoreAccountListResult.DeserializeDataLakeStoreAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeStoreAccountData.DeserializeDataLakeStoreAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeStoreAccountData.DeserializeDataLakeStoreAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreAccountNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeStoreAccountNameAvailabilityResult.DeserializeDataLakeStoreAccountNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreAccountNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeStoreAccountNameAvailabilityResult.DeserializeDataLakeStoreAccountNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -908,7 +908,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeStoreAccountListResult.DeserializeDataLakeStoreAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -941,7 +941,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeStoreAccountListResult.DeserializeDataLakeStoreAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -998,7 +998,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeStoreAccountListResult.DeserializeDataLakeStoreAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1033,7 +1033,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeStoreAccountListResult.DeserializeDataLakeStoreAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

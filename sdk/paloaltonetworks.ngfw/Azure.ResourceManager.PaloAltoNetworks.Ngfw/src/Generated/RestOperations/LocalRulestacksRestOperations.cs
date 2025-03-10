@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         LocalRulestackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LocalRulestackListResult.DeserializeLocalRulestackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         LocalRulestackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LocalRulestackListResult.DeserializeLocalRulestackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         LocalRulestackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LocalRulestackListResult.DeserializeLocalRulestackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         LocalRulestackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LocalRulestackListResult.DeserializeLocalRulestackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         LocalRulestackData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LocalRulestackData.DeserializeLocalRulestackData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         LocalRulestackData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LocalRulestackData.DeserializeLocalRulestackData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         LocalRulestackData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LocalRulestackData.DeserializeLocalRulestackData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         LocalRulestackData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LocalRulestackData.DeserializeLocalRulestackData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         RulestackChangelog value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RulestackChangelog.DeserializeRulestackChangelog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         RulestackChangelog value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RulestackChangelog.DeserializeRulestackChangelog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         FirewallSupportInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FirewallSupportInfo.DeserializeFirewallSupportInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         FirewallSupportInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FirewallSupportInfo.DeserializeFirewallSupportInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -933,7 +933,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         AdvancedSecurityObjectListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AdvancedSecurityObjectListResult.DeserializeAdvancedSecurityObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         AdvancedSecurityObjectListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AdvancedSecurityObjectListResult.DeserializeAdvancedSecurityObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1066,7 +1066,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         RulestackAppIdListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RulestackAppIdListResult.DeserializeRulestackAppIdListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1099,7 +1099,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         RulestackAppIdListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RulestackAppIdListResult.DeserializeRulestackAppIdListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1182,7 +1182,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         RulestackCountryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RulestackCountryListResult.DeserializeRulestackCountryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1213,7 +1213,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         RulestackCountryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RulestackCountryListResult.DeserializeRulestackCountryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1278,7 +1278,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         RulestackFirewallListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RulestackFirewallListResult.DeserializeRulestackFirewallListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1307,7 +1307,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         RulestackFirewallListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RulestackFirewallListResult.DeserializeRulestackFirewallListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1390,7 +1390,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PredefinedUrlCategoryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PredefinedUrlCategoryListResult.DeserializePredefinedUrlCategoryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1421,7 +1421,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PredefinedUrlCategoryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PredefinedUrlCategoryListResult.DeserializePredefinedUrlCategoryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1507,7 +1507,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         RulestackSecurityServiceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RulestackSecurityServiceListResult.DeserializeRulestackSecurityServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1539,7 +1539,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         RulestackSecurityServiceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RulestackSecurityServiceListResult.DeserializeRulestackSecurityServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1672,7 +1672,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         LocalRulestackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LocalRulestackListResult.DeserializeLocalRulestackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1699,7 +1699,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         LocalRulestackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LocalRulestackListResult.DeserializeLocalRulestackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1750,7 +1750,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         LocalRulestackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LocalRulestackListResult.DeserializeLocalRulestackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1779,7 +1779,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         LocalRulestackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LocalRulestackListResult.DeserializeLocalRulestackListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

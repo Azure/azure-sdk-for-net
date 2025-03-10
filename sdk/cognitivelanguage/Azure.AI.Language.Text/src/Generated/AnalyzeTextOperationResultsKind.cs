@@ -33,9 +33,6 @@ namespace Azure.AI.Language.Text
         private const string CustomMultiLabelClassificationOperationResultsValue = "CustomMultiLabelClassificationLROResults";
         private const string ExtractiveSummarizationOperationResultsValue = "ExtractiveSummarizationLROResults";
         private const string AbstractiveSummarizationOperationResultsValue = "AbstractiveSummarizationLROResults";
-        private const string CustomHealthcareOperationResultsValue = "CustomHealthcareLROResults";
-        private const string CustomSentimentAnalysisOperationResultsValue = "CustomSentimentAnalysisLROResults";
-        private const string CustomAbstractiveSummarizationOperationResultsValue = "CustomAbstractiveSummarizationLROResults";
 
         /// <summary> Sentiment analysis LRO results. </summary>
         public static AnalyzeTextOperationResultsKind SentimentAnalysisOperationResults { get; } = new AnalyzeTextOperationResultsKind(SentimentAnalysisOperationResultsValue);
@@ -59,12 +56,6 @@ namespace Azure.AI.Language.Text
         public static AnalyzeTextOperationResultsKind ExtractiveSummarizationOperationResults { get; } = new AnalyzeTextOperationResultsKind(ExtractiveSummarizationOperationResultsValue);
         /// <summary> Abstractive summarization LRO results. </summary>
         public static AnalyzeTextOperationResultsKind AbstractiveSummarizationOperationResults { get; } = new AnalyzeTextOperationResultsKind(AbstractiveSummarizationOperationResultsValue);
-        /// <summary> Custom healthcare LRO results. </summary>
-        public static AnalyzeTextOperationResultsKind CustomHealthcareOperationResults { get; } = new AnalyzeTextOperationResultsKind(CustomHealthcareOperationResultsValue);
-        /// <summary> Custom sentiment analysis LRO results. </summary>
-        public static AnalyzeTextOperationResultsKind CustomSentimentAnalysisOperationResults { get; } = new AnalyzeTextOperationResultsKind(CustomSentimentAnalysisOperationResultsValue);
-        /// <summary> Custom abstractive summarization LRO results. </summary>
-        public static AnalyzeTextOperationResultsKind CustomAbstractiveSummarizationOperationResults { get; } = new AnalyzeTextOperationResultsKind(CustomAbstractiveSummarizationOperationResultsValue);
         /// <summary> Determines if two <see cref="AnalyzeTextOperationResultsKind"/> values are the same. </summary>
         public static bool operator ==(AnalyzeTextOperationResultsKind left, AnalyzeTextOperationResultsKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeTextOperationResultsKind"/> values are not the same. </summary>

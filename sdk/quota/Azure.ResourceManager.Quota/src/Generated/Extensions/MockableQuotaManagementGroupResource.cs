@@ -8,18 +8,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Quota.Mocking
 {
     /// <summary> A class to add extension methods to ManagementGroupResource. </summary>
     public partial class MockableQuotaManagementGroupResource : ArmResource
     {
-        private ClientDiagnostics _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics;
-        private GroupQuotaSubscriptionAllocationRequestRestOperations _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="MockableQuotaManagementGroupResource"/> class for mocking. </summary>
         protected MockableQuotaManagementGroupResource()
         {
@@ -31,9 +26,6 @@ namespace Azure.ResourceManager.Quota.Mocking
         internal MockableQuotaManagementGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics => _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quota", QuotaAllocationRequestStatusResource.ResourceType.Namespace, Diagnostics);
-        private GroupQuotaSubscriptionAllocationRequestRestOperations QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient => _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient ??= new GroupQuotaSubscriptionAllocationRequestRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(QuotaAllocationRequestStatusResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -61,7 +53,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -92,7 +84,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -110,102 +102,91 @@ namespace Azure.ResourceManager.Quota.Mocking
             return GetGroupQuotaEntities().Get(groupQuotaName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SubscriptionQuotaAllocationResources in the ManagementGroupResource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="groupQuotaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of SubscriptionQuotaAllocationResources and their operations over a SubscriptionQuotaAllocationResource. </returns>
-        public virtual SubscriptionQuotaAllocationCollection GetSubscriptionQuotaAllocations(string subscriptionId, string groupQuotaName)
+        /// <summary> Gets a collection of SubscriptionQuotaAllocationsListResources in the ManagementGroupResource. </summary>
+        /// <returns> An object representing collection of SubscriptionQuotaAllocationsListResources and their operations over a SubscriptionQuotaAllocationsListResource. </returns>
+        public virtual SubscriptionQuotaAllocationsListCollection GetSubscriptionQuotaAllocationsLists()
         {
-            return new SubscriptionQuotaAllocationCollection(Client, Id, subscriptionId, groupQuotaName);
+            return GetCachedClient(client => new SubscriptionQuotaAllocationsListCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets Quota allocated to a subscription for the specific Resource Provider, Location, ResourceName. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
+        /// Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/quotaAllocations/{resourceName}</description>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocation_Get</description>
+        /// <description>GroupQuotaSubscriptionAllocation_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionQuotaAllocationResource"/></description>
+        /// <description><see cref="SubscriptionQuotaAllocationsListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="resourceName"> Resource name. </param>
-        /// <param name="filter">
-        /// | Field | Supported operators
-        /// |---------------------|------------------------
-        ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
-        /// </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceName"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SubscriptionQuotaAllocationResource>> GetSubscriptionQuotaAllocationAsync(string subscriptionId, string groupQuotaName, string resourceName, string filter, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionQuotaAllocationsListResource>> GetSubscriptionQuotaAllocationsListAsync(string subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionQuotaAllocations(subscriptionId, groupQuotaName).GetAsync(resourceName, filter, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionQuotaAllocationsLists().GetAsync(subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets Quota allocated to a subscription for the specific Resource Provider, Location, ResourceName. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
+        /// Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/quotaAllocations/{resourceName}</description>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocation_Get</description>
+        /// <description>GroupQuotaSubscriptionAllocation_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionQuotaAllocationResource"/></description>
+        /// <description><see cref="SubscriptionQuotaAllocationsListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="resourceName"> Resource name. </param>
-        /// <param name="filter">
-        /// | Field | Supported operators
-        /// |---------------------|------------------------
-        ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
-        /// </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceName"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SubscriptionQuotaAllocationResource> GetSubscriptionQuotaAllocation(string subscriptionId, string groupQuotaName, string resourceName, string filter, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionQuotaAllocationsListResource> GetSubscriptionQuotaAllocationsList(string subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionQuotaAllocations(subscriptionId, groupQuotaName).Get(resourceName, filter, cancellationToken);
+            return GetSubscriptionQuotaAllocationsLists().Get(subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken);
         }
 
         /// <summary> Gets a collection of QuotaAllocationRequestStatusResources in the ManagementGroupResource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of QuotaAllocationRequestStatusResources and their operations over a QuotaAllocationRequestStatusResource. </returns>
-        public virtual QuotaAllocationRequestStatusCollection GetQuotaAllocationRequestStatuses()
+        public virtual QuotaAllocationRequestStatusCollection GetQuotaAllocationRequestStatuses(string subscriptionId, string groupQuotaName, string resourceProviderName)
         {
-            return GetCachedClient(client => new QuotaAllocationRequestStatusCollection(client, Id));
+            return new QuotaAllocationRequestStatusCollection(Client, Id, subscriptionId, groupQuotaName, resourceProviderName);
         }
 
         /// <summary>
@@ -213,7 +194,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/quotaAllocationRequests/{allocationId}</description>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{allocationId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -221,7 +202,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -231,14 +212,15 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="allocationId"> Request Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="allocationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="allocationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<QuotaAllocationRequestStatusResource>> GetQuotaAllocationRequestStatusAsync(string subscriptionId, string groupQuotaName, string allocationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QuotaAllocationRequestStatusResource>> GetQuotaAllocationRequestStatusAsync(string subscriptionId, string groupQuotaName, string resourceProviderName, string allocationId, CancellationToken cancellationToken = default)
         {
-            return await GetQuotaAllocationRequestStatuses().GetAsync(subscriptionId, groupQuotaName, allocationId, cancellationToken).ConfigureAwait(false);
+            return await GetQuotaAllocationRequestStatuses(subscriptionId, groupQuotaName, resourceProviderName).GetAsync(allocationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -246,7 +228,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/quotaAllocationRequests/{allocationId}</description>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{allocationId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -254,7 +236,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -264,328 +246,15 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="allocationId"> Request Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="allocationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="allocationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatus(string subscriptionId, string groupQuotaName, string allocationId, CancellationToken cancellationToken = default)
+        public virtual Response<QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatus(string subscriptionId, string groupQuotaName, string resourceProviderName, string allocationId, CancellationToken cancellationToken = default)
         {
-            return GetQuotaAllocationRequestStatuses().Get(subscriptionId, groupQuotaName, allocationId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get all the quotaAllocationRequests for a resourceProvider/location. The filter paramter for location is required.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocationRequest_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="filter">
-        /// | Field | Supported operators
-        /// |---------------------|------------------------
-        ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="QuotaAllocationRequestStatusResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatusesByResourceProviderAsync(string subscriptionId, string groupQuotaName, string resourceProviderName, string filter, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.CreateListRequest(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.CreateListNextPageRequest(nextLink, Id.Name, subscriptionId, groupQuotaName, resourceProviderName, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QuotaAllocationRequestStatusResource(Client, QuotaAllocationRequestStatusData.DeserializeQuotaAllocationRequestStatusData(e)), QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics, Pipeline, "MockableQuotaManagementGroupResource.GetQuotaAllocationRequestStatusesByResourceProvider", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get all the quotaAllocationRequests for a resourceProvider/location. The filter paramter for location is required.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocationRequest_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="filter">
-        /// | Field | Supported operators
-        /// |---------------------|------------------------
-        ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="QuotaAllocationRequestStatusResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatusesByResourceProvider(string subscriptionId, string groupQuotaName, string resourceProviderName, string filter, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.CreateListRequest(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.CreateListNextPageRequest(nextLink, Id.Name, subscriptionId, groupQuotaName, resourceProviderName, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QuotaAllocationRequestStatusResource(Client, QuotaAllocationRequestStatusData.DeserializeQuotaAllocationRequestStatusData(e)), QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics, Pipeline, "MockableQuotaManagementGroupResource.GetQuotaAllocationRequestStatusesByResourceProvider", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Request to assign quota from group quota to a specific Subscription. The assign GroupQuota to subscriptions or reduce the quota allocated to subscription to give back the unused quota ( quota &gt;= usages) to the groupQuota. So, this API can be used to assign Quota to subscriptions and assign back unused quota to group quota, which can be assigned to another subscriptions in the GroupQuota.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocationRequest_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="resourceName"> Resource name. </param>
-        /// <param name="data"> Quota requests payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<QuotaAllocationRequestStatusResource>> CreateOrUpdateGroupQuotaSubscriptionAllocationRequestAsync(WaitUntil waitUntil, string subscriptionId, string groupQuotaName, string resourceProviderName, string resourceName, QuotaAllocationRequestStatusData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics.CreateScope("MockableQuotaManagementGroupResource.CreateOrUpdateGroupQuotaSubscriptionAllocationRequest");
-            scope.Start();
-            try
-            {
-                var response = await QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.CreateOrUpdateAsync(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new QuotaArmOperation<QuotaAllocationRequestStatusResource>(new QuotaAllocationRequestStatusOperationSource(Client), QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics, Pipeline, QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.CreateCreateOrUpdateRequest(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, resourceName, data).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Request to assign quota from group quota to a specific Subscription. The assign GroupQuota to subscriptions or reduce the quota allocated to subscription to give back the unused quota ( quota &gt;= usages) to the groupQuota. So, this API can be used to assign Quota to subscriptions and assign back unused quota to group quota, which can be assigned to another subscriptions in the GroupQuota.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocationRequest_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="resourceName"> Resource name. </param>
-        /// <param name="data"> Quota requests payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<QuotaAllocationRequestStatusResource> CreateOrUpdateGroupQuotaSubscriptionAllocationRequest(WaitUntil waitUntil, string subscriptionId, string groupQuotaName, string resourceProviderName, string resourceName, QuotaAllocationRequestStatusData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics.CreateScope("MockableQuotaManagementGroupResource.CreateOrUpdateGroupQuotaSubscriptionAllocationRequest");
-            scope.Start();
-            try
-            {
-                var response = QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.CreateOrUpdate(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, resourceName, data, cancellationToken);
-                var operation = new QuotaArmOperation<QuotaAllocationRequestStatusResource>(new QuotaAllocationRequestStatusOperationSource(Client), QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics, Pipeline, QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.CreateCreateOrUpdateRequest(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, resourceName, data).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Request to assign quota from group quota to a specific Subscription. The assign GroupQuota to subscriptions or reduce the quota allocated to subscription to give back the unused quota ( quota &gt;= usages) to the groupQuota. So, this API can be used to assign Quota to subscriptions and assign back unused quota to group quota, which can be assigned to another subscriptions in the GroupQuota. User can collect unused quotas from multiple subscriptions within the groupQuota and assign the groupQuota to the subscription, where it's needed.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocationRequest_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="resourceName"> Resource name. </param>
-        /// <param name="data"> Quota requests payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<QuotaAllocationRequestStatusResource>> UpdateGroupQuotaSubscriptionAllocationRequestAsync(WaitUntil waitUntil, string subscriptionId, string groupQuotaName, string resourceProviderName, string resourceName, QuotaAllocationRequestStatusData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics.CreateScope("MockableQuotaManagementGroupResource.UpdateGroupQuotaSubscriptionAllocationRequest");
-            scope.Start();
-            try
-            {
-                var response = await QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.UpdateAsync(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new QuotaArmOperation<QuotaAllocationRequestStatusResource>(new QuotaAllocationRequestStatusOperationSource(Client), QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics, Pipeline, QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.CreateUpdateRequest(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, resourceName, data).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Request to assign quota from group quota to a specific Subscription. The assign GroupQuota to subscriptions or reduce the quota allocated to subscription to give back the unused quota ( quota &gt;= usages) to the groupQuota. So, this API can be used to assign Quota to subscriptions and assign back unused quota to group quota, which can be assigned to another subscriptions in the GroupQuota. User can collect unused quotas from multiple subscriptions within the groupQuota and assign the groupQuota to the subscription, where it's needed.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionAllocationRequest_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="QuotaAllocationRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="resourceName"> Resource name. </param>
-        /// <param name="data"> Quota requests payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<QuotaAllocationRequestStatusResource> UpdateGroupQuotaSubscriptionAllocationRequest(WaitUntil waitUntil, string subscriptionId, string groupQuotaName, string resourceProviderName, string resourceName, QuotaAllocationRequestStatusData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics.CreateScope("MockableQuotaManagementGroupResource.UpdateGroupQuotaSubscriptionAllocationRequest");
-            scope.Start();
-            try
-            {
-                var response = QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.Update(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, resourceName, data, cancellationToken);
-                var operation = new QuotaArmOperation<QuotaAllocationRequestStatusResource>(new QuotaAllocationRequestStatusOperationSource(Client), QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestClientDiagnostics, Pipeline, QuotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.CreateUpdateRequest(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, resourceName, data).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetQuotaAllocationRequestStatuses(subscriptionId, groupQuotaName, resourceProviderName).Get(allocationId, cancellationToken);
         }
     }
 }

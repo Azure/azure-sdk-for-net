@@ -86,7 +86,7 @@ An Event Hub consumer is associated with a specific Event Hub and [consumer grou
 
 Each consumer has a unique view of the events in a partition that it reads from, which means that events are available to all consumers and are not removed from the partition when read.  This allows consumers to read and process events from the Event Hub at different speeds without interfering with one another.
 
-When events are published, they will continue to exist in the Event Hub and be available for consuming until they reach an age where they are older than the [retention period](https://learn.microsoft.com//azure/event-hubs/event-hubs-faq#what-is-the-maximum-retention-period-for-events).  Once removed, the events are no longer available to be read and cannot be recovered.  Though the Event Hubs service is free to remove events older than the retention period, it does not do so deterministically; there is no guarantee of when events will be removed.
+When events are published, they will continue to exist in the Event Hub and be available for consuming until they reach an age where they are older than the [retention period](https://learn.microsoft.com/azure/event-hubs/event-hubs-faq#what-is-the-maximum-retention-period-for-events).  Once removed, the events are no longer available to be read and cannot be recovered.  Though the Event Hubs service is free to remove events older than the retention period, it does not do so deterministically; there is no guarantee of when events will be removed.
 
 ```C# Snippet:EventHubs_Sample01_ReadEvents
 try

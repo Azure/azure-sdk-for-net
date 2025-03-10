@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="timeout"> (Optional) When specified, indicates the timeout for the http client making the API call. </param>
         /// <param name="region"> (Optional for token authentication). The region the AML service is deployed in. </param>
         /// <param name="modelName"> The name of the embedding model from the Azure AI Studio Catalog that is deployed at the provided endpoint. </param>
-        internal AzureMachineLearningParameters(Uri scoringUri, string authenticationKey, string resourceId, TimeSpan? timeout, string region, AIStudioModelCatalogName? modelName)
+        internal AzureMachineLearningParameters(Uri scoringUri, string authenticationKey, string resourceId, TimeSpan? timeout, string region, AIFoundryModelCatalogName? modelName)
         {
             ScoringUri = scoringUri;
             AuthenticationKey = authenticationKey;
@@ -47,6 +47,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> (Optional for token authentication). The region the AML service is deployed in. </summary>
         public string Region { get; set; }
         /// <summary> The name of the embedding model from the Azure AI Studio Catalog that is deployed at the provided endpoint. </summary>
-        public AIStudioModelCatalogName? ModelName { get; set; }
+        public AIFoundryModelCatalogName? ModelName { get; set; }
     }
 }

@@ -114,7 +114,9 @@ namespace Azure.Identity
                 }
                 else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                 {
+#pragma warning disable CS0618 // Type or member is obsolete
                     Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, envCredOptions, _pipeline, envCredOptions.MsalPublicClient);
+#pragma warning restore CS0618 // Type or member is obsolete
                 }
             }
         }
@@ -129,7 +131,7 @@ namespace Azure.Identity
         /// Obtains a token from Microsoft Entra ID, using the client details specified in the environment variables
         /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate.
         /// Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the credential
-        /// instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances
+        /// instance. Token lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
         /// to optimize cache effectiveness.
         /// </summary>
         /// <remarks>
@@ -149,7 +151,7 @@ namespace Azure.Identity
         /// Obtains a token from Microsoft Entra ID, using the client details specified in the environment variables
         /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate.
         /// Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the credential
-        /// instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances
+        /// instance. Token lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
         /// to optimize cache effectiveness.
         /// </summary>
         /// <remarks>

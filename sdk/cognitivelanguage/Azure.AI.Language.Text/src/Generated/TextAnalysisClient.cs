@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Text
 {
     // Data plane generated client.
-    /// <summary> The language service API is a suite of natural language processing (NLP) skills built with best-in-class Microsoft machine learning algorithms.  The API can be used to analyze unstructured text for tasks such as sentiment analysis, key phrase extraction, language detection and question answering. Further documentation can be found in &lt;a href=\"https://docs.microsoft.com/azure/cognitive-services/language-service/overview\"&gt;https://docs.microsoft.com/azure/cognitive-services/language-service/overview&lt;/a&gt;.0. </summary>
+    /// <summary> The language service API is a suite of natural language processing (NLP) skills built with best-in-class Microsoft machine learning algorithms.  The API can be used to analyze unstructured text for tasks such as sentiment analysis, key phrase extraction, language detection and question answering. Further documentation can be found in &lt;a href=\"https://learn.microsoft.com/azure/cognitive-services/language-service/overview\"&gt;https://learn.microsoft.com/azure/cognitive-services/language-service/overview&lt;/a&gt;.0. </summary>
     public partial class TextAnalysisClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";

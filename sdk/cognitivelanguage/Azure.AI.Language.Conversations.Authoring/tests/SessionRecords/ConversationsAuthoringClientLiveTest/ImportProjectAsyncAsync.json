@@ -1,0 +1,170 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/:import?api-version=2024-11-15-preview&format=Conversation",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "849",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250228.1 (.NET 8.0.13; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "projectFileVersion": "2022-10-01-preview",
+        "stringIndexType": "Utf16CodeUnit",
+        "metadata": {
+          "projectKind": "Conversation",
+          "settings": {
+            "confidenceThreshold": 0
+          },
+          "projectName": null,
+          "multilingual": false,
+          "description": "",
+          "language": "en-us"
+        },
+        "assets": {
+          "projectKind": "Conversation",
+          "intents": [
+            {
+              "category": "None"
+            },
+            {
+              "category": "Buy"
+            }
+          ],
+          "entities": [
+            {
+              "category": "product",
+              "compositionSetting": "combineComponents"
+            }
+          ],
+          "utterances": [
+            {
+              "entities": [
+                {
+                  "category": "product",
+                  "offset": 16,
+                  "length": 5
+                }
+              ],
+              "text": "I want to buy a house",
+              "language": "en-us",
+              "intent": "Buy",
+              "dataset": "Train"
+            },
+            {
+              "entities": [
+                {
+                  "category": "product",
+                  "offset": 14,
+                  "length": 11
+                }
+              ],
+              "text": "I want to buy surface pro",
+              "language": "en-us",
+              "intent": "Buy",
+              "dataset": "Train"
+            },
+            {
+              "entities": [
+                {
+                  "category": "product",
+                  "offset": 14,
+                  "length": 4
+                }
+              ],
+              "text": "I want to buy xbox",
+              "language": "en-us",
+              "intent": "Buy",
+              "dataset": "Train"
+            }
+          ]
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "1e69e90c-0cd6-48d6-9ef2-b724b93e653d",
+        "Content-Length": "0",
+        "Date": "Sat, 01 Mar 2025 07:25:44 GMT",
+        "operation-location": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/import/jobs/d4b27900-0cd2-4f75-bcc0-808621238742_638763840000000000?api-version=2024-11-15-preview",
+        "request-id": "1e69e90c-0cd6-48d6-9ef2-b724b93e653d",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "83",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/import/jobs/d4b27900-0cd2-4f75-bcc0-808621238742_638763840000000000?api-version=2024-11-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250228.1 (.NET 8.0.13; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "0bb68373-c1cb-4a15-b451-b3f0224a1bf6",
+        "Content-Length": "219",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 01 Mar 2025 07:25:44 GMT",
+        "request-id": "0bb68373-c1cb-4a15-b451-b3f0224a1bf6",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "23",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "jobId": "d4b27900-0cd2-4f75-bcc0-808621238742_638763840000000000",
+        "createdDateTime": "2025-03-01T07:25:44Z",
+        "lastUpdatedDateTime": "2025-03-01T07:25:44Z",
+        "expirationDateTime": "2025-03-08T07:25:44Z",
+        "status": "notStarted"
+      }
+    },
+    {
+      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/import/jobs/d4b27900-0cd2-4f75-bcc0-808621238742_638763840000000000?api-version=2024-11-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250228.1 (.NET 8.0.13; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "c6c93c69-ca20-412a-bdb6-5b35d9fe3522",
+        "Content-Length": "218",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 01 Mar 2025 07:25:45 GMT",
+        "request-id": "c6c93c69-ca20-412a-bdb6-5b35d9fe3522",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "25",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "jobId": "d4b27900-0cd2-4f75-bcc0-808621238742_638763840000000000",
+        "createdDateTime": "2025-03-01T07:25:44Z",
+        "lastUpdatedDateTime": "2025-03-01T07:25:44Z",
+        "expirationDateTime": "2025-03-08T07:25:44Z",
+        "status": "succeeded"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com/",
+    "AZURE_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "1004202557"
+  }
+}

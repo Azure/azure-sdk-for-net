@@ -33,7 +33,12 @@ namespace Azure.Identity.Tests
         {
             var tenantId = TestEnvironment.ServicePrincipalTenantId;
             var clientId = TestEnvironment.ServicePrincipalClientId;
+
+#if NET9_0_OR_GREATER
+            var cert = X509CertificateLoader.LoadPkcs12FromFile(TestEnvironment.ServicePrincipalCertificatePfxPath, null);
+#else
             var cert = new X509Certificate2(TestEnvironment.ServicePrincipalCertificatePfxPath);
+#endif
 
             var options = InstrumentClientOptions(new ClientAssertionCredentialOptions());
 

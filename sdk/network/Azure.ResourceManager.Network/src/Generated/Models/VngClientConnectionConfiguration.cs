@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnClientAddressPool"> The reference to the address space resource which represents Address space for P2S VpnClient. </param>
         /// <param name="virtualNetworkGatewayPolicyGroups"> List of references to virtualNetworkGatewayPolicyGroups. </param>
         /// <param name="provisioningState"> The provisioning state of the VngClientConnectionConfiguration resource. </param>
-        internal VngClientConnectionConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, AddressSpace vpnClientAddressPool, IList<WritableSubResource> virtualNetworkGatewayPolicyGroups, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal VngClientConnectionConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, VirtualNetworkAddressSpace vpnClientAddressPool, IList<WritableSubResource> virtualNetworkGatewayPolicyGroups, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             VpnClientAddressPool = vpnClientAddressPool;
@@ -41,18 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
         /// <summary> The reference to the address space resource which represents Address space for P2S VpnClient. </summary>
-        internal AddressSpace VpnClientAddressPool { get; set; }
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> VpnClientAddressPrefixes
-        {
-            get
-            {
-                if (VpnClientAddressPool is null)
-                    VpnClientAddressPool = new AddressSpace();
-                return VpnClientAddressPool.AddressPrefixes;
-            }
-        }
-
+        public VirtualNetworkAddressSpace VpnClientAddressPool { get; set; }
         /// <summary> List of references to virtualNetworkGatewayPolicyGroups. </summary>
         public IList<WritableSubResource> VirtualNetworkGatewayPolicyGroups { get; }
         /// <summary> The provisioning state of the VngClientConnectionConfiguration resource. </summary>

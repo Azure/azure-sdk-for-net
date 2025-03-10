@@ -35,13 +35,13 @@ namespace Azure.Storage.DataMovement
             string transferId,
             CancellationToken cancellationToken = default);
 
-        Task<DataTransferStatus> GetJobStatusAsync(
+        Task<TransferStatus> GetJobStatusAsync(
             string transferId,
             CancellationToken cancellationToken = default);
 
         Task SetJobStatusAsync(
             string transferId,
-            DataTransferStatus status,
+            TransferStatus status,
             CancellationToken cancellationToken = default);
 
         Task<JobPartPlanHeader> GetJobPartAsync(
@@ -52,10 +52,10 @@ namespace Azure.Storage.DataMovement
         Task SetJobPartStatusAsync(
             string transferId,
             int partNumber,
-            DataTransferStatus status,
+            TransferStatus status,
             CancellationToken cancellationToken = default);
 
-        Task<DataTransferProperties> GetDataTransferPropertiesAsync(
+        Task<TransferProperties> GetTransferPropertiesAsync(
             string transferId,
             CancellationToken cancellationToken = default);
 

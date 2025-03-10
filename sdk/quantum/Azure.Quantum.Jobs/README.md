@@ -4,7 +4,7 @@ Azure Quantum is a Microsoft Azure service that you can use to run quantum compu
 - Create, enumerate, and cancel quantum jobs
 - Enumerate provider status and quotas
 
-  [Source code][source] | [API reference documentation](https://docs.microsoft.com/qsharp/api/) | [Product documentation](https://docs.microsoft.com/azure/quantum/)
+  [Source code][source] | [API reference documentation](https://learn.microsoft.com/qsharp/api/) | [Product documentation](https://learn.microsoft.com/azure/quantum/)
 
 ## Getting started
 
@@ -22,13 +22,13 @@ dotnet add package Azure.Quantum.Jobs --prerelease
 
 Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/), [Cosmos DB account](https://learn.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
 
 ### Authenticate the client
 
-To authenticate with the service, the workspace will use [DefaultAzureCredential](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) internally. This will try different authentication mechanisms based on the environment (e.g. Environment Variables, ManagedIdentity, CachedTokens) and finally it will fallback to [InteractiveBrowserCredential](https://docs.microsoft.com/dotnet/api/azure.identity.interactivebrowsercredential?view=azure-dotnet).
+To authenticate with the service, the workspace will use [DefaultAzureCredential](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) internally. This will try different authentication mechanisms based on the environment (e.g. Environment Variables, ManagedIdentity, CachedTokens) and finally it will fallback to [InteractiveBrowserCredential](https://learn.microsoft.com/dotnet/api/azure.identity.interactivebrowsercredential?view=azure-dotnet).
 
-Workspace will also allow the user to override the above behavior by passing their own [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet).
+Workspace will also allow the user to override the above behavior by passing their own [TokenCredential](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet).
 
 `TokenCredential` is the default Authentication mechanism used by Azure SDKs.
 
@@ -202,7 +202,7 @@ All Quantum Jobs service operations will throw a RequestFailedException on failu
 
 ## Next steps
 
-*  Visit our [Product documentation](https://docs.microsoft.com/azure/quantum/) to learn more about Azure Quantum.
+*  Visit our [Product documentation](https://learn.microsoft.com/azure/quantum/) to learn more about Azure Quantum.
 ## Contributing
 
 See the [CONTRIBUTING.md][contributing] for details on building,
@@ -223,14 +223,12 @@ additional questions or comments.
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/quantum/Azure.Quantum.Jobs/src
-[resource-groups]: https://docs.microsoft.com/azure/azure-resource-manager/management/manage-resource-groups-portal
-[workspaces]: https://docs.microsoft.com/azure/quantum/how-to-create-quantum-workspaces-with-the-azure-portal
+[resource-groups]: https://learn.microsoft.com/azure/azure-resource-manager/management/manage-resource-groups-portal
+[workspaces]: https://learn.microsoft.com/azure/quantum/how-to-create-quantum-workspaces-with-the-azure-portal
 [location]: https://azure.microsoft.com/global-infrastructure/services/?products=quantum
-[blob-storage]: https://docs.microsoft.com/azure/storage/blobs/storage-blobs-introduction
+[blob-storage]: https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction
 [contributing]: https://github.com/Azure/azure-sdk-for-net/tree/main/CONTRIBUTING.md
 [subscriptions]: https://ms.portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade
-[credentials]: https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme#credentials
-[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
+[credentials]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme#credentials
+[style-guide-msft]: https://learn.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fquantum%2FAzure.Quantum.Jobs%2FREADME.png)

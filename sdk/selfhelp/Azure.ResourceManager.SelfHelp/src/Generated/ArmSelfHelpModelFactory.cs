@@ -69,6 +69,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpDiagnosticInfo(solutionId, status, insights?.ToList(), error, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpDiagnosticInsight"/>. </summary>
+        /// <param name="id"> Article id. </param>
+        /// <param name="title"> This insight's title. </param>
+        /// <param name="results"> Detailed result content. </param>
+        /// <param name="insightImportanceLevel"> Importance level of the insight. </param>
+        /// <returns> A new <see cref="Models.SelfHelpDiagnosticInsight"/> instance for mocking. </returns>
+        public static SelfHelpDiagnosticInsight SelfHelpDiagnosticInsight(string id = null, string title = null, string results = null, SelfHelpImportanceLevel? insightImportanceLevel = null)
+        {
+            return new SelfHelpDiagnosticInsight(id, title, results, insightImportanceLevel, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.SelfHelpError"/>. </summary>
         /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
         /// <param name="errorType"> Service specific error type which serves as additional context for the error herein. </param>

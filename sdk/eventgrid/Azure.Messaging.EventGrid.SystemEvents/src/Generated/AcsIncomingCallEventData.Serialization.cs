@@ -55,6 +55,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("incomingCallContext"u8);
                 writer.WriteStringValue(IncomingCallContext);
             }
+            if (Optional.IsDefined(OnBehalfOfCallee))
+            {
+                writer.WritePropertyName("onBehalfOfCallee"u8);
+                writer.WriteObjectValue(OnBehalfOfCallee, options);
+            }
             if (Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
@@ -68,7 +73,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -103,6 +108,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string callerDisplayName = default;
             AcsIncomingCallCustomContext customContext = default;
             string incomingCallContext = default;
+            CommunicationIdentifierModel onBehalfOfCallee = default;
             string correlationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -138,6 +144,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     incomingCallContext = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("onBehalfOfCallee"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    onBehalfOfCallee = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("correlationId"u8))
                 {
                     correlationId = property.Value.GetString();
@@ -156,6 +171,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 callerDisplayName,
                 customContext,
                 incomingCallContext,
+                onBehalfOfCallee,
                 correlationId,
                 serializedAdditionalRawData);
         }
@@ -181,7 +197,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsIncomingCallEventData(document.RootElement, options);
                     }
                 default:
@@ -195,7 +211,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AcsIncomingCallEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsIncomingCallEventData(document.RootElement);
         }
 

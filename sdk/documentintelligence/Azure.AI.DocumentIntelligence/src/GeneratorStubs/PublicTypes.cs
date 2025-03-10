@@ -20,9 +20,6 @@ namespace Azure.AI.DocumentIntelligence
 
     public readonly partial struct BoundingRegion { }
 
-    [CodeGenModel("AzureAIDocumentIntelligenceClientOptions")]
-    public partial class DocumentIntelligenceClientOptions { }
-
     public readonly partial struct DocumentSpan { }
 }
 

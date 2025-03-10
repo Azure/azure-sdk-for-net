@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 using OpenTelemetry.Trace;
 using Xunit;
 using Xunit.Abstractions;
@@ -47,7 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             catch (System.Exception ex)
             {
                 activity.SetStatus(ActivityStatusCode.Error);
-                activity.RecordException(ex, new TagList
+                activity.AddException(ex, new TagList
                 {
                     {"customKey1", "customValue1"},
                     {"customKey2", "customValue2"},

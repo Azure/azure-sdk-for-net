@@ -62,7 +62,7 @@ namespace Azure.AI.DocumentIntelligence
             ModelId = modelId;
         }
 
-        private AnalyzeDocumentOptions()
+        internal AnalyzeDocumentOptions()
         {
             Features = new ChangeTrackingList<DocumentAnalysisFeature>();
             QueryFields = new ChangeTrackingList<string>();

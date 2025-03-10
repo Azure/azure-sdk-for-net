@@ -22,7 +22,7 @@ namespace MgmtTypeSpec.Models
         /// <summary> User assigned managed identity. </summary>
         private const string UserAssignedValue = "UserAssigned";
         /// <summary> System and user assigned managed identity. </summary>
-        private const string SystemAndUserAssignedValue = "SystemAssigned,UserAssigned";
+        private const string SystemAssignedUserAssignedValue = "SystemAssigned,UserAssigned";
 
         /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentityType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -44,7 +44,7 @@ namespace MgmtTypeSpec.Models
         public static ManagedServiceIdentityType UserAssigned { get; } = new ManagedServiceIdentityType(UserAssignedValue);
 
         /// <summary> System and user assigned managed identity. </summary>
-        public static ManagedServiceIdentityType SystemAndUserAssigned { get; } = new ManagedServiceIdentityType(SystemAndUserAssignedValue);
+        public static ManagedServiceIdentityType SystemAssignedUserAssigned { get; } = new ManagedServiceIdentityType(SystemAssignedUserAssignedValue);
 
         /// <summary> Determines if two <see cref="ManagedServiceIdentityType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 extern alias BaseShares;
+extern alias DMShare;
 
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ using Moq;
 using Moq.Protected;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -376,11 +378,13 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 completeLength: length,
                 options: new()
                 {
-                    SourceProperties = new StorageResourceItemProperties(
-                        length,
-                        new ETag("eTag"),
-                        DefaultLastWrittenOn,
-                        sourceProperties)
+                    SourceProperties = new StorageResourceItemProperties()
+                    {
+                        ResourceLength = length,
+                        ETag = new("ETag"),
+                        LastModifiedTime = DefaultLastWrittenOn,
+                        RawProperties = sourceProperties
+                    }
                 });
 
             return mock;
@@ -420,7 +424,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new HttpRange(0, length),
                 stream,
                 It.Is<ShareFileUploadRangeOptions>(options =>
-                    options.FileLastWrittenMode == FileLastWrittenMode.Now),
+                    options.FileLastWrittenMode == FileLastWrittenMode.Preserve),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mock.Verify(b => b.CreateAsync(
@@ -476,17 +480,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 length: length,
                 resourceOptions: new ShareFileStorageResourceOptions()
                 {
-                    ContentType = new(true),
-                    ContentDisposition = new(true),
-                    ContentEncoding = new(true),
-                    ContentLanguage = new(true),
-                    CacheControl = new(true),
-                    FileAttributes = new(true),
-                    FilePermissions = new(true),
-                    FileCreatedOn = new(true),
-                    FileLastWrittenOn = new(true),
-                    FileChangedOn = new(true),
-                    FileMetadata = new(true)
+                    FilePermissions = true,
                 },
                 sourceProperties: sourceProperties);
 
@@ -547,17 +541,17 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 length: length,
                 resourceOptions: new ShareFileStorageResourceOptions()
                 {
-                    ContentType = new(false),
-                    ContentDisposition = new(false),
-                    ContentEncoding = new(false),
-                    ContentLanguage = new(false),
-                    CacheControl = new(false),
-                    FileAttributes = new(false),
-                    FilePermissions = new(false),
-                    FileCreatedOn = new(false),
-                    FileLastWrittenOn = new(false),
-                    FileChangedOn = new(false),
-                    FileMetadata = new(false)
+                    ContentType = default,
+                    ContentDisposition = default,
+                    ContentEncoding = default,
+                    ContentLanguage = default,
+                    CacheControl = default,
+                    FileAttributes = default,
+                    FilePermissions = default,
+                    FileCreatedOn = default,
+                    FileLastWrittenOn = default,
+                    FileChangedOn = default,
+                    FileMetadata = default
                 },
                 sourceProperties: sourceProperties);
 
@@ -605,17 +599,17 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 length: length,
                 resourceOptions: new ShareFileStorageResourceOptions()
                 {
-                    ContentType = new(DefaultContentType),
-                    ContentDisposition = new(DefaultContentDisposition),
-                    ContentEncoding = new(DefaultContentEncoding),
-                    ContentLanguage = new(DefaultContentLanguage),
-                    CacheControl = new(DefaultCacheControl),
-                    FileAttributes = new(DefaultFileAttributes),
+                    ContentType = DefaultContentType,
+                    ContentDisposition = DefaultContentDisposition,
+                    ContentEncoding = DefaultContentEncoding,
+                    ContentLanguage = DefaultContentLanguage,
+                    CacheControl = DefaultCacheControl,
+                    FileAttributes = DefaultFileAttributes,
                     FilePermissions = default,
-                    FileCreatedOn = new(DefaultFileCreatedOn),
-                    FileLastWrittenOn = new(DefaultLastWrittenOn),
-                    FileChangedOn = new(DefaultFileChangedOn),
-                    FileMetadata = new(DefaultFileMetadata)
+                    FileCreatedOn = DefaultFileCreatedOn,
+                    FileLastWrittenOn = DefaultLastWrittenOn,
+                    FileChangedOn = DefaultFileChangedOn,
+                    FileMetadata = DefaultFileMetadata
                 },
                 sourceProperties: default);
 
@@ -826,11 +820,13 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 await CopyFromUriAsyncPreserveProperties_Internal(
                     length,
                     default,
-                    new StorageResourceItemProperties(
-                        length,
-                        new ETag("eTag"),
-                        DefaultLastWrittenOn,
-                        sourceProperties));
+                    new StorageResourceItemProperties()
+                    {
+                        ResourceLength = length,
+                        ETag = new("ETag"),
+                        LastModifiedTime = DefaultLastWrittenOn,
+                        RawProperties = sourceProperties
+                    });
 
             // Verify
             mockTuple.Item2.Verify(b => b.CreateAsync(
@@ -887,25 +883,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Tuple<Mock<StorageResourceItem>, Mock<ShareFileClient>> mockTuple =
                 await CopyFromUriAsyncPreserveProperties_Internal(
                     length,
-                    resourceOptions: new ShareFileStorageResourceOptions()
+                    resourceOptions: new(),
+                    new StorageResourceItemProperties()
                     {
-                        ContentType = new(true),
-                        ContentDisposition = new(true),
-                        ContentEncoding = new(true),
-                        ContentLanguage = new(true),
-                        CacheControl = new(true),
-                        FileAttributes = new(true),
-                        FilePermissions = default,
-                        FileCreatedOn = new(true),
-                        FileLastWrittenOn = new(true),
-                        FileChangedOn = new(true),
-                        FileMetadata = new(true)
-                    },
-                    new StorageResourceItemProperties(
-                        length,
-                        new ETag("eTag"),
-                        DefaultLastWrittenOn,
-                        sourceProperties));
+                        ResourceLength = length,
+                        ETag = new("ETag"),
+                        LastModifiedTime = DefaultLastWrittenOn,
+                        RawProperties = sourceProperties
+                    });
 
             // Verify
             mockTuple.Item2.Verify(b => b.CreateAsync(
@@ -963,23 +948,25 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     length,
                     resourceOptions: new ShareFileStorageResourceOptions()
                     {
-                        ContentType = new(false),
-                        ContentDisposition = new(false),
-                        ContentEncoding = new(false),
-                        ContentLanguage = new(false),
-                        CacheControl = new(false),
-                        FileAttributes = new(false),
+                        ContentType = default,
+                        ContentDisposition = default,
+                        ContentEncoding = default,
+                        ContentLanguage = default,
+                        CacheControl = default,
+                        FileAttributes = default,
                         FilePermissions = default,
-                        FileCreatedOn = new(false),
-                        FileLastWrittenOn = new(false),
-                        FileChangedOn = new(false),
-                        FileMetadata = new(false)
+                        FileCreatedOn = default,
+                        FileLastWrittenOn = default,
+                        FileChangedOn = default,
+                        FileMetadata = default
                     },
-                    new StorageResourceItemProperties(
-                        length,
-                        new ETag("eTag"),
-                        DefaultLastWrittenOn,
-                        sourceProperties));
+                    new StorageResourceItemProperties()
+                    {
+                        ResourceLength = length,
+                        ETag = new("ETag"),
+                        LastModifiedTime = DefaultLastWrittenOn,
+                        RawProperties = sourceProperties
+                    });
 
             // Verify
             mockTuple.Item2.Verify(b => b.CreateAsync(
@@ -1024,23 +1011,23 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     length,
                     resourceOptions: new ShareFileStorageResourceOptions()
                     {
-                        ContentType = new(DefaultContentType),
-                        ContentDisposition = new(DefaultContentDisposition),
-                        ContentEncoding = new(DefaultContentEncoding),
-                        ContentLanguage = new(DefaultContentLanguage),
-                        CacheControl = new(DefaultCacheControl),
-                        FileAttributes = new(DefaultFileAttributes),
-                        FilePermissions = default,
-                        FileCreatedOn = new(DefaultFileCreatedOn),
-                        FileLastWrittenOn = new(DefaultLastWrittenOn),
-                        FileChangedOn = new(DefaultFileChangedOn),
-                        FileMetadata = new(DefaultFileMetadata)
+                        ContentType = DefaultContentType,
+                        ContentDisposition = DefaultContentDisposition,
+                        ContentEncoding = DefaultContentEncoding,
+                        ContentLanguage = DefaultContentLanguage,
+                        CacheControl = DefaultCacheControl,
+                        FileAttributes = DefaultFileAttributes,
+                        FileCreatedOn = DefaultFileCreatedOn,
+                        FileLastWrittenOn = DefaultLastWrittenOn,
+                        FileChangedOn = DefaultFileChangedOn,
+                        FileMetadata = DefaultFileMetadata
                     },
-                    new StorageResourceItemProperties(
-                        length,
-                        new ETag("eTag"),
-                        DefaultLastWrittenOn,
-                        default));
+                    new StorageResourceItemProperties()
+                    {
+                        ResourceLength = length,
+                        ETag = new("ETag"),
+                        LastModifiedTime = DefaultLastWrittenOn
+                    });
 
             // Verify
             mockTuple.Item2.Verify(b => b.CreateAsync(
@@ -1257,11 +1244,13 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 await CopyBlockFromUriAsyncPreserveProperties_Internal(
                     length,
                     default,
-                    new StorageResourceItemProperties(
-                        length,
-                        new ETag("eTag"),
-                        DefaultLastWrittenOn,
-                        sourceProperties));
+                    new StorageResourceItemProperties()
+                    {
+                        ResourceLength = length,
+                        ETag = new("ETag"),
+                        LastModifiedTime = DefaultLastWrittenOn,
+                        RawProperties = sourceProperties
+                    });
 
             // Assert
             mockTuple.Item2.Verify(b => b.CreateAsync(
@@ -1318,25 +1307,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Tuple<Mock<StorageResourceItem>, Mock<ShareFileClient>> mockTuple =
                 await CopyBlockFromUriAsyncPreserveProperties_Internal(
                     length,
-                    resourceOptions: new ShareFileStorageResourceOptions()
+                    resourceOptions: new(),
+                    new StorageResourceItemProperties()
                     {
-                        ContentType = new(true),
-                        ContentDisposition = new(true),
-                        ContentEncoding = new(true),
-                        ContentLanguage = new(true),
-                        CacheControl = new(true),
-                        FileAttributes = new(true),
-                        FilePermissions = default,
-                        FileCreatedOn = new(true),
-                        FileLastWrittenOn = new(true),
-                        FileChangedOn = new(true),
-                        FileMetadata = new(true)
-                    },
-                    new StorageResourceItemProperties(
-                        length,
-                        new ETag("eTag"),
-                        DefaultLastWrittenOn,
-                        sourceProperties));
+                        ResourceLength = length,
+                        ETag = new("ETag"),
+                        LastModifiedTime = DefaultLastWrittenOn,
+                        RawProperties = sourceProperties
+                    });
 
             // Verify
             mockTuple.Item2.Verify(b => b.CreateAsync(
@@ -1394,23 +1372,25 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     length,
                     resourceOptions: new ShareFileStorageResourceOptions()
                     {
-                        ContentType = new(false),
-                        ContentDisposition = new(false),
-                        ContentEncoding = new(false),
-                        ContentLanguage = new(false),
-                        CacheControl = new(false),
-                        FileAttributes = new(false),
+                        ContentType = default,
+                        ContentDisposition = default,
+                        ContentEncoding = default,
+                        ContentLanguage = default,
+                        CacheControl = default,
+                        FileAttributes = default,
                         FilePermissions = default,
-                        FileCreatedOn = new(false),
-                        FileLastWrittenOn = new(false),
-                        FileChangedOn = new(false),
-                        FileMetadata = new(false)
+                        FileCreatedOn = default,
+                        FileLastWrittenOn = default,
+                        FileChangedOn = default,
+                        FileMetadata = default
                     },
-                    new StorageResourceItemProperties(
-                        length,
-                        new ETag("eTag"),
-                        DefaultLastWrittenOn,
-                        sourceProperties));
+                    new StorageResourceItemProperties()
+                    {
+                        ResourceLength = length,
+                        ETag = new("ETag"),
+                        LastModifiedTime = DefaultLastWrittenOn,
+                        RawProperties = sourceProperties
+                    });
 
             // Verify
             mockTuple.Item2.Verify(b => b.CreateAsync(
@@ -1456,23 +1436,24 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     length,
                     resourceOptions: new ShareFileStorageResourceOptions()
                     {
-                        ContentType = new(DefaultContentType),
-                        ContentDisposition = new(DefaultContentDisposition),
-                        ContentEncoding = new(DefaultContentEncoding),
-                        ContentLanguage = new(DefaultContentLanguage),
-                        CacheControl = new(DefaultCacheControl),
-                        FileAttributes = new(DefaultFileAttributes),
+                        ContentType = DefaultContentType,
+                        ContentDisposition = DefaultContentDisposition,
+                        ContentEncoding = DefaultContentEncoding,
+                        ContentLanguage = DefaultContentLanguage,
+                        CacheControl = DefaultCacheControl,
+                        FileAttributes = DefaultFileAttributes,
                         FilePermissions = default,
-                        FileCreatedOn = new(DefaultFileCreatedOn),
-                        FileLastWrittenOn = new(DefaultLastWrittenOn),
-                        FileChangedOn = new(DefaultFileChangedOn),
-                        FileMetadata = new(DefaultFileMetadata)
+                        FileCreatedOn = DefaultFileCreatedOn,
+                        FileLastWrittenOn = DefaultLastWrittenOn,
+                        FileChangedOn = DefaultFileChangedOn,
+                        FileMetadata = DefaultFileMetadata
                     },
-                    new StorageResourceItemProperties(
-                        length,
-                        new ETag("eTag"),
-                        DefaultLastWrittenOn,
-                        default));
+                    new StorageResourceItemProperties()
+                    {
+                        ResourceLength = length,
+                        ETag = new("ETag"),
+                        LastModifiedTime = DefaultLastWrittenOn
+                    });
 
             // Verify
             mockTuple.Item2.Verify(b => b.CreateAsync(
@@ -1622,15 +1603,17 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             ShareFileStorageResource storageResource = new ShareFileStorageResource(
                 mock.Object,
-                new StorageResourceItemProperties(
-                    resourceLength: length,
-                    eTag: new ETag("etag"),
-                    lastModifiedTime: DefaultLastWrittenOn,
-                    properties: new Dictionary<string, object>
+                new StorageResourceItemProperties()
+                {
+                    ResourceLength = length,
+                    ETag = new("ETag"),
+                    LastModifiedTime = DefaultLastWrittenOn,
+                    RawProperties = new Dictionary<string, object>
                     {
                         { DataMovementConstants.ResourceProperties.SourceFilePermissionKey, DefaultFilePermissionKey },
                         { DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, DefaultDestinationFilePermissionKey }
-                    }));
+                    }
+                });
 
             // Act
             StorageResourceItemProperties result = await storageResource.GetPropertiesInternalAsync();
@@ -1740,14 +1723,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 .Returns(mockShare.Object)
                 .Verifiable();
 
-            StorageResourceItemProperties properties = new StorageResourceItemProperties(
-                1024,
-                new ETag("etag"),
-                DateTimeOffset.UtcNow,
-                new Dictionary<string, object>
+            StorageResourceItemProperties properties = new()
+            {
+                ResourceLength = 1024,
+                ETag = new("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow,
+                RawProperties = new Dictionary<string, object>
                 {
                     { DataMovementConstants.ResourceProperties.SourceFilePermissionKey, DefaultFilePermissionKey }
-                });
+                }
+            };
 
             ShareFileStorageResource resource = new(mockFile.Object);
             string actualPermission = await resource.GetPermissionsInternalAsync(properties);
@@ -1798,21 +1783,23 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 .Returns(mockShare.Object)
                 .Verifiable();
 
-            StorageResourceItemProperties properties = new StorageResourceItemProperties(
-                1024,
-                new ETag("etag"),
-                DateTimeOffset.UtcNow,
-                new Dictionary<string, object>
+            StorageResourceItemProperties properties = new()
+            {
+                ResourceLength = 1024,
+                ETag = new("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow,
+                RawProperties = new Dictionary<string, object>
                 {
                     { DataMovementConstants.ResourceProperties.SourceFilePermissionKey, DefaultFilePermissionKey }
-                });
+                }
+            };
 
             ShareFileStorageResource resource = new(
                 mockFile.Object,
                 properties,
                 new ShareFileStorageResourceOptions()
                 {
-                    FilePermissions = new(true)
+                    FilePermissions = true
                 });
             await resource.SetPermissionsInternalAsync(
                 sourceFileMock.Object,
@@ -1833,14 +1820,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Mock<StorageResourceItem> sourceFileMock = new();
             Mock<ShareFileClient> mockFile = new();
 
-            StorageResourceItemProperties properties = new StorageResourceItemProperties(
-                1024,
-                new ETag("etag"),
-                DateTimeOffset.UtcNow,
-                new Dictionary<string, object>
+            StorageResourceItemProperties properties = new()
+            {
+                ResourceLength = 1024,
+                ETag = new("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow,
+                RawProperties = new Dictionary<string, object>
                 {
                     { DataMovementConstants.ResourceProperties.SourceFilePermissionKey, DefaultFilePermissionKey }
-                });
+                }
+            };
 
             ShareFileStorageResource resource = new(mockFile.Object);
             await resource.SetPermissionsInternalAsync(
@@ -1859,20 +1848,22 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new ShareClientOptions()),
                 new ShareFileStorageResourceOptions());
 
-            StorageResourceItemProperties properties = new StorageResourceItemProperties(
-                1024,
-                new ETag("etag"),
-                DateTimeOffset.UtcNow,
-                new Dictionary<string, object>
+            StorageResourceItemProperties properties = new()
+            {
+                ResourceLength = 1024,
+                ETag = new("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow,
+                RawProperties = new Dictionary<string, object>
                 {
                     { DataMovementConstants.ResourceProperties.SourceFilePermissionKey, DefaultFilePermissionKey }
-                });
+                }
+            };
 
             ShareFileStorageResource resource = new(
                 shareFileClient.Object,
                 new ShareFileStorageResourceOptions()
                 {
-                    FilePermissions = new(false)
+                    FilePermissions = default
                 });
             await resource.SetPermissionsInternalAsync(
                 sourceFileMock.Object,
@@ -1896,19 +1887,21 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 .Returns(Task.FromResult((string)default))
                 .Verifiable();
 
-            StorageResourceItemProperties properties = new StorageResourceItemProperties(
-                1024,
-                new ETag("etag"),
-                DateTimeOffset.UtcNow,
-                new Dictionary<string, object>
+            StorageResourceItemProperties properties = new()
+            {
+                ResourceLength = 1024,
+                ETag = new("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow,
+                RawProperties = new Dictionary<string, object>
                 {
                     { DataMovementConstants.ResourceProperties.SourceFilePermissionKey, DefaultFilePermissionKey }
-                });
+                }
+            };
 
             ShareFileStorageResource resource = new(mockFile.Object,
                 new ShareFileStorageResourceOptions()
                 {
-                    FilePermissions = new(true)
+                    FilePermissions = true
                 });
             await resource.SetPermissionsInternalAsync(
                 sourceFileMock.Object,
@@ -1926,28 +1919,32 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new ShareFileStorageResourceOptions());
             Mock<ShareFileClient> mockFile = new(new Uri("https://storageaccount.file.core.windows.net/share/file1"), new ShareClientOptions());
 
-            StorageResourceItemProperties destinationProperties = new StorageResourceItemProperties(
-                1024,
-                new ETag("etag"),
-                DateTimeOffset.UtcNow,
-                new Dictionary<string, object>
+            StorageResourceItemProperties destinationProperties = new()
+            {
+                ResourceLength = 1024,
+                ETag = new("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow,
+                RawProperties = new Dictionary<string, object>
                 {
                     { DataMovementConstants.ResourceProperties.LastModified, DefaultLastModifiedOn }
-                });
-            StorageResourceItemProperties sourceProperties = new StorageResourceItemProperties(
-                1024,
-                new ETag("etag"),
-                DateTimeOffset.UtcNow,
-                new Dictionary<string, object>
+                }
+            };
+            StorageResourceItemProperties sourceProperties = new()
+            {
+                ResourceLength = 1024,
+                ETag = new("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow,
+                RawProperties = new Dictionary<string, object>
                 {
                     { DataMovementConstants.ResourceProperties.FilePermissions, DefaultPermissions }
-                });
+                }
+            };
 
             ShareFileStorageResource resource = new(mockFile.Object,
                 destinationProperties,
                 new ShareFileStorageResourceOptions()
                 {
-                    FilePermissions = new(true)
+                    FilePermissions = true
                 });
             await resource.SetPermissionsInternalAsync(
                 sourceFileMock.Object,
@@ -1981,11 +1978,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         fileParentId: "93024923"),
                     new MockResponse(200))));
             ShareFileStorageResource destinationResource = new ShareFileStorageResource(mockDestination.Object);
-            StorageResourceItemProperties properties = new StorageResourceItemProperties(
-                1024,
-                new ETag("etag"),
-                DateTimeOffset.UtcNow,
-                new()
+            StorageResourceItemProperties properties = new()
+            {
+                ResourceLength = 1024,
+                ETag = new("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow,
+                RawProperties = new Dictionary<string, object>
                 {
                     { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
                     { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
@@ -1999,7 +1997,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
                     { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
                     { DataMovementConstants.ResourceProperties.FilePermissions, DefaultPermissions }
-                });
+                }
+            };
 
             // Act
             await destinationResource.CreateAsync(
@@ -2060,13 +2059,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 mockDestination.Object,
                 new()
                 {
-                    FilePermissions = new(true)
+                    FilePermissions = true
                 });
-            StorageResourceItemProperties properties = new StorageResourceItemProperties(
-                1024,
-                new ETag("etag"),
-                DateTimeOffset.UtcNow,
-                new()
+            StorageResourceItemProperties properties = new()
+            {
+                ResourceLength = 1024,
+                ETag = new("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow,
+                RawProperties = new Dictionary<string, object>
                 {
                     { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
                     { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
@@ -2081,7 +2081,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
                     { DataMovementConstants.ResourceProperties.SourceFilePermissionKey, DefaultFilePermissionKey },
                     { DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, DefaultDestinationFilePermissionKey }
-                });
+                }
+            };
 
             // Act
             await destinationResource.CreateAsync(

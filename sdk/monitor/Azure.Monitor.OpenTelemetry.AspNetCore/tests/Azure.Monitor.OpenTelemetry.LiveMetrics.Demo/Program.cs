@@ -4,15 +4,12 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Azure.Monitor.OpenTelemetry.AspNetCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using OpenTelemetry.Trace;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
-using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
+using Microsoft.Extensions.Logging;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
+using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 {
@@ -24,19 +21,19 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 
         private const string ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
 
-        private static Random _random = new();
+        private static readonly Random _random = new();
 
         private const int chunkSizeMB = 100;
         private static long totalMemoryAllocated = 0;
 
         public static async Task Main(string[] args)
         {
-            var azureMonitorOptions = new AzureMonitorOptions
+            var options = new AzureMonitorLiveMetricsOptions
             {
                 ConnectionString = ConnectionString
             };
 
-            var manager = new Manager(azureMonitorOptions, new DefaultPlatformDistro());
+            var manager = new LiveMetricsClientManager(options, new DefaultPlatformLiveMetrics());
 
             using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(ActivitySourceName)
@@ -101,7 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                         catch (Exception ex)
                         {
                             activity?.SetStatus(ActivityStatusCode.Error);
-                            activity?.RecordException(ex, new TagList { { "customKey1", "customValue1" } });
+                            activity?.AddException(ex, new TagList { { "customKey1", "customValue1" } });
                         }
                     }
                     else
@@ -130,7 +127,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                         catch (Exception ex)
                         {
                             activity?.SetStatus(ActivityStatusCode.Error);
-                            activity?.RecordException(ex, new TagList { { "customKey1", "customValue1" } });
+                            activity?.AddException(ex, new TagList { { "customKey1", "customValue1" } });
                         }
                     }
 

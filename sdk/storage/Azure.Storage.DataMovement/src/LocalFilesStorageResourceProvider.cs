@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
@@ -15,24 +15,27 @@ namespace Azure.Storage.DataMovement
     public class LocalFilesStorageResourceProvider : StorageResourceProvider
     {
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal override string ProviderId => "local";
 
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public LocalFilesStorageResourceProvider()
+        internal LocalFilesStorageResourceProvider()
         {
         }
 
         /// <inheritdoc/>
-        protected internal override Task<StorageResource> FromSourceAsync(DataTransferProperties properties, CancellationToken cancellationToken)
-            => Task.FromResult(FromTransferProperties(properties, getSource: true));
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal override ValueTask<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
+            => new(FromTransferProperties(properties, getSource: true));
 
         /// <inheritdoc/>
-        protected internal override Task<StorageResource> FromDestinationAsync(DataTransferProperties properties, CancellationToken cancellationToken)
-            => Task.FromResult(FromTransferProperties(properties, getSource: false));
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal override ValueTask<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
+            => new(FromTransferProperties(properties, getSource: false));
 
-        private StorageResource FromTransferProperties(DataTransferProperties properties, bool getSource)
+        private StorageResource FromTransferProperties(TransferProperties properties, bool getSource)
         {
             Argument.AssertNotNull(properties, nameof(properties));
             Uri storedUri = getSource ? properties.SourceUri : properties.DestinationUri;
@@ -50,7 +53,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>
         /// Storage resource to this file.
         /// </returns>
-        public StorageResourceItem FromFile(string filePath)
+        public static StorageResourceItem FromFile(string filePath)
         {
             return new LocalFileStorageResource(filePath);
         }
@@ -64,7 +67,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>
         /// Storage resource to this directory.
         /// </returns>
-        public StorageResourceContainer FromDirectory(string directoryPath)
+        public static StorageResourceContainer FromDirectory(string directoryPath)
         {
             return new LocalDirectoryStorageResourceContainer(directoryPath);
         }

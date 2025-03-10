@@ -9,6 +9,32 @@ namespace Azure.AI.DocumentIntelligence.Tests
 {
     internal static class DocumentAssert
     {
+        public static void AreEqual(AnalyzeBatchResult expected, AnalyzeBatchResult actual)
+        {
+            if (expected == null)
+            {
+                Assert.That(actual, Is.Null);
+                return;
+            }
+
+            Assert.That(actual, Is.Not.Null);
+
+            Assert.That(actual.SucceededCount, Is.EqualTo(expected.SucceededCount));
+            Assert.That(actual.FailedCount, Is.EqualTo(expected.FailedCount));
+            Assert.That(actual.SkippedCount, Is.EqualTo(expected.SkippedCount));
+
+            AreEquivalent(expected.Details, actual.Details);
+        }
+
+        public static void AreEqual(AnalyzeBatchResultDetails expected, AnalyzeBatchResultDetails actual)
+        {
+            Assert.That(actual.SourceUri.AbsoluteUri, Is.EqualTo(expected.SourceUri.AbsoluteUri));
+            Assert.That(actual.ResultUri.AbsoluteUri, Is.EqualTo(expected.ResultUri.AbsoluteUri));
+            Assert.That(actual.Status, Is.EqualTo(expected.Status));
+
+            AreEqual(expected.Error, actual.Error);
+        }
+
         public static void AreEqual(BlobContentSource expected, BlobContentSource actual)
         {
             if (expected == null)
@@ -77,6 +103,40 @@ namespace Azure.AI.DocumentIntelligence.Tests
             AreEquivalent(expected.Properties, actual.Properties);
         }
 
+        public static void AreEqual(DocumentIntelligenceError expected, DocumentIntelligenceError actual)
+        {
+            if (expected == null)
+            {
+                Assert.That(actual, Is.Null);
+                return;
+            }
+
+            Assert.That(actual, Is.Not.Null);
+
+            Assert.That(actual.Code, Is.EqualTo(expected.Code));
+            Assert.That(actual.Message, Is.EqualTo(expected.Message));
+            Assert.That(actual.Target, Is.EqualTo(expected.Target));
+
+            AreEquivalent(expected.Details, actual.Details);
+            AreEqual(expected.InnerError, actual.InnerError);
+        }
+
+        public static void AreEqual(DocumentIntelligenceInnerError expected, DocumentIntelligenceInnerError actual)
+        {
+            if (expected == null)
+            {
+                Assert.That(actual, Is.Null);
+                return;
+            }
+
+            Assert.That(actual, Is.Not.Null);
+
+            Assert.That(actual.Code, Is.EqualTo(expected.Code));
+            Assert.That(actual.Message, Is.EqualTo(expected.Message));
+
+            AreEqual(expected.InnerError, actual.InnerError);
+        }
+
         public static void AreEqual(DocumentModelDetails expected, DocumentModelDetails actual)
         {
             Assert.That(actual.ModelId, Is.EqualTo(expected.ModelId));
@@ -99,6 +159,26 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(actual.FieldConfidence, Is.EquivalentTo(expected.FieldConfidence));
 
             AreEquivalent(expected.FieldSchema, actual.FieldSchema);
+        }
+
+        public static void AreEquivalent(IReadOnlyList<AnalyzeBatchResultDetails> expected, IReadOnlyList<AnalyzeBatchResultDetails> actual)
+        {
+            Assert.That(actual.Count, Is.EqualTo(expected.Count));
+
+            for (int i = 0; i < actual.Count; i++)
+            {
+                AreEqual(expected[i], actual[i]);
+            }
+        }
+
+        public static void AreEquivalent(IReadOnlyList<DocumentIntelligenceError> expected, IReadOnlyList<DocumentIntelligenceError> actual)
+        {
+            Assert.That(actual.Count, Is.EqualTo(expected.Count));
+
+            for (int i = 0; i < actual.Count; i++)
+            {
+                AreEqual(expected[i], actual[i]);
+            }
         }
 
         public static void AreEquivalent(IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> expected, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> actual)

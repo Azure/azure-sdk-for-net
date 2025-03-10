@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="signatureId"> The ID of the signature. </param>
         /// <param name="mode"> The current mode enforced, 0 - Disabled, 1 - Alert, 2 -Deny. </param>
         /// <param name="severity"> Describes the severity of signature: 1 - High, 2 - Medium, 3 - Low. </param>
-        /// <param name="direction"> Describes in which direction signature is being enforced: 0 - OutBound, 1 - InBound, 2 - Any, 3 - Internal, 4 - InternalOutbound. </param>
+        /// <param name="direction"> Describes in which direction signature is being enforced: 0 - OutBound, 1 - InBound, 2 - Any, 3 - Internal, 4 - InternalOutbound, 5 - InternalInbound. </param>
         /// <param name="group"> Describes the groups the signature belongs to. </param>
         /// <param name="description"> Describes what is the signature enforces. </param>
         /// <param name="protocol"> Describes the protocol the signatures is being enforced in. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
         public FirewallPolicyIdpsSignatureMode? Mode { get; }
         /// <summary> Describes the severity of signature: 1 - High, 2 - Medium, 3 - Low. </summary>
         public FirewallPolicyIdpsSignatureSeverity? Severity { get; }
-        /// <summary> Describes in which direction signature is being enforced: 0 - OutBound, 1 - InBound, 2 - Any, 3 - Internal, 4 - InternalOutbound. </summary>
+        /// <summary> Describes in which direction signature is being enforced: 0 - OutBound, 1 - InBound, 2 - Any, 3 - Internal, 4 - InternalOutbound, 5 - InternalInbound. </summary>
         public FirewallPolicyIdpsSignatureDirection? Direction { get; }
         /// <summary> Describes the groups the signature belongs to. </summary>
         public string Group { get; }

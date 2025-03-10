@@ -53,19 +53,18 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNull(tools, nameof(tools));
 
-            DataSources = new ChangeTrackingList<VectorStoreDataSource>();
             Tools = tools.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageAttachment"/>. </summary>
         /// <param name="fileId"> The ID of the file to attach to the message. </param>
-        /// <param name="dataSources"> Azure asset ID. </param>
+        /// <param name="dataSource"> Azure asset ID. </param>
         /// <param name="tools"> The tools to add to this file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MessageAttachment(string fileId, IList<VectorStoreDataSource> dataSources, IList<BinaryData> tools, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MessageAttachment(string fileId, VectorStoreDataSource dataSource, IList<BinaryData> tools, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileId = fileId;
-            DataSources = dataSources;
+            DataSource = dataSource;
             Tools = tools;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -78,7 +77,7 @@ namespace Azure.AI.Projects
         /// <summary> The ID of the file to attach to the message. </summary>
         public string FileId { get; set; }
         /// <summary> Azure asset ID. </summary>
-        public IList<VectorStoreDataSource> DataSources { get; }
+        public VectorStoreDataSource DataSource { get; set; }
         /// <summary>
         /// The tools to add to this file.
         /// <para>

@@ -20,6 +20,9 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
+models-to-treat-empty-string-as-null:
+  - IaasComputeVmProtectedItem
+
 rename-mapping:
   Job: BackupGenericJob
   JobResource: BackupJob

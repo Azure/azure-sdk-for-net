@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SubscriptionQuotaAllocationRequestsGetRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/SubscriptionQuotaAllocationRequests/SubscriptionQuotaAllocationRequests_Get-Compute.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2025-03-01/examples/SubscriptionQuotaAllocationRequests/SubscriptionQuotaAllocationRequests_Get-Compute.json
             // this example is just showing the usage of "GroupQuotaSubscriptionAllocationRequest_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -32,8 +32,9 @@ namespace Azure.ResourceManager.Quota.Samples
             string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupQuotaName = "groupquota1";
+            string resourceProviderName = "Microsoft.Compute";
             string allocationId = "AE000000-0000-0000-0000-00000000000A";
-            ResourceIdentifier quotaAllocationRequestStatusResourceId = QuotaAllocationRequestStatusResource.CreateResourceIdentifier(managementGroupId, subscriptionId, groupQuotaName, allocationId);
+            ResourceIdentifier quotaAllocationRequestStatusResourceId = QuotaAllocationRequestStatusResource.CreateResourceIdentifier(managementGroupId, subscriptionId, groupQuotaName, resourceProviderName, allocationId);
             QuotaAllocationRequestStatusResource quotaAllocationRequestStatus = client.GetQuotaAllocationRequestStatusResource(quotaAllocationRequestStatusResourceId);
 
             // invoke the operation

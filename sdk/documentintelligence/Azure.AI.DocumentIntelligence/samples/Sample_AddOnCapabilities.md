@@ -2,15 +2,15 @@
 
 This sample demonstrates how to analyze a document with add-on capabilities. For more information about the supported features, see the [service documentation][docint_addon].
 
-To get started you'll need a Cognitive Services resource or a Document Intelligence resource. See [README][README] for prerequisites and instructions.
+To get started you'll need an Azure AI services resource or a Document Intelligence resource. See [README][README] for prerequisites and instructions.
 
 When analyzing a document, you can specify a list of optional [analysis features][sdk_docfeature] to enable certain add-on capabilities. Some of the capabilities are free, while others incur additional charges, see [pricing][docint_pricing] for more information.
 
 ## Creating a `DocumentIntelligenceClient`
 
-To create a new `DocumentIntelligenceClient` you need the endpoint and credentials from your resource. In the sample below you'll use a Document Intelligence API key credential by creating an `AzureKeyCredential` object that, if needed, will allow you to update the API key without creating a new client.
+To create a new `DocumentIntelligenceClient` you need the endpoint and credentials from your resource. In the sample below you'll make use of identity-based authentication by creating a `DefaultAzureCredential` object.
 
-You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
+You can set `endpoint` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:CreateDocumentIntelligenceClient
 string endpoint = "<endpoint>";
@@ -210,7 +210,7 @@ To extract barcodes from a given file at a URI with the add-on barcodes capabili
 ```C# Snippet:DocumentIntelligenceSampleBarcodeExtraction
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new AnalyzeDocumentOptions("prebuild-layout", uriSource)
+var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource)
 {
     Features = { DocumentAnalysisFeature.Barcodes }
 };

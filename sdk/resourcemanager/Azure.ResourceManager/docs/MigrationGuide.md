@@ -718,4 +718,4 @@ await virtualNetwork.DeleteAsync(WaitUntil.Completed);
 
 ## Next steps
 
-Check out [more .NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK) we have available.
+Check out [more .NET Management Library Code Samples](https://learn.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK) we have available.

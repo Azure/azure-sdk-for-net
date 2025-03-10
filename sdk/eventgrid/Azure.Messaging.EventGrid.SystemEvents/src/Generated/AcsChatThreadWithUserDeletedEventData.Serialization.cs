@@ -37,8 +37,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("deletedByCommunicationIdentifier"u8);
             writer.WriteObjectValue(DeletedByCommunicationIdentifier, options);
-            writer.WritePropertyName("deleteTime"u8);
-            writer.WriteStringValue(DeleteTime, "O");
+            if (Optional.IsDefined(DeleteTime))
+            {
+                writer.WritePropertyName("deleteTime"u8);
+                writer.WriteStringValue(DeleteTime.Value, "O");
+            }
         }
 
         AcsChatThreadWithUserDeletedEventData IJsonModel<AcsChatThreadWithUserDeletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -62,8 +65,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             CommunicationIdentifierModel deletedByCommunicationIdentifier = default;
-            DateTimeOffset deleteTime = default;
-            DateTimeOffset createTime = default;
+            DateTimeOffset? deleteTime = default;
+            DateTimeOffset? createTime = default;
             long? version = default;
             CommunicationIdentifierModel recipientCommunicationIdentifier = default;
             string transactionId = default;
@@ -79,11 +82,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("deleteTime"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     deleteTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("createTime"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     createTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -149,7 +160,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsChatThreadWithUserDeletedEventData(document.RootElement, options);
                     }
                 default:
@@ -163,7 +174,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AcsChatThreadWithUserDeletedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsChatThreadWithUserDeletedEventData(document.RootElement);
         }
 

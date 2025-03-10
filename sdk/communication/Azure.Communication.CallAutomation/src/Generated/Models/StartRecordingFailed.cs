@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The StartRecordingFailed. </summary>
-    internal partial class StartRecordingFailed
+    public partial class StartRecordingFailed
     {
         /// <summary> Initializes a new instance of <see cref="StartRecordingFailed"/>. </summary>
         internal StartRecordingFailed()
@@ -25,11 +25,6 @@ namespace Azure.Communication.CallAutomation
             CorrelationId = correlationId;
             RecordingId = recordingId;
         }
-
-        /// <summary> Call connection ID. </summary>
-        public string CallConnectionId { get; }
-        /// <summary> Correlation ID for event to call correlation. </summary>
-        public string CorrelationId { get; }
         /// <summary> The call recording id. </summary>
         public string RecordingId { get; }
     }

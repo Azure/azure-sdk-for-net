@@ -61,7 +61,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             X509Certificate2 cert = null;
             if (Mode != RecordedTestMode.Playback)
             {
+#if NET9_0_OR_GREATER
+                cert = X509CertificateLoader.LoadCertificateFromFile("./Resources/sdktest.cer");
+#else
                 cert = new X509Certificate2("./Resources/sdktest.cer");
+#endif
             }
             var content = new ApiManagementCertificateCreateOrUpdateContent()
             {

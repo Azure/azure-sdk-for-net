@@ -23,7 +23,9 @@ namespace Azure.IoT.ModelsRepository.Tests
         [SetUp]
         public virtual void SetupE2eTestBase()
         {
+#if NETFRAMEWORK
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+#endif
         }
 
         protected ModelsRepositoryClient GetClient(

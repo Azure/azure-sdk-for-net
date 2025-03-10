@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.Elastic
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-06-15-preview";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGetApiKeyRequestUri(string subscriptionId, ElasticModelUserEmailId body)
+        internal RequestUriBuilder CreateGetApiKeyRequestUri(string subscriptionId, ElasticUserEmailId body)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Elastic
             return uri;
         }
 
-        internal HttpMessage CreateGetApiKeyRequest(string subscriptionId, ElasticModelUserEmailId body)
+        internal HttpMessage CreateGetApiKeyRequest(string subscriptionId, ElasticUserEmailId body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UserApiKeyResponse>> GetApiKeyAsync(string subscriptionId, ElasticModelUserEmailId body = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ElasticUserApiKeyResult>> GetApiKeyAsync(string subscriptionId, ElasticUserEmailId body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.Elastic
             {
                 case 200:
                     {
-                        UserApiKeyResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UserApiKeyResponse.DeserializeUserApiKeyResponse(document.RootElement);
+                        ElasticUserApiKeyResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ElasticUserApiKeyResult.DeserializeElasticUserApiKeyResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UserApiKeyResponse> GetApiKey(string subscriptionId, ElasticModelUserEmailId body = null, CancellationToken cancellationToken = default)
+        public Response<ElasticUserApiKeyResult> GetApiKey(string subscriptionId, ElasticUserEmailId body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.Elastic
             {
                 case 200:
                     {
-                        UserApiKeyResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UserApiKeyResponse.DeserializeUserApiKeyResponse(document.RootElement);
+                        ElasticUserApiKeyResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ElasticUserApiKeyResult.DeserializeElasticUserApiKeyResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ElasticOrganizationToAzureSubscriptionMappingResponse>> GetElasticToAzureSubscriptionMappingAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ElasticOrganizationToAzureSubscriptionMappingResult>> GetElasticToAzureSubscriptionMappingAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.Elastic
             {
                 case 200:
                     {
-                        ElasticOrganizationToAzureSubscriptionMappingResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ElasticOrganizationToAzureSubscriptionMappingResponse.DeserializeElasticOrganizationToAzureSubscriptionMappingResponse(document.RootElement);
+                        ElasticOrganizationToAzureSubscriptionMappingResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ElasticOrganizationToAzureSubscriptionMappingResult.DeserializeElasticOrganizationToAzureSubscriptionMappingResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ElasticOrganizationToAzureSubscriptionMappingResponse> GetElasticToAzureSubscriptionMapping(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ElasticOrganizationToAzureSubscriptionMappingResult> GetElasticToAzureSubscriptionMapping(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -191,106 +191,11 @@ namespace Azure.ResourceManager.Elastic
             {
                 case 200:
                     {
-                        ElasticOrganizationToAzureSubscriptionMappingResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ElasticOrganizationToAzureSubscriptionMappingResponse.DeserializeElasticOrganizationToAzureSubscriptionMappingResponse(document.RootElement);
+                        ElasticOrganizationToAzureSubscriptionMappingResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ElasticOrganizationToAzureSubscriptionMappingResult.DeserializeElasticOrganizationToAzureSubscriptionMappingResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateResubscribeRequestUri(string subscriptionId, string resourceGroupName, string monitorName, ResubscribeProperties body)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
-            uri.AppendPath(monitorName, true);
-            uri.AppendPath("/resubscribe", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateResubscribeRequest(string subscriptionId, string resourceGroupName, string monitorName, ResubscribeProperties body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
-            uri.AppendPath(monitorName, true);
-            uri.AppendPath("/resubscribe", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body, ModelSerializationExtensions.WireOptions);
-                request.Content = content;
-            }
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Resubscribe the Elasticsearch Organization. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="monitorName"> Monitor resource name. </param>
-        /// <param name="body"> Resubscribe Properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ResubscribeAsync(string subscriptionId, string resourceGroupName, string monitorName, ResubscribeProperties body = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
-
-            using var message = CreateResubscribeRequest(subscriptionId, resourceGroupName, monitorName, body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Resubscribe the Elasticsearch Organization. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="monitorName"> Monitor resource name. </param>
-        /// <param name="body"> Resubscribe Properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Resubscribe(string subscriptionId, string resourceGroupName, string monitorName, ResubscribeProperties body = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
-
-            using var message = CreateResubscribeRequest(subscriptionId, resourceGroupName, monitorName, body);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }

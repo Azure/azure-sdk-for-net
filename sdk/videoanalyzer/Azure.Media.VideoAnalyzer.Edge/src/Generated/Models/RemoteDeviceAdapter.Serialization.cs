@@ -72,7 +72,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static RemoteDeviceAdapter FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeRemoteDeviceAdapter(document.RootElement);
         }
 

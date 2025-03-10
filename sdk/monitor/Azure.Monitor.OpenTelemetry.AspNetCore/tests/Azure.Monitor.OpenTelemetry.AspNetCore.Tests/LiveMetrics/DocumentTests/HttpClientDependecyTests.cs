@@ -7,8 +7,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 using Microsoft.AspNetCore.Builder;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
@@ -77,7 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             Assert.True(dependencyDocument.Extension_IsSuccess);
         }
 
-#if !NET462
+#if NET
         [Theory]
         [InlineData(true)]
         [InlineData(false)]

@@ -1,3 +1,5 @@
+#! /bin/env pwsh
+
 # Not defining a default parameter set makes SkipLogin/Subscription required all the time.
 [CmdletBinding(DefaultParameterSetName = 'Default')]
 param(
@@ -10,6 +12,7 @@ param(
     [string]$DeployId,
     [switch]$SkipLogin,
     [string]$Subscription,
+    [string]$Tenant,
 
     # Default to true in Azure Pipelines environments
     [switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID),

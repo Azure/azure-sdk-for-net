@@ -13,7 +13,8 @@ namespace Azure.AI.Language.Text.Tests
     [ClientTestFixture(
         TextAnalysisClientOptions.ServiceVersion.V2022_05_01,
         TextAnalysisClientOptions.ServiceVersion.V2023_04_01,
-        TextAnalysisClientOptions.ServiceVersion.V2023_11_15_Preview
+        TextAnalysisClientOptions.ServiceVersion.V2024_11_01,
+        TextAnalysisClientOptions.ServiceVersion.V2024_11_15_Preview
     )]
     [IgnoreServiceError(429, "429")]
     public abstract class TextAnalysisTestBase : RecordedTestBase<TextAnalysisClientTestEnvironment>

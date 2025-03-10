@@ -2,13 +2,13 @@
 
 This sample demonstrates how to analyze data from certain types of common documents with prebuilt models, using an invoice as an example. For more information about prebuilt models and which types of documents are supported, see the [service documentation][docint_models].
 
-To get started you'll need a Cognitive Services resource or a Document Intelligence resource. See [README][README] for prerequisites and instructions.
+To get started you'll need an Azure AI services resource or a Document Intelligence resource. See [README][README] for prerequisites and instructions.
 
 ## Creating a `DocumentIntelligenceClient`
 
-To create a new `DocumentIntelligenceClient` you need the endpoint and credentials from your resource. In the sample below you'll use a Document Intelligence API key credential by creating an `AzureKeyCredential` object that, if needed, will allow you to update the API key without creating a new client.
+To create a new `DocumentIntelligenceClient` you need the endpoint and credentials from your resource. In the sample below you'll make use of identity-based authentication by creating a `DefaultAzureCredential` object.
 
-You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
+You can set `endpoint` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:CreateDocumentIntelligenceClient
 string endpoint = "<endpoint>";
@@ -24,10 +24,7 @@ For simplicity, we are not showing all the fields that the service returns. To s
 
 ```C# Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
-
-var options = new AnalyzeDocumentOptions("prebuilt-invoice", uriSource);
-
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", uriSource);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the

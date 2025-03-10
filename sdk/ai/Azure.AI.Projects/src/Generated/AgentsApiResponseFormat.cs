@@ -56,13 +56,13 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="AgentsApiResponseFormat"/>. </summary>
         /// <param name="type"> Must be one of `text` or `json_object`. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgentsApiResponseFormat(ApiResponseFormat? type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AgentsApiResponseFormat(ResponseFormat? type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Must be one of `text` or `json_object`. </summary>
-        public ApiResponseFormat? Type { get; set; }
+        public ResponseFormat? Type { get; set; }
     }
 }

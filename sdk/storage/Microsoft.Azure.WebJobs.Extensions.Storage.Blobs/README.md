@@ -27,13 +27,13 @@ az storage account create --name <your-resource-name> --resource-group <your-res
 
 ### Authenticate the client
 
-In order for the extension to access Blobs, you will need the connection string which can be found in the [Azure Portal](https://portal.azure.com/) or by using the [Azure CLI](https://docs.microsoft.com/cli/azure) snippet below.
+In order for the extension to access Blobs, you will need the connection string which can be found in the [Azure Portal](https://portal.azure.com/) or by using the [Azure CLI](https://learn.microsoft.com/cli/azure) snippet below.
 
 ```bash
 az storage account show-connection-string -g <your-resource-group-name> -n <your-resource-name>
 ```
 
-The connection string can be supplied through [AzureWebJobsStorage app setting](https://docs.microsoft.com/azure/azure-functions/functions-app-settings).
+The connection string can be supplied through [AzureWebJobsStorage app setting](https://learn.microsoft.com/azure/azure-functions/functions-app-settings).
 
 ## Key concepts
 
@@ -41,7 +41,7 @@ The connection string can be supplied through [AzureWebJobsStorage app setting](
 
 The Blob storage trigger starts a function when a new or updated blob is detected. The blob contents are provided as input to the function.
 
-Please follow the [tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=csharp) to learn about triggering an Azure Function when a blob is modified.
+Please follow the [tutorial](https://learn.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=csharp) to learn about triggering an Azure Function when a blob is modified.
 
 #### Listening strategies
 
@@ -49,16 +49,16 @@ Blob trigger offers handful of strategies when it comes to listening to blob cre
 
 #### Default strategy
 
-By default blob trigger uses [polling](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=csharp#polling) which works as a hybrid between inspecting [Azure Storage analytics logging](https://docs.microsoft.com/azure/storage/common/storage-analytics-logging?tabs=dotnet) and running periodic container scans.
+By default blob trigger uses [polling](https://learn.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=csharp#polling) which works as a hybrid between inspecting [Azure Storage analytics logging](https://learn.microsoft.com/azure/storage/common/storage-analytics-logging?tabs=dotnet) and running periodic container scans.
 Blobs are scanned in groups of 10,000 at a time with a continuation token used between intervals.
 
-[Azure Storage analytics logging](https://docs.microsoft.com/azure/storage/common/storage-analytics-logging?tabs=dotnet) is not enabled by default, see [Azure Storage analytics logging](https://docs.microsoft.com/azure/storage/common/storage-analytics-logging?tabs=dotnet) for how to enable it.
+[Azure Storage analytics logging](https://learn.microsoft.com/azure/storage/common/storage-analytics-logging?tabs=dotnet) is not enabled by default, see [Azure Storage analytics logging](https://learn.microsoft.com/azure/storage/common/storage-analytics-logging?tabs=dotnet) for how to enable it.
 
 This strategy is not recommended for high-scale applications or scenarios that require low latency.
 
 #### Event grid
 
-[Blob storage events](https://docs.microsoft.com/azure/storage/blobs/storage-blob-event-overview) can be used to listen for changes. This strategy requires [additional setup](https://docs.microsoft.com/azure/event-grid/blob-event-quickstart-portal?toc=/azure/storage/blobs/toc.json).
+[Blob storage events](https://learn.microsoft.com/azure/storage/blobs/storage-blob-event-overview) can be used to listen for changes. This strategy requires [additional setup](https://learn.microsoft.com/azure/event-grid/blob-event-quickstart-portal?toc=/azure/storage/blobs/toc.json).
 
 This strategy is recommended for high-scale applications.
 
@@ -66,7 +66,7 @@ This strategy is recommended for high-scale applications.
 
 The input binding allows you to read blob storage data as input to an Azure Function. The output binding allows you to modify and delete blob storage data in an Azure Function.
 
-Please follow the [input binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-input?tabs=csharp) and [output binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-output?tabs=csharp) to learn about using this extension for accessing Blobs.
+Please follow the [input binding tutorial](https://learn.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-input?tabs=csharp) and [output binding tutorial](https://learn.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-output?tabs=csharp) to learn about using this extension for accessing Blobs.
 
 ## Examples
 
@@ -314,11 +314,11 @@ Please refer to [sample functions app](https://github.com/Azure/azure-sdk-for-ne
 
 ## Troubleshooting
 
-Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.
+Please refer to [Monitor Azure Functions](https://learn.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.
 
 ## Next steps
 
-Read the [introduction to Azure Function](https://docs.microsoft.com/azure/azure-functions/functions-overview) or [creating an Azure Function guide](https://docs.microsoft.com/azure/azure-functions/functions-create-first-azure-function).
+Read the [introduction to Azure Function](https://learn.microsoft.com/azure/azure-functions/functions-overview) or [creating an Azure Function guide](https://learn.microsoft.com/azure/azure-functions/functions-create-first-azure-function).
 
 ## Contributing
 
@@ -335,14 +335,12 @@ For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Webjobs.Extensions.Blobs%2FREADME.png)
-
 <!-- LINKS -->
 [nuget]: https://www.nuget.org/
-[storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
-[storage_account_create_ps]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
-[storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
-[storage_account_create_portal]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
+[storage_account_docs]: https://learn.microsoft.com/azure/storage/common/storage-account-overview
+[storage_account_create_ps]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
+[storage_account_create_cli]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
+[storage_account_create_portal]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
 [storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/CONTRIBUTING.md

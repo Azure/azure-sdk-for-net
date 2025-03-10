@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -71,8 +72,10 @@ namespace Azure.ResourceManager.Redis.Tests
 
             // Delete
             await ruleTwo.DeleteAsync(WaitUntil.Completed);
+            rules = await firewallCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.AreEqual(1, rules.Count);
             var falseResult = (await firewallCollection.ExistsAsync("RuleTwo")).Value;
-            Assert.IsTrue(falseResult);
+            Assert.IsFalse(falseResult);
         }
     }
 }

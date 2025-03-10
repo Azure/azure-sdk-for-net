@@ -1,10 +1,8 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
@@ -12,7 +10,33 @@
 
 ### Other Changes
 
-## 1.1.0-beta.2 (2027-07-23)
+## 1.1.0 (2025-02-28)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-12-18-preview' to 'package-2025-03-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/8abab3c9c1ff7c4f9d393c2ddb00e5f735289b37/specification/quota/resource-manager/readme.md.
+
+### Bugs Fixed
+
+- Fixed an issue where the GroupQuotaLimits and SubscriptionQuotaAllocations operations were erroring out even though the action completed successfully.
+
+## 1.1.0-beta.3 (2025-01-20)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-06-01-preview' to 'package-2024-12-18-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/55c5a0cd6da80b2700333c01e9a9c6067de9cef0/specification/quota/resource-manager/readme.md.
+    - Replaces the GroupQuotaLimitRequest and SubscriptionQuotaAllocationRequest PUT paths with a PATCH operation in both GroupQuotaLimits and SubscriptionQuotaAllocations operations. This ensures no issues with checking for action completeness and is better aligned with the REST API design guidelines.
+
+### Bugs Fixed
+
+- Fixed an issue where the GroupQuotaLimits and SubscriptionQuotaAllocations operations were erroring out even though the action completed successfully.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.41.0 to 1.44.1
+- Upgraded Azure.ResourceManager from 1.12.0 to 1.13.0
+
+## 1.1.0-beta.2 (2024-07-23)
 
 ### Features Added
 
@@ -85,4 +109,4 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

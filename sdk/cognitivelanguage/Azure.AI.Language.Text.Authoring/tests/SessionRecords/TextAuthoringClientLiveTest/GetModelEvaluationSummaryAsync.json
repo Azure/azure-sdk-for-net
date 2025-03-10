@@ -1,0 +1,124 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/test001/models/m1/evaluation/summary-result?api-version=2024-11-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Connection": "keep-alive",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250302.1 (.NET Framework 4.8.9290.0; Microsoft Windows 10.0.26100 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "8e180d8e-ed30-4e23-886f-21742727e804",
+        "Content-Length": "1492",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 03 Mar 2025 07:19:50 GMT",
+        "request-id": "8e180d8e-ed30-4e23-886f-21742727e804",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "54",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "projectKind": "CustomSingleLabelClassification",
+        "customSingleLabelClassificationEvaluation": {
+          "confusionMatrix": {
+            "Computer_science": {},
+            "Electrical_engineering": {},
+            "Mechanical_engineering": {
+              "Biochemistry": {
+                "normalizedValue": 50.0,
+                "rawValue": 1.0
+              },
+              "Mechanical_engineering": {
+                "normalizedValue": 50.0,
+                "rawValue": 1.0
+              }
+            },
+            "Civil_engineering": {},
+            "Biochemistry": {},
+            "None": {}
+          },
+          "classes": {
+            "Mechanical_engineering": {
+              "f1": 0.6666666865348816,
+              "precision": 1.0,
+              "recall": 0.5,
+              "truePositiveCount": 1,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 1
+            },
+            "Biochemistry": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "truePositiveCount": 0,
+              "trueNegativeCount": 1,
+              "falsePositiveCount": 1,
+              "falseNegativeCount": 0
+            },
+            "Computer_science": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "truePositiveCount": 0,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Electrical_engineering": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "truePositiveCount": 0,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Civil_engineering": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "truePositiveCount": 0,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "None": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "truePositiveCount": 0,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            }
+          },
+          "microF1": 0.5,
+          "microPrecision": 0.5,
+          "microRecall": 0.5,
+          "macroF1": 0.6666667,
+          "macroPrecision": 1.0,
+          "macroRecall": 0.5
+        },
+        "evaluationOptions": {
+          "kind": "percentage",
+          "trainingSplitPercentage": 80,
+          "testingSplitPercentage": 20
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com/",
+    "AZURE_TEXT_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "1732408200"
+  }
+}

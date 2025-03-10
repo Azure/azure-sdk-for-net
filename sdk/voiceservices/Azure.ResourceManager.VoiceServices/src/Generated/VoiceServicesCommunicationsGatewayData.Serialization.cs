@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.VoiceServices
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ApiBridge);
 #else
-                using (JsonDocument document = JsonDocument.Parse(ApiBridge))
+                using (JsonDocument document = JsonDocument.Parse(ApiBridge, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVoiceServicesCommunicationsGatewayData(document.RootElement, options);
                     }
                 default:

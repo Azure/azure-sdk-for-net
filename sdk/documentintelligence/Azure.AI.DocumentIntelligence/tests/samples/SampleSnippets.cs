@@ -82,7 +82,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
             #region Snippet:DocumentIntelligenceBadRequest
             var uriSource = new Uri("http://invalid.uri");
-            var options = new AnalyzeDocumentOptions("prebuild-receipt", uriSource);
+            var options = new AnalyzeDocumentOptions("prebuilt-receipt", uriSource);
 
             try
             {

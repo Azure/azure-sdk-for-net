@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Nginx
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-06-01-preview";
+            _apiVersion = apiVersion ?? "2024-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary> Get a certificate of given NGINX deployment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="certificateName"> The name of certificate. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxCertificateData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NginxCertificateData.DeserializeNginxCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary> Get a certificate of given NGINX deployment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="certificateName"> The name of certificate. </param>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxCertificateData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NginxCertificateData.DeserializeNginxCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary> Create or update the NGINX certificates for given NGINX deployment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="certificateName"> The name of certificate. </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary> Create or update the NGINX certificates for given NGINX deployment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="certificateName"> The name of certificate. </param>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary> Deletes a certificate from the NGINX deployment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="certificateName"> The name of certificate. </param>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary> Deletes a certificate from the NGINX deployment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="certificateName"> The name of certificate. </param>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary> List all certificates of given NGINX deployment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxCertificateListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NginxCertificateListResponse.DeserializeNginxCertificateListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary> List all certificates of given NGINX deployment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxCertificateListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NginxCertificateListResponse.DeserializeNginxCertificateListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Nginx
 
         /// <summary> List all certificates of given NGINX deployment. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxCertificateListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NginxCertificateListResponse.DeserializeNginxCertificateListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Nginx
 
         /// <summary> List all certificates of given NGINX deployment. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxCertificateListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NginxCertificateListResponse.DeserializeNginxCertificateListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -16,8 +16,7 @@ namespace MgmtTypeSpec.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FooProperties"/>. </summary>
-        public FooProperties()
+        internal FooProperties()
         {
         }
 
@@ -32,18 +31,18 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> the service url. </summary>
-        public Uri ServiceUrl { get; set; }
+        public Uri ServiceUrl { get; }
 
         /// <summary> something. </summary>
-        public string Something { get; set; }
+        public string Something { get; }
 
         /// <summary> boolean value. </summary>
-        public bool? BoolValue { get; set; }
+        public bool? BoolValue { get; }
 
         /// <summary> float value. </summary>
-        public float? FloatValue { get; set; }
+        public float? FloatValue { get; }
 
         /// <summary> double value. </summary>
-        public double? DoubleValue { get; set; }
+        public double? DoubleValue { get; }
     }
 }

@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Blueprint
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAssignmentOperationData(document.RootElement, options);
                     }
                 default:

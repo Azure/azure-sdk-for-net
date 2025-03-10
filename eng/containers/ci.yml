@@ -8,32 +8,55 @@ trigger:
     include:
     - eng/containers/
 
-pool:
-  vmImage: 'ubuntu-20.04'
+extends:
+  template: /eng/pipelines/templates/stages/1es-redirect.yml
+  parameters:
+    stages:
+    - stage:
+      displayName: Docker Build and Publish
+      variables:
+      - template: /eng/pipelines/templates/variables/globals.yml
+      - template: /eng/pipelines/templates/variables/image.yml
+      - name: configPath
+        value: ./eng/containers/UbuntuNetCoreKeyring
+      - name: containerRegistry
+        value: 'azsdkengsys'
+      - name: imageRepository
+        value: 'dotnet/ubuntu_netcore_keyring'
+      - name: imageTag
+        value: $(build.buildid)
 
-variables:
-  - template: /eng/pipelines/templates/variables/globals.yml
-  - name: dockerfile
-    value: ./eng/containers/UbuntuNetCoreKeyring/Dockerfile
-  - name: containerRegistry
-    value: 'azsdkengsys'
-  - name: imageRepository
-    value: 'dotnet/ubuntu_netcore_keyring'
-  - name: imageTag
-    value: $(build.buildid)
+      jobs:
+      - job:
+        displayName: Docker Build and Publish
+        pool:
+          name: $(LINUXPOOL)
+          image: $(LINUXVMIMAGE)
+          os: linux
 
-steps:
-- task: Docker@2
-  displayName: Build Docker Image
-  inputs:
-    command: build
-    Dockerfile: $(dockerfile)
-    tags: $(imageTag)
-    arguments: '-t $(containerRegistry).azurecr.io/$(imageRepository):$(imageTag)'
-- task: Docker@2
-  displayName: Push Docker Image
-  inputs:
-    containerRegistry: $(containerRegistry)
-    repository: $(imageRepository)
-    command: push
-    tags: $(imageTag)
+        templateContext:
+          outputs:
+          - output: containerImage
+            image: image:tag
+            remoteImage:
+            - $(containerRegistry).azurecr.io/$(imageRepository):$(imageTag)
+
+        steps:
+        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+
+        - task: AzureCLI@2
+          displayName: Login to $(containerRegistry)
+          inputs:
+            azureSubscription: "Azure SDK Engineering System"
+            scriptType: pscore
+            scriptLocation: inlineScript
+            inlineScript: |
+              az acr login --name $(containerRegistry)
+
+        - task: 1ES.BuildContainerImage@1
+          displayName: Build Docker Image
+          inputs:
+            path: $(configPath)
+            image: image:tag
+            enableNetwork: true
+            useBuildKit: true

@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Mvc;
 using Integration.Identity.Common;
 
