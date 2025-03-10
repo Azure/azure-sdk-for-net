@@ -73,11 +73,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
                 isAadEnabled = true;
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-#if ASP_NET_CORE_DISTRO
-                AspNetCore.AzureMonitorAspNetCoreEventSource.Log.SetAADCredentialsToPipeline(options.Credential.GetType().Name, scope);
-#else
                 AzureMonitorLiveMetricsEventSource.Log.SetAADCredentialsToPipeline(options.Credential.GetType().Name, scope);
-#endif
             }
             else
             {

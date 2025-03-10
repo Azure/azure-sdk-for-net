@@ -55,8 +55,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
                 AzureMonitorExporterEventSource.Log.FailedToReadEnvironmentVariables(ex);
 #elif ASP_NET_CORE_DISTRO
                 AzureMonitorAspNetCoreEventSource.Log.FailedToReadEnvironmentVariables(ex);
-#else
-                System.Diagnostics.Debug.Write(ex.ToString());
+#elif LIVE_METRICS_PROJECT
+                LiveMetrics.AzureMonitorLiveMetricsEventSource.Log.FailedToReadEnvironmentVariables(ex);
 #endif
                 _environmentVariables = new Dictionary<string, object>();
             }

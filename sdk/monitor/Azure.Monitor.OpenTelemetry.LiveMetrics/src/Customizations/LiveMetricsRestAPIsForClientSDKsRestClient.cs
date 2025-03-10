@@ -82,19 +82,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             value = ServiceError.DeserializeServiceError(document.RootElement);
-#if ASP_NET_CORE_DISTRO
-                            AspNetCore.AzureMonitorAspNetCoreEventSource.Log.PingFailedWithServiceError(message.Response.Status, value);
-#else
                             AzureMonitorLiveMetricsEventSource.Log.PingFailedWithServiceError(message.Response.Status, value);
-#endif
                         }
 
                         Debug.WriteLine($"{DateTime.Now}: Ping FAILED: {message.Response.Status} {message.Response.ReasonPhrase}.");
-#if ASP_NET_CORE_DISTRO
-                        AspNetCore.AzureMonitorAspNetCoreEventSource.Log.PingFailed(message.Response, _host, message.Request.Uri.Host);
-#else
                         AzureMonitorLiveMetricsEventSource.Log.PingFailed(message.Response, _host, message.Request.Uri.Host);
-#endif
                         return new QuickPulseResponse(success: false);
                     }
                 default:
@@ -149,20 +141,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             value = ServiceError.DeserializeServiceError(document.RootElement);
-#if ASP_NET_CORE_DISTRO
-                            AspNetCore.AzureMonitorAspNetCoreEventSource.Log.PostFailedWithServiceError(message.Response.Status, value);
-#else
                             AzureMonitorLiveMetricsEventSource.Log.PostFailedWithServiceError(message.Response.Status, value);
-#endif
                         }
 
                         Debug.WriteLine($"{DateTime.Now}: Post FAILED: {message.Response.Status} {message.Response.ReasonPhrase}.");
 
-#if ASP_NET_CORE_DISTRO
-                        AspNetCore.AzureMonitorAspNetCoreEventSource.Log.PostFailed(message.Response, _host, message.Request.Uri.Host);
-#else
                         AzureMonitorLiveMetricsEventSource.Log.PostFailed(message.Response, _host, message.Request.Uri.Host);
-#endif
                         return new QuickPulseResponse(success: false);
                     }
                 default:

@@ -54,8 +54,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
                 AzureMonitorExporterEventSource.Log.FailedToParseConnectionString(ex);
 #elif ASP_NET_CORE_DISTRO
                 AzureMonitorAspNetCoreEventSource.Log.FailedToParseConnectionString(ex);
-#else
-                System.Diagnostics.Debug.Write(ex.ToString());
+#elif LIVE_METRICS_PROJECT
+                LiveMetrics.AzureMonitorLiveMetricsEventSource.Log.FailedToParseConnectionString(ex);
 #endif
                 throw new InvalidOperationException("Connection String Error: " + ex.Message, ex);
             }

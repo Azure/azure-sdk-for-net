@@ -273,15 +273,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             if (period < 0)
             {
                 // Not likely to happen but being safe here incase of clock issues in multi-core.
-#if ASP_NET_CORE_DISTRO
-                AspNetCore.AzureMonitorAspNetCoreEventSource.Log.ProcessCountersUnexpectedNegativeTimeSpan(
-                    previousCollectedTime: previousCollectedTime.Ticks,
-                    recentCollectedTime: recentCollectedTime.Ticks);
-#else
                 AzureMonitorLiveMetricsEventSource.Log.ProcessCountersUnexpectedNegativeTimeSpan(
                     previousCollectedTime: previousCollectedTime.Ticks,
                     recentCollectedTime: recentCollectedTime.Ticks);
-#endif
 
                 Debug.WriteLine($"{nameof(TryCalculateCPUCounter)} period less than zero");
                 normalizedValue = default;
@@ -291,15 +285,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             var diff = recentCollectedValue - previousCollectedValue;
             if (diff < 0)
             {
-#if ASP_NET_CORE_DISTRO
-                AspNetCore.AzureMonitorAspNetCoreEventSource.Log.ProcessCountersUnexpectedNegativeValue(
-                    previousCollectedValue: previousCollectedValue,
-                    recentCollectedValue: recentCollectedValue);
-#else
                 AzureMonitorLiveMetricsEventSource.Log.ProcessCountersUnexpectedNegativeValue(
                     previousCollectedValue: previousCollectedValue,
                     recentCollectedValue: recentCollectedValue);
-#endif
+
                 Debug.WriteLine($"{nameof(TryCalculateCPUCounter)} diff less than zero");
                 normalizedValue = default;
                 return false;
@@ -308,21 +297,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             period = period != 0 ? period : 1;
             calculatedValue = diff * 100.0 / period;
             normalizedValue = calculatedValue / _processorCount;
-#if ASP_NET_CORE_DISTRO
-            AspNetCore.AzureMonitorAspNetCoreEventSource.Log.ProcessCountersCpuCounter(
-                period: previousCollectedValue,
-                diffValue: recentCollectedValue,
-                calculatedValue: calculatedValue,
-                processorCount: _processorCount,
-                normalizedValue: normalizedValue);
-#else
+
             AzureMonitorLiveMetricsEventSource.Log.ProcessCountersCpuCounter(
                 period: previousCollectedValue,
                 diffValue: recentCollectedValue,
                 calculatedValue: calculatedValue,
                 processorCount: _processorCount,
                 normalizedValue: normalizedValue);
-#endif
+
             return true;
         }
 

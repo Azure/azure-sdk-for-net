@@ -34,11 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
             }
             catch (System.Exception ex)
             {
-#if ASP_NET_CORE_DISTRO
-                AspNetCore.AzureMonitorAspNetCoreEventSource.Log.FailedToCreateTelemetryDocument("ExceptionDocument", ex);
-#else
                 AzureMonitorLiveMetricsEventSource.Log.FailedToCreateTelemetryDocument("ExceptionDocument", ex);
-#endif
             }
         }
 
@@ -53,11 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
             }
             catch (System.Exception ex)
             {
-#if ASP_NET_CORE_DISTRO
-                AspNetCore.AzureMonitorAspNetCoreEventSource.Log.FailedToCreateTelemetryDocument("ExceptionDocument", ex);
-#else
                 AzureMonitorLiveMetricsEventSource.Log.FailedToCreateTelemetryDocument("ExceptionDocument", ex);
-#endif
             }
         }
 
@@ -70,11 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
             }
             catch (System.Exception ex)
             {
-#if ASP_NET_CORE_DISTRO
-                AspNetCore.AzureMonitorAspNetCoreEventSource.Log.FailedToCreateTelemetryDocument("LogDocument", ex);
-#else
                 AzureMonitorLiveMetricsEventSource.Log.FailedToCreateTelemetryDocument("LogDocument", ex);
-#endif
             }
         }
 
@@ -87,11 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
             }
             catch (System.Exception ex)
             {
-#if ASP_NET_CORE_DISTRO
-                AspNetCore.AzureMonitorAspNetCoreEventSource.Log.FailedToCreateTelemetryDocument("LogDocument", ex);
-#else
                 AzureMonitorLiveMetricsEventSource.Log.FailedToCreateTelemetryDocument("LogDocument", ex);
-#endif
             }
         }
 
@@ -104,11 +88,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
             }
             catch (System.Exception ex)
             {
-#if ASP_NET_CORE_DISTRO
-                AspNetCore.AzureMonitorAspNetCoreEventSource.Log.FailedToCreateTelemetryDocument("DependencyDocument", ex);
-#else
                 AzureMonitorLiveMetricsEventSource.Log.FailedToCreateTelemetryDocument("DependencyDocument", ex);
-#endif
             }
         }
 
@@ -121,11 +101,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
             }
             catch (System.Exception ex)
             {
-#if ASP_NET_CORE_DISTRO
-                AspNetCore.AzureMonitorAspNetCoreEventSource.Log.FailedToCreateTelemetryDocument("RequestDocument", ex);
-#else
                 AzureMonitorLiveMetricsEventSource.Log.FailedToCreateTelemetryDocument("RequestDocument", ex);
-#endif
             }
         }
         #endregion
