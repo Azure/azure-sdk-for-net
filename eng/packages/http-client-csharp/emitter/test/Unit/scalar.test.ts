@@ -22,7 +22,6 @@ describe("Test GetInputType for scalar", () => {
         op test(@query location: azureLocation): void;
       `,
       runner,
-      { IsAzureCoreNeeded: true },
     );
     const context = await createCSharpSdkContext(createEmitterContext(program));
     const model = createModel(context);
