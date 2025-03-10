@@ -80,6 +80,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             Assert.True(dependencyDocument.Extension_IsSuccess);
         }
 
+#if !NETFRAMEWORK // DiagnosticListener-based instrumentation is only available on .NET Core
         [Theory]
         [InlineData(SqlClientConstants.SqlDataBeforeExecuteCommand, SqlClientConstants.SqlDataAfterExecuteCommand, CommandType.StoredProcedure, "SP_GetOrders")]
         [InlineData(SqlClientConstants.SqlDataBeforeExecuteCommand, SqlClientConstants.SqlDataAfterExecuteCommand, CommandType.Text, "select * from sys.databases")]
@@ -99,7 +100,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
                 .AddSqlClientInstrumentation(options =>
                 {
                     options.SetDbStatementForText = true;
-                    //options.SetDbStatementForStoredProcedure = true;
                 })
                 .AddInMemoryExporter(exportedActivities)
                 .Build())
@@ -147,7 +147,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);
             Assert.True(dependencyDocument.Extension_IsSuccess);
         }
+#endif
 
+#if !NETFRAMEWORK // DiagnosticListener-based instrumentation is only available on .NET Core
         [Theory]
         [InlineData(SqlClientConstants.SqlDataBeforeExecuteCommand, SqlClientConstants.SqlDataWriteCommandError, CommandType.StoredProcedure, "SP_GetOrders")]
         [InlineData(SqlClientConstants.SqlDataBeforeExecuteCommand, SqlClientConstants.SqlDataWriteCommandError, CommandType.Text, "select * from sys.databases")]
@@ -170,7 +172,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
                 .AddSqlClientInstrumentation(options =>
                 {
                     options.SetDbStatementForText = true;
-                    //options.SetDbStatementForStoredProcedure = true;
                     options.RecordException = recordException;
                 })
                 .AddInMemoryExporter(exportedActivities)
@@ -220,6 +221,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);
             Assert.False(dependencyDocument.Extension_IsSuccess);
         }
+#endif
 
         /// <summary>
         /// These tests and helper classes were initially copied from
