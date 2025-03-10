@@ -86,8 +86,8 @@ namespace Azure.Communication
             Assert.AreEqual("456", new PhoneNumberIdentifier("14255550121", "4:14255550121_123_456").AssertedId);
 
             var staticPhoneNumberIdentifier = new PhoneNumberIdentifier("14255550121_123");
-            Assert.AreEqual("123", staticPhoneNumberIdentifier.AssertedId); // compute assertedId
-            Assert.AreEqual("123", staticPhoneNumberIdentifier.AssertedId); // reuse previously computed assertedId
+            Assert.AreEqual("123", staticPhoneNumberIdentifier.AssertedId); // first use: compute assertedId
+            Assert.AreEqual("123", staticPhoneNumberIdentifier.AssertedId); // second use: reuse previously computed assertedId
         }
 
         [Test]
