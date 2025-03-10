@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: DataFactory
 namespace: Azure.ResourceManager.DataFactory
-require: https://github.com/Azure/azure-rest-api-specs/blob/1982dfc5db1a54ac3cf824449e08590cee74d9a5/specification/datafactory/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/2d73bd7fb1c68a8b6829fac1760bd0fc84ca5554/specification/datafactory/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -253,6 +253,8 @@ rename-mapping:
   WebActivity.typeProperties.headers: RequestHeaders
   WebHookActivity.typeProperties.headers: RequestHeaders
   LinkedService.version: LinkedServiceVersion
+  SapOdpLinkedService.typeProperties.sncMode: SncFlag
+  SapTableLinkedService.typeProperties.sncMode: SncFlag
 
 prepend-rp-prefix:
   - BlobEventsTrigger
@@ -333,4 +335,9 @@ directive:
     where: $.definitions
     transform: >
       delete $.FactoryIdentity.properties.userAssignedIdentities;
+  # This change is used to prevent name conflicts within the model, where the previous `pwd` property has been renamed to `Password`.
+  - from: LinkedService.json
+    where: $.definitions
+    transform: >
+      $.GreenplumLinkedServiceTypeProperties.properties.password['x-ms-client-name'] = 'PasswordV2';
 ```

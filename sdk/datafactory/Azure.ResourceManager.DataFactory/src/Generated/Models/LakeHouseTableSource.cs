@@ -11,7 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A copy activity source for Microsoft Fabric LakeHouse Table. </summary>
+    /// <summary> A copy activity source for Microsoft Fabric Lakehouse Table. </summary>
     public partial class LakeHouseTableSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of <see cref="LakeHouseTableSource"/>. </summary>
