@@ -18,8 +18,7 @@ namespace Azure.Core
         // Version for this contract itself since we might change the members in the future.
         internal string Version { get; } = NextLinkOperationImplementation.RehydrationTokenVersion;
 
-        // The below members are used to re-construct <cref="NextLinkOperationImplementation">.
-        // Value of <cref="NextLinkOperationImplementation.HeaderSource">.
+        // The below members are used to re-construct the NextLinkOperationImplementation._headerSource field in NextLinkOperationImplementation internal class.
         internal string HeaderSource { get; }
 
         // The polling Uri of the operation.
