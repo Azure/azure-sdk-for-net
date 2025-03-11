@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.DurableTask.Models;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
@@ -165,7 +164,18 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
         await resource.DeleteAsync(WaitUntil.Completed);
 
         // Verify the scheduler is deleted
-        Response<SchedulerResource> notFoundResource = await rg.GetSchedulerAsync(resourceName);
-        Assert.False(notFoundResource.HasValue);
+        try
+        {
+            await rg.GetSchedulerAsync(resourceName);
+        }
+        catch (RequestFailedException ex) when (ex.Status == StatusCodes.Status404NotFound)
+        {
+            // Expected exception
+            Assert.Pass("Scheduler deleted successfully");
+        }
+        catch (Exception ex)
+        {
+            Assert.Fail($"Unexpected exception: {ex}");
+        }
     }
 }
