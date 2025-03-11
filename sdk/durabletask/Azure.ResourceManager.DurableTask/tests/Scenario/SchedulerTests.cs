@@ -153,7 +153,7 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
 
         Assert.AreEqual(resourceName, resource.Data.Name);
         Assert.AreEqual(skuType, resource.Data.Properties.Sku.Name);
-        Assert.AreEqual(RedundancyState.Zone, resource.Data.Properties.Sku.RedundancyState);
+        Assert.AreEqual(RedundancyState.None, resource.Data.Properties.Sku.RedundancyState);
         Assert.AreEqual(1, resource.Data.Properties.IPAllowlist.Count);
         Assert.Contains(PatchIpRange, resource.Data.Properties.IPAllowlist as IList);
         Assert.AreEqual(1, resource.Data.Tags.Count);
