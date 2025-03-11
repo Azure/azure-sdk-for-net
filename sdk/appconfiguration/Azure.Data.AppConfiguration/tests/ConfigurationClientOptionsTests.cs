@@ -13,7 +13,7 @@ namespace Azure.Data.AppConfiguration.Tests
         // when it is provided via the options.
         [TestCaseSource(nameof(GetDefaultScopeWithSuppliedValueTestCases))]
         public void TestGetDefaultScope_WithSuppliedValue(
-            ConfigurationAudience? configurationAudience,
+            AppConfigurationAudience? configurationAudience,
             string url,
             string expectedScope)
         {
@@ -38,16 +38,16 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             get
             {
-                yield return new TestCaseData(ConfigurationAudience.AzurePublicCloud, "https://locaLhost.azconfiG.com", $"{ConfigurationAudience.AzurePublicCloud}/.default");
-                yield return new TestCaseData(ConfigurationAudience.AzurePublicCloud, "https://locaLhost.azconfiG.com/", $"{ConfigurationAudience.AzurePublicCloud}/.default");
-                yield return new TestCaseData(ConfigurationAudience.AzureChina, "https://other.AZconfig.cn", $"{ConfigurationAudience.AzureChina}/.default");
-                yield return new TestCaseData(ConfigurationAudience.AzureChina, "https://other.AZconfig.cn/", $"{ConfigurationAudience.AzureChina}/.default");
-                yield return new TestCaseData(ConfigurationAudience.AzureGovernment, "https://gov-localhost-2353453.azconfig.us", $"{ConfigurationAudience.AzureGovernment}/.default");
-                yield return new TestCaseData(ConfigurationAudience.AzureGovernment, "https://gov-localhost-2353453.azconfig.us/", $"{ConfigurationAudience.AzureGovernment}/.default");
-                yield return new TestCaseData(null, "https://localhost.azconfig.com", $"{ConfigurationAudience.AzurePublicCloud}/.default");
-                yield return new TestCaseData(null, "https://localhost.azconfig.com/", $"{ConfigurationAudience.AzurePublicCloud}/.default");
-                yield return new TestCaseData(new ConfigurationAudience("my.custom.audience"), "http://other.my.custom.audience", "my.custom.audience/.default");
-                yield return new TestCaseData(new ConfigurationAudience("my.custom.audience"), "http://other.my.custom.audience/", "my.custom.audience/.default");
+                yield return new TestCaseData(AppConfigurationAudience.AzurePublicCloud, "https://locaLhost.azconfiG.com", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                yield return new TestCaseData(AppConfigurationAudience.AzurePublicCloud, "https://locaLhost.azconfiG.com/", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                yield return new TestCaseData(AppConfigurationAudience.AzureChina, "https://other.AZconfig.cn", $"{AppConfigurationAudience.AzureChina}/.default");
+                yield return new TestCaseData(AppConfigurationAudience.AzureChina, "https://other.AZconfig.cn/", $"{AppConfigurationAudience.AzureChina}/.default");
+                yield return new TestCaseData(AppConfigurationAudience.AzureGovernment, "https://gov-localhost-2353453.azconfig.us", $"{AppConfigurationAudience.AzureGovernment}/.default");
+                yield return new TestCaseData(AppConfigurationAudience.AzureGovernment, "https://gov-localhost-2353453.azconfig.us/", $"{AppConfigurationAudience.AzureGovernment}/.default");
+                yield return new TestCaseData(null, "https://localhost.azconfig.com", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                yield return new TestCaseData(null, "https://localhost.azconfig.com/", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                yield return new TestCaseData(new AppConfigurationAudience("my.custom.audience"), "http://other.my.custom.audience", "my.custom.audience/.default");
+                yield return new TestCaseData(new AppConfigurationAudience("my.custom.audience"), "http://other.my.custom.audience/", "my.custom.audience/.default");
             }
         }
 
@@ -56,27 +56,27 @@ namespace Azure.Data.AppConfiguration.Tests
             get
             {
                 // public cloud
-                yield return new TestCaseData("http://locaLhost.azconfiG.io", $"{ConfigurationAudience.AzurePublicCloud}/.default");
-                yield return new TestCaseData("https://locaLhost.azconfiG.io/", $"{ConfigurationAudience.AzurePublicCloud}/.default");
-                yield return new TestCaseData("https://locaLhost.azconfiG.io//", $"{ConfigurationAudience.AzurePublicCloud}/.default");
-                yield return new TestCaseData("https://contoso.azconfig.io", $"{ConfigurationAudience.AzurePublicCloud}/.default");
-                yield return new TestCaseData("https://contoso.appconfig.azure.com", $"{ConfigurationAudience.AzurePublicCloud}/.default");
-                yield return new TestCaseData("https://contoso.appconfig.azure.com/", $"{ConfigurationAudience.AzurePublicCloud}/.default");
-                yield return new TestCaseData("http://other.my.custom.audience", $"{ConfigurationAudience.AzurePublicCloud}/.default");
+                yield return new TestCaseData("http://locaLhost.azconfiG.io", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                yield return new TestCaseData("https://locaLhost.azconfiG.io/", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                yield return new TestCaseData("https://locaLhost.azconfiG.io//", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                yield return new TestCaseData("https://contoso.azconfig.io", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                yield return new TestCaseData("https://contoso.appconfig.azure.com", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                yield return new TestCaseData("https://contoso.appconfig.azure.com/", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                yield return new TestCaseData("http://other.my.custom.audience", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
                 // china cloud
-                yield return new TestCaseData("http://other-23232.AZconfig.azure.cn", $"{ConfigurationAudience.AzureChina}/.default");
-                yield return new TestCaseData("https://contoso.azconfig.azure.cn", $"{ConfigurationAudience.AzureChina}/.default");
-                yield return new TestCaseData("https://other.APPconfig.azure.cn", $"{ConfigurationAudience.AzureChina}/.default");
-                yield return new TestCaseData("https://contoso.appconfig.azure.cn", $"{ConfigurationAudience.AzureChina}/.default");
-                yield return new TestCaseData("https://contoso.appconfig.azure.cn/", $"{ConfigurationAudience.AzureChina}/.default");
-                yield return new TestCaseData("https://contoso.appconfig.azure.cn//", $"{ConfigurationAudience.AzureChina}/.default");
+                yield return new TestCaseData("http://other-23232.AZconfig.azure.cn", $"{AppConfigurationAudience.AzureChina}/.default");
+                yield return new TestCaseData("https://contoso.azconfig.azure.cn", $"{AppConfigurationAudience.AzureChina}/.default");
+                yield return new TestCaseData("https://other.APPconfig.azure.cn", $"{AppConfigurationAudience.AzureChina}/.default");
+                yield return new TestCaseData("https://contoso.appconfig.azure.cn", $"{AppConfigurationAudience.AzureChina}/.default");
+                yield return new TestCaseData("https://contoso.appconfig.azure.cn/", $"{AppConfigurationAudience.AzureChina}/.default");
+                yield return new TestCaseData("https://contoso.appconfig.azure.cn//", $"{AppConfigurationAudience.AzureChina}/.default");
                 // us gov cloud
-                yield return new TestCaseData("http://other-23232.AZconfig.azure.us", $"{ConfigurationAudience.AzureGovernment}/.default");
-                yield return new TestCaseData("https://contoso.azconfig.azure.us", $"{ConfigurationAudience.AzureGovernment}/.default");
-                yield return new TestCaseData("https://other.APPconfig.azure.us", $"{ConfigurationAudience.AzureGovernment}/.default");
-                yield return new TestCaseData("https://contoso.appconfig.azure.us", $"{ConfigurationAudience.AzureGovernment}/.default");
-                yield return new TestCaseData("https://contoso.appconfig.azure.us/", $"{ConfigurationAudience.AzureGovernment}/.default");
-                yield return new TestCaseData("https://contoso.appconfig.azure.us//", $"{ConfigurationAudience.AzureGovernment}/.default");
+                yield return new TestCaseData("http://other-23232.AZconfig.azure.us", $"{AppConfigurationAudience.AzureGovernment}/.default");
+                yield return new TestCaseData("https://contoso.azconfig.azure.us", $"{AppConfigurationAudience.AzureGovernment}/.default");
+                yield return new TestCaseData("https://other.APPconfig.azure.us", $"{AppConfigurationAudience.AzureGovernment}/.default");
+                yield return new TestCaseData("https://contoso.appconfig.azure.us", $"{AppConfigurationAudience.AzureGovernment}/.default");
+                yield return new TestCaseData("https://contoso.appconfig.azure.us/", $"{AppConfigurationAudience.AzureGovernment}/.default");
+                yield return new TestCaseData("https://contoso.appconfig.azure.us//", $"{AppConfigurationAudience.AzureGovernment}/.default");
             }
         }
     }
