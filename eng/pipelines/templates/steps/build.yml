@@ -92,10 +92,6 @@ steps:
   # only use the project list override file if the service directory is not auto
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
     - pwsh: |
-        if (!"$(ProjectNames)") {
-          Write-Host "No packages to build."
-          exit 0
-        }
         dotnet pack eng/service.proj -warnaserror `
           /p:ValidateRunApiCompat=true `
           /p:SDKType=${{ parameters.SDKType }} `
