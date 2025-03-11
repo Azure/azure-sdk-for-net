@@ -7,12 +7,11 @@
 
   <!-- Import the common SDK build properties. -->
   <Import
-    Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)..\..\.., Directory.Build.props))\Directory.Build.props"
-		Condition="'$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)..\..\.., Directory.Build.props))' != ''"
+    Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props"
+		Condition="'$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))' != ''"
   />
 
   <PropertyGroup>
     <IsShippingLibrary>false</IsShippingLibrary>
-    <RequiredTargetFrameworks Condition="$(IsTestProject) != 'true'">net8.0;net9.0</RequiredTargetFrameworks>
   </PropertyGroup>
 </Project>
