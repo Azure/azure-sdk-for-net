@@ -911,16 +911,22 @@ Url = "Example Url",
 }},
                 Contacts =
 {
-["Expert"] = {new ContactInfo
+["Expert"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Expert Info",
-}},
-["Steward"] = {new ContactInfo
+}
+},
+["Steward"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Steward info",
-}}
+}
+}
 },
             };
             Response<AtlasGlossaryTerm> response = client.CreateTerm(body);
@@ -952,16 +958,22 @@ Url = "Example Url",
 }},
                 Contacts =
 {
-["Expert"] = {new ContactInfo
+["Expert"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Expert Info",
-}},
-["Steward"] = {new ContactInfo
+}
+},
+["Steward"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Steward info",
-}}
+}
+}
 },
             };
             Response<AtlasGlossaryTerm> response = await client.CreateTermAsync(body);
@@ -1056,7 +1068,7 @@ Info = "Example Steward info",
                 },
                 Attributes =
 {
-["ExampleTermTemplateAttribute"] =
+["ExampleTermTemplateAttribute"] = new Dictionary<string, BinaryData>
 {
 ["plain string"] = BinaryData.FromObjectAsJson("Example String"),
 ["date"] = BinaryData.FromObjectAsJson(1606233600000L),
@@ -1089,7 +1101,7 @@ Info = "Example Steward info",
                 },
                 Attributes =
 {
-["ExampleTermTemplateAttribute"] =
+["ExampleTermTemplateAttribute"] = new Dictionary<string, BinaryData>
 {
 ["plain string"] = BinaryData.FromObjectAsJson("Example String"),
 ["date"] = BinaryData.FromObjectAsJson(1606233600000L),

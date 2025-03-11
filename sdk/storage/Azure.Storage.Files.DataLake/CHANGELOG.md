@@ -3,7 +3,8 @@
 ## 12.22.0-beta.2 (Unreleased)
 
 ### Features Added
-
+- Added the following Client Builders: `AddDataLakeServiceClient(Uri, Azure.SasCredential)`, `AddDataLakeServiceClient(Uri, TokenCredential)`
+- 
 ### Breaking Changes
 
 ### Bugs Fixed

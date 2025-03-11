@@ -13,11 +13,9 @@ namespace Azure.Generator
     internal class RestClientVisitor : ScmLibraryVisitor
     {
         /// <inheritdoc/>
-        protected override TypeProvider? Visit(TypeProvider type)
+        protected override TypeProvider? VisitType(TypeProvider type)
         {
-            base.Visit(type);
-
-            if (type is ClientProvider)
+            if (type is not null && type is ClientProvider)
             {
                 type.Update(modifiers: TransfromPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForClient(type));
             }

@@ -367,6 +367,50 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        /// <summary> Get recording result. This includes the download URLs for the recording chunks. </summary>
+        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
+        public virtual Response<RecordingResult> GetRecording(string recordingId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(GetRecording)}");
+            scope.Start();
+            try
+            {
+                return _callRecordingRestClient.GetRecordingResult(
+                    recordingId: recordingId,
+                    cancellationToken: cancellationToken
+                    );
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Get recording result. This includes the download URLs for the recording chunks. </summary>
+        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
+        public virtual async Task<Response<RecordingResult>> GetRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(GetRecording)}");
+            scope.Start();
+            try
+            {
+                return await _callRecordingRestClient.GetRecordingResultAsync(
+                    recordingId: recordingId,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         /// <summary>
         /// The <see cref="DownloadStreamingAsync(Uri, HttpRange, CancellationToken)"/>
         /// operation downloads the recording's content.

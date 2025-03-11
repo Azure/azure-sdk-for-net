@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.ManagementGroups
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagementGroupSubscriptionData(document.RootElement, options);
                     }
                 default:
