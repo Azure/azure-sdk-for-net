@@ -212,7 +212,7 @@ namespace Azure.Generator.Tests.Providers
                     InputFactory.Parameter(
                         KnownParameters.Endpoint.Name,
                         InputPrimitiveType.String,
-                        location:InputRequestLocation.None,
+                        location: InputRequestLocation.None,
                         kind: InputOperationParameterKind.Client,
                         isEndpoint: true)
                 });

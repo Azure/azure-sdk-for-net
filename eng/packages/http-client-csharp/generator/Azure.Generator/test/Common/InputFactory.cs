@@ -222,7 +222,6 @@ namespace Azure.Generator.Tests.Common
             IEnumerable<InputParameter>? parameters = null,
             IEnumerable<InputOperationResponse>? responses = null,
             IEnumerable<string>? requestMediaTypes = null,
-            string? path = null,
             IReadOnlyList<InputDecoratorInfo>? decorators = null)
         {
             var operation = new InputOperation(
@@ -235,8 +234,8 @@ namespace Azure.Generator.Tests.Common
                 parameters is null ? [] : [.. parameters],
                 responses is null ? [OperationResponse()] : [.. responses],
                 "GET",
-                string.Empty,
-                path ?? string.Empty,
+                "",
+                "",
                 null,
                 requestMediaTypes is null ? null : [.. requestMediaTypes],
                 false,
