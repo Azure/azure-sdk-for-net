@@ -9,10 +9,10 @@ namespace System.ClientModel;
 /// <summary>
 /// Represents a Token capable of refreshing itself.
 /// </summary>
-public abstract class RefreshableToken : Token
+public abstract class RefreshableToken : AccessToken
 {
     /// <summary>
-    /// Creates a new instance of <see cref="Token"/> using the provided <paramref name="tokenValue"/> and <paramref name="expiresOn"/>.
+    /// Creates a new instance of <see cref="AccessToken"/> using the provided <paramref name="tokenValue"/> and <paramref name="expiresOn"/>.
     /// </summary>
     /// <param name="tokenValue"></param>
     /// <param name="tokenType"></param>

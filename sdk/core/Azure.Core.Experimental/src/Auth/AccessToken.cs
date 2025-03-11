@@ -6,18 +6,16 @@ namespace System.ClientModel;
 /// <summary>
 /// Represents an OAuth token and its metadata.
 /// </summary>
-#pragma warning disable AZC0012 // Avoid single word type names
-public class Token
-#pragma warning restore AZC0012 // Avoid single word type names
+public class AccessToken
 {
     /// <summary>
-    /// Creates a new instance of <see cref="Token"/> using the provided <paramref name="tokenValue"/> and <paramref name="expiresOn"/>.
+    /// Creates a new instance of <see cref="AccessToken"/> using the provided <paramref name="tokenValue"/> and <paramref name="expiresOn"/>.
     /// </summary>
     /// <param name="tokenValue"></param>
     /// <param name="tokenType"></param>
     /// <param name="expiresOn"></param>
     /// <param name="refreshOn"></param>
-    public Token(string tokenValue, string tokenType, DateTimeOffset expiresOn, DateTimeOffset? refreshOn = null)
+    public AccessToken(string tokenValue, string tokenType, DateTimeOffset expiresOn, DateTimeOffset? refreshOn = null)
     {
         TokenValue = tokenValue;
         TokenType = tokenType;

@@ -122,18 +122,18 @@ namespace Azure.Core
 }
 namespace System.ClientModel
 {
-    public abstract partial class RefreshableToken : System.ClientModel.Token
+    public partial class AccessToken
     {
-        public RefreshableToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) : base (default(string), default(string), default(System.DateTimeOffset), default(System.DateTimeOffset?)) { }
-        public abstract System.Threading.Tasks.Task RefreshAsync(System.Threading.CancellationToken cancellationToken);
-    }
-    public partial class Token
-    {
-        public Token(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) { }
+        public AccessToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) { }
         public System.DateTimeOffset ExpiresOn { get { throw null; } protected set { } }
         public System.DateTimeOffset? RefreshOn { get { throw null; } protected set { } }
         public string TokenType { get { throw null; } protected set { } }
         public string TokenValue { get { throw null; } protected set { } }
+    }
+    public abstract partial class RefreshableToken : System.ClientModel.AccessToken
+    {
+        public RefreshableToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) : base (default(string), default(string), default(System.DateTimeOffset), default(System.DateTimeOffset?)) { }
+        public abstract System.Threading.Tasks.Task RefreshAsync(System.Threading.CancellationToken cancellationToken);
     }
 }
 namespace System.ClientModel.Auth
@@ -159,7 +159,7 @@ namespace System.ClientModel.Auth
     {
         protected TokenProvider() { }
         public abstract System.ClientModel.Auth.TokenFlowProperties? CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
-        public abstract System.ClientModel.Token GetToken(System.ClientModel.Auth.TokenFlowProperties properties, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Token> GetTokenAsync(System.ClientModel.Auth.TokenFlowProperties properties, System.Threading.CancellationToken cancellationToken);
+        public abstract System.ClientModel.AccessToken GetToken(System.ClientModel.Auth.TokenFlowProperties properties, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.AccessToken> GetTokenAsync(System.ClientModel.Auth.TokenFlowProperties properties, System.Threading.CancellationToken cancellationToken);
     }
 }
