@@ -241,9 +241,9 @@ public static class ModelReaderWriter
     }
 
     private static T? ReadInternal<T>(
-    BinaryData data,
-    ModelReaderWriterContext context,
-    ModelReaderWriterOptions? options = default)
+        BinaryData data,
+        ModelReaderWriterContext context,
+        ModelReaderWriterOptions? options = default)
     {
         var obj = ReadInternal(data, typeof(T), context, options);
         return obj is null ? (T?)obj : (T)obj;

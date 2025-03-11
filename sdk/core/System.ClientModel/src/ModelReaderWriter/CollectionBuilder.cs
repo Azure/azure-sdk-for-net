@@ -25,7 +25,8 @@ public abstract class CollectionBuilder
     /// </summary>
     /// <param name="item">The item to add.</param>
     /// <param name="key">Optional key for <see cref="IDictionary"/> collections.</param>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="ArgumentException">If <paramref name="item"/> is not the expected type.</exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="key"/> and the collection being added to is an <see cref="IDictionary"/>.</exception>
     protected internal abstract void AddItem(object item, string? key = default);
 
     /// <summary>
@@ -39,7 +40,7 @@ public abstract class CollectionBuilder
     /// <typeparam name="T">The type to try to cast into.</typeparam>
     /// <param name="item">The item being inserted.</param>
     /// <returns>The <paramref name="item"/> cast into the desired <typeparamref name="T"/>.</returns>
-    /// <exception cref="ArgumentException">When the cast fails.</exception>
+    /// <exception cref="ArgumentException">When the cast to <typeparamref name="T"/> fails.</exception>
     protected static T AssertItem<T>(object item)
     {
         if (item is not T t)

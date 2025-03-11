@@ -7,6 +7,7 @@ internal abstract class CollectionReader
 {
     internal static CollectionReader GetCollectionReader(CollectionBuilder builder, ModelReaderWriterOptions options)
     {
+        //For info on the different formats see the comments in ModelReaderWriterOptions.cs
         if (options.Format != "J" && options.Format != "W")
         {
             throw new InvalidOperationException($"Format '{options.Format}' is not supported only 'J' or 'W' format can be read as collections");

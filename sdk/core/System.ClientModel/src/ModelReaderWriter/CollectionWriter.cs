@@ -9,9 +9,10 @@ internal abstract class CollectionWriter
 {
     internal static CollectionWriter GetCollectionWriter(IEnumerable enumerable, ModelReaderWriterOptions options)
     {
+        //For info on the different formats see the comments in ModelReaderWriterOptions.cs
         if (options.Format != "J" && options.Format != "W")
         {
-            throw new InvalidOperationException($"Format '{options.Format}' is not supported only 'J' or 'W' format can be written as collections");
+            throw new InvalidOperationException($"Format '{options.Format}' is not supported.  Only 'J' or 'W' format can be written as collections");
         }
 
         if (options.Format == "J")
@@ -26,7 +27,7 @@ internal abstract class CollectionWriter
             {
                 return new JsonCollectionWriter();
             }
-            throw new InvalidOperationException($"{persistableModel.GetType().Name} has a wire format of '{wireFormat}' it must be 'J' to be written as a collection");
+            throw new InvalidOperationException($"{persistableModel.GetType().Name} has a wire format of '{wireFormat}'.  It must be 'J' to be written as a collection");
         }
     }
 
@@ -43,7 +44,7 @@ internal abstract class CollectionWriter
         }
         else
         {
-            throw new InvalidOperationException($"Unable to write {enumerable.GetType().Name} can only write collections of IPersistableModel");
+            throw new InvalidOperationException($"Unable to write {enumerable.GetType().Name}.  Only collections of 'IPersistableModel' can be written.");
         }
     }
 
@@ -59,7 +60,7 @@ internal abstract class CollectionWriter
                     return value;
                 }
             }
-            throw new InvalidOperationException($"Can't use format 'W' format on an empty collection please specify a concrete format");
+            throw new InvalidOperationException($"Can't use format 'W' format on an empty collection.  Please specify a concrete format");
         }
 
         var enumerator = enumerable.GetEnumerator();
@@ -68,7 +69,7 @@ internal abstract class CollectionWriter
             return enumerator.Current;
         }
 
-        throw new InvalidOperationException($"Can't use format 'W' format on an empty collection please specify a concrete format");
+        throw new InvalidOperationException($"Can't use format 'W' format on an empty collection.  Please specify a concrete format");
     }
 
     internal abstract BinaryData Write(IEnumerable enumerable, ModelReaderWriterOptions options);
