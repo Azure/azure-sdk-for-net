@@ -21,8 +21,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             return resourceGroup.GetRoleEligibilityScheduleInstances();
         }
 
-        [TestCase]
-        [RecordedTest]
+        [Test]
         [Ignore("InsufficientPermissions")]
         public async Task Get()
         {

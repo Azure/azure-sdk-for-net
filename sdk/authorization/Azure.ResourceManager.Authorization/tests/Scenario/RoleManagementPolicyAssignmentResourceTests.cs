@@ -15,8 +15,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
         }
 
-        [TestCase]
-        [RecordedTest]
+        [Test]
         public async Task Get()
         {
             var resourceGroup = await CreateResourceGroupAsync();
@@ -31,8 +30,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         }
 
         [Ignore("Not implemented exception")]
-        [TestCase]
-        [RecordedTest]
+        [Test]
         public async Task Update()
         {
             var resourceGroup = await CreateResourceGroupAsync();
