@@ -46,10 +46,10 @@ namespace Azure.Developer.LoadTesting.Models
                 writer.WritePropertyName("fileType"u8);
                 writer.WriteStringValue(FileType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireDateTime))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expireDateTime"u8);
-                writer.WriteStringValue(ExpireDateTime.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ValidationStatus))
             {

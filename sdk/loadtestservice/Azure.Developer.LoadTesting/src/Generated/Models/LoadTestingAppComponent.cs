@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> An Azure resource object (Refer azure generic resource model :https://learn.microsoft.com/en-us/rest/api/resources/resources/get-by-id#genericresource). </summary>
-    public partial class AppComponent
+    public partial class LoadTestingAppComponent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,11 +46,11 @@ namespace Azure.Developer.LoadTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AppComponent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingAppComponent"/>. </summary>
         /// <param name="resourceName"> Azure resource name, required while creating the app component. </param>
         /// <param name="resourceType"> Azure resource type, required while creating the app component. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="resourceType"/> is null. </exception>
-        public AppComponent(string resourceName, string resourceType)
+        public LoadTestingAppComponent(string resourceName, string resourceType)
         {
             Argument.AssertNotNull(resourceName, nameof(resourceName));
             Argument.AssertNotNull(resourceType, nameof(resourceType));
@@ -59,7 +59,7 @@ namespace Azure.Developer.LoadTesting.Models
             ResourceType = resourceType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppComponent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingAppComponent"/>. </summary>
         /// <param name="resourceId"> fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}. </param>
         /// <param name="resourceName"> Azure resource name, required while creating the app component. </param>
         /// <param name="resourceType"> Azure resource type, required while creating the app component. </param>
@@ -68,7 +68,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="subscriptionId"> Subscription Id of the Azure resource. </param>
         /// <param name="kind"> Kind of Azure resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppComponent(ResourceIdentifier resourceId, string resourceName, string resourceType, string displayName, string resourceGroup, string subscriptionId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LoadTestingAppComponent(ResourceIdentifier resourceId, string resourceName, string resourceType, string displayName, string resourceGroup, string subscriptionId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             ResourceName = resourceName;
@@ -80,8 +80,8 @@ namespace Azure.Developer.LoadTesting.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppComponent"/> for deserialization. </summary>
-        internal AppComponent()
+        /// <summary> Initializes a new instance of <see cref="LoadTestingAppComponent"/> for deserialization. </summary>
+        internal LoadTestingAppComponent()
         {
         }
 

@@ -104,7 +104,7 @@ namespace Azure.Developer.LoadTesting.Models
             {
                 return null;
             }
-            IDictionary<string, AppComponent> components = default;
+            IDictionary<string, LoadTestingAppComponent> components = default;
             string testId = default;
             DateTimeOffset? createdDateTime = default;
             string createdBy = default;
@@ -116,10 +116,10 @@ namespace Azure.Developer.LoadTesting.Models
             {
                 if (property.NameEquals("components"u8))
                 {
-                    Dictionary<string, AppComponent> dictionary = new Dictionary<string, AppComponent>();
+                    Dictionary<string, LoadTestingAppComponent> dictionary = new Dictionary<string, LoadTestingAppComponent>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, AppComponent.DeserializeAppComponent(property0.Value, options));
+                        dictionary.Add(property0.Name, LoadTestingAppComponent.DeserializeLoadTestingAppComponent(property0.Value, options));
                     }
                     components = dictionary;
                     continue;

@@ -52,18 +52,18 @@ namespace Azure.Developer.LoadTesting.Models
 
         /// <summary> Initializes a new instance of <see cref="ArtifactsContainerInfo"/>. </summary>
         /// <param name="uri"> This is a SAS URI to an Azure Storage Container that contains the test run artifacts. </param>
-        /// <param name="expireDateTime"> Expiry time of the container (RFC 3339 literal format). </param>
+        /// <param name="expiresOn"> Expiry time of the container (RFC 3339 literal format). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArtifactsContainerInfo(Uri uri, DateTimeOffset? expireDateTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArtifactsContainerInfo(Uri uri, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
-            ExpireDateTime = expireDateTime;
+            ExpiresOn = expiresOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This is a SAS URI to an Azure Storage Container that contains the test run artifacts. </summary>
         public Uri Uri { get; }
         /// <summary> Expiry time of the container (RFC 3339 literal format). </summary>
-        public DateTimeOffset? ExpireDateTime { get; }
+        public DateTimeOffset? ExpiresOn { get; }
     }
 }

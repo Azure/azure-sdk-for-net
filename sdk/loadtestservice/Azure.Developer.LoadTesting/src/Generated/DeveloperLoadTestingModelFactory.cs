@@ -165,17 +165,17 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="fileName"> Name of the file. </param>
         /// <param name="uri"> File URL. </param>
         /// <param name="fileType"> File type. </param>
-        /// <param name="expireDateTime"> Expiry time of the file (RFC 3339 literal format). </param>
+        /// <param name="expiresOn"> Expiry time of the file (RFC 3339 literal format). </param>
         /// <param name="validationStatus"> Validation status of the file. </param>
         /// <param name="validationFailureDetails"> Validation failure error details. </param>
         /// <returns> A new <see cref="Models.TestFileInfo"/> instance for mocking. </returns>
-        public static TestFileInfo TestFileInfo(string fileName = null, Uri uri = null, FileType? fileType = null, DateTimeOffset? expireDateTime = null, FileValidationStatus? validationStatus = null, string validationFailureDetails = null)
+        public static TestFileInfo TestFileInfo(string fileName = null, Uri uri = null, FileType? fileType = null, DateTimeOffset? expiresOn = null, FileValidationStatus? validationStatus = null, string validationFailureDetails = null)
         {
             return new TestFileInfo(
                 fileName,
                 uri,
                 fileType,
-                expireDateTime,
+                expiresOn,
                 validationStatus,
                 validationFailureDetails,
                 serializedAdditionalRawData: null);
@@ -193,9 +193,9 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="Models.TestAppComponents"/> instance for mocking. </returns>
-        public static TestAppComponents TestAppComponents(IDictionary<string, AppComponent> components = null, string testId = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
+        public static TestAppComponents TestAppComponents(IDictionary<string, LoadTestingAppComponent> components = null, string testId = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
         {
-            components ??= new Dictionary<string, AppComponent>();
+            components ??= new Dictionary<string, LoadTestingAppComponent>();
 
             return new TestAppComponents(
                 components,
@@ -207,7 +207,7 @@ namespace Azure.Developer.LoadTesting.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AppComponent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LoadTestingAppComponent"/>. </summary>
         /// <param name="resourceId"> fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}. </param>
         /// <param name="resourceName"> Azure resource name, required while creating the app component. </param>
         /// <param name="resourceType"> Azure resource type, required while creating the app component. </param>
@@ -215,10 +215,10 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="resourceGroup"> Resource group name of the Azure resource. </param>
         /// <param name="subscriptionId"> Subscription Id of the Azure resource. </param>
         /// <param name="kind"> Kind of Azure resource type. </param>
-        /// <returns> A new <see cref="Models.AppComponent"/> instance for mocking. </returns>
-        public static AppComponent AppComponent(ResourceIdentifier resourceId = null, string resourceName = null, string resourceType = null, string displayName = null, string resourceGroup = null, string subscriptionId = null, string kind = null)
+        /// <returns> A new <see cref="Models.LoadTestingAppComponent"/> instance for mocking. </returns>
+        public static LoadTestingAppComponent LoadTestingAppComponent(ResourceIdentifier resourceId = null, string resourceName = null, string resourceType = null, string displayName = null, string resourceGroup = null, string subscriptionId = null, string kind = null)
         {
-            return new AppComponent(
+            return new LoadTestingAppComponent(
                 resourceId,
                 resourceName,
                 resourceType,
@@ -496,17 +496,17 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="fileName"> Name of the file. </param>
         /// <param name="uri"> File URL. </param>
         /// <param name="fileType"> File type. </param>
-        /// <param name="expireDateTime"> Expiry time of the file (RFC 3339 literal format). </param>
+        /// <param name="expiresOn"> Expiry time of the file (RFC 3339 literal format). </param>
         /// <param name="validationStatus"> Validation status of the file. </param>
         /// <param name="validationFailureDetails"> Validation failure error details. </param>
         /// <returns> A new <see cref="Models.TestRunFileInfo"/> instance for mocking. </returns>
-        public static TestRunFileInfo TestRunFileInfo(string fileName = null, Uri uri = null, FileType? fileType = null, DateTimeOffset? expireDateTime = null, FileValidationStatus? validationStatus = null, string validationFailureDetails = null)
+        public static TestRunFileInfo TestRunFileInfo(string fileName = null, Uri uri = null, FileType? fileType = null, DateTimeOffset? expiresOn = null, FileValidationStatus? validationStatus = null, string validationFailureDetails = null)
         {
             return new TestRunFileInfo(
                 fileName,
                 uri,
                 fileType,
-                expireDateTime,
+                expiresOn,
                 validationStatus,
                 validationFailureDetails,
                 serializedAdditionalRawData: null);
@@ -525,11 +525,11 @@ namespace Azure.Developer.LoadTesting.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.ArtifactsContainerInfo"/>. </summary>
         /// <param name="uri"> This is a SAS URI to an Azure Storage Container that contains the test run artifacts. </param>
-        /// <param name="expireDateTime"> Expiry time of the container (RFC 3339 literal format). </param>
+        /// <param name="expiresOn"> Expiry time of the container (RFC 3339 literal format). </param>
         /// <returns> A new <see cref="Models.ArtifactsContainerInfo"/> instance for mocking. </returns>
-        public static ArtifactsContainerInfo ArtifactsContainerInfo(Uri uri = null, DateTimeOffset? expireDateTime = null)
+        public static ArtifactsContainerInfo ArtifactsContainerInfo(Uri uri = null, DateTimeOffset? expiresOn = null)
         {
-            return new ArtifactsContainerInfo(uri, expireDateTime, serializedAdditionalRawData: null);
+            return new ArtifactsContainerInfo(uri, expiresOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TestRunAppComponents"/>. </summary>
@@ -544,9 +544,9 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="Models.TestRunAppComponents"/> instance for mocking. </returns>
-        public static TestRunAppComponents TestRunAppComponents(IDictionary<string, AppComponent> components = null, string testRunId = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
+        public static TestRunAppComponents TestRunAppComponents(IDictionary<string, LoadTestingAppComponent> components = null, string testRunId = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
         {
-            components ??= new Dictionary<string, AppComponent>();
+            components ??= new Dictionary<string, LoadTestingAppComponent>();
 
             return new TestRunAppComponents(
                 components,

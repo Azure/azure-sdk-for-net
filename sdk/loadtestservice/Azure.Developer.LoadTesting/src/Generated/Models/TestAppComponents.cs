@@ -52,7 +52,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// : resource object }
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="components"/> is null. </exception>
-        public TestAppComponents(IDictionary<string, AppComponent> components)
+        public TestAppComponents(IDictionary<string, LoadTestingAppComponent> components)
         {
             Argument.AssertNotNull(components, nameof(components));
 
@@ -71,7 +71,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestAppComponents(IDictionary<string, AppComponent> components, string testId, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TestAppComponents(IDictionary<string, LoadTestingAppComponent> components, string testId, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Components = components;
             TestId = testId;
@@ -92,7 +92,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName})
         /// : resource object }
         /// </summary>
-        public IDictionary<string, AppComponent> Components { get; }
+        public IDictionary<string, LoadTestingAppComponent> Components { get; }
         /// <summary> Test identifier. </summary>
         public string TestId { get; }
         /// <summary> The creation datetime(RFC 3339 literal format). </summary>

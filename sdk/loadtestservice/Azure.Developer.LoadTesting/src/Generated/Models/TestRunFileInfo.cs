@@ -59,16 +59,16 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="fileName"> Name of the file. </param>
         /// <param name="uri"> File URL. </param>
         /// <param name="fileType"> File type. </param>
-        /// <param name="expireDateTime"> Expiry time of the file (RFC 3339 literal format). </param>
+        /// <param name="expiresOn"> Expiry time of the file (RFC 3339 literal format). </param>
         /// <param name="validationStatus"> Validation status of the file. </param>
         /// <param name="validationFailureDetails"> Validation failure error details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestRunFileInfo(string fileName, Uri uri, FileType? fileType, DateTimeOffset? expireDateTime, FileValidationStatus? validationStatus, string validationFailureDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TestRunFileInfo(string fileName, Uri uri, FileType? fileType, DateTimeOffset? expiresOn, FileValidationStatus? validationStatus, string validationFailureDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileName = fileName;
             Uri = uri;
             FileType = fileType;
-            ExpireDateTime = expireDateTime;
+            ExpiresOn = expiresOn;
             ValidationStatus = validationStatus;
             ValidationFailureDetails = validationFailureDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -86,7 +86,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> File type. </summary>
         public FileType? FileType { get; }
         /// <summary> Expiry time of the file (RFC 3339 literal format). </summary>
-        public DateTimeOffset? ExpireDateTime { get; }
+        public DateTimeOffset? ExpiresOn { get; }
         /// <summary> Validation status of the file. </summary>
         public FileValidationStatus? ValidationStatus { get; }
         /// <summary> Validation failure error details. </summary>

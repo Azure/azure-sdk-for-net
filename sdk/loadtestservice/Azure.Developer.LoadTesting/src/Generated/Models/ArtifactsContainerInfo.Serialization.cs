@@ -39,10 +39,10 @@ namespace Azure.Developer.LoadTesting.Models
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ExpireDateTime))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expireDateTime"u8);
-                writer.WriteStringValue(ExpireDateTime.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

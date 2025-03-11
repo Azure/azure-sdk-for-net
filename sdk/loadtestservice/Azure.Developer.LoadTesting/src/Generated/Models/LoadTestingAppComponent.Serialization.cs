@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class AppComponent : IUtf8JsonSerializable, IJsonModel<AppComponent>
+    public partial class LoadTestingAppComponent : IUtf8JsonSerializable, IJsonModel<LoadTestingAppComponent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppComponent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadTestingAppComponent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AppComponent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LoadTestingAppComponent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComponent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LoadTestingAppComponent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppComponent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingAppComponent)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W")
@@ -80,19 +80,19 @@ namespace Azure.Developer.LoadTesting.Models
             }
         }
 
-        AppComponent IJsonModel<AppComponent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LoadTestingAppComponent IJsonModel<LoadTestingAppComponent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComponent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LoadTestingAppComponent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppComponent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingAppComponent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAppComponent(document.RootElement, options);
+            return DeserializeLoadTestingAppComponent(document.RootElement, options);
         }
 
-        internal static AppComponent DeserializeAppComponent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LoadTestingAppComponent DeserializeLoadTestingAppComponent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -152,7 +152,7 @@ namespace Azure.Developer.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AppComponent(
+            return new LoadTestingAppComponent(
                 resourceId,
                 resourceName,
                 resourceType,
@@ -163,43 +163,43 @@ namespace Azure.Developer.LoadTesting.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AppComponent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LoadTestingAppComponent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComponent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LoadTestingAppComponent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppComponent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingAppComponent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AppComponent IPersistableModel<AppComponent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LoadTestingAppComponent IPersistableModel<LoadTestingAppComponent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComponent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LoadTestingAppComponent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAppComponent(document.RootElement, options);
+                        return DeserializeLoadTestingAppComponent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppComponent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingAppComponent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AppComponent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LoadTestingAppComponent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AppComponent FromResponse(Response response)
+        internal static LoadTestingAppComponent FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAppComponent(document.RootElement);
+            return DeserializeLoadTestingAppComponent(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
