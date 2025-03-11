@@ -1123,5 +1123,135 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateTransparency = false,
             ContentType = CertificateContentType.Pkcs12
         };
+
+        [RecordedTest]
+        public async Task StartCreateCertificateWithPreserveCertOrder()
+        {
+            string certName = Recording.GenerateId();
+            CertificateClient client = GetClient();
+
+            var policy = CertificatePolicy.Default;
+            var tags = new Dictionary<string, string>
+            {
+                { "tag1", "value1" },
+                { "tag2", "value2" }
+            };
+
+            CertificateOperation operation = await client.StartCreateCertificateAsync(
+                certName,
+                policy,
+                enabled: true,
+                tags: tags,
+                preserveCertOrder: true);
+
+            Assert.That(operation, Is.Not.Null);
+            Assert.That(operation.Properties.Name, Is.EqualTo(certName));
+
+            KeyVaultCertificateWithPolicy cert = await operation.WaitForCompletionAsync();
+
+            Assert.That(cert, Is.Not.Null);
+            Assert.That(cert.Name, Is.EqualTo(certName));
+            Assert.That(cert.Properties.Enabled, Is.True);
+            Assert.That(cert.Properties.Tags, Is.EquivalentTo(tags));
+        }
+
+        [RecordedTest]
+        public async Task ImportCertificateWithPreserveCertOrder()
+        {
+            string certName = Recording.GenerateId();
+            CertificateClient client = GetClient();
+
+            var certBytes = Encoding.ASCII.GetBytes(CertificateTestsUtils.s_pem);
+            var policy = CertificatePolicy.Default;
+            var tags = new Dictionary<string, string>
+            {
+                { "tag1", "value1" },
+                { "tag2", "value2" }
+            };
+
+            var importOptions = new ImportCertificateOptions(certName, certBytes)
+            {
+                Policy = policy,
+                Enabled = true,
+                PreserveCertOrder = true
+            };
+
+            foreach (var tag in tags)
+            {
+                importOptions.Tags.Add(tag);
+            }
+
+            KeyVaultCertificateWithPolicy cert = await client.ImportCertificateAsync(importOptions);
+
+            Assert.That(cert, Is.Not.Null);
+            Assert.That(cert.Name, Is.EqualTo(certName));
+            Assert.That(cert.Properties.Enabled, Is.True);
+            Assert.That(cert.Properties.Tags, Is.EquivalentTo(tags));
+        }
+
+        [RecordedTest]
+        public void StartCreateCertificateWithPreserveCertOrderSync()
+        {
+            string certName = Recording.GenerateId();
+            CertificateClient client = GetClient();
+
+            var policy = CertificatePolicy.Default;
+            var tags = new Dictionary<string, string>
+            {
+                { "tag1", "value1" },
+                { "tag2", "value2" }
+            };
+
+            CertificateOperation operation = client.StartCreateCertificate(
+                certName,
+                policy,
+                enabled: true,
+                tags: tags,
+                preserveCertOrder: true);
+
+            Assert.That(operation, Is.Not.Null);
+            Assert.That(operation.Properties.Name, Is.EqualTo(certName));
+
+            KeyVaultCertificateWithPolicy cert = operation.WaitForCompletion();
+
+            Assert.That(cert, Is.Not.Null);
+            Assert.That(cert.Name, Is.EqualTo(certName));
+            Assert.That(cert.Properties.Enabled, Is.True);
+            Assert.That(cert.Properties.Tags, Is.EquivalentTo(tags));
+        }
+
+        [RecordedTest]
+        public void ImportCertificateWithPreserveCertOrderSync()
+        {
+            string certName = Recording.GenerateId();
+            CertificateClient client = GetClient();
+
+            var certBytes = Encoding.ASCII.GetBytes(CertificateTestsUtils.s_pem);
+            var policy = CertificatePolicy.Default;
+            var tags = new Dictionary<string, string>
+            {
+                { "tag1", "value1" },
+                { "tag2", "value2" }
+            };
+
+            var importOptions = new ImportCertificateOptions(certName, certBytes)
+            {
+                Policy = policy,
+                Enabled = true,
+                PreserveCertOrder = true
+            };
+
+            foreach (var tag in tags)
+            {
+                importOptions.Tags.Add(tag);
+            }
+
+            KeyVaultCertificateWithPolicy cert = client.ImportCertificate(importOptions);
+
+            Assert.That(cert, Is.Not.Null);
+            Assert.That(cert.Name, Is.EqualTo(certName));
+            Assert.That(cert.Properties.Enabled, Is.True);
+            Assert.That(cert.Properties.Tags, Is.EquivalentTo(tags));
+        }
     }
 }
