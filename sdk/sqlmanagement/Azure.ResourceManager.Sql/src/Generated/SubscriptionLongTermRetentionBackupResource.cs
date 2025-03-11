@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -256,98 +256,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Change a long term retention backup access tier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}/changeAccessTier</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionBackups_ChangeAccessTier</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionLongTermRetentionBackupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="changeLongTermRetentionBackupAccessTierParameters"> The <see cref="ChangeLongTermRetentionBackupAccessTierParameters"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="changeLongTermRetentionBackupAccessTierParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<SubscriptionLongTermRetentionBackupResource>> ChangeAccessTierAsync(WaitUntil waitUntil, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(changeLongTermRetentionBackupAccessTierParameters, nameof(changeLongTermRetentionBackupAccessTierParameters));
-
-            using var scope = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupResource.ChangeAccessTier");
-            scope.Start();
-            try
-            {
-                var response = await _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.ChangeAccessTierAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, changeLongTermRetentionBackupAccessTierParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SubscriptionLongTermRetentionBackupResource>(new SubscriptionLongTermRetentionBackupOperationSource(Client), _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateChangeAccessTierRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, changeLongTermRetentionBackupAccessTierParameters).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Change a long term retention backup access tier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}/changeAccessTier</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionBackups_ChangeAccessTier</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionLongTermRetentionBackupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="changeLongTermRetentionBackupAccessTierParameters"> The <see cref="ChangeLongTermRetentionBackupAccessTierParameters"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="changeLongTermRetentionBackupAccessTierParameters"/> is null. </exception>
-        public virtual ArmOperation<SubscriptionLongTermRetentionBackupResource> ChangeAccessTier(WaitUntil waitUntil, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(changeLongTermRetentionBackupAccessTierParameters, nameof(changeLongTermRetentionBackupAccessTierParameters));
-
-            using var scope = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupResource.ChangeAccessTier");
-            scope.Start();
-            try
-            {
-                var response = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.ChangeAccessTier(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, changeLongTermRetentionBackupAccessTierParameters, cancellationToken);
-                var operation = new SqlArmOperation<SubscriptionLongTermRetentionBackupResource>(new SubscriptionLongTermRetentionBackupOperationSource(Client), _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateChangeAccessTierRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, changeLongTermRetentionBackupAccessTierParameters).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Copy an existing long term retention backup.
         /// <list type="bullet">
         /// <item>
@@ -360,7 +268,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -406,7 +314,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -452,7 +360,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -498,7 +406,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

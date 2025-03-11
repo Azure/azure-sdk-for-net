@@ -80,16 +80,6 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
-            if (Optional.IsDefined(IsBackupImmutable))
-            {
-                writer.WritePropertyName("isBackupImmutable"u8);
-                writer.WriteBooleanValue(IsBackupImmutable.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(BackupStorageAccessTier))
-            {
-                writer.WritePropertyName("backupStorageAccessTier"u8);
-                writer.WriteStringValue(BackupStorageAccessTier.Value.ToString());
-            }
             writer.WriteEndObject();
         }
 
@@ -125,8 +115,6 @@ namespace Azure.ResourceManager.Sql
             DateTimeOffset? backupExpirationTime = default;
             SqlBackupStorageRedundancy? backupStorageRedundancy = default;
             SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default;
-            bool? isBackupImmutable = default;
-            SqlBackupStorageAccessTier? backupStorageAccessTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,24 +216,6 @@ namespace Azure.ResourceManager.Sql
                             requestedBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("isBackupImmutable"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isBackupImmutable = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("backupStorageAccessTier"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            backupStorageAccessTier = new SqlBackupStorageAccessTier(property0.Value.GetString());
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -268,8 +238,6 @@ namespace Azure.ResourceManager.Sql
                 backupExpirationTime,
                 backupStorageRedundancy,
                 requestedBackupStorageRedundancy,
-                isBackupImmutable,
-                backupStorageAccessTier,
                 serializedAdditionalRawData);
         }
 
@@ -476,37 +444,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     builder.Append("    requestedBackupStorageRedundancy: ");
                     builder.AppendLine($"'{RequestedBackupStorageRedundancy.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsBackupImmutable), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    isBackupImmutable: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsBackupImmutable))
-                {
-                    builder.Append("    isBackupImmutable: ");
-                    var boolValue = IsBackupImmutable.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupStorageAccessTier), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    backupStorageAccessTier: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BackupStorageAccessTier))
-                {
-                    builder.Append("    backupStorageAccessTier: ");
-                    builder.AppendLine($"'{BackupStorageAccessTier.Value.ToString()}'");
                 }
             }
 

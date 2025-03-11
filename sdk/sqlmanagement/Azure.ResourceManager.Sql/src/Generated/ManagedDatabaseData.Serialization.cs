@@ -91,25 +91,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("sourceDatabaseId"u8);
                 writer.WriteStringValue(SourceDatabaseId);
             }
-            if (Optional.IsDefined(CrossSubscriptionSourceDatabaseId))
-            {
-                writer.WritePropertyName("crossSubscriptionSourceDatabaseId"u8);
-                writer.WriteStringValue(CrossSubscriptionSourceDatabaseId);
-            }
             if (Optional.IsDefined(RestorableDroppedDatabaseId))
             {
                 writer.WritePropertyName("restorableDroppedDatabaseId"u8);
                 writer.WriteStringValue(RestorableDroppedDatabaseId);
-            }
-            if (Optional.IsDefined(CrossSubscriptionRestorableDroppedDatabaseId))
-            {
-                writer.WritePropertyName("crossSubscriptionRestorableDroppedDatabaseId"u8);
-                writer.WriteStringValue(CrossSubscriptionRestorableDroppedDatabaseId);
-            }
-            if (Optional.IsDefined(StorageContainerIdentity))
-            {
-                writer.WritePropertyName("storageContainerIdentity"u8);
-                writer.WriteStringValue(StorageContainerIdentity);
             }
             if (Optional.IsDefined(StorageContainerSasToken))
             {
@@ -140,16 +125,6 @@ namespace Azure.ResourceManager.Sql
             {
                 writer.WritePropertyName("lastBackupName"u8);
                 writer.WriteStringValue(LastBackupName);
-            }
-            if (Optional.IsDefined(CrossSubscriptionTargetManagedInstanceId))
-            {
-                writer.WritePropertyName("crossSubscriptionTargetManagedInstanceId"u8);
-                writer.WriteStringValue(CrossSubscriptionTargetManagedInstanceId);
-            }
-            if (Optional.IsDefined(IsLedgerOn))
-            {
-                writer.WritePropertyName("isLedgerOn"u8);
-                writer.WriteBooleanValue(IsLedgerOn.Value);
             }
             writer.WriteEndObject();
         }
@@ -190,18 +165,13 @@ namespace Azure.ResourceManager.Sql
             ManagedDatabaseCreateMode? createMode = default;
             Uri storageContainerUri = default;
             ResourceIdentifier sourceDatabaseId = default;
-            ResourceIdentifier crossSubscriptionSourceDatabaseId = default;
             ResourceIdentifier restorableDroppedDatabaseId = default;
-            ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId = default;
-            string storageContainerIdentity = default;
             string storageContainerSasToken = default;
             ResourceIdentifier failoverGroupId = default;
             ResourceIdentifier recoverableDatabaseId = default;
             ResourceIdentifier longTermRetentionBackupResourceId = default;
             bool? autoCompleteRestore = default;
             string lastBackupName = default;
-            ResourceIdentifier crossSubscriptionTargetManagedInstanceId = default;
-            bool? isLedgerOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -344,15 +314,6 @@ namespace Azure.ResourceManager.Sql
                             sourceDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("crossSubscriptionSourceDatabaseId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            crossSubscriptionSourceDatabaseId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("restorableDroppedDatabaseId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -360,20 +321,6 @@ namespace Azure.ResourceManager.Sql
                                 continue;
                             }
                             restorableDroppedDatabaseId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("crossSubscriptionRestorableDroppedDatabaseId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            crossSubscriptionRestorableDroppedDatabaseId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("storageContainerIdentity"u8))
-                        {
-                            storageContainerIdentity = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("storageContainerSasToken"u8))
@@ -422,24 +369,6 @@ namespace Azure.ResourceManager.Sql
                             lastBackupName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("crossSubscriptionTargetManagedInstanceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            crossSubscriptionTargetManagedInstanceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("isLedgerOn"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isLedgerOn = property0.Value.GetBoolean();
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -466,18 +395,13 @@ namespace Azure.ResourceManager.Sql
                 createMode,
                 storageContainerUri,
                 sourceDatabaseId,
-                crossSubscriptionSourceDatabaseId,
                 restorableDroppedDatabaseId,
-                crossSubscriptionRestorableDroppedDatabaseId,
-                storageContainerIdentity,
                 storageContainerSasToken,
                 failoverGroupId,
                 recoverableDatabaseId,
                 longTermRetentionBackupResourceId,
                 autoCompleteRestore,
                 lastBackupName,
-                crossSubscriptionTargetManagedInstanceId,
-                isLedgerOn,
                 serializedAdditionalRawData);
         }
 
@@ -757,21 +681,6 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CrossSubscriptionSourceDatabaseId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    crossSubscriptionSourceDatabaseId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CrossSubscriptionSourceDatabaseId))
-                {
-                    builder.Append("    crossSubscriptionSourceDatabaseId: ");
-                    builder.AppendLine($"'{CrossSubscriptionSourceDatabaseId.ToString()}'");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestorableDroppedDatabaseId), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -784,44 +693,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     builder.Append("    restorableDroppedDatabaseId: ");
                     builder.AppendLine($"'{RestorableDroppedDatabaseId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CrossSubscriptionRestorableDroppedDatabaseId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    crossSubscriptionRestorableDroppedDatabaseId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CrossSubscriptionRestorableDroppedDatabaseId))
-                {
-                    builder.Append("    crossSubscriptionRestorableDroppedDatabaseId: ");
-                    builder.AppendLine($"'{CrossSubscriptionRestorableDroppedDatabaseId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageContainerIdentity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    storageContainerIdentity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StorageContainerIdentity))
-                {
-                    builder.Append("    storageContainerIdentity: ");
-                    if (StorageContainerIdentity.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{StorageContainerIdentity}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{StorageContainerIdentity}'");
-                    }
                 }
             }
 
@@ -929,37 +800,6 @@ namespace Azure.ResourceManager.Sql
                     {
                         builder.AppendLine($"'{LastBackupName}'");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CrossSubscriptionTargetManagedInstanceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    crossSubscriptionTargetManagedInstanceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CrossSubscriptionTargetManagedInstanceId))
-                {
-                    builder.Append("    crossSubscriptionTargetManagedInstanceId: ");
-                    builder.AppendLine($"'{CrossSubscriptionTargetManagedInstanceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLedgerOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    isLedgerOn: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsLedgerOn))
-                {
-                    builder.Append("    isLedgerOn: ");
-                    var boolValue = IsLedgerOn.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
                 }
             }
 

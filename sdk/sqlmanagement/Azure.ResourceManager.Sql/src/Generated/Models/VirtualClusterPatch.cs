@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> An update request for virtual cluster. </summary>
+    /// <summary> An update request for an Azure SQL Database virtual cluster. </summary>
     public partial class VirtualClusterPatch
     {
         /// <summary>
@@ -56,15 +56,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="VirtualClusterPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="subnetId"> Subnet resource ID for the virtual cluster. </param>
-        /// <param name="version"> Virtual cluster version. </param>
+        /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
         /// <param name="childResources"> List of resources in this virtual cluster. </param>
+        /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this virtual cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualClusterPatch(IDictionary<string, string> tags, ResourceIdentifier subnetId, string version, IReadOnlyList<string> childResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualClusterPatch(IDictionary<string, string> tags, ResourceIdentifier subnetId, string family, IReadOnlyList<string> childResources, ResourceIdentifier maintenanceConfigurationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             SubnetId = subnetId;
-            Version = version;
+            Family = family;
             ChildResources = childResources;
+            MaintenanceConfigurationId = maintenanceConfigurationId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -74,9 +76,6 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Subnet resource ID for the virtual cluster. </summary>
         [WirePath("properties.subnetId")]
         public ResourceIdentifier SubnetId { get; }
-        /// <summary> Virtual cluster version. </summary>
-        [WirePath("properties.version")]
-        public string Version { get; set; }
         /// <summary> List of resources in this virtual cluster. </summary>
         [WirePath("properties.childResources")]
         public IReadOnlyList<string> ChildResources { get; }

@@ -84,10 +84,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="licenseType"> The license type to apply for this elastic pool. </param>
         /// <param name="maintenanceConfigurationId"> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </param>
         /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the elastic pool that are used to provide high availability. Applicable only to Hyperscale elastic pools. </param>
-        /// <param name="preferredEnclaveType"> Type of enclave requested on the elastic pool. </param>
-        /// <param name="availabilityZone"> Specifies the availability zone the pool's primary replica is pinned to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, ElasticPoolState? state, DateTimeOffset? createdOn, long? maxSizeBytes, double? minCapacity, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? isZoneRedundant, ElasticPoolLicenseType? licenseType, ResourceIdentifier maintenanceConfigurationId, int? highAvailabilityReplicaCount, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, SqlAvailabilityZoneType? availabilityZone, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ElasticPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, ElasticPoolState? state, DateTimeOffset? createdOn, long? maxSizeBytes, double? minCapacity, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? isZoneRedundant, ElasticPoolLicenseType? licenseType, ResourceIdentifier maintenanceConfigurationId, int? highAvailabilityReplicaCount, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -100,8 +98,6 @@ namespace Azure.ResourceManager.Sql
             LicenseType = licenseType;
             MaintenanceConfigurationId = maintenanceConfigurationId;
             HighAvailabilityReplicaCount = highAvailabilityReplicaCount;
-            PreferredEnclaveType = preferredEnclaveType;
-            AvailabilityZone = availabilityZone;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -152,11 +148,5 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The number of secondary replicas associated with the elastic pool that are used to provide high availability. Applicable only to Hyperscale elastic pools. </summary>
         [WirePath("properties.highAvailabilityReplicaCount")]
         public int? HighAvailabilityReplicaCount { get; set; }
-        /// <summary> Type of enclave requested on the elastic pool. </summary>
-        [WirePath("properties.preferredEnclaveType")]
-        public SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get; set; }
-        /// <summary> Specifies the availability zone the pool's primary replica is pinned to. </summary>
-        [WirePath("properties.availabilityZone")]
-        public SqlAvailabilityZoneType? AvailabilityZone { get; set; }
     }
 }

@@ -76,17 +76,6 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("backupStorageRedundancy"u8);
                 writer.WriteStringValue(BackupStorageRedundancy.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Keys))
-            {
-                writer.WritePropertyName("keys"u8);
-                writer.WriteStartObject();
-                foreach (var item in Keys)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
             writer.WriteEndObject();
         }
 
@@ -123,7 +112,6 @@ namespace Azure.ResourceManager.Sql
             DateTimeOffset? deletionDate = default;
             DateTimeOffset? earliestRestoreDate = default;
             SqlBackupStorageRedundancy? backupStorageRedundancy = default;
-            IDictionary<string, SqlDatabaseKey> keys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -239,20 +227,6 @@ namespace Azure.ResourceManager.Sql
                             backupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("keys"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, SqlDatabaseKey> dictionary = new Dictionary<string, SqlDatabaseKey>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, SqlDatabaseKey.DeserializeSqlDatabaseKey(property1.Value, options));
-                            }
-                            keys = dictionary;
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -276,7 +250,6 @@ namespace Azure.ResourceManager.Sql
                 deletionDate,
                 earliestRestoreDate,
                 backupStorageRedundancy,
-                keys ?? new ChangeTrackingDictionary<string, SqlDatabaseKey>(),
                 serializedAdditionalRawData);
         }
 
@@ -508,30 +481,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     builder.Append("    backupStorageRedundancy: ");
                     builder.AppendLine($"'{BackupStorageRedundancy.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Keys), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    keys: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Keys))
-                {
-                    if (Keys.Any())
-                    {
-                        builder.Append("    keys: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Keys)
-                        {
-                            builder.Append($"        '{item.Key}': ");
-                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 6, false, "    keys: ");
-                        }
-                        builder.AppendLine("    }");
-                    }
                 }
             }
 

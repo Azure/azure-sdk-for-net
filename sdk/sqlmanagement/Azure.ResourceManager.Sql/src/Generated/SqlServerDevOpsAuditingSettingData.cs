@@ -74,7 +74,6 @@ namespace Azure.ResourceManager.Sql
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
         ///
         /// </param>
-        /// <param name="isManagedIdentityInUse"> Specifies whether Managed Identity is used to access blob storage. </param>
         /// <param name="state"> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
         /// <param name="storageAccountAccessKey">
@@ -87,10 +86,9 @@ namespace Azure.ResourceManager.Sql
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerDevOpsAuditingSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isAzureMonitorTargetEnabled, bool? isManagedIdentityInUse, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlServerDevOpsAuditingSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isAzureMonitorTargetEnabled, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
-            IsManagedIdentityInUse = isManagedIdentityInUse;
             State = state;
             StorageEndpoint = storageEndpoint;
             StorageAccountAccessKey = storageAccountAccessKey;
@@ -113,9 +111,6 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         [WirePath("properties.isAzureMonitorTargetEnabled")]
         public bool? IsAzureMonitorTargetEnabled { get; set; }
-        /// <summary> Specifies whether Managed Identity is used to access blob storage. </summary>
-        [WirePath("properties.isManagedIdentityInUse")]
-        public bool? IsManagedIdentityInUse { get; set; }
         /// <summary> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </summary>
         [WirePath("properties.state")]
         public BlobAuditingPolicyState? State { get; set; }

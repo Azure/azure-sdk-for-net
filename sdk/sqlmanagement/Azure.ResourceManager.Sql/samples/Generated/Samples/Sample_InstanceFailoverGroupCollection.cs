@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateFailoverGroup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/InstanceFailoverGroupCreateOrUpdate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/InstanceFailoverGroupCreateOrUpdate.json
             // this example is just showing the usage of "InstanceFailoverGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.Sql.Samples
             string failoverGroupName = "failover-group-test-3";
             InstanceFailoverGroupData data = new InstanceFailoverGroupData
             {
-                SecondaryType = GeoSecondaryInstanceType.Geo,
                 ReadWriteEndpoint = new InstanceFailoverGroupReadWriteEndpoint(ReadWriteEndpointFailoverPolicy.Automatic)
                 {
                     FailoverWithDataLossGracePeriodMinutes = 480,
@@ -74,7 +73,7 @@ PartnerManagedInstanceId = new ResourceIdentifier("/subscriptions/00000000-1111-
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetFailoverGroup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/InstanceFailoverGroupGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/InstanceFailoverGroupGet.json
             // this example is just showing the usage of "InstanceFailoverGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -108,7 +107,7 @@ PartnerManagedInstanceId = new ResourceIdentifier("/subscriptions/00000000-1111-
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListFailoverGroup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/InstanceFailoverGroupList.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/InstanceFailoverGroupList.json
             // this example is just showing the usage of "InstanceFailoverGroups_ListByLocation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,7 +143,7 @@ PartnerManagedInstanceId = new ResourceIdentifier("/subscriptions/00000000-1111-
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetFailoverGroup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/InstanceFailoverGroupGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/InstanceFailoverGroupGet.json
             // this example is just showing the usage of "InstanceFailoverGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -174,7 +173,7 @@ PartnerManagedInstanceId = new ResourceIdentifier("/subscriptions/00000000-1111-
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetFailoverGroup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/InstanceFailoverGroupGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/InstanceFailoverGroupGet.json
             // this example is just showing the usage of "InstanceFailoverGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

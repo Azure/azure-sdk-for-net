@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Link type (GEO, NAMED, STANDBY). Update operation does not support NAMED. </summary>
+    /// <summary> Link type (GEO, NAMED, STANDBY). </summary>
     public readonly partial struct ReplicationLinkType : IEquatable<ReplicationLinkType>
     {
         private readonly string _value;

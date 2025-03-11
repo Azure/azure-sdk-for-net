@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The state of the geo backup policy. </summary>
     public enum GeoBackupPolicyState
     {
-        /// <summary> Disabled. </summary>
-        Disabled,
         /// <summary> Enabled. </summary>
-        Enabled
+        Enabled,
+        /// <summary> Disabled. </summary>
+        Disabled
     }
 }

@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.Sql
 
         private readonly ClientDiagnostics _sqlServerServersClientDiagnostics;
         private readonly ServersRestOperations _sqlServerServersRestClient;
-        private readonly ClientDiagnostics _serverUsagesClientDiagnostics;
-        private readonly ServerUsagesRestOperations _serverUsagesRestClient;
-        private readonly ClientDiagnostics _serverOperationsClientDiagnostics;
-        private readonly ServerRestOperations _serverOperationsRestClient;
-        private readonly ClientDiagnostics _tdeCertificatesClientDiagnostics;
-        private readonly TdeCertificatesRestOperations _tdeCertificatesRestClient;
         private readonly ClientDiagnostics _sqlDatabaseDatabasesClientDiagnostics;
         private readonly DatabasesRestOperations _sqlDatabaseDatabasesRestClient;
         private readonly ClientDiagnostics _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics;
         private readonly ReplicationLinksRestOperations _sqlServerDatabaseReplicationLinkReplicationLinksRestClient;
+        private readonly ClientDiagnostics _serverOperationsClientDiagnostics;
+        private readonly ServerRestOperations _serverOperationsRestClient;
+        private readonly ClientDiagnostics _serverUsagesClientDiagnostics;
+        private readonly ServerUsagesRestOperations _serverUsagesRestClient;
+        private readonly ClientDiagnostics _tdeCertificatesClientDiagnostics;
+        private readonly TdeCertificatesRestOperations _tdeCertificatesRestClient;
         private readonly SqlServerData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -75,18 +75,18 @@ namespace Azure.ResourceManager.Sql
             _sqlServerServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string sqlServerServersApiVersion);
             _sqlServerServersRestClient = new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerServersApiVersion);
-            _serverUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _serverUsagesRestClient = new ServerUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _serverOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _serverOperationsRestClient = new ServerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _tdeCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _tdeCertificatesRestClient = new TdeCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _sqlDatabaseDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabaseResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SqlDatabaseResource.ResourceType, out string sqlDatabaseDatabasesApiVersion);
             _sqlDatabaseDatabasesRestClient = new DatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseDatabasesApiVersion);
             _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerDatabaseReplicationLinkResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SqlServerDatabaseReplicationLinkResource.ResourceType, out string sqlServerDatabaseReplicationLinkReplicationLinksApiVersion);
             _sqlServerDatabaseReplicationLinkReplicationLinksRestClient = new ReplicationLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerDatabaseReplicationLinkReplicationLinksApiVersion);
+            _serverOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _serverOperationsRestClient = new ServerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _serverUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _serverUsagesRestClient = new ServerUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _tdeCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _tdeCertificatesRestClient = new TdeCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -113,142 +113,134 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SqlServerCommunicationLinkResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of SqlServerCommunicationLinkResources and their operations over a SqlServerCommunicationLinkResource. </returns>
-        public virtual SqlServerCommunicationLinkCollection GetSqlServerCommunicationLinks()
+        /// <summary> Gets a collection of SqlServerBlobAuditingPolicyResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlServerBlobAuditingPolicyResources and their operations over a SqlServerBlobAuditingPolicyResource. </returns>
+        public virtual SqlServerBlobAuditingPolicyCollection GetSqlServerBlobAuditingPolicies()
         {
-            return GetCachedClient(client => new SqlServerCommunicationLinkCollection(client, Id));
+            return GetCachedClient(client => new SqlServerBlobAuditingPolicyCollection(client, Id));
         }
 
         /// <summary>
-        /// Returns a server communication link.
+        /// Gets a server's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/communicationLinks/{communicationLinkName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/auditingSettings/{blobAuditingPolicyName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerCommunicationLinks_Get</description>
+        /// <description>ServerBlobAuditingPolicies_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2014-04-01</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SqlServerCommunicationLinkResource"/></description>
+        /// <description><see cref="SqlServerBlobAuditingPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="communicationLinkName"> The name of the server communication link. </param>
+        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlServerCommunicationLinkResource>> GetSqlServerCommunicationLinkAsync(string communicationLinkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerBlobAuditingPolicyResource>> GetSqlServerBlobAuditingPolicyAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
-            return await GetSqlServerCommunicationLinks().GetAsync(communicationLinkName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlServerBlobAuditingPolicies().GetAsync(blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Returns a server communication link.
+        /// Gets a server's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/communicationLinks/{communicationLinkName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/auditingSettings/{blobAuditingPolicyName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerCommunicationLinks_Get</description>
+        /// <description>ServerBlobAuditingPolicies_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2014-04-01</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SqlServerCommunicationLinkResource"/></description>
+        /// <description><see cref="SqlServerBlobAuditingPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="communicationLinkName"> The name of the server communication link. </param>
+        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SqlServerCommunicationLinkResource> GetSqlServerCommunicationLink(string communicationLinkName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerBlobAuditingPolicyResource> GetSqlServerBlobAuditingPolicy(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
-            return GetSqlServerCommunicationLinks().Get(communicationLinkName, cancellationToken);
+            return GetSqlServerBlobAuditingPolicies().Get(blobAuditingPolicyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceObjectiveResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServiceObjectiveResources and their operations over a ServiceObjectiveResource. </returns>
-        public virtual ServiceObjectiveCollection GetServiceObjectives()
+        /// <summary> Gets a collection of ExtendedServerBlobAuditingPolicyResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of ExtendedServerBlobAuditingPolicyResources and their operations over a ExtendedServerBlobAuditingPolicyResource. </returns>
+        public virtual ExtendedServerBlobAuditingPolicyCollection GetExtendedServerBlobAuditingPolicies()
         {
-            return GetCachedClient(client => new ServiceObjectiveCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a database service objective.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/serviceObjectives/{serviceObjectiveName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceObjectives_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2014-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceObjectiveResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serviceObjectiveName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceObjectiveResource>> GetServiceObjectiveAsync(string serviceObjectiveName, CancellationToken cancellationToken = default)
-        {
-            return await GetServiceObjectives().GetAsync(serviceObjectiveName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ExtendedServerBlobAuditingPolicyCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets a database service objective.
+        /// Gets an extended server's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/serviceObjectives/{serviceObjectiveName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/extendedAuditingSettings/{blobAuditingPolicyName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceObjectives_Get</description>
+        /// <description>ExtendedServerBlobAuditingPolicies_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2014-04-01</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceObjectiveResource"/></description>
+        /// <description><see cref="ExtendedServerBlobAuditingPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
+        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serviceObjectiveName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceObjectiveResource> GetServiceObjective(string serviceObjectiveName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExtendedServerBlobAuditingPolicyResource>> GetExtendedServerBlobAuditingPolicyAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
-            return GetServiceObjectives().Get(serviceObjectiveName, cancellationToken);
+            return await GetExtendedServerBlobAuditingPolicies().GetAsync(blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an extended server's blob auditing policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/extendedAuditingSettings/{blobAuditingPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExtendedServerBlobAuditingPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExtendedServerBlobAuditingPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ExtendedServerBlobAuditingPolicyResource> GetExtendedServerBlobAuditingPolicy(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        {
+            return GetExtendedServerBlobAuditingPolicies().Get(blobAuditingPolicyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlServerAdvisorResources in the SqlServer. </summary>
@@ -271,7 +263,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -302,7 +294,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,6 +310,82 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<SqlServerAdvisorResource> GetSqlServerAdvisor(string advisorName, CancellationToken cancellationToken = default)
         {
             return GetSqlServerAdvisors().Get(advisorName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SqlDatabaseResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlDatabaseResources and their operations over a SqlDatabaseResource. </returns>
+        public virtual SqlDatabaseCollection GetSqlDatabases()
+        {
+            return GetCachedClient(client => new SqlDatabaseCollection(client, Id));
+        }
+
+        /// <summary> Gets a collection of ElasticPoolResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of ElasticPoolResources and their operations over a ElasticPoolResource. </returns>
+        public virtual ElasticPoolCollection GetElasticPools()
+        {
+            return GetCachedClient(client => new ElasticPoolCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets an elastic pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ElasticPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ElasticPoolResource>> GetElasticPoolAsync(string elasticPoolName, CancellationToken cancellationToken = default)
+        {
+            return await GetElasticPools().GetAsync(elasticPoolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an elastic pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ElasticPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ElasticPoolResource> GetElasticPool(string elasticPoolName, CancellationToken cancellationToken = default)
+        {
+            return GetElasticPools().Get(elasticPoolName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EncryptionProtectorResources in the SqlServer. </summary>
@@ -340,7 +408,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -369,7 +437,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -383,6 +451,75 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<EncryptionProtectorResource> GetEncryptionProtector(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
             return GetEncryptionProtectors().Get(encryptionProtectorName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of FailoverGroupResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of FailoverGroupResources and their operations over a FailoverGroupResource. </returns>
+        public virtual FailoverGroupCollection GetFailoverGroups()
+        {
+            return GetCachedClient(client => new FailoverGroupCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a failover group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/failoverGroups/{failoverGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FailoverGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FailoverGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="failoverGroupName"> The name of the failover group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<FailoverGroupResource>> GetFailoverGroupAsync(string failoverGroupName, CancellationToken cancellationToken = default)
+        {
+            return await GetFailoverGroups().GetAsync(failoverGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a failover group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/failoverGroups/{failoverGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FailoverGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FailoverGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="failoverGroupName"> The name of the failover group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<FailoverGroupResource> GetFailoverGroup(string failoverGroupName, CancellationToken cancellationToken = default)
+        {
+            return GetFailoverGroups().Get(failoverGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlFirewallRuleResources in the SqlServer. </summary>
@@ -405,7 +542,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -436,7 +573,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -452,6 +589,75 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<SqlFirewallRuleResource> GetSqlFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             return GetSqlFirewallRules().Get(firewallRuleName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of IPv6FirewallRuleResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of IPv6FirewallRuleResources and their operations over a IPv6FirewallRuleResource. </returns>
+        public virtual IPv6FirewallRuleCollection GetIPv6FirewallRules()
+        {
+            return GetCachedClient(client => new IPv6FirewallRuleCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets an IPv6 firewall rule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IPv6FirewallRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IPv6FirewallRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallRuleName"> The name of the firewall rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IPv6FirewallRuleResource>> GetIPv6FirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
+        {
+            return await GetIPv6FirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an IPv6 firewall rule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IPv6FirewallRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IPv6FirewallRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallRuleName"> The name of the firewall rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IPv6FirewallRuleResource> GetIPv6FirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
+        {
+            return GetIPv6FirewallRules().Get(firewallRuleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlServerJobAgentResources in the SqlServer. </summary>
@@ -474,7 +680,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -505,7 +711,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -521,6 +727,75 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<SqlServerJobAgentResource> GetSqlServerJobAgent(string jobAgentName, CancellationToken cancellationToken = default)
         {
             return GetSqlServerJobAgents().Get(jobAgentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of OutboundFirewallRuleResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of OutboundFirewallRuleResources and their operations over a OutboundFirewallRuleResource. </returns>
+        public virtual OutboundFirewallRuleCollection GetOutboundFirewallRules()
+        {
+            return GetCachedClient(client => new OutboundFirewallRuleCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets an outbound firewall rule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/outboundFirewallRules/{outboundRuleFqdn}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OutboundFirewallRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OutboundFirewallRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="outboundRuleFqdn"> The <see cref="string"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<OutboundFirewallRuleResource>> GetOutboundFirewallRuleAsync(string outboundRuleFqdn, CancellationToken cancellationToken = default)
+        {
+            return await GetOutboundFirewallRules().GetAsync(outboundRuleFqdn, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an outbound firewall rule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/outboundFirewallRules/{outboundRuleFqdn}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OutboundFirewallRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OutboundFirewallRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="outboundRuleFqdn"> The <see cref="string"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<OutboundFirewallRuleResource> GetOutboundFirewallRule(string outboundRuleFqdn, CancellationToken cancellationToken = default)
+        {
+            return GetOutboundFirewallRules().Get(outboundRuleFqdn, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlPrivateEndpointConnectionResources in the SqlServer. </summary>
@@ -543,7 +818,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -574,7 +849,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -612,7 +887,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -643,7 +918,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -659,6 +934,85 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<SqlPrivateLinkResource> GetSqlPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
         {
             return GetSqlPrivateLinkResources().Get(groupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of RecoverableDatabaseResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of RecoverableDatabaseResources and their operations over a RecoverableDatabaseResource. </returns>
+        public virtual RecoverableDatabaseCollection GetRecoverableDatabases()
+        {
+            return GetCachedClient(client => new RecoverableDatabaseCollection(client, Id));
+        }
+
+        /// <summary> Gets a collection of RestorableDroppedDatabaseResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of RestorableDroppedDatabaseResources and their operations over a RestorableDroppedDatabaseResource. </returns>
+        public virtual RestorableDroppedDatabaseCollection GetRestorableDroppedDatabases()
+        {
+            return GetCachedClient(client => new RestorableDroppedDatabaseCollection(client, Id));
+        }
+
+        /// <summary> Gets a collection of ServerAdvancedThreatProtectionResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of ServerAdvancedThreatProtectionResources and their operations over a ServerAdvancedThreatProtectionResource. </returns>
+        public virtual ServerAdvancedThreatProtectionCollection GetServerAdvancedThreatProtections()
+        {
+            return GetCachedClient(client => new ServerAdvancedThreatProtectionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a server's Advanced Threat Protection state.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerAdvancedThreatProtectionSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServerAdvancedThreatProtectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServerAdvancedThreatProtectionResource>> GetServerAdvancedThreatProtectionAsync(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetServerAdvancedThreatProtections().GetAsync(advancedThreatProtectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a server's Advanced Threat Protection state.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerAdvancedThreatProtectionSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServerAdvancedThreatProtectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ServerAdvancedThreatProtectionResource> GetServerAdvancedThreatProtection(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
+        {
+            return GetServerAdvancedThreatProtections().Get(advancedThreatProtectionName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a SqlServerAutomaticTuningResource along with the instance operations that can be performed on it in the SqlServer. </summary>
@@ -688,7 +1042,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -717,7 +1071,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -753,7 +1107,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -782,7 +1136,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -796,6 +1150,71 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<SqlServerAzureADOnlyAuthenticationResource> GetSqlServerAzureADOnlyAuthentication(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
         {
             return GetSqlServerAzureADOnlyAuthentications().Get(authenticationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SqlServerConnectionPolicyResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlServerConnectionPolicyResources and their operations over a SqlServerConnectionPolicyResource. </returns>
+        public virtual SqlServerConnectionPolicyCollection GetSqlServerConnectionPolicies()
+        {
+            return GetCachedClient(client => new SqlServerConnectionPolicyCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a server connection policy
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerConnectionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerConnectionPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionPolicyName"> The name of the connection policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SqlServerConnectionPolicyResource>> GetSqlServerConnectionPolicyAsync(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        {
+            return await GetSqlServerConnectionPolicies().GetAsync(connectionPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a server connection policy
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerConnectionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerConnectionPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionPolicyName"> The name of the connection policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<SqlServerConnectionPolicyResource> GetSqlServerConnectionPolicy(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        {
+            return GetSqlServerConnectionPolicies().Get(connectionPolicyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlServerDevOpsAuditingSettingResources in the SqlServer. </summary>
@@ -818,7 +1237,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -849,7 +1268,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -887,7 +1306,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -918,7 +1337,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -956,7 +1375,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -987,7 +1406,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1025,7 +1444,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1036,7 +1455,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlServerSecurityAlertPolicyResource>> GetSqlServerSecurityAlertPolicyAsync(SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerSecurityAlertPolicyResource>> GetSqlServerSecurityAlertPolicyAsync(SecurityAlertPolicyNameAutoGenerated securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             return await GetSqlServerSecurityAlertPolicies().GetAsync(securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
         }
@@ -1054,7 +1473,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1065,7 +1484,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<SqlServerSecurityAlertPolicyResource> GetSqlServerSecurityAlertPolicy(SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerSecurityAlertPolicyResource> GetSqlServerSecurityAlertPolicy(SecurityAlertPolicyNameAutoGenerated securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             return GetSqlServerSecurityAlertPolicies().Get(securityAlertPolicyName, cancellationToken);
         }
@@ -1090,7 +1509,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1119,7 +1538,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1155,7 +1574,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1186,7 +1605,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1224,7 +1643,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1255,7 +1674,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1273,826 +1692,6 @@ namespace Azure.ResourceManager.Sql
             return GetSqlServerVirtualNetworkRules().Get(virtualNetworkRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OutboundFirewallRuleResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of OutboundFirewallRuleResources and their operations over a OutboundFirewallRuleResource. </returns>
-        public virtual OutboundFirewallRuleCollection GetOutboundFirewallRules()
-        {
-            return GetCachedClient(client => new OutboundFirewallRuleCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an outbound firewall rule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/outboundFirewallRules/{outboundRuleFqdn}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OutboundFirewallRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OutboundFirewallRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="outboundRuleFqdn"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<OutboundFirewallRuleResource>> GetOutboundFirewallRuleAsync(string outboundRuleFqdn, CancellationToken cancellationToken = default)
-        {
-            return await GetOutboundFirewallRules().GetAsync(outboundRuleFqdn, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an outbound firewall rule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/outboundFirewallRules/{outboundRuleFqdn}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OutboundFirewallRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OutboundFirewallRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="outboundRuleFqdn"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<OutboundFirewallRuleResource> GetOutboundFirewallRule(string outboundRuleFqdn, CancellationToken cancellationToken = default)
-        {
-            return GetOutboundFirewallRules().Get(outboundRuleFqdn, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SqlServerConnectionPolicyResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of SqlServerConnectionPolicyResources and their operations over a SqlServerConnectionPolicyResource. </returns>
-        public virtual SqlServerConnectionPolicyCollection GetSqlServerConnectionPolicies()
-        {
-            return GetCachedClient(client => new SqlServerConnectionPolicyCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a server connection policy
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerConnectionPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerConnectionPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="connectionPolicyName"> The name of the connection policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SqlServerConnectionPolicyResource>> GetSqlServerConnectionPolicyAsync(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
-        {
-            return await GetSqlServerConnectionPolicies().GetAsync(connectionPolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a server connection policy
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerConnectionPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerConnectionPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="connectionPolicyName"> The name of the connection policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<SqlServerConnectionPolicyResource> GetSqlServerConnectionPolicy(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
-        {
-            return GetSqlServerConnectionPolicies().Get(connectionPolicyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SqlServerBlobAuditingPolicyResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of SqlServerBlobAuditingPolicyResources and their operations over a SqlServerBlobAuditingPolicyResource. </returns>
-        public virtual SqlServerBlobAuditingPolicyCollection GetSqlServerBlobAuditingPolicies()
-        {
-            return GetCachedClient(client => new SqlServerBlobAuditingPolicyCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a server's blob auditing policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/auditingSettings/{blobAuditingPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerBlobAuditingPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerBlobAuditingPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SqlServerBlobAuditingPolicyResource>> GetSqlServerBlobAuditingPolicyAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
-        {
-            return await GetSqlServerBlobAuditingPolicies().GetAsync(blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a server's blob auditing policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/auditingSettings/{blobAuditingPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerBlobAuditingPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerBlobAuditingPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<SqlServerBlobAuditingPolicyResource> GetSqlServerBlobAuditingPolicy(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
-        {
-            return GetSqlServerBlobAuditingPolicies().Get(blobAuditingPolicyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ExtendedServerBlobAuditingPolicyResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of ExtendedServerBlobAuditingPolicyResources and their operations over a ExtendedServerBlobAuditingPolicyResource. </returns>
-        public virtual ExtendedServerBlobAuditingPolicyCollection GetExtendedServerBlobAuditingPolicies()
-        {
-            return GetCachedClient(client => new ExtendedServerBlobAuditingPolicyCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an extended server's blob auditing policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/extendedAuditingSettings/{blobAuditingPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExtendedServerBlobAuditingPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExtendedServerBlobAuditingPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ExtendedServerBlobAuditingPolicyResource>> GetExtendedServerBlobAuditingPolicyAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
-        {
-            return await GetExtendedServerBlobAuditingPolicies().GetAsync(blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an extended server's blob auditing policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/extendedAuditingSettings/{blobAuditingPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExtendedServerBlobAuditingPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExtendedServerBlobAuditingPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ExtendedServerBlobAuditingPolicyResource> GetExtendedServerBlobAuditingPolicy(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
-        {
-            return GetExtendedServerBlobAuditingPolicies().Get(blobAuditingPolicyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ServerAdvancedThreatProtectionResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerAdvancedThreatProtectionResources and their operations over a ServerAdvancedThreatProtectionResource. </returns>
-        public virtual ServerAdvancedThreatProtectionCollection GetServerAdvancedThreatProtections()
-        {
-            return GetCachedClient(client => new ServerAdvancedThreatProtectionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a server's Advanced Threat Protection state.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerAdvancedThreatProtectionSettings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServerAdvancedThreatProtectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServerAdvancedThreatProtectionResource>> GetServerAdvancedThreatProtectionAsync(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
-        {
-            return await GetServerAdvancedThreatProtections().GetAsync(advancedThreatProtectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a server's Advanced Threat Protection state.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerAdvancedThreatProtectionSettings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServerAdvancedThreatProtectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ServerAdvancedThreatProtectionResource> GetServerAdvancedThreatProtection(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
-        {
-            return GetServerAdvancedThreatProtections().Get(advancedThreatProtectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SqlDatabaseResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of SqlDatabaseResources and their operations over a SqlDatabaseResource. </returns>
-        public virtual SqlDatabaseCollection GetSqlDatabases()
-        {
-            return GetCachedClient(client => new SqlDatabaseCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="expand"> The child resources to include in the response. </param>
-        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SqlDatabaseResource>> GetSqlDatabaseAsync(string databaseName, string expand = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return await GetSqlDatabases().GetAsync(databaseName, expand, filter, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="expand"> The child resources to include in the response. </param>
-        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SqlDatabaseResource> GetSqlDatabase(string databaseName, string expand = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return GetSqlDatabases().Get(databaseName, expand, filter, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ElasticPoolResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of ElasticPoolResources and their operations over a ElasticPoolResource. </returns>
-        public virtual ElasticPoolCollection GetElasticPools()
-        {
-            return GetCachedClient(client => new ElasticPoolCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an elastic pool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticPools_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticPoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ElasticPoolResource>> GetElasticPoolAsync(string elasticPoolName, CancellationToken cancellationToken = default)
-        {
-            return await GetElasticPools().GetAsync(elasticPoolName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an elastic pool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticPools_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticPoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ElasticPoolResource> GetElasticPool(string elasticPoolName, CancellationToken cancellationToken = default)
-        {
-            return GetElasticPools().Get(elasticPoolName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RecoverableDatabaseResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of RecoverableDatabaseResources and their operations over a RecoverableDatabaseResource. </returns>
-        public virtual RecoverableDatabaseCollection GetRecoverableDatabases()
-        {
-            return GetCachedClient(client => new RecoverableDatabaseCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a recoverable database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoverableDatabases_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoverableDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="expand"> The child resources to include in the response. </param>
-        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RecoverableDatabaseResource>> GetRecoverableDatabaseAsync(string databaseName, string expand = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return await GetRecoverableDatabases().GetAsync(databaseName, expand, filter, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a recoverable database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoverableDatabases_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoverableDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="expand"> The child resources to include in the response. </param>
-        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RecoverableDatabaseResource> GetRecoverableDatabase(string databaseName, string expand = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return GetRecoverableDatabases().Get(databaseName, expand, filter, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RestorableDroppedDatabaseResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of RestorableDroppedDatabaseResources and their operations over a RestorableDroppedDatabaseResource. </returns>
-        public virtual RestorableDroppedDatabaseCollection GetRestorableDroppedDatabases()
-        {
-            return GetCachedClient(client => new RestorableDroppedDatabaseCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a restorable dropped database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorableDroppedDatabases_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RestorableDroppedDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="restorableDroppedDatabaseId"> The <see cref="string"/> to use. </param>
-        /// <param name="expand"> The child resources to include in the response. </param>
-        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RestorableDroppedDatabaseResource>> GetRestorableDroppedDatabaseAsync(string restorableDroppedDatabaseId, string expand = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return await GetRestorableDroppedDatabases().GetAsync(restorableDroppedDatabaseId, expand, filter, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a restorable dropped database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorableDroppedDatabases_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RestorableDroppedDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="restorableDroppedDatabaseId"> The <see cref="string"/> to use. </param>
-        /// <param name="expand"> The child resources to include in the response. </param>
-        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RestorableDroppedDatabaseResource> GetRestorableDroppedDatabase(string restorableDroppedDatabaseId, string expand = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return GetRestorableDroppedDatabases().Get(restorableDroppedDatabaseId, expand, filter, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of IPv6FirewallRuleResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of IPv6FirewallRuleResources and their operations over a IPv6FirewallRuleResource. </returns>
-        public virtual IPv6FirewallRuleCollection GetIPv6FirewallRules()
-        {
-            return GetCachedClient(client => new IPv6FirewallRuleCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an IPv6 firewall rule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IPv6FirewallRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPv6FirewallRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="firewallRuleName"> The name of the firewall rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<IPv6FirewallRuleResource>> GetIPv6FirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
-        {
-            return await GetIPv6FirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an IPv6 firewall rule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IPv6FirewallRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPv6FirewallRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="firewallRuleName"> The name of the firewall rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<IPv6FirewallRuleResource> GetIPv6FirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
-        {
-            return GetIPv6FirewallRules().Get(firewallRuleName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SqlServerSqlVulnerabilityAssessmentResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of SqlServerSqlVulnerabilityAssessmentResources and their operations over a SqlServerSqlVulnerabilityAssessmentResource. </returns>
-        public virtual SqlServerSqlVulnerabilityAssessmentCollection GetSqlServerSqlVulnerabilityAssessments()
-        {
-            return GetCachedClient(client => new SqlServerSqlVulnerabilityAssessmentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets SQL Vulnerability Assessment policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlVulnerabilityAssessmentsSettings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerSqlVulnerabilityAssessmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vulnerabilityAssessmentName"> The name of the SQL Vulnerability Assessment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SqlServerSqlVulnerabilityAssessmentResource>> GetSqlServerSqlVulnerabilityAssessmentAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
-        {
-            return await GetSqlServerSqlVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets SQL Vulnerability Assessment policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlVulnerabilityAssessmentsSettings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerSqlVulnerabilityAssessmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vulnerabilityAssessmentName"> The name of the SQL Vulnerability Assessment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<SqlServerSqlVulnerabilityAssessmentResource> GetSqlServerSqlVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
-        {
-            return GetSqlServerSqlVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of FailoverGroupResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of FailoverGroupResources and their operations over a FailoverGroupResource. </returns>
-        public virtual FailoverGroupCollection GetFailoverGroups()
-        {
-            return GetCachedClient(client => new FailoverGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a failover group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/failoverGroups/{failoverGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FailoverGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FailoverGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="failoverGroupName"> The name of the failover group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<FailoverGroupResource>> GetFailoverGroupAsync(string failoverGroupName, CancellationToken cancellationToken = default)
-        {
-            return await GetFailoverGroups().GetAsync(failoverGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a failover group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/failoverGroups/{failoverGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FailoverGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FailoverGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="failoverGroupName"> The name of the failover group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<FailoverGroupResource> GetFailoverGroup(string failoverGroupName, CancellationToken cancellationToken = default)
-        {
-            return GetFailoverGroups().Get(failoverGroupName, cancellationToken);
-        }
-
         /// <summary>
         /// Gets a server.
         /// <list type="bullet">
@@ -2106,7 +1705,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2147,7 +1746,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2188,7 +1787,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2230,7 +1829,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2272,7 +1871,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2318,7 +1917,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2352,192 +1951,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Returns server usages.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerUsages_ListByServer</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2014-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlServerUsage> GetServerUsagesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverUsagesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SqlServerUsage.DeserializeSqlServerUsage(e), _serverUsagesClientDiagnostics, Pipeline, "SqlServerResource.GetServerUsages", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns server usages.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerUsages_ListByServer</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2014-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlServerUsage> GetServerUsages(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverUsagesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SqlServerUsage.DeserializeSqlServerUsage(e), _serverUsagesClientDiagnostics, Pipeline, "SqlServerResource.GetServerUsages", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of operations performed on the server.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerOperations_ListByServer</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerOperationData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerOperationData> GetServerOperationsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverOperationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverOperationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ServerOperationData.DeserializeServerOperationData(e), _serverOperationsClientDiagnostics, Pipeline, "SqlServerResource.GetServerOperations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of operations performed on the server.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerOperations_ListByServer</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerOperationData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerOperationData> GetServerOperations(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverOperationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverOperationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ServerOperationData.DeserializeServerOperationData(e), _serverOperationsClientDiagnostics, Pipeline, "SqlServerResource.GetServerOperations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Creates a TDE certificate for a given server.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/tdeCertificates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TdeCertificates_Create</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="tdeCertificate"> The requested TDE certificate to be created or updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tdeCertificate"/> is null. </exception>
-        public virtual async Task<ArmOperation> CreateTdeCertificateAsync(WaitUntil waitUntil, TdeCertificate tdeCertificate, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tdeCertificate, nameof(tdeCertificate));
-
-            using var scope = _tdeCertificatesClientDiagnostics.CreateScope("SqlServerResource.CreateTdeCertificate");
-            scope.Start();
-            try
-            {
-                var response = await _tdeCertificatesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_tdeCertificatesClientDiagnostics, Pipeline, _tdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates a TDE certificate for a given server.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/tdeCertificates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TdeCertificates_Create</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="tdeCertificate"> The requested TDE certificate to be created or updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tdeCertificate"/> is null. </exception>
-        public virtual ArmOperation CreateTdeCertificate(WaitUntil waitUntil, TdeCertificate tdeCertificate, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tdeCertificate, nameof(tdeCertificate));
-
-            using var scope = _tdeCertificatesClientDiagnostics.CreateScope("SqlServerResource.CreateTdeCertificate");
-            scope.Start();
-            try
-            {
-                var response = _tdeCertificatesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate, cancellationToken);
-                var operation = new SqlArmOperation(_tdeCertificatesClientDiagnostics, Pipeline, _tdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Gets a list of inaccessible databases in a logical server
         /// <list type="bullet">
         /// <item>
@@ -2550,7 +1963,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2580,7 +1993,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2598,6 +2011,118 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets a list of replication links.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/replicationLinks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationLinks_ListByServer</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerDatabaseReplicationLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SqlServerDatabaseReplicationLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlServerDatabaseReplicationLinkResource> GetReplicationLinksAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseReplicationLinkResource(Client, SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(e)), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, "SqlServerResource.GetReplicationLinks", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of replication links.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/replicationLinks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationLinks_ListByServer</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerDatabaseReplicationLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SqlServerDatabaseReplicationLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlServerDatabaseReplicationLinkResource> GetReplicationLinks(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseReplicationLinkResource(Client, SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(e)), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, "SqlServerResource.GetReplicationLinks", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of operations performed on the server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerOperations_ListByServer</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ServerOperationData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerOperationData> GetServerOperationsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverOperationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverOperationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ServerOperationData.DeserializeServerOperationData(e), _serverOperationsClientDiagnostics, Pipeline, "SqlServerResource.GetServerOperations", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of operations performed on the server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerOperations_ListByServer</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServerOperationData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerOperationData> GetServerOperations(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverOperationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverOperationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ServerOperationData.DeserializeServerOperationData(e), _serverOperationsClientDiagnostics, Pipeline, "SqlServerResource.GetServerOperations", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Imports a bacpac into a new database.
         /// <list type="bullet">
         /// <item>
@@ -2610,7 +2135,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2656,7 +2181,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2690,38 +2215,90 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Refresh external governance enablement status.
+        /// Gets server usages.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/refreshExternalGovernanceStatus</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/usages</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Servers_RefreshStatus</description>
+        /// <description>ServerUsages_ListByServer</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SqlServerUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlServerUsage> GetServerUsagesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverUsagesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverUsagesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SqlServerUsage.DeserializeSqlServerUsage(e), _serverUsagesClientDiagnostics, Pipeline, "SqlServerResource.GetServerUsages", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets server usages.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/usages</description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerResource"/></description>
+        /// <term>Operation Id</term>
+        /// <description>ServerUsages_ListByServer</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SqlServerUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlServerUsage> GetServerUsages(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverUsagesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverUsagesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SqlServerUsage.DeserializeSqlServerUsage(e), _serverUsagesClientDiagnostics, Pipeline, "SqlServerResource.GetServerUsages", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates a TDE certificate for a given server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/tdeCertificates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TdeCertificates_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="tdeCertificate"> The requested TDE certificate to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<RefreshExternalGovernanceStatusOperationResult>> RefreshStatusAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="tdeCertificate"/> is null. </exception>
+        public virtual async Task<ArmOperation> CreateTdeCertificateAsync(WaitUntil waitUntil, TdeCertificate tdeCertificate, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.RefreshStatus");
+            Argument.AssertNotNull(tdeCertificate, nameof(tdeCertificate));
+
+            using var scope = _tdeCertificatesClientDiagnostics.CreateScope("SqlServerResource.CreateTdeCertificate");
             scope.Start();
             try
             {
-                var response = await _sqlServerServersRestClient.RefreshStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<RefreshExternalGovernanceStatusOperationResult>(new RefreshExternalGovernanceStatusOperationResultOperationSource(), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateRefreshStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _tdeCertificatesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation(_tdeCertificatesClientDiagnostics, Pipeline, _tdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -2732,38 +2309,38 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Refresh external governance enablement status.
+        /// Creates a TDE certificate for a given server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/refreshExternalGovernanceStatus</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/tdeCertificates</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Servers_RefreshStatus</description>
+        /// <description>TdeCertificates_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerResource"/></description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="tdeCertificate"> The requested TDE certificate to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<RefreshExternalGovernanceStatusOperationResult> RefreshStatus(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="tdeCertificate"/> is null. </exception>
+        public virtual ArmOperation CreateTdeCertificate(WaitUntil waitUntil, TdeCertificate tdeCertificate, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.RefreshStatus");
+            Argument.AssertNotNull(tdeCertificate, nameof(tdeCertificate));
+
+            using var scope = _tdeCertificatesClientDiagnostics.CreateScope("SqlServerResource.CreateTdeCertificate");
             scope.Start();
             try
             {
-                var response = _sqlServerServersRestClient.RefreshStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation<RefreshExternalGovernanceStatusOperationResult>(new RefreshExternalGovernanceStatusOperationResultOperationSource(), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateRefreshStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _tdeCertificatesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate, cancellationToken);
+                var operation = new SqlArmOperation(_tdeCertificatesClientDiagnostics, Pipeline, _tdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -2771,66 +2348,6 @@ namespace Azure.ResourceManager.Sql
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets a list of replication links.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/replicationLinks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationLinks_ListByServer</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDatabaseReplicationLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerDatabaseReplicationLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlServerDatabaseReplicationLinkResource> GetReplicationLinksAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseReplicationLinkResource(Client, SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(e)), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, "SqlServerResource.GetReplicationLinks", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of replication links.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/replicationLinks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationLinks_ListByServer</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDatabaseReplicationLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerDatabaseReplicationLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlServerDatabaseReplicationLinkResource> GetReplicationLinks(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseReplicationLinkResource(Client, SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(e)), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, "SqlServerResource.GetReplicationLinks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2846,7 +2363,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2908,7 +2425,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2970,7 +2487,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3027,7 +2544,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3084,7 +2601,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3144,7 +2661,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2021-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

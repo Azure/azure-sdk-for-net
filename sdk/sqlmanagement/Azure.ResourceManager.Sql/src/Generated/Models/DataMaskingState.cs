@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The state of the data masking policy. </summary>
     public enum DataMaskingState
     {
-        /// <summary> Disabled. </summary>
-        Disabled,
         /// <summary> Enabled. </summary>
-        Enabled
+        Enabled,
+        /// <summary> Disabled. </summary>
+        Disabled
     }
 }

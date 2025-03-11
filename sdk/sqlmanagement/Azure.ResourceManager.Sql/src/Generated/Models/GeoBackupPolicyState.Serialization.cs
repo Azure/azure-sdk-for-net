@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.Sql.Models
     {
         public static string ToSerialString(this GeoBackupPolicyState value) => value switch
         {
-            GeoBackupPolicyState.Disabled => "Disabled",
             GeoBackupPolicyState.Enabled => "Enabled",
+            GeoBackupPolicyState.Disabled => "Disabled",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown GeoBackupPolicyState value.")
         };
 
         public static GeoBackupPolicyState ToGeoBackupPolicyState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return GeoBackupPolicyState.Disabled;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return GeoBackupPolicyState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return GeoBackupPolicyState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown GeoBackupPolicyState value.");
         }
     }

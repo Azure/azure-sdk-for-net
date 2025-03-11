@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.Sql.Models
         public SqlDatabasePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Keys = new ChangeTrackingDictionary<string, SqlDatabaseKey>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlDatabasePatch"/>. </summary>
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="earliestRestoreOn"> This records the earliest start date and time that restore is available for this database (ISO8601 format). </param>
         /// <param name="readScale"> The state of read-only routing. If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica in the same region. Not applicable to a Hyperscale database within an elastic pool. </param>
         /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the database that are used to provide high availability. Not applicable to a Hyperscale database within an elastic pool. </param>
-        /// <param name="secondaryType"> The secondary type of the database if it is a secondary.  Valid values are Geo, Named and Standby. </param>
+        /// <param name="secondaryType"> The secondary type of the database if it is a secondary.  Valid values are Geo and Named. </param>
         /// <param name="currentSku"> The name and tier of the SKU. </param>
         /// <param name="autoPauseDelay"> Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled. </param>
         /// <param name="currentBackupStorageRedundancy"> The storage account type used to store backups for this database. </param>
@@ -113,38 +112,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
         /// <param name="isInfraEncryptionEnabled"> Infra encryption is enabled for this database. </param>
         /// <param name="federatedClientId"> The Client id used for cross tenant per database CMK scenario. </param>
-        /// <param name="keys"> The resource ids of the user assigned identities to use. </param>
-        /// <param name="encryptionProtector"> The azure key vault URI of the database if it's configured with per Database Customer Managed Keys. </param>
-        /// <param name="preferredEnclaveType"> Type of enclave requested on the database i.e. Default or VBS enclaves. </param>
-        /// <param name="useFreeLimit"> Whether or not the database uses free monthly limits. Allowed on one database in a subscription. </param>
-        /// <param name="freeLimitExhaustionBehavior">
-        /// Specifies the behavior when monthly free limits are exhausted for the free database.
-        ///
-        /// AutoPause: The database will be auto paused upon exhaustion of free limits for remainder of the month.
-        ///
-        /// BillForUsage: The database will continue to be online upon exhaustion of free limits and any overage will be billed.
-        /// </param>
-        /// <param name="manualCutover">
-        /// Whether or not customer controlled manual cutover needs to be done during Update Database operation to Hyperscale tier.
-        ///
-        /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier.
-        ///
-        /// When manualCutover is specified, the scaling operation will wait for user input to trigger cutover to Hyperscale database.
-        ///
-        /// To trigger cutover, please provide 'performCutover' parameter when the Scaling operation is in Waiting state.
-        /// </param>
-        /// <param name="performCutover">
-        /// To trigger customer controlled manual cutover during the wait state while Scaling operation is in progress.
-        ///
-        /// This property parameter is only applicable for scaling operations that are initiated along with 'manualCutover' parameter.
-        ///
-        /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier is already in progress.
-        ///
-        /// When performCutover is specified, the scaling operation will trigger cutover and perform role-change to Hyperscale database.
-        /// </param>
-        /// <param name="encryptionProtectorAutoRotation"> The flag to enable or disable auto rotation of database encryption protector AKV key. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlDatabasePatch(SqlSku sku, DatabaseIdentity identity, IDictionary<string, string> tags, SqlDatabaseCreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, SqlDatabaseStatus? status, Guid? databaseId, DateTimeOffset? createdOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, AzureLocation? defaultSecondaryLocation, ResourceIdentifier failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletedOn, ResourceIdentifier recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? isZoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, ResourceIdentifier maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, IDictionary<string, SqlDatabaseKey> keys, string encryptionProtector, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, bool? useFreeLimit, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior, bool? manualCutover, bool? performCutover, bool? encryptionProtectorAutoRotation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SqlDatabasePatch(SqlSku sku, DatabaseIdentity identity, IDictionary<string, string> tags, SqlDatabaseCreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, SqlDatabaseStatus? status, Guid? databaseId, DateTimeOffset? createdOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, AzureLocation? defaultSecondaryLocation, ResourceIdentifier failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletedOn, ResourceIdentifier recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? isZoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, ResourceIdentifier maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Identity = identity;
@@ -187,14 +156,6 @@ namespace Azure.ResourceManager.Sql.Models
             IsLedgerOn = isLedgerOn;
             IsInfraEncryptionEnabled = isInfraEncryptionEnabled;
             FederatedClientId = federatedClientId;
-            Keys = keys;
-            EncryptionProtector = encryptionProtector;
-            PreferredEnclaveType = preferredEnclaveType;
-            UseFreeLimit = useFreeLimit;
-            FreeLimitExhaustionBehavior = freeLimitExhaustionBehavior;
-            ManualCutover = manualCutover;
-            PerformCutover = performCutover;
-            EncryptionProtectorAutoRotation = encryptionProtectorAutoRotation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -303,7 +264,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The number of secondary replicas associated with the database that are used to provide high availability. Not applicable to a Hyperscale database within an elastic pool. </summary>
         [WirePath("properties.highAvailabilityReplicaCount")]
         public int? HighAvailabilityReplicaCount { get; set; }
-        /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo, Named and Standby. </summary>
+        /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo and Named. </summary>
         [WirePath("properties.secondaryType")]
         public SecondaryType? SecondaryType { get; set; }
         /// <summary> The name and tier of the SKU. </summary>
@@ -339,51 +300,5 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The Client id used for cross tenant per database CMK scenario. </summary>
         [WirePath("properties.federatedClientId")]
         public Guid? FederatedClientId { get; set; }
-        /// <summary> The resource ids of the user assigned identities to use. </summary>
-        [WirePath("properties.keys")]
-        public IDictionary<string, SqlDatabaseKey> Keys { get; }
-        /// <summary> The azure key vault URI of the database if it's configured with per Database Customer Managed Keys. </summary>
-        [WirePath("properties.encryptionProtector")]
-        public string EncryptionProtector { get; set; }
-        /// <summary> Type of enclave requested on the database i.e. Default or VBS enclaves. </summary>
-        [WirePath("properties.preferredEnclaveType")]
-        public SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get; set; }
-        /// <summary> Whether or not the database uses free monthly limits. Allowed on one database in a subscription. </summary>
-        [WirePath("properties.useFreeLimit")]
-        public bool? UseFreeLimit { get; set; }
-        /// <summary>
-        /// Specifies the behavior when monthly free limits are exhausted for the free database.
-        ///
-        /// AutoPause: The database will be auto paused upon exhaustion of free limits for remainder of the month.
-        ///
-        /// BillForUsage: The database will continue to be online upon exhaustion of free limits and any overage will be billed.
-        /// </summary>
-        [WirePath("properties.freeLimitExhaustionBehavior")]
-        public FreeLimitExhaustionBehavior? FreeLimitExhaustionBehavior { get; set; }
-        /// <summary>
-        /// Whether or not customer controlled manual cutover needs to be done during Update Database operation to Hyperscale tier.
-        ///
-        /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier.
-        ///
-        /// When manualCutover is specified, the scaling operation will wait for user input to trigger cutover to Hyperscale database.
-        ///
-        /// To trigger cutover, please provide 'performCutover' parameter when the Scaling operation is in Waiting state.
-        /// </summary>
-        [WirePath("properties.manualCutover")]
-        public bool? ManualCutover { get; set; }
-        /// <summary>
-        /// To trigger customer controlled manual cutover during the wait state while Scaling operation is in progress.
-        ///
-        /// This property parameter is only applicable for scaling operations that are initiated along with 'manualCutover' parameter.
-        ///
-        /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier is already in progress.
-        ///
-        /// When performCutover is specified, the scaling operation will trigger cutover and perform role-change to Hyperscale database.
-        /// </summary>
-        [WirePath("properties.performCutover")]
-        public bool? PerformCutover { get; set; }
-        /// <summary> The flag to enable or disable auto rotation of database encryption protector AKV key. </summary>
-        [WirePath("properties.encryptionProtectorAutoRotation")]
-        public bool? EncryptionProtectorAutoRotation { get; set; }
     }
 }

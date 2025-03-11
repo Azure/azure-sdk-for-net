@@ -13,7 +13,6 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -41,30 +40,15 @@ namespace Azure.ResourceManager.Sql
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RestoreType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(RestoreType);
-            }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(BlockReason))
+            if (options.Format != "W" && Optional.IsDefined(CurrentRestoringFileName))
             {
-                writer.WritePropertyName("blockReason"u8);
-                writer.WriteStringValue(BlockReason);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastUploadedFileName))
-            {
-                writer.WritePropertyName("lastUploadedFileName"u8);
-                writer.WriteStringValue(LastUploadedFileName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastUploadedFileOn))
-            {
-                writer.WritePropertyName("lastUploadedFileTime"u8);
-                writer.WriteStringValue(LastUploadedFileOn.Value, "O");
+                writer.WritePropertyName("currentRestoringFileName"u8);
+                writer.WriteStringValue(CurrentRestoringFileName);
             }
             if (options.Format != "W" && Optional.IsDefined(LastRestoredFileName))
             {
@@ -81,95 +65,35 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("percentCompleted"u8);
                 writer.WriteNumberValue(CompletedPercent.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentRestoredSizeInMB))
-            {
-                writer.WritePropertyName("currentRestoredSizeMB"u8);
-                writer.WriteNumberValue(CurrentRestoredSizeInMB.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CurrentRestorePlanSizeInMB))
-            {
-                writer.WritePropertyName("currentRestorePlanSizeMB"u8);
-                writer.WriteNumberValue(CurrentRestorePlanSizeInMB.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CurrentBackupType))
-            {
-                writer.WritePropertyName("currentBackupType"u8);
-                writer.WriteStringValue(CurrentBackupType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CurrentRestoringFileName))
-            {
-                writer.WritePropertyName("currentRestoringFileName"u8);
-                writer.WriteStringValue(CurrentRestoringFileName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesFound))
-            {
-                writer.WritePropertyName("numberOfFilesDetected"u8);
-                writer.WriteNumberValue(NumberOfFilesFound.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesQueued))
-            {
-                writer.WritePropertyName("numberOfFilesQueued"u8);
-                writer.WriteNumberValue(NumberOfFilesQueued.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesSkipped))
-            {
-                writer.WritePropertyName("numberOfFilesSkipped"u8);
-                writer.WriteNumberValue(NumberOfFilesSkipped.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesRestoring))
-            {
-                writer.WritePropertyName("numberOfFilesRestoring"u8);
-                writer.WriteNumberValue(NumberOfFilesRestoring.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesRestored))
-            {
-                writer.WritePropertyName("numberOfFilesRestored"u8);
-                writer.WriteNumberValue(NumberOfFilesRestored.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesUnrestorable))
-            {
-                writer.WritePropertyName("numberOfFilesUnrestorable"u8);
-                writer.WriteNumberValue(NumberOfFilesUnrestorable.Value);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FullBackupSets))
-            {
-                writer.WritePropertyName("fullBackupSets"u8);
-                writer.WriteStartArray();
-                foreach (var item in FullBackupSets)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DiffBackupSets))
-            {
-                writer.WritePropertyName("diffBackupSets"u8);
-                writer.WriteStartArray();
-                foreach (var item in DiffBackupSets)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LogBackupSets))
-            {
-                writer.WritePropertyName("logBackupSets"u8);
-                writer.WriteStartArray();
-                foreach (var item in LogBackupSets)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && Optional.IsCollectionDefined(UnrestorableFileList))
             {
                 writer.WritePropertyName("unrestorableFiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in UnrestorableFileList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesFound))
+            {
+                writer.WritePropertyName("numberOfFilesDetected"u8);
+                writer.WriteNumberValue(NumberOfFilesFound.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastUploadedFileName))
+            {
+                writer.WritePropertyName("lastUploadedFileName"u8);
+                writer.WriteStringValue(LastUploadedFileName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastUploadedFileOn))
+            {
+                writer.WritePropertyName("lastUploadedFileTime"u8);
+                writer.WriteStringValue(LastUploadedFileOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(BlockReason))
+            {
+                writer.WritePropertyName("blockReason"u8);
+                writer.WriteStringValue(BlockReason);
             }
             writer.WriteEndObject();
         }
@@ -198,28 +122,16 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string type0 = default;
             string status = default;
-            string blockReason = default;
-            string lastUploadedFileName = default;
-            DateTimeOffset? lastUploadedFileTime = default;
+            string currentRestoringFileName = default;
             string lastRestoredFileName = default;
             DateTimeOffset? lastRestoredFileTime = default;
-            int? percentCompleted = default;
-            int? currentRestoredSizeMB = default;
-            int? currentRestorePlanSizeMB = default;
-            string currentBackupType = default;
-            string currentRestoringFileName = default;
-            int? numberOfFilesDetected = default;
-            int? numberOfFilesQueued = default;
-            int? numberOfFilesSkipped = default;
-            int? numberOfFilesRestoring = default;
-            int? numberOfFilesRestored = default;
-            int? numberOfFilesUnrestorable = default;
-            IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> fullBackupSets = default;
-            IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> diffBackupSets = default;
-            IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> logBackupSets = default;
-            IReadOnlyList<ManagedDatabaseRestoreDetailUnrestorableFileProperties> unrestorableFiles = default;
+            double? percentCompleted = default;
+            IReadOnlyList<string> unrestorableFiles = default;
+            long? numberOfFilesDetected = default;
+            string lastUploadedFileName = default;
+            DateTimeOffset? lastUploadedFileTime = default;
+            string blockReason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,33 +169,14 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("type"u8))
-                        {
-                            type0 = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("status"u8))
                         {
                             status = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("blockReason"u8))
+                        if (property0.NameEquals("currentRestoringFileName"u8))
                         {
-                            blockReason = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lastUploadedFileName"u8))
-                        {
-                            lastUploadedFileName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lastUploadedFileTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            lastUploadedFileTime = property0.Value.GetDateTimeOffset("O");
+                            currentRestoringFileName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("lastRestoredFileName"u8))
@@ -306,131 +199,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            percentCompleted = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("currentRestoredSizeMB"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            currentRestoredSizeMB = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("currentRestorePlanSizeMB"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            currentRestorePlanSizeMB = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("currentBackupType"u8))
-                        {
-                            currentBackupType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("currentRestoringFileName"u8))
-                        {
-                            currentRestoringFileName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("numberOfFilesDetected"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            numberOfFilesDetected = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("numberOfFilesQueued"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            numberOfFilesQueued = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("numberOfFilesSkipped"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            numberOfFilesSkipped = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("numberOfFilesRestoring"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            numberOfFilesRestoring = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("numberOfFilesRestored"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            numberOfFilesRestored = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("numberOfFilesUnrestorable"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            numberOfFilesUnrestorable = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("fullBackupSets"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ManagedDatabaseRestoreDetailBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item, options));
-                            }
-                            fullBackupSets = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("diffBackupSets"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ManagedDatabaseRestoreDetailBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item, options));
-                            }
-                            diffBackupSets = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("logBackupSets"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ManagedDatabaseRestoreDetailBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item, options));
-                            }
-                            logBackupSets = array;
+                            percentCompleted = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("unrestorableFiles"u8))
@@ -439,12 +208,40 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            List<ManagedDatabaseRestoreDetailUnrestorableFileProperties> array = new List<ManagedDatabaseRestoreDetailUnrestorableFileProperties>();
+                            List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDatabaseRestoreDetailUnrestorableFileProperties.DeserializeManagedDatabaseRestoreDetailUnrestorableFileProperties(item, options));
+                                array.Add(item.GetString());
                             }
                             unrestorableFiles = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("numberOfFilesDetected"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            numberOfFilesDetected = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("lastUploadedFileName"u8))
+                        {
+                            lastUploadedFileName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("lastUploadedFileTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastUploadedFileTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("blockReason"u8))
+                        {
+                            blockReason = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -461,28 +258,16 @@ namespace Azure.ResourceManager.Sql
                 name,
                 type,
                 systemData,
-                type0,
                 status,
-                blockReason,
-                lastUploadedFileName,
-                lastUploadedFileTime,
+                currentRestoringFileName,
                 lastRestoredFileName,
                 lastRestoredFileTime,
                 percentCompleted,
-                currentRestoredSizeMB,
-                currentRestorePlanSizeMB,
-                currentBackupType,
-                currentRestoringFileName,
+                unrestorableFiles ?? new ChangeTrackingList<string>(),
                 numberOfFilesDetected,
-                numberOfFilesQueued,
-                numberOfFilesSkipped,
-                numberOfFilesRestoring,
-                numberOfFilesRestored,
-                numberOfFilesUnrestorable,
-                fullBackupSets ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>(),
-                diffBackupSets ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>(),
-                logBackupSets ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>(),
-                unrestorableFiles ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailUnrestorableFileProperties>(),
+                lastUploadedFileName,
+                lastUploadedFileTime,
+                blockReason,
                 serializedAdditionalRawData);
         }
 
@@ -552,29 +337,6 @@ namespace Azure.ResourceManager.Sql
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RestoreType))
-                {
-                    builder.Append("    type: ");
-                    if (RestoreType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RestoreType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RestoreType}'");
-                    }
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -598,65 +360,26 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlockReason), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentRestoringFileName), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    blockReason: ");
+                builder.Append("    currentRestoringFileName: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(BlockReason))
+                if (Optional.IsDefined(CurrentRestoringFileName))
                 {
-                    builder.Append("    blockReason: ");
-                    if (BlockReason.Contains(Environment.NewLine))
+                    builder.Append("    currentRestoringFileName: ");
+                    if (CurrentRestoringFileName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{BlockReason}'''");
+                        builder.AppendLine($"{CurrentRestoringFileName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{BlockReason}'");
+                        builder.AppendLine($"'{CurrentRestoringFileName}'");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUploadedFileName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    lastUploadedFileName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastUploadedFileName))
-                {
-                    builder.Append("    lastUploadedFileName: ");
-                    if (LastUploadedFileName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LastUploadedFileName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LastUploadedFileName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUploadedFileOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    lastUploadedFileTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastUploadedFileOn))
-                {
-                    builder.Append("    lastUploadedFileTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(LastUploadedFileOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
@@ -710,242 +433,7 @@ namespace Azure.ResourceManager.Sql
                 if (Optional.IsDefined(CompletedPercent))
                 {
                     builder.Append("    percentCompleted: ");
-                    builder.AppendLine($"{CompletedPercent.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentRestoredSizeInMB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    currentRestoredSizeMB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CurrentRestoredSizeInMB))
-                {
-                    builder.Append("    currentRestoredSizeMB: ");
-                    builder.AppendLine($"{CurrentRestoredSizeInMB.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentRestorePlanSizeInMB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    currentRestorePlanSizeMB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CurrentRestorePlanSizeInMB))
-                {
-                    builder.Append("    currentRestorePlanSizeMB: ");
-                    builder.AppendLine($"{CurrentRestorePlanSizeInMB.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentBackupType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    currentBackupType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CurrentBackupType))
-                {
-                    builder.Append("    currentBackupType: ");
-                    if (CurrentBackupType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CurrentBackupType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CurrentBackupType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentRestoringFileName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    currentRestoringFileName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CurrentRestoringFileName))
-                {
-                    builder.Append("    currentRestoringFileName: ");
-                    if (CurrentRestoringFileName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CurrentRestoringFileName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CurrentRestoringFileName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfFilesFound), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    numberOfFilesDetected: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NumberOfFilesFound))
-                {
-                    builder.Append("    numberOfFilesDetected: ");
-                    builder.AppendLine($"{NumberOfFilesFound.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfFilesQueued), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    numberOfFilesQueued: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NumberOfFilesQueued))
-                {
-                    builder.Append("    numberOfFilesQueued: ");
-                    builder.AppendLine($"{NumberOfFilesQueued.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfFilesSkipped), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    numberOfFilesSkipped: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NumberOfFilesSkipped))
-                {
-                    builder.Append("    numberOfFilesSkipped: ");
-                    builder.AppendLine($"{NumberOfFilesSkipped.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfFilesRestoring), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    numberOfFilesRestoring: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NumberOfFilesRestoring))
-                {
-                    builder.Append("    numberOfFilesRestoring: ");
-                    builder.AppendLine($"{NumberOfFilesRestoring.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfFilesRestored), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    numberOfFilesRestored: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NumberOfFilesRestored))
-                {
-                    builder.Append("    numberOfFilesRestored: ");
-                    builder.AppendLine($"{NumberOfFilesRestored.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfFilesUnrestorable), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    numberOfFilesUnrestorable: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NumberOfFilesUnrestorable))
-                {
-                    builder.Append("    numberOfFilesUnrestorable: ");
-                    builder.AppendLine($"{NumberOfFilesUnrestorable.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FullBackupSets), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    fullBackupSets: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(FullBackupSets))
-                {
-                    if (FullBackupSets.Any())
-                    {
-                        builder.Append("    fullBackupSets: ");
-                        builder.AppendLine("[");
-                        foreach (var item in FullBackupSets)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    fullBackupSets: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiffBackupSets), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    diffBackupSets: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(DiffBackupSets))
-                {
-                    if (DiffBackupSets.Any())
-                    {
-                        builder.Append("    diffBackupSets: ");
-                        builder.AppendLine("[");
-                        foreach (var item in DiffBackupSets)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    diffBackupSets: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogBackupSets), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    logBackupSets: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(LogBackupSets))
-                {
-                    if (LogBackupSets.Any())
-                    {
-                        builder.Append("    logBackupSets: ");
-                        builder.AppendLine("[");
-                        foreach (var item in LogBackupSets)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    logBackupSets: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
+                    builder.AppendLine($"'{CompletedPercent.Value.ToString()}'");
                 }
             }
 
@@ -965,9 +453,99 @@ namespace Azure.ResourceManager.Sql
                         builder.AppendLine("[");
                         foreach (var item in UnrestorableFileList)
                         {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    unrestorableFiles: ");
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
                         }
                         builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfFilesFound), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    numberOfFilesDetected: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NumberOfFilesFound))
+                {
+                    builder.Append("    numberOfFilesDetected: ");
+                    builder.AppendLine($"'{NumberOfFilesFound.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUploadedFileName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lastUploadedFileName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastUploadedFileName))
+                {
+                    builder.Append("    lastUploadedFileName: ");
+                    if (LastUploadedFileName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LastUploadedFileName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LastUploadedFileName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUploadedFileOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lastUploadedFileTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastUploadedFileOn))
+                {
+                    builder.Append("    lastUploadedFileTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastUploadedFileOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlockReason), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    blockReason: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BlockReason))
+                {
+                    builder.Append("    blockReason: ");
+                    if (BlockReason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BlockReason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BlockReason}'");
                     }
                 }
             }

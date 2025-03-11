@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(Version))
+            if (Optional.IsDefined(Family))
             {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
+                writer.WritePropertyName("family"u8);
+                writer.WriteStringValue(Family);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ChildResources))
             {
@@ -66,6 +66,11 @@ namespace Azure.ResourceManager.Sql.Models
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(MaintenanceConfigurationId))
+            {
+                writer.WritePropertyName("maintenanceConfigurationId"u8);
+                writer.WriteStringValue(MaintenanceConfigurationId);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -107,8 +112,9 @@ namespace Azure.ResourceManager.Sql.Models
             }
             IDictionary<string, string> tags = default;
             ResourceIdentifier subnetId = default;
-            string version = default;
+            string family = default;
             IReadOnlyList<string> childResources = default;
+            ResourceIdentifier maintenanceConfigurationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,9 +151,9 @@ namespace Azure.ResourceManager.Sql.Models
                             subnetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("version"u8))
+                        if (property0.NameEquals("family"u8))
                         {
-                            version = property0.Value.GetString();
+                            family = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("childResources"u8))
@@ -164,6 +170,15 @@ namespace Azure.ResourceManager.Sql.Models
                             childResources = array;
                             continue;
                         }
+                        if (property0.NameEquals("maintenanceConfigurationId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maintenanceConfigurationId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -173,7 +188,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VirtualClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), subnetId, version, childResources ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new VirtualClusterPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                subnetId,
+                family,
+                childResources ?? new ChangeTrackingList<string>(),
+                maintenanceConfigurationId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualClusterPatch>.Write(ModelReaderWriterOptions options)

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="startIPv6Address"> The start IP address of the firewall rule. Must be IPv6 format. </param>
-        /// <param name="endIPv6Address"> The end IP address of the firewall rule. Must be IPv6 format. Must be greater than or equal to startIpv6Address. </param>
+        /// <param name="endIPv6Address"> The end IP address of the firewall rule. Must be IPv6 format. Must be greater than or equal to startIpAddress. </param>
         internal IPv6FirewallRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string startIPv6Address, string endIPv6Address) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             StartIPv6Address = startIPv6Address;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The start IP address of the firewall rule. Must be IPv6 format. </summary>
         [WirePath("properties.startIPv6Address")]
         public string StartIPv6Address { get; set; }
-        /// <summary> The end IP address of the firewall rule. Must be IPv6 format. Must be greater than or equal to startIpv6Address. </summary>
+        /// <summary> The end IP address of the firewall rule. Must be IPv6 format. Must be greater than or equal to startIpAddress. </summary>
         [WirePath("properties.endIPv6Address")]
         public string EndIPv6Address { get; set; }
     }
