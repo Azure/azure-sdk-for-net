@@ -121,8 +121,6 @@ function Process-ReviewStatusCode($statusCode, $packageName, $apiApprovalStatus,
 function Set-ApiViewCommentForRelatedIssues {
   param (
     [Parameter(Mandatory = $true)]
-    [string]$SourceCommish,
-    [Parameter(Mandatory = $true)]
     [string]$HeadCommitish,
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)]
@@ -142,7 +140,7 @@ function Set-ApiViewCommentForRelatedIssues {
   }
   $issuesForCommit.items | ForEach-Object {
     $urlParts = $_.url -split "/"
-    Set-ApiViewCommentForPR -RepoOwner $urlParts[4] -RepoName $urlParts[5] -PrNumber $urlParts[7] -SourceCommish $SourceCommish -AuthToken $AuthToken
+    Set-ApiViewCommentForPR -RepoOwner $urlParts[4] -RepoName $urlParts[5] -PrNumber $urlParts[7] -HeadCommitish $HeadCommitish -AuthToken $AuthToken
   }
 }
 
@@ -155,13 +153,13 @@ function Set-ApiViewCommentForPR {
     [Parameter(Mandatory = $true)]
     [string]$PrNumber,
     [Parameter(Mandatory = $true)]
-    [string]$SourceCommish,
+    [string]$HeadCommitish,
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)]
     $AuthToken
   )
   $repoFullName = "$RepoOwner/$RepoName"
-  $apiviewEndpoint = "https://apiview.dev/api/pullrequests?pullRequestNumber=$PrNumber&repoName=$repoFullName&commitSHA=$SourceCommish"
+  $apiviewEndpoint = "https://apiview.dev/api/pullrequests?pullRequestNumber=$PrNumber&repoName=$repoFullName&commitSHA=$HeadCommitish"
   LogDebug "Get APIView information for PR using endpoint: $apiviewEndpoint"
 
   $commentText = @()
@@ -189,6 +187,7 @@ function Set-ApiViewCommentForPR {
     exit 1
   }
 
+  $commentText += "<!-- Fetch URI: $apiviewEndpoint -->"
   $commentText = $commentText -join "`r`n"
   $existingComment = $null;
   $existingAPIViewComment = $null;
