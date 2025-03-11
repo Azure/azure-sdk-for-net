@@ -165,7 +165,7 @@ function Set-ApiViewCommentForPR {
   LogDebug "Get APIView information for PR using endpoint: $apiviewEndpoint"
 
   $commentText = @()
-  $commentText += "**API Change Check**"
+  $commentText += "## API Change Check"
   try {
     $response = Invoke-RestMethod -Uri $apiviewEndpoint -Method Get -MaximumRetryCount 3
     if ($response.Count -eq 0) {
@@ -195,7 +195,8 @@ function Set-ApiViewCommentForPR {
 
   try {
     $existingComment = Get-GitHubIssueComments -RepoOwner $RepoOwner -RepoName $RepoName -IssueNumber $PrNumber -AuthToken $AuthToken
-    $existingAPIViewComment = $existingComment | Where-Object { $_.body.StartsWith("**API Change Check**", [StringComparison]::OrdinalIgnoreCase) }
+    $existingAPIViewComment = $existingComment | Where-Object { 
+      $_.body.StartsWith("**API Change Check**", [StringComparison]::OrdinalIgnoreCase) -or $_.body.StartsWith("## API Change Check", [StringComparison]::OrdinalIgnoreCase) }
   } catch {
     LogWarning "Failed to get comments from Pull Request: $PrNumber in repo: $repoFullName"
   }
