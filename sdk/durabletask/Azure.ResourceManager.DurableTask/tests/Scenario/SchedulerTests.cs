@@ -45,11 +45,13 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
 
         SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
         ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg", AzureLocation.NorthCentralUS);
-        await TestContext.Error.WriteLineAsync($"subscription: {subscription.Data.SubscriptionId}, resource group {rg.Data.Name}");
+        await TestContext.Error.WriteLineAsync(
+            $"subscription: {subscription.Data.SubscriptionId}, resource group {rg.Data.Name}");
         string resourceName = Recording.GenerateAssetName("resource");
 
         // Create Scheduler
-        SchedulerData createSchedulerData = new(AzureLocation.NorthCentralUS) {
+        SchedulerData createSchedulerData = new(AzureLocation.NorthCentralUS)
+        {
             Properties = new SchedulerProperties(
                 ipAllowlist: [IpRange1, IpRange2, IpRange3],
                 sku: new SchedulerSku() { Name = skuType, Capacity = 1 }
@@ -96,7 +98,8 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
             Tags = { { TagKeyOrg, TagValueOrg }, { TagKeyEnv, TagValueEnv } }
         };
 
-        longRunningOperation = await rg.GetSchedulers().CreateOrUpdateAsync(WaitUntil.Started, resourceName, updateSchedulerData);
+        longRunningOperation =
+            await rg.GetSchedulers().CreateOrUpdateAsync(WaitUntil.Started, resourceName, updateSchedulerData);
         // While the update is in progress the resource is in updating state
         resource = await rg.GetSchedulerAsync(resourceName);
         Assert.AreEqual(ProvisioningState.Updating, resource.Data.Properties.ProvisioningState);
@@ -110,8 +113,8 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
         Assert.Contains(UpdatedIpRange2, resource.Data.Properties.IPAllowlist as IList);
         Assert.Contains(IpRange3, resource.Data.Properties.IPAllowlist as IList);
         Assert.AreEqual(2, resource.Data.Tags.Count);
-        Assert.Contains(TagKeyOrg, resource.Data.Tags.Keys as IList);
-        Assert.Contains(TagKeyEnv, resource.Data.Tags.Keys as IList);
+        Assert.That(resource.Data.Tags.Keys, Does.Contain(TagKeyOrg));
+        Assert.That(resource.Data.Tags.Keys, Does.Contain(TagKeyEnv));
         Assert.AreEqual(TagValueOrg, resource.Data.Tags[TagKeyOrg]);
         Assert.AreEqual(TagValueEnv, resource.Data.Tags[TagKeyEnv]);
         Assert.AreEqual(ProvisioningState.Succeeded, resource.Data.Properties.ProvisioningState);
@@ -128,18 +131,19 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
         Assert.Contains(UpdatedIpRange2, resource.Data.Properties.IPAllowlist as IList);
         Assert.Contains(IpRange3, resource.Data.Properties.IPAllowlist as IList);
         Assert.AreEqual(2, resource.Data.Tags.Count);
-        Assert.Contains(TagKeyOrg, resource.Data.Tags.Keys as IList);
-        Assert.Contains(TagKeyEnv, resource.Data.Tags.Keys as IList);
+        Assert.That(resource.Data.Tags.Keys, Does.Contain(TagKeyOrg));
+        Assert.That(resource.Data.Tags.Keys, Does.Contain(TagKeyEnv));
         Assert.AreEqual(TagValueOrg, resource.Data.Tags[TagKeyOrg]);
         Assert.AreEqual(TagValueEnv, resource.Data.Tags[TagKeyEnv]);
         Assert.AreEqual(ProvisioningState.Succeeded, resource.Data.Properties.ProvisioningState);
 
         // Update select Scheduler properties (Patch)
-        SchedulerData patchSchedulerData = new()
+        SchedulerData patchSchedulerData = new(default)
         {
-            Properties = new SchedulerProperties (
+            Properties = new SchedulerProperties(
                 ipAllowlist: [PatchIpRange],
-                sku: new SchedulerSku(skuType)), // capacity can optionally be changed
+                sku: new SchedulerSku(skuType) // capacity can optionally be changed
+            ),
             Tags = { { TagKeyEnv, TagValueEnv } }
         };
 
@@ -155,7 +159,7 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
         Assert.AreEqual(1, resource.Data.Properties.IPAllowlist.Count);
         Assert.Contains(PatchIpRange, resource.Data.Properties.IPAllowlist as IList);
         Assert.AreEqual(1, resource.Data.Tags.Count);
-        Assert.Contains(TagKeyEnv, resource.Data.Tags.Keys as IList);
+        Assert.That(resource.Data.Tags.Keys, Does.Contain(TagKeyEnv));
         Assert.AreEqual(TagValueEnv, resource.Data.Tags[TagKeyEnv]);
         Assert.AreEqual(ProvisioningState.Succeeded, resource.Data.Properties.ProvisioningState);
 
