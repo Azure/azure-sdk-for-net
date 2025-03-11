@@ -122,12 +122,6 @@ namespace Azure.Core
 }
 namespace System.ClientModel
 {
-    public partial interface ITokenProvider
-    {
-        object CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
-        System.ClientModel.Token GetToken(System.ClientModel.Auth.ITokenContext context, System.Threading.CancellationToken cancellationToken);
-        System.Threading.Tasks.ValueTask<System.ClientModel.Token> GetTokenAsync(System.ClientModel.Auth.ITokenContext context, System.Threading.CancellationToken cancellationToken);
-    }
     public abstract partial class RefreshableToken : System.ClientModel.Token
     {
         public RefreshableToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) : base (default(string), default(string), default(System.DateTimeOffset), default(System.DateTimeOffset?)) { }
@@ -144,49 +138,28 @@ namespace System.ClientModel
 }
 namespace System.ClientModel.Auth
 {
-    public partial interface IAuthorizationCodeFlowContext : System.ClientModel.Auth.IScopedFlowContext, System.ClientModel.Auth.ITokenContext
-    {
-        System.Uri AuthorizationUri { get; }
-        System.Uri RefreshUri { get; }
-        System.Uri TokenUri { get; }
-    }
-    public partial interface IClientCredentialsFlowContext : System.ClientModel.Auth.IScopedFlowContext, System.ClientModel.Auth.ITokenContext
-    {
-        System.Uri RefreshUri { get; }
-        System.Uri TokenUri { get; }
-    }
-    public partial interface IImplicitFlowContext : System.ClientModel.Auth.IScopedFlowContext, System.ClientModel.Auth.ITokenContext
-    {
-        System.Uri AuthorizationUri { get; }
-        System.Uri RefreshUri { get; }
-    }
-    public partial interface IPasswordFlowContext : System.ClientModel.Auth.IScopedFlowContext, System.ClientModel.Auth.ITokenContext
-    {
-        System.Uri RefreshUri { get; }
-        System.Uri TokenUri { get; }
-    }
-    public partial interface IScopedFlowContext : System.ClientModel.Auth.ITokenContext
-    {
-        string[] Scopes { get; }
-        System.ClientModel.Auth.ITokenContext WithAdditionalScopes(params string[] additionalScopes);
-    }
-    public partial interface ITokenContext
-    {
-    }
     public partial class OAuth2BearerTokenAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
-        public OAuth2BearerTokenAuthenticationPolicy(System.ClientModel.ITokenProvider tokenProvider, System.Collections.Generic.IEnumerable<System.Collections.Generic.IReadOnlyDictionary<string, object>> contexts) { }
+        public OAuth2BearerTokenAuthenticationPolicy(System.ClientModel.Auth.TokenProvider tokenProvider, System.Collections.Generic.IEnumerable<System.Collections.Generic.IReadOnlyDictionary<string, object>> contexts) { }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
-    public abstract partial class TokenProvider<TContext> : System.ClientModel.ITokenProvider where TContext : System.ClientModel.Auth.ITokenContext
+    public partial class TokenFlowProperties
+    {
+        public const string AuthorizationUrlPropertyName = "authorizationUrl";
+        public const string RefreshUrlPropertyName = "refreshUrl";
+        public const string ScopesPropertyName = "scopes";
+        public const string TokenUrlPropertyName = "tokenUrl";
+        public TokenFlowProperties(string[] scopes, System.Collections.Generic.IReadOnlyDictionary<string, object> properties) { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> Properties { get { throw null; } }
+        public string[] Scopes { get { throw null; } }
+        public System.ClientModel.Auth.TokenFlowProperties WithAdditionalScopes(string[] additionalScopes) { throw null; }
+    }
+    public abstract partial class TokenProvider
     {
         protected TokenProvider() { }
-        public abstract TContext CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
-        public abstract System.ClientModel.Token GetAccessToken(TContext context, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Token> GetAccessTokenAsync(TContext context, System.Threading.CancellationToken cancellationToken);
-        object System.ClientModel.ITokenProvider.CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> properties) { throw null; }
-        System.ClientModel.Token System.ClientModel.ITokenProvider.GetToken(System.ClientModel.Auth.ITokenContext context, System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Threading.Tasks.ValueTask<System.ClientModel.Token> System.ClientModel.ITokenProvider.GetTokenAsync(System.ClientModel.Auth.ITokenContext context, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public abstract System.ClientModel.Auth.TokenFlowProperties? CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
+        public abstract System.ClientModel.Token GetToken(System.ClientModel.Auth.TokenFlowProperties properties, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Token> GetTokenAsync(System.ClientModel.Auth.TokenFlowProperties properties, System.Threading.CancellationToken cancellationToken);
     }
 }

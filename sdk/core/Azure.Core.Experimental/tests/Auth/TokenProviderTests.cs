@@ -10,7 +10,6 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 
@@ -22,7 +21,7 @@ public class TokenProviderTests
     public void SampleUsage()
     {
         // usage for TokenProvider2 abstract type
-        ITokenProvider provider = new ClientCredentialTokenProvider("myClientId", "myClientSecret");
+        TokenProvider provider = new ClientCredentialTokenProvider("myClientId", "myClientSecret");
         var client = new FooClient(new Uri("http://localhost"), provider);
         client.Get();
     }
@@ -32,11 +31,13 @@ public class TokenProviderTests
         // Generated from the TypeSpec spec.
         private readonly Dictionary<string, object>[] flows = [
             new Dictionary<string, object> {
-                { "scopes", new string[] { "baselineScope" } },
-                { "tokenUrl" , new Uri("https://myAuthserver.com/token")},
-                { "refreshUrl" , new Uri("https://myAuthserver.com/refresh")}
+                { TokenFlowProperties.ScopesPropertyName, new string[] { "baselineScope" } },
+                { TokenFlowProperties.TokenUrlPropertyName , "https://myauthserver.com/token"},
+                { TokenFlowProperties.RefreshUrlPropertyName, "https://myauthserver.com/refresh"}
             }
         ];
+
+        private readonly IReadOnlyDictionary<string, object> _emptyProperties = new Dictionary<string, object>();
 
         private ClientPipeline _pipeline;
 
@@ -51,7 +52,7 @@ public class TokenProviderTests
             _pipeline = pipeline;
         }
 
-        public FooClient(Uri uri, ITokenProvider credential)
+        public FooClient(Uri uri, TokenProvider credential)
         {
             var options = new ClientPipelineOptions();
             options.Transport = new MockPipelineTransport("foo",
@@ -69,8 +70,8 @@ public class TokenProviderTests
         public ClientResult Get()
         {
             var message = _pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
-            message.SetProperty(typeof(IScopedFlowContext), new ScopedContext(["read"]));
+            message.ResponseClassifier = PipelineMessageClassifier.Create([200]);
+            message.SetProperty(typeof(TokenFlowProperties), new TokenFlowProperties(["read"], _emptyProperties));
 
             PipelineRequest request = message.Request;
             request.Method = "GET";
@@ -80,22 +81,7 @@ public class TokenProviderTests
         }
     }
 
-    internal struct ScopedContext : IScopedFlowContext
-    {
-        public string[] Scopes { get; }
-
-        public ScopedContext(string[] scopes)
-        {
-            Scopes = scopes;
-        }
-
-        public ITokenContext WithAdditionalScopes(string[] additionalScopes)
-        {
-            return new ScopedContext([.. Scopes, .. additionalScopes]);
-        }
-    }
-
-    public class ClientCredentialTokenProvider : TokenProvider<IClientCredentialsFlowContext>
+    public class ClientCredentialTokenProvider : TokenProvider
     {
         private string _clientId;
         private string _clientSecret;
@@ -119,36 +105,60 @@ public class TokenProviderTests
             _clientId = clientId;
             _clientSecret = clientSecret;
             // Create a mock handler that returns the predefined response
-            var mockHandler = new MockHttpMessageHandler(_ => mockResponse);
+            var mockHandler = new MockHttpMessageHandler(req =>
+            {
+                Assert.AreEqual(req.RequestUri.ToString(), "https://myauthserver.com/token");
+                // Extract the Authorization header
+                var authHeader = req.Headers.Authorization;
+                Assert.IsNotNull(authHeader, "Authorization header is missing");
+                Assert.AreEqual("Basic", authHeader.Scheme, "Authorization scheme should be 'Basic'");
+
+                // Decode the Base64 parameter
+                byte[] credentialBytes = Convert.FromBase64String(authHeader.Parameter);
+                string decodedCredentials = Encoding.ASCII.GetString(credentialBytes);
+
+                // Verify the decoded credentials
+                Assert.AreEqual($"{_clientId}:{_clientSecret}", decodedCredentials, "Decoded credentials don't match expected values");
+
+                return mockResponse;
+            });
 
             // Create an HttpClient with the mock handler
             _client = new HttpClient(mockHandler);
         }
 
-        public override Token GetAccessToken(IClientCredentialsFlowContext context, CancellationToken cancellationToken)
+        public override Token GetToken(TokenFlowProperties properties, CancellationToken cancellationToken)
         {
-            return GetAccessTokenInternal(false, context, cancellationToken).GetAwaiter().GetResult();
+            return GetAccessTokenInternal(false, properties, cancellationToken).GetAwaiter().GetResult();
         }
 
-        public override async ValueTask<Token> GetAccessTokenAsync(IClientCredentialsFlowContext context, CancellationToken cancellationToken)
+        public override async ValueTask<Token> GetTokenAsync(TokenFlowProperties properties, CancellationToken cancellationToken)
         {
-            return await GetAccessTokenInternal(true, context, cancellationToken).ConfigureAwait(false);
+            return await GetAccessTokenInternal(true, properties, cancellationToken).ConfigureAwait(false);
         }
 
-        public override IClientCredentialsFlowContext CreateContext(IReadOnlyDictionary<string, object> properties)
+        public override TokenFlowProperties CreateContext(IReadOnlyDictionary<string, object> properties)
         {
-            if (properties.TryGetValue("scopes", out var scopes) && scopes is string[] scopeArray &&
-                properties.TryGetValue("tokenUrl", out var tokenUri) && tokenUri is Uri tokenUriValue &&
-                properties.TryGetValue("refreshUrl", out var refreshUri) && refreshUri is Uri refreshUriValue)
+            if (properties.TryGetValue(TokenFlowProperties.ScopesPropertyName, out var scopes) && scopes is string[] scopeArray &&
+                properties.TryGetValue(TokenFlowProperties.TokenUrlPropertyName, out var tokenUri) && tokenUri is string tokenUriValue &&
+                properties.TryGetValue(TokenFlowProperties.RefreshUrlPropertyName, out var refreshUri) && refreshUri is string refreshUriValue)
             {
-                return new ClientCredentialsContext(tokenUriValue, refreshUriValue, scopeArray);
+                return new TokenFlowProperties(scopeArray, new Dictionary<string, object>
+                {
+                    { TokenFlowProperties.TokenUrlPropertyName, tokenUriValue },
+                    { TokenFlowProperties.RefreshUrlPropertyName, refreshUriValue }
+                });
             }
             return null;
         }
 
-        internal async ValueTask<Token> GetAccessTokenInternal(bool async, IClientCredentialsFlowContext context, CancellationToken cancellationToken)
+        internal async ValueTask<Token> GetAccessTokenInternal(bool async, TokenFlowProperties properties, CancellationToken cancellationToken)
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, context.TokenUri);
+            if (!properties.Properties.TryGetValue("tokenUrl", out var tokenUri) || tokenUri is not string tokenUriValue)
+            {
+                throw new ArgumentException("Argument properties did not contain the expected value 'tokenUrl'.", nameof(properties));
+            }
+            var request = new HttpRequestMessage(HttpMethod.Post, tokenUriValue);
 
             // Add Basic Authentication header
             var authBytes = System.Text.Encoding.ASCII.GetBytes($"{_clientId}:{_clientSecret}");
@@ -159,7 +169,7 @@ public class TokenProviderTests
             var formContent = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("grant_type", "client_credentials"),
-                new KeyValuePair<string, string>("scope", context.Scopes[0])
+                new KeyValuePair<string, string>("scope", properties.Scopes[0])
             });
 
             request.Content = formContent;
@@ -188,34 +198,20 @@ public class TokenProviderTests
         }
     }
 
-    public struct ClientCredentialsContext(Uri tokenUri, Uri refreshUri, string[] scopes) : IClientCredentialsFlowContext
-    {
-        public string[] Scopes { get; } = scopes;
-
-        public Uri TokenUri { get; } = tokenUri;
-
-        public Uri RefreshUri { get; } = refreshUri;
-
-        public ITokenContext WithAdditionalScopes(string[] additionalScopes)
-        {
-            return new ClientCredentialsContext(TokenUri, RefreshUri, [.. Scopes, .. additionalScopes]);
-        }
-    }
-
     public class ClientCredentialToken : RefreshableToken
     {
-        private TokenProvider<IClientCredentialsFlowContext> _provider;
-        private IClientCredentialsFlowContext _context;
+        private TokenProvider _provider;
+        private TokenFlowProperties properties;
 
-        public ClientCredentialToken(TokenProvider<IClientCredentialsFlowContext> provider, IClientCredentialsFlowContext context, string tokenValue, string tokenType, DateTimeOffset expiresOn, DateTimeOffset? refreshOn = null)
+        public ClientCredentialToken(TokenProvider provider, TokenFlowProperties properties, string tokenValue, string tokenType, DateTimeOffset expiresOn, DateTimeOffset? refreshOn = null)
             : base(tokenValue, tokenType, expiresOn, refreshOn)
         {
             _provider = provider;
-            _context = context;
+            this.properties = properties;
         }
         public override async Task RefreshAsync(CancellationToken cancellationToken)
         {
-            var token = await _provider.GetAccessTokenAsync(_context, cancellationToken);
+            var token = await _provider.GetTokenAsync(properties, cancellationToken);
             TokenValue = token.TokenValue;
             TokenType = token.TokenType;
             ExpiresOn = token.ExpiresOn;

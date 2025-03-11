@@ -9,16 +9,16 @@ using Azure.Core.Pipeline;
 namespace System.ClientModel.Auth;
 
 /// <summary>
-/// A <see cref="PipelinePolicy"/> that uses an <see cref="ITokenProvider"/> to authenticate requests.
+/// A <see cref="PipelinePolicy"/> that uses an <see cref="TokenProvider"/> to authenticate requests.
 /// </summary>
 public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
 {
-    private readonly ITokenProvider _tokenProvider;
-    private readonly IScopedFlowContext _flowContext;
+    private readonly TokenProvider _tokenProvider;
+    private readonly TokenFlowProperties _flowContext;
 
     /// <param name="tokenProvider"></param>
     /// <param name="contexts"></param>
-    public OAuth2BearerTokenAuthenticationPolicy(ITokenProvider tokenProvider, IEnumerable<IReadOnlyDictionary<string, object>> contexts)
+    public OAuth2BearerTokenAuthenticationPolicy(TokenProvider tokenProvider, IEnumerable<IReadOnlyDictionary<string, object>> contexts)
     {
         _tokenProvider = tokenProvider;
         _flowContext = GetContext(contexts, tokenProvider);
@@ -43,7 +43,7 @@ public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
             throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
         }
         Token token;
-        if (message.TryGetProperty(typeof(IScopedFlowContext), out var rawContext) && rawContext is IScopedFlowContext scopesContext)
+        if (message.TryGetProperty(typeof(TokenFlowProperties), out var rawContext) && rawContext is TokenFlowProperties scopesContext)
         {
             var context = _flowContext.WithAdditionalScopes(scopesContext.Scopes);
             token = async ? await _tokenProvider.GetTokenAsync(context, message.CancellationToken).ConfigureAwait(false) :
@@ -65,26 +65,16 @@ public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
         }
     }
 
-    internal static IScopedFlowContext GetContext(IEnumerable<IReadOnlyDictionary<string, object>> contexts, ITokenProvider tokenProvider)
+    internal static TokenFlowProperties GetContext(IEnumerable<IReadOnlyDictionary<string, object>> contexts, TokenProvider tokenProvider)
     {
-        var type = tokenProvider.GetType();
-        // This assumes that a credential provider will only implement one flow type.
-        var credentialFlowType = type switch
-        {
-            var t when typeof(TokenProvider<IClientCredentialsFlowContext>).IsAssignableFrom(t) => typeof(IClientCredentialsFlowContext),
-            var t when typeof(TokenProvider<IAuthorizationCodeFlowContext>).IsAssignableFrom(t) => typeof(IAuthorizationCodeFlowContext),
-            var t when typeof(TokenProvider<IPasswordFlowContext>).IsAssignableFrom(t) => typeof(IPasswordFlowContext),
-            var t when typeof(TokenProvider<IImplicitFlowContext>).IsAssignableFrom(t) => typeof(IImplicitFlowContext),
-            _ => typeof(IScopedFlowContext)
-        };
         foreach (var context in contexts)
         {
             var createdContext = tokenProvider.CreateContext(context);
-            if (createdContext != null && credentialFlowType.IsInstanceOfType(createdContext))
+            if (createdContext is not null)
             {
-                return (IScopedFlowContext)createdContext;
+                return createdContext;
             }
         }
-        throw new InvalidOperationException($"The service does not support the flow implemented by the supplied token provider {type.FullName}.");
+        throw new InvalidOperationException($"The service does not support any of the auth flows implemented by the supplied token provider {tokenProvider.GetType().FullName}.");
     }
 }
