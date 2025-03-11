@@ -56,8 +56,7 @@ steps:
 
   - pwsh: |
       $failed = $false
-
-      if ('$(ProjectNames)' -and '$(ProjectNames)' -notlike '$(*')){
+      if ('$(ProjectNames)' -and '$(ProjectNames)' -notlike '$(*') {
         $serviceDirectories = "$(ChangedServices)" -split ","
         $ScanPaths = @()
         foreach ($ServiceDirectory in $serviceDirectories) {
