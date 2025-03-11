@@ -16,20 +16,14 @@ namespace Azure.Security.ConfidentialLedger
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateUserAsync(string userId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateUserDefinedEndpoint(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateUserDefinedEndpointAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response CreateUserDefinedFunction(string functionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateUserDefinedFunctionAsync(string functionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateUserDefinedRole(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateUserDefinedRoleAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteLedgerUser(string userId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteLedgerUserAsync(string userId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteUser(string userId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteUserAsync(string userId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response DeleteUserDefinedFunction(string functionId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteUserDefinedFunctionAsync(string functionId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteUserDefinedRole(string roleName, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteUserDefinedRoleAsync(string roleName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response ExecuteUserDefinedFunction(string functionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ExecuteUserDefinedFunctionAsync(string functionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetCollections(Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetCollectionsAsync(Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetConsortiumMembers(Azure.RequestContext context = null) { throw null; }
@@ -58,12 +52,8 @@ namespace Azure.Security.ConfidentialLedger
         public virtual System.Threading.Tasks.Task<Azure.Response> GetUserAsync(string userId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetUserDefinedEndpoint(Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetUserDefinedEndpointAsync(Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetUserDefinedEndpointsModule(string moduleName, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetUserDefinedEndpointsModuleAsync(string moduleName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetUserDefinedFunction(string functionId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetUserDefinedFunctionAsync(string functionId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetUserDefinedFunctions(Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetUserDefinedFunctionsAsync(Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetUserDefinedEndpointsModule(string module, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetUserDefinedEndpointsModuleAsync(string module, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetUserDefinedRole(string roleName, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetUserDefinedRoleAsync(string roleName, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetUsers(Azure.RequestContext context = null) { throw null; }
@@ -77,7 +67,7 @@ namespace Azure.Security.ConfidentialLedger
     }
     public partial class ConfidentialLedgerClientOptions : Azure.Core.ClientOptions
     {
-        public ConfidentialLedgerClientOptions(Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion.V2024_12_09_Preview) { }
+        public ConfidentialLedgerClientOptions(Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion.V2024_08_22_Preview) { }
         public System.Uri CertificateEndpoint { get { throw null; } set { } }
         public bool VerifyConnection { get { throw null; } set { } }
         public enum ServiceVersion
@@ -85,7 +75,6 @@ namespace Azure.Security.ConfidentialLedger
             V2022_05_13 = 1,
             V2024_01_26_Preview = 2,
             V2024_08_22_Preview = 3,
-            V2024_12_09_Preview = 4,
         }
     }
 }
@@ -102,13 +91,12 @@ namespace Azure.Security.ConfidentialLedger.Certificate
     }
     public partial class ConfidentialLedgerCertificateClientOptions : Azure.Core.ClientOptions
     {
-        public ConfidentialLedgerCertificateClientOptions(Azure.Security.ConfidentialLedger.Certificate.ConfidentialLedgerCertificateClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.Certificate.ConfidentialLedgerCertificateClientOptions.ServiceVersion.V2024_12_09_Preview) { }
+        public ConfidentialLedgerCertificateClientOptions(Azure.Security.ConfidentialLedger.Certificate.ConfidentialLedgerCertificateClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.Certificate.ConfidentialLedgerCertificateClientOptions.ServiceVersion.V2024_08_22_Preview) { }
         public enum ServiceVersion
         {
             V2022_05_13 = 1,
             V2024_01_26_Preview = 2,
             V2024_08_22_Preview = 3,
-            V2024_12_09_Preview = 4,
         }
     }
 }
