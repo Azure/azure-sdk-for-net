@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncMemberData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncMemberData.DeserializeSyncMemberData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncMemberData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncMemberData.DeserializeSyncMemberData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncMemberListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncMemberListResult.DeserializeSyncMemberListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncMemberListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncMemberListResult.DeserializeSyncMemberListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncFullSchemaPropertiesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncFullSchemaPropertiesListResult.DeserializeSyncFullSchemaPropertiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncFullSchemaPropertiesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncFullSchemaPropertiesListResult.DeserializeSyncFullSchemaPropertiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncMemberListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncMemberListResult.DeserializeSyncMemberListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncMemberListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncMemberListResult.DeserializeSyncMemberListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -978,7 +978,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncFullSchemaPropertiesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncFullSchemaPropertiesListResult.DeserializeSyncFullSchemaPropertiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1015,7 +1015,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncFullSchemaPropertiesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncFullSchemaPropertiesListResult.DeserializeSyncFullSchemaPropertiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

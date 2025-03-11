@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DiscoveredSecuritySolutionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiscoveredSecuritySolutionList.DeserializeDiscoveredSecuritySolutionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DiscoveredSecuritySolutionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiscoveredSecuritySolutionList.DeserializeDiscoveredSecuritySolutionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DiscoveredSecuritySolutionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiscoveredSecuritySolutionList.DeserializeDiscoveredSecuritySolutionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DiscoveredSecuritySolutionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiscoveredSecuritySolutionList.DeserializeDiscoveredSecuritySolutionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DiscoveredSecuritySolution value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiscoveredSecuritySolution.DeserializeDiscoveredSecuritySolution(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DiscoveredSecuritySolution value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiscoveredSecuritySolution.DeserializeDiscoveredSecuritySolution(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DiscoveredSecuritySolutionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiscoveredSecuritySolutionList.DeserializeDiscoveredSecuritySolutionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DiscoveredSecuritySolutionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiscoveredSecuritySolutionList.DeserializeDiscoveredSecuritySolutionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DiscoveredSecuritySolutionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiscoveredSecuritySolutionList.DeserializeDiscoveredSecuritySolutionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DiscoveredSecuritySolutionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiscoveredSecuritySolutionList.DeserializeDiscoveredSecuritySolutionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

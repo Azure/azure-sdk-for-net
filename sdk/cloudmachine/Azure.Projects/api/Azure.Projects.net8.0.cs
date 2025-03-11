@@ -1,11 +1,3 @@
-namespace Azure.Core
-{
-    public static partial class ProjectClientConfiguration
-    {
-        public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddAzureProjectConnections(this Microsoft.Extensions.Configuration.IConfigurationBuilder builder, System.ClientModel.Primitives.ConnectionCollection connections) { throw null; }
-        public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddProjectId(this Microsoft.Extensions.Configuration.IConfigurationBuilder builder, string id) { throw null; }
-    }
-}
 namespace Azure.Core.Rest
 {
     public partial class RestCallFailedException : System.Exception
@@ -46,7 +38,7 @@ namespace Azure.Projects
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
     }
-    public static partial class AzureAIProjectsExensions
+    public static partial class AzureAIProjectsExtensions
     {
         public static Azure.AI.Projects.AgentsClient GetAgentsClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
         public static Azure.AI.Inference.ChatCompletionsClient GetChatCompletionsClient(this System.ClientModel.Primitives.ConnectionProvider workspace) { throw null; }
@@ -67,14 +59,10 @@ namespace Azure.Projects
     }
     public partial class ProjectClient : System.ClientModel.Primitives.ConnectionProvider
     {
-        protected ProjectClient() { }
-        public ProjectClient(Microsoft.Extensions.Configuration.IConfiguration configuration, Azure.Core.TokenCredential credential = null) { }
-        public ProjectClient(System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> connections = null, Azure.Core.TokenCredential credential = null) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public System.ClientModel.Primitives.ConnectionCollection Connections { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public string Id { get { throw null; } }
+        public ProjectClient() { }
         public Azure.Projects.MessagingServices Messaging { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string ProjectId { get { throw null; } }
         public Azure.Projects.StorageServices Storage { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataFactoryLinkedServiceData(document.RootElement, options);
                     }
                 default:
