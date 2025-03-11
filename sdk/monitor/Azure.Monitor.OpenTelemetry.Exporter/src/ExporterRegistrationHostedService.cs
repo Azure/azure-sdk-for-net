@@ -57,6 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     tracerProvider.AddProcessor(new LiveMetricsActivityProcessor(manager));
                 }
 
+                // TODO: Add Ai Sampler.
                 tracerProvider.AddProcessor(new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
                 {
                     new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions)),

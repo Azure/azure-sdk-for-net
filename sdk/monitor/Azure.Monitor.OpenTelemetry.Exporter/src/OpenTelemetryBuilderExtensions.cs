@@ -64,6 +64,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 builder.Services.Configure(configureAzureMonitor);
             }
 
+            // Note: We automatically turn on signals for "UseOtlpExporter"
             builder
                 .WithLogging()
                 .WithMetrics(metrics => metrics.AddAzureMonitorMetricExporter())
