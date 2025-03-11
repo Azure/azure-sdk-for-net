@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.3 (2025-03-11)
 
 ### Features Added
 
@@ -10,6 +10,8 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Set MaxDepth to 256 for json serialization options to handle json with more depth in https://github.com/Azure/azure-sdk-for-net/issues/48260
 
 ### Other Changes
 
