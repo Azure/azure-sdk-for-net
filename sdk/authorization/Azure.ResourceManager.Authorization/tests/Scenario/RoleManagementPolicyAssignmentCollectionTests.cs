@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         }
 
         [Ignore("Not implemented exception")]
+        [TestCase]
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             Assert.AreEqual(name, policyAssignment.Data.Name);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task GetAll()
         {
@@ -47,6 +49,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             Assert.GreaterOrEqual(policyAssignmentList.Count, 0);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Get()
         {
@@ -61,6 +64,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             }
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Exists()
         {

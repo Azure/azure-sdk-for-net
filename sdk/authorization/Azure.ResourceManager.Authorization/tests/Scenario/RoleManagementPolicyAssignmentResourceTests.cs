@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Get()
         {
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         }
 
         [Ignore("Not implemented exception")]
+        [TestCase]
         [RecordedTest]
         public async Task Update()
         {

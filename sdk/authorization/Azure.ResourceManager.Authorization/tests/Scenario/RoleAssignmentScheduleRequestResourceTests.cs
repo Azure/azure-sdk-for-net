@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             return resourceGroup.GetRoleAssignmentScheduleRequests();
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Get()
         {
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             }
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Update()
         {
@@ -48,6 +50,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             }
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Validate()
         {
@@ -62,6 +65,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             }
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Cancel()
         {

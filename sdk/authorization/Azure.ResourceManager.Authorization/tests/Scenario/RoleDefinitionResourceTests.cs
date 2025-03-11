@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             return resourceGroup.GetAuthorizationRoleDefinitions();
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Get()
         {
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             }
         }
 
+        [TestCase]
         [RecordedTest]
         [Ignore("Permission issue")]
         public async Task Delete()
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             }
         }
 
+        [TestCase]
         [RecordedTest]
         [Ignore("Permission issue")]
         public async Task Update()

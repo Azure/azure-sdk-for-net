@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             return resourceGroup.GetRoleEligibilityScheduleRequests();
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Get()
         {
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         }
 
         [Ignore("Role assignment is not supported")]
+        [TestCase]
         [RecordedTest]
         public async Task Create()
         {
@@ -63,6 +65,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             Assert.AreEqual(roleEligibilityScheduleRequest.Value.Data.Name, roleName);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task GetAll()
         {
@@ -71,6 +74,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             Assert.GreaterOrEqual(roleEligibilityScheduleRequests.Count, 0);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Exists()
         {

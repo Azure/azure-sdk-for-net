@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             return resourceGroup.GetRoleEligibilityScheduleInstances();
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Get()
         {
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             }
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task GetAll()
         {
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             Assert.GreaterOrEqual(roleEligibilityScheduleInstances.Count, 0);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Exists()
         {

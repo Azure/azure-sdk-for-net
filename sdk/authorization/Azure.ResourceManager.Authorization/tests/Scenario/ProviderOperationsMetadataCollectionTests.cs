@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             return tenants.FirstOrDefault().GetAllAuthorizationProviderOperationsMetadata();
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task GetAll()
         {
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             Assert.GreaterOrEqual(providerOperations.Count, 0);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Get()
         {
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             }
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Exists()
         {

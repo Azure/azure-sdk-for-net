@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             return resourceGroup.GetRoleAssignmentScheduleRequests();
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Get()
         {
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             }
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task GetAll()
         {
@@ -49,6 +51,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             Assert.GreaterOrEqual(roleAssignmentScheduleRequests.Count, 0);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Exists()
         {
