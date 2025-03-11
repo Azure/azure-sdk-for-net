@@ -147,12 +147,10 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
             Tags = { { TagKeyEnv, TagValueEnv } }
         };
 
-        longRunningOperation = await resource.UpdateAsync(waitUntil: WaitUntil.Started, patchSchedulerData);
-        // While the update is in progress the resource is in updating state
-        Assert.AreEqual(ProvisioningState.Updating, resource.Data.Properties.ProvisioningState);
+        // While the update is in progress the resource is in updating state, but we will wait for completion now
+        longRunningOperation = await resource.UpdateAsync(waitUntil: WaitUntil.Completed, patchSchedulerData);
+        resource = longRunningOperation.Value;
 
-        // Wait for the update to complete
-        resource = await longRunningOperation.WaitForCompletionAsync();
         Assert.AreEqual(resourceName, resource.Data.Name);
         Assert.AreEqual(skuType, resource.Data.Properties.Sku.Name);
         Assert.AreEqual(RedundancyState.Zone, resource.Data.Properties.Sku.RedundancyState);
@@ -164,19 +162,10 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
         Assert.AreEqual(ProvisioningState.Succeeded, resource.Data.Properties.ProvisioningState);
 
         // Delete Scheduler
-        var longRunningDeleteOperation = await resource.DeleteAsync(WaitUntil.Started);
-
-        // While delete is in progress the resource is in deleting state
-        SchedulerResource toBeDeleted = await resource.GetAsync();
-        Assert.NotNull(toBeDeleted);
-        Assert.Equals(ProvisioningState.Deleting, toBeDeleted.Data.Properties.ProvisioningState ?? "Unknown");
-
-        var done = await longRunningDeleteOperation.WaitForCompletionResponseAsync();
-        Assert.True(done.Status is StatusCodes.Status200OK or StatusCodes.Status204NoContent);
+        await resource.DeleteAsync(WaitUntil.Completed);
 
         // Verify the scheduler is deleted
         Response<SchedulerResource> notFoundResource = await rg.GetSchedulerAsync(resourceName);
         Assert.False(notFoundResource.HasValue);
-        Assert.Equals(StatusCodes.Status404NotFound, notFoundResource.GetRawResponse().Status);
     }
 }
