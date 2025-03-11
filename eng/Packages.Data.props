@@ -253,7 +253,7 @@
     <PackageReference Update="CoreWCF.Queue" Version="1.7.0" />
     <PackageReference Update="System.IO.Pipelines" Version="8.0.0" />
     <PackageReference Update="Microsoft.AspNetCore" Version="2.3.0" />
-    <PackageReference Update="System.ServiceModel.Primitives" Version="8.1.2" />
+    <PackageReference Update="System.ServiceModel.Primitives" Version="6.2.0" />
     <PackageReference Update="Azure.Storage.Files.Shares" Version="12.21.0" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.21.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.1" />
