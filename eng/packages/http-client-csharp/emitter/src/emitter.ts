@@ -14,14 +14,13 @@ import {
   emit
 } from "@typespec/http-client-csharp";
 import { azureSDKContextOptions } from "./sdk-context-options.js";
-import {
-  armResourceCreateOrUpdate,
-  armResourceOperations,
-  armResourceRead,
-  singleton,
-  resourceMetadata,
-} from "./knownDecorators.js";
 import { CalculateResourceTypeFromPath } from "./resource-type.js";
+
+const armResourceOperations = "Azure.ResourceManager.@armResourceOperations";
+const armResourceRead = "Azure.ResourceManager.@armResourceRead";
+const armResourceCreateOrUpdate = "Azure.ResourceManager.@armResourceCreateOrUpdate";
+const singleton= "Azure.ResourceManager.@singleton";
+const resourceMetadata = "Azure.ClientGenerator.Core.@resourceSchema";
 
 export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
   const program = context.program
