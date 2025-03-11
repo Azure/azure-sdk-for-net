@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/authorization/ci.mgmt.yml
-    - sdk/authorization/Azure.ResourceManager.Authorization/
+    - sdk/authorization/ci.mgmt.yml
+    - sdk/authorization/Azure.ResourceManager.Authorization/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

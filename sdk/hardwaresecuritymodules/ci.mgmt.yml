@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/hardwaresecuritymodules/ci.mgmt.yml
-    - sdk/hardwaresecuritymodules/Azure.ResourceManager.HardwareSecurityModules/
+    - sdk/hardwaresecuritymodules/ci.mgmt.yml
+    - sdk/hardwaresecuritymodules/Azure.ResourceManager.HardwareSecurityModules/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

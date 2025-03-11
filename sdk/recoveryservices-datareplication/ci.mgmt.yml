@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/recoveryservices-datareplication/ci.mgmt.yml
-    - sdk/recoveryservices-datareplication/Azure.ResourceManager.RecoveryServicesDataReplication/
+    - sdk/recoveryservices-datareplication/ci.mgmt.yml
+    - sdk/recoveryservices-datareplication/Azure.ResourceManager.RecoveryServicesDataReplication/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

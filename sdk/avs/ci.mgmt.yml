@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/avs/ci.mgmt.yml
-    - sdk/avs/Azure.ResourceManager.Avs/
+    - sdk/avs/ci.mgmt.yml
+    - sdk/avs/Azure.ResourceManager.Avs/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

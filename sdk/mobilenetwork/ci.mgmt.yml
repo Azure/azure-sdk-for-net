@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/mobilenetwork/ci.mgmt.yml
-    - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork/
+    - sdk/mobilenetwork/ci.mgmt.yml
+    - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork/
+
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml

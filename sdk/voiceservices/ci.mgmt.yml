@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/voiceservices/ci.mgmt.yml
-    - sdk/voiceservices/Azure.ResourceManager.VoiceServices/
+    - sdk/voiceservices/ci.mgmt.yml
+    - sdk/voiceservices/Azure.ResourceManager.VoiceServices/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

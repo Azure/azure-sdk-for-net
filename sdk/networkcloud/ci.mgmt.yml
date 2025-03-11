@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/networkcloud/ci.mgmt.yml
-    - sdk/networkcloud/Azure.ResourceManager.NetworkCloud/
+    - sdk/networkcloud/ci.mgmt.yml
+    - sdk/networkcloud/Azure.ResourceManager.NetworkCloud/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/privatedns/ci.mgmt.yml
-    - sdk/privatedns/Azure.ResourceManager.PrivateDns/
+    - sdk/privatedns/ci.mgmt.yml
+    - sdk/privatedns/Azure.ResourceManager.PrivateDns/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

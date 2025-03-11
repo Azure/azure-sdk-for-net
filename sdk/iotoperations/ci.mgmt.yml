@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/iotoperations/ci.mgmt.yml
-    - sdk/iotoperations/Azure.ResourceManager.IotOperations/
+    - sdk/iotoperations/ci.mgmt.yml
+    - sdk/iotoperations/Azure.ResourceManager.IotOperations/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

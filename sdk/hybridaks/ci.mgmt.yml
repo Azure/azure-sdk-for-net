@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/hybridaks/ci.mgmt.yml
-    - sdk/hybridaks/Azure.ResourceManager.HybridContainerService/
+    - sdk/hybridaks/ci.mgmt.yml
+    - sdk/hybridaks/Azure.ResourceManager.HybridContainerService/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

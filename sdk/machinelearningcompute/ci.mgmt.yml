@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/machinelearningcompute/ci.mgmt.yml
-    - sdk/machinelearningcompute/Azure.ResourceManager.MachineLearningCompute/
+    - sdk/machinelearningcompute/ci.mgmt.yml
+    - sdk/machinelearningcompute/Azure.ResourceManager.MachineLearningCompute/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

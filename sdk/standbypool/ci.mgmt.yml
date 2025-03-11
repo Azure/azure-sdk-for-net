@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/standbypool/ci.mgmt.yml
-    - sdk/standbypool/Azure.ResourceManager.StandbyPool/
+    - sdk/standbypool/ci.mgmt.yml
+    - sdk/standbypool/Azure.ResourceManager.StandbyPool/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/defendereasm/ci.mgmt.yml
-    - sdk/defendereasm/Azure.ResourceManager.DefenderEasm/
+    - sdk/defendereasm/ci.mgmt.yml
+    - sdk/defendereasm/Azure.ResourceManager.DefenderEasm/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/redisenterprise/ci.mgmt.yml
-    - sdk/redisenterprise/Azure.ResourceManager.RedisEnterprise/
+    - sdk/redisenterprise/ci.mgmt.yml
+    - sdk/redisenterprise/Azure.ResourceManager.RedisEnterprise/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

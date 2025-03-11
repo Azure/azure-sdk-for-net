@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/fabric/ci.mgmt.yml
-    - sdk/fabric/Azure.ResourceManager.Fabric/
+    - sdk/fabric/ci.mgmt.yml
+    - sdk/fabric/Azure.ResourceManager.Fabric/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

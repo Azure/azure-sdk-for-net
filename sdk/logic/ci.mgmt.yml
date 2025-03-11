@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/logic/ci.mgmt.yml
-    - sdk/logic/Azure.ResourceManager.Logic/
+    - sdk/logic/ci.mgmt.yml
+    - sdk/logic/Azure.ResourceManager.Logic/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

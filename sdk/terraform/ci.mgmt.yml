@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/terraform/ci.mgmt.yml
-    - sdk/terraform/Azure.ResourceManager.Terraform/
+    - sdk/terraform/ci.mgmt.yml
+    - sdk/terraform/Azure.ResourceManager.Terraform/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

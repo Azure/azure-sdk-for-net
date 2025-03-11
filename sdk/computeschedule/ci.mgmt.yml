@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/computeschedule/ci.mgmt.yml
-    - sdk/computeschedule/Azure.ResourceManager.ComputeSchedule/
+    - sdk/computeschedule/ci.mgmt.yml
+    - sdk/computeschedule/Azure.ResourceManager.ComputeSchedule/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

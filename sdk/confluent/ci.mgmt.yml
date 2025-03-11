@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/confluent/ci.mgmt.yml
-    - sdk/confluent/Azure.ResourceManager.Confluent/
+    - sdk/confluent/ci.mgmt.yml
+    - sdk/confluent/Azure.ResourceManager.Confluent/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

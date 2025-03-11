@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/healthbot/ci.mgmt.yml
-    - sdk/healthbot/Azure.ResourceManager.HealthBot/
+    - sdk/healthbot/ci.mgmt.yml
+    - sdk/healthbot/Azure.ResourceManager.HealthBot/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

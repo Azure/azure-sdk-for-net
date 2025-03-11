@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/reservations/ci.mgmt.yml
-    - sdk/reservations/Azure.ResourceManager.Reservations/
+    - sdk/reservations/ci.mgmt.yml
+    - sdk/reservations/Azure.ResourceManager.Reservations/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

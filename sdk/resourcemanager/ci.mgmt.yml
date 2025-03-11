@@ -79,7 +79,6 @@ trigger:
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
-    - sdk/iotoperations/Azure.ResourceManager.IotOperations
     - sdk/edgezones/Azure.ResourceManager.EdgeZones
     - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
@@ -108,6 +107,7 @@ trigger:
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
+    - sdk/iotoperations/Azure.ResourceManager.IotOperations
     - sdk/keyvault/Azure.ResourceManager.KeyVault
     - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration
     - sdk/kusto/Azure.ResourceManager.Kusto
@@ -202,6 +202,7 @@ trigger:
     - sdk/voiceservices/Azure.ResourceManager.VoiceServices
     - sdk/webpubsub/Azure.ResourceManager.WebPubSub
     - sdk/websites/Azure.ResourceManager.AppService
+    - sdk/weightsandbiases/Azure.ResourceManager.WeightsAndBiases
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
 
@@ -285,7 +286,6 @@ pr:
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
-    - sdk/iotoperations/Azure.ResourceManager.IotOperations
     - sdk/edgezones/Azure.ResourceManager.EdgeZones
     - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
@@ -314,6 +314,7 @@ pr:
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
+    - sdk/iotoperations/Azure.ResourceManager.IotOperations
     - sdk/keyvault/Azure.ResourceManager.KeyVault
     - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration
     - sdk/kusto/Azure.ResourceManager.Kusto
@@ -408,6 +409,7 @@ pr:
     - sdk/voiceservices/Azure.ResourceManager.VoiceServices
     - sdk/webpubsub/Azure.ResourceManager.WebPubSub
     - sdk/websites/Azure.ResourceManager.AppService
+    - sdk/weightsandbiases/Azure.ResourceManager.WeightsAndBiases
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
 

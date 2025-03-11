@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/fluidrelay/ci.mgmt.yml
-    - sdk/fluidrelay/Azure.ResourceManager.FluidRelay/
+    - sdk/fluidrelay/ci.mgmt.yml
+    - sdk/fluidrelay/Azure.ResourceManager.FluidRelay/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

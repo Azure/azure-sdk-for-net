@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/qumulo/ci.mgmt.yml
-    - sdk/qumulo/Azure.ResourceManager.Qumulo/
+    - sdk/qumulo/ci.mgmt.yml
+    - sdk/qumulo/Azure.ResourceManager.Qumulo/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

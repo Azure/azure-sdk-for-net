@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/kusto/ci.mgmt.yml
-    - sdk/kusto/Azure.ResourceManager.Kusto/
+    - sdk/kusto/ci.mgmt.yml
+    - sdk/kusto/Azure.ResourceManager.Kusto/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/appcomplianceautomation/ci.mgmt.yml
-    - sdk/appcomplianceautomation/Azure.ResourceManager.AppComplianceAutomation/
+    - sdk/appcomplianceautomation/ci.mgmt.yml
+    - sdk/appcomplianceautomation/Azure.ResourceManager.AppComplianceAutomation/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

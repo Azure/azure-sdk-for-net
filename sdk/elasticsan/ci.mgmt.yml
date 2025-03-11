@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/elasticsan/ci.mgmt.yml
-    - sdk/elasticsan/Azure.ResourceManager.ElasticSan/
+    - sdk/elasticsan/ci.mgmt.yml
+    - sdk/elasticsan/Azure.ResourceManager.ElasticSan/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

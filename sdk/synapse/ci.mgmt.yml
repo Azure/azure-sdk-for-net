@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/synapse/ci.mgmt.yml
-    - sdk/synapse/Azure.ResourceManager.Synapse/
+    - sdk/synapse/ci.mgmt.yml
+    - sdk/synapse/Azure.ResourceManager.Synapse/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

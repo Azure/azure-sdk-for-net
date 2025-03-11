@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/quantum/ci.mgmt.yml
-    - sdk/quantum/Azure.ResourceManager.Quantum/
+    - sdk/quantum/ci.mgmt.yml
+    - sdk/quantum/Azure.ResourceManager.Quantum/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

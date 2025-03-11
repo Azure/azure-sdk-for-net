@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/migrationdiscoverysap/ci.mgmt.yml
-    - sdk/migrationdiscoverysap/Azure.ResourceManager.MigrationDiscoverySap/
+    - sdk/migrationdiscoverysap/ci.mgmt.yml
+    - sdk/migrationdiscoverysap/Azure.ResourceManager.MigrationDiscoverySap/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

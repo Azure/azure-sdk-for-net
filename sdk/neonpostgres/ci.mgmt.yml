@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/neonpostgres/ci.mgmt.yml
-    - sdk/neonpostgres/Azure.ResourceManager.NeonPostgres/
+    - sdk/neonpostgres/ci.mgmt.yml
+    - sdk/neonpostgres/Azure.ResourceManager.NeonPostgres/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

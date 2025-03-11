@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/playwrighttesting/ci.mgmt.yml
-    - sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting/
+    - sdk/playwrighttesting/ci.mgmt.yml
+    - sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/datamigration/ci.mgmt.yml
-    - sdk/datamigration/Azure.ResourceManager.DataMigration/
+    - sdk/datamigration/ci.mgmt.yml
+    - sdk/datamigration/Azure.ResourceManager.DataMigration/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

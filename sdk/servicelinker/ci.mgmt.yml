@@ -10,8 +10,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/servicelinker/ci.mgmt.yml
-    - sdk/servicelinker/Azure.ResourceManager.ServiceLinker/
+    - sdk/servicelinker/ci.mgmt.yml
+    - sdk/servicelinker/Azure.ResourceManager.ServiceLinker/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
