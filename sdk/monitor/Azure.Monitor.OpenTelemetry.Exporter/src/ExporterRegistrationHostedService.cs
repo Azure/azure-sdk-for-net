@@ -17,6 +17,15 @@ using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
+    /// <summary>
+    /// A hosted service responsible for registering the Azure Monitor Trace and Log Exporters.
+    /// It also initializes Live Metrics if enabled.
+    /// Note: The Metric Exporter is not registered here — it is directly handled.
+    /// via the <see cref="OpenTelemetryBuilderExtensions.UseAzureMonitorExporter(IOpenTelemetryBuilder)"/> API.
+    /// Unlike traces and logs, the order of metric instrumentation and exporters does not impact
+    /// registration.
+    /// Metrics should be registered using the <see cref="OpenTelemetryBuilderSdkExtensions.WithMetrics(IOpenTelemetryBuilder)"/> API.
+    /// </summary>
     internal sealed class ExporterRegistrationHostedService : IHostedService
     {
         private readonly IServiceProvider _serviceProvider;
@@ -40,10 +49,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private static void Initialize(IServiceProvider serviceProvider)
         {
             Debug.Assert(serviceProvider != null, "serviceProvider was null");
-
-            // Note: For MeterProvider just do normal registration style and call
-            // meterProviderBuilder.AddReader because the order doesn't matter for
-            // metrics
 
             var tracerProvider = serviceProvider!.GetService<TracerProvider>();
             if (tracerProvider != null)
