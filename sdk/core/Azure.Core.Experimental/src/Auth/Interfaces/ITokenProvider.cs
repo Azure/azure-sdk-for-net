@@ -4,8 +4,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.ClientModel.Auth;
 
-namespace System.ClientModel.Auth;
+namespace System.ClientModel;
 
 /// <summary>
 /// An interface implemented by all <see cref="TokenProvider{TContext}"/> implementations.
