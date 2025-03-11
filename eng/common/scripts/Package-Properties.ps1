@@ -232,7 +232,7 @@ function Update-TargetedFilesForTriggerPaths([string[]]$TargetedFiles, [string[]
     foreach ($file in $TargetedFiles) {
         $isExistingTriggerPath = $false
 
-        for ($i = 0; $i -lt $Triggers.Length; $i++) {
+        for ($i = 0; $i -lt $Triggers.Count; $i++) {
             $triggerPath = $Triggers[$i]
             if ($triggerPath -and $file -eq "$triggerPath") {
                 $isExistingTriggerPath = $true
@@ -329,7 +329,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
             $filePath = (Join-Path $RepoRoot $file)
 
             # handle direct changes to packages
-            $shouldInclude = $filePath -like (Join-Path "$pkgDirectory" "*")
+            $shouldInclude = $filePath -eq $pkgDirectory -or $filePath -like (Join-Path "$pkgDirectory" "*")
 
             # we only need to do additional work for indirect packages if we haven't already decided
             # to include this package due to this file
@@ -337,7 +337,8 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                 # handle changes to files that are RELATED to each package
                 foreach($triggerPath in $triggeringPaths) {
                     $resolvedRelativePath = (Join-Path $RepoRoot $triggerPath)
-                    $includedForValidation = $filePath -like (Join-Path "$resolvedRelativePath" "*")
+                    # triggerPaths can be direct files, so we need to check both startswith and direct equality
+                    $includedForValidation = ($filePath -like (Join-Path "$resolvedRelativePath" "*") -or $filePath -eq $resolvedRelativePath)
                     $shouldInclude = $shouldInclude -or $includedForValidation
                     if ($includedForValidation) {
                         $pkg.IncludedForValidation = $true
@@ -360,7 +361,10 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                     $directory = [System.IO.Path]::GetDirectoryName($ciYml).Replace("`\", "/")
 
                     # we should only continue with this check if the file being changed is "in the service directory"
-                    $serviceDirectoryChange = (Split-Path $filePath -Parent).Replace("`\", "/") -eq $directory
+                    # files that are directly included in triggerPaths will kept in full form, but otherwise we pre-process the targetedFiles to the
+                    # directory containing the change. Given that pre-process, we should check both direct equality (when not triggeringPath) and parent directory
+                    # for the case where the full form of the file has been left behind (because it was a triggeringPath)
+                    $serviceDirectoryChange = (Split-Path $filePath -Parent).Replace("`\", "/") -eq $directory -or $filePath.Replace("`\", "/") -eq $directory
                     if (!$serviceDirectoryChange) {
                         break
                     }
