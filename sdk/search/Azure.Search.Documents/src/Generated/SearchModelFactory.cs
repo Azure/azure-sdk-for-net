@@ -307,6 +307,16 @@ namespace Azure.Search.Documents.Models
             return new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.ListIndexStatsSummary"/>. </summary>
+        /// <param name="indexesStatistics"> The Statistics summary of all indexes in the Search service. </param>
+        /// <returns> A new <see cref="Indexes.Models.ListIndexStatsSummary"/> instance for mocking. </returns>
+        public static ListIndexStatsSummary ListIndexStatsSummary(IEnumerable<IndexStatisticsSummary> indexesStatistics = null)
+        {
+            indexesStatistics ??= new List<IndexStatisticsSummary>();
+
+            return new ListIndexStatsSummary(indexesStatistics?.ToList());
+        }
+
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.IndexStatisticsSummary"/>. </summary>
         /// <param name="name"> The name of the index. </param>
         /// <param name="documentCount"> The number of documents in the index. </param>
