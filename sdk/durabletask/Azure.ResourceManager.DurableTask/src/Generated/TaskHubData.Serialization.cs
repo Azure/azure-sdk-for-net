@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DurableTask
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTaskHubData(document.RootElement, options);
                     }
                 default:
