@@ -100,7 +100,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> or <paramref name="policy"/> is null.</exception>
         [CallerShouldAudit(CallerShouldAuditReason)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual CertificateOperation StartCreateCertificate(string certificateName, CertificatePolicy policy, bool? enabled = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual CertificateOperation StartCreateCertificate(string certificateName, CertificatePolicy policy, bool? enabled, IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             return StartCreateCertificate(certificateName, policy, enabled, tags, preserveCertOrder: null, cancellationToken);
         }
@@ -163,7 +163,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> or <paramref name="policy"/> is null.</exception>
         [CallerShouldAudit(CallerShouldAuditReason)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<CertificateOperation> StartCreateCertificateAsync(string certificateName, CertificatePolicy policy, bool? enabled = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<CertificateOperation> StartCreateCertificateAsync(string certificateName, CertificatePolicy policy, bool? enabled, IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             return await StartCreateCertificateAsync(certificateName, policy, enabled, tags, preserveCertOrder: null, cancellationToken).ConfigureAwait(false);
         }
