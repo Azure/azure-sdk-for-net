@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.IdentityModel.Selectors;
 using System.ServiceModel.Description;
 using Azure;
 using Azure.Core;
