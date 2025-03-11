@@ -4,6 +4,8 @@
 
 ### Features Added
 - Introduced support for `Azure.Core.TokenCredential` with `EntraCommunicationTokenCredentialOptions`, enabling Entra users to authorize Communication Services and allowing an Entra user with a Teams license to use Teams Phone Extensibility features through the Azure Communication Services resource.
+- Added support for a new communication identifier `TeamsExtensionUserIdentifier` which maps rawIds with format `8:acs:{resourceId}_{tenantId}_{userId}`.
+- Added `IsAnonymous` and `AssertedId` properties to `PhoneNumberIdentifier`.
 
 ### Breaking Changes
 
