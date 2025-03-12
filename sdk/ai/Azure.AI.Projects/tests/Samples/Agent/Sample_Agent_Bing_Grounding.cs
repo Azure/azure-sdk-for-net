@@ -37,7 +37,7 @@ public partial class Sample_Agent_Bing_Grounding : SamplesBase<AIProjectsTestEnv
         BingGroundingToolDefinition bingGroundingTool = new BingGroundingToolDefinition(connectionList);
 
         Response<Agent> agentResponse = await agentClient.CreateAgentAsync(
-           model: "gpt-4-1106-preview",
+           model: "gpt-4",
            name: "my-assistant",
            instructions: "You are a helpful assistant.",
            tools: new List<ToolDefinition> { bingGroundingTool });
@@ -65,6 +65,11 @@ public partial class Sample_Agent_Bing_Grounding : SamplesBase<AIProjectsTestEnv
         while (runResponse.Value.Status == RunStatus.Queued
             || runResponse.Value.Status == RunStatus.InProgress);
 
+        if (runResponse.Value.Status == RunStatus.Failed)
+        {
+            throw new Exception($"Run failed: {runResponse.Value.LastError}");
+        }
+
         Response<PageableList<ThreadMessage>> afterRunMessagesResponse
             = await agentClient.GetMessagesAsync(thread.Id);
         IReadOnlyList<ThreadMessage> messages = afterRunMessagesResponse.Value.Data;
@@ -77,7 +82,17 @@ public partial class Sample_Agent_Bing_Grounding : SamplesBase<AIProjectsTestEnv
             {
                 if (contentItem is MessageTextContent textItem)
                 {
-                    Console.Write(textItem.Text);
+                    Console.Write($"Agent response: {textItem.Text}");
+                    if (textItem.Annotations != null)
+                    {
+                        foreach (MessageTextAnnotation annotation in textItem.Annotations)
+                        {
+                            if (annotation is MessageTextUrlCitationAnnotation urlAnnotation)
+                            {
+                                Console.Write($"URL Citation: [{urlAnnotation.UrlCitation.Title}]({urlAnnotation.UrlCitation.Url})");
+                            }
+                        }
+                    }
                 }
                 else if (contentItem is MessageImageFileContent imageFileItem)
                 {
