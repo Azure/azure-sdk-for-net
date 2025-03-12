@@ -8,10 +8,9 @@ using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 {
-#if LIVE_METRICS_PROJECT
     /// <summary>
     /// EventSource for the AzureMonitor LiveMetrics Client.
-    /// EventSource Guid at Runtime: TODO.
+    /// EventSource Guid at Runtime: 72f5588f-fa1c-502e-0627-e13dd2bd67c9.
     /// (This guid can be found by debugging this class and inspecting the "Log" singleton and reading the "Guid" property).
     /// </summary>
     /// <remarks>
@@ -27,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
     /// </list>
     /// Logman Instructions:
     /// <list type="number">
-    /// <item>Create a text file containing providers: <code>echo "{TODO}" > providers.txt</code></item>
+    /// <item>Create a text file containing providers: <code>echo "{72f5588f-fa1c-502e-0627-e13dd2bd67c9}" > providers.txt</code></item>
     /// <item>Start collecting: <code>logman -start exporter -pf providers.txt -ets -bs 1024 -nb 100 256</code></item>
     /// <item>Stop collecting: <code>logman -stop exporter -ets</code></item>
     /// </list>
@@ -42,42 +41,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool IsEnabled(EventLevel eventLevel) => IsEnabled(eventLevel, EventKeywords.All);
-
-        [NonEvent]
-        public void MapLogLevelFailed(EventLevel level)
-        {
-            if (IsEnabled(EventLevel.Warning))
-            {
-                MapLogLevelFailed(level.ToString());
-            }
-        }
-
-        [NonEvent]
-        public void ConfigureFailed(System.Exception ex)
-        {
-            if (IsEnabled(EventLevel.Error))
-            {
-                ConfigureFailed(ex.FlattenException().ToInvariantString());
-            }
-        }
-
-        [Event(1, Message = "Failed to configure AzureMonitorOptions using the connection string from environment variables due to an exception: {0}", Level = EventLevel.Error)]
-        public void ConfigureFailed(string exceptionMessage) => WriteEvent(1, exceptionMessage);
-
-        [Event(2, Message = "Package reference for {0} found. Backing off from default included instrumentation. Action Required: You must manually configure this instrumentation.", Level = EventLevel.Warning)]
-        public void FoundInstrumentationPackageReference(string packageName) => WriteEvent(2, packageName);
-
-        [Event(3, Message = "No instrumentation package found with name: {0}.", Level = EventLevel.Verbose)]
-        public void NoInstrumentationPackageReference(string packageName) => WriteEvent(3, packageName);
-
-        [Event(4, Message = "Vendor instrumentation added for: {0}.", Level = EventLevel.Verbose)]
-        public void VendorInstrumentationAdded(string packageName) => WriteEvent(4, packageName);
-
-        [Event(5, Message = "Failed to map unknown EventSource log level in AzureEventSourceLogForwarder {0}", Level = EventLevel.Warning)]
-        public void MapLogLevelFailed(string level) => WriteEvent(5, level);
-
-        [Event(6, Message = "Found existing Microsoft.Extensions.Azure.AzureEventSourceLogForwarder registration.", Level = EventLevel.Informational)]
-        public void LogForwarderIsAlreadyRegistered() => WriteEvent(6);
 
         [NonEvent]
         public void FailedToParseConnectionString(System.Exception ex)
@@ -102,18 +65,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
         [Event(9, Message = "Failed to read environment variables due to an exception. This may prevent the Exporter from initializing. {0}", Level = EventLevel.Warning)]
         public void FailedToReadEnvironmentVariables(string errorMessage) => WriteEvent(9, errorMessage);
-
-        [NonEvent]
-        public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, System.Exception ex)
-        {
-            if (IsEnabled(EventLevel.Warning))
-            {
-                AccessingEnvironmentVariableFailedWarning(environmentVariable, ex.FlattenException().ToInvariantString());
-            }
-        }
-
-        [Event(10, Message = "Accessing environment variable - {0} failed with exception: {1}.", Level = EventLevel.Warning)]
-        public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, string exceptionMessage) => WriteEvent(10, environmentVariable, exceptionMessage);
 
         [NonEvent]
         public void SdkVersionCreateFailed(System.Exception ex)
@@ -141,7 +92,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
         [Event(13, Message = "Failed to get Type version while initialize SDK version due to an exception. Not user actionable. Type: {0}. {1}", Level = EventLevel.Warning)]
         public void ErrorInitializingPartOfSdkVersion(string typeName, string exceptionMessage) => WriteEvent(13, typeName, exceptionMessage);
-
         [Event(14, Message = "HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {0} Scope: {1}", Level = EventLevel.Informational)]
         public void SetAADCredentialsToPipeline(string credentialTypeName, string scope) => WriteEvent(14, credentialTypeName, scope);
 
@@ -220,18 +170,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
         [Event(18, Message = "LiveMetrics State Machine failed with exception: {0}", Level = EventLevel.Error)]
         public void StateMachineFailedWithUnknownException(string exceptionMessage) => WriteEvent(18, exceptionMessage);
 
-        [NonEvent]
-        public void DroppedDocument(DocumentType documentType)
-        {
-            if (IsEnabled(EventLevel.Warning))
-            {
-                DroppedDocument(documentType.ToString());
-            }
-        }
-
-        [Event(19, Message = "Document was dropped. DocumentType: {0}. Not user actionable.", Level = EventLevel.Warning)]
-        public void DroppedDocument(string documentType) => WriteEvent(19, documentType);
-
         [Event(20, Message = "Failure to calculate CPU Counter. Unexpected negative timespan: PreviousCollectedTime: {0}. RecentCollectedTime: {0}. Not user actionable.", Level = EventLevel.Error)]
         public void ProcessCountersUnexpectedNegativeTimeSpan(long previousCollectedTime, long recentCollectedTime) => WriteEvent(20, previousCollectedTime, recentCollectedTime);
 
@@ -259,5 +197,4 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
         [Event(25, Message = "Polling Interval received from LiveMetrics service: {0}", Level = EventLevel.Informational)]
         public void LiveMetricsPolingIntervalReceived(int pollingInterval) => WriteEvent(25, pollingInterval);
     }
-#endif
 }

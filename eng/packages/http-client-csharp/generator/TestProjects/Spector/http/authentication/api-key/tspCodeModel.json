@@ -8,7 +8,7 @@
    "$id": "2",
    "kind": "model",
    "name": "InvalidAuth",
-   "clientNamespace": "Authentication.ApiKey",
+   "namespace": "Authentication.ApiKey",
    "crossLanguageDefinitionId": "Authentication.ApiKey.InvalidAuth",
    "usage": "Error,Json,Exception",
    "decorators": [],
@@ -46,7 +46,7 @@
   {
    "$id": "7",
    "Name": "ApiKeyClient",
-   "ClientNamespace": "Authentication.ApiKey",
+   "Namespace": "Authentication.ApiKey",
    "Doc": "Illustrates clients generated with ApiKey authentication.",
    "Operations": [
     {
@@ -62,13 +62,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/authentication/api-key/valid",
      "BufferResponse": true,
@@ -118,13 +116,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/authentication/api-key/invalid",
      "BufferResponse": true,
@@ -170,7 +166,8 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Authentication.ApiKey"
   }
  ],
  "Auth": {

@@ -8,7 +8,7 @@
    "$id": "2",
    "kind": "model",
    "name": "PngImageAsJson",
-   "clientNamespace": "Payload.ContentNegotiation.DifferentBody",
+   "namespace": "Payload.ContentNegotiation.DifferentBody",
    "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.PngImageAsJson",
    "usage": "Output,Json",
    "decorators": [],
@@ -47,7 +47,7 @@
   {
    "$id": "7",
    "Name": "ContentNegotiationClient",
-   "ClientNamespace": "Payload.ContentNegotiation",
+   "Namespace": "Payload.ContentNegotiation",
    "Doc": "Test describing optionality of the request body.",
    "Operations": [],
    "Protocol": {
@@ -86,12 +86,13 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Payload.ContentNegotiation"
   },
   {
    "$id": "13",
    "Name": "SameBody",
-   "ClientNamespace": "Payload.ContentNegotiation.SameBody",
+   "Namespace": "Payload.ContentNegotiation.SameBody",
    "Operations": [
     {
      "$id": "14",
@@ -140,7 +141,6 @@
         "crossLanguageDefinitionId": "TypeSpec.bytes",
         "decorators": []
        },
-       "BodyMediaType": "Json",
        "Headers": [
         {
          "$id": "20",
@@ -168,7 +168,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/content-negotiation/same-body",
      "BufferResponse": true,
@@ -224,7 +223,6 @@
         "crossLanguageDefinitionId": "TypeSpec.bytes",
         "decorators": []
        },
-       "BodyMediaType": "Json",
        "Headers": [
         {
          "$id": "29",
@@ -252,7 +250,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/content-negotiation/same-body",
      "BufferResponse": true,
@@ -299,12 +296,13 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody"
   },
   {
    "$id": "37",
    "Name": "DifferentBody",
-   "ClientNamespace": "Payload.ContentNegotiation.DifferentBody",
+   "Namespace": "Payload.ContentNegotiation.DifferentBody",
    "Operations": [
     {
      "$id": "38",
@@ -353,7 +351,6 @@
         "crossLanguageDefinitionId": "TypeSpec.bytes",
         "decorators": []
        },
-       "BodyMediaType": "Json",
        "Headers": [
         {
          "$id": "44",
@@ -381,7 +378,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/content-negotiation/different-body",
      "BufferResponse": true,
@@ -433,7 +429,6 @@
        "BodyType": {
         "$ref": "2"
        },
-       "BodyMediaType": "Json",
        "Headers": [
         {
          "$id": "52",
@@ -461,7 +456,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/content-negotiation/different-body",
      "BufferResponse": true,
@@ -508,7 +502,8 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody"
   }
  ]
 }
