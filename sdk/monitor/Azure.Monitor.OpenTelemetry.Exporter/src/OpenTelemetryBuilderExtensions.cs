@@ -76,7 +76,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             });
 
             // Register Manager as a singleton
-            builder.Services.AddSingleton<LiveMetricsClientManager>(sp =>
+            builder.Services.TryAddSingleton<LiveMetricsClientManager>(sp =>
             {
                 AzureMonitorExporterOptions exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
                 var azureMonitorLiveMetricsOptions = new AzureMonitorLiveMetricsOptions();
@@ -97,8 +97,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             builder.Services.AddHostedService(sp =>
             {
-                var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
-                var loggerFilterOptions = sp.GetRequiredService<IOptionsMonitor<LoggerFilterOptions>>().CurrentValue;
                 return new ExporterRegistrationHostedService(sp);
             });
 
