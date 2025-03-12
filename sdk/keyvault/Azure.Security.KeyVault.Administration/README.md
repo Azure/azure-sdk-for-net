@@ -7,6 +7,8 @@ The Azure Key Vault administration library clients support administrative tasks 
 
 [Source code][admin_client_src] | [Package (NuGet)][admin_client_nuget_package] | [Product documentation][managedhsm_docs] | [Samples][admin_client_samples]
 
+A change that will be reverted.
+
 ## Getting started
 
 ### Install the package

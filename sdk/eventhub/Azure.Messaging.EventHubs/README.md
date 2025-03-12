@@ -14,6 +14,8 @@ The Azure Event Hubs client library allows for publishing and consuming of Azure
 
 [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventHubs/) | [API reference documentation](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs) | [Product documentation](https://learn.microsoft.com/azure/event-hubs/) | [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/MigrationGuide.md) | [Troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/TROUBLESHOOTING.md)
 
+This is a single revertable change.
+
 ## Getting started
 
 ### Prerequisites

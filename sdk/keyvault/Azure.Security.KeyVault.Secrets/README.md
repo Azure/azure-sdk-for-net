@@ -6,6 +6,8 @@ The Azure Key Vault secrets client library allows you to securely store and cont
 
 [Source code][secret_client_src] | [Package (NuGet)][secret_client_nuget_package] | [API reference documentation][API_reference] | [Product documentation][keyvault_docs] | [Samples][secret_client_samples] | [Migration guide][migration_guide]
 
+A change that will be reverted.
+
 ## Getting started
 
 ### Install the package

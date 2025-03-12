@@ -6,6 +6,8 @@ The Azure Key Vault certificates client library enables programmatically managin
 
 [Source code][certificate_client_src] | [Package (NuGet)][certificate_client_nuget_package] | [API reference documentation][API_reference] | [Product documentation][keyvault_docs] | [Samples][certificate_client_samples] | [Migration guide][migration_guide]
 
+A change that will be reverted.
+
 ## Getting started
 
 ### Install the package

@@ -12,6 +12,8 @@ The Event Processor client library is a companion to the Azure Event Hubs client
 
 [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor/) | [API reference documentation](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs) | [Product documentation](https://learn.microsoft.com/azure/event-hubs/) | [Troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/TROUBLESHOOTING.md)
 
+This is a single revertable change.
+
 ## Getting started
 
 ### Prerequisites

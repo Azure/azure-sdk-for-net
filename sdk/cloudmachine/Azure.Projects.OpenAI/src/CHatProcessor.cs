@@ -14,7 +14,7 @@ namespace Azure.Projects.OpenAI
     public class ChatProcessor
     {
         /// <summary>
-        /// Vector db.
+        /// Vector db. A change that will be reverted.
         /// </summary>
         public EmbeddingsVectorbase? VectorDb { get; set; }
 

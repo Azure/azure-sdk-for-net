@@ -2,6 +2,8 @@
 
 TODO
 
+A change that will be reverted.
+
 ## Getting started
 
 ### Install the package

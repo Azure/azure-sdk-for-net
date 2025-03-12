@@ -11,6 +11,8 @@ The Azure Key Vault keys library client supports RSA keys and Elliptic Curve (EC
 
 [Source code][key_client_src] | [Package (NuGet)][key_client_nuget_package] | [API reference documentation][API_reference] | [Product documentation][keyvault_docs] | [Samples][key_client_samples] | [Migration guide][migration_guide]
 
+A change that will be reverted.
+
 ## Getting started
 
 ### Install the package

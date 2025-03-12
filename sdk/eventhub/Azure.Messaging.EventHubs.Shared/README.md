@@ -1,5 +1,7 @@
 # Azure Event Hubs code sharing library
 
+This is a single revertable change.
+
 This library is intended to serve as a common location for non-public code that is shared amongst the packages that comprise the [Azure Event Hubs client library for .NET](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs) development ecosystem.  The artifacts in this library are intended to be small and cohesive units of work with minimal dependencies, which offer common building blocks for internal implementation.  These artifacts should be accompanied by their suite of unit tests, allowing the `Shared` library to have sole responsibility for them.
 
 The other libraries within the Azure Event Hubs ecosystem are expected to include these artifacts by shared links to enable them to be loosely hosted within those projects rather than consumed by direct project or package reference.

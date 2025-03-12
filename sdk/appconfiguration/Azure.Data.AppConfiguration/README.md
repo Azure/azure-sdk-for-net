@@ -2,6 +2,8 @@
 
 Azure App Configuration is a managed service that helps developers centralize their application and feature settings simply and securely.
 
+This is a single revertable change.
+
 Use the client library for App Configuration to:
 
 * [Create and manage centrally stored application configuration settings][azconfig_setting_concepts]

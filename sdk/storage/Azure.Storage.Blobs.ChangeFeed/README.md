@@ -10,6 +10,8 @@ process change events that occur in your Blob Storage account at a low cost.
 
 [Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs]
 
+A change that will be reverted.
+
 ## Getting started
 
 ### Install the package
