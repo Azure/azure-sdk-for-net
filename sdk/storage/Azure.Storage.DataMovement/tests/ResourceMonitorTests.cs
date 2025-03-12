@@ -15,31 +15,34 @@ namespace Azure.Storage.DataMovement.Tests
     public class ResourceMonitorTests
     {
         [Test]
-        public void CpuUsage_ShouldBeGreaterThan0()
+        public async void CpuUsage_ShouldBeGreaterThan0()
         {
             // Arrange
             var resourceMonitor = new ResourceMonitor();
+            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = cancellationTokenSource.Token;
 
             // Act
-            resourceMonitor.StartMonitoring();
+            await resourceMonitor.StartMonitoring(cancellationToken);
             SimulateCpuLoad(3);
-            resourceMonitor.StopMonitoring();
+            cancellationTokenSource.Cancel();
 
             // Assert
             Assert.That(resourceMonitor.CpuUsage, Is.GreaterThan(0));
         }
 
         [Test]
-        public void CpuUsage_ShouldNeverGoAbove1()
+        public async Task CpuUsage_ShouldNeverGoAbove1()
         {
             // Arrange
             var resourceMonitor = new ResourceMonitor();
+            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = cancellationTokenSource.Token;
 
             // Act
-            resourceMonitor.StartMonitoring();
+            await resourceMonitor.StartMonitoring(cancellationToken);
             SimulateCpuLoad(10);
-            resourceMonitor.StopMonitoring();
-
+            cancellationTokenSource.Cancel();
             // Assert
             //for (var i = 0; i < 1000; i++)
             //{
@@ -50,16 +53,17 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public void CpuUsage_TimeSpanUnder10MillisecondsShouldHaveZeroReadings()
+        public async Task CpuUsage_TimeSpanUnder10MillisecondsShouldHaveZeroReadings()
         {
             // Arrange
             var resourceMonitor = new ResourceMonitor(TimeSpan.FromMilliseconds(10));
+            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = cancellationTokenSource.Token;
 
             // Act
-            resourceMonitor.StartMonitoring();
+            await resourceMonitor.StartMonitoring(cancellationToken);
             SimulateCpuLoad(2);
-            resourceMonitor.StopMonitoring();
-
+            cancellationTokenSource.Cancel();
             // Assert
             //for (var i = 0; i < 1000; i++)
             //{
@@ -73,36 +77,42 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             var resourceMonitor = new ResourceMonitor(TimeSpan.FromMilliseconds(100));
+            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = cancellationTokenSource.Token;
 
             // Assert
-            Assert.DoesNotThrow(() => resourceMonitor.StopMonitoring(), "No error thrown");
+            Assert.DoesNotThrow(() => cancellationTokenSource.Cancel(), "No error thrown");
         }
 
         [Test]
-        public void MemoryUsage_MemoryUsageShouldBeGreaterThan0()
+        public async Task MemoryUsage_MemoryUsageShouldBeGreaterThan0()
         {
             // Arrange
-            ResourceMonitor resourceMonitor = new ResourceMonitor();
+            var resourceMonitor = new ResourceMonitor();
+            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = cancellationTokenSource.Token;
 
             // Act
-            resourceMonitor.StartMonitoring();
+            await resourceMonitor.StartMonitoring(cancellationToken);
             SimulateCpuLoad(1);
-            resourceMonitor.StopMonitoring();
+            cancellationTokenSource.Cancel();
 
             // Assert
             Assert.Greater(resourceMonitor.MemoryUsage, 0);
         }
 
         [Test]
-        public void MemoryUsage_ShouldNotBeNull()
+        public async void MemoryUsage_ShouldNotBeNull()
         {
             // Arrange
-            ResourceMonitor resourceMonitor = new(TimeSpan.FromMilliseconds(1000));
+            var resourceMonitor = new ResourceMonitor();
+            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = cancellationTokenSource.Token;
 
             // Act
-            resourceMonitor.StartMonitoring();
+            await resourceMonitor.StartMonitoring(cancellationToken);
             SimulateCpuLoad(1);
-            resourceMonitor.StopMonitoring();
+            cancellationTokenSource.Cancel();
 
             // Assert
             Assert.NotNull(resourceMonitor.MemoryUsage);
@@ -144,8 +154,10 @@ namespace Azure.Storage.DataMovement.Tests
             // Act
             // The lower frequency check
             ResourceMonitor resourceMonitor = new(monitorInterval);
+            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = cancellationTokenSource.Token;
             watch.Start();
-            resourceMonitor.StartMonitoring();
+            await resourceMonitor.StartMonitoring(cancellationToken);
 
             while (watch.Elapsed < endTime)
             {
@@ -161,7 +173,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cpuUsageStart = cpuUsageEnd;
                 memoryUsageStart = memoryUsageEnd;
             }
-            resourceMonitor.StopMonitoring();
+            cancellationTokenSource.Cancel();
             watch.Stop();
 
             watch.Restart();
@@ -169,7 +181,9 @@ namespace Azure.Storage.DataMovement.Tests
             // The higher frequency check
             monitorInterval = TimeSpan.FromMilliseconds(1);
             resourceMonitor = new(monitorInterval);
-            resourceMonitor.StartMonitoring();
+            cancellationTokenSource = new CancellationTokenSource();
+            cancellationToken = cancellationTokenSource.Token;
+            await resourceMonitor.StartMonitoring(cancellationToken);
 
             cpuUsageStart = 0.0F;
             cpuUsageEnd = 0.0F;
@@ -190,7 +204,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cpuUsageStart = cpuUsageEnd;
                 memoryUsageStart = memoryUsageEnd;
             }
-            resourceMonitor.StopMonitoring();
+            cancellationTokenSource.Cancel();
             watch.Stop();
 
             // Assert

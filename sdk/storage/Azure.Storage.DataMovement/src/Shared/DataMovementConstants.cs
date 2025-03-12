@@ -16,11 +16,13 @@ namespace Azure.Storage.DataMovement
         internal static class Channels
         {
             internal const int MaxJobPartReaders = 32;
+            internal const int MinimumJobChuckReaders = 1;
             internal static int MaxJobChunkReaders = Environment.ProcessorCount * 8;
             internal const int JobPartCapacity = 1000;
             internal const int JobChunkCapacity = 1000;
             internal const int DownloadChunkCapacity = 16;
             internal const int StageChunkCapacity = 1000;
+            internal const int MaxJobReaders = 1;
         }
 
         internal static class ConcurrencyTuner
