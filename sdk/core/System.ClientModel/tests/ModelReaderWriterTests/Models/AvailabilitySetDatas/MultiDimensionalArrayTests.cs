@@ -4,6 +4,7 @@
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {
@@ -24,48 +25,58 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
             private static readonly Lazy<ListTests.LocalContext> s_availabilitySetData_ListTests_LocalContext = new(() => new());
 
-            private ArrayOfArray_AvailabilitySetData_Info? _arrayOfArray_AvailabilitySetData_Info;
+            private ArrayOfArray_AvailabilitySetData_Builder? _arrayOfArray_AvailabilitySetData_Builder;
 
-            public override ModelInfo? GetModelInfo(Type type)
+            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modelInfo)
             {
-                return type switch
+                modelInfo = type switch
                 {
-                    Type t when t == typeof(AvailabilitySetData[,]) => _arrayOfArray_AvailabilitySetData_Info ??= new(),
-                    _ => s_libraryContext.Value.GetModelInfo(type) ??
-                         s_availabilitySetData_ListTests_LocalContext.Value.GetModelInfo(type)
+                    Type t when t == typeof(AvailabilitySetData[,]) => _arrayOfArray_AvailabilitySetData_Builder ??= new(),
+                    _ => GetFromDependencies(type)
                 };
+                return modelInfo is not null;
             }
 
-            private class ArrayOfArray_AvailabilitySetData_Info : ModelInfo
+            private ModelBuilder? GetFromDependencies(Type type)
             {
-                public override object CreateObject() => new ArrayOfArray_AvailabilitySetData_Builder();
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? modelInfo))
+                    return modelInfo;
+                if (s_availabilitySetData_ListTests_LocalContext.Value.TryGetModelBuilder(type, out modelInfo))
+                    return modelInfo;
+                return null;
+            }
 
-                private class ArrayOfArray_AvailabilitySetData_Builder : CollectionBuilder
-                {
-                    private readonly Lazy<List<List<AvailabilitySetData>>> _instance = new(() => []);
+            private class ArrayOfArray_AvailabilitySetData_Builder : ModelBuilder
+            {
+                private Func<object>? _createInstance;
+                protected override Func<object> CreateInstance => _createInstance ??= () => new List<List<AvailabilitySetData>>();
 
-                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<List<AvailabilitySetData>>(item));
+                private Action<object, object, string?>? _addItem;
+                protected override Action<object, object, string?>? AddItem
+                    => _addItem ??= (collection, item, key) => AssertCollection<List<List<AvailabilitySetData>>>(collection).Add(AssertItem<List<AvailabilitySetData>>(item));
 
-                    protected internal override object GetBuilder() => _instance.Value;
+                private Func<object>? _createElementInstance;
+                protected override Func<object>? CreateElementInstance
+                    => _createElementInstance ??= () => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
 
-                    protected internal override object ToObject()
+                private Func<object, object>? _toCollection;
+                protected override Func<object, object> ToCollection
+                    => _toCollection ??= collection =>
                     {
-                        int rowCount = _instance.Value.Count;
-                        int colCount = _instance.Value[0].Count;
+                        var instance = AssertCollection<List<List<AvailabilitySetData>>>(collection);
+                        int rowCount = instance.Count;
+                        int colCount = instance[0].Count;
                         AvailabilitySetData[,] multiArray = new AvailabilitySetData[rowCount, colCount];
 
                         for (int i = 0; i < rowCount; i++)
                         {
                             for (int j = 0; j < colCount; j++)
                             {
-                                multiArray[i, j] = _instance.Value[i][j];
+                                multiArray[i, j] = instance[i][j];
                             }
                         }
                         return multiArray;
-                    }
-
-                    protected internal override object? CreateElement() => s_libraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
-                }
+                    };
             }
         }
     }

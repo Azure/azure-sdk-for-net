@@ -5,6 +5,7 @@ using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {
@@ -23,35 +24,43 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
         private class LocalContext : ModelReaderWriterContext
         {
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
-            private ReadOnlyMemory_AvailabilitySetData_Info? _readOnlyMemory_AvailabilitySetData_Info;
+            private ReadOnlyMemory_AvailabilitySetData_Builder? _readOnlyMemory_AvailabilitySetData_Builder;
 
-            public override ModelInfo? GetModelInfo(Type type)
+            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modelInfo)
             {
-                return type switch
+                modelInfo = type switch
                 {
-                    Type t when t == typeof(ReadOnlyMemory<AvailabilitySetData>) => _readOnlyMemory_AvailabilitySetData_Info ??= new(),
-                    _ => s_libraryContext.Value.GetModelInfo(type)
+                    Type t when t == typeof(ReadOnlyMemory<AvailabilitySetData>) => _readOnlyMemory_AvailabilitySetData_Builder ??= new(),
+                    _ => GetFromDependencies(type)
                 };
+                return modelInfo is not null;
             }
 
-            private class ReadOnlyMemory_AvailabilitySetData_Info : ModelInfo
+            private ModelBuilder? GetFromDependencies(Type type)
             {
-                public override object CreateObject() => new ReadOnlyMemory_AvailabilitySetData_Builder();
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? modelInfo))
+                    return modelInfo;
+                return null;
+            }
 
-                private class ReadOnlyMemory_AvailabilitySetData_Builder : CollectionBuilder
-                {
-                    private readonly Lazy<List<AvailabilitySetData>> _instance = new(() => []);
+            private class ReadOnlyMemory_AvailabilitySetData_Builder : ModelBuilder
+            {
+                private Func<object>? _createInstance;
+                protected override Func<object> CreateInstance => _createInstance ??= () => new List<AvailabilitySetData>();
 
-                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertItem<AvailabilitySetData>(item));
+                private Action<object, object, string?>? _addItem;
+                protected override Action<object, object, string?>? AddItem
+                    => _addItem ??= (collection, item, key) => AssertCollection<List<AvailabilitySetData>>(collection).Add(AssertItem<AvailabilitySetData>(item));
 
-                    protected internal override object GetBuilder() => _instance.Value;
+                private Func<object>? _createElementInstance;
+                protected override Func<object>? CreateElementInstance
+                    => _createElementInstance ??= () => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
 
-                    protected internal override object ToObject() => new ReadOnlyMemory<AvailabilitySetData>([.. _instance.Value]);
+                private Func<object, object>? _toCollection;
+                protected override Func<object, object> ToCollection
+                    => _toCollection ??= collection => new ReadOnlyMemory<AvailabilitySetData>([.. AssertCollection<List<AvailabilitySetData>>(collection)]);
 
-                    protected internal override object? CreateElement() => s_libraryContext.Value.GetModelInfo(typeof(AvailabilitySetData))?.CreateObject();
-                }
-
-                public override IEnumerable? GetEnumerable(object obj)
+                protected internal override IEnumerable? GetEnumerable(object obj)
                 {
                     if (obj is ReadOnlyMemory<AvailabilitySetData> rom)
                     {

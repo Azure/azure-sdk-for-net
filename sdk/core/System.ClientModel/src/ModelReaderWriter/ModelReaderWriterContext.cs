@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace System.ClientModel.Primitives;
 
 /// <summary>
@@ -9,14 +11,13 @@ namespace System.ClientModel.Primitives;
 public abstract class ModelReaderWriterContext
 {
     /// <summary>
-    /// Gets a <see cref="ModelInfo"/> for the given <see cref="Type"/> to allow <see cref="ModelReaderWriter"/> to work with AOT.
+    /// Gets a <see cref="ModelBuilder"/> for the given <see cref="Type"/> to allow <see cref="ModelReaderWriter"/> to work with AOT.
     /// </summary>
     /// <param name="type">The type to get info for.</param>
-    /// <exception cref="InvalidOperationException">When the context does not contain a <see cref="ModelInfo"/> for the given <see cref="Type"/>.</exception>
-    internal ModelInfo GetModelInfoInternal(Type type)
+    /// <exception cref="InvalidOperationException">When the context does not contain a <see cref="ModelBuilder"/> for the given <see cref="Type"/>.</exception>
+    public ModelBuilder GetModelBuilder(Type type)
     {
-        var modelInfo = GetModelInfo(type);
-        if (modelInfo is null)
+        if (!TryGetModelBuilder(type, out ModelBuilder? modelInfo))
         {
             throw new InvalidOperationException($"No model info found for {type.Name}.");
         }
@@ -24,9 +25,14 @@ public abstract class ModelReaderWriterContext
     }
 
     /// <summary>
-    /// Gets a <see cref="ModelInfo"/> for the given <see cref="Type"/> to allow <see cref="ModelReaderWriter"/> to work with AOT.
+    /// Tries to gets a <see cref="ModelBuilder"/> for the given <see cref="Type"/> to allow <see cref="ModelReaderWriter"/> to work with AOT.
     /// </summary>
     /// <param name="type">The type to get info for.</param>
-    /// <returns>The corresponding <see cref="ModelInfo"/> if defined in the context otherwise null.</returns>
-    public abstract ModelInfo? GetModelInfo(Type type);
+    /// <param name="modelInfo">The <see cref="ModelBuilder"/> if found.</param>
+    /// <returns>True if the corresponding <see cref="ModelBuilder"/> if defined in the context otherwise false.</returns>
+    public virtual bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modelInfo)
+    {
+        modelInfo = null;
+        return false;
+    }
 }

@@ -162,16 +162,6 @@ namespace System.ClientModel.Primitives
         protected virtual void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
         protected virtual System.Threading.Tasks.Task WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public abstract partial class CollectionBuilder
-    {
-        protected CollectionBuilder() { }
-        protected internal abstract void AddItem(object item, string? key = null);
-        protected static T AssertItem<T>(object item) { throw null; }
-        protected static string AssertKey(string? key) { throw null; }
-        protected internal abstract object? CreateElement();
-        protected internal abstract object GetBuilder();
-        protected internal virtual object ToObject() { throw null; }
-    }
     public abstract partial class CollectionResult
     {
         protected CollectionResult() { }
@@ -233,11 +223,17 @@ namespace System.ClientModel.Primitives
         public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
-    public abstract partial class ModelInfo
+    public abstract partial class ModelBuilder
     {
-        protected ModelInfo() { }
-        public abstract object CreateObject();
-        public virtual System.Collections.IEnumerable? GetEnumerable(object obj) { throw null; }
+        protected ModelBuilder() { }
+        protected virtual System.Action<object, object, string?>? AddItem { get { throw null; } }
+        protected virtual System.Func<object>? CreateElementInstance { get { throw null; } }
+        protected abstract System.Func<object> CreateInstance { get; }
+        protected virtual System.Func<object, object> ToCollection { get { throw null; } }
+        protected static T AssertCollection<T>(object collection) { throw null; }
+        protected static T AssertItem<T>(object item) { throw null; }
+        protected static string AssertKey(string? key) { throw null; }
+        protected internal virtual System.Collections.IEnumerable? GetEnumerable(object obj) { throw null; }
     }
     public static partial class ModelReaderWriter
     {
@@ -253,7 +249,8 @@ namespace System.ClientModel.Primitives
     public abstract partial class ModelReaderWriterContext
     {
         protected ModelReaderWriterContext() { }
-        public abstract System.ClientModel.Primitives.ModelInfo? GetModelInfo(System.Type type);
+        public System.ClientModel.Primitives.ModelBuilder GetModelBuilder(System.Type type) { throw null; }
+        public virtual bool TryGetModelBuilder(System.Type type, out System.ClientModel.Primitives.ModelBuilder? modelInfo) { throw null; }
     }
     public partial class ModelReaderWriterOptions
     {

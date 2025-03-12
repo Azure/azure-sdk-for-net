@@ -119,7 +119,7 @@ public static class ModelReaderWriter
         }
         else
         {
-            var enumerable = model as IEnumerable ?? context.GetModelInfoInternal(model!.GetType()).GetEnumerable(model);
+            var enumerable = model as IEnumerable ?? context.GetModelBuilder(model!.GetType()).GetEnumerable(model);
             if (enumerable is not null)
             {
                 var collectionWriter = CollectionWriter.GetCollectionWriter(enumerable, options);
@@ -267,8 +267,8 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        var returnObj = context.GetModelInfoInternal(returnType).CreateObject();
-        if (returnObj is CollectionBuilder builder)
+        var returnObj = context.GetModelBuilder(returnType).CreateObject();
+        if (returnObj is CollectionWrapper builder)
         {
             var collectionReader = CollectionReader.GetCollectionReader(builder, options);
             return collectionReader.Read(builder, data, context, options);
@@ -279,7 +279,7 @@ public static class ModelReaderWriter
         }
         else
         {
-            throw new InvalidOperationException($"{returnType.Name} must implement CollectionBuilder or IPersistableModel");
+            throw new InvalidOperationException($"{returnType.Name} must implement IPersistableModel");
         }
     }
 

@@ -6,8 +6,8 @@ using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.ClientModel.Tests.ModelReaderWriterTests;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
@@ -164,18 +164,20 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             private PersistableModelInfo? _persistableModelInfo;
 
-            public override ModelInfo? GetModelInfo(Type type)
+            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modelInfo)
             {
-                return type switch
+                modelInfo = type switch
                 {
                     Type t when t == typeof(PersistableModel) => _persistableModelInfo ??= new(),
                     _ => null
                 };
+                return modelInfo is not null;
             }
 
-            private class PersistableModelInfo : ModelInfo
+            private class PersistableModelInfo : ModelBuilder
             {
-                public override object CreateObject() => new DoesNotImplementPersistableModel();
+                private Func<object>? _createInstance;
+                protected override Func<object> CreateInstance => _createInstance ??= () => new DoesNotImplementPersistableModel();
             }
         }
 

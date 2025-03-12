@@ -5,75 +5,84 @@ using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
 {
     public class TestClientModelReaderWriterContext : ModelReaderWriterContext
     {
-        private AvailabilitySetData_Info? _availabilitySetData_Info;
-        private BaseModel_Info? _baseModel_Info;
-        private ModelAsStruct_Info? _modelAsStruct_Info;
-        private ModelWithPersistableOnly_Info? _modelWithPersistableOnly_Info;
-        private ModelX_Info? _modelX_Info;
-        private ResourceProviderData_Info? _resourceProviderData_Info;
-        private UnknownBaseModel_Info? _unknownBaseModel_Info;
-        private ModelY_Info? _modelY_Info;
+        private AvailabilitySetData_Builder? _availabilitySetData_Builder;
+        private BaseModel_Builder? _baseModel_Builder;
+        private ModelAsStruct_Builder? _modelAsStruct_Builder;
+        private ModelWithPersistableOnly_Builder? _modelWithPersistableOnly_Builder;
+        private ModelX_Builder? _modelX_Builder;
+        private ResourceProviderData_Builder? _resourceProviderData_Builder;
+        private UnknownBaseModel_Builder? _unknownBaseModel_Builder;
+        private ModelY_Builder? _modelY_Builder;
 
-        public override ModelInfo? GetModelInfo(Type type)
+        public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modelInfo)
         {
-            return type switch
+            modelInfo = type switch
             {
-                Type t when t == typeof(AvailabilitySetData) => _availabilitySetData_Info ??= new(),
-                Type t when t == typeof(BaseModel) => _baseModel_Info ??= new(),
-                Type t when t == typeof(ModelAsStruct) => _modelAsStruct_Info ??= new(),
-                Type t when t == typeof(ModelWithPersistableOnly) => _modelWithPersistableOnly_Info ??= new(),
-                Type t when t == typeof(ModelX) => _modelX_Info ??= new(),
-                Type t when t == typeof(ResourceProviderData) => _resourceProviderData_Info ??= new(),
-                Type t when t == typeof(UnknownBaseModel) => _unknownBaseModel_Info ??= new(),
-                Type t when t == typeof(ModelY) => _modelY_Info ??= new(),
+                Type t when t == typeof(AvailabilitySetData) => _availabilitySetData_Builder ??= new(),
+                Type t when t == typeof(BaseModel) => _baseModel_Builder ??= new(),
+                Type t when t == typeof(ModelAsStruct) => _modelAsStruct_Builder ??= new(),
+                Type t when t == typeof(ModelWithPersistableOnly) => _modelWithPersistableOnly_Builder ??= new(),
+                Type t when t == typeof(ModelX) => _modelX_Builder ??= new(),
+                Type t when t == typeof(ResourceProviderData) => _resourceProviderData_Builder ??= new(),
+                Type t when t == typeof(UnknownBaseModel) => _unknownBaseModel_Builder ??= new(),
+                Type t when t == typeof(ModelY) => _modelY_Builder ??= new(),
                 _ => null
             };
+            return modelInfo is not null;
         }
 
-        private class ModelY_Info : ModelInfo
+        private class ModelY_Builder : ModelBuilder
         {
-            public override object CreateObject() => new ModelY();
+            private Func<object>? _createInstance;
+            protected override Func<object> CreateInstance => _createInstance ??= () => new ModelY();
         }
 
-        private class UnknownBaseModel_Info : ModelInfo
+        private class UnknownBaseModel_Builder : ModelBuilder
         {
-            public override object CreateObject() => new UnknownBaseModel();
+            private Func<object>? _createInstance;
+            protected override Func<object> CreateInstance => _createInstance ??= () => new UnknownBaseModel();
         }
 
-        private class ResourceProviderData_Info : ModelInfo
+        private class ResourceProviderData_Builder : ModelBuilder
         {
-            public override object CreateObject() => new ResourceProviderData();
+            private Func<object>? _createInstance;
+            protected override Func<object> CreateInstance => _createInstance ??= () => new ResourceProviderData();
         }
 
-        private class ModelX_Info : ModelInfo
+        private class ModelX_Builder : ModelBuilder
         {
-            public override object CreateObject() => new ModelX();
+            private Func<object>? _createInstance;
+            protected override Func<object> CreateInstance => _createInstance ??= () => new ModelX();
         }
 
-        private class ModelWithPersistableOnly_Info : ModelInfo
+        private class ModelWithPersistableOnly_Builder : ModelBuilder
         {
-            public override object CreateObject() => new ModelWithPersistableOnly();
+            private Func<object>? _createInstance;
+            protected override Func<object> CreateInstance => _createInstance ??= () => new ModelWithPersistableOnly();
         }
 
-        private class ModelAsStruct_Info : ModelInfo
+        private class ModelAsStruct_Builder : ModelBuilder
         {
-            public override object CreateObject() => new ModelAsStruct();
+            private Func<object>? _createInstance;
+            protected override Func<object> CreateInstance => _createInstance ??= () => new ModelAsStruct();
         }
 
-        private class BaseModel_Info : ModelInfo
+        private class BaseModel_Builder : ModelBuilder
         {
-            public override object CreateObject() => new UnknownBaseModel();
+            private Func<object>? _createInstance;
+            protected override Func<object> CreateInstance => _createInstance ??= () => new UnknownBaseModel();
         }
 
-        private class AvailabilitySetData_Info : ModelInfo
+        private class AvailabilitySetData_Builder : ModelBuilder
         {
-            public override object CreateObject() => new AvailabilitySetData();
+            private Func<object>? _createInstance;
+            protected override Func<object> CreateInstance => _createInstance ??= () => new AvailabilitySetData();
         }
     }
 }

@@ -4,6 +4,7 @@
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
@@ -42,31 +43,37 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
         public class LocalContext : ModelReaderWriterContext
         {
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
-            private Dictionary_BaseModel_Info? _Dictionary_BaseModel_Info;
+            private Dictionary_BaseModel_Builder? _Dictionary_BaseModel_Builder;
 
-            public override ModelInfo? GetModelInfo(Type type)
+            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modelInfo)
             {
-                return type switch
+                modelInfo = type switch
                 {
-                    Type t when t == typeof(Dictionary<string, BaseModel>) => _Dictionary_BaseModel_Info ??= new(),
-                    _ => s_libraryContext.Value.GetModelInfo(type)
+                    Type t when t == typeof(Dictionary<string, BaseModel>) => _Dictionary_BaseModel_Builder ??= new(),
+                    _ => GetFromDependencies(type)
                 };
+                return modelInfo is not null;
             }
 
-            private class Dictionary_BaseModel_Info : ModelInfo
+            private ModelBuilder? GetFromDependencies(Type type)
             {
-                public override object CreateObject() => new Dictionary_BaseModel_Builder();
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? modelInfo))
+                    return modelInfo;
+                return null;
+            }
 
-                private class Dictionary_BaseModel_Builder : CollectionBuilder
-                {
-                    private readonly Lazy<Dictionary<string, BaseModel>> _instance = new(() => []);
+            private class Dictionary_BaseModel_Builder : ModelBuilder
+            {
+                private Func<object>? _createInstance;
+                protected override Func<object> CreateInstance => _createInstance ??= () => new Dictionary<string, BaseModel>();
 
-                    protected internal override void AddItem(object item, string? key = null) => _instance.Value.Add(AssertKey(key), AssertItem<BaseModel>(item));
+                private Action<object, object, string?>? _addItem;
+                protected override Action<object, object, string?>? AddItem
+                    => _addItem ??= (collection, item, key) => AssertCollection<Dictionary<string, BaseModel>>(collection).Add(AssertKey(key), AssertItem<BaseModel>(item));
 
-                    protected internal override object GetBuilder() => _instance.Value;
-
-                    protected internal override object CreateElement() => s_libraryContext.Value.GetModelInfo(typeof(BaseModel))!.CreateObject();
-                }
+                private Func<object>? _createElementInstance;
+                protected override Func<object> CreateElementInstance
+                    => _createElementInstance ??= () => s_libraryContext.Value.GetModelBuilder(typeof(BaseModel)).CreateObject();
             }
         }
     }

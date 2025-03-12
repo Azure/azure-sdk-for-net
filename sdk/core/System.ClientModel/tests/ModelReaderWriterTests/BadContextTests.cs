@@ -4,6 +4,7 @@
 using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using NUnit.Framework;
 
@@ -27,7 +28,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "{}";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(DoesNotImplementInterface), s_badContext));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("DoesNotImplementInterface must implement CollectionBuilder or IPersistableModel", ex!.Message);
+            Assert.AreEqual("DoesNotImplementInterface must implement IPersistableModel", ex!.Message);
         }
 
         [Test]
@@ -50,74 +51,63 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         private class BadContext : ModelReaderWriterContext
         {
-            private DoesNotImplementInterface_Info? _doesNotImplementInterface_Info;
-            private List_PersistableModel_NonPersistableElement_Info? _list_PersistableModel_NonPersistableElement_Info;
-            private PersistableModel_NonPersistableElement_Info? _persistableModel_NonPersistableElement_Info;
-            private List_PersistableModel_NullElement_Info? _list_PersistableModel_NullElement_Info;
-            private PersistableModel_NullElement_Info? _persistableModel_NullElement_Info;
+            private DoesNotImplementInterface_Builder? _doesNotImplementInterface_Builder;
+            private List_PersistableModel_NonPersistableElement_Builder? _list_PersistableModel_NonPersistableElement_Builder;
+            private PersistableModel_NonPersistableElement_Builder? _persistableModel_NonPersistableElement_Builder;
+            private List_PersistableModel_NullElement_Builder? _list_PersistableModel_NullElement_Builder;
+            private PersistableModel_NullElement_Builder? _persistableModel_NullElement_Builder;
 
-            public override ModelInfo? GetModelInfo(Type type)
+            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modelInfo)
             {
-                return type switch
+                modelInfo = type switch
                 {
-                    Type t when t == typeof(DoesNotImplementInterface) => _doesNotImplementInterface_Info ??= new(),
-                    Type t when t == typeof(List<PersistableModel_NonPersistableElement>) => _list_PersistableModel_NonPersistableElement_Info ??= new(),
-                    Type t when t == typeof(PersistableModel_NonPersistableElement) => _persistableModel_NonPersistableElement_Info ??= new(),
-                    Type t when t == typeof(List<PersistableModel_NullElement>) => _list_PersistableModel_NullElement_Info ??= new(),
-                    Type t when t == typeof(PersistableModel_NullElement) => _persistableModel_NullElement_Info ??= new(),
+                    Type t when t == typeof(DoesNotImplementInterface) => _doesNotImplementInterface_Builder ??= new(),
+                    Type t when t == typeof(List<PersistableModel_NonPersistableElement>) => _list_PersistableModel_NonPersistableElement_Builder ??= new(),
+                    Type t when t == typeof(PersistableModel_NonPersistableElement) => _persistableModel_NonPersistableElement_Builder ??= new(),
+                    Type t when t == typeof(List<PersistableModel_NullElement>) => _list_PersistableModel_NullElement_Builder ??= new(),
+                    Type t when t == typeof(PersistableModel_NullElement) => _persistableModel_NullElement_Builder ??= new(),
                     _ => null
                 };
+                return modelInfo is not null;
             }
 
-            private class PersistableModel_NullElement_Info : ModelInfo
+            private class PersistableModel_NullElement_Builder : ModelBuilder
             {
-                public override object CreateObject() => new PersistableModel_NullElement();
+                private Func<object>? _createInstance;
+                protected override Func<object> CreateInstance => _createInstance ??= () => new PersistableModel_NullElement();
             }
 
-            private class List_PersistableModel_NullElement_Info : ModelInfo
+            private class List_PersistableModel_NullElement_Builder : ModelBuilder
             {
-                public override object CreateObject() => new List_PersistableModel_NullElement_Builder();
+                private Func<object>? _createInstance;
+                protected override Func<object> CreateInstance => _createInstance ??= () => new List<PersistableModel_NullElement>();
 
-                private class List_PersistableModel_NullElement_Builder : CollectionBuilder
-                {
-                    protected internal override void AddItem(object item, string? key = null)
-                    {
-                        throw new NotImplementedException();
-                    }
+                protected override Action<object, object, string?>? AddItem => (_, _, _) => throw new NotImplementedException();
 
-                    protected internal override object GetBuilder() => new List<PersistableModel_NullElement>();
-
-                    protected internal override object? CreateElement() => null;
-                }
+                protected override Func<object>? CreateElementInstance => () => null!;
             }
 
-            private class PersistableModel_NonPersistableElement_Info : ModelInfo
+            private class PersistableModel_NonPersistableElement_Builder : ModelBuilder
             {
-                public override object CreateObject() => new PersistableModel_NonPersistableElement();
+                private Func<object>? _createInstance;
+                protected override Func<object> CreateInstance => _createInstance ??= () => new PersistableModel_NonPersistableElement();
             }
 
-            private class List_PersistableModel_NonPersistableElement_Info : ModelInfo
+            private class List_PersistableModel_NonPersistableElement_Builder : ModelBuilder
             {
-                public override object CreateObject() => new List_PersistableModel_NonPersistableElement_Builder();
+                private Func<object>? _createInstance;
+                protected override Func<object> CreateInstance => _createInstance ??= () => new List<PersistableModel_NonPersistableElement>();
 
-                private class List_PersistableModel_NonPersistableElement_Builder : CollectionBuilder
-                {
-                    protected internal override void AddItem(object item, string? key = null)
-                    {
-                        throw new NotImplementedException();
-                    }
+                protected override Action<object, object, string?>? AddItem => (_, _, _) => throw new NotImplementedException();
 
-                    protected internal override object GetBuilder() => new List<PersistableModel_NonPersistableElement>();
-
-                    protected internal override object? CreateElement() => new DoesNotImplementInterface();
-                }
+                private Func<object>? _createElementInstance;
+                protected override Func<object>? CreateElementInstance => _createElementInstance ??= () => new DoesNotImplementInterface();
             }
 
-            private class DoesNotImplementInterface_Info : ModelInfo
+            private class DoesNotImplementInterface_Builder : ModelBuilder
             {
-                public override object CreateObject() => new DoesNotImplementInterface();
-
-                public override IEnumerable? GetEnumerable(object obj) => null;
+                private Func<object>? _createInstance;
+                protected override Func<object> CreateInstance => _createInstance ??= () => new DoesNotImplementInterface();
             }
         }
 
