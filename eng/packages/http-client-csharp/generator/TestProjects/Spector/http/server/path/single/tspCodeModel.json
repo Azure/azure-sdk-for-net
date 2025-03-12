@@ -8,7 +8,7 @@
   {
    "$id": "2",
    "Name": "SingleClient",
-   "ClientNamespace": "Server.Path.Single",
+   "Namespace": "Server.Path.Single",
    "Doc": "Illustrates server with a single path parameter @server",
    "Operations": [
     {
@@ -23,13 +23,11 @@
        "StatusCodes": [
         200
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "HEAD",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/server/path/single/myOp",
      "BufferResponse": true,
@@ -65,7 +63,8 @@
      "Kind": "Client"
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Server.Path.Single"
   }
  ]
 }

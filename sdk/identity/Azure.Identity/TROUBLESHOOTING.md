@@ -172,6 +172,7 @@ DefaultAzureCredentialOptions options = new
 
 | Error Code | Issue | Mitigation |
 |---|---|---|
+|AADSTS50076|Multifactor authentication (MFA) is enabled on your Entra tenant, and the username + password flow is incompatible with MFA.|Use a different credential, per the guidance at [Planning for mandatory MFA: Client libraries](https://aka.ms/azsdk/identity/mfa).|
 |AADSTS50126|The provided username or password is invalid|Ensure the `username` and `password` provided when constructing the credential are valid.|
 
 ## Troubleshoot `WorkloadIdentityCredential` authentication issues

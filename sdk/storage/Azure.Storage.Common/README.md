@@ -65,6 +65,8 @@ Please see the examples for [Blobs][blobs_examples], [Queues][queues_examples], 
 
 All Azure Storage services will throw a [RequestFailedException][RequestFailedException]
 with helpful [`ErrorCode`s][error_codes].
+If multiple failures occur, an [AggregateException][AggregateException] will be thrown,
+containing each failure instance.
 
 ## Next steps
 
@@ -113,3 +115,4 @@ additional questions or comments.
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
+[AggregateException]: https://learn.microsoft.com/dotnet/api/system.aggregateexception?view=net-9.0

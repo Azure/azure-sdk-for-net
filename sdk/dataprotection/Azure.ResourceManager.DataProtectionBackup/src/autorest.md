@@ -235,6 +235,7 @@ rename-mapping:
   DeletedBackupInstance: DeletedDataProtectionBackupInstanceProperties
   BackupDatasourceParameters: BackupDataSourceSettings
   BlobBackupDatasourceParameters: BlobBackupDataSourceSettings
+  AdlsBlobBackupDatasourceParameters: AdlsBlobBackupDataSourceSettings
   KubernetesClusterBackupDatasourceParameters: KubernetesClusterBackupDataSourceSettings
   KubernetesClusterBackupDatasourceParameters.snapshotVolumes: IsSnapshotVolumesEnabled
   KubernetesClusterBackupDatasourceParameters.includeClusterScopeResources: IsClusterScopeResourcesIncluded

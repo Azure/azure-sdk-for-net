@@ -49,8 +49,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceDeletedDetails"/>. </summary>
-        internal ResourceNotificationsResourceDeletedDetails()
+        /// <param name="id"> id of the resource for which the event is being emitted. </param>
+        /// <param name="name"> name of the resource for which the event is being emitted. </param>
+        /// <param name="type"> the type of the resource for which the event is being emitted. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="type"/> is null. </exception>
+        internal ResourceNotificationsResourceDeletedDetails(string id, string name, string type)
         {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(type, nameof(type));
+
+            Id = id;
+            Name = name;
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceDeletedDetails"/>. </summary>
@@ -64,6 +75,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Name = name;
             Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceDeletedDetails"/> for deserialization. </summary>
+        internal ResourceNotificationsResourceDeletedDetails()
+        {
         }
 
         /// <summary> id of the resource for which the event is being emitted. </summary>

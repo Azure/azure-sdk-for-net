@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ProfileListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProfileListResult.DeserializeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ProfileListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProfileListResult.DeserializeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ProfileListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProfileListResult.DeserializeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ProfileListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProfileListResult.DeserializeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProfileData.DeserializeProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProfileData.DeserializeProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -882,7 +882,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         SsoUri value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SsoUri.DeserializeSsoUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -911,7 +911,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         SsoUri value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SsoUri.DeserializeSsoUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         SupportedOptimizationTypesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SupportedOptimizationTypesListResult.DeserializeSupportedOptimizationTypesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1005,7 +1005,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         SupportedOptimizationTypesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SupportedOptimizationTypesListResult.DeserializeSupportedOptimizationTypesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1070,7 +1070,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ResourceUsageListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceUsageListResult.DeserializeResourceUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1099,7 +1099,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ResourceUsageListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceUsageListResult.DeserializeResourceUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1148,7 +1148,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ProfileListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProfileListResult.DeserializeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1175,7 +1175,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ProfileListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProfileListResult.DeserializeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1226,7 +1226,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ProfileListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProfileListResult.DeserializeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1255,7 +1255,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ProfileListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProfileListResult.DeserializeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1308,7 +1308,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ResourceUsageListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceUsageListResult.DeserializeResourceUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1339,7 +1339,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ResourceUsageListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceUsageListResult.DeserializeResourceUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -142,7 +142,7 @@ namespace Azure.Communication.JobRouter
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWebhookRouterRule(document.RootElement, options);
                     }
                 default:
@@ -156,7 +156,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new WebhookRouterRule FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeWebhookRouterRule(document.RootElement);
         }
 
