@@ -30,9 +30,9 @@ steps:
         artifact: BuildPackagesArtifact
         path: $(Build.ArtifactStagingDirectory)/PackageInfo
   - ${{ else }}:
-  - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
-    parameters:
-      ServiceDirectory: ${{ parameters.ServiceDirectory }}
+    - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
+      parameters:
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
   - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
     parameters:
