@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using Azure.Projects.Core;
 using Azure.Provisioning.ServiceBus;
 
@@ -20,6 +19,7 @@ internal class ServiceBusTopicFeature : AzureProjectFeature
     private ServiceBusNamespaceFeature? _namespace;
 
     public ServiceBusTopicFeature(string namespaceName, string topicName)
+        : base(CreateId(namespaceName, topicName))
     {
         Name = topicName;
         _namespaceName = namespaceName;
@@ -56,4 +56,7 @@ internal class ServiceBusTopicFeature : AzureProjectFeature
 
         EmitConnections(infrastructure, Name, Name);
     }
+
+    public override string ToString() => CreateId(_namespaceName, Name);
+    public static string CreateId(string namespaceName, string topicName) => $"{nameof(ServiceBusTopicFeature)}{namespaceName}/{topicName}";
 }

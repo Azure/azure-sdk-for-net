@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Xml.Linq;
 using Azure.Projects.Core;
 using Azure.Provisioning.ServiceBus;
 
@@ -9,18 +10,36 @@ namespace Azure.Projects.ServiceBus;
 
 internal class ServiceBusSubscriptionFeature : AzureProjectFeature
 {
-    public ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature parent)
+    private string _namespaceName;
+    private string _topicName;
+
+    public ServiceBusSubscriptionFeature(string namespaceName, string topicName, string name)
     {
         Name = name;
-        Parent = parent;
+        _namespaceName = namespaceName;
+        _topicName = topicName;
     }
 
     public string Name { get; }
-    public ServiceBusTopicFeature Parent { get; }
+
+    protected internal override void EmitFeatures(ProjectInfrastructure infrastructure)
+    {
+        FeatureCollection features = infrastructure.Features;
+
+        string topidId = ServiceBusTopicFeature.CreateId(_namespaceName, _topicName);
+        if (!features.TryGet(topidId, out ServiceBusTopicFeature? topic))
+        {
+            topic = new ServiceBusTopicFeature(_namespaceName, _topicName);
+            features.Append(topic);
+        }
+
+        features.Append(this);
+    }
 
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
-        ServiceBusTopic serviceBusTopic = infrastructure.GetConstruct<ServiceBusTopic>(Parent.Id);
+        string topidId = ServiceBusTopicFeature.CreateId(_namespaceName, _topicName);
+        ServiceBusTopic serviceBusTopic = infrastructure.GetConstruct<ServiceBusTopic>(topidId);
 
         var subscription = new ServiceBusSubscription(Name, "2021-11-01")
         {
@@ -39,6 +58,6 @@ internal class ServiceBusSubscriptionFeature : AzureProjectFeature
 
         infrastructure.AddConstruct(Id, subscription);
 
-        EmitConnections(infrastructure, Name, $"{Parent.Name}/{Name}");
+        EmitConnections(infrastructure, Name, $"{_topicName}/{Name}");
     }
 }
