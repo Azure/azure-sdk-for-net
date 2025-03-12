@@ -42,7 +42,7 @@ public abstract class ModelBuilder
     /// Gets an <see cref="IEnumerable"/> representation of the object.
     /// </summary>
     /// <returns>An <see cref="IEnumerable"/> representation if its a collection otherwise null.</returns>
-    protected internal virtual IEnumerable? GetEnumerable(object obj) => null;
+    protected internal virtual IEnumerable? GetItems(object obj) => null;
 
     /// <summary>
     /// Provides a factory to create an instance of the object.

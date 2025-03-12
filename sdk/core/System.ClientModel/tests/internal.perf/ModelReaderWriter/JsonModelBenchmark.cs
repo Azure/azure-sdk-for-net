@@ -77,7 +77,7 @@ namespace System.ClientModel.Tests.Internal.Perf
         [BenchmarkCategory("ModelReaderWriter")]
         public BinaryData Write_ModelReaderWriter_WithContext()
         {
-            return ModelReaderWriter.Write(_model, _context, _options);
+            return ModelReaderWriter.Write(_model, _options, _context);
         }
 
         [Benchmark]
@@ -98,7 +98,7 @@ namespace System.ClientModel.Tests.Internal.Perf
         [BenchmarkCategory("ModelReaderWriter")]
         public BinaryData Write_ModelReaderWriterNonGeneric_WithContext()
         {
-            return ModelReaderWriter.Write((object)_model, _context, _options);
+            return ModelReaderWriter.Write((object)_model, _options, _context);
         }
 
         [Benchmark]
@@ -151,7 +151,7 @@ namespace System.ClientModel.Tests.Internal.Perf
         [BenchmarkCategory("ModelReaderWriter")]
         public T Read_ModelReaderWriterFromBinaryData_WithContext()
         {
-            return ModelReaderWriter.Read<T>(_data, _context, _options);
+            return ModelReaderWriter.Read<T>(_data, _options, _context);
         }
 
         [Benchmark]
@@ -165,7 +165,7 @@ namespace System.ClientModel.Tests.Internal.Perf
         [BenchmarkCategory("ModelReaderWriter")]
         public object Read_ModelReaderWriterFromBinaryDataNonGeneric_WithContext()
         {
-            return ModelReaderWriter.Read(_data, typeof(T), _context, _options);
+            return ModelReaderWriter.Read(_data, typeof(T), _options, _context);
         }
 
         [Benchmark]

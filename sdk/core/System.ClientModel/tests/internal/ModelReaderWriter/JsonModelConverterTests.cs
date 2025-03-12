@@ -67,7 +67,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 
             var options = new JsonSerializerOptions();
             var mrwOptions = new ModelReaderWriterOptions(format);
-            var converter = context is null ? new JsonModelConverter(mrwOptions) : new JsonModelConverter(context, mrwOptions);
+            var converter = context is null ? new JsonModelConverter(mrwOptions) : new JsonModelConverter(mrwOptions, context);
             options.Converters.Add(converter);
             ModelY? modelY = JsonSerializer.Deserialize<ModelY>(modelYResponse, options);
             Assert.IsNotNull(modelY);
@@ -120,7 +120,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void NullContextThrows()
         {
-            var ex = Assert.Throws<ArgumentNullException>(() => new JsonModelConverter(null!, ModelReaderWriterOptions.Json));
+            var ex = Assert.Throws<ArgumentNullException>(() => new JsonModelConverter(ModelReaderWriterOptions.Json, null!));
             Assert.IsNotNull(ex);
             Assert.AreEqual("context", ex!.ParamName);
         }
@@ -129,7 +129,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         public void ConvertWithMissingInfo()
         {
             var options = new JsonSerializerOptions();
-            var converter = new JsonModelConverter(new TestClientModelReaderWriterContext());
+            var converter = new JsonModelConverter(ModelReaderWriterOptions.Json, new TestClientModelReaderWriterContext());
             options.Converters.Add(converter);
             var ex = Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize("{}", typeof(PersistableModel), options));
             Assert.IsNotNull(ex);
@@ -140,7 +140,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         public void ConvertWithBadContext()
         {
             var options = new JsonSerializerOptions();
-            var converter = new JsonModelConverter(new BadContext());
+            var converter = new JsonModelConverter(ModelReaderWriterOptions.Json, new BadContext());
             options.Converters.Add(converter);
             var ex = Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize("{}", typeof(PersistableModel), options));
             Assert.IsNotNull(ex);

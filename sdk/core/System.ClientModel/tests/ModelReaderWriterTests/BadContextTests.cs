@@ -17,7 +17,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void Write_NonPersistableAndNonEnumerable()
         {
-            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(new DoesNotImplementInterface(), s_badContext));
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(new DoesNotImplementInterface(), ModelReaderWriterOptions.Json, s_badContext));
             Assert.IsNotNull(ex);
             Assert.AreEqual("DoesNotImplementInterface must implement IEnumerable or IPersistableModel", ex!.Message);
         }
@@ -26,7 +26,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void Read_NonPersistableAndNonEnumerable()
         {
             var json = "{}";
-            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(DoesNotImplementInterface), s_badContext));
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(DoesNotImplementInterface), ModelReaderWriterOptions.Json, s_badContext));
             Assert.IsNotNull(ex);
             Assert.AreEqual("DoesNotImplementInterface must implement IPersistableModel", ex!.Message);
         }
@@ -35,7 +35,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void Read_NonPersistableElement()
         {
             var json = "[]";
-            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(List<PersistableModel_NonPersistableElement>), s_badContext, new ModelReaderWriterOptions("W")));
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(List<PersistableModel_NonPersistableElement>), new ModelReaderWriterOptions("W"), s_badContext));
             Assert.IsNotNull(ex);
             Assert.AreEqual("'DoesNotImplementInterface' must implement IPersistableModel", ex!.Message);
         }
@@ -44,7 +44,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void Read_NullElement()
         {
             var json = "[]";
-            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(List<PersistableModel_NullElement>), s_badContext, new ModelReaderWriterOptions("W")));
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(List<PersistableModel_NullElement>), new ModelReaderWriterOptions("W"), s_badContext));
             Assert.IsNotNull(ex);
             Assert.AreEqual("'' must implement IPersistableModel", ex!.Message);
         }
@@ -57,9 +57,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             private List_PersistableModel_NullElement_Builder? _list_PersistableModel_NullElement_Builder;
             private PersistableModel_NullElement_Builder? _persistableModel_NullElement_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modelInfo)
+            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modeBuilder)
             {
-                modelInfo = type switch
+                modeBuilder = type switch
                 {
                     Type t when t == typeof(DoesNotImplementInterface) => _doesNotImplementInterface_Builder ??= new(),
                     Type t when t == typeof(List<PersistableModel_NonPersistableElement>) => _list_PersistableModel_NonPersistableElement_Builder ??= new(),
@@ -68,7 +68,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                     Type t when t == typeof(PersistableModel_NullElement) => _persistableModel_NullElement_Builder ??= new(),
                     _ => null
                 };
-                return modelInfo is not null;
+                return modeBuilder is not null;
             }
 
             private class PersistableModel_NullElement_Builder : ModelBuilder

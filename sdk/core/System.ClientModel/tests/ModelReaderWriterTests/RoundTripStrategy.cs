@@ -51,11 +51,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            return ModelReaderWriter.Write<T>(model, _context!, options);
+            return ModelReaderWriter.Write<T>(model, options, _context!);
         }
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), _context!, options) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
+            return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options, _context!) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
         }
     }
 
@@ -89,12 +89,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            return ModelReaderWriter.Write((object)model!, _context!, options);
+            return ModelReaderWriter.Write((object)model!, options, _context!);
         }
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return ModelReaderWriter.Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), typeof(T), _context!, options) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
+            return ModelReaderWriter.Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), typeof(T), options, _context!) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
         }
     }
 

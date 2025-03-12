@@ -72,35 +72,43 @@ public static class ModelReaderWriter
     /// </summary>
     /// <typeparam name="T">The type of the value to write.</typeparam>
     /// <param name="model">The model to convert.</param>
-    /// <param name="context"> The <see cref="ModelReaderWriterContext"/> to use.</param>
     /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+    /// <param name="context"> The <see cref="ModelReaderWriterContext"/> to use.</param>
     /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterOptions.Format"/> specified by the <paramref name="options"/>.</returns>
     /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
     /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
-    public static BinaryData Write<T>(T model, ModelReaderWriterContext context, ModelReaderWriterOptions? options = default)
+    public static BinaryData Write<T>(T model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
     {
+        if (options is null)
+        {
+            throw new ArgumentNullException(nameof(options));
+        }
+
         if (model is null)
         {
             throw new ArgumentNullException(nameof(model));
         }
 
-        options ??= ModelReaderWriterOptions.Json;
-
-        return WritePersistableOrEnumerable(model, context, options);
+        return WritePersistableOrEnumerable(model, options, context);
     }
 
     /// <summary>
     /// Converts the value of a model into a <see cref="BinaryData"/>.
     /// </summary>
     /// <param name="model">The model to convert.</param>
-    /// <param name="context"> The <see cref="ModelReaderWriterContext"/> to use.</param>
     /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+    /// <param name="context"> The <see cref="ModelReaderWriterContext"/> to use.</param>
     /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterOptions.Format"/> specified by the <paramref name="options"/>.</returns>
     /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IPersistableModel{T}"/>.</exception>
     /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
     /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
-    public static BinaryData Write(object model, ModelReaderWriterContext context, ModelReaderWriterOptions? options = default)
+    public static BinaryData Write(object model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
     {
+        if (options is null)
+        {
+            throw new ArgumentNullException(nameof(options));
+        }
+
         if (model is null)
         {
             throw new ArgumentNullException(nameof(model));
@@ -108,10 +116,10 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        return WritePersistableOrEnumerable(model, context, options);
+        return WritePersistableOrEnumerable(model, options, context);
     }
 
-    private static BinaryData WritePersistableOrEnumerable<T>(T model, ModelReaderWriterContext context, ModelReaderWriterOptions options)
+    private static BinaryData WritePersistableOrEnumerable<T>(T model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
     {
         if (model is IPersistableModel<T> iModel)
         {
@@ -119,7 +127,7 @@ public static class ModelReaderWriter
         }
         else
         {
-            var enumerable = model as IEnumerable ?? context.GetModelBuilder(model!.GetType()).GetEnumerable(model);
+            var enumerable = model as IEnumerable ?? context.GetModelBuilder(model!.GetType()).GetItems(model);
             if (enumerable is not null)
             {
                 var collectionWriter = CollectionWriter.GetCollectionWriter(enumerable, options);
@@ -162,32 +170,33 @@ public static class ModelReaderWriter
         ModelReaderWriterOptions? options = default)
         where T : IPersistableModel<T>
     {
-        return ReadInternal<T>(
-            data,
-            s_reflectionContext.Value,
-            options);
+        return ReadInternal<T>(data, options ??= ModelReaderWriterOptions.Json, s_reflectionContext.Value);
     }
 
     /// <summary>
     /// Converts the <see cref="BinaryData"/> into a <typeparamref name="T"/>.
     /// </summary>
     /// <param name="data">The <see cref="BinaryData"/> to convert.</param>
-    /// <param name="context"> The <see cref="ModelReaderWriterContext"/> to use.</param>
     /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+    /// <param name="context"> The <see cref="ModelReaderWriterContext"/> to use.</param>
     /// <returns>A <typeparamref name="T"/> representation of the <see cref="BinaryData"/>.</returns>
     /// <exception cref="InvalidOperationException">Throws if <typeparamref name="T"/> does not have a public or internal parameterless constructor.</exception>
     /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
     /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
     /// <exception cref="MissingMethodException">If <typeparamref name="T"/> does not have a public or non public empty constructor.</exception>
-    public static T? Read<T>(
-        BinaryData data,
-        ModelReaderWriterContext context,
-        ModelReaderWriterOptions? options = default)
+    public static T? Read<T>(BinaryData data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
     {
-        return ReadInternal<T>(
-            data,
-            context,
-            options);
+        if (options is null)
+        {
+            throw new ArgumentNullException(nameof(options));
+        }
+
+        if (context is null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
+        return ReadInternal<T>(data, options, context);
     }
 
     /// <summary>
@@ -207,11 +216,7 @@ public static class ModelReaderWriter
         [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType,
         ModelReaderWriterOptions? options = default)
     {
-        return ReadInternal(
-            data,
-            returnType,
-            s_reflectionContext.Value,
-            options);
+        return ReadInternal(data, returnType, options ??= ModelReaderWriterOptions.Json, s_reflectionContext.Value);
     }
 
     /// <summary>
@@ -219,41 +224,36 @@ public static class ModelReaderWriter
     /// </summary>
     /// <param name="data">The <see cref="BinaryData"/> to convert.</param>
     /// <param name="returnType">The type of the object to convert and return.</param>
-    /// <param name="context">The <see cref="ModelReaderWriterContext"/> to use.</param>
     /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+    /// <param name="context">The <see cref="ModelReaderWriterContext"/> to use.</param>
     /// <returns>A <paramref name="returnType"/> representation of the <see cref="BinaryData"/>.</returns>
     /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not implement <see cref="IPersistableModel{T}"/>.</exception>
     /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal parameterless constructor.</exception>
     /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
     /// <exception cref="ArgumentNullException">If <paramref name="data"/> or <paramref name="returnType"/> are null.</exception>
     /// <exception cref="MissingMethodException">If <paramref name="returnType"/> does not have a public or non public empty constructor.</exception>
-    public static object? Read(
-        BinaryData data,
-        Type returnType,
-        ModelReaderWriterContext context,
-        ModelReaderWriterOptions? options = default)
+    public static object? Read(BinaryData data, Type returnType, ModelReaderWriterOptions options, ModelReaderWriterContext context)
     {
-        return ReadInternal(
-            data,
-            returnType,
-            context,
-            options);
+        if (options is null)
+        {
+            throw new ArgumentNullException(nameof(options));
+        }
+
+        if (context is null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
+        return ReadInternal(data, returnType, options, context);
     }
 
-    private static T? ReadInternal<T>(
-        BinaryData data,
-        ModelReaderWriterContext context,
-        ModelReaderWriterOptions? options = default)
+    private static T? ReadInternal<T>(BinaryData data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
     {
-        var obj = ReadInternal(data, typeof(T), context, options);
+        var obj = ReadInternal(data, typeof(T), options, context);
         return obj is null ? (T?)obj : (T)obj;
     }
 
-    private static object? ReadInternal(
-        BinaryData data,
-        Type returnType,
-        ModelReaderWriterContext context,
-        ModelReaderWriterOptions? options = default)
+    private static object? ReadInternal(BinaryData data, Type returnType, ModelReaderWriterOptions options, ModelReaderWriterContext context)
     {
         if (data is null)
         {
@@ -264,8 +264,6 @@ public static class ModelReaderWriter
         {
             throw new ArgumentNullException(nameof(returnType));
         }
-
-        options ??= ModelReaderWriterOptions.Json;
 
         var returnObj = context.GetModelBuilder(returnType).CreateObject();
         if (returnObj is CollectionWrapper builder)

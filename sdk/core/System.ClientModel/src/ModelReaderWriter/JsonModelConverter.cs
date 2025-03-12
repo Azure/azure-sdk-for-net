@@ -42,13 +42,18 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
     /// <summary>
     /// Initializes a new instance of <see cref="JsonModelConverter"/> with a <see cref="ModelReaderWriterContext"/>.
     /// </summary>
-    /// <param name="context">The <see cref="ModelReaderWriterContext"/> for model construction.</param>
     /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
-    public JsonModelConverter(ModelReaderWriterContext context, ModelReaderWriterOptions? options = default)
+    /// <param name="context">The <see cref="ModelReaderWriterContext"/> for model construction.</param>
+    public JsonModelConverter(ModelReaderWriterOptions options, ModelReaderWriterContext context)
     {
         if (context is null)
         {
             throw new ArgumentNullException(nameof(context));
+        }
+
+        if (options is null)
+        {
+            throw new ArgumentNullException(nameof(options));
         }
 
         _context = context;

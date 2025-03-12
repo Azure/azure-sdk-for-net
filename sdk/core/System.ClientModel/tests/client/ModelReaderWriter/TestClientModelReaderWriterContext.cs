@@ -20,9 +20,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         private UnknownBaseModel_Builder? _unknownBaseModel_Builder;
         private ModelY_Builder? _modelY_Builder;
 
-        public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modelInfo)
+        public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modeBuilder)
         {
-            modelInfo = type switch
+            modeBuilder = type switch
             {
                 Type t when t == typeof(AvailabilitySetData) => _availabilitySetData_Builder ??= new(),
                 Type t when t == typeof(BaseModel) => _baseModel_Builder ??= new(),
@@ -34,7 +34,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 Type t when t == typeof(ModelY) => _modelY_Builder ??= new(),
                 _ => null
             };
-            return modelInfo is not null;
+            return modeBuilder is not null;
         }
 
         private class ModelY_Builder : ModelBuilder

@@ -26,20 +26,20 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
             private ReadOnlyMemory_AvailabilitySetData_Builder? _readOnlyMemory_AvailabilitySetData_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modelInfo)
+            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modeBuilder)
             {
-                modelInfo = type switch
+                modeBuilder = type switch
                 {
                     Type t when t == typeof(ReadOnlyMemory<AvailabilitySetData>) => _readOnlyMemory_AvailabilitySetData_Builder ??= new(),
                     _ => GetFromDependencies(type)
                 };
-                return modelInfo is not null;
+                return modeBuilder is not null;
             }
 
             private ModelBuilder? GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? modelInfo))
-                    return modelInfo;
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? modeBuilder))
+                    return modeBuilder;
                 return null;
             }
 
@@ -60,7 +60,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override Func<object, object> ToCollection
                     => _toCollection ??= collection => new ReadOnlyMemory<AvailabilitySetData>([.. AssertCollection<List<AvailabilitySetData>>(collection)]);
 
-                protected internal override IEnumerable? GetEnumerable(object obj)
+                protected internal override IEnumerable? GetItems(object obj)
                 {
                     if (obj is ReadOnlyMemory<AvailabilitySetData> rom)
                     {
