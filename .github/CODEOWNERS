@@ -321,7 +321,7 @@
 /sdk/communication/Azure.Communication.ProgrammableConnectivity/   @aronhegedusms
 
 # PRLabel: %Communication - Short Codes
-/sdk/communication/Azure.Communication.ShortCodes/                 @guilhermeluizsp @Arazan @whisper6284 @danielortega-msft @sofiar-msft
+/sdk/communication/Azure.Communication.ShortCodes/                 @Arazan @whisper6284 @danielortega-msft @sofiar-msft
 
 # PRLabel: %Communication - SMS
 /sdk/communication/Azure.Communication.Sms/                        @gfeitosa-msft @phermanov-msft @ilyapaliakou-msft @besh2014
