@@ -196,13 +196,13 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> User assigned identity properties. </summary>
-        /// <param name="principalId"> The principal ID of the assigned identity. </param>
         /// <param name="clientId"> The client ID of the assigned identity. </param>
+        /// <param name="principalId"> The principal ID of the assigned identity. </param>
         /// <returns> A new <see cref="Models.UserAssignedIdentity"/> instance for mocking. </returns>
-        public static UserAssignedIdentity UserAssignedIdentity(Guid? principalId = default, Guid? clientId = default)
+        public static UserAssignedIdentity UserAssignedIdentity(Guid? clientId = default, Guid? principalId = default)
         {
 
-            return new UserAssignedIdentity(principalId, clientId, additionalBinaryDataProperties: null);
+            return new UserAssignedIdentity(clientId, principalId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location. </summary>

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 case 200:
                     {
                         ManagedNetworkPeeringPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 case 200:
                     {
                         ManagedNetworkPeeringPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 case 200:
                     {
                         ManagedNetworkPeeringPolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedNetworkPeeringPolicyListResult.DeserializeManagedNetworkPeeringPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 case 200:
                     {
                         ManagedNetworkPeeringPolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedNetworkPeeringPolicyListResult.DeserializeManagedNetworkPeeringPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 case 200:
                     {
                         ManagedNetworkPeeringPolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedNetworkPeeringPolicyListResult.DeserializeManagedNetworkPeeringPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 case 200:
                     {
                         ManagedNetworkPeeringPolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedNetworkPeeringPolicyListResult.DeserializeManagedNetworkPeeringPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -104,8 +104,8 @@ union StringExtensibleEnum {
 }
 
 @doc("A model with a few properties of literal types")
-model Thing {
-  @doc("name of the Thing")
+model ThingModel {
+  @doc("name of the ThingModel")
   name: string;
 
   @doc("required Union")
@@ -158,7 +158,7 @@ model ModelWithRequiredNullableProperties {
 }
 
 @doc("this is not a friendly model but with a friendly name")
-@friendlyName("Friend")
+@friendlyName("FriendModel")
 model NotFriend {
   @doc("name of the NotFriend")
   name: string;
@@ -186,7 +186,7 @@ model RoundTripModel {
   requiredDictionary: Record<StringExtensibleEnum>;
 
   @doc("Required model")
-  requiredModel: Thing;
+  requiredModel: ThingModel;
 
   @doc("this is an int based extensible enum")
   intExtensibleEnum?: IntExtensibleEnum;
@@ -266,7 +266,7 @@ op sayHi(
   @header headParameter: string,
   @query queryParameter: string,
   @query optionalQuery?: string,
-): Thing;
+): ThingModel;
 
 @route("/againHi")
 @doc("Return hi again")
@@ -293,43 +293,43 @@ op noContentType(
 @doc("Return hi in demo2")
 @get
 @convenientAPI(true)
-op helloDemo2(): Thing;
+op helloDemo2(): ThingModel;
 
 @route("/literal")
 @doc("Create with literal value")
 @post
 @convenientAPI(true)
-op createLiteral(@body body: Thing): Thing;
+op createLiteral(@body body: ThingModel): ThingModel;
 
 @route("/helloLiteral")
 @doc("Send literal parameters")
 @get
 @convenientAPI(true)
-op helloLiteral(@header p1: "test", @path p2: 123, @query p3: true): Thing;
+op helloLiteral(@header p1: "test", @path p2: 123, @query p3: true): ThingModel;
 
 @route("/top")
 @doc("top level method")
 @get
 @convenientAPI(true)
-op topAction(@path action: utcDateTime): Thing;
+op topAction(@path action: utcDateTime): ThingModel;
 
 @route("/top2")
 @doc("top level method2")
 @get
 @convenientAPI(false)
-op topAction2(): Thing;
+op topAction2(): ThingModel;
 
 @route("/patch")
 @doc("top level patch")
 @patch
 @convenientAPI(true)
-op patchAction(@body body: Thing): Thing;
+op patchAction(@body body: ThingModel): ThingModel;
 
 @route("/anonymousBody")
 @doc("body parameter without body decorator")
 @post
 @convenientAPI(true)
-op anonymousBody(...Thing): Thing;
+op anonymousBody(...ThingModel): ThingModel;
 
 @route("/friendlyName")
 @doc("Model can have its friendly name")
@@ -363,7 +363,7 @@ op getUnknownValue(): DaysOfWeekExtensibleEnum;
 @post
 @convenientAPI(true)
 @protocolAPI(false)
-op internalProtocol(@body body: Thing): Thing;
+op internalProtocol(@body body: ThingModel): ThingModel;
 
 @doc("When set protocol false and convenient true, the convenient method should be generated even it has the same signature as protocol one")
 @route("stillConvenient")

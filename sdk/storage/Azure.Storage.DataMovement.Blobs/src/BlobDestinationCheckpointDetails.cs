@@ -127,7 +127,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
             ContentEncoding = contentEncoding;
             IsContentEncodingSet = isContentEncodingSet;
-            ContentEncodingBytes = contentEncoding!= default ? Encoding.UTF8.GetBytes(contentEncoding) : Array.Empty<byte>();
+            ContentEncodingBytes = contentEncoding != default ? Encoding.UTF8.GetBytes(contentEncoding) : Array.Empty<byte>();
 
             ContentLanguage = contentLanguage;
             IsContentLanguageSet = isContentLanguageSet;
@@ -434,27 +434,27 @@ namespace Azure.Storage.DataMovement.Blobs
             // Length is calculated based on whether the property is preserved.
             // If the property is preserved, the property's length is added to the total length.
             int length = DataMovementBlobConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
-            if (!IsContentTypeSet)
+            if (IsContentTypeSet)
             {
                 length += ContentTypeBytes.Length;
             }
-            if (!IsContentEncodingSet)
+            if (IsContentEncodingSet)
             {
                 length += ContentEncodingBytes.Length;
             }
-            if (!IsContentLanguageSet)
+            if (IsContentLanguageSet)
             {
                 length += ContentLanguageBytes.Length;
             }
-            if (!IsContentDispositionSet)
+            if (IsContentDispositionSet)
             {
                 length += ContentDispositionBytes.Length;
             }
-            if (!IsCacheControlSet)
+            if (IsCacheControlSet)
             {
                 length += CacheControlBytes.Length;
             }
-            if (!IsMetadataSet)
+            if (IsMetadataSet)
             {
                 length += MetadataBytes.Length;
             }

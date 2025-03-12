@@ -18,21 +18,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
-
-            string projectName = "SampleProject";
-            string trainedModelLabel = "SampleModel";
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample10_ConversationsAuthoring_LoadSnapshot
-            Operation operation = authoringClient.LoadSnapshot(
-                waitUntil: WaitUntil.Completed,
-                projectName: projectName,
-                trainedModelLabel: trainedModelLabel
+            string projectName = "SampleProject";
+            string trainedModelLabel = "SampleModel";
+            ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
+
+            Operation operation = trainedModelClient.LoadSnapshot(
+                waitUntil: WaitUntil.Completed
             );
 
              // Extract the operation-location header
-            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 
             Console.WriteLine($"Snapshot loaded with operation status: {operation.GetRawResponse().Status}");

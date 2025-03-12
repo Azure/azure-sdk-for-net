@@ -180,3 +180,7 @@ TempTypeSpecFiles/
 
 # Common toolchain intermediate files
 temp
+/sdk/recoveryservices-datareplication/Azure.ResourceManager.RecoveryServicesDataReplication/tests/Tests/VaultCRUDTest.cs
+/sdk/recoveryservices-datareplication/Azure.ResourceManager.RecoveryServicesDataReplication/tests/Tests/ReplicationExtensionCRUDTest.cs
+/sdk/recoveryservices-datareplication/Azure.ResourceManager.RecoveryServicesDataReplication/tests/Tests/ProtectedItemCRUDTest.cs
+/sdk/recoveryservices-datareplication/Azure.ResourceManager.RecoveryServicesDataReplication/tests/Helpers/RecoveryServicesDataReplicationManagementTestUtilities.cs

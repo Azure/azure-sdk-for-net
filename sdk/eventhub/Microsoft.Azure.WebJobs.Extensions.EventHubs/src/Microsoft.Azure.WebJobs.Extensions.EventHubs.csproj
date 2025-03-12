@@ -12,9 +12,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- TEMP TEMP -->
-    <ProjectReference Include="../../Azure.Messaging.EventHubs/src/Azure.Messaging.EventHubs.csproj" />
-    <!-- PackageReference Include="Azure.Messaging.EventHubs" /-->
+    <!-- Using a local override to avoid moving the central reference to a beta.  Tracked by #47302-->
+    <PackageReference Include="Azure.Messaging.EventHubs" VersionOverride="5.12.0-beta.2" />
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />

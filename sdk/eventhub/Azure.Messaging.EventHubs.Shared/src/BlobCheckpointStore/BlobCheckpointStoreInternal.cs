@@ -223,9 +223,11 @@ namespace Azure.Messaging.EventHubs.Primitives
                         {
                             // This is an unlikely corner case that indicates that the blob was unexpectedly deleted while the
                             // processor is running.  Attempt to recover by resetting the ETag and considering it an upload scenario
-                            // to be handled by the next block.
+                            // to be handled by the next block. Additionally clear the IfMatch to ensure next block does not have
+                            // an outdated ETag.
 
                             ownership.Version = null;
+                            blobRequestConditions.IfMatch = null;
                         }
                     }
 

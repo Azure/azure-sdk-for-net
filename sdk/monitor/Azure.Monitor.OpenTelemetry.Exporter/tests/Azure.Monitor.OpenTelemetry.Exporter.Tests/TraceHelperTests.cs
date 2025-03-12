@@ -237,7 +237,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Server);
 
             Assert.NotNull(activity);
-            activity.RecordException(new Exception(exceptionMessage));
+            activity.AddException(new Exception(exceptionMessage));
 
             Activity[] activityList = new Activity[1];
             activityList[0] = activity;
@@ -307,7 +307,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Checking with empty string here as OTel
             // adds the exception only if it non-null and non-empty.
             // https://github.com/open-telemetry/opentelemetry-dotnet/blob/872a52f5291804c7af19e90307b5cc097b2da709/src/OpenTelemetry.Api/Trace/ActivityExtensions.cs#L102-L104
-            activity.RecordException(new Exception(""));
+            activity.AddException(new Exception(""));
 
             Activity[] activityList = new Activity[1];
             activityList[0] = activity;

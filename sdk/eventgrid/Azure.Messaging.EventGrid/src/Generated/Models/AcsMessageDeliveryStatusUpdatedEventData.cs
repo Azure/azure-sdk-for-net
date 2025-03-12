@@ -13,8 +13,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsMessageDeliveryStatusUpdatedEventData : AcsMessageEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsMessageDeliveryStatusUpdatedEventData"/>. </summary>
-        internal AcsMessageDeliveryStatusUpdatedEventData()
+        /// <param name="from"> The message sender. </param>
+        /// <param name="to"> The message recipient. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="from"/> or <paramref name="to"/> is null. </exception>
+        internal AcsMessageDeliveryStatusUpdatedEventData(string @from, string to) : base(@from, to)
         {
+            Argument.AssertNotNull(@from, nameof(@from));
+            Argument.AssertNotNull(to, nameof(to));
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsMessageDeliveryStatusUpdatedEventData"/>. </summary>

@@ -4,8 +4,8 @@
 using Azure.Generator.Mgmt.Models;
 using Azure.Generator.Providers;
 using Azure.Generator.Utilities;
-using Microsoft.Generator.CSharp.ClientModel;
-using Microsoft.Generator.CSharp.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
 
 namespace Azure.Generator
@@ -76,7 +76,20 @@ namespace Azure.Generator
 
         /// <inheritdoc/>
         // TODO: generate resources and collections
-        protected override TypeProvider[] BuildTypeProviders() => [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
+        protected override TypeProvider[] BuildTypeProviders()
+        {
+            if (AzureClientPlugin.Instance.IsAzureArm.Value == true)
+            {
+                var armOperation = new MgmtLongRunningOperationProvider(false);
+                var genericArmOperation = new MgmtLongRunningOperationProvider(true);
+
+                // TODO: remove them once they are referenced in Resource operation implementation
+                AzureClientPlugin.Instance.AddTypeToKeep(armOperation.Name);
+                AzureClientPlugin.Instance.AddTypeToKeep(genericArmOperation.Name);
+                return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition(), armOperation, genericArmOperation];
+            }
+            return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
+        }
 
         internal bool IsResource(string name) => _resourceDataBySpecNameMap.ContainsKey(name);
     }

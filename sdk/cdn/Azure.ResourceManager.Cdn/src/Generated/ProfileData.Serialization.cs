@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeProfileData(document.RootElement, options);
                     }
                 default:

@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Generator.CSharp.Input;
+using Microsoft.TypeSpec.Generator.Input;
 
 namespace Azure.Generator.Tests.Common
 {
@@ -65,7 +65,7 @@ namespace Azure.Generator.Tests.Common
             => Parameter(
                 "contentType",
                 Literal.String(contentType),
-                location: RequestLocation.Header,
+                location: InputRequestLocation.Header,
                 isRequired: true,
                 defaultValue: Constant.String(contentType),
                 nameInRequest: "Content-Type",
@@ -77,7 +77,7 @@ namespace Azure.Generator.Tests.Common
             InputType type,
             string? nameInRequest = null,
             InputConstant? defaultValue = null,
-            RequestLocation location = RequestLocation.Body,
+            InputRequestLocation location = InputRequestLocation.Body,
             bool isRequired = false,
             InputOperationParameterKind kind = InputOperationParameterKind.Method,
             bool isEndpoint = false,
@@ -121,10 +121,12 @@ namespace Azure.Generator.Tests.Common
             string access = "public",
             InputModelTypeUsage usage = InputModelTypeUsage.Output | InputModelTypeUsage.Input,
             IEnumerable<InputEnumTypeValue>? values = null,
-            bool isExtensible = false)
+            bool isExtensible = false,
+            string clientNamespace = "Sample.Models")
         {
             return new InputEnumType(
                 name,
+                clientNamespace,
                 name,
                 access,
                 null,
@@ -148,17 +150,18 @@ namespace Azure.Generator.Tests.Common
         {
             return new InputModelProperty(
                 name,
-                wireName ?? name,
                 summary,
                 description ?? $"Description for {name}",
                 type,
                 isRequired,
                 isReadOnly,
-                isDiscriminator);
+                isDiscriminator,
+                new(json: new(wireName ?? name)));
         }
 
         public static InputModelType Model(
             string name,
+            string clientNamespace = "Sample.Models",
             string access = "public",
             InputModelTypeUsage usage = InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
             IEnumerable<InputModelProperty>? properties = null,
@@ -172,6 +175,7 @@ namespace Azure.Generator.Tests.Common
             IEnumerable<InputModelProperty> propertiesList = properties ?? [Property("StringProperty", InputPrimitiveType.String)];
             return new InputModelType(
                 name,
+                clientNamespace,
                 name,
                 access,
                 null,
@@ -185,7 +189,8 @@ namespace Azure.Generator.Tests.Common
                 propertiesList.FirstOrDefault(p => p.IsDiscriminator),
                 discriminatedModels is null ? new Dictionary<string, InputModelType>() : discriminatedModels.AsReadOnly(),
                 additionalProperties,
-                modelAsStruct);
+                modelAsStruct,
+                new());
         }
 
         public static InputType Array(InputType elementType)
@@ -207,7 +212,7 @@ namespace Azure.Generator.Tests.Common
             string name,
             string access = "public",
             IEnumerable<InputParameter>? parameters = null,
-            IEnumerable<OperationResponse>? responses = null,
+            IEnumerable<InputOperationResponse>? responses = null,
             IEnumerable<string>? requestMediaTypes = null)
         {
             return new InputOperation(
@@ -220,7 +225,6 @@ namespace Azure.Generator.Tests.Common
                 parameters is null ? [] : [.. parameters],
                 responses is null ? [OperationResponse()] : [.. responses],
                 "GET",
-                BodyMediaType.Json,
                 "",
                 "",
                 null,
@@ -233,23 +237,24 @@ namespace Azure.Generator.Tests.Common
                 name);
         }
 
-        public static OperationResponse OperationResponse(IEnumerable<int>? statusCodes = null, InputType? bodytype = null)
+        public static InputOperationResponse OperationResponse(IEnumerable<int>? statusCodes = null, InputType? bodytype = null)
         {
-            return new OperationResponse(
+            return new InputOperationResponse(
                 statusCodes is null ? [200] : [.. statusCodes],
                 bodytype,
-                BodyMediaType.Json,
                 [],
                 false,
                 ["application/json"]);
         }
 
-        public static InputClient Client(string name, IEnumerable<InputOperation>? operations = null, IEnumerable<InputParameter>? parameters = null, string? parent = null)
+        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputOperation>? operations = null, IEnumerable<InputParameter>? parameters = null, string? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null)
         {
             return new InputClient(
                 name,
-                null,
-                $"{name} description",
+                clientNamespace,
+                crossLanguageDefinitionId ?? $"{clientNamespace}.{name}",
+                string.Empty,
+                doc ?? $"{name} description",
                 operations is null ? [] : [.. operations],
                 parameters is null ? [] : [.. parameters],
                 parent);

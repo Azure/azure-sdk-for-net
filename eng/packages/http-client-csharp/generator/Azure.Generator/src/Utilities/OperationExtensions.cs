@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Generator.CSharp.Input;
+using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Linq;
 
@@ -17,7 +17,7 @@ namespace Azure.Generator.Utilities
                 throw new InvalidOperationException($"Cannot get HTTP path from operation {operation.Name}");
         }
 
-        public static OperationResponse? GetServiceResponse(this InputOperation operation, int code = 200)
+        public static InputOperationResponse? GetServiceResponse(this InputOperation operation, int code = 200)
         {
             return operation.Responses.FirstOrDefault(r => r.StatusCodes.Contains(code));
         }
