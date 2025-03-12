@@ -100,7 +100,6 @@ jobs:
             SDKType: ${{ parameters.SDKType }}
             CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
             AOTTestInputs: ${{ parameters.AOTTestInputs }}
-            PackageInfoFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
 
     - job: "Analyze"
       timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
