@@ -53,6 +53,19 @@ public class BicepGenerationTests
     }
 
     [Test]
+    public void TwoContainers()
+    {
+        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
+        infrastructure.AddFeature(new BlobContainerFeature("container1"));
+        infrastructure.AddFeature(new BlobContainerFeature("container2"));
+
+        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        File.WriteAllText("d:\\twoContainers.bicep", actualBicep);
+        string expectedBicep = LoadTestFile("twoContainers.bicep");
+        Assert.AreEqual(expectedBicep, actualBicep);
+    }
+
+    [Test]
     public void ObservableContainer()
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
