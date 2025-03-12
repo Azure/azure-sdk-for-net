@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.1 (2025-03-11)
+
+### Other Changes
+- Updated Microsoft.Identity.Client.Broker dependency to version 4.69.1.
 
 ## 1.2.0 (2024-11-18)
 

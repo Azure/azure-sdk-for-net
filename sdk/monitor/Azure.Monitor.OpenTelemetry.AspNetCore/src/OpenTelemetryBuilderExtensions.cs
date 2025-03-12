@@ -3,9 +3,9 @@
 
 using System.Reflection;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling;
-using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Microsoft.Extensions.Configuration;
@@ -121,8 +121,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 var azureMonitorOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().Get(Options.DefaultName);
                 if (azureMonitorOptions.EnableLiveMetrics)
                 {
-                    var manager = sp.GetRequiredService<Manager>();
-                    builder.AddProcessor(new LiveMetricsActivityProcessor(manager));
+                    // TODO: THIS WILL COME FROM THE EXPORTER
+
+                    //var manager = sp.GetRequiredService<LiveMetricsClientManager>();
+                    //builder.AddProcessor(new LiveMetricsActivityProcessor(manager));
                 }
             });
 
@@ -141,13 +143,15 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
 
                         if (azureMonitorOptions.EnableLiveMetrics)
                         {
-                            var manager = sp.GetRequiredService<Manager>();
+                            // TODO: THIS WILL COME FROM THE EXPORTER
 
-                            return new CompositeProcessor<LogRecord>(new BaseProcessor<LogRecord>[]
-                            {
-                                new LiveMetricsLogProcessor(manager),
-                                new BatchLogRecordExportProcessor(exporter)
-                            });
+                            //var manager = sp.GetRequiredService<LiveMetricsClientManager>();
+
+                            //return new CompositeProcessor<LogRecord>(new BaseProcessor<LogRecord>[]
+                            //{
+                            //    new LiveMetricsLogProcessor(manager),
+                            //    new BatchLogRecordExportProcessor(exporter)
+                            //});
                         }
 
                         return new BatchLogRecordExportProcessor(exporter);
@@ -181,11 +185,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             });
 
             // Register Manager as a singleton
-            builder.Services.AddSingleton<Manager>(sp =>
-            {
-                AzureMonitorOptions options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().Get(Options.DefaultName);
-                return new Manager(options, new DefaultPlatformDistro());
-            });
+
+            // TODO: THIS WILL COME FROM THE EXPORTER
+
+            //builder.Services.AddSingleton<LiveMetricsClientManager>(sp =>
+            //{
+            //    AzureMonitorOptions azureMonitorOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().Get(Options.DefaultName);
+            //    var azureMonitorLiveMetricsOptions = new AzureMonitorLiveMetricsOptions();
+            //    azureMonitorOptions.SetValueToLiveMetricsOptions(azureMonitorLiveMetricsOptions);
+
+            //    return new LiveMetricsClientManager(azureMonitorLiveMetricsOptions, new DefaultPlatformDistro());
+            //});
 
             builder.Services.AddOptions<AzureMonitorOptions>()
                 .Configure<IConfiguration>((options, config) =>

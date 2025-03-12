@@ -11,15 +11,18 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
+using Azure.Storage.Common;
 using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
@@ -58,6 +61,30 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(containerName, builder.BlobContainerName);
             Assert.AreEqual("", builder.BlobName);
             Assert.AreEqual(accountName, builder.AccountName);
+        }
+
+        [Test]
+        public void Ctor_ConnectionString_CustomUri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var blobEndpoint = new Uri("http://customdomain/" + accountName);
+            var blobSecondaryEndpoint = new Uri("http://customdomain/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+
+            var containerName = "containername";
+
+            BlobContainerClient container = new BlobContainerClient(connectionString.ToString(true), containerName);
+
+            var builder = new BlobUriBuilder(container.Uri);
+
+            Assert.AreEqual(containerName, builder.BlobContainerName);
+            Assert.AreEqual("", builder.BlobName);
+            Assert.AreEqual(containerName, container.Name);
+            Assert.AreEqual(accountName, container.AccountName);
         }
 
         [RecordedTest]
@@ -300,6 +327,22 @@ namespace Azure.Storage.Blobs.Test
                 new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
         }
 
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var containerName = "containerName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var blobEndpoint = new Uri($"https://customdomain/{containerName}");
+
+            BlobContainerClient blobClient = new BlobContainerClient(blobEndpoint, credentials);
+
+            Assert.AreEqual(accountName, blobClient.AccountName);
+            Assert.AreEqual(containerName, blobClient.Name);
+        }
+
         [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {
@@ -439,6 +482,67 @@ namespace Azure.Storage.Blobs.Test
                     ClientSideEncryption = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V2_0)
                 });
             Assert.NotNull(client.ClientSideEncryption);
+        }
+
+        [Test]
+        public void Ctor_FromConfig(
+            [Values(
+            StorageAuthType.None,
+            StorageAuthType.StorageSharedKey,
+            StorageAuthType.Token,
+            StorageAuthType.Sas)] StorageAuthType authType)
+        {
+            StorageSharedKeyCredential sharedKeyCred =
+                authType == StorageAuthType.StorageSharedKey ? new("", "") : null;
+            TokenCredential tokenCred =
+                authType == StorageAuthType.Token ? new DefaultAzureCredential() : null;
+            AzureSasCredential sasCred =
+                authType == StorageAuthType.Sas ? new("?foo=bar") : null;
+
+            BlobClientOptions options = new();
+            BlobContainerClient container = new(
+                new Uri("https://example.blob.core.windows.net"),
+                new BlobClientConfiguration(
+                    options.Build(authType switch
+                    {
+                        StorageAuthType.StorageSharedKey => sharedKeyCred,
+                        StorageAuthType.Token => tokenCred,
+                        StorageAuthType.Sas => sasCred,
+                        _ => null,
+                    }),
+                    sharedKeyCred,
+                    tokenCred,
+                    sasCred,
+                    new ClientDiagnostics(options),
+                    _serviceVersion,
+                    customerProvidedKey: default,
+                    transferValidation: null,
+                    encryptionScope: null,
+                    trimBlobNameSlashes: default),
+                null);
+
+            Assert.That(container.ClientConfiguration.SharedKeyCredential,
+                authType == StorageAuthType.StorageSharedKey ? Is.EqualTo(sharedKeyCred) : Is.Null);
+            Assert.That(container.ClientConfiguration.TokenCredential,
+                authType == StorageAuthType.Token ? Is.EqualTo(tokenCred) : Is.Null);
+            Assert.That(container.ClientConfiguration.SasCredential,
+                authType == StorageAuthType.Sas ? Is.EqualTo(sasCred) : Is.Null);
+
+            switch (authType)
+            {
+                case StorageAuthType.None:
+                    Assert.That(container.AuthenticationPolicy, Is.Null);
+                    break;
+                case StorageAuthType.StorageSharedKey:
+                    Assert.That(container.AuthenticationPolicy, Is.TypeOf<StorageSharedKeyPipelinePolicy>());
+                    break;
+                case StorageAuthType.Token:
+                    Assert.That(container.AuthenticationPolicy, Is.TypeOf<StorageBearerTokenChallengeAuthorizationPolicy>());
+                    break;
+                case StorageAuthType.Sas:
+                    Assert.That(container.AuthenticationPolicy, Is.TypeOf<AzureSasCredentialSynchronousPolicy>());
+                    break;
+            }
         }
 
         [RecordedTest]

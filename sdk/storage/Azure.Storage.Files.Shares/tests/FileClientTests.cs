@@ -77,6 +77,49 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(createResponse.Value.ETag, propertiesResponse.Value.ETag);
         }
 
+        [Test]
+        public void Ctor_ConnectionString_CustomUri()
+        {
+            var accountName = "accountName";
+            var shareName = "shareName";
+            var directoryName = "directoryName";
+            var fileName = "fileName";
+            var filePath = $"{directoryName}/{fileName}";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var fileEndpoint = new Uri("http://customdomain/" + accountName);
+            var fileSecondaryEndpoint = new Uri("http://customdomain/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
+
+            ShareFileClient fileClient = new ShareFileClient(connectionString.ToString(true), shareName, filePath);
+
+            Assert.AreEqual(accountName, fileClient.AccountName);
+            Assert.AreEqual(shareName, fileClient.ShareName);
+            Assert.AreEqual(filePath, fileClient.Path);
+        }
+
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var shareName = "shareName";
+            var directoryName = "directoryName";
+            var fileName = "fileName";
+            var filePath = $"{directoryName}/{fileName}";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var shareEndpoint = new Uri($"https://customdomain/{shareName}/{filePath}");
+
+            ShareDirectoryClient ShareDirectoryClient = new ShareDirectoryClient(shareEndpoint, credentials);
+
+            Assert.AreEqual(accountName, ShareDirectoryClient.AccountName);
+            Assert.AreEqual(shareName, ShareDirectoryClient.ShareName);
+            Assert.AreEqual(filePath, ShareDirectoryClient.Path);
+        }
+
         [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {

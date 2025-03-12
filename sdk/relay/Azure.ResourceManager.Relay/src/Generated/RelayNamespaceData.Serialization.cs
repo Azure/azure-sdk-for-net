@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Relay
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRelayNamespaceData(document.RootElement, options);
                     }
                 default:
