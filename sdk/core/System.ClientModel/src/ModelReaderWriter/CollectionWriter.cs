@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections;
+using System.IO;
 
 namespace System.ClientModel.Primitives;
 
@@ -73,4 +74,5 @@ internal abstract class CollectionWriter
     }
 
     internal abstract BinaryData Write(IEnumerable enumerable, ModelReaderWriterOptions options);
+    internal abstract void WriteTo(IEnumerable enumerable, Stream stream, ModelReaderWriterOptions options);
 }
