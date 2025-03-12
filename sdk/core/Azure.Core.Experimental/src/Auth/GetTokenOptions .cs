@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace System.ClientModel.Auth;
 
@@ -33,7 +35,7 @@ public class GetTokenOptions
     /// <summary>
     /// Gets the scopes required to authenticate.
     /// </summary>
-    public string[] Scopes { get; }
+    public ReadOnlyCollection<string> Scopes { get; }
 
     /// <summary>
     /// Gets the properties to be used for token requests.
@@ -47,8 +49,13 @@ public class GetTokenOptions
     /// <param name="properties">The properties to be used for token requests.</param>
     public GetTokenOptions(string[] scopes, IReadOnlyDictionary<string, object> properties)
     {
-        Scopes = scopes;
-        Properties = properties;
+        Scopes = Array.AsReadOnly(scopes);
+        Properties = properties switch
+        {
+            Dictionary<string, object> dict => new ReadOnlyDictionary<string, object>(dict),
+            ReadOnlyDictionary<string, object> readOnlyDict => readOnlyDict,
+            _ => new ReadOnlyDictionary<string, object>(properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value))
+        };
     }
 
     /// <summary>
@@ -56,7 +63,7 @@ public class GetTokenOptions
     /// </summary>
     /// <param name="additionalScopes"></param>
     /// <returns></returns>
-    public GetTokenOptions WithAdditionalScopes(string[] additionalScopes)
+    public GetTokenOptions WithAdditionalScopes(params IEnumerable<string> additionalScopes)
     {
         return new GetTokenOptions([.. Scopes, .. additionalScopes], Properties);
     }
