@@ -128,7 +128,7 @@ public class BlobContainerFeature : AzureProjectFeature
 
         if (_isObservable)
         {
-            var sb = infrastructure.AddServiceBusNamespace();
+            var sb = infrastructure.AddFeature(new ServiceBusNamespaceFeature(infrastructure.ProjectId));
             var sbTopicPrivate = infrastructure.AddFeature(new ServiceBusTopicFeature("cm_servicebus_topic_private", sb));
             var systemTopic = infrastructure.AddFeature(new EventGridSystemTopicFeature(infrastructure.ProjectId, storageAccount!, "Microsoft.Storage.StorageAccounts"));
             infrastructure.AddFeature(new SystemTopicEventSubscriptionFeature("cm-eventgrid-subscription-blob", systemTopic, sbTopicPrivate, sb));

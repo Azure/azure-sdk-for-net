@@ -9,6 +9,7 @@ using System.Linq;
 using Azure.Projects.AppService;
 using Azure.Projects.KeyVault;
 using Azure.Projects.OpenAI;
+using Azure.Projects.ServiceBus;
 using Azure.Projects.Storage;
 using NUnit.Framework;
 
@@ -41,7 +42,7 @@ public class BicepGenerationTests
     }
 
     [Test]
-    public void Blobs()
+    public void OneContainer()
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
         infrastructure.AddFeature(new BlobContainerFeature("testcontainer", isObservable: false));
@@ -78,18 +79,6 @@ public class BicepGenerationTests
     }
 
     [Test]
-    public void AIFoundry()
-    {
-        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
-        infrastructure.AddFeature(new AIFoundry.AIProjectFeature());
-        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\Foundry.bicep", actualBicep);
-
-        string expectedBicep = LoadTestFile("Foundry.bicep");
-        Assert.AreEqual(expectedBicep, actualBicep);
-    }
-
-    [Test]
     public void OpenAI()
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
@@ -100,6 +89,18 @@ public class BicepGenerationTests
         File.WriteAllText("d:\\OpenAI.bicep", actualBicep);
 
         string expectedBicep = LoadTestFile("OpenAI.bicep");
+        Assert.AreEqual(expectedBicep, actualBicep);
+    }
+
+    [Test]
+    public void ServiceBus()
+    {
+        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
+        infrastructure.AddFeature(new ServiceBusNamespaceFeature(infrastructure.ProjectId));
+
+        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        File.WriteAllText("d:\\sb.bicep", actualBicep);
+        string expectedBicep = LoadTestFile("sb.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 
@@ -115,6 +116,18 @@ public class BicepGenerationTests
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         File.WriteAllText("d:\\app.bicep", actualBicep);
         string expectedBicep = LoadTestFile("app.bicep");
+        Assert.AreEqual(expectedBicep, actualBicep);
+    }
+
+    [Test]
+    public void AIFoundry()
+    {
+        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
+        infrastructure.AddFeature(new AIFoundry.AIProjectFeature());
+        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        File.WriteAllText("d:\\Foundry.bicep", actualBicep);
+
+        string expectedBicep = LoadTestFile("Foundry.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 
