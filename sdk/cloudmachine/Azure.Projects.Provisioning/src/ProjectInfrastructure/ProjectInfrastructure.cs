@@ -77,7 +77,6 @@ public partial class ProjectInfrastructure
     public T AddFeature<T>(T feature) where T: AzureProjectFeature
     {
         feature.EmitFeatures(this);
-        Features.Append(feature);
         return feature;
     }
 

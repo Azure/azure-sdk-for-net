@@ -65,6 +65,8 @@ public class OpenAIModelFeature : AzureProjectFeature
         }
 
         Account = openAI!;
+
+        features.Append(this);
     }
 
     /// <summary>

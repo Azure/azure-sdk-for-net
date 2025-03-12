@@ -4,6 +4,8 @@
 using System;
 using System.Linq;
 using Azure.Projects.Core;
+using Azure.Projects.EventGrid;
+using Azure.Projects.ServiceBus;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
@@ -70,6 +72,7 @@ public class BlobServiceFeature : AzureProjectFeature
             features.Append(storageAccount);
         }
         Account = storageAccount;
+        features.Append(this);
     }
 
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
@@ -92,13 +95,15 @@ public class BlobServiceFeature : AzureProjectFeature
 
 public class BlobContainerFeature : AzureProjectFeature
 {
+    private readonly bool _isObservable;
     public string ContainerName { get; }
     public BlobServiceFeature? Service { get; set; }
 
-    public BlobContainerFeature(string containerName)
+    public BlobContainerFeature(string containerName, bool isObservable = true)
         : base($"{typeof(BlobContainerFeature).Name}_{containerName}")
     {
         ContainerName = containerName;
+        _isObservable = isObservable;
     }
 
     protected internal override void EmitFeatures(ProjectInfrastructure infrastructure)
@@ -118,6 +123,17 @@ public class BlobContainerFeature : AzureProjectFeature
         }
 
         Service = blobBervice;
+
+        features.Append(this);
+
+        if (_isObservable)
+        {
+            var sb = infrastructure.AddServiceBusNamespace();
+            var sbTopicPrivate = infrastructure.AddFeature(new ServiceBusTopicFeature("cm_servicebus_topic_private", sb));
+            var systemTopic = infrastructure.AddFeature(new EventGridSystemTopicFeature(infrastructure.ProjectId, storageAccount!, "Microsoft.Storage.StorageAccounts"));
+            infrastructure.AddFeature(new SystemTopicEventSubscriptionFeature("cm-eventgrid-subscription-blob", systemTopic, sbTopicPrivate, sb));
+            infrastructure.AddFeature(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_private", sbTopicPrivate)); // TODO: should private connections not be in the Connections collection?
+        }
     }
 
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)

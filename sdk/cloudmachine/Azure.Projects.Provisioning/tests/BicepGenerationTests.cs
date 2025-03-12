@@ -44,7 +44,7 @@ public class BicepGenerationTests
     public void Blobs()
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
-        infrastructure.AddFeature(new BlobContainerFeature("testcontainer"));
+        infrastructure.AddFeature(new BlobContainerFeature("testcontainer", isObservable: false));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         File.WriteAllText("d:\\blobs.bicep", actualBicep);
@@ -56,8 +56,8 @@ public class BicepGenerationTests
     public void TwoContainers()
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
-        infrastructure.AddFeature(new BlobContainerFeature("container1"));
-        infrastructure.AddFeature(new BlobContainerFeature("container2"));
+        infrastructure.AddFeature(new BlobContainerFeature("container1", isObservable: false));
+        infrastructure.AddFeature(new BlobContainerFeature("container2", isObservable: false));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         File.WriteAllText("d:\\twoContainers.bicep", actualBicep);
@@ -69,7 +69,7 @@ public class BicepGenerationTests
     public void ObservableContainer()
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
-        infrastructure.AddBlobContainer(isObservable: true); // TODO: this should be done through feature
+        infrastructure.AddFeature(new BlobContainerFeature("default", isObservable: true));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         File.WriteAllText("d:\\ofx.bicep", actualBicep);
