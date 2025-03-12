@@ -12,8 +12,6 @@ Install the Event Hubs extension with [NuGet](https://www.nuget.org/packages/Mic
 dotnet add package Microsoft.Azure.WebJobs.Extensions.EventHubs
 ```
 
-This is a single revertable change.
-
 ### Prerequisites
 
 - **Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://azure.microsoft.com/account).

@@ -2,8 +2,6 @@
 
 TODO
 
-This is a single revertable change.
-
 ## Getting started
 
 ### Install the package

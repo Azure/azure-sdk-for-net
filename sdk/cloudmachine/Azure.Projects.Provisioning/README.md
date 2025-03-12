@@ -2,8 +2,6 @@
 
 Azure.Projects.Provisioning simplifies declarative resource provisioning in .NET.
 
-A revertable commit
-
 ## Getting started
 
 ### Install the package

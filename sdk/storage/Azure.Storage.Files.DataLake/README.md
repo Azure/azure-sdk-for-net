@@ -9,8 +9,6 @@ while making it faster to get up and running with batch, streaming, and interact
 
 [Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
 
-A change that will be reverted.
-
 ## Getting started
 
 ### Install the package

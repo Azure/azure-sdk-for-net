@@ -10,8 +10,6 @@ Use the client library for to:
 
   [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://learn.microsoft.com/azure)
 
-This is a single revertable change.
-
 ## Getting started
 
 This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
