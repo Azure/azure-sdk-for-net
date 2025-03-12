@@ -4,6 +4,8 @@
 using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -74,6 +76,31 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                         },
                     },
                 },
+                AnalyticsOutputSettings = new AnalyticsOutputSettings
+                {
+                    AnalyticsWorkspaceId = new ResourceIdentifier(TestEnvironment.LawId),
+                    AssociatedIdentity = new ManagedServiceIdentitySelector
+                    {
+                        IdentityType = ManagedServiceIdentitySelectorType.UserAssignedIdentity,
+                        UserAssignedIdentityResourceId = new ResourceIdentifier("/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/sdk-testing_id-simdev-3153212/providers/Microsoft.ManagedIdentity/userAssignedIdentities/simdev-3153212-cluster-1-identity")
+                    }
+                },
+                CommandOutputSettings = new CommandOutputSettings
+                {
+                    AssociatedIdentity = new ManagedServiceIdentitySelector
+                    {
+                        IdentityType = ManagedServiceIdentitySelectorType.UserAssignedIdentity,
+                        UserAssignedIdentityResourceId = new ResourceIdentifier("/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/sdk-testing_id-simdev-3153212/providers/Microsoft.ManagedIdentity/userAssignedIdentities/simdev-3153212-cluster-1-identity")
+                    },
+                    ContainerUri = new Uri("https://myaccount.blob.core.windows.net/mycontainer?restype=container"),
+                },
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
+                {
+                    UserAssignedIdentities =
+                    {
+                        [new ResourceIdentifier("/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/sdk-testing_id-simdev-3153212/providers/Microsoft.ManagedIdentity/userAssignedIdentities/simdev-3153212-cluster-1-identity")] = new UserAssignedIdentity()
+                    }
+                },
                 Tags =
                 {
                     ["key1"] = "myvalue1",
@@ -133,6 +160,33 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             };
             var strategyResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch2);
             Assert.IsNotNull(strategyResult.Value);
+
+            // Patch Secret Archive Settings
+            NetworkCloudClusterPatch patch3 = new NetworkCloudClusterPatch()
+            {
+                SecretArchiveSettings = new SecretArchiveSettings
+                {
+                    VaultUri = new Uri("https://myaccount.blob.core.windows.net/mycontainer?restype=container"),
+                }
+            };
+            var secretArchiveResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch3);
+            Assert.IsNotNull(secretArchiveResult.Value);
+
+            // Patch VulnerabilityScanningContainerScan
+            try
+            {
+                NetworkCloudClusterPatch patch4 = new NetworkCloudClusterPatch()
+                {
+                    VulnerabilityScanningContainerScan = VulnerabilityScanningSettingsContainerScan.Enabled
+                };
+                var vulnerabilityScanResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch4);
+                Assert.IsNotNull(vulnerabilityScanResult.Value);
+            }
+            catch (Exception ex)
+            {
+                StringAssert.Contains("cluster conditions do not pass validation for cluster", ex.Message);
+                StringAssert.Contains("ClusterDeployedCondition is not True", ex.Message);
+            }
 
             // Cluster Update Version
             try
