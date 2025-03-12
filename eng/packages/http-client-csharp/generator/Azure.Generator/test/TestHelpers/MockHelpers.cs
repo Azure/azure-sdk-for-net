@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Providers;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -34,8 +33,7 @@ namespace Azure.Generator.Tests.TestHelpers
             Func<IReadOnlyList<InputClient>>? clients = null,
             ClientResponseApi? clientResponseApi = null,
             ClientPipelineApi? clientPipelineApi = null,
-            HttpMessageApi? httpMessageApi = null,
-            Func<InputClient, ResourceClientProvider>? createResourceCore = null)
+            HttpMessageApi? httpMessageApi = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
             IReadOnlyList<InputEnumType> inputNsEnums = inputEnums?.Invoke() ?? [];
@@ -74,17 +72,6 @@ namespace Azure.Generator.Tests.TestHelpers
             clientModelInstance!.SetValue(null, mockPluginInstance.Object);
             azureInstance!.SetValue(null, mockPluginInstance.Object);
             mockPluginInstance.SetupGet(p => p.InputLibrary).Returns(mockInputLibrary.Object);
-
-            if (createResourceCore is not null)
-            {
-                Mock<AzureOutputLibrary> mockOutputLibrary = new Mock<AzureOutputLibrary>() { CallBase = true };
-                mockOutputLibrary.Setup(p => p.CreateResourceClientCore(It.IsAny<InputClient>())).Returns(
-                    (InputClient inputClient) =>
-                    {
-                        return createResourceCore(inputClient);
-                    });
-                mockPluginInstance.Setup(p => p.OutputLibrary).Returns(mockOutputLibrary.Object);
-            }
 
             if (mockTypeFactory is not null)
             {

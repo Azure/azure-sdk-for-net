@@ -133,11 +133,11 @@ namespace MgmtTypeSpec.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.PrivateLinkResource"/> instance for mocking. </returns>
-        public static PrivateLinkResource PrivateLinkResource(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default, PrivateLinkResourceProperties properties = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="Models.PrivateLinkResourceData"/> instance for mocking. </returns>
+        public static PrivateLinkResourceData PrivateLinkResourceData(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default, PrivateLinkResourceProperties properties = default, ManagedServiceIdentity identity = default)
         {
 
-            return new PrivateLinkResource(
+            return new PrivateLinkResourceData(
                 id,
                 name,
                 @type,

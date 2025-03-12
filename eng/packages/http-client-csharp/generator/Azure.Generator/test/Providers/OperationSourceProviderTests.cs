@@ -1,31 +1,76 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Generator.Providers;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Generator.Tests.Providers
 {
     internal class OperationSourceProviderTests
     {
         [TestCase]
-        public void Verify_ResourceProviderGeneration()
+        public void Verify_CreateResult()
         {
-            var (client, models) = InputData.ClientWithResource();
-            var plugin = MockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var validateIdMethod = GetOperationSourceProviderMethodByName("CreateResult");
 
-            var operationSourceProvider = plugin.Object.OutputLibrary.TypeProviders.Single(p => p is OperationSourceProvider) as OperationSourceProvider;
-            Assert.NotNull(operationSourceProvider);
-            var codeFile = new TypeProviderWriter(operationSourceProvider!).Write();
-            var result = codeFile.Content;
+            // verify the method signature
+            var signature = validateIdMethod.Signature;
+            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.None));
+            Assert.IsTrue(signature.Parameters.Count == 2);
+            Assert.IsTrue(signature.Parameters[0].Type.FrameworkType.Equals(typeof(Response)));
+            Assert.IsTrue(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)));
+            Assert.AreEqual(signature.ReturnType?.Name, "ResponseTypeResource");
 
+            // verify the method body
+            var bodyStatements = validateIdMethod.BodyStatements?.ToDisplayString();
+            Assert.NotNull(bodyStatements);
             var exptected = Helpers.GetExpectedFromFile();
+            Assert.AreEqual(exptected, bodyStatements);
+        }
 
-            Assert.AreEqual(exptected, result);
+        [TestCase]
+        public void Verify_CreateResultAsync()
+        {
+            var validateIdMethod = GetOperationSourceProviderMethodByName("CreateResultAsync");
+
+            // verify the method signature
+            var signature = validateIdMethod.Signature;
+            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.Async));
+            Assert.IsTrue(signature.Parameters.Count == 2);
+            Assert.IsTrue(signature.Parameters[0].Type.FrameworkType.Equals(typeof(Response)));
+            Assert.IsTrue(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)));
+            Assert.AreEqual(signature.ReturnType?.FrameworkType, typeof(ValueTask<>));
+
+            // verify the method body
+            var bodyStatements = validateIdMethod.BodyStatements?.ToDisplayString();
+            Assert.NotNull(bodyStatements);
+            var exptected = Helpers.GetExpectedFromFile();
+            Assert.AreEqual(exptected, bodyStatements);
+        }
+
+        private static MethodProvider GetOperationSourceProviderMethodByName(string methodName)
+        {
+            OperationSourceProvider resourceProvider = GetOperationSourceProvider();
+            var method = resourceProvider.Methods.FirstOrDefault(m => m.Signature.Name == methodName);
+            Assert.NotNull(method);
+            return method!;
+        }
+
+        private static OperationSourceProvider GetOperationSourceProvider()
+        {
+            var (client, models) = InputResourceData.ClientWithResource();
+            var plugin = MockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var operationSourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is OperationSourceProvider) as OperationSourceProvider;
+            Assert.NotNull(operationSourceProvider);
+            return operationSourceProvider!;
         }
     }
 }

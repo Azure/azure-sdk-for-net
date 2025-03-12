@@ -2,19 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 import { EmitContext } from "@typespec/compiler";
-import {
-  createSdkContext,
-  DecoratorInfo
-} from "@azure-tools/typespec-client-generator-core";
+import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
 
 import {
+  $onEmit as $onMTGEmit,
+  CodeModel,
   CSharpEmitterOptions,
-  createModel,
   InputModelType,
-  Logger,
-  LoggerLevel,
-  resolveOptions,
-  emit
+  setSDKContextOptions,
+  setUpdateCodeModelCallback
 } from "@typespec/http-client-csharp";
 import { azureSDKContextOptions } from "./sdk-context-options.js";
 import { CalculateResourceTypeFromPath } from "./resource-type.js";
@@ -27,37 +23,15 @@ const singleton = "Azure.ResourceManager.@singleton";
 const resourceMetadata = "Azure.ClientGenerator.Core.@resourceSchema";
 
 export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
-  const program = context.program;
   context.options["plugin-name"] ??= "AzureClientPlugin";
   context.options["emitter-extension-path"] = import.meta.url;
+  setSDKContextOptions(azureSDKContextOptions);
+  setUpdateCodeModelCallback(updateCodeModel);
+  await $onMTGEmit(context);
+}
 
-  const options = resolveOptions(context);
-  /* set the log level. */
-  const logger = new Logger(program, options.logLevel ?? LoggerLevel.INFO);
-
-  // Write out the dotnet model to the output path
-  const sdkContext = {
-    ...(await createSdkContext(
-      context,
-      "@typespec/http-client-csharp",
-      azureSDKContextOptions
-    )),
-    logger: logger,
-    __typeCache: {
-      crossLanguageDefinitionIds: new Map(),
-      types: new Map(),
-      models: new Map(),
-      enums: new Map()
-    }
-  };
-  program.reportDiagnostics(sdkContext.diagnostics);
-
-  const root = createModel(sdkContext);
-  if (!root) {
-    return;
-  }
-
-  for (const client of root.Clients) {
+function updateCodeModel(codeModel: CodeModel): CodeModel {
+  for (const client of codeModel.Clients) {
     // TODO: we can implement this decorator in TCGC until we meet the corner case
     // if the client has resourceMetadata decorator, it is a resource client and we don't need to add it again
     if (client.Decorators?.some((d) => d.name == resourceMetadata)) {
@@ -115,6 +89,5 @@ export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
       client.Decorators.push(resourceMetadataDecorator);
     }
   }
-
-  await emit(options, logger, sdkContext, context, root);
+  return codeModel;
 }

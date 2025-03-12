@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Azure.Generator.Tests.Common
 {
-    internal static class InputData
+    internal static class InputResourceData
     {
         public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource()
         {
@@ -21,7 +21,8 @@ namespace Azure.Generator.Tests.Common
                             InputFactory.Property("id", InputPrimitiveType.String),
                             InputFactory.Property("type", InputPrimitiveType.String),
                             InputFactory.Property("name", InputFactory.Primitive.String()),
-                        ]);
+                        ],
+                        decorators: [new InputDecoratorInfo(KnownDecorators.ArmResourceInternal, null)]);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
             var testNameParameter = InputFactory.Parameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
             var operation = InputFactory.Operation(name: "Get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: [new InputDecoratorInfo(KnownDecorators.ArmResourceRead, null)]);
