@@ -8,7 +8,7 @@ namespace System.ClientModel.Auth;
 /// <summary>
 /// An interface implemented by auth flow interfaces supporting scopes.
 /// </summary>
-public class TokenFlowProperties
+public class GetTokenOptions
 {
     /// <summary>
     /// The name of the property used to specify the scopes required to authenticate.
@@ -41,11 +41,11 @@ public class TokenFlowProperties
     public IReadOnlyDictionary<string, object> Properties { get; }
 
     /// <summary>
-    /// Creates a new instance of <see cref="TokenFlowProperties"/> with the specified scopes.
+    /// Creates a new instance of <see cref="GetTokenOptions"/> with the specified scopes.
     /// </summary>
-    /// <param name="scopes">The scopes to be used in a call to <see cref="TokenProvider.GetToken(TokenFlowProperties, Threading.CancellationToken)"/> or <see cref="TokenProvider.GetTokenAsync(TokenFlowProperties, Threading.CancellationToken)"/></param>
+    /// <param name="scopes">The scopes to be used in a call to <see cref="TokenProvider.GetToken(GetTokenOptions, Threading.CancellationToken)"/> or <see cref="TokenProvider.GetTokenAsync(GetTokenOptions, Threading.CancellationToken)"/></param>
     /// <param name="properties">The properties to be used for token requests.</param>
-    public TokenFlowProperties(string[] scopes, IReadOnlyDictionary<string, object> properties)
+    public GetTokenOptions(string[] scopes, IReadOnlyDictionary<string, object> properties)
     {
         Scopes = scopes;
         Properties = properties;
@@ -56,8 +56,8 @@ public class TokenFlowProperties
     /// </summary>
     /// <param name="additionalScopes"></param>
     /// <returns></returns>
-    public TokenFlowProperties WithAdditionalScopes(string[] additionalScopes)
+    public GetTokenOptions WithAdditionalScopes(string[] additionalScopes)
     {
-        return new TokenFlowProperties([.. Scopes, .. additionalScopes], Properties);
+        return new GetTokenOptions([.. Scopes, .. additionalScopes], Properties);
     }
 }

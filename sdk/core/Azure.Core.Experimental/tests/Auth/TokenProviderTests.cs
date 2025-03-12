@@ -31,9 +31,9 @@ public class TokenProviderTests
         // Generated from the TypeSpec spec.
         private readonly Dictionary<string, object>[] flows = [
             new Dictionary<string, object> {
-                { TokenFlowProperties.ScopesPropertyName, new string[] { "baselineScope" } },
-                { TokenFlowProperties.TokenUrlPropertyName , "https://myauthserver.com/token"},
-                { TokenFlowProperties.RefreshUrlPropertyName, "https://myauthserver.com/refresh"}
+                { GetTokenOptions.ScopesPropertyName, new string[] { "baselineScope" } },
+                { GetTokenOptions.TokenUrlPropertyName , "https://myauthserver.com/token"},
+                { GetTokenOptions.RefreshUrlPropertyName, "https://myauthserver.com/refresh"}
             }
         ];
 
@@ -71,7 +71,7 @@ public class TokenProviderTests
         {
             var message = _pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier.Create([200]);
-            message.SetProperty(typeof(TokenFlowProperties), new TokenFlowProperties(["read"], _emptyProperties));
+            message.SetProperty(typeof(GetTokenOptions), new GetTokenOptions(["read"], _emptyProperties));
 
             PipelineRequest request = message.Request;
             request.Method = "GET";
@@ -127,32 +127,32 @@ public class TokenProviderTests
             _client = new HttpClient(mockHandler);
         }
 
-        public override AccessToken GetToken(TokenFlowProperties properties, CancellationToken cancellationToken)
+        public override AccessToken GetToken(GetTokenOptions properties, CancellationToken cancellationToken)
         {
             return GetAccessTokenInternal(false, properties, cancellationToken).GetAwaiter().GetResult();
         }
 
-        public override async ValueTask<AccessToken> GetTokenAsync(TokenFlowProperties properties, CancellationToken cancellationToken)
+        public override async ValueTask<AccessToken> GetTokenAsync(GetTokenOptions properties, CancellationToken cancellationToken)
         {
             return await GetAccessTokenInternal(true, properties, cancellationToken).ConfigureAwait(false);
         }
 
-        public override TokenFlowProperties CreateContext(IReadOnlyDictionary<string, object> properties)
+        public override GetTokenOptions CreateContext(IReadOnlyDictionary<string, object> properties)
         {
-            if (properties.TryGetValue(TokenFlowProperties.ScopesPropertyName, out var scopes) && scopes is string[] scopeArray &&
-                properties.TryGetValue(TokenFlowProperties.TokenUrlPropertyName, out var tokenUri) && tokenUri is string tokenUriValue &&
-                properties.TryGetValue(TokenFlowProperties.RefreshUrlPropertyName, out var refreshUri) && refreshUri is string refreshUriValue)
+            if (properties.TryGetValue(GetTokenOptions.ScopesPropertyName, out var scopes) && scopes is string[] scopeArray &&
+                properties.TryGetValue(GetTokenOptions.TokenUrlPropertyName, out var tokenUri) && tokenUri is string tokenUriValue &&
+                properties.TryGetValue(GetTokenOptions.RefreshUrlPropertyName, out var refreshUri) && refreshUri is string refreshUriValue)
             {
-                return new TokenFlowProperties(scopeArray, new Dictionary<string, object>
+                return new GetTokenOptions(scopeArray, new Dictionary<string, object>
                 {
-                    { TokenFlowProperties.TokenUrlPropertyName, tokenUriValue },
-                    { TokenFlowProperties.RefreshUrlPropertyName, refreshUriValue }
+                    { GetTokenOptions.TokenUrlPropertyName, tokenUriValue },
+                    { GetTokenOptions.RefreshUrlPropertyName, refreshUriValue }
                 });
             }
             return null;
         }
 
-        internal async ValueTask<AccessToken> GetAccessTokenInternal(bool async, TokenFlowProperties properties, CancellationToken cancellationToken)
+        internal async ValueTask<AccessToken> GetAccessTokenInternal(bool async, GetTokenOptions properties, CancellationToken cancellationToken)
         {
             if (!properties.Properties.TryGetValue("tokenUrl", out var tokenUri) || tokenUri is not string tokenUriValue)
             {
@@ -198,24 +198,20 @@ public class TokenProviderTests
         }
     }
 
-    public class ClientCredentialToken : RefreshableToken
+    public class ClientCredentialToken : AccessToken
     {
         private TokenProvider _provider;
-        private TokenFlowProperties properties;
+        private GetTokenOptions properties;
 
-        public ClientCredentialToken(TokenProvider provider, TokenFlowProperties properties, string tokenValue, string tokenType, DateTimeOffset expiresOn, DateTimeOffset? refreshOn = null)
+        public ClientCredentialToken(TokenProvider provider, GetTokenOptions properties, string tokenValue, string tokenType, DateTimeOffset expiresOn, DateTimeOffset? refreshOn = null)
             : base(tokenValue, tokenType, expiresOn, refreshOn)
         {
             _provider = provider;
             this.properties = properties;
         }
-        public override async Task RefreshAsync(CancellationToken cancellationToken)
+        public override async Task<AccessToken> RefreshAsync(CancellationToken cancellationToken)
         {
-            var token = await _provider.GetTokenAsync(properties, cancellationToken);
-            TokenValue = token.TokenValue;
-            TokenType = token.TokenType;
-            ExpiresOn = token.ExpiresOn;
-            RefreshOn = token.RefreshOn;
+            return await _provider.GetTokenAsync(properties, cancellationToken);
         }
     }
 

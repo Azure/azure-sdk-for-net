@@ -13,11 +13,11 @@ namespace System.ClientModel.Auth;
 public abstract class TokenProvider
 {
     /// <summary>
-    /// Creates a new instance of <see cref="TokenFlowProperties"/> using the provided <paramref name="properties"/>.
+    /// Creates a new instance of <see cref="GetTokenOptions"/> using the provided <paramref name="properties"/>.
     /// </summary>
     /// <param name="properties"></param>
     /// <returns></returns>
-    public abstract TokenFlowProperties? CreateContext(IReadOnlyDictionary<string, object> properties);
+    public abstract GetTokenOptions? CreateContext(IReadOnlyDictionary<string, object> properties);
 
     /// <summary>
     /// Gets a token from the auth provider.
@@ -25,7 +25,7 @@ public abstract class TokenProvider
     /// <param name="properties">The options used by the <see cref="TokenProvider"/> to make a token request.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
     /// <returns></returns>
-    public abstract AccessToken GetToken(TokenFlowProperties properties, CancellationToken cancellationToken);
+    public abstract AccessToken GetToken(GetTokenOptions properties, CancellationToken cancellationToken);
 
     /// <summary>
     /// Gets the token.
@@ -33,5 +33,5 @@ public abstract class TokenProvider
     /// <param name="properties">The options used by the <see cref="TokenProvider"/> to make a token request.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
     /// <returns></returns>
-    public abstract ValueTask<AccessToken> GetTokenAsync(TokenFlowProperties properties, CancellationToken cancellationToken);
+    public abstract ValueTask<AccessToken> GetTokenAsync(GetTokenOptions properties, CancellationToken cancellationToken);
 }

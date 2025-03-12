@@ -14,7 +14,7 @@ namespace System.ClientModel.Auth;
 public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
 {
     private readonly TokenProvider _tokenProvider;
-    private readonly TokenFlowProperties _flowContext;
+    private readonly GetTokenOptions _flowContext;
 
     /// <param name="tokenProvider"></param>
     /// <param name="contexts"></param>
@@ -43,7 +43,7 @@ public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
             throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
         }
         AccessToken token;
-        if (message.TryGetProperty(typeof(TokenFlowProperties), out var rawContext) && rawContext is TokenFlowProperties scopesContext)
+        if (message.TryGetProperty(typeof(GetTokenOptions), out var rawContext) && rawContext is GetTokenOptions scopesContext)
         {
             var context = _flowContext.WithAdditionalScopes(scopesContext.Scopes);
             token = async ? await _tokenProvider.GetTokenAsync(context, message.CancellationToken).ConfigureAwait(false) :
@@ -65,7 +65,7 @@ public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
         }
     }
 
-    internal static TokenFlowProperties GetContext(IEnumerable<IReadOnlyDictionary<string, object>> contexts, TokenProvider tokenProvider)
+    internal static GetTokenOptions GetContext(IEnumerable<IReadOnlyDictionary<string, object>> contexts, TokenProvider tokenProvider)
     {
         foreach (var context in contexts)
         {
