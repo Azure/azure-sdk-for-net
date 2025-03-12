@@ -51,7 +51,7 @@
      "decorators": []
     }
    ],
-   "clientNamespace": "",
+   "namespace": "",
    "isFixed": true,
    "isFlags": false,
    "usage": "Output",
@@ -63,7 +63,7 @@
   {
    "$id": "8",
    "Name": "RepeatabilityClient",
-   "ClientNamespace": "SpecialHeaders.Repeatability",
+   "Namespace": "SpecialHeaders.Repeatability",
    "Doc": "Illustrates OASIS repeatability headers",
    "Operations": [
     {
@@ -130,7 +130,6 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [
         {
          "$id": "16",
@@ -146,7 +145,6 @@
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/special-headers/repeatability/immediateSuccess",
      "BufferResponse": true,
@@ -192,7 +190,8 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "SpecialHeaders.Repeatability"
   }
  ]
 }

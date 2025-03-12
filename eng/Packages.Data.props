@@ -171,8 +171,6 @@
     <PackageReference Update="Microsoft.Identity.Client" Version="4.69.1" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.69.1" />
     <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.69.1" />
-
-    <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.35.0" />
     <PackageReference Update="Microsoft.IdentityModel.Tokens" Version="6.35.0" />
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
@@ -205,6 +203,10 @@
     <PackageReference Update="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0"/>
     <PackageReference Update="System.Memory.Data" Version="8.0.1"/>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
+    <PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" Version="1.0.0-alpha.20250307.1" />
   </ItemGroup>
 
   <!--
@@ -245,6 +247,28 @@
     <PackageReference Update="Microsoft.Extensions.Options" Version="2.1.0" />
   </ItemGroup>
 
+  <!-- Packages intended for WCF/CoreWCF Extensions libraries only -->
+  <ItemGroup Condition="'$(IsWcfLibrary)' == 'true'">
+    <PackageReference Update="CoreWCF.Primitives" Version="1.7.0" />
+    <PackageReference Update="CoreWCF.Queue" Version="1.7.0" />
+    <PackageReference Update="System.IO.Pipelines" Version="8.0.0" />
+    <PackageReference Update="Microsoft.AspNetCore" Version="2.3.0" />
+    <PackageReference Update="System.ServiceModel.Primitives" Version="6.2.0" />
+    <PackageReference Update="Azure.Storage.Files.Shares" Version="12.21.0" />
+    <PackageReference Update="Azure.Storage.Queues" Version="12.21.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.1" />
+    <PackageReference Update="Microsoft.Extensions.Http" Version="8.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="8.0.1" />
+    <PackageReference Update="System.Formats.Asn1" Version="8.0.2" />
+    <PackageReference Update="System.Security.Cryptography.Pkcs" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition="('$(IsWcfLibrary)' == 'true') AND ($(TargetFramework.StartsWith('net4')))">
+    <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="2.2.0" />
+    <PackageReference Update="Microsoft.Extensions.Http" Version="2.2.0" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="2.2.0" />
+  </ItemGroup>
+
   <!--
     Build time packages
     All should have PrivateAssets="All" set so they don't become package dependencies
@@ -263,10 +287,6 @@
     <PackageReference Update="SauceControl.InheritDoc" Version="1.2.0" PrivateAssets="All" />
     <PackageReference Update="StyleCop.Analyzers" Version="1.2.0-beta.333" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version ="3.9.0" PrivateAssets="all" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
-    <PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" Version="1.0.0-alpha.20250223.1" />
   </ItemGroup>
 
   <!--
@@ -353,7 +373,7 @@
     <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Update="Microsoft.Extensions.Hosting" Version="8.0.1" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="8.0.0-rc.1.23419.4" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="8.0.1" />
     <PackageReference Update="Microsoft.Extensions.Logging.Console" Version="6.0.0"/>
     <PackageReference Update="Microsoft.Extensions.Primitives" Version="6.0.1"/>
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="3.1.32" />
@@ -403,29 +423,9 @@
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.2" />
     <PackageReference Update="xunit" Version="2.4.2" />
   </ItemGroup>
+
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageDownload Update="NETStandard.Library.Ref" Version="[2.1.0]" />
-  </ItemGroup>
-
-  <!-- IsWcfLibrary is set in "..\sdk\extension-wcf\Directory.Build.props". This property indicates that WCF/CoreWCF extensions project is being built.-->
-  <ItemGroup Condition="'$(IsWcfLibrary)' == 'true'">
-    <PackageReference Update="CoreWCF.Primitives" Version="[1.5.2,2.0)" />
-    <PackageReference Update="CoreWCF.Queue" Version="[1.5.2,2.0)" />
-    <PackageReference Update="System.IO.Pipelines" Version="8.0.0" />
-    <PackageReference Update="Microsoft.AspNetCore" Version="2.1.7" />
-    <PackageReference Update="System.ServiceModel.Primitives" Version="6.2.0" />
-    <PackageReference Update="Azure.Storage.Files.Shares" Version="12.21.0" />
-    <PackageReference Update="Azure.Storage.Queues" Version="12.21.0" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.1" />
-    <PackageReference Update="Microsoft.Extensions.Http" Version="8.0.0" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="8.0.1" />
-    <PackageReference Update="System.Formats.Asn1" Version="6.0.1" />
-    <PackageReference Update="System.Security.Cryptography.Pkcs" Version="6.0.5" />
-  </ItemGroup>
-  <ItemGroup Condition="('$(IsWcfLibrary)' == 'true') AND ($(TargetFramework.StartsWith('net4')))">
-    <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="2.1.1" />
-    <PackageReference Update="Microsoft.Extensions.Http" Version="2.1.1" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="2.1.1" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -450,9 +450,6 @@
 # ServiceLabel: %Data Lake
 # ServiceOwners:                                                   @sumantmehtams
 
-# ServiceLabel: %Data Lake Storage Gen1
-# ServiceOwners:                                                   @sumantmehtams @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
-
 # ServiceLabel: %Data Lake Storage Gen2
 # ServiceOwners:                                                   @sumantmehtams @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
 

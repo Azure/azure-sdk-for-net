@@ -61,6 +61,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     AzureMonitorExporterEventSource.Log.VersionStringUnexpectedLength(type.Name, versionString);
 #elif ASP_NET_CORE_DISTRO
                     AzureMonitorAspNetCoreEventSource.Log.VersionStringUnexpectedLength(type.Name, versionString);
+#elif LIVE_METRICS_PROJECT
+                    LiveMetrics.AzureMonitorLiveMetricsEventSource.Log.VersionStringUnexpectedLength(type.Name, versionString);
 #endif
                     return shortVersion.Substring(0, 20);
                 }
@@ -73,8 +75,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 AzureMonitorExporterEventSource.Log.ErrorInitializingPartOfSdkVersion(type.Name, ex);
 #elif ASP_NET_CORE_DISTRO
                 AzureMonitorAspNetCoreEventSource.Log.ErrorInitializingPartOfSdkVersion(type.Name, ex);
-#else
-                System.Diagnostics.Debug.Write(ex.ToString());
+#elif LIVE_METRICS_PROJECT
+                LiveMetrics.AzureMonitorLiveMetricsEventSource.Log.ErrorInitializingPartOfSdkVersion(type.Name, ex);
 #endif
                 return null;
             }
@@ -91,8 +93,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 string? extensionVersion = GetVersion(typeof(AzureMonitorTraceExporter));
 #elif ASP_NET_CORE_DISTRO
                 string? extensionVersion = GetVersion(typeof(AzureMonitorAspNetCoreEventSource));
-#else
-                string extensionVersion = "Undefined";
+#elif LIVE_METRICS_PROJECT
+                string? extensionVersion = GetVersion(typeof(LiveMetrics.AzureMonitorLiveMetricsEventSource));
 #endif
 
                 if (IsDistro)
@@ -108,8 +110,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 AzureMonitorExporterEventSource.Log.SdkVersionCreateFailed(ex);
 #elif ASP_NET_CORE_DISTRO
                 AzureMonitorAspNetCoreEventSource.Log.SdkVersionCreateFailed(ex);
-#else
-                System.Diagnostics.Debug.Write(ex.ToString());
+#elif LIVE_METRICS_PROJECT
+                LiveMetrics.AzureMonitorLiveMetricsEventSource.Log.SdkVersionCreateFailed(ex);
 #endif
 
                 // Return a default value in case of failure.
