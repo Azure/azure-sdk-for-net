@@ -3,6 +3,8 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             // Update
             var newTags = new NetworkCloudClusterManagerPatch()
             {
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
                 Tags = {
                     ["DisableFabricIntegration"] = "true",
                     ["PatchTag"] = "patchTag",

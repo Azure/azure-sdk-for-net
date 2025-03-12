@@ -4,6 +4,8 @@
 using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -76,9 +78,10 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
                 AnalyticsOutputSettings = new AnalyticsOutputSettings
                 {
-                    AnalyticsWorkspaceId = new ResourceIdentifier("/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/sdk-testing_id-simdev-3153212/providers/Microsoft.OperationalInsights/workspaces/simdev-3153212-law"),
+                    AnalyticsWorkspaceId = new ResourceIdentifier(TestEnvironment.LawId),
                     AssociatedIdentity = new ManagedServiceIdentitySelector
                     {
+                        IdentityType = ManagedServiceIdentitySelectorType.UserAssignedIdentity,
                         UserAssignedIdentityResourceId = new ResourceIdentifier("/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/sdk-testing_id-simdev-3153212/providers/Microsoft.ManagedIdentity/userAssignedIdentities/simdev-3153212-cluster-1-identity")
                     }
                 },
@@ -86,9 +89,17 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 {
                     AssociatedIdentity = new ManagedServiceIdentitySelector
                     {
+                        IdentityType = ManagedServiceIdentitySelectorType.UserAssignedIdentity,
                         UserAssignedIdentityResourceId = new ResourceIdentifier("/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/sdk-testing_id-simdev-3153212/providers/Microsoft.ManagedIdentity/userAssignedIdentities/simdev-3153212-cluster-1-identity")
                     },
                     ContainerUri = new Uri("https://myaccount.blob.core.windows.net/mycontainer?restype=container"),
+                },
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
+                {
+                    UserAssignedIdentities =
+                    {
+                        [new ResourceIdentifier("/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/resourceGroups/sdk-testing_id-simdev-3153212/providers/Microsoft.ManagedIdentity/userAssignedIdentities/simdev-3153212-cluster-1-identity")] = new UserAssignedIdentity()
+                    }
                 },
                 Tags =
                 {
