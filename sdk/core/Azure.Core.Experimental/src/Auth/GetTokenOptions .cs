@@ -35,7 +35,7 @@ public class GetTokenOptions
     /// <summary>
     /// Gets the scopes required to authenticate.
     /// </summary>
-    public ReadOnlyCollection<string> Scopes { get; }
+    public ReadOnlyMemory<string> Scopes { get; }
 
     /// <summary>
     /// Gets the properties to be used for token requests.
@@ -45,11 +45,11 @@ public class GetTokenOptions
     /// <summary>
     /// Creates a new instance of <see cref="GetTokenOptions"/> with the specified scopes.
     /// </summary>
-    /// <param name="scopes">The scopes to be used in a call to <see cref="TokenProvider.GetToken(GetTokenOptions, Threading.CancellationToken)"/> or <see cref="TokenProvider.GetTokenAsync(GetTokenOptions, Threading.CancellationToken)"/></param>
+    /// <param name="scopes">The scopes to be used in a call to <see cref="AuthenticationTokenProvider.GetToken(GetTokenOptions, Threading.CancellationToken)"/> or <see cref="AuthenticationTokenProvider.GetTokenAsync(GetTokenOptions, Threading.CancellationToken)"/></param>
     /// <param name="properties">The properties to be used for token requests.</param>
     public GetTokenOptions(string[] scopes, IReadOnlyDictionary<string, object> properties)
     {
-        Scopes = Array.AsReadOnly(scopes);
+        Scopes = new(scopes);
         Properties = properties switch
         {
             Dictionary<string, object> dict => new ReadOnlyDictionary<string, object>(dict),
@@ -59,12 +59,20 @@ public class GetTokenOptions
     }
 
     /// <summary>
-    /// Clones the current context with additional scopes.
+    /// Creates a new instance of <see cref="GetTokenOptions"/> by combining the current scopes with additional scopes.
     /// </summary>
-    /// <param name="additionalScopes"></param>
-    /// <returns></returns>
-    public GetTokenOptions WithAdditionalScopes(params IEnumerable<string> additionalScopes)
+    /// <param name="additionalScopes">Additional authentication scopes to be combined with existing ones.</param>
+    /// <returns>A new <see cref="GetTokenOptions"/> instance containing both original and additional scopes.</returns>
+    /// <remarks>
+    /// This method creates a new options instance rather than modifying the existing one, maintaining immutability.
+    /// The order of scopes is preserved, with original scopes followed by additional scopes.
+    /// </remarks>
+    public GetTokenOptions WithAdditionalScopes(ReadOnlyMemory<string> additionalScopes)
     {
-        return new GetTokenOptions([.. Scopes, .. additionalScopes], Properties);
+        var originalScopes = Scopes;
+        var combined = new string[originalScopes.Length + additionalScopes.Length];
+        originalScopes.Span.CopyTo(combined.AsSpan(0, originalScopes.Length));
+        additionalScopes.Span.CopyTo(combined.AsSpan(originalScopes.Length));
+        return new GetTokenOptions(combined, Properties);
     }
 }

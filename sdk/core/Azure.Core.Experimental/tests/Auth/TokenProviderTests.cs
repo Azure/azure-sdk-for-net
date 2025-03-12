@@ -21,7 +21,7 @@ public class TokenProviderTests
     public void SampleUsage()
     {
         // usage for TokenProvider2 abstract type
-        TokenProvider provider = new ClientCredentialTokenProvider("myClientId", "myClientSecret");
+        AuthenticationTokenProvider provider = new ClientCredentialTokenProvider("myClientId", "myClientSecret");
         var client = new FooClient(new Uri("http://localhost"), provider);
         client.Get();
     }
@@ -52,7 +52,7 @@ public class TokenProviderTests
             _pipeline = pipeline;
         }
 
-        public FooClient(Uri uri, TokenProvider credential)
+        public FooClient(Uri uri, AuthenticationTokenProvider credential)
         {
             var options = new ClientPipelineOptions();
             options.Transport = new MockPipelineTransport("foo",
@@ -81,7 +81,7 @@ public class TokenProviderTests
         }
     }
 
-    public class ClientCredentialTokenProvider : TokenProvider
+    public class ClientCredentialTokenProvider : AuthenticationTokenProvider
     {
         private string _clientId;
         private string _clientSecret;
@@ -169,7 +169,7 @@ public class TokenProviderTests
             var formContent = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("grant_type", "client_credentials"),
-                new KeyValuePair<string, string>("scope", properties.Scopes[0])
+                new KeyValuePair<string, string>("scope", properties.Scopes.Span[0])
             });
 
             request.Content = formContent;
@@ -200,10 +200,10 @@ public class TokenProviderTests
 
     public class ClientCredentialToken : AccessToken
     {
-        private TokenProvider _provider;
+        private AuthenticationTokenProvider _provider;
         private GetTokenOptions properties;
 
-        public ClientCredentialToken(TokenProvider provider, GetTokenOptions properties, string tokenValue, string tokenType, DateTimeOffset expiresOn, DateTimeOffset? refreshOn = null)
+        public ClientCredentialToken(AuthenticationTokenProvider provider, GetTokenOptions properties, string tokenValue, string tokenType, DateTimeOffset expiresOn, DateTimeOffset? refreshOn = null)
             : base(tokenValue, tokenType, expiresOn, refreshOn)
         {
             _provider = provider;

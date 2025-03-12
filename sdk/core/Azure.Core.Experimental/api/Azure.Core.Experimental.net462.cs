@@ -122,9 +122,9 @@ namespace Azure.Core
 }
 namespace System.ClientModel
 {
-    public abstract partial class TokenProvider
+    public abstract partial class AuthenticationTokenProvider
     {
-        protected TokenProvider() { }
+        protected AuthenticationTokenProvider() { }
         public abstract System.ClientModel.Auth.GetTokenOptions? CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
         public abstract System.ClientModel.Auth.AccessToken GetToken(System.ClientModel.Auth.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Auth.AccessToken> GetTokenAsync(System.ClientModel.Auth.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken);
@@ -150,12 +150,12 @@ namespace System.ClientModel.Auth
         public const string TokenUrlPropertyName = "tokenUrl";
         public GetTokenOptions(string[] scopes, System.Collections.Generic.IReadOnlyDictionary<string, object> properties) { }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> Properties { get { throw null; } }
-        public System.Collections.ObjectModel.ReadOnlyCollection<string> Scopes { get { throw null; } }
-        public System.ClientModel.Auth.GetTokenOptions WithAdditionalScopes(System.Collections.Generic.IEnumerable<string> additionalScopes) { throw null; }
+        public System.ReadOnlyMemory<string> Scopes { get { throw null; } }
+        public System.ClientModel.Auth.GetTokenOptions WithAdditionalScopes(System.ReadOnlyMemory<string> additionalScopes) { throw null; }
     }
     public partial class OAuth2BearerTokenAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
-        public OAuth2BearerTokenAuthenticationPolicy(System.ClientModel.TokenProvider tokenProvider, System.Collections.Generic.IEnumerable<System.Collections.Generic.IReadOnlyDictionary<string, object>> contexts) { }
+        public OAuth2BearerTokenAuthenticationPolicy(System.ClientModel.AuthenticationTokenProvider tokenProvider, System.Collections.Generic.IEnumerable<System.Collections.Generic.IReadOnlyDictionary<string, object>> contexts) { }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }

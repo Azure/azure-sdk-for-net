@@ -9,16 +9,16 @@ using Azure.Core.Pipeline;
 namespace System.ClientModel.Auth;
 
 /// <summary>
-/// A <see cref="PipelinePolicy"/> that uses an <see cref="TokenProvider"/> to authenticate requests.
+/// A <see cref="PipelinePolicy"/> that uses an <see cref="AuthenticationTokenProvider"/> to authenticate requests.
 /// </summary>
 public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
 {
-    private readonly TokenProvider _tokenProvider;
+    private readonly AuthenticationTokenProvider _tokenProvider;
     private readonly GetTokenOptions _flowContext;
 
     /// <param name="tokenProvider"></param>
     /// <param name="contexts"></param>
-    public OAuth2BearerTokenAuthenticationPolicy(TokenProvider tokenProvider, IEnumerable<IReadOnlyDictionary<string, object>> contexts)
+    public OAuth2BearerTokenAuthenticationPolicy(AuthenticationTokenProvider tokenProvider, IEnumerable<IReadOnlyDictionary<string, object>> contexts)
     {
         _tokenProvider = tokenProvider;
         _flowContext = GetContext(contexts, tokenProvider);
@@ -65,7 +65,7 @@ public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
         }
     }
 
-    internal static GetTokenOptions GetContext(IEnumerable<IReadOnlyDictionary<string, object>> contexts, TokenProvider tokenProvider)
+    internal static GetTokenOptions GetContext(IEnumerable<IReadOnlyDictionary<string, object>> contexts, AuthenticationTokenProvider tokenProvider)
     {
         foreach (var context in contexts)
         {

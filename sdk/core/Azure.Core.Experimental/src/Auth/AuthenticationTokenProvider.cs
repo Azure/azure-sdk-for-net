@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace System.ClientModel;
 
 /// <summary>
-/// The base class for all <see cref="TokenProvider"/> implementations.
+/// The base class for all <see cref="AuthenticationTokenProvider"/> implementations.
 /// </summary>
-public abstract class TokenProvider
+public abstract class AuthenticationTokenProvider
 {
     /// <summary>
     /// Creates a new instance of <see cref="GetTokenOptions"/> using the provided <paramref name="properties"/>.
@@ -23,7 +23,7 @@ public abstract class TokenProvider
     /// <summary>
     /// Gets a token from the auth provider.
     /// </summary>
-    /// <param name="properties">The options used by the <see cref="TokenProvider"/> to make a token request.</param>
+    /// <param name="properties">The options used by the <see cref="AuthenticationTokenProvider"/> to make a token request.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
     /// <returns></returns>
     public abstract AccessToken GetToken(GetTokenOptions properties, CancellationToken cancellationToken);
@@ -31,7 +31,7 @@ public abstract class TokenProvider
     /// <summary>
     /// Gets the token.
     /// </summary>
-    /// <param name="properties">The options used by the <see cref="TokenProvider"/> to make a token request.</param>
+    /// <param name="properties">The options used by the <see cref="AuthenticationTokenProvider"/> to make a token request.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
     /// <returns></returns>
     public abstract ValueTask<AccessToken> GetTokenAsync(GetTokenOptions properties, CancellationToken cancellationToken);
