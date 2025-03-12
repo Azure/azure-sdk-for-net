@@ -129,7 +129,7 @@ public class BlobContainerFeature : AzureProjectFeature
         if (_isObservable)
         {
             var sb = infrastructure.AddFeature(new ServiceBusNamespaceFeature(infrastructure.ProjectId));
-            var sbTopicPrivate = infrastructure.AddFeature(new ServiceBusTopicFeature("cm_servicebus_topic_private", sb));
+            var sbTopicPrivate = infrastructure.AddFeature(new ServiceBusTopicFeature(infrastructure.ProjectId, "cm_servicebus_topic_private"));
             var systemTopic = infrastructure.AddFeature(new EventGridSystemTopicFeature(infrastructure.ProjectId, storageAccount!, "Microsoft.Storage.StorageAccounts"));
             infrastructure.AddFeature(new SystemTopicEventSubscriptionFeature("cm-eventgrid-subscription-blob", systemTopic, sbTopicPrivate, sb));
             infrastructure.AddFeature(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_private", sbTopicPrivate)); // TODO: should private connections not be in the Connections collection?

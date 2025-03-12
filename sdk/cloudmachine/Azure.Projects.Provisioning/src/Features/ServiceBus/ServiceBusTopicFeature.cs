@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using Azure.Projects.Core;
 using Azure.Provisioning.ServiceBus;
 
@@ -14,17 +15,31 @@ internal class ServiceBusTopicFeature : AzureProjectFeature
     /// </summary>
     public string Name { get; }
 
-    private ServiceBusNamespaceFeature _parent;
+    private string _namespaceName;
 
-    public ServiceBusTopicFeature(string name, ServiceBusNamespaceFeature parent)
+    private ServiceBusNamespaceFeature? _namespace;
+
+    public ServiceBusTopicFeature(string namespaceName, string topicName)
     {
-        Name = name;
-        _parent = parent;
+        Name = topicName;
+        _namespaceName = namespaceName;
     }
 
+    protected internal override void EmitFeatures(ProjectInfrastructure infrastructure)
+    {
+        FeatureCollection features = infrastructure.Features;
+
+        if (!features.TryGet(out _namespace))
+        {
+            _namespace = new ServiceBusNamespaceFeature(_namespaceName);
+            features.Append(_namespace);
+        }
+
+        features.Append(this);
+    }
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
-        ServiceBusNamespace serviceBusNamespace = infrastructure.GetConstruct<ServiceBusNamespace>(_parent.Id);
+        ServiceBusNamespace serviceBusNamespace = infrastructure.GetConstruct<ServiceBusNamespace>(_namespace!.Id);
         var topic = new ServiceBusTopic(Name, "2021-11-01")
         {
             Name = Name,

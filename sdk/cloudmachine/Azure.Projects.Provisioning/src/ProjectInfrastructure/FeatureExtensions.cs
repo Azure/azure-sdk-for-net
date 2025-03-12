@@ -7,14 +7,10 @@ namespace Azure.Projects;
 
 public static class FeatureExtensions
 {
-    public static ServiceBusNamespaceFeature AddServiceBus(this ProjectInfrastructure infrastructure)
+    public static void AddServiceBus(this ProjectInfrastructure infrastructure)
     {
-        ServiceBusNamespaceFeature sb = new(infrastructure.ProjectId);
-        infrastructure.AddFeature(sb);
-
-        // Add core features
-        var sbTopicDefault = infrastructure.AddFeature(new ServiceBusTopicFeature("cm_servicebus_default_topic", sb));
-        infrastructure.AddFeature(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_default", sbTopicDefault));
-        return sb;
+        ServiceBusTopicFeature topic = new(infrastructure.ProjectId, "cm_servicebus_default_topic");
+        infrastructure.AddFeature(topic);
+        infrastructure.AddFeature(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_default", topic));
     }
 }
