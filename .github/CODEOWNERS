@@ -800,6 +800,9 @@
 # ServiceLabel: %Recovery Services Site-Recovery
 # ServiceOwners:                                                   @Sharmistha-Rai
 
+# ServiceLabel: %Recovery Services Data-Replication
+# ServiceOwners:                                                   @helen-afework
+
 # ServiceLabel: %Redis Cache
 # ServiceOwners:                                                   @yegu-ms
 
