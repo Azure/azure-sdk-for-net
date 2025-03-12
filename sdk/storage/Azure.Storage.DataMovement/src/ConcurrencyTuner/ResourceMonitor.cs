@@ -32,11 +32,12 @@ namespace Azure.Storage.DataMovement
     {
         #region private fields and properties
         private Task _monitoringWorker;
-        private CancellationTokenSource _cancellationTokenSource;
+        //private CancellationTokenSource _cancellationTokenSource;
         private TimeSpan _monitoringInterval;
         private double _previousProcessorTime = 0;
         private double _currentProcessorTime = 0;
         private int _coreCount = Environment.ProcessorCount;
+        private CancellationToken _cancellationToken;
         private Process CurrentProcess
         {
             get
@@ -72,13 +73,13 @@ namespace Azure.Storage.DataMovement
         internal bool IsRunning { get; private set; }
         #endregion
         ///
-        public ResourceMonitor(TimeSpan? monitoringInterval = default)
+        public ResourceMonitor(TimeSpan monitoringInterval = default)
         {
             if (monitoringInterval < TimeSpan.FromMilliseconds(0))
             {
                 throw new ArgumentOutOfRangeException(nameof(monitoringInterval), "Value cannot be less than 0.");
             }
-            _monitoringInterval = monitoringInterval ?? TimeSpan.FromMilliseconds(1000);
+            _monitoringInterval = monitoringInterval == TimeSpan.FromSeconds(0) ? TimeSpan.FromMilliseconds(1000) : monitoringInterval;
         }
 
         /// <summary>
@@ -169,26 +170,28 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        public void StartMonitoring()
+        internal async Task StartMonitoring(CancellationToken cancellationToken)
         {
             if (IsRunning)
                 return;
 
             IsRunning = true;
-            // One cancellation token so that each thread is cancelled
-            _cancellationTokenSource = new CancellationTokenSource();
-
-            Task.Run(() => MonitorResourceUsage(_cancellationTokenSource.Token));
+            // _cancellationToken is set for the MonitorResourceUsage loop
+            // cancellationToken is used to cancel the callback
+            _cancellationToken = cancellationToken;
+            await Task.Run(() => MonitorResourceUsage(), cancellationToken).ConfigureAwait(false);
         }
 
-        public void StopMonitoring()
-        {
-            if (!IsRunning)
-                return;
+        // Removing the stopMonitoring method. This will be handled by the TransferManager
+        // when the Transfer Manager calls `.Cancel()` on the cancellationTokenSource
+        //internal void StopMonitoring()
+        //{
+        //    if (!IsRunning)
+        //        return;
 
-            IsRunning = false;
-            _cancellationTokenSource?.Cancel();
-        }
+        //    IsRunning = false;
+        //    _cancellationTokenSource.Cancel();
+        //}
 
         private static async Task MonitoringWorker(
             TimeSpan waitTime,
@@ -213,16 +216,16 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        private async Task MonitorResourceUsage(CancellationToken cancellationToken)
+        private async Task MonitorResourceUsage()
         {
-            while (!cancellationToken.IsCancellationRequested)
+            while (!_cancellationToken.IsCancellationRequested)
             {
                 // Calling Refresh forces the Process object to update its cached information with current values from the OS.
                 CurrentProcess.Refresh();
 
                 CalculateCpuUsage();
                 CalculateMemoryUsage();
-                await Task.Delay(_monitoringInterval, cancellationToken).ConfigureAwait(false);
+                await Task.Delay(_monitoringInterval, _cancellationToken).ConfigureAwait(false);
             }
         }
 
