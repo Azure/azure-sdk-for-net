@@ -87,9 +87,9 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\OpenAI.bicep", actualBicep);
+        File.WriteAllText("d:\\openai.bicep", actualBicep);
 
-        string expectedBicep = LoadTestFile("OpenAI.bicep");
+        string expectedBicep = LoadTestFile("openai.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 
@@ -138,9 +138,9 @@ public class BicepGenerationTests
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
         infrastructure.AddFeature(new AIFoundry.AIProjectFeature());
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\Foundry.bicep", actualBicep);
+        File.WriteAllText("d:\\foundry.bicep", actualBicep);
 
-        string expectedBicep = LoadTestFile("Foundry.bicep");
+        string expectedBicep = LoadTestFile("foundry.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 

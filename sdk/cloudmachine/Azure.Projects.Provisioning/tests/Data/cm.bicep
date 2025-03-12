@@ -102,8 +102,8 @@ resource storageBlobService 'Microsoft.Storage/storageAccounts/blobServices@2024
   parent: storageAccount
 }
 
-resource storageBlobContainer_ofx 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = {
-  name: 'ofx'
+resource storageBlobContainer_cm 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = {
+  name: 'cm'
   parent: storageBlobService
 }
 
@@ -238,9 +238,9 @@ resource cm_servicebus_subscription_private 'Microsoft.ServiceBus/namespaces/top
 }
 
 resource app_config_setting2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
-  name: 'Azure.Storage.Blobs.BlobContainerClient@ofx'
+  name: 'Azure.Storage.Blobs.BlobContainerClient@cm'
   properties: {
-    value: 'https://cm0c420d2f21084cd.blob.core.windows.net/ofx'
+    value: 'https://cm0c420d2f21084cd.blob.core.windows.net/cm'
   }
   parent: appConfiguration
 }
