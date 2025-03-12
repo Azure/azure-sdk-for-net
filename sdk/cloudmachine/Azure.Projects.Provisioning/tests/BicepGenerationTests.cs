@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using Azure.Projects.AppService;
 using Azure.Projects.KeyVault;
+using Azure.Projects.Ofx;
 using Azure.Projects.OpenAI;
 using Azure.Projects.ServiceBus;
 using Azure.Projects.Storage;
@@ -61,8 +62,8 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new BlobContainerFeature("container2", isObservable: false));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\twoContainers.bicep", actualBicep);
-        string expectedBicep = LoadTestFile("twoContainers.bicep");
+        File.WriteAllText("d:\\blobs2Containers.bicep", actualBicep);
+        string expectedBicep = LoadTestFile("blobs2Containers.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 
@@ -73,8 +74,8 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new BlobContainerFeature("default", isObservable: true));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\ofx.bicep", actualBicep);
-        string expectedBicep = LoadTestFile("ofx.bicep");
+        File.WriteAllText("d:\\blobsObservable.bicep", actualBicep);
+        string expectedBicep = LoadTestFile("blobsObservable.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 
@@ -101,6 +102,18 @@ public class BicepGenerationTests
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         File.WriteAllText("d:\\sb.bicep", actualBicep);
         string expectedBicep = LoadTestFile("sb.bicep");
+        Assert.AreEqual(expectedBicep, actualBicep);
+    }
+
+    [Test]
+    public void CloudMachine()
+    {
+        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
+        infrastructure.AddFeature(new CloudMachineFeature());
+
+        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        File.WriteAllText("d:\\cm.bicep", actualBicep);
+        string expectedBicep = LoadTestFile("cm.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 

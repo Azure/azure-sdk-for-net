@@ -22,9 +22,9 @@ namespace Azure.Projects;
 /// </summary>
 public readonly struct StorageServices
 {
-    private readonly ProjectClient _cm;
+    private readonly ProjectClient _project;
 
-    internal StorageServices(ProjectClient cm) => _cm = cm;
+    internal StorageServices(ProjectClient project) => _project = project;
 
     // TODO: do we want Azure.Storage.Blobs in the public API? This would prevent us from using a custom implementation.
     /// <summary>
@@ -37,10 +37,11 @@ public readonly struct StorageServices
     {
         if (containerName == default) containerName = "default";
         string blobContainerClientId = $"{typeof(BlobContainerClient).FullName}@{containerName}";
-        ProjectClient cm = _cm;
-        BlobContainerClient container = cm.Subclients.GetClient(() =>
+
+        ProjectClient project = _project;
+        BlobContainerClient container = project.Subclients.GetClient(() =>
         {
-            ClientConnection connection = cm.GetConnection(blobContainerClientId);
+            ClientConnection connection = project.GetConnection(blobContainerClientId);
 
             if (!connection.TryGetLocatorAsUri(out Uri uri))
             {
@@ -244,9 +245,10 @@ public readonly struct StorageServices
     /// <param name="function"></param>
     public void WhenUploaded(Action<StorageFile> function)
     {
-        ProjectClient cm = _cm;
         // TODO (Pri 0): once the cache gets GCed, we will stop receiving events
-        ServiceBusProcessor processor = cm.Messaging.GetServiceBusProcessor("cm_servicebus_subscription_private");
+        ServiceBusProcessor processor = _project.GetServiceBusProcessor(_project.ProjectId, "cm_servicebus_subscription_private");
+        StorageServices storage = this;
+
         // TODO: How to unsubscribe?
         processor.ProcessMessageAsync += async (args) =>
         {
@@ -260,7 +262,7 @@ public readonly struct StorageServices
                         var requestId = bc.ClientRequestId;
                         // _logger.Log.EventReceived(nameof(OnProcessMessage), $"StorageBlobCreatedEventData: blobUri='{blobUri}' requestId='{requestId}'");
 
-                        var eventArgs = new StorageFile(cm.Storage, blobUri, requestId, default);
+                        var eventArgs = new StorageFile(storage, blobUri, requestId, default);
                         function(eventArgs);
                         await args.CompleteMessageAsync(args.Message).ConfigureAwait(false);
                         break;

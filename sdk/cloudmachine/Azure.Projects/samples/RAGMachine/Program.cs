@@ -22,7 +22,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
 
 // Add ProjectClient to the DI container
-builder.Services.AddSingleton(client);
+CloudMachineClient ofx = builder.AddCloudMachineClient();
 
 var app = builder.Build();
 app.MapRazorPages();
@@ -32,9 +32,9 @@ EmbeddingsStore vectorDb = new(client.GetOpenAIEmbeddingClient());
 List<ChatMessage> prompt = [];
 
 // Register the vector db to be updated when a new file is uploaded
-client.Storage.WhenUploaded(vectorDb.Add);
+ofx.Storage.WhenUploaded(vectorDb.Add);
 
-app.MapPost("/upload", async (HttpRequest request)
+app.MapPost("/upload", async (HttpRequest request, CloudMachineClient client)
     => await client.Storage.UploadFormAsync(request));
 
 app.MapPost("/chat", async (HttpRequest request) =>

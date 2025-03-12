@@ -33,20 +33,7 @@ public partial class ProjectClient : ConnectionProvider
         ProjectId = ReadOrCreateProjectId();
 
         _config = new(new Uri($"https://{ProjectId}.azconfig.io"), _credential);
-
-        Messaging = new MessagingServices(this);
-        Storage = new StorageServices(this);
     }
-
-    /// <summary>
-    /// Gets the messaging services.
-    /// </summary>
-    public MessagingServices Messaging { get; }
-
-    /// <summary>
-    /// Gets the storage services.
-    /// </summary>
-    public StorageServices Storage { get; }
 
     private static TokenCredential BuildCredential(TokenCredential credential)
     {
