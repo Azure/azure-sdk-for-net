@@ -2,19 +2,19 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Microsoft.Generator.CSharp.ClientModel.Snippets;
-using Microsoft.Generator.CSharp.Expressions;
-using Microsoft.Generator.CSharp.Input;
-using Microsoft.Generator.CSharp.Primitives;
-using Microsoft.Generator.CSharp.Snippets;
-using Microsoft.Generator.CSharp.Statements;
+using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Text.Json;
-using static Microsoft.Generator.CSharp.Snippets.Snippet;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Primitives
 {

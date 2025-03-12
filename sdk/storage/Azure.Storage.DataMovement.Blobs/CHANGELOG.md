@@ -1,8 +1,24 @@
 # Release History
 
-## 12.0.0-beta.7 (Unreleased)
+## 12.2.0-beta.1 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.1.0 (2025-02-27)
+
+### Features Added
+- Added support for anonymous access by adding a default constructor for `BlobsStorageResourceProvider`.
+
+### Bugs Fixed
+- Fixed an issue that would prevent transfers of large files (>200 GiB) for certain destination resource types.
+
+## 12.0.0 (2025-02-11)
 
 ### Breaking Changes
 - Changed `BlobStorageResourceContainerOptions.BlobType` type from `DataTransferProperty<BlobType>` to `BlobType`
@@ -23,10 +39,6 @@
   - Changed constructor overloads for `GetStorageSharedKeyCredential` and `GetAzureSasCredential` to use `Func`. These callbacks are also now async, returning a `ValueTask`, and the `readOnly` parameter was removed.
   - Changed `FromBlob` and `FromContainer` to async, returning a `ValueTask`, and renamed to `FromBlobAsync` and `FromContainerAsync` respectively.
   - Changed `FromClient` methods to `static` methods.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 12.0.0-beta.6 (2024-10-14)
 

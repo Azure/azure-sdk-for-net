@@ -521,7 +521,7 @@ internal partial class AzureAssistantClient : AssistantClient
     private new PipelineMessage CreateCreateAssistantRequest(BinaryContent content, RequestOptions options = null)
         => NewJsonPostBuilder(content, options).WithPath("assistants").Build();
 
-    private new PipelineMessage CreateGetAssistantsRequest(int? limit, string order, string after, string before, RequestOptions options)
+    private PipelineMessage CreateGetAssistantsRequest(int? limit, string order, string after, string before, RequestOptions options)
         => NewGetListBuilder(limit, order, after, before, options).WithPath("assistants").Build();
 
     private new PipelineMessage CreateGetAssistantRequest(string assistantId, RequestOptions options)

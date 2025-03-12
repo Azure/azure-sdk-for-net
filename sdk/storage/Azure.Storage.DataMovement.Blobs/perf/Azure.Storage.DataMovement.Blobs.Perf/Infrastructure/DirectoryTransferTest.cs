@@ -83,7 +83,7 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
         {
             TransferOptions options = new()
             {
-                CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
+                CreationMode = StorageResourceCreationMode.OverwriteIfExists,
                 InitialTransferSize = Options.InitialTransferSize,
                 MaximumTransferChunkSize = Options.ChunkSize,
             };

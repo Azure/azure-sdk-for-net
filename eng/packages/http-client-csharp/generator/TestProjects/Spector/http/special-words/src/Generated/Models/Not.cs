@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SpecialWords.Models
+namespace SpecialWords._Models
 {
     public partial class Not
     {

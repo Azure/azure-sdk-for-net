@@ -35,16 +35,10 @@ namespace Azure.AI.Projects
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(FileSearch))
+            if (Optional.IsDefined(FileSearch))
             {
                 writer.WritePropertyName("file_search"u8);
-                writer.WriteStartObject();
-                foreach (var item in FileSearch)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue(FileSearch, options);
             }
         }
 
@@ -68,7 +62,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            IReadOnlyDictionary<string, string> fileSearch = default;
+            RunStepFileSearchToolCallResults fileSearch = default;
             int index = default;
             string id = default;
             string type = default;
@@ -82,12 +76,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    fileSearch = dictionary;
+                    fileSearch = RunStepFileSearchToolCallResults.DeserializeRunStepFileSearchToolCallResults(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("index"u8))
@@ -111,7 +100,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RunStepDeltaFileSearchToolCall(index, id, type, serializedAdditionalRawData, fileSearch ?? new ChangeTrackingDictionary<string, string>());
+            return new RunStepDeltaFileSearchToolCall(index, id, type, serializedAdditionalRawData, fileSearch);
         }
 
         BinaryData IPersistableModel<RunStepDeltaFileSearchToolCall>.Write(ModelReaderWriterOptions options)
@@ -135,7 +124,7 @@ namespace Azure.AI.Projects
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRunStepDeltaFileSearchToolCall(document.RootElement, options);
                     }
                 default:
@@ -149,7 +138,7 @@ namespace Azure.AI.Projects
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new RunStepDeltaFileSearchToolCall FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeRunStepDeltaFileSearchToolCall(document.RootElement);
         }
 

@@ -105,7 +105,9 @@ namespace Azure.Storage
         public const string TrueName = "true";
 
         public const string ErrorCode = "Code";
+        public const string ErrorCodeLower = "code";
         public const string ErrorMessage = "Message";
+        public const string ErrorMessageLower = "message";
 
         public const string CommaString = ",";
         public const char CommaChar = ',';

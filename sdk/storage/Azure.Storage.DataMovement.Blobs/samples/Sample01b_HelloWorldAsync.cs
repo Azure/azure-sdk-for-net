@@ -194,8 +194,11 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Get a reference to a destination blobs
                 Uri destinationBlobUri = container.GetBlockBlobClient("sample-blob").Uri;
 
+                // Should be the same token credential as above, but for demonstration/sample purposes
+                // we include how we would get the token credential.
                 #region Snippet:SimpleBlobUpload_BasePackage
-                BlobsStorageResourceProvider blobs = new(tokenCredential);
+                TokenCredential defaultTokenCredential = new DefaultAzureCredential();
+                BlobsStorageResourceProvider blobs = new BlobsStorageResourceProvider(defaultTokenCredential);
 
                 // Create simple transfer single blob upload job
                 #region Snippet:SimpleBlobUpload
@@ -361,7 +364,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 TransferOptions options = new TransferOptions()
                 {
                     MaximumTransferChunkSize = 4 * Constants.MB,
-                    CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
+                    CreationMode = StorageResourceCreationMode.OverwriteIfExists,
                 };
                 TransferManager transferManager = new TransferManager(transferManagerOptions);
 
@@ -864,10 +867,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create a token credential that can use our Azure Active
                 // Directory application to authenticate with Azure Storage
-                TokenCredential tokenCredential = new DefaultAzureCredential();
 
                 // Create transfer manager
                 #region Snippet:SetupTransferManagerForResume
+                TokenCredential tokenCredential = new DefaultAzureCredential();
                 BlobsStorageResourceProvider blobs = new(tokenCredential);
                 TransferManager transferManager = new(new TransferManagerOptions()
                 {
@@ -890,8 +893,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferManager.PauseTransferAsync(transferId);
                 #endregion
 
+                #region Snippet:ResumeAllTransfers
                 // Resume all transfers
                 List<TransferOperation> transfers = await transferManager.ResumeAllTransfersAsync();
+                #endregion
 
                 // Resume a single transfer
                 #region Snippet:DataMovement_ResumeSingle
@@ -951,7 +956,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #endregion
 
                 TransferOperation resumedTransfer = await transferManager.ResumeTransferAsync(
-                    transferId: transferOperation.Id);
+                transferId: transferOperation.Id);
 
                 // Wait for download to finish
                 await resumedTransfer.WaitForCompletionAsync();
@@ -1015,7 +1020,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         },
                         TransferOptions = new TransferOptions()
                         {
-                            CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
+                            CreationMode = StorageResourceCreationMode.OverwriteIfExists,
                         }
                     };
 
@@ -1085,7 +1090,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         },
                         TransferOptions = new TransferOptions()
                         {
-                            CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
+                            CreationMode = StorageResourceCreationMode.OverwriteIfExists,
                         }
                     };
 
@@ -1191,6 +1196,55 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await container.DeleteIfExistsAsync();
             }
         }
+
+        public void CreateTransferOptionCreationMode()
+        {
+            #region Snippet:TransferOptionsOverwrite
+            TransferOptions optionsOverwriteIfExists = new TransferOptions()
+            {
+                CreationMode = StorageResourceCreationMode.OverwriteIfExists,
+            };
+            #endregion
+            #region Snippet:TransferOptionsSkipIfExists
+            TransferOptions optionsSkipIfExists = new TransferOptions()
+            {
+                CreationMode = StorageResourceCreationMode.SkipIfExists,
+            };
+            #endregion
+        }
+
+        public async Task ResumeTransfersStoredAsync()
+        {
+            #region Snippet:TransferManagerResumeTransfers
+            TokenCredential tokenCredential = new DefaultAzureCredential();
+            BlobsStorageResourceProvider blobs = new(tokenCredential);
+            TransferManager transferManager = new TransferManager(new TransferManagerOptions()
+            {
+                ProvidersForResuming = new List<StorageResourceProvider>() { blobs }
+            });
+            // Get resumable transfers from transfer manager
+            await foreach (TransferProperties properties in transferManager.GetResumableTransfersAsync())
+            {
+                // Resume the transfer
+                if (properties.SourceUri.AbsoluteUri == "https://storageaccount.blob.core.windows.net/containername/blobpath")
+                {
+                    await transferManager.ResumeTransferAsync(properties.TransferId);
+                }
+            }
+            #endregion
+        }
+
+        #region Snippet:EnumerateTransfersStatus
+        public async Task CheckTransfersStatusAsync(TransferManager transferManager)
+        {
+            string logFile = CreateTempPath();
+            await foreach (TransferOperation transfer in transferManager.GetTransfersAsync())
+            {
+                using StreamWriter logStream = File.AppendText(logFile);
+                logStream.WriteLine(Enum.GetName(typeof(TransferStatus), transfer.Status));
+            }
+        }
+        #endregion
 
         public async Task<string> CreateBlobContainerTestDirectory(BlobContainerClient client, int depth = 0, string basePath = default)
         {

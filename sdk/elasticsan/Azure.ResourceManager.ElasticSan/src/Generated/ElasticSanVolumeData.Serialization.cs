@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeElasticSanVolumeData(document.RootElement, options);
                     }
                 default:

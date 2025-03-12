@@ -1,11 +1,5 @@
 # Azure Storage Data Movement Blobs client library for .NET
 
-## Project Status: Beta
-
-This product is in beta. Some features will be missing or have significant bugs. Please see [Known Issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md) for detailed information.
-
----
-
 Azure Storage is a Microsoft-managed service providing cloud storage that is
 highly available, secure, durable, scalable, and redundant.
 
@@ -21,12 +15,10 @@ Azure Storage client libraries.
 
 ### Install the package
 
-Install the Azure Storage client library for .NET you'd like to use with
-[NuGet][nuget] and the `Azure.Storage.DataMovement.Blobs` client library will be included:
+Install the Azure Storage Data Movement Blobs client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Storage.DataMovement --prerelease
-dotnet add package Azure.Storage.DataMovement.Blobs --prerelease
+dotnet add package Azure.Storage.DataMovement.Blobs
 ```
 
 ### Prerequisites
@@ -235,6 +227,30 @@ destinationResource: await blobs.FromContainerAsync(
 await transferOperation.WaitForCompletionAsync();
 ```
 
+### Resume using ShareFilesStorageResourceProvider
+
+To resume a transfer with Blob(s), valid credentials must be provided. See the sample below.
+
+```C# Snippet:TransferManagerResumeTransfers
+TokenCredential tokenCredential = new DefaultAzureCredential();
+BlobsStorageResourceProvider blobs = new(tokenCredential);
+TransferManager transferManager = new TransferManager(new TransferManagerOptions()
+{
+    ProvidersForResuming = new List<StorageResourceProvider>() { blobs }
+});
+// Get resumable transfers from transfer manager
+await foreach (TransferProperties properties in transferManager.GetResumableTransfersAsync())
+{
+    // Resume the transfer
+    if (properties.SourceUri.AbsoluteUri == "https://storageaccount.blob.core.windows.net/containername/blobpath")
+    {
+        await transferManager.ResumeTransferAsync(properties.TransferId);
+    }
+}
+```
+
+For more information regarding pause, resume, and/or checkpointing, see [Pause and Resume Checkpointing](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement/samples/PauseResumeCheckpointing.md).
+
 ### Extensions on `BlobContainerClient`
 
 For applications with preexisting code using Azure.Storage.Blobs, this package provides extension methods for `BlobContainerClient` to get some of the benefits of the `TransferManager` with minimal extra code.
@@ -270,7 +286,7 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     },
     TransferOptions = new TransferOptions()
     {
-        CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
+        CreationMode = StorageResourceCreationMode.OverwriteIfExists,
     }
 };
 
@@ -303,7 +319,7 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     },
     TransferOptions = new TransferOptions()
     {
-        CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
+        CreationMode = StorageResourceCreationMode.OverwriteIfExists,
     }
 };
 
@@ -315,6 +331,8 @@ await transfer.WaitForCompletionAsync();
 ## Troubleshooting
 
 See [Handling Failed Transfers](#handling-failed-transfers) and [Enabling Logging](https://learn.microsoft.com/dotnet/azure/sdk/logging) to assist with any troubleshooting.
+
+See [Known Issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md) for detailed information.
 
 ## Next steps
 
@@ -336,8 +354,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc].
 For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Common%2FREADME.png)
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Common/src

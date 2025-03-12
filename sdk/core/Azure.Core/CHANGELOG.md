@@ -1,6 +1,16 @@
 # Release History
 
-## 1.45.0-beta.1 (Unreleased)
+## 1.46.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.45.0 (2025-02-11)
 
 ### Acknowledgments
 
@@ -11,8 +21,6 @@ Thank you to our developer community members who helped to make the Azure.Core l
 ### Features Added
 
 - Added `MexicoCentral` and `SpainCentral` locations to `AzureLocation` struct. This was a community contribution, courtesy of [jerobado](https://github.com/jerobado).  ([#47862](https://github.com/Azure/azure-sdk-for-net/pull/47862))
-
-### Breaking Changes
 
 ### Bugs Fixed
 

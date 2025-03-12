@@ -70,6 +70,28 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("accountName", builder2.AccountName);
         }
 
+        [Test]
+        public void Ctor_ConnectionString_CustomUri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var blobEndpoint = new Uri("http://customdomain/" + accountName);
+            var blobSecondaryEndpoint = new Uri("http://customdomain/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+
+            var containerName = "containername";
+            var blobName = "blobname";
+
+            BlobBaseClient blobClient = new BlobBaseClient(connectionString.ToString(true), containerName, blobName);
+
+            Assert.AreEqual(containerName, blobClient.BlobContainerName);
+            Assert.AreEqual(blobName, blobClient.Name);
+            Assert.AreEqual(accountName, blobClient.AccountName);
+        }
+
         [RecordedTest]
         public async Task Ctor_ConnectionStringEscapeBlobName()
         {
@@ -212,6 +234,24 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertExpectedException(
                 () => new BlobBaseClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
                 new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
+        }
+
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var containerName = "containerName";
+            var blobName = "blobName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var blobEndpoint = new Uri($"https://customdomain/{containerName}/{blobName}");
+
+            BlobBaseClient blobClient = new BlobBaseClient(blobEndpoint, credentials);
+
+            Assert.AreEqual(accountName, blobClient.AccountName);
+            Assert.AreEqual(containerName, blobClient.BlobContainerName);
+            Assert.AreEqual(blobName, blobClient.Name);
         }
 
         [RecordedTest]
@@ -8206,7 +8246,7 @@ namespace Azure.Storage.Blobs.Test
                  new InvalidOperationException("SAS Uri cannot be generated. BlobSasBuilder.BlobVersionId does not match snapshot value in the URI in the Client. BlobSasBuilder.BlobVersionId must either be left empty or match the snapshot value in the URI in the Client"));
         }
 
-        [LiveOnly]
+        [RecordedTest]
         public async Task GenerateUserDelegationSas_TrimBlobSlashes()
         {
             // Arrange

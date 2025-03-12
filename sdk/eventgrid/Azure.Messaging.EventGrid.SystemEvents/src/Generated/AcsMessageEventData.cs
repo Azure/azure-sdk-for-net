@@ -46,15 +46,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AcsMessageEventData"/>. </summary>
-        /// <param name="receivedTimestamp"> The time message was received. </param>
-        /// <param name="error"> The channel event error. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
-        internal AcsMessageEventData(DateTimeOffset receivedTimestamp, AcsMessageChannelEventError error)
+        /// <param name="from"> The message sender. </param>
+        /// <param name="to"> The message recipient. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="from"/> or <paramref name="to"/> is null. </exception>
+        internal AcsMessageEventData(string @from, string to)
         {
-            Argument.AssertNotNull(error, nameof(error));
+            Argument.AssertNotNull(@from, nameof(@from));
+            Argument.AssertNotNull(to, nameof(to));
 
-            ReceivedTimestamp = receivedTimestamp;
-            Error = error;
+            From = @from;
+            To = to;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsMessageEventData"/>. </summary>
@@ -63,7 +64,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="receivedTimestamp"> The time message was received. </param>
         /// <param name="error"> The channel event error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsMessageEventData(string @from, string to, DateTimeOffset receivedTimestamp, AcsMessageChannelEventError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AcsMessageEventData(string @from, string to, DateTimeOffset? receivedTimestamp, AcsMessageChannelEventError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             From = @from;
             To = to;
@@ -82,7 +83,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The message recipient. </summary>
         public string To { get; }
         /// <summary> The time message was received. </summary>
-        public DateTimeOffset ReceivedTimestamp { get; }
+        public DateTimeOffset? ReceivedTimestamp { get; }
         /// <summary> The channel event error. </summary>
         public AcsMessageChannelEventError Error { get; }
     }
