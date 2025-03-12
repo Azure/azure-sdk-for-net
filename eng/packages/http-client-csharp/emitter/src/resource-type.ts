@@ -4,7 +4,7 @@ const SubscriptionScopePrefix = "/subscriptions";
 const TenantScopePrefix = "/tenants";
 const Providers = "/providers";
 
-export function CalculateResourceTypeFromPath(path: string): string {
+export function calculateResourceTypeFromPath(path: string): string {
   const providerIndex = path.indexOf(Providers);
   if (providerIndex === -1) {
     if (path.startsWith(ResourceGroupScopePrefix)) {

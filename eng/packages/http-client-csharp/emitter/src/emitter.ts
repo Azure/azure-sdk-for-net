@@ -13,7 +13,7 @@ import {
   setUpdateCodeModelCallback
 } from "@typespec/http-client-csharp";
 import { azureSDKContextOptions } from "./sdk-context-options.js";
-import { CalculateResourceTypeFromPath } from "./resource-type.js";
+import { calculateResourceTypeFromPath } from "./resource-type.js";
 
 const armResourceOperations = "Azure.ResourceManager.@armResourceOperations";
 const armResourceRead = "Azure.ResourceManager.@armResourceRead";
@@ -58,7 +58,7 @@ function updateCodeModel(codeModel: CodeModel): CodeModel {
       );
       if (putOperation) {
         const path = putOperation.Path;
-        resourceType = CalculateResourceTypeFromPath(path);
+        resourceType = calculateResourceTypeFromPath(path);
         resourceModel = putOperation.Responses.filter((r) => r.BodyType)[0]
           .BodyType as InputModelType;
         isSingleton =
@@ -69,7 +69,7 @@ function updateCodeModel(codeModel: CodeModel): CodeModel {
         );
         if (getOperation) {
           const path = getOperation.Path;
-          resourceType = CalculateResourceTypeFromPath(path);
+          resourceType = calculateResourceTypeFromPath(path);
           resourceModel = getOperation.Responses.filter((r) => r.BodyType)[0]
             .BodyType as InputModelType;
           isSingleton =
