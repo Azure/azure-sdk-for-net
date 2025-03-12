@@ -24,9 +24,15 @@ steps:
 
   - template: /eng/common/pipelines/templates/steps/cache-ps-modules.yml
 
-  - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
-    parameters:
-      ServiceDirectory: ${{ parameters.ServiceDirectory }}
+  - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        artifact: BuildPackagesArtifact
+        path: $(Build.ArtifactStagingDirectory)/PackageInfo
+  - ${{ else }}:
+    - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
+      parameters:
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
   - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
     parameters:
