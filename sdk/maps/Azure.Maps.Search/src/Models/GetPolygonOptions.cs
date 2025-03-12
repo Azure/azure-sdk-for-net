@@ -19,5 +19,10 @@ namespace Azure.Maps.Search.Models
 
         /// <summary>A point on the earth specified as a longitude and latitude. Example: <c>GeoPosition(lon, lat)</c></summary>
         public GeoPosition Coordinates { get; set; }
+        /// <summary>
+        /// Language in which search results should be returned.
+        /// Please refer to [Supported Languages](/azure/azure-maps/supported-languages) for details.
+        /// </summary>
+        public string AcceptLanguage { get; set; }
     }
 }

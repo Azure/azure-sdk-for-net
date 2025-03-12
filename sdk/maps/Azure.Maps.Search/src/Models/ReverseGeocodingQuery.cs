@@ -35,5 +35,11 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> id of the request which would show in corresponding batchItem. </summary>
         public string OptionalId { get; set; }
+
+        /// <summary>
+        /// Language in which search results should be returned.
+        /// Please refer to [Supported Languages](/azure/azure-maps/supported-languages) for details.
+        /// </summary>
+        public string AcceptLanguage { get; set; }
     }
 }
