@@ -57,9 +57,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             private List_PersistableModel_NullElement_Builder? _list_PersistableModel_NullElement_Builder;
             private PersistableModel_NullElement_Builder? _persistableModel_NullElement_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modeBuilder)
+            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
             {
-                modeBuilder = type switch
+                builder = type switch
                 {
                     Type t when t == typeof(DoesNotImplementInterface) => _doesNotImplementInterface_Builder ??= new(),
                     Type t when t == typeof(List<PersistableModel_NonPersistableElement>) => _list_PersistableModel_NonPersistableElement_Builder ??= new(),
@@ -68,7 +68,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                     Type t when t == typeof(PersistableModel_NullElement) => _persistableModel_NullElement_Builder ??= new(),
                     _ => null
                 };
-                return modeBuilder is not null;
+                return builder is not null;
             }
 
             private class PersistableModel_NullElement_Builder : ModelBuilder

@@ -250,7 +250,7 @@ namespace System.ClientModel.Primitives
     {
         protected ModelReaderWriterContext() { }
         public System.ClientModel.Primitives.ModelBuilder GetModelBuilder(System.Type type) { throw null; }
-        public virtual bool TryGetModelBuilder(System.Type type, out System.ClientModel.Primitives.ModelBuilder? modelBuilder) { throw null; }
+        public virtual bool TryGetModelBuilder(System.Type type, out System.ClientModel.Primitives.ModelBuilder? builder) { throw null; }
     }
     public partial class ModelReaderWriterOptions
     {

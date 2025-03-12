@@ -28,22 +28,22 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
             private List_List_AvailabilitySetData_Builder? _list_list_AvailabilitySet_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modeBuilder)
+            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
             {
-                modeBuilder = type switch
+                builder = type switch
                 {
                     Type t when t == typeof(List<List<AvailabilitySetData>>) => _list_list_AvailabilitySet_Builder ??= new(),
                     _ => GetFromDependencies(type)
                 };
-                return modeBuilder is not null;
+                return builder is not null;
             }
 
             private ModelBuilder? GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? modeBuilder))
-                    return modeBuilder;
-                if (s_availabilitySetData_ListTests_LocalContext.Value.TryGetModelBuilder(type, out modeBuilder))
-                    return modeBuilder;
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? builder))
+                    return builder;
+                if (s_availabilitySetData_ListTests_LocalContext.Value.TryGetModelBuilder(type, out builder))
+                    return builder;
                 return null;
             }
 

@@ -40,20 +40,20 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
             private ImmutableStack_AvailabilitySetData_Builder? _immutableStack_AvailabilitySetData_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modeBuilder)
+            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
             {
-                modeBuilder = type switch
+                builder = type switch
                 {
                     Type t when t == typeof(ImmutableStack<AvailabilitySetData>) => _immutableStack_AvailabilitySetData_Builder ??= new(),
                     _ => GetFromDependencies(type)
                 };
-                return modeBuilder is not null;
+                return builder is not null;
             }
 
             private ModelBuilder? GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? modeBuilder))
-                    return modeBuilder;
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? builder))
+                    return builder;
                 return null;
             }
 

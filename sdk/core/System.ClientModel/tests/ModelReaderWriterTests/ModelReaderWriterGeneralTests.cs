@@ -679,9 +679,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             private ReadReturnsNull_Builder? _readReturnsNull_Builder;
             private Dictionary_String_AvailabilitySetData_Builder? _dictionary_String_AvailabilitySetData_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modeBuilder)
+            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
             {
-                modeBuilder = type switch
+                builder = type switch
                 {
                     Type t when t == typeof(Dictionary<string, SubType>) => _dictionary_String_SubType_Builder ??= new(),
                     Type t when t == typeof(List<List<SubType>>) => _list_List_SubType_Builder ??= new(),
@@ -699,18 +699,18 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                     Type t when t == typeof(Dictionary<string, AvailabilitySetData>) => _dictionary_String_AvailabilitySetData_Builder ??= new(),
                     _ => GetFromDependencies(type)
                 };
-                return modeBuilder is not null;
+                return builder is not null;
             }
 
             private ModelBuilder? GetFromDependencies(Type type)
             {
-                if (_LibraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? modeBuilder))
+                if (_LibraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? builder))
                 {
-                    return modeBuilder;
+                    return builder;
                 }
-                if (_availabilitySetData_ListTests_LocalContext.Value.TryGetModelBuilder(type, out modeBuilder))
+                if (_availabilitySetData_ListTests_LocalContext.Value.TryGetModelBuilder(type, out builder))
                 {
-                    return modeBuilder;
+                    return builder;
                 }
                 return null;
             }
