@@ -35,5 +35,15 @@ if ($SetOverrideFile) {
     $relativeOutputPath = [System.IO.Path]::GetRelativePath($RepoRoot, "$OutputPath/$outputFile")
     Write-Host "##vso[task.setvariable variable=ProjectListOverrideFile;]$relativeOutputPath"
 }
+
+# Filter JSON files to only keep those matching package names in packageSet
+Get-ChildItem -Recurse "$PackageInfoFolder" *.json | ForEach-Object {
+    $fileContent = Get-Content -Raw -Path $_.FullName | ConvertFrom-Json
+    if ($packageSet -notcontains $fileContent.Name) {
+        Remove-Item $_.FullName -Force
+        Write-Host "Removed $($_.FullName) as it doesn't belong to the package set that this batch is targeting."
+    }
+}
+
 Write-Host "##vso[task.setvariable variable=ChangedServices;]$changedServices"
 Write-Host "This run is targeting: $ProjectNames in [$changedServices]"
