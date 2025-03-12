@@ -16,7 +16,7 @@ steps:
       filePath: ${{ parameters.RepoRoot }}/eng/common/scripts/Detect-Api-Changes.ps1
       arguments: >
         -ArtifactPath ${{parameters.ArtifactPath}}
-        -CommitSha '$(Build.SourceVersion)'
+        -CommitSha '$(System.PullRequest.SourceCommitId)'
         -BuildId $(Build.BuildId)
         -PullRequestNumber $(System.PullRequest.PullRequestNumber)
         -RepoFullName $(Build.Repository.Name)

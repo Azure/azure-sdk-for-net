@@ -8,7 +8,7 @@
   {
    "$id": "2",
    "Name": "NotDefinedClient",
-   "ClientNamespace": "Server.Endpoint.NotDefined",
+   "Namespace": "Server.Endpoint.NotDefined",
    "Doc": "Illustrates server doesn't define endpoint. Client should automatically add an endpoint to let user pass in.",
    "Operations": [
     {
@@ -23,13 +23,11 @@
        "StatusCodes": [
         200
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "HEAD",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/server/endpoint/not-defined/valid",
      "BufferResponse": true,
@@ -65,7 +63,8 @@
      "Kind": "Client"
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Server.Endpoint.NotDefined"
   }
  ]
 }
