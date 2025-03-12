@@ -20,6 +20,7 @@
 - Added ability to send custom calling context when answering calls
 - Added TeamsAppSource for use when creating outbound OPS calls
 - Recording with the call connection ID is now supported. OPS calls can be recorded using the call connection ID.
+- Added a backup identifier of the Cognitive Service resource for the call
 
 ### Breaking Changes
 
