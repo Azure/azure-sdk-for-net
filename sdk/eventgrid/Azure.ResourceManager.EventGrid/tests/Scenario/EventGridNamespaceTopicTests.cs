@@ -2,18 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventGrid.Tests
@@ -107,10 +101,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.NotNull(getUpdatedNamespaceTopic);
             Assert.AreEqual(getUpdatedNamespaceTopic.Data.EventRetentionInDays, 1);
 
-            // Regenerate namespace topic keys
+            // Get Shared Access Keys
             var sharedAccessKeyBefore = (await getUpdatedNamespaceTopic.GetSharedAccessKeysAsync()).Value;
             Assert.NotNull(sharedAccessKeyBefore);
             TopicRegenerateKeyContent topicRegenerateKeyContent = new TopicRegenerateKeyContent("key1");
+            // Regenerate namespace topic keys
             var sharedAccessKeyAfter = (await getUpdatedNamespaceTopic.RegenerateKeyAsync(WaitUntil.Completed, topicRegenerateKeyContent)).Value;
             Assert.NotNull(sharedAccessKeyAfter);
             Assert.AreNotEqual(sharedAccessKeyBefore.Key1, sharedAccessKeyAfter.Key1);
@@ -164,8 +159,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
                     {"originalTag2", "originalValue2"}
                 },
                 Sku = namespaceSku,
-                IsZoneRedundant = true
+                IsZoneRedundant = true,
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
             };
+            UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity();
+            nameSpace.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_easteuap/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"), userAssignedIdentity);
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
             Assert.NotNull(createNamespaceResponse);
             Assert.AreEqual(createNamespaceResponse.Data.Name, namespaceName);
@@ -185,19 +183,24 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // create subscriptions
             var subscriptionsCollection = namespaceTopicsResponse1.GetNamespaceTopicEventSubscriptions();
 
-            DeliveryConfiguration deliveryConfiguration = new DeliveryConfiguration()
+            DeliveryConfiguration deliveryConfiguration = new DeliveryConfiguration
             {
-                DeliveryMode = DeliveryMode.Queue.ToString(),
-                Queue = new QueueInfo()
+                DeliveryMode = DeliveryMode.Push,
+                Push = new PushInfo
                 {
-                    EventTimeToLive = TimeSpan.FromDays(1),
-                    MaxDeliveryCount = 5,
-                    ReceiveLockDurationInSeconds = 120
+                    // For the webhook endpoint, replace "SANITIZED_FUNCTION_KEY" with the function key
+                    // from the Logic App "mylogicappkish2" in the East US region under the
+                    // "Azure Event Grid SDK" subscription.
+                    Destination = new WebHookEventSubscriptionDestination
+                    {
+                        Endpoint = new Uri("https://prod-71.eastus.logic.azure.com:443/workflows/b60c5432896846608c05de3a96be6de2/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=SANITIZED_FUNCTION_KEY"),
+                    }
                 }
             };
             NamespaceTopicEventSubscriptionData subscriptionData = new NamespaceTopicEventSubscriptionData()
             {
-                DeliveryConfiguration = deliveryConfiguration
+                DeliveryConfiguration = deliveryConfiguration,
+                EventDeliverySchema = DeliverySchema.CloudEventSchemaV10,
             };
             var createEventsubscription1 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName1, subscriptionData)).Value;
             Assert.NotNull(createEventsubscription1);
@@ -207,27 +210,41 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.NotNull(createEventsubscription2);
             Assert.AreEqual(createEventsubscription2.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
 
+            // Test getting full URL and delivery attributes
+            var fullUrlResponse = (await createEventsubscription2.GetFullUriAsync()).Value;
+            Assert.NotNull(fullUrlResponse);
+            Assert.NotNull(fullUrlResponse.EndpointUri);
+
+            var deliveryAttributesResponse = await createEventsubscription2.GetDeliveryAttributesAsync().ToEnumerableAsync();
+            Assert.NotNull(deliveryAttributesResponse);
+
             var createEventsubscription3 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName3, subscriptionData)).Value;
             Assert.NotNull(createEventsubscription3);
             Assert.AreEqual(createEventsubscription3.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
 
             // Validate get event subscription
             var getEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
-            Assert.NotNull (getEventSubscription1);
+            Assert.NotNull(getEventSubscription1);
             Assert.AreEqual(getEventSubscription1.Data.Name, namespaceTopicSubscriptionName1);
-            Assert.AreEqual(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Queue.ToString());
-            Assert.AreEqual(getEventSubscription1.Data.DeliveryConfiguration.Queue.EventTimeToLive, TimeSpan.FromDays(1));
-            Assert.AreEqual(getEventSubscription1.Data.DeliveryConfiguration.Queue.MaxDeliveryCount, 5);
-
+            Assert.AreEqual(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Push.ToString());
             //update event subscription
             DeliveryConfiguration deliveryConfiguration2 = new DeliveryConfiguration()
             {
-                DeliveryMode = DeliveryMode.Queue.ToString(),
-                Queue = new QueueInfo()
+                DeliveryMode = DeliveryMode.Push.ToString(),
+                Push = new PushInfo()
                 {
-                    EventTimeToLive = TimeSpan.FromDays(0.5),
-                    MaxDeliveryCount = 6,
-                    ReceiveLockDurationInSeconds = 120
+                    DeliveryWithResourceIdentity = new DeliveryWithResourceIdentity()
+                    {
+                        Identity = new EventSubscriptionIdentity
+                        {
+                            IdentityType = EventSubscriptionIdentityType.UserAssigned,
+                            UserAssignedIdentity = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_easteuap/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity",
+                        },
+                        Destination = new EventHubEventSubscriptionDestination()
+                        {
+                            ResourceId = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk_test_easteuap/providers/Microsoft.EventHub/namespaces/testsdk-eh-namespace/eventhubs/eh1"),
+                        },
+                    }
                 }
             };
             NamespaceTopicEventSubscriptionPatch subscriptionPatch = new NamespaceTopicEventSubscriptionPatch()
@@ -241,9 +258,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var getUpdatedEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
             Assert.NotNull(getUpdatedEventSubscription1);
             Assert.AreEqual(getUpdatedEventSubscription1.Data.Name, namespaceTopicSubscriptionName1);
-            Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Queue.ToString());
-            Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.Queue.EventTimeToLive, TimeSpan.FromDays(0.5));
-            Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.Queue.MaxDeliveryCount, 6);
+            Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Push.ToString());
 
             // List all event subscriptions
             var listAllSubscriptionsBefore = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();

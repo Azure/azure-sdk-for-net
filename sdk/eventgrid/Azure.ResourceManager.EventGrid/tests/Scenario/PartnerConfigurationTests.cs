@@ -1,10 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventGrid.Models;
@@ -29,7 +25,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         [Test]
-        [PlaybackOnly("SDK do not support creating partner configuraion, it must be manually created before running this case")]
         public async Task PartnerConfigurationE2EOperation()
         {
             var configuration = (CreatePartnerConfiguration(_resourceGroup, Recording.GenerateAssetName("registration"))).Result;
@@ -55,8 +50,39 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsNotNull(response);
             Assert.AreEqual("Succeeded", response.Value.Data.ProvisioningState.ToString());
 
+            // List all partner configurations under the entire subscription
+            var partnerConfigurationsInSubscription = await DefaultSubscription.GetPartnerConfigurationsAsync().ToEnumerableAsync();
+
+            Assert.NotNull(partnerConfigurationsInSubscription);
+
+            Assert.GreaterOrEqual(partnerConfigurationsInSubscription.Count, 1);
+
             // Delete
             await configuration.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Test]
+        public async Task GetPartnerConfiguration()
+        {
+            var configuration = (CreatePartnerConfiguration(_resourceGroup, Recording.GenerateAssetName("registration"))).Result;
+            var response = await configuration.GetAsync();
+            Assert.IsNotNull(response.Value);
+            Assert.AreEqual("Microsoft.EventGrid/partnerConfigurations", response.Value.Data.ResourceType.ToString());
+        }
+
+        [Test]
+        public async Task UnauthorizePartner()
+        {
+            var configuration = (CreatePartnerConfiguration(_resourceGroup, Recording.GenerateAssetName("registration"))).Result;
+            var registration = await CreatePartnerRegistration(_resourceGroup, Recording.GenerateAssetName("registration"));
+            var eventGridPartnerContent = new EventGridPartnerContent()
+            {
+                PartnerRegistrationImmutableId = registration.Data.PartnerRegistrationImmutableId,
+            };
+            await configuration.AuthorizePartnerAsync(eventGridPartnerContent);
+
+            var unauthorizeResponse = await configuration.UnauthorizePartnerAsync(eventGridPartnerContent);
+            Assert.AreEqual("Succeeded", unauthorizeResponse.Value.Data.ProvisioningState.ToString());
         }
     }
 }

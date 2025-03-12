@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             _partnerRegistrationCollection = _resourceGroup.GetPartnerRegistrations();
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CreateOrUpdate()
         {
             string partnerRegistrationName = Recording.GenerateAssetName("PartnerRegistration");
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             ValidatePartnerRegistration(registration, partnerRegistrationName);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task Exist()
         {
             string partnerRegistrationName = Recording.GenerateAssetName("PartnerRegistration");
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsTrue(flag);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task Get()
         {
             string partnerRegistrationName = Recording.GenerateAssetName("PartnerRegistration");
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             ValidatePartnerRegistration(registration, partnerRegistrationName);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetAll()
         {
             string partnerRegistrationName = Recording.GenerateAssetName("PartnerRegistration");
@@ -66,9 +65,44 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var list = await _partnerRegistrationCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             ValidatePartnerRegistration(list.First(item => item.Data.Name == partnerRegistrationName), partnerRegistrationName);
+            // Get all registrations created within a resourceGroup
+            Assert.NotNull(list);
+            Assert.GreaterOrEqual(list.Count, 1);
+            Assert.AreEqual(list.FirstOrDefault().Data.Name, partnerRegistrationName);
+            // Get all registrations created within the subscription irrespective of the resourceGroup
+            var registrationsInAzureSubscription = await DefaultSubscription.GetPartnerRegistrationsAsync().ToEnumerableAsync();
+            Assert.NotNull(registrationsInAzureSubscription);
+            Assert.GreaterOrEqual(registrationsInAzureSubscription.Count, 1);
+            var falseFlag = false;
+            foreach (var item in registrationsInAzureSubscription)
+            {
+                if (item.Data.Name == partnerRegistrationName)
+                {
+                    falseFlag = true;
+                    break;
+                }
+            }
+            Assert.IsTrue(falseFlag);
         }
 
-        [RecordedTest]
+        [Ignore("28/02/2025: This test is failing in the pipeline, because of API Issue, enable it in RECORD mode once the api is fixed")]
+        [Test]
+        public async Task Update()
+        {
+            // Arrange
+            string partnerRegistrationName = Recording.GenerateAssetName("PartnerRegistration");
+            var topic = await CreatePartnerRegistration(_resourceGroup, partnerRegistrationName);
+            var patch = new Models.PartnerRegistrationPatch
+            {
+                Tags = { { "env", "test" }, { "owner", "sdk-test" } }
+            };
+            await topic.UpdateAsync(WaitUntil.Completed, patch);
+            // Retrieve the updated topic
+            var updatedTopic = await _partnerRegistrationCollection.GetAsync(partnerRegistrationName);
+            Assert.IsNotNull(updatedTopic.Value);
+        }
+
+        [Test]
         public async Task Delete()
         {
             string partnerRegistrationName = Recording.GenerateAssetName("PartnerRegistration");

@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -18,8 +21,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
-        // For live tests, replace "SANITIZED_FUNCTION_KEY" with the actual function key
-        // from the Azure Portal for the function "EventGridTrigger1" in "devexpfuncappdestination".
+        // for live tests, replace passcode with actual code from portal for this this function devexpfuncappdestination and function EventGridTrigger1
         public const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=SANITIZED_FUNCTION_KEY";
         public const string AzureFunctionArmId = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/DevExpRg/providers/Microsoft.Web/sites/devexpfuncappdestination/functions/EventGridTrigger1";
         private EventGridTopicCollection TopicCollection { get; set; }
