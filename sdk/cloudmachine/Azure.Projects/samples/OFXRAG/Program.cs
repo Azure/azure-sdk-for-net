@@ -7,7 +7,7 @@ using Azure.Projects.OpenAI;
 using OpenAI.Chat;
 
 ProjectInfrastructure infrastructure = new();
-infrastructure.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
+infrastructure.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
 infrastructure.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
 
 // the app can be called with -init switch to generate bicep and prepare for azd deployment.
