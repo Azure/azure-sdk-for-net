@@ -266,7 +266,7 @@ function Update-TargetedFilesForExclude([string[]]$TargetedFiles, [string[]]$Exc
     foreach ($file in $TargetedFiles) {
         $shouldExclude = $false
         foreach ($exclude in $ExcludePaths) {
-            if (!$file.StartsWith($exclude,'CurrentCultureIgnoreCase')) {
+            if ($file.StartsWith($exclude,'CurrentCultureIgnoreCase')) {
                 $shouldExclude = $true
                 break
             }
