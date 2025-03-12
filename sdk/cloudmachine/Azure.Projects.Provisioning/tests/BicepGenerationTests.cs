@@ -30,6 +30,17 @@ public class BicepGenerationTests
     }
 
     [Test]
+    public void KeyVault()
+    {
+        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
+        infrastructure.AddFeature(new KeyVaultFeature());
+        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        File.WriteAllText("d:\\kv.bicep", actualBicep);
+        string expectedBicep = LoadTestFile("kv.bicep");
+        Assert.AreEqual(expectedBicep, actualBicep);
+    }
+
+    [Test]
     public void Blobs()
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
@@ -50,17 +61,6 @@ public class BicepGenerationTests
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         File.WriteAllText("d:\\ofx.bicep", actualBicep);
         string expectedBicep = LoadTestFile("ofx.bicep");
-        Assert.AreEqual(expectedBicep, actualBicep);
-    }
-
-    [Test]
-    public void KeyVault()
-    {
-        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
-        infrastructure.AddFeature(new KeyVaultFeature());
-        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\kv.bicep", actualBicep);
-        string expectedBicep = LoadTestFile("kv.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 

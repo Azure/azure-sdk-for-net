@@ -7,15 +7,24 @@ using Azure.Provisioning.ServiceBus;
 
 namespace Azure.Projects.ServiceBus;
 
-internal class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature parent) : AzureProjectFeature
+internal class ServiceBusSubscriptionFeature : AzureProjectFeature
 {
+    public ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature parent)
+    {
+        Name = name;
+        Parent = parent;
+    }
+
+    public string Name { get; }
+    public ServiceBusTopicFeature Parent { get; }
+
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
-        ServiceBusTopic serviceBusTopic = infrastructure.GetConstruct<ServiceBusTopic>(parent.Id);
+        ServiceBusTopic serviceBusTopic = infrastructure.GetConstruct<ServiceBusTopic>(Parent.Id);
 
-        var subscription = new ServiceBusSubscription(name, "2021-11-01")
+        var subscription = new ServiceBusSubscription(Name, "2021-11-01")
         {
-            Name = name,
+            Name = Name,
             Parent = serviceBusTopic,
             IsClientAffine = false,
             LockDuration = TimeSpan.FromSeconds(30),
@@ -30,6 +39,6 @@ internal class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature
 
         infrastructure.AddConstruct(Id, subscription);
 
-        EmitConnections(infrastructure, name, $"{parent.Name}/{name}");
+        EmitConnections(infrastructure, Name, $"{Parent.Name}/{Name}");
     }
 }

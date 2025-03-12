@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using Azure.Projects.AppConfiguration;
 using Azure.Projects.Core;
@@ -14,12 +16,14 @@ using Azure.Provisioning.Roles;
 
 namespace Azure.Projects;
 
+[DebuggerTypeProxy(typeof(ProjectInfrastructureDebugView))]
 public partial class ProjectInfrastructure
 {
     private readonly Infrastructure _infrastructure = new("project");
     private readonly Dictionary<string, NamedProvisionableConstruct> _constrcuts = [];
     private readonly Dictionary<Provisionable, List<FeatureRole>> _requiredSystemRoles = new();
     private readonly FeatureCollection _features = new();
+    private readonly AppConfigurationFeature _appConfig = new();
 
     /// <summary>
     /// This is the resource group name for the project resources.
@@ -28,6 +32,9 @@ public partial class ProjectInfrastructure
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public UserAssignedIdentity Identity { get; private set; }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    internal AppConfigurationFeature AppConfiguration => _appConfig;
 
     /// <summary>
     /// The common principalId parameter.
@@ -57,20 +64,19 @@ public partial class ProjectInfrastructure
         });
 
         // setup project identity
-        Identity = new UserAssignedIdentity("project_identity")
+        Identity = new UserAssignedIdentity("projectIdentity")
         {
             Name = ProjectId
         };
         _infrastructure.Add(Identity);
         _infrastructure.Add(new ProvisioningOutput("project_identity_id", typeof(string)) { Value = Identity.Id });
 
-        AppConfigurationFeature appConfig = new();
-        this.AddFeature(appConfig);
+        AddFeature(_appConfig);
     }
 
     public T AddFeature<T>(T feature) where T: AzureProjectFeature
     {
-        feature.EmitFeatures(Features, ProjectId);
+        feature.EmitFeatures(this);
         Features.Append(feature);
         return feature;
     }
@@ -132,6 +138,24 @@ public partial class ProjectInfrastructure
     internal string CreateUniqueBicepIdentifier(string baseIdentifier)
     {
         int index = Interlocked.Increment(ref _index);
-        return baseIdentifier + "_" + index;
+        if (index == 1) return baseIdentifier;
+        return $"{baseIdentifier}{index}";
+    }
+
+    private class ProjectInfrastructureDebugView
+    {
+        private readonly ProjectInfrastructure _projectInfrastructure;
+
+        public ProjectInfrastructureDebugView(ProjectInfrastructure projectInfrastructure)
+        {
+            _projectInfrastructure = projectInfrastructure;
+        }
+
+        public AzureProjectFeature[] Features => _projectInfrastructure.Features.ToArray();
+
+        //[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+        public Dictionary<string, NamedProvisionableConstruct> Constructs => _projectInfrastructure._constrcuts;
+
+        public string ProjectId => _projectInfrastructure.ProjectId;
     }
 }

@@ -19,7 +19,9 @@ public class OpenAIModelFeature : AzureProjectFeature
     /// <param name="model"></param>
     /// <param name="modelVersion"></param>
     /// <param name="kind"></param>
-    public OpenAIModelFeature(string model, string modelVersion, AIModelKind kind = AIModelKind.Chat) {
+    public OpenAIModelFeature(string model, string modelVersion, AIModelKind kind = AIModelKind.Chat)
+        : base($"{typeof(OpenAIModelFeature).Name}_{model}")
+    {
         Kind = kind;
         Model = model;
         ModelVersion = modelVersion;
@@ -49,15 +51,13 @@ public class OpenAIModelFeature : AzureProjectFeature
         ClientConnection connection = new("Azure.AI.OpenAI.AzureOpenAIClient", $"https://{cmId}.openai.azure.com", ClientAuthenticationMethod.Credential);
         return connection;
     }
+
     /// <summary>
     /// Emit the feature.
     /// </summary>
-    /// <param name="features"></param>
-    /// <param name="cmId"></param>
-    protected override void EmitFeatures(FeatureCollection features, string cmId)
+    protected override void EmitFeatures(ProjectInfrastructure infrastructure)
     {
-        // TODO: is it OK that we return the first one?
-
+        FeatureCollection features = infrastructure.Features;
         if (!features.TryGet(out OpenAIAccountFeature? openAI))
         {
             openAI = new OpenAIAccountFeature();
@@ -75,18 +75,25 @@ public class OpenAIModelFeature : AzureProjectFeature
     /// <exception cref="NotImplementedException"></exception>
     protected override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
-        string name = Kind switch
+        string suffix = Kind switch
         {
-            AIModelKind.Chat => $"{infrastructure.ProjectId}_chat",
-            AIModelKind.Embedding => $"{infrastructure.ProjectId}_embedding",
+            AIModelKind.Chat => "chat",
+            AIModelKind.Embedding => "embedding",
+            _ => throw new NotImplementedException()
+        };
+
+        string resourceName = Kind switch
+        {
+            AIModelKind.Chat => $"{infrastructure.ProjectId}_{suffix}",
+            AIModelKind.Embedding => $"{infrastructure.ProjectId}_{suffix}",
             _ => throw new NotImplementedException()
         };
 
         CognitiveServicesAccount parent = infrastructure.GetConstruct<CognitiveServicesAccount>(Account.Id);
 
-        CognitiveServicesAccountDeployment deployment = new($"openai_{name}", "2024-06-01-preview") {
+        CognitiveServicesAccountDeployment deployment = new($"openai_{suffix}", "2024-06-01-preview") {
             Parent = parent,
-            Name = name,
+            Name = resourceName,
             Properties = new CognitiveServicesAccountDeploymentProperties()
             {
                 Model = new CognitiveServicesAccountDeploymentModel()
@@ -115,14 +122,13 @@ public class OpenAIModelFeature : AzureProjectFeature
 
         infrastructure.AddConstruct(Id, deployment);
 
-        string key = Kind == AIModelKind.Chat ? "OpenAI.Chat.ChatClient" : "OpenAI.Embeddings.EmbeddingClient";
-        string locator = Kind == AIModelKind.Chat ? $"{infrastructure.ProjectId}_chat" : $"{infrastructure.ProjectId}_embedding";
-        EmitConnections(infrastructure, key, locator);
+        string clientId = Kind == AIModelKind.Chat ? "OpenAI.Chat.ChatClient" : "OpenAI.Embeddings.EmbeddingClient";
+        EmitConnections(infrastructure, clientId, resourceName);
 
-        OpenAIModelFeature? FindPrevious(ProjectInfrastructure cm, OpenAIModelFeature current)
+        OpenAIModelFeature? FindPrevious(ProjectInfrastructure infrastructure, OpenAIModelFeature current)
         {
             OpenAIModelFeature? previous = default;
-            foreach (var feature in cm.Features)
+            foreach (var feature in infrastructure.Features)
             {
                 if (feature == current)
                     return previous;

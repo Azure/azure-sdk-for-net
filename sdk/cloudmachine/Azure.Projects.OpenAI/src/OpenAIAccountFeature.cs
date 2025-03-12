@@ -8,6 +8,9 @@ namespace Azure.Projects.OpenAI;
 
 internal class OpenAIAccountFeature : AzureProjectFeature
 {
+    public OpenAIAccountFeature()
+    {}
+
     protected override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         CognitiveServicesAccount cognitiveServices = new("openai")

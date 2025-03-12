@@ -27,7 +27,7 @@ namespace Azure.Projects.AIFoundry
         /// <exception cref="ArgumentException">
         /// Thrown if <paramref name="connectionString"/> is null or empty.
         /// </exception>
-        public AIProjectFeature(string connectionString)
+        public AIProjectFeature(string connectionString) : this()
         {
             if (string.IsNullOrEmpty(connectionString))
             {
@@ -75,8 +75,8 @@ namespace Azure.Projects.AIFoundry
         protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
         {
             var cmId = infrastructure.ProjectId;
-            AIFoundryHubCdk hub = new($"{cmId}_hub", $"{cmId}_hub");
-            AIFoundryProjectCdk project = new($"{cmId}_project", $"{cmId}_project", hub);
+            AIFoundryHubCdk hub = new($"ai_hub", $"{cmId}_hub");
+            AIFoundryProjectCdk project = new($"ai_project", $"{cmId}_project", hub);
 
             infrastructure.AddConstruct(Id + "_hub", hub);
             infrastructure.AddConstruct(Id + "_project", project);

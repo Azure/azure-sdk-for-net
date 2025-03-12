@@ -13,7 +13,7 @@ public static class FeatureExtensions
     {
         StorageAccountFeature account = infrastructure.AddStorageAccount();
         var blobs = infrastructure.AddFeature(new BlobServiceFeature() { Account = account });
-        var defaultContainer = infrastructure.AddFeature(new BlobContainerFeature() { Service = blobs });
+        var defaultContainer = infrastructure.AddFeature(new BlobContainerFeature("default") { Service = blobs });
 
         if (isObservable)
         {
@@ -41,7 +41,8 @@ public static class FeatureExtensions
     {
         if (!infrastructure.Features.TryGet(out ServiceBusNamespaceFeature? serviceBusNamespace))
         {
-            serviceBusNamespace = infrastructure.AddFeature(new ServiceBusNamespaceFeature(infrastructure.ProjectId));
+            serviceBusNamespace = new ServiceBusNamespaceFeature(infrastructure.ProjectId);
+            infrastructure.AddFeature(serviceBusNamespace);
         }
         return serviceBusNamespace!;
     }
@@ -51,7 +52,8 @@ public static class FeatureExtensions
     {
         if (!infrastructure.Features.TryGet(out StorageAccountFeature? storageAccount))
         {
-            storageAccount = infrastructure.AddFeature(new StorageAccountFeature(infrastructure.ProjectId));
+            storageAccount = new StorageAccountFeature(accountName: infrastructure.ProjectId);
+            infrastructure.AddFeature(storageAccount);
         }
         return storageAccount!;
     }

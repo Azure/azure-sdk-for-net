@@ -28,9 +28,16 @@ public class FeatureCollection : IEnumerable<AzureProjectFeature>
 
     public bool TryGet<T>(out T? feature) where T : AzureProjectFeature
     {
+        string name = typeof(T).Name;
+        return TryGet(name, out feature);
+    }
+
+    public bool TryGet<T>(string id, out T? feature) where T : AzureProjectFeature
+    {
         for (int i = 0; i < _count; i++)
         {
-            if (_features[i] is T typed)
+            var item = _features[i];
+            if (item.Id == id && item is T typed)
             {
                 feature = typed;
                 return true;

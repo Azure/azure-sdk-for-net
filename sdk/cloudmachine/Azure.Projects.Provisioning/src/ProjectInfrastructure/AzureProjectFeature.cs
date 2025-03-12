@@ -11,16 +11,28 @@ namespace Azure.Projects.Core;
 
 public abstract partial class AzureProjectFeature
 {
-    // TODO: this should not be a guid. It should be a nice human readable name
-    public string Id { get; } = Guid.NewGuid().ToString();
+    protected AzureProjectFeature(string id)
+    {
+        Id = id;
+    }
 
-    protected internal virtual void EmitFeatures(FeatureCollection features, string projectId) { }
+    protected AzureProjectFeature()
+    {
+        Id = this.GetType().Name;
+    }
+
+    public string Id { get; }
+
+    protected internal virtual void EmitFeatures(ProjectInfrastructure infrastructure) { }
 
     protected internal abstract void EmitConstructs(ProjectInfrastructure infrastructure);
 
     protected void EmitConnections(ProjectInfrastructure infrastructure, string connectionId, string endpoint)
     {
-        AppConfigurationSettingFeature connection = new(connectionId, endpoint, "cm_connection");
+        AppConfigurationSettingFeature connection = new(connectionId, endpoint);
         infrastructure.AddFeature(connection);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override string ToString() => $"{this.GetType().Name} {this.Id}";
 }

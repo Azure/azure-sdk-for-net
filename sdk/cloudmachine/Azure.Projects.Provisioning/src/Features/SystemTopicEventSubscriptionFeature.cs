@@ -10,13 +10,26 @@ using Azure.Provisioning.ServiceBus;
 
 namespace Azure.Projects.EventGrid;
 
-internal class SystemTopicEventSubscriptionFeature(string name, EventGridSystemTopicFeature parent, ServiceBusTopicFeature destination, ServiceBusNamespaceFeature parentNamespace) : AzureProjectFeature
+internal class SystemTopicEventSubscriptionFeature : AzureProjectFeature
 {
+    private string _name;
+    private EventGridSystemTopicFeature _parent;
+    private ServiceBusTopicFeature _destination;
+    private ServiceBusNamespaceFeature _parentNamespace;
+
+    public SystemTopicEventSubscriptionFeature(string name, EventGridSystemTopicFeature parent, ServiceBusTopicFeature destination, ServiceBusNamespaceFeature parentNamespace)
+    {
+        _name = name;
+        _parent = parent;
+        _destination = destination;
+        _parentNamespace = parentNamespace;
+    }
+
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
-        ServiceBusNamespace serviceBusNamespace = infrastructure.GetConstruct<ServiceBusNamespace>(parentNamespace.Id);
-        SystemTopic parentTopic = infrastructure.GetConstruct<SystemTopic>(parent.Id);
-        ServiceBusTopic destinationTopic = infrastructure.GetConstruct<ServiceBusTopic>(destination.Id);
+        ServiceBusNamespace serviceBusNamespace = infrastructure.GetConstruct<ServiceBusNamespace>(_parentNamespace.Id);
+        SystemTopic parentTopic = infrastructure.GetConstruct<SystemTopic>(_parent.Id);
+        ServiceBusTopic destinationTopic = infrastructure.GetConstruct<ServiceBusTopic>(_destination.Id);
 
         ServiceBusBuiltInRole role = ServiceBusBuiltInRole.AzureServiceBusDataSender;
         var roleAssignment = new RoleAssignment($"cm_servicebus_{parentTopic.Name.Value}_role")
@@ -30,7 +43,7 @@ internal class SystemTopicEventSubscriptionFeature(string name, EventGridSystemT
 
         var subscription = new SystemTopicEventSubscription("cm_eventgrid_subscription_blob", "2022-06-15")
         {
-            Name = name,
+            Name = _name,
             Parent = parentTopic,
             DeliveryWithResourceIdentity = new DeliveryWithResourceIdentity
             {

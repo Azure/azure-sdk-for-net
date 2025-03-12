@@ -21,7 +21,7 @@ public class AppServiceFeature : AzureProjectFeature
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         //Add a App Service to the infrastructure.
-        AppServicePlan hostingPlan = new("cm_hosting_plan")
+        AppServicePlan hostingPlan = new("appServicePlan")
         {
             Name = infrastructure.ProjectId,
             Sku = Sku,
@@ -29,7 +29,7 @@ public class AppServiceFeature : AzureProjectFeature
         };
         infrastructure.AddConstruct(Id + "_plan", hostingPlan);
 
-        WebSite appService = new("cm_website")
+        WebSite appService = new("appServiceWebsite")
         {
             Name = infrastructure.ProjectId,
             Kind = "app",

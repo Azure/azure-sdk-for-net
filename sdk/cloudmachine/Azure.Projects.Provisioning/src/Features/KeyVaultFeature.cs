@@ -4,7 +4,6 @@
 using Azure.Projects.Core;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.KeyVault;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Projects.KeyVault;
 
@@ -12,16 +11,15 @@ public class KeyVaultFeature : AzureProjectFeature
 {
     public KeyVaultSku Sku { get; set; }
 
-    public KeyVaultFeature(KeyVaultSku? sku = default)
+    public KeyVaultFeature()
     {
-        sku ??= new KeyVaultSku { Name = KeyVaultSkuName.Standard, Family = KeyVaultSkuFamily.A, };
-        Sku = sku;
+        Sku = new KeyVaultSku { Name = KeyVaultSkuName.Standard, Family = KeyVaultSkuFamily.A };
     }
 
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         // Add a KeyVault to the infrastructure.
-        KeyVaultService kv = new("cm_kv")
+        KeyVaultService kv = new("keyVault")
         {
             Name = infrastructure.ProjectId,
             Properties =

@@ -23,7 +23,7 @@ public class StorageAccountFeature : AzureProjectFeature
 
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
-        var storageAccount = new StorageAccount("cm_storage", StorageAccount.ResourceVersions.V2023_01_01)
+        var storageAccount = new StorageAccount("storageAccount", StorageAccount.ResourceVersions.V2023_01_01)
         {
             Name = Name,
             Kind = StorageKind.StorageV2,
@@ -50,22 +50,26 @@ public class StorageAccountFeature : AzureProjectFeature
             StorageBuiltInRole.StorageTableDataContributor.ToString()
         );
     }
+
+    public override string ToString() => $"{this.GetType().Name} {this.Id} {Name}";
 }
 
 public class BlobServiceFeature : AzureProjectFeature
 {
+    public BlobServiceFeature()
+    {}
+
     public StorageAccountFeature? Account { get; set; }
 
-    protected internal override void EmitFeatures(FeatureCollection features, string projectId)
+    protected internal override void EmitFeatures(ProjectInfrastructure infrastructure)
     {
-        // This should use feature.Id, just like GetConstruct<T>
-        StorageAccountFeature? account = features.FindAll<StorageAccountFeature>().FirstOrDefault();
-        if (account == default)
+        FeatureCollection features = infrastructure.Features;
+        if (!features.TryGet(out StorageAccountFeature? storageAccount))
         {
-            account = new(projectId);
-            features.Append(account);
+            storageAccount = new(infrastructure.ProjectId);
+            features.Append(storageAccount);
         }
-        Account = account;
+        Account = storageAccount;
     }
 
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
@@ -76,12 +80,14 @@ public class BlobServiceFeature : AzureProjectFeature
         }
         StorageAccount storageAccount = infrastructure.GetConstruct<StorageAccount>(Account.Id);
 
-        BlobService blobService = new("cm_storage_blobs")
+        BlobService blobService = new("storageBlobService")
         {
             Parent = storageAccount
         };
         infrastructure.AddConstruct(Id, blobService);
     }
+
+    public override string ToString() => $"{this.GetType().Name} {this.Id}";
 }
 
 public class BlobContainerFeature : AzureProjectFeature
@@ -89,27 +95,28 @@ public class BlobContainerFeature : AzureProjectFeature
     public string ContainerName { get; }
     public BlobServiceFeature? Service { get; set; }
 
-    public BlobContainerFeature(string containerName = "default")
+    public BlobContainerFeature(string containerName)
+        : base($"{typeof(BlobContainerFeature).Name}_{containerName}")
     {
         ContainerName = containerName;
     }
 
-    protected internal override void EmitFeatures(FeatureCollection features, string projectId)
+    protected internal override void EmitFeatures(ProjectInfrastructure infrastructure)
     {
-        // TODO: is it OK that we return the first one?
-        BlobServiceFeature? blobBervice = features.FindAll<BlobServiceFeature>().FirstOrDefault();
-        if (blobBervice == default)
+        FeatureCollection features = infrastructure.Features;
+        string projectId = infrastructure.ProjectId;
+        if (!features.TryGet(out StorageAccountFeature? storageAccount))
         {
-            StorageAccountFeature? storageAccount = features.FindAll<StorageAccountFeature>().FirstOrDefault();
-            if (storageAccount == default)
-            {
-                storageAccount = new(projectId);
-                features.Append(storageAccount);
-            }
+            storageAccount = new(projectId);
+            features.Append(storageAccount);
+        }
 
+        if (!features.TryGet(out BlobServiceFeature? blobBervice))
+        {
             blobBervice = new BlobServiceFeature() { Account = storageAccount };
             features.Append(blobBervice);
         }
+
         Service = blobBervice;
     }
 
@@ -121,7 +128,7 @@ public class BlobContainerFeature : AzureProjectFeature
         }
 
         BlobService blobService = infrastructure.GetConstruct<BlobService>(Service.Id);
-        BlobContainer blobContainer = new($"cm_storage_blobs_container_{ContainerName}", "2023-01-01")
+        BlobContainer blobContainer = new($"storageBlobContainer_{ContainerName}", "2023-01-01")
         {
             Parent = blobService,
             Name = ContainerName
@@ -133,4 +140,6 @@ public class BlobContainerFeature : AzureProjectFeature
             $"https://{Service.Account.Name}.blob.core.windows.net/{ContainerName}"
         );
     }
+
+    public override string ToString() => $"{this.GetType().Name} {this.Id} {ContainerName}";
 }
