@@ -6,7 +6,6 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Identity;
-using Azure.Security.KeyVault.Certificates.Tests;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Samples
