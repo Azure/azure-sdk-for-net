@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace System.ClientModel;
+namespace System.ClientModel.Auth;
 
 /// <summary>
 /// Represents an OAuth token and its metadata.

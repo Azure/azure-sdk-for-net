@@ -1,11 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Auth;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Auth;
+namespace System.ClientModel;
 
 /// <summary>
 /// The base class for all <see cref="TokenProvider"/> implementations.

@@ -122,6 +122,16 @@ namespace Azure.Core
 }
 namespace System.ClientModel
 {
+    public abstract partial class TokenProvider
+    {
+        protected TokenProvider() { }
+        public abstract System.ClientModel.Auth.GetTokenOptions? CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
+        public abstract System.ClientModel.Auth.AccessToken GetToken(System.ClientModel.Auth.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Auth.AccessToken> GetTokenAsync(System.ClientModel.Auth.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken);
+    }
+}
+namespace System.ClientModel.Auth
+{
     public partial class AccessToken
     {
         public AccessToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) { }
@@ -130,11 +140,8 @@ namespace System.ClientModel
         public virtual bool SupportRefresh { get { throw null; } }
         public string TokenType { get { throw null; } }
         public string TokenValue { get { throw null; } }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.AccessToken> RefreshAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.Auth.AccessToken> RefreshAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-}
-namespace System.ClientModel.Auth
-{
     public partial class GetTokenOptions
     {
         public const string AuthorizationUrlPropertyName = "authorizationUrl";
@@ -148,15 +155,8 @@ namespace System.ClientModel.Auth
     }
     public partial class OAuth2BearerTokenAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
-        public OAuth2BearerTokenAuthenticationPolicy(System.ClientModel.Auth.TokenProvider tokenProvider, System.Collections.Generic.IEnumerable<System.Collections.Generic.IReadOnlyDictionary<string, object>> contexts) { }
+        public OAuth2BearerTokenAuthenticationPolicy(System.ClientModel.TokenProvider tokenProvider, System.Collections.Generic.IEnumerable<System.Collections.Generic.IReadOnlyDictionary<string, object>> contexts) { }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
-    }
-    public abstract partial class TokenProvider
-    {
-        protected TokenProvider() { }
-        public abstract System.ClientModel.Auth.GetTokenOptions? CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
-        public abstract System.ClientModel.AccessToken GetToken(System.ClientModel.Auth.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.AccessToken> GetTokenAsync(System.ClientModel.Auth.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken);
     }
 }
