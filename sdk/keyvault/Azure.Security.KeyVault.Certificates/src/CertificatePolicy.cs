@@ -36,7 +36,6 @@ namespace Azure.Security.KeyVault.Certificates
         private const string EnabledPropertyName = "enabled";
         private const string CreatedPropertyName = "created";
         private const string UpdatedPropertyName = "updated";
-        private const string PreserveCertOrderPropertyName = "preserveCertOrder";
 
         private static readonly JsonEncodedText s_keyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
         private static readonly JsonEncodedText s_reuseKeyPropertyNameBytes = JsonEncodedText.Encode(ReuseKeyPropertyName);
@@ -56,7 +55,6 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_ekusPropertyNameBytes = JsonEncodedText.Encode(EkusPropertyName);
         private static readonly JsonEncodedText s_validityMonthsPropertyNameBytes = JsonEncodedText.Encode(ValidityMonthsPropertyName);
         private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
-        private static readonly JsonEncodedText s_preserveCertOrderPropertyNameBytes = JsonEncodedText.Encode(PreserveCertOrderPropertyName);
 
         private IssuerParameters _issuer;
 
@@ -267,12 +265,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         public IList<LifetimeAction> LifetimeActions { get; } = new List<LifetimeAction>();
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the certificate chain preserves its original order.
-        /// The default value is false, which sets the leaf certificate at index 0.
-        /// </summary>
-        public bool? PreserveCertOrder { get; set; }
-
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())
@@ -304,10 +296,6 @@ namespace Azure.Security.KeyVault.Certificates
                         {
                             LifetimeActions.Add(LifetimeAction.FromJsonObject(actionElem));
                         }
-                        break;
-
-                    case PreserveCertOrderPropertyName:
-                        PreserveCertOrder = prop.Value.GetBoolean();
                         break;
                 }
             }
@@ -381,11 +369,6 @@ namespace Azure.Security.KeyVault.Certificates
                 }
 
                 json.WriteEndArray();
-            }
-
-            if (PreserveCertOrder.HasValue)
-            {
-                json.WriteBoolean(s_preserveCertOrderPropertyNameBytes, PreserveCertOrder.Value);
             }
         }
 

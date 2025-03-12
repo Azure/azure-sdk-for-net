@@ -1158,100 +1158,26 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [RecordedTest]
         public async Task ImportCertificateWithPreserveCertOrder()
         {
-            string certName = Recording.GenerateId();
+            string certName = $"cert-{Recording.GenerateId()}";
             CertificateClient client = GetClient();
 
-            var certBytes = Encoding.ASCII.GetBytes(CertificateTestsUtils.s_pem);
-            var policy = CertificatePolicy.Default;
-            var tags = new Dictionary<string, string>
+            byte[] certificateBytes = Encoding.ASCII.GetBytes(PemCertificateWithV3Extensions);
+            ImportCertificateOptions importOptions = new ImportCertificateOptions(certName, certificateBytes)
             {
-                { "tag1", "value1" },
-                { "tag2", "value2" }
-            };
-
-            var importOptions = new ImportCertificateOptions(certName, certBytes)
-            {
-                Policy = policy,
-                Enabled = true,
+                Policy = new CertificatePolicy(WellKnownIssuerNames.Self, "CN=contoso.com")
+                {
+                    ContentType = CertificateContentType.Pem,
+                    Exportable = true
+                },
                 PreserveCertOrder = true
             };
 
-            foreach (var tag in tags)
-            {
-                importOptions.Tags.Add(tag);
-            }
+            KeyVaultCertificateWithPolicy cert =  await client.ImportCertificateAsync(importOptions);
 
-            KeyVaultCertificateWithPolicy cert = await client.ImportCertificateAsync(importOptions);
-
-            Assert.That(cert, Is.Not.Null);
-            Assert.That(cert.Name, Is.EqualTo(certName));
-            Assert.That(cert.Properties.Enabled, Is.True);
-            Assert.That(cert.Properties.Tags, Is.EquivalentTo(tags));
-        }
-
-        [RecordedTest]
-        public void StartCreateCertificateWithPreserveCertOrderSync()
-        {
-            string certName = Recording.GenerateId();
-            CertificateClient client = GetClient();
-
-            var policy = CertificatePolicy.Default;
-            var tags = new Dictionary<string, string>
-            {
-                { "tag1", "value1" },
-                { "tag2", "value2" }
-            };
-
-            CertificateOperation operation = client.StartCreateCertificate(
-                certName,
-                policy,
-                enabled: true,
-                tags: tags,
-                preserveCertOrder: true);
-
-            Assert.That(operation, Is.Not.Null);
-            Assert.That(operation.Properties.Name, Is.EqualTo(certName));
-
-            KeyVaultCertificateWithPolicy cert = operation.WaitForCompletion();
-
-            Assert.That(cert, Is.Not.Null);
-            Assert.That(cert.Name, Is.EqualTo(certName));
-            Assert.That(cert.Properties.Enabled, Is.True);
-            Assert.That(cert.Properties.Tags, Is.EquivalentTo(tags));
-        }
-
-        [RecordedTest]
-        public void ImportCertificateWithPreserveCertOrderSync()
-        {
-            string certName = Recording.GenerateId();
-            CertificateClient client = GetClient();
-
-            var certBytes = Encoding.ASCII.GetBytes(CertificateTestsUtils.s_pem);
-            var policy = CertificatePolicy.Default;
-            var tags = new Dictionary<string, string>
-            {
-                { "tag1", "value1" },
-                { "tag2", "value2" }
-            };
-
-            var importOptions = new ImportCertificateOptions(certName, certBytes)
-            {
-                Policy = policy,
-                Enabled = true,
-                PreserveCertOrder = true
-            };
-
-            foreach (var tag in tags)
-            {
-                importOptions.Tags.Add(tag);
-            }
-
-            KeyVaultCertificateWithPolicy cert = client.ImportCertificate(importOptions);
-
-            Assert.That(cert, Is.Not.Null);
-            Assert.That(cert.Name, Is.EqualTo(certName));
-            Assert.That(cert.Properties.Enabled, Is.True);
-            Assert.That(cert.Properties.Tags, Is.EquivalentTo(tags));
+            Assert.NotNull(cert.Cer, "Certificate should have a cer");
+            Assert.AreEqual(certName, cert.Name, "Certificate name should match the expected name");
+            Assert.IsTrue(cert.Properties.Enabled, "Certificate should be enabled");
+            Assert.IsTrue(cert.PreserveCertOrder, "Certificate should preserve the certificate order");
         }
     }
 }

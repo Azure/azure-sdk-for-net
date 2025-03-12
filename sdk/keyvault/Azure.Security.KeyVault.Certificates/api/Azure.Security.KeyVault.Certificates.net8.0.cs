@@ -274,7 +274,6 @@ namespace Azure.Security.KeyVault.Certificates
         public Azure.Security.KeyVault.Certificates.CertificateKeyType? KeyType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.CertificateKeyUsage> KeyUsage { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.LifetimeAction> LifetimeActions { get { throw null; } }
-        public bool? PreserveCertOrder { get { throw null; } set { } }
         public bool? ReuseKey { get { throw null; } set { } }
         public string Subject { get { throw null; } }
         public Azure.Security.KeyVault.Certificates.SubjectAlternativeNames SubjectAlternativeNames { get { throw null; } }
