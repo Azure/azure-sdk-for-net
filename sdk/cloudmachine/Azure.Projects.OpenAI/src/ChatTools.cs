@@ -50,6 +50,37 @@ public class ChatTools
     }
 
     /// <summary>
+    /// Adds tool definitions from a JSON array in BinaryData format.
+    /// </summary>
+    /// <param name="toolDefinitions">BinaryData containing a JSON array of tool definitions</param>
+    /// <exception cref="ArgumentNullException">Thrown when toolDefinitions is null</exception>
+    /// <exception cref="JsonException">Thrown when JSON parsing fails</exception>
+    public void Add(BinaryData toolDefinitions)
+    {
+        using var document = JsonDocument.Parse(toolDefinitions);
+        var tools = document.RootElement.EnumerateArray();
+
+        foreach (var tool in tools)
+        {
+            var name = tool.GetProperty("name").GetString()!;
+            var description = tool.GetProperty("description").GetString()!;
+            var inputSchema = tool.GetProperty("inputSchema").GetRawText();
+
+            var chatTool = ChatTool.CreateFunctionTool(
+                name,
+                description,
+                BinaryData.FromString(inputSchema));
+
+            _definitions.Add(chatTool);
+
+            // Create a generic method that forwards the call to the Call method
+            MethodInfo genericMethod = GetType()
+                .GetMethod(nameof(Call), [typeof(string), typeof(object[])])!;
+            _methods[name] = genericMethod;
+        }
+    }
+
+    /// <summary>
     /// Adds a set of functions to the chat functions.
     /// </summary>
     /// <param name="functions"></param>
