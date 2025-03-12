@@ -2,14 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.Metrics;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventGrid.Tests
@@ -25,6 +24,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
         private ResourceGroupResource ResourceGroup { get; set; }
         private EventGridNamespaceCollection NamespaceCollection { get; set; }
 
+        // For live tests, replace "SANITIZED_FUNCTION_KEY" with the actual function key
+        // from the Azure Portal for the function "EventGridTrigger1" in "devexpfuncappdestination".
+        private const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=SANITIZED_FUNCTION_KEY";
         private async Task SetCollection()
         {
             // This test relies on the existence of the 'TestRG' resource group within the subscription, ensuring that system topics and related resources (such as Key Vault) are deployed within the same resource group for validation
@@ -55,6 +57,15 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var createSystemTopicResponse = (await SystemTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, systemTopicName, data)).Value;
             Assert.NotNull(createSystemTopicResponse);
             Assert.AreEqual(createSystemTopicResponse.Data.ProvisioningState, EventGridResourceProvisioningState.Succeeded);
+
+            // List all system topics under resource group
+            var systemTopicsUnderResourceGroup = await ResourceGroup.GetSystemTopics().GetAllAsync().ToEnumerableAsync();
+            Assert.AreEqual(systemTopicsUnderResourceGroup.Count, 1);
+
+            // List all system topics under subscription
+            var systemTopicsInAzureSubscription = await DefaultSubscription.GetSystemTopicsAsync().ToEnumerableAsync();
+            Assert.AreEqual(systemTopicsInAzureSubscription.Count, 2);
+
             var SystemTopicEventSubscriptionsCollection = createSystemTopicResponse.GetSystemTopicEventSubscriptions();
 
             EventGridSubscriptionData eventSubscriptionData = new EventGridSubscriptionData()
@@ -121,55 +132,16 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.NotNull(listSystemTopicsResponseAfterDeletion);
             Assert.AreEqual(listSystemTopicsResponseAfterDeletion.Count, 0);
 
-            // delete system topic
+            // Delete the System Topic
             await createSystemTopicResponse.DeleteAsync(WaitUntil.Completed);
+            var resultFalse = (await SystemTopicCollection.ExistsAsync(systemTopicName)).Value;
+            Assert.IsFalse(resultFalse);
         }
 
         [Test]
         public async Task SystemTopicWithNamespaceTopicDestinationCreateGetUpdateDelete()
         {
             await SetCollection();
-
-            // Setup Namespace topic
-            /*var namespaceName = Recording.GenerateAssetName("sdk-Namespace-");
-            var namespaceTopicName = Recording.GenerateAssetName("sdk-Namespace-Topic");
-            var namespaceSkuName = "Standard";
-            var namespaceSku = new NamespaceSku()
-            {
-                Name = namespaceSkuName,
-                Capacity = 1,
-            };
-            AzureLocation location = new AzureLocation("eastus", "eastus");
-            UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity();
-            var nameSpace = new EventGridNamespaceData(location)
-            {
-                Tags = {
-                    {"originalTag1", "originalValue1"},
-                    {"originalTag2", "originalValue2"}
-                },
-                Sku = namespaceSku,
-                IsZoneRedundant = true,
-                TopicSpacesConfiguration = new TopicSpacesConfiguration()
-                {
-                    State = TopicSpacesConfigurationState.Enabled
-                },
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
-            };
-            nameSpace.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/b6a8bef9-9220-454a-a229-f360b6e9f0f6/resourcegroups/TestRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdktestuseridentity"), userAssignedIdentity);
-            var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
-            Assert.NotNull(createNamespaceResponse);
-            Assert.AreEqual(createNamespaceResponse.Data.Name, namespaceName);
-            var namespaceTopicsCollection = createNamespaceResponse.GetNamespaceTopics();
-            Assert.NotNull(namespaceTopicsCollection);
-
-            var namespaceTopic = new NamespaceTopicData()
-            {
-                EventRetentionInDays = 1
-            };
-            var namespaceTopicsResponse1 = (await namespaceTopicsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicName, namespaceTopic)).Value;
-            Assert.NotNull(namespaceTopicsResponse1);
-            Assert.AreEqual(namespaceTopicsResponse1.Data.ProvisioningState, NamespaceTopicProvisioningState.Succeeded);*/
-
             // Create system topic and create subscription to namespace topic for that system topic
             string systemTopicName = Recording.GenerateAssetName("sdk-SystemTopic-");
             string systemTopicEventSubscriptionName1 = Recording.GenerateAssetName("sdk-EventSubscription-");
@@ -191,6 +163,19 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var createSystemTopicResponse = (await SystemTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, systemTopicName, data)).Value;
             Assert.NotNull(createSystemTopicResponse);
             Assert.AreEqual(createSystemTopicResponse.Data.ProvisioningState, EventGridResourceProvisioningState.Succeeded);
+
+            // Update the system topic
+            SystemTopicPatch systemTopicPatch = new SystemTopicPatch()
+            {
+                Tags = {
+                    {"updatedTag1", "updatedValue1"},
+                    {"updatedTag2", "updatedValue2"}
+                }
+            };
+            var updateSystemTopicResponse = (await createSystemTopicResponse.UpdateAsync(WaitUntil.Completed, systemTopicPatch)).Value;
+            Assert.NotNull(updateSystemTopicResponse);
+            Assert.AreEqual(updateSystemTopicResponse.Data.Name, systemTopicName);
+
             var SystemTopicEventSubscriptionsCollection = createSystemTopicResponse.GetSystemTopicEventSubscriptions();
 
             var namespaceTopicDestination = new DeliveryWithResourceIdentity()
@@ -208,11 +193,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             EventGridSubscriptionData eventSubscriptionData = new EventGridSubscriptionData()
             {
-                /*Destination = new NamespaceTopicEventSubscriptionDestination
-                {
-                    EndpointType = EndpointType.NamespaceTopic,
-                    ResourceId = createNamespaceResponse.Id
-                },*/
                 Filter = new EventSubscriptionFilter()
                 {
                     SubjectBeginsWith = "ExamplePrefix",
@@ -261,11 +241,10 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var listSystemTopicsResponseAfterDeletion = await eventSubscriptionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.NotNull(listSystemTopicsResponseAfterDeletion);
             Assert.AreEqual(listSystemTopicsResponseAfterDeletion.Count, 0);
-
-            // delete system topic and namespace
+            // Delete the System Topic
             await createSystemTopicResponse.DeleteAsync(WaitUntil.Completed);
-            //await namespaceTopicsResponse1.DeleteAsync(WaitUntil.Completed);
-            //await createNamespaceResponse.DeleteAsync(WaitUntil.Completed);
+            var resultFalse = (await SystemTopicCollection.ExistsAsync(systemTopicName)).Value;
+            Assert.IsFalse(resultFalse);
         }
     }
 }
