@@ -32,6 +32,8 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override long MaxSupportedChunkSize => Constants.Blob.Page.MaxPageBlockBytes;
 
+        protected override int MaxSupportedChunkCount => int.MaxValue;
+
         protected override long? Length => ResourceProperties?.ResourceLength;
 
         public PageBlobStorageResource()

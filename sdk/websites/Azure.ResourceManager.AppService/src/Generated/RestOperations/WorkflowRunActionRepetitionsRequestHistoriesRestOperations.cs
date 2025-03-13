@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         RequestHistoryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RequestHistoryListResult.DeserializeRequestHistoryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         RequestHistoryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RequestHistoryListResult.DeserializeRequestHistoryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebAppRequestHistoryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WebAppRequestHistoryData.DeserializeWebAppRequestHistoryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebAppRequestHistoryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WebAppRequestHistoryData.DeserializeWebAppRequestHistoryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         RequestHistoryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RequestHistoryListResult.DeserializeRequestHistoryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         RequestHistoryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RequestHistoryListResult.DeserializeRequestHistoryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

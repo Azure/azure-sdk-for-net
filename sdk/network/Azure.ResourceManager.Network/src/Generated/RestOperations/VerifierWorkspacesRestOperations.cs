@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         VerifierWorkspaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VerifierWorkspaceListResult.DeserializeVerifierWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         VerifierWorkspaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VerifierWorkspaceListResult.DeserializeVerifierWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkVerifierWorkspaceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkVerifierWorkspaceData.DeserializeNetworkVerifierWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkVerifierWorkspaceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkVerifierWorkspaceData.DeserializeNetworkVerifierWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Network
                 case 201:
                     {
                         NetworkVerifierWorkspaceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkVerifierWorkspaceData.DeserializeNetworkVerifierWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Network
                 case 201:
                     {
                         NetworkVerifierWorkspaceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkVerifierWorkspaceData.DeserializeNetworkVerifierWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkVerifierWorkspaceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkVerifierWorkspaceData.DeserializeNetworkVerifierWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkVerifierWorkspaceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkVerifierWorkspaceData.DeserializeNetworkVerifierWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         VerifierWorkspaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VerifierWorkspaceListResult.DeserializeVerifierWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         VerifierWorkspaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VerifierWorkspaceListResult.DeserializeVerifierWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

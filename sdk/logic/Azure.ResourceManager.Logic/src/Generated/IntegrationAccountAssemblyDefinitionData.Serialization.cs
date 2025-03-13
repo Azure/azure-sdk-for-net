@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Logic
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIntegrationAccountAssemblyDefinitionData(document.RootElement, options);
                     }
                 default:

@@ -4,14 +4,11 @@
 using Azure.Core;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
-using Microsoft.Generator.CSharp.Expressions;
-using Microsoft.Generator.CSharp.Input;
-using Microsoft.Generator.CSharp.Primitives;
-using Microsoft.Generator.CSharp.Providers;
-using Microsoft.Generator.CSharp.Snippets;
+using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using NUnit.Framework;
 using System;
-using System.Buffers;
 using System.ClientModel.Primitives;
 using System.Net;
 using System.Text.Json;

@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Resources
                 case 201:
                     {
                         PredefinedTagValue value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PredefinedTagValue.DeserializePredefinedTagValue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Resources
                 case 201:
                     {
                         PredefinedTagValue value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PredefinedTagValue.DeserializePredefinedTagValue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Resources
                 case 201:
                     {
                         PredefinedTag value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PredefinedTag.DeserializePredefinedTag(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Resources
                 case 201:
                     {
                         PredefinedTag value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PredefinedTag.DeserializePredefinedTag(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PredefinedTagsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PredefinedTagsListResult.DeserializePredefinedTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PredefinedTagsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PredefinedTagsListResult.DeserializePredefinedTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TagResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TagResourceData.DeserializeTagResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TagResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TagResourceData.DeserializeTagResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PredefinedTagsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PredefinedTagsListResult.DeserializePredefinedTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PredefinedTagsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PredefinedTagsListResult.DeserializePredefinedTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

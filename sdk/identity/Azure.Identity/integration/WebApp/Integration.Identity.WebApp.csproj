@@ -7,9 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Blobs" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Integration.Identity.Common\Integration.Identity.Common.csproj" />
   </ItemGroup>
 

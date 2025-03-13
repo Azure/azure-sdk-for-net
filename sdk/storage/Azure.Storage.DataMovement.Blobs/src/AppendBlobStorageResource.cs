@@ -31,6 +31,8 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override long MaxSupportedChunkSize => Constants.Blob.Append.MaxAppendBlockBytes;
 
+        protected override int MaxSupportedChunkCount => Constants.Blob.Append.MaxBlocks;
+
         protected override long? Length => ResourceProperties?.ResourceLength;
 
         internal AppendBlobStorageResource()

@@ -44,6 +44,8 @@ extends:
     Artifacts:
     - name: Azure.Core
       safeName: AzureCore
+      triggeringPaths:
+      - /sdk/resourcemanager/
     - name: Azure.Core.Experimental
       safeName: AzureCoreExperimental
     - name: Azure.Core.Expressions.DataFactory

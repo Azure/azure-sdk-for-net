@@ -65,6 +65,8 @@ Please see the examples for [Blobs][blobs_examples], [Queues][queues_examples], 
 
 All Azure Storage services will throw a [RequestFailedException][RequestFailedException]
 with helpful [`ErrorCode`s][error_codes].
+If multiple failures occur, an [AggregateException][AggregateException] will be thrown,
+containing each failure instance.
 
 ## Next steps
 
@@ -84,8 +86,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc].
 For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Common%2FREADME.png)
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Common/src
@@ -115,3 +115,4 @@ additional questions or comments.
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
+[AggregateException]: https://learn.microsoft.com/dotnet/api/system.aggregateexception?view=net-9.0

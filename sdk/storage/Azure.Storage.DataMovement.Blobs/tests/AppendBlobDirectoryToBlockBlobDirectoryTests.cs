@@ -31,7 +31,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string objectName = null,
             Stream contents = null,
             CancellationToken cancellationToken = default)
-            => CreateBlockBlobAsync(container, objectName, contents, cancellationToken);
+            => CreateBlockBlobAsync(container, objectLength, objectName, contents, cancellationToken);
 
         protected override Task CreateObjectInSourceAsync(
             BlobContainerClient container,
@@ -65,14 +65,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
             return new BlobStorageResourceContainer(containerClient, new BlobStorageResourceContainerOptions()
             {
-                BlobDirectoryPrefix = directoryPath,
+                BlobPrefix = directoryPath,
                 BlobType = BlobType.Block,
                 BlobOptions = options
             });
         }
 
         protected override StorageResourceContainer GetSourceStorageResourceContainer(BlobContainerClient containerClient, string directoryPath)
-            => new BlobStorageResourceContainer(containerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = BlobType.Append });
+            => new BlobStorageResourceContainer(containerClient, new BlobStorageResourceContainerOptions() { BlobPrefix = directoryPath, BlobType = BlobType.Append });
 
         protected internal override BlockBlobClient GetDestinationBlob(BlobContainerClient containerClient, string blobName)
             => containerClient.GetBlockBlobClient(blobName);

@@ -129,7 +129,7 @@ namespace Azure.AI.Projects
         /// <param name="properties">
         /// The properties of the resource
         /// Please note <see cref="Projects.ConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Projects.ConnectionPropertiesApiKeyAuth"/>.
+        /// The available derived classes include <see cref="Projects.ConnectionPropertiesApiKeyAuth"/> and <see cref="Projects.InternalConnectionPropertiesNoAuth"/>.
         /// </param>
         /// <returns> A new <see cref="Projects.ConnectionResponse"/> instance for mocking. </returns>
         public static ConnectionResponse ConnectionResponse(string id = null, string name = null, ConnectionProperties properties = null)
@@ -162,6 +162,15 @@ namespace Azure.AI.Projects
         public static CredentialsApiKeyAuth CredentialsApiKeyAuth(string key = null)
         {
             return new CredentialsApiKeyAuth(key, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.InternalConnectionPropertiesNoAuth"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="target"> The connection URL to be used for this service. </param>
+        /// <returns> A new <see cref="Projects.InternalConnectionPropertiesNoAuth"/> instance for mocking. </returns>
+        public static InternalConnectionPropertiesNoAuth InternalConnectionPropertiesNoAuth(ConnectionType category = default, string target = null)
+        {
+            return new InternalConnectionPropertiesNoAuth(AuthenticationType.None, category, target, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.AzureFunctionBinding"/>. </summary>
@@ -839,10 +848,8 @@ namespace Azure.AI.Projects
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="fileSearch"> Reserved for future use. </param>
         /// <returns> A new <see cref="Projects.RunStepDeltaFileSearchToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaFileSearchToolCall RunStepDeltaFileSearchToolCall(int index = default, string id = null, IReadOnlyDictionary<string, string> fileSearch = null)
+        public static RunStepDeltaFileSearchToolCall RunStepDeltaFileSearchToolCall(int index = default, string id = null, RunStepFileSearchToolCallResults fileSearch = null)
         {
-            fileSearch ??= new Dictionary<string, string>();
-
             return new RunStepDeltaFileSearchToolCall(index, id, "file_search", serializedAdditionalRawData: null, fileSearch);
         }
 

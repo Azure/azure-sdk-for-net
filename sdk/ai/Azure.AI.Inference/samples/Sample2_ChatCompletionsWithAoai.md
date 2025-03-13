@@ -7,7 +7,7 @@ This sample demonstrates how to get a chat completions response from the service
 Set these two environment variables before running the sample:
 
 1. AZURE_OPENAI_CHAT_ENDPOINT - Your AOAI endpoint URL, with partial path, in the form `https://<your-unique-resouce-name>.openai.azure.com/openai/deployments/<your-deployment-name>` where `your-unique-resource-name` is your globally unique AOAI resource name, and `your-deployment-name` is your AI Model deployment name. For example: `https://your-unique-host.openai.azure.com/openai/deployments/gpt-4-turbo`
-2. AZURE_OPENAI_CHAT_KEY - Your model key (a 32-character string). Keep it secret. This is only required for key authentication.
+2. AZURE_OPENAI_CHAT_KEY - Your model key. Keep it secret. This is only required for key authentication.
 
 In order to target AOAI, the auth key must currently be provided as a separate header. This can be done by creating a `HttpPipelinePolicy` like below:
 

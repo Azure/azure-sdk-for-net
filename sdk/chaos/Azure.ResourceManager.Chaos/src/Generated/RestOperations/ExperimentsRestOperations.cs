@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ExperimentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExperimentListResult.DeserializeExperimentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ExperimentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExperimentListResult.DeserializeExperimentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ExperimentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExperimentListResult.DeserializeExperimentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ExperimentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExperimentListResult.DeserializeExperimentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ChaosExperimentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChaosExperimentData.DeserializeChaosExperimentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ChaosExperimentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChaosExperimentData.DeserializeChaosExperimentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ExperimentExecutionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExperimentExecutionListResult.DeserializeExperimentExecutionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ExperimentExecutionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExperimentExecutionListResult.DeserializeExperimentExecutionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ChaosExperimentExecutionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChaosExperimentExecutionData.DeserializeChaosExperimentExecutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -955,7 +955,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ChaosExperimentExecutionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChaosExperimentExecutionData.DeserializeChaosExperimentExecutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ExperimentExecutionDetails value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExperimentExecutionDetails.DeserializeExperimentExecutionDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1059,7 +1059,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ExperimentExecutionDetails value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExperimentExecutionDetails.DeserializeExperimentExecutionDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1110,7 +1110,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ExperimentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExperimentListResult.DeserializeExperimentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1139,7 +1139,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ExperimentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExperimentListResult.DeserializeExperimentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1192,7 +1192,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ExperimentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExperimentListResult.DeserializeExperimentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1223,7 +1223,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ExperimentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExperimentListResult.DeserializeExperimentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1276,7 +1276,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ExperimentExecutionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExperimentExecutionListResult.DeserializeExperimentExecutionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1307,7 +1307,7 @@ namespace Azure.ResourceManager.Chaos
                 case 200:
                     {
                         ExperimentExecutionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExperimentExecutionListResult.DeserializeExperimentExecutionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

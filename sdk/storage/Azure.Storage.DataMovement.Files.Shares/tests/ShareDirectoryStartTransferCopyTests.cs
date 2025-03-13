@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 extern alias BaseShares;
+extern alias DMShare;
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.Tests;
 using BaseShares::Azure.Storage.Files.Shares;
 using BaseShares::Azure.Storage.Files.Shares.Models;
@@ -18,6 +18,7 @@ using NUnit.Framework;
 using System.Threading;
 using Azure.Core;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -285,6 +286,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
                 Assert.AreEqual(_defaultFileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
                 Assert.AreEqual(_defaultFileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
+                Assert.AreEqual(_defaultFileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.Preserve)
             {
@@ -298,6 +300,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
                 Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
                 Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
 
                 // Check if the permissions are the same. Permission Keys will be different as they are defined by the share service.
                 ShareClient sourceShareClient = sourceClient.GetParentShareClient();
@@ -319,6 +322,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
                 Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
                 Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
             }
         }
 
@@ -363,71 +367,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 };
             }
             return options;
-        }
-
-        private async Task CopyRemoteObjects_VerifyProperties(
-            ShareClient sourceContainer,
-            ShareClient destinationContainer,
-            TransferPropertiesTestType propertiesType)
-        {
-            // Arrange
-            int size = Constants.KB;
-            string sourcePrefix = "sourceFolder";
-            string destPrefix = "destFolder";
-            await CreateDirectoryInSourceAsync(sourceContainer, sourcePrefix);
-            string itemName1 = string.Join("/", sourcePrefix, GetNewObjectName());
-            string itemName2 = string.Join("/", sourcePrefix, GetNewObjectName());
-            await CreateShareFileAsync(sourceContainer, size, itemName1, propertiesType: propertiesType);
-            await CreateShareFileAsync(sourceContainer, size, itemName2, propertiesType: propertiesType);
-
-            string subDirName = string.Join("/", sourcePrefix, "bar");
-            await CreateDirectoryInSourceAsync(sourceContainer, subDirName);
-            string itemName3 = string.Join("/", subDirName, GetNewObjectName());
-            await CreateShareFileAsync(sourceContainer, size, itemName3, propertiesType: propertiesType);
-
-            string subDirName2 = string.Join("/", sourcePrefix, "pik");
-            await CreateDirectoryInSourceAsync(sourceContainer, subDirName2);
-            string itemName4 = string.Join("/", subDirName2, GetNewObjectName());
-            await CreateShareFileAsync(sourceContainer, size, itemName4, propertiesType: propertiesType);
-
-            await CreateDirectoryInDestinationAsync(destinationContainer, destPrefix);
-
-            // Create storage resource containers
-            StorageResourceContainer sourceResource =
-                GetSourceStorageResourceContainer(sourceContainer, sourcePrefix);
-            StorageResourceContainer destinationResource =
-                GetDestinationStorageResourceContainer(destinationContainer, destPrefix, propertiesType);
-
-            // Create Transfer Manager
-            TransferOptions options = new TransferOptions();
-            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-            TransferManager transferManager = new TransferManager();
-
-            // Start transfer and await for completion.
-            TransferOperation transfer = await transferManager.StartTransferAsync(
-                sourceResource,
-                destinationResource,
-                options).ConfigureAwait(false);
-
-            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await TestTransferWithTimeout.WaitForCompletionAsync(
-                transfer,
-                testEventsRaised,
-                tokenSource.Token);
-
-            // Verify completion
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            await testEventsRaised.AssertContainerCompletedCheck(4);
-
-            // Assert
-            await VerifyResultsAsync(
-                sourceContainer,
-                sourcePrefix,
-                destinationContainer,
-                destPrefix,
-                propertiesType);
         }
     }
 }

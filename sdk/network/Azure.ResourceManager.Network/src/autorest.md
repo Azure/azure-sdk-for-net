@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/5dc3201e0fd56e77cd54d8f79867af4d3f57a51b/specification/network/resource-manager/readme.md
-# tag: package-2024-05
+require: https://github.com/Azure/azure-rest-api-specs/blob/177b67dfa65d476ac941b157ca42eec440e98cb0/specification/network/resource-manager/readme.md
+tag: package-2024-06-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -24,9 +24,11 @@ sample-gen:
     - VirtualMachineScaleSetVMs_ListPublicIPAddresses
     - VirtualMachineScaleSetVMs_ListNetworkInterfaces
     - VirtualMachineScaleSets_GetNetworkInterface
+    - NetworkSecurityPerimeterOperationStatus_Get
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 model-namespace: true
 public-clients: false
@@ -38,6 +40,8 @@ resource-model-requires-type: false
 
 rename-mapping:
   Access: NetworkAccess
+  AssociationAccessMode: NetworkSecurityPerimeterAssociationAccessMode
+  AccessRuleDirection: NetworkSecurityPerimeterAccessRuleDirection
   Action: RouteMapAction
   ActionType: RuleMatchActionType
   ActiveConfigurationParameter.regions: -|azure-location
@@ -132,6 +136,7 @@ rename-mapping:
   IsGlobal: GlobalMeshSupportFlag
   IssueType: ConnectivityIssueType
   IsWorkloadProtected: WorkloadProtectedFlag
+  LoadBalancingRulePropertiesFormat: LoadBalancingRuleProperties
   MigratedPools: MigrateLoadBalancerToIPBasedResult
   NetworkManagerConnection.properties.networkManagerId: -|arm-id
   NetworkManagerDeploymentStatus.deploymentStatus: DeploymentState
@@ -162,6 +167,8 @@ rename-mapping:
   QosDefinition: DscpQosDefinition
   QueryRequestOptions: NetworkManagementQueryContent
   QueryResults: IdpsSignatureListResult
+  PerimeterAssociableResource: NetworkSecurityPerimeterAssociableResourceType
+  PerimeterBasedAccessRule: NetworkSecurityPerimeterBasedAccessRule
   ResiliencyModel: ExpressRouteGatewayResiliencyModel
   Resource: NetworkTrackedResourceData
   ResourceBasics: IpamResourceBasics
@@ -219,7 +226,6 @@ rename-mapping:
   VpnPacketCaptureStartParameters: VpnPacketCaptureStartContent
   VpnPacketCaptureStopParameters: VpnPacketCaptureStopContent
   VpnPolicyMemberAttributeType.AADGroupId: AadGroupId
-  LoadBalancingRulePropertiesFormat: LoadBalancingRuleProperties
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps
@@ -289,6 +295,7 @@ acronym-mapping:
   IKEv2: IkeV2
   IkeV2: IkeV2
   Stag: STag|stag
+  Nsp: NetworkSecurityPerimeter
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:
@@ -347,6 +354,9 @@ directive:
   - remove-operation: 'GetActiveSessions'
   - remove-operation: 'DisconnectActiveSessions'
   - remove-operation: 'VirtualNetworks_ListDdosProtectionStatus'
+  - remove-operation: 'NetworkSecurityPerimeterAssociations_Reconcile'
+  - remove-operation: 'NetworkSecurityPerimeterAccessRules_Reconcile'
+  - remove-operation: 'NetworkSecurityPerimeterOperationStatus_Get'
   # This part is for generate partial class in network
   # these operations are renamed because their api-versions are different from others in the same operation group
   # - rename-operation:

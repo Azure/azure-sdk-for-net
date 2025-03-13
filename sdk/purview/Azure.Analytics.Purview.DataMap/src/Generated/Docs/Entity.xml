@@ -62,16 +62,22 @@ AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
         Version = 0L,
         Contacts =
         {
-            ["Expert"] = {new ContactInfo
+            ["Expert"] = new ContactInfo[]
             {
-                Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
-                Info = "Example Expert Info",
-            }},
-            ["Owner"] = {new ContactInfo
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Expert Info",
+                }
+            },
+            ["Owner"] = new ContactInfo[]
             {
-                Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
-                Info = "Example Owner Info",
-            }}
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Owner Info",
+                }
+            }
         },
     },
 };
@@ -140,16 +146,22 @@ AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
         Version = 0L,
         Contacts =
         {
-            ["Expert"] = {new ContactInfo
+            ["Expert"] = new ContactInfo[]
             {
-                Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
-                Info = "Example Expert Info",
-            }},
-            ["Owner"] = {new ContactInfo
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Expert Info",
+                }
+            },
+            ["Owner"] = new ContactInfo[]
             {
-                Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
-                Info = "Example Owner Info",
-            }}
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Owner Info",
+                }
+            }
         },
     },
 };
@@ -217,16 +229,22 @@ AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
         Version = 0L,
         Contacts =
         {
-            ["Expert"] = {new ContactInfo
+            ["Expert"] = new ContactInfo[]
             {
-                Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
-                Info = "Example Expert Info",
-            }},
-            ["Owner"] = {new ContactInfo
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Expert Info",
+                }
+            },
+            ["Owner"] = new ContactInfo[]
             {
-                Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
-                Info = "Example Owner Info",
-            }}
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Owner Info",
+                }
+            }
         },
     },
 };
@@ -295,16 +313,22 @@ AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
         Version = 0L,
         Contacts =
         {
-            ["Expert"] = {new ContactInfo
+            ["Expert"] = new ContactInfo[]
             {
-                Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
-                Info = "Example Expert Info",
-            }},
-            ["Owner"] = {new ContactInfo
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Expert Info",
+                }
+            },
+            ["Owner"] = new ContactInfo[]
             {
-                Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
-                Info = "Example Owner Info",
-            }}
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Owner Info",
+                }
+            }
         },
     },
 };
@@ -733,16 +757,22 @@ AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo
         Version = 0L,
         Contacts =
         {
-            ["Expert"] = {new ContactInfo
+            ["Expert"] = new ContactInfo[]
             {
-                Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
-                Info = "Example Expert Info",
-            }},
-            ["Owner"] = {new ContactInfo
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Expert Info",
+                }
+            },
+            ["Owner"] = new ContactInfo[]
             {
-                Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
-                Info = "Example Owner Info",
-            }}
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Owner Info",
+                }
+            }
         },
     }, new AtlasEntity
     {
@@ -763,16 +793,22 @@ AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo
         Version = 0L,
         Contacts =
         {
-            ["Expert"] = {new ContactInfo
+            ["Expert"] = new ContactInfo[]
             {
-                Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
-                Info = "Example Expert Info",
-            }},
-            ["Owner"] = {new ContactInfo
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Expert Info",
+                }
+            },
+            ["Owner"] = new ContactInfo[]
             {
-                Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
-                Info = "Example Owner Info",
-            }}
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Owner Info",
+                }
+            }
         },
     }},
 };
@@ -809,16 +845,22 @@ AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo
         Version = 0L,
         Contacts =
         {
-            ["Expert"] = {new ContactInfo
+            ["Expert"] = new ContactInfo[]
             {
-                Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
-                Info = "Example Expert Info",
-            }},
-            ["Owner"] = {new ContactInfo
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Expert Info",
+                }
+            },
+            ["Owner"] = new ContactInfo[]
             {
-                Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
-                Info = "Example Owner Info",
-            }}
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Owner Info",
+                }
+            }
         },
     }, new AtlasEntity
     {
@@ -839,16 +881,22 @@ AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo
         Version = 0L,
         Contacts =
         {
-            ["Expert"] = {new ContactInfo
+            ["Expert"] = new ContactInfo[]
             {
-                Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
-                Info = "Example Expert Info",
-            }},
-            ["Owner"] = {new ContactInfo
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Expert Info",
+                }
+            },
+            ["Owner"] = new ContactInfo[]
             {
-                Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
-                Info = "Example Owner Info",
-            }}
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Owner Info",
+                }
+            }
         },
     }},
 };
