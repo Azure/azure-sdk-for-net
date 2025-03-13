@@ -17,7 +17,7 @@ using BasicTypeSpec.Models;
 
 namespace BasicTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> This is a sample typespec project. </summary>
     public partial class BasicTypeSpecClient
     {
         private readonly Uri _endpoint;

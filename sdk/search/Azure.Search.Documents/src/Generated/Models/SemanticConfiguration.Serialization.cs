@@ -19,6 +19,11 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("prioritizedFields"u8);
             writer.WriteObjectValue(PrioritizedFields);
+            if (Optional.IsDefined(FlightingOptIn))
+            {
+                writer.WritePropertyName("flightingOptIn"u8);
+                writer.WriteBooleanValue(FlightingOptIn.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -30,6 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             SemanticPrioritizedFields prioritizedFields = default;
+            bool? flightingOptIn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -42,8 +48,17 @@ namespace Azure.Search.Documents.Indexes.Models
                     prioritizedFields = SemanticPrioritizedFields.DeserializeSemanticPrioritizedFields(property.Value);
                     continue;
                 }
+                if (property.NameEquals("flightingOptIn"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    flightingOptIn = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new SemanticConfiguration(name, prioritizedFields);
+            return new SemanticConfiguration(name, prioritizedFields, flightingOptIn);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

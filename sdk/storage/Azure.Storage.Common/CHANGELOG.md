@@ -1,10 +1,16 @@
 # Release History
 
-## 12.23.0-beta.2 (Unreleased)
+## 12.24.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.23.0 (2025-03-11)
 
 ### Bugs Fixed
 - Fixed bug where in rare cases, a `NullReferenceException` could be thrown when parsing an error response from the service.

@@ -49,7 +49,7 @@ export async function typeSpecCompile(
   const namespace = `
     @versioned(Versions)
     ${authDecorator}
-    @service({
+    @service(#{
       title: "Azure Csharp emitter Testing",
     })
 
@@ -117,6 +117,7 @@ export async function createCSharpSdkContext(
     ...context,
     logger: new Logger(program.program, LoggerLevel.INFO),
     __typeCache: {
+      crossLanguageDefinitionIds: new Map(),
       types: new Map(),
       models: new Map(),
       enums: new Map(),

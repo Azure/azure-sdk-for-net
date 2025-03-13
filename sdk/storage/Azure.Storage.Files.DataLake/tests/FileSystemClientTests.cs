@@ -2393,6 +2393,19 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2025_07_05)]
+        public async Task GetSetAccesPolicy_OAuth()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_OAuth();
+            await using DisposingFileSystem test = await GetNewFileSystem(service);
+
+            // Act
+            Response<FileSystemAccessPolicy> response = await test.FileSystem.GetAccessPolicyAsync();
+            await test.FileSystem.SetAccessPolicyAsync(permissions: response.Value.SignedIdentifiers);
+        }
+
+        [RecordedTest]
         public async Task SetAccessPolicyAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
