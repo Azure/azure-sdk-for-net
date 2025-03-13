@@ -27,8 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             VaultModelResource vault = await rg.GetVaultModels().GetAsync(
                 RecoveryServicesDataReplicationManagementTestUtilities.DefaultVaultName);
 
-            Random random = new Random();
-            var policyName = $"policy{random.Next(0, 101)}";
+            var policyName = $"policy{IsAsync.ToString()}123";
             var policyModelData = new PolicyModelData
             {
                 Properties = new Models.PolicyModelProperties

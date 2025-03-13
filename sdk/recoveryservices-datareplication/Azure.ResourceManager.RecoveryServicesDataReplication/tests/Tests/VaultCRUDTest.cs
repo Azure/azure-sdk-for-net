@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
     public class VaultCRUDTest: RecoveryServicesDataReplicationManagementTestBase
     {
         public VaultCRUDTest(bool isAsync)
-            : base(isAsync, RecordedTestMode.Playback)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                     },
             };
 
-            Random random = new Random();
-            var vaultName = $"vault{random.Next(0, 101)}";
+            var vaultName = $"vault{IsAsync.ToString()}123";
+
             var vaultCreateOperation = await rg.GetVaultModels().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 vaultName,
