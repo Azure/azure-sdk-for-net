@@ -1414,6 +1414,19 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2025_07_05)]
+        public async Task GetSetAccessPolicyAsync_OAuth()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+
+            // Act
+            Response<BlobContainerAccessPolicy> response = await test.Container.GetAccessPolicyAsync();
+            await test.Container.SetAccessPolicyAsync(permissions: response.Value.SignedIdentifiers);
+        }
+
+        [RecordedTest]
         public async Task SetAccessPolicyAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -4426,6 +4439,18 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 containerClient.GetAccountInfoAsync(),
                 e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2025_07_05)]
+        public async Task GetAccountInfoAsync_OAuth()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+
+            // Act
+            await test.Container.GetAccountInfoAsync();
         }
 
         [RecordedTest]
