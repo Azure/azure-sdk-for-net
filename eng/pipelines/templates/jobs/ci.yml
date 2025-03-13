@@ -101,7 +101,6 @@ jobs:
             SDKType: ${{ parameters.SDKType }}
             CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
             AOTTestInputs: ${{ parameters.AOTTestInputs }}
-            BuildSnippets: ${{ parameters.BuildSnippets }}
 
     - job: "Analyze"
       timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
