@@ -15,10 +15,6 @@
 - Fixed the sncMode property of the LinkedService in SAPTable.
 - Fixed the problem of an unknown linked service type 'LakeHouse'.
 
-### Other Changes
-
-- Updated README.md
-
 ## 1.6.0 (2024-11-11)
 
 ### Features Added
