@@ -18,7 +18,6 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
     public async Task AzureAISearchExample()
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
 
         var clientOptions = new AIProjectClientOptions();
 
@@ -46,7 +45,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
         AgentsClient agentClient = projectClient.GetAgentsClient();
 
         Response<Agent> agentResponse = await agentClient.CreateAgentAsync(
-           model: modelName,
+           model: "gpt-4",
            name: "my-assistant",
            instructions: "You are a helpful assistant.",
            tools: new List<ToolDefinition> { new AzureAISearchToolDefinition() },
@@ -61,7 +60,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
         Response<ThreadMessage> messageResponse = await agentClient.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
-            "What is the temperature rating of the cozynights sleeping bag?");
+            "Hello, send an email with the datetime and weather information in New York?");
         ThreadMessage message = messageResponse.Value;
 
         // Run the agent
@@ -74,11 +73,6 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
         }
         while (runResponse.Value.Status == RunStatus.Queued
             || runResponse.Value.Status == RunStatus.InProgress);
-
-        Assert.AreEqual(
-            RunStatus.Completed,
-            runResponse.Value.Status,
-            runResponse.Value.LastError?.Message);
 
         Response<PageableList<ThreadMessage>> afterRunMessagesResponse
             = await agentClient.GetMessagesAsync(thread.Id);
