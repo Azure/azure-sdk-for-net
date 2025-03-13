@@ -104,8 +104,8 @@ steps:
       arguments: >
         -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo"
         -SdkType "${{ parameters.SDKType }}"
-        -DiagnosticArguments "$(DiagnosticArguments)"
         -ProjectNames "$(ProjectNames)"
+        -DiagnosticArguments "$(DiagnosticArguments)"
       pwsh: true
 
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:

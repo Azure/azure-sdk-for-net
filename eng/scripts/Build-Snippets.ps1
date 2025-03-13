@@ -4,9 +4,9 @@ param(
     [Parameter(Mandatory=$true)]
     [string] $SdkType,
     [Parameter(Mandatory=$true)]
-    [string] $DiagnosticArguments,
-    [Parameter(Mandatory=$true)]
-    [string] $ProjectNames
+    [string] $ProjectNames,
+    [Parameter(Mandatory=$false)]
+    [string] $DiagnosticArguments
 )
 . $PSScriptRoot/generate-dependency-functions.ps1
 
