@@ -96,6 +96,16 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("highAvailabilityReplicaCount"u8);
                 writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
             }
+            if (Optional.IsDefined(PreferredEnclaveType))
+            {
+                writer.WritePropertyName("preferredEnclaveType"u8);
+                writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
+            }
+            if (Optional.IsDefined(AvailabilityZone))
+            {
+                writer.WritePropertyName("availabilityZone"u8);
+                writer.WriteStringValue(AvailabilityZone.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -136,6 +146,8 @@ namespace Azure.ResourceManager.Sql
             ElasticPoolLicenseType? licenseType = default;
             ResourceIdentifier maintenanceConfigurationId = default;
             int? highAvailabilityReplicaCount = default;
+            SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default;
+            SqlAvailabilityZoneType? availabilityZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -287,6 +299,24 @@ namespace Azure.ResourceManager.Sql
                             highAvailabilityReplicaCount = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("preferredEnclaveType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            preferredEnclaveType = new SqlAlwaysEncryptedEnclaveType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("availabilityZone"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            availabilityZone = new SqlAvailabilityZoneType(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -314,6 +344,8 @@ namespace Azure.ResourceManager.Sql
                 licenseType,
                 maintenanceConfigurationId,
                 highAvailabilityReplicaCount,
+                preferredEnclaveType,
+                availabilityZone,
                 serializedAdditionalRawData);
         }
 
@@ -604,6 +636,36 @@ namespace Azure.ResourceManager.Sql
                 {
                     builder.Append("    highAvailabilityReplicaCount: ");
                     builder.AppendLine($"{HighAvailabilityReplicaCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreferredEnclaveType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    preferredEnclaveType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PreferredEnclaveType))
+                {
+                    builder.Append("    preferredEnclaveType: ");
+                    builder.AppendLine($"'{PreferredEnclaveType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AvailabilityZone), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    availabilityZone: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AvailabilityZone))
+                {
+                    builder.Append("    availabilityZone: ");
+                    builder.AppendLine($"'{AvailabilityZone.Value.ToString()}'");
                 }
             }
 

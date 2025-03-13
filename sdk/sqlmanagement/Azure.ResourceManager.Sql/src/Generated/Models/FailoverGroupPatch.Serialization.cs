@@ -63,9 +63,29 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in FailoverDatabases)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PartnerServers))
+            {
+                writer.WritePropertyName("partnerServers"u8);
+                writer.WriteStartArray();
+                foreach (var item in PartnerServers)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SecondaryType))
+            {
+                writer.WritePropertyName("secondaryType"u8);
+                writer.WriteStringValue(SecondaryType.Value.ToString());
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -108,7 +128,9 @@ namespace Azure.ResourceManager.Sql.Models
             IDictionary<string, string> tags = default;
             FailoverGroupReadWriteEndpoint readWriteEndpoint = default;
             FailoverGroupReadOnlyEndpoint readOnlyEndpoint = default;
-            IList<string> databases = default;
+            IList<ResourceIdentifier> databases = default;
+            IList<PartnerServerInfo> partnerServers = default;
+            FailoverGroupDatabasesSecondaryType? secondaryType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,12 +182,42 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
                             }
                             databases = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("partnerServers"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<PartnerServerInfo> array = new List<PartnerServerInfo>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(PartnerServerInfo.DeserializePartnerServerInfo(item, options));
+                            }
+                            partnerServers = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("secondaryType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            secondaryType = new FailoverGroupDatabasesSecondaryType(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -177,7 +229,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FailoverGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), readWriteEndpoint, readOnlyEndpoint, databases ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new FailoverGroupPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                readWriteEndpoint,
+                readOnlyEndpoint,
+                databases ?? new ChangeTrackingList<ResourceIdentifier>(),
+                partnerServers ?? new ChangeTrackingList<PartnerServerInfo>(),
+                secondaryType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverGroupPatch>.Write(ModelReaderWriterOptions options)

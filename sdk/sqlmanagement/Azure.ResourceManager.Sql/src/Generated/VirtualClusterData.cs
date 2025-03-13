@@ -65,16 +65,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="subnetId"> Subnet resource ID for the virtual cluster. </param>
-        /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
+        /// <param name="version"> Virtual cluster version. </param>
         /// <param name="childResources"> List of resources in this virtual cluster. </param>
-        /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this virtual cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier subnetId, string family, IReadOnlyList<string> childResources, ResourceIdentifier maintenanceConfigurationId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier subnetId, string version, IReadOnlyList<string> childResources, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             SubnetId = subnetId;
-            Family = family;
+            Version = version;
             ChildResources = childResources;
-            MaintenanceConfigurationId = maintenanceConfigurationId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -86,6 +84,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Subnet resource ID for the virtual cluster. </summary>
         [WirePath("properties.subnetId")]
         public ResourceIdentifier SubnetId { get; }
+        /// <summary> Virtual cluster version. </summary>
+        [WirePath("properties.version")]
+        public string Version { get; set; }
         /// <summary> List of resources in this virtual cluster. </summary>
         [WirePath("properties.childResources")]
         public IReadOnlyList<string> ChildResources { get; }

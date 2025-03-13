@@ -51,37 +51,6 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetInstancePools_ListInstancePoolsInTheSubscription()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/ListInstancePoolsBySubscriptionId.json
-            // this example is just showing the usage of "InstancePools_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (InstancePoolResource item in subscriptionResource.GetInstancePoolsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                InstancePoolData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetCapabilitiesByLocation_ListSubscriptionCapabilitiesInTheGivenLocation()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/LocationCapabilityListByLocation.json
@@ -107,10 +76,10 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetLongTermRetentionBackupsWithLocation_GetAllLongTermRetentionBackupsUnderTheLocation()
+        public async Task GetSyncDatabaseIdsSyncGroups_GetASyncDatabaseID()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/LongTermRetentionBackupListByLocation.json
-            // this example is just showing the usage of "LongTermRetentionBackups_ListByLocation" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/SyncGroupGetSyncDatabaseId.json
+            // this example is just showing the usage of "SyncGroups_ListSyncDatabaseIds" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -124,41 +93,10 @@ namespace Azure.ResourceManager.Sql.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            AzureLocation locationName = new AzureLocation("japaneast");
-            await foreach (LongTermRetentionBackupData item in subscriptionResource.GetLongTermRetentionBackupsWithLocationAsync(locationName))
+            AzureLocation locationName = new AzureLocation("westus");
+            await foreach (SubResource item in subscriptionResource.GetSyncDatabaseIdsSyncGroupsAsync(locationName))
             {
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {item.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetLongTermRetentionBackupsWithServer_GetAllLongTermRetentionBackupsUnderTheServer()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/LongTermRetentionBackupListByServer.json
-            // this example is just showing the usage of "LongTermRetentionBackups_ListByServer" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation locationName = new AzureLocation("japaneast");
-            string longTermRetentionServerName = "testserver";
-            await foreach (LongTermRetentionBackupData item in subscriptionResource.GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName))
-            {
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {item.Id}");
+                Console.WriteLine($"Succeeded: {item}");
             }
 
             Console.WriteLine("Succeeded");
@@ -225,9 +163,40 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetVirtualClusters_ListVirtualClusters()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/VirtualClusterList.json
+            // this example is just showing the usage of "VirtualClusters_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20d7082a-0fc7-4468-82bd-542694d5042b";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (VirtualClusterResource item in subscriptionResource.GetVirtualClustersAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VirtualClusterData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetManagedInstances_ListManagedInstances()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/ManagedInstanceList.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedInstanceList.json
             // this example is just showing the usage of "ManagedInstances_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -258,7 +227,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetManagedInstances_ListManagedInstancesWithExpandAdministratorsActivedirectory()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/ManagedInstanceListWithExpandEqualsAdministrators.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedInstanceListWithExpandEqualsAdministrators.json
             // this example is just showing the usage of "ManagedInstances_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -287,9 +256,99 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetInstancePools_ListInstancePoolsInTheSubscription()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/ListInstancePoolsBySubscriptionId.json
+            // this example is just showing the usage of "InstancePools_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (InstancePoolResource item in subscriptionResource.GetInstancePoolsAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                InstancePoolData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetLongTermRetentionBackupsWithLocation_GetAllLongTermRetentionBackupsUnderTheLocation()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/LongTermRetentionBackupListByLocation.json
+            // this example is just showing the usage of "LongTermRetentionBackups_ListByLocation" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation locationName = new AzureLocation("japaneast");
+            await foreach (LongTermRetentionBackupData item in subscriptionResource.GetLongTermRetentionBackupsWithLocationAsync(locationName))
+            {
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {item.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetLongTermRetentionBackupsWithServer_GetAllLongTermRetentionBackupsUnderTheServer()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/LongTermRetentionBackupListByServer.json
+            // this example is just showing the usage of "LongTermRetentionBackups_ListByServer" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation locationName = new AzureLocation("japaneast");
+            string longTermRetentionServerName = "testserver";
+            await foreach (LongTermRetentionBackupData item in subscriptionResource.GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName))
+            {
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {item.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckSqlServerNameAvailability_CheckForAServerNameThatAlreadyExists()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/CheckNameAvailabilityServerAlreadyExists.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/CheckNameAvailabilityServerAlreadyExists.json
             // this example is just showing the usage of "Servers_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -314,7 +373,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckSqlServerNameAvailability_CheckForAServerNameThatIsAvailable()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/CheckNameAvailabilityServerAvailable.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/CheckNameAvailabilityServerAvailable.json
             // this example is just showing the usage of "Servers_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -339,7 +398,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckSqlServerNameAvailability_CheckForAServerNameThatIsInvalid()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/CheckNameAvailabilityServerInvalid.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/CheckNameAvailabilityServerInvalid.json
             // this example is just showing the usage of "Servers_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -364,7 +423,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetSqlServers_ListServers()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/ServerList.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/ServerList.json
             // this example is just showing the usage of "Servers_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -395,7 +454,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetSqlServers_ListServersWithExpandAdministratorsActivedirectory()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/ServerListWithExpandEqualsAdministrators.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/ServerListWithExpandEqualsAdministrators.json
             // this example is just showing the usage of "Servers_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -415,65 +474,6 @@ namespace Azure.ResourceManager.Sql.Samples
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
                 SqlServerData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetSyncDatabaseIdsSyncGroups_GetASyncDatabaseID()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/SyncGroupGetSyncDatabaseId.json
-            // this example is just showing the usage of "SyncGroups_ListSyncDatabaseIds" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation locationName = new AzureLocation("westus");
-            await foreach (SubResource item in subscriptionResource.GetSyncDatabaseIdsSyncGroupsAsync(locationName))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetVirtualClusters_ListVirtualClusters()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/VirtualClusterList.json
-            // this example is just showing the usage of "VirtualClusters_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "20d7082a-0fc7-4468-82bd-542694d5042b";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (VirtualClusterResource item in subscriptionResource.GetVirtualClustersAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualClusterData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

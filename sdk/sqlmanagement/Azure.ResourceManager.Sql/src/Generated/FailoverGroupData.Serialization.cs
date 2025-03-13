@@ -102,6 +102,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(SecondaryType))
+            {
+                writer.WritePropertyName("secondaryType"u8);
+                writer.WriteStringValue(SecondaryType.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -137,6 +142,7 @@ namespace Azure.ResourceManager.Sql
             string replicationState = default;
             IList<PartnerServerInfo> partnerServers = default;
             IList<ResourceIdentifier> databases = default;
+            FailoverGroupDatabasesSecondaryType? secondaryType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,6 +270,15 @@ namespace Azure.ResourceManager.Sql
                             databases = array;
                             continue;
                         }
+                        if (property0.NameEquals("secondaryType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            secondaryType = new FailoverGroupDatabasesSecondaryType(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -286,6 +301,7 @@ namespace Azure.ResourceManager.Sql
                 replicationState,
                 partnerServers ?? new ChangeTrackingList<PartnerServerInfo>(),
                 databases ?? new ChangeTrackingList<ResourceIdentifier>(),
+                secondaryType,
                 serializedAdditionalRawData);
         }
 
@@ -422,16 +438,11 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ReadOnlyEndpointFailoverPolicy", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReadOnlyEndpoint), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    readOnlyEndpoint: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      readOnlyEndpoint: {");
-                builder.Append("        failoverPolicy: ");
                 builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
             }
             else
             {
@@ -528,6 +539,21 @@ namespace Azure.ResourceManager.Sql
                         }
                         builder.AppendLine("    ]");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    secondaryType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecondaryType))
+                {
+                    builder.Append("    secondaryType: ");
+                    builder.AppendLine($"'{SecondaryType.Value.ToString()}'");
                 }
             }
 

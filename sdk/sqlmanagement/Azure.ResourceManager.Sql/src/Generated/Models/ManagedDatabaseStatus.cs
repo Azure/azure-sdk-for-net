@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.Sql.Models
         private const string InaccessibleValue = "Inaccessible";
         private const string RestoringValue = "Restoring";
         private const string UpdatingValue = "Updating";
+        private const string StoppingValue = "Stopping";
+        private const string StoppedValue = "Stopped";
+        private const string StartingValue = "Starting";
+        private const string DBMovingValue = "DbMoving";
+        private const string DBCopyingValue = "DbCopying";
 
         /// <summary> Online. </summary>
         public static ManagedDatabaseStatus Online { get; } = new ManagedDatabaseStatus(OnlineValue);
@@ -44,6 +49,16 @@ namespace Azure.ResourceManager.Sql.Models
         public static ManagedDatabaseStatus Restoring { get; } = new ManagedDatabaseStatus(RestoringValue);
         /// <summary> Updating. </summary>
         public static ManagedDatabaseStatus Updating { get; } = new ManagedDatabaseStatus(UpdatingValue);
+        /// <summary> Stopping. </summary>
+        public static ManagedDatabaseStatus Stopping { get; } = new ManagedDatabaseStatus(StoppingValue);
+        /// <summary> Stopped. </summary>
+        public static ManagedDatabaseStatus Stopped { get; } = new ManagedDatabaseStatus(StoppedValue);
+        /// <summary> Starting. </summary>
+        public static ManagedDatabaseStatus Starting { get; } = new ManagedDatabaseStatus(StartingValue);
+        /// <summary> DbMoving. </summary>
+        public static ManagedDatabaseStatus DBMoving { get; } = new ManagedDatabaseStatus(DBMovingValue);
+        /// <summary> DbCopying. </summary>
+        public static ManagedDatabaseStatus DBCopying { get; } = new ManagedDatabaseStatus(DBCopyingValue);
         /// <summary> Determines if two <see cref="ManagedDatabaseStatus"/> values are the same. </summary>
         public static bool operator ==(ManagedDatabaseStatus left, ManagedDatabaseStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedDatabaseStatus"/> values are not the same. </summary>

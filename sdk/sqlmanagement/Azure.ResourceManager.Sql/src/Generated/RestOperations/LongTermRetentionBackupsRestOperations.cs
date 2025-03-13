@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-11-01";
+            _apiVersion = apiVersion ?? "2023-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -519,6 +519,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(backupName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -568,6 +569,114 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var message = CreateDeleteRequest(subscriptionId, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateChangeAccessTierRequestUri(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionServers/", false);
+            uri.AppendPath(longTermRetentionServerName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(longTermRetentionDatabaseName, true);
+            uri.AppendPath("/longTermRetentionBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendPath("/changeAccessTier", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateChangeAccessTierRequest(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionServers/", false);
+            uri.AppendPath(longTermRetentionServerName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(longTermRetentionDatabaseName, true);
+            uri.AppendPath("/longTermRetentionBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendPath("/changeAccessTier", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(changeLongTermRetentionBackupAccessTierParameters, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Change a long term retention backup access tier. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="locationName"> The <see cref="AzureLocation"/> to use. </param>
+        /// <param name="longTermRetentionServerName"> The <see cref="string"/> to use. </param>
+        /// <param name="longTermRetentionDatabaseName"> The <see cref="string"/> to use. </param>
+        /// <param name="backupName"> The <see cref="string"/> to use. </param>
+        /// <param name="changeLongTermRetentionBackupAccessTierParameters"> The <see cref="ChangeLongTermRetentionBackupAccessTierParameters"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/> or <paramref name="changeLongTermRetentionBackupAccessTierParameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ChangeAccessTierAsync(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            Argument.AssertNotNull(changeLongTermRetentionBackupAccessTierParameters, nameof(changeLongTermRetentionBackupAccessTierParameters));
+
+            using var message = CreateChangeAccessTierRequest(subscriptionId, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, changeLongTermRetentionBackupAccessTierParameters);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Change a long term retention backup access tier. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="locationName"> The <see cref="AzureLocation"/> to use. </param>
+        /// <param name="longTermRetentionServerName"> The <see cref="string"/> to use. </param>
+        /// <param name="longTermRetentionDatabaseName"> The <see cref="string"/> to use. </param>
+        /// <param name="backupName"> The <see cref="string"/> to use. </param>
+        /// <param name="changeLongTermRetentionBackupAccessTierParameters"> The <see cref="ChangeLongTermRetentionBackupAccessTierParameters"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/> or <paramref name="changeLongTermRetentionBackupAccessTierParameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ChangeAccessTier(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            Argument.AssertNotNull(changeLongTermRetentionBackupAccessTierParameters, nameof(changeLongTermRetentionBackupAccessTierParameters));
+
+            using var message = CreateChangeAccessTierRequest(subscriptionId, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, changeLongTermRetentionBackupAccessTierParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -847,7 +956,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Lists the long term retention backups for a given location. </summary>
+        /// <summary> Lists the long term retention backups for a given location based on resource group. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -877,7 +986,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Lists the long term retention backups for a given location. </summary>
+        /// <summary> Lists the long term retention backups for a given location based on resource group. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -963,7 +1072,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Lists the long term retention backups for a given server. </summary>
+        /// <summary> Lists the long term retention backups for a given server based on resource groups. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -995,7 +1104,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Lists the long term retention backups for a given server. </summary>
+        /// <summary> Lists the long term retention backups for a given server based on resource groups. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -1087,7 +1196,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Lists all long term retention backups for a database. </summary>
+        /// <summary> Lists all long term retention backups for a database based on a particular resource group. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -1121,7 +1230,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Lists all long term retention backups for a database. </summary>
+        /// <summary> Lists all long term retention backups for a database based on a particular resource group. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -1314,6 +1423,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(backupName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -1367,6 +1477,122 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var message = CreateDeleteByResourceGroupRequest(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateChangeAccessTierByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionServers/", false);
+            uri.AppendPath(longTermRetentionServerName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(longTermRetentionDatabaseName, true);
+            uri.AppendPath("/longTermRetentionBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendPath("/changeAccessTier", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateChangeAccessTierByResourceGroupRequest(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionServers/", false);
+            uri.AppendPath(longTermRetentionServerName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(longTermRetentionDatabaseName, true);
+            uri.AppendPath("/longTermRetentionBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendPath("/changeAccessTier", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(changeLongTermRetentionBackupAccessTierParameters, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Change a long term retention backup access tier. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="locationName"> The <see cref="AzureLocation"/> to use. </param>
+        /// <param name="longTermRetentionServerName"> The <see cref="string"/> to use. </param>
+        /// <param name="longTermRetentionDatabaseName"> The <see cref="string"/> to use. </param>
+        /// <param name="backupName"> The <see cref="string"/> to use. </param>
+        /// <param name="changeLongTermRetentionBackupAccessTierParameters"> The <see cref="ChangeLongTermRetentionBackupAccessTierParameters"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/> or <paramref name="changeLongTermRetentionBackupAccessTierParameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ChangeAccessTierByResourceGroupAsync(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            Argument.AssertNotNull(changeLongTermRetentionBackupAccessTierParameters, nameof(changeLongTermRetentionBackupAccessTierParameters));
+
+            using var message = CreateChangeAccessTierByResourceGroupRequest(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, changeLongTermRetentionBackupAccessTierParameters);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Change a long term retention backup access tier. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="locationName"> The <see cref="AzureLocation"/> to use. </param>
+        /// <param name="longTermRetentionServerName"> The <see cref="string"/> to use. </param>
+        /// <param name="longTermRetentionDatabaseName"> The <see cref="string"/> to use. </param>
+        /// <param name="backupName"> The <see cref="string"/> to use. </param>
+        /// <param name="changeLongTermRetentionBackupAccessTierParameters"> The <see cref="ChangeLongTermRetentionBackupAccessTierParameters"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/> or <paramref name="changeLongTermRetentionBackupAccessTierParameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ChangeAccessTierByResourceGroup(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            Argument.AssertNotNull(changeLongTermRetentionBackupAccessTierParameters, nameof(changeLongTermRetentionBackupAccessTierParameters));
+
+            using var message = CreateChangeAccessTierByResourceGroupRequest(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, changeLongTermRetentionBackupAccessTierParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1890,7 +2116,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Lists the long term retention backups for a given location. </summary>
+        /// <summary> Lists the long term retention backups for a given location based on resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
@@ -1922,7 +2148,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Lists the long term retention backups for a given location. </summary>
+        /// <summary> Lists the long term retention backups for a given location based on resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
@@ -1976,7 +2202,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Lists the long term retention backups for a given server. </summary>
+        /// <summary> Lists the long term retention backups for a given server based on resource groups. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
@@ -2010,7 +2236,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Lists the long term retention backups for a given server. </summary>
+        /// <summary> Lists the long term retention backups for a given server based on resource groups. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
@@ -2066,7 +2292,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Lists all long term retention backups for a database. </summary>
+        /// <summary> Lists all long term retention backups for a database based on a particular resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
@@ -2102,7 +2328,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Lists all long term retention backups for a database. </summary>
+        /// <summary> Lists all long term retention backups for a database based on a particular resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>

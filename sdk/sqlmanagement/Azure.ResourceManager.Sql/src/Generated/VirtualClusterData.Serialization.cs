@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(Family))
+            if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("family"u8);
-                writer.WriteStringValue(Family);
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ChildResources))
             {
@@ -59,11 +59,6 @@ namespace Azure.ResourceManager.Sql
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(MaintenanceConfigurationId))
-            {
-                writer.WritePropertyName("maintenanceConfigurationId"u8);
-                writer.WriteStringValue(MaintenanceConfigurationId);
             }
             writer.WriteEndObject();
         }
@@ -95,9 +90,8 @@ namespace Azure.ResourceManager.Sql
             ResourceType type = default;
             SystemData systemData = default;
             ResourceIdentifier subnetId = default;
-            string family = default;
+            string version = default;
             IReadOnlyList<string> childResources = default;
-            ResourceIdentifier maintenanceConfigurationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,9 +157,9 @@ namespace Azure.ResourceManager.Sql
                             subnetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("family"u8))
+                        if (property0.NameEquals("version"u8))
                         {
-                            family = property0.Value.GetString();
+                            version = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("childResources"u8))
@@ -180,15 +174,6 @@ namespace Azure.ResourceManager.Sql
                                 array.Add(item.GetString());
                             }
                             childResources = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("maintenanceConfigurationId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maintenanceConfigurationId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -208,9 +193,8 @@ namespace Azure.ResourceManager.Sql
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 subnetId,
-                family,
+                version,
                 childResources ?? new ChangeTrackingList<string>(),
-                maintenanceConfigurationId,
                 serializedAdditionalRawData);
         }
 
@@ -344,25 +328,25 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Family), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    family: ");
+                builder.Append("    version: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(Family))
+                if (Optional.IsDefined(Version))
                 {
-                    builder.Append("    family: ");
-                    if (Family.Contains(Environment.NewLine))
+                    builder.Append("    version: ");
+                    if (Version.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{Family}'''");
+                        builder.AppendLine($"{Version}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{Family}'");
+                        builder.AppendLine($"'{Version}'");
                     }
                 }
             }
@@ -400,21 +384,6 @@ namespace Azure.ResourceManager.Sql
                         }
                         builder.AppendLine("    ]");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaintenanceConfigurationId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    maintenanceConfigurationId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaintenanceConfigurationId))
-                {
-                    builder.Append("    maintenanceConfigurationId: ");
-                    builder.AppendLine($"'{MaintenanceConfigurationId.ToString()}'");
                 }
             }
 

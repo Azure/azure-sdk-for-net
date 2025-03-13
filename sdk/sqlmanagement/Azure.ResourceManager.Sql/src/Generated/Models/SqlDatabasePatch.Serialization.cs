@@ -247,6 +247,52 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("federatedClientId"u8);
                 writer.WriteStringValue(FederatedClientId.Value);
             }
+            if (Optional.IsCollectionDefined(Keys))
+            {
+                writer.WritePropertyName("keys"u8);
+                writer.WriteStartObject();
+                foreach (var item in Keys)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(EncryptionProtector))
+            {
+                writer.WritePropertyName("encryptionProtector"u8);
+                writer.WriteStringValue(EncryptionProtector);
+            }
+            if (Optional.IsDefined(PreferredEnclaveType))
+            {
+                writer.WritePropertyName("preferredEnclaveType"u8);
+                writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
+            }
+            if (Optional.IsDefined(UseFreeLimit))
+            {
+                writer.WritePropertyName("useFreeLimit"u8);
+                writer.WriteBooleanValue(UseFreeLimit.Value);
+            }
+            if (Optional.IsDefined(FreeLimitExhaustionBehavior))
+            {
+                writer.WritePropertyName("freeLimitExhaustionBehavior"u8);
+                writer.WriteStringValue(FreeLimitExhaustionBehavior.Value.ToString());
+            }
+            if (Optional.IsDefined(ManualCutover))
+            {
+                writer.WritePropertyName("manualCutover"u8);
+                writer.WriteBooleanValue(ManualCutover.Value);
+            }
+            if (Optional.IsDefined(PerformCutover))
+            {
+                writer.WritePropertyName("performCutover"u8);
+                writer.WriteBooleanValue(PerformCutover.Value);
+            }
+            if (Optional.IsDefined(EncryptionProtectorAutoRotation))
+            {
+                writer.WritePropertyName("encryptionProtectorAutoRotation"u8);
+                writer.WriteBooleanValue(EncryptionProtectorAutoRotation.Value);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -326,6 +372,14 @@ namespace Azure.ResourceManager.Sql.Models
             bool? isLedgerOn = default;
             bool? isInfraEncryptionEnabled = default;
             Guid? federatedClientId = default;
+            IDictionary<string, SqlDatabaseKey> keys = default;
+            string encryptionProtector = default;
+            SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default;
+            bool? useFreeLimit = default;
+            FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = default;
+            bool? manualCutover = default;
+            bool? performCutover = default;
+            bool? encryptionProtectorAutoRotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -701,6 +755,79 @@ namespace Azure.ResourceManager.Sql.Models
                             federatedClientId = property0.Value.GetGuid();
                             continue;
                         }
+                        if (property0.NameEquals("keys"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, SqlDatabaseKey> dictionary = new Dictionary<string, SqlDatabaseKey>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, SqlDatabaseKey.DeserializeSqlDatabaseKey(property1.Value, options));
+                            }
+                            keys = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("encryptionProtector"u8))
+                        {
+                            encryptionProtector = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("preferredEnclaveType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            preferredEnclaveType = new SqlAlwaysEncryptedEnclaveType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("useFreeLimit"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useFreeLimit = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("freeLimitExhaustionBehavior"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            freeLimitExhaustionBehavior = new FreeLimitExhaustionBehavior(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("manualCutover"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            manualCutover = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("performCutover"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            performCutover = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("encryptionProtectorAutoRotation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryptionProtectorAutoRotation = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -752,6 +879,14 @@ namespace Azure.ResourceManager.Sql.Models
                 isLedgerOn,
                 isInfraEncryptionEnabled,
                 federatedClientId,
+                keys ?? new ChangeTrackingDictionary<string, SqlDatabaseKey>(),
+                encryptionProtector,
+                preferredEnclaveType,
+                useFreeLimit,
+                freeLimitExhaustionBehavior,
+                manualCutover,
+                performCutover,
+                encryptionProtectorAutoRotation,
                 serializedAdditionalRawData);
         }
 

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetsTheDatabaseDataMaskingPolicies()
+        public async Task Get_GetDataMaskingPolicy()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/DataMaskingPolicyGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/examples/DataMaskingPolicyGet.json
             // this example is just showing the usage of "DataMaskingPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,8 +34,7 @@ namespace Azure.ResourceManager.Sql.Samples
             string resourceGroupName = "sqlcrudtest-6852";
             string serverName = "sqlcrudtest-2080";
             string databaseName = "sqlcrudtest-331";
-            DataMaskingPolicyName dataMaskingPolicyName = DataMaskingPolicyName.Default;
-            ResourceIdentifier dataMaskingPolicyResourceId = DataMaskingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName, dataMaskingPolicyName);
+            ResourceIdentifier dataMaskingPolicyResourceId = DataMaskingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName);
             DataMaskingPolicyResource dataMaskingPolicy = client.GetDataMaskingPolicyResource(dataMaskingPolicyResourceId);
 
             // invoke the operation
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_CreateOrUpdateDataMaskingPolicyMax()
+        public async Task CreateOrUpdate_CreateOrUpdateDataMaskingPolicyMax()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/DataMaskingPolicyCreateOrUpdateMax.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/examples/DataMaskingPolicyCreateOrUpdateMax.json
             // this example is just showing the usage of "DataMaskingPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,8 +65,7 @@ namespace Azure.ResourceManager.Sql.Samples
             string resourceGroupName = "sqlcrudtest-6852";
             string serverName = "sqlcrudtest-2080";
             string databaseName = "sqlcrudtest-331";
-            DataMaskingPolicyName dataMaskingPolicyName = DataMaskingPolicyName.Default;
-            ResourceIdentifier dataMaskingPolicyResourceId = DataMaskingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName, dataMaskingPolicyName);
+            ResourceIdentifier dataMaskingPolicyResourceId = DataMaskingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName);
             DataMaskingPolicyResource dataMaskingPolicy = client.GetDataMaskingPolicyResource(dataMaskingPolicyResourceId);
 
             // invoke the operation
@@ -76,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Samples
                 DataMaskingState = DataMaskingState.Enabled,
                 ExemptPrincipals = "testuser;",
             };
-            ArmOperation<DataMaskingPolicyResource> lro = await dataMaskingPolicy.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<DataMaskingPolicyResource> lro = await dataMaskingPolicy.CreateOrUpdateAsync(WaitUntil.Completed, data);
             DataMaskingPolicyResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -88,9 +86,9 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_CreateOrUpdateDataMaskingPolicyMin()
+        public async Task CreateOrUpdate_CreateOrUpdateDataMaskingPolicyMin()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/DataMaskingPolicyCreateOrUpdateMin.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/examples/DataMaskingPolicyCreateOrUpdateMin.json
             // this example is just showing the usage of "DataMaskingPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,8 +102,7 @@ namespace Azure.ResourceManager.Sql.Samples
             string resourceGroupName = "sqlcrudtest-6852";
             string serverName = "sqlcrudtest-2080";
             string databaseName = "sqlcrudtest-331";
-            DataMaskingPolicyName dataMaskingPolicyName = DataMaskingPolicyName.Default;
-            ResourceIdentifier dataMaskingPolicyResourceId = DataMaskingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName, dataMaskingPolicyName);
+            ResourceIdentifier dataMaskingPolicyResourceId = DataMaskingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName);
             DataMaskingPolicyResource dataMaskingPolicy = client.GetDataMaskingPolicyResource(dataMaskingPolicyResourceId);
 
             // invoke the operation
@@ -113,7 +110,7 @@ namespace Azure.ResourceManager.Sql.Samples
             {
                 DataMaskingState = DataMaskingState.Enabled,
             };
-            ArmOperation<DataMaskingPolicyResource> lro = await dataMaskingPolicy.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<DataMaskingPolicyResource> lro = await dataMaskingPolicy.CreateOrUpdateAsync(WaitUntil.Completed, data);
             DataMaskingPolicyResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -125,40 +122,9 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetDataMaskingRules_GetsAListOfDatabaseDataMaskingRules()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/DataMaskingRuleListByDatabase.json
-            // this example is just showing the usage of "DataMaskingRules_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DataMaskingPolicyResource created on azure
-            // for more information of creating DataMaskingPolicyResource, please refer to the document of DataMaskingPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "sqlcrudtest-6852";
-            string serverName = "sqlcrudtest-2080";
-            string databaseName = "sqlcrudtest-331";
-            DataMaskingPolicyName dataMaskingPolicyName = DataMaskingPolicyName.Default;
-            ResourceIdentifier dataMaskingPolicyResourceId = DataMaskingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName, dataMaskingPolicyName);
-            DataMaskingPolicyResource dataMaskingPolicy = client.GetDataMaskingPolicyResource(dataMaskingPolicyResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (DataMaskingRule item in dataMaskingPolicy.GetDataMaskingRulesAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateDataMaskingRule_CreateUpdateDataMaskingRuleForDefaultMax()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/DataMaskingRuleCreateOrUpdateDefaultMax.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/examples/DataMaskingRuleCreateOrUpdateDefaultMax.json
             // this example is just showing the usage of "DataMaskingRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -172,19 +138,18 @@ namespace Azure.ResourceManager.Sql.Samples
             string resourceGroupName = "sqlcrudtest-6852";
             string serverName = "sqlcrudtest-2080";
             string databaseName = "sqlcrudtest-331";
-            DataMaskingPolicyName dataMaskingPolicyName = DataMaskingPolicyName.Default;
-            ResourceIdentifier dataMaskingPolicyResourceId = DataMaskingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName, dataMaskingPolicyName);
+            ResourceIdentifier dataMaskingPolicyResourceId = DataMaskingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName);
             DataMaskingPolicyResource dataMaskingPolicy = client.GetDataMaskingPolicyResource(dataMaskingPolicyResourceId);
 
             // invoke the operation
             string dataMaskingRuleName = "rule1";
             DataMaskingRule dataMaskingRule = new DataMaskingRule
             {
+                AliasName = "nickname",
                 RuleState = DataMaskingRuleState.Enabled,
                 SchemaName = "dbo",
                 TableName = "Table_1",
                 ColumnName = "test1",
-                AliasName = "nickname",
                 MaskingFunction = DataMaskingFunction.Default,
             };
             DataMaskingRule result = await dataMaskingPolicy.CreateOrUpdateDataMaskingRuleAsync(dataMaskingRuleName, dataMaskingRule);
@@ -196,7 +161,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateDataMaskingRule_CreateUpdateDataMaskingRuleForDefaultMin()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/DataMaskingRuleCreateOrUpdateDefaultMin.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/examples/DataMaskingRuleCreateOrUpdateDefaultMin.json
             // this example is just showing the usage of "DataMaskingRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -210,8 +175,7 @@ namespace Azure.ResourceManager.Sql.Samples
             string resourceGroupName = "sqlcrudtest-6852";
             string serverName = "sqlcrudtest-2080";
             string databaseName = "sqlcrudtest-331";
-            DataMaskingPolicyName dataMaskingPolicyName = DataMaskingPolicyName.Default;
-            ResourceIdentifier dataMaskingPolicyResourceId = DataMaskingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName, dataMaskingPolicyName);
+            ResourceIdentifier dataMaskingPolicyResourceId = DataMaskingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName);
             DataMaskingPolicyResource dataMaskingPolicy = client.GetDataMaskingPolicyResource(dataMaskingPolicyResourceId);
 
             // invoke the operation
@@ -232,7 +196,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateDataMaskingRule_CreateUpdateDataMaskingRuleForNumbers()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/DataMaskingRuleCreateOrUpdateNumber.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/examples/DataMaskingRuleCreateOrUpdateNumber.json
             // this example is just showing the usage of "DataMaskingRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -246,8 +210,7 @@ namespace Azure.ResourceManager.Sql.Samples
             string resourceGroupName = "sqlcrudtest-6852";
             string serverName = "sqlcrudtest-2080";
             string databaseName = "sqlcrudtest-331";
-            DataMaskingPolicyName dataMaskingPolicyName = DataMaskingPolicyName.Default;
-            ResourceIdentifier dataMaskingPolicyResourceId = DataMaskingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName, dataMaskingPolicyName);
+            ResourceIdentifier dataMaskingPolicyResourceId = DataMaskingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName);
             DataMaskingPolicyResource dataMaskingPolicy = client.GetDataMaskingPolicyResource(dataMaskingPolicyResourceId);
 
             // invoke the operation
@@ -270,7 +233,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateDataMaskingRule_CreateUpdateDataMaskingRuleForText()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/DataMaskingRuleCreateOrUpdateText.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/examples/DataMaskingRuleCreateOrUpdateText.json
             // this example is just showing the usage of "DataMaskingRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -284,8 +247,7 @@ namespace Azure.ResourceManager.Sql.Samples
             string resourceGroupName = "sqlcrudtest-6852";
             string serverName = "sqlcrudtest-2080";
             string databaseName = "sqlcrudtest-331";
-            DataMaskingPolicyName dataMaskingPolicyName = DataMaskingPolicyName.Default;
-            ResourceIdentifier dataMaskingPolicyResourceId = DataMaskingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName, dataMaskingPolicyName);
+            ResourceIdentifier dataMaskingPolicyResourceId = DataMaskingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName);
             DataMaskingPolicyResource dataMaskingPolicy = client.GetDataMaskingPolicyResource(dataMaskingPolicyResourceId);
 
             // invoke the operation
@@ -303,6 +265,36 @@ namespace Azure.ResourceManager.Sql.Samples
             DataMaskingRule result = await dataMaskingPolicy.CreateOrUpdateDataMaskingRuleAsync(dataMaskingRuleName, dataMaskingRule);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetDataMaskingRules_ListDataMaskingRules()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/examples/DataMaskingRuleList.json
+            // this example is just showing the usage of "DataMaskingRules_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DataMaskingPolicyResource created on azure
+            // for more information of creating DataMaskingPolicyResource, please refer to the document of DataMaskingPolicyResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "sqlcrudtest-6852";
+            string serverName = "sqlcrudtest-2080";
+            string databaseName = "sqlcrudtest-331";
+            ResourceIdentifier dataMaskingPolicyResourceId = DataMaskingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName);
+            DataMaskingPolicyResource dataMaskingPolicy = client.GetDataMaskingPolicyResource(dataMaskingPolicyResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (DataMaskingRule item in dataMaskingPolicy.GetDataMaskingRulesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
     }
 }

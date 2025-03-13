@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> A list of server usage metrics. </summary>
+    /// <summary> Represents the response to a list server metrics request. </summary>
     internal partial class ServerUsageListResult
     {
         /// <summary>
@@ -46,25 +47,30 @@ namespace Azure.ResourceManager.Sql.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ServerUsageListResult"/>. </summary>
-        internal ServerUsageListResult()
+        /// <param name="value"> The list of server metrics for the server. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ServerUsageListResult(IEnumerable<SqlServerUsage> value)
         {
-            Value = new ChangeTrackingList<SqlServerUsage>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerUsageListResult"/>. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        /// <param name="value"> The list of server metrics for the server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerUsageListResult(IReadOnlyList<SqlServerUsage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServerUsageListResult(IReadOnlyList<SqlServerUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
-            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of results. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerUsageListResult"/> for deserialization. </summary>
+        internal ServerUsageListResult()
+        {
+        }
+
+        /// <summary> The list of server metrics for the server. </summary>
         public IReadOnlyList<SqlServerUsage> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
-        public string NextLink { get; }
     }
 }

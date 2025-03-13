@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetsTheSpecifiedGeoBackupPolicy()
+        public async Task Get_GetGeoBackupPolicy()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/GeoBackupPoliciesGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/examples/GeoBackupPoliciesGet.json
             // this example is just showing the usage of "GeoBackupPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_CreateOrUpdateADatabaseDefaultGeoBackupPolicy()
+        public async Task Update_UpdateGeoBackupPolicy()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/GeoBackupPoliciesCreateOrUpdate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/examples/GeoBackupPoliciesCreateOrUpdate.json
             // this example is just showing the usage of "GeoBackupPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -71,10 +71,7 @@ namespace Azure.ResourceManager.Sql.Samples
             GeoBackupPolicyResource geoBackupPolicy = client.GetGeoBackupPolicyResource(geoBackupPolicyResourceId);
 
             // invoke the operation
-            GeoBackupPolicyData data = new GeoBackupPolicyData
-            {
-                State = GeoBackupPolicyState.Enabled,
-            };
+            GeoBackupPolicyData data = new GeoBackupPolicyData(GeoBackupPolicyState.Enabled);
             ArmOperation<GeoBackupPolicyResource> lro = await geoBackupPolicy.UpdateAsync(WaitUntil.Completed, data);
             GeoBackupPolicyResource result = lro.Value;
 

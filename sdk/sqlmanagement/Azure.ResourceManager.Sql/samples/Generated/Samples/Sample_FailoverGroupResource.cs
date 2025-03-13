@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetFailoverGroup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/FailoverGroupGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/FailoverGroupGet.json
             // this example is just showing the usage of "FailoverGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Sql.Samples
             // for more information of creating FailoverGroupResource, please refer to the document of FailoverGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "Default";
-            string serverName = "failover-group-primary-server";
-            string failoverGroupName = "failover-group-test";
+            string serverName = "failovergroupprimaryserver";
+            string failoverGroupName = "failovergrouptest3";
             ResourceIdentifier failoverGroupResourceId = FailoverGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, failoverGroupName);
             FailoverGroupResource failoverGroup = client.GetFailoverGroupResource(failoverGroupResourceId);
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteFailoverGroup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/FailoverGroupDelete.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/FailoverGroupDelete.json
             // this example is just showing the usage of "FailoverGroups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateFailoverGroup()
+        public async Task Update_AddDatabaseToFailoverGroupWithStandbySecondaryOnPartnerServer()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/FailoverGroupUpdate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/FailoverGroupUpdateStandbySecondary.json
             // this example is just showing the usage of "FailoverGroups_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,7 +102,48 @@ namespace Azure.ResourceManager.Sql.Samples
                 {
                     FailoverWithDataLossGracePeriodMinutes = 120,
                 },
-                FailoverDatabases = { "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default/providers/Microsoft.Sql/servers/failover-group-primary-server/databases/testdb-1" },
+                FailoverDatabases = { new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default/providers/Microsoft.Sql/servers/failover-group-primary-server/databases/testdb-1") },
+                SecondaryType = FailoverGroupDatabasesSecondaryType.Standby,
+            };
+            ArmOperation<FailoverGroupResource> lro = await failoverGroup.UpdateAsync(WaitUntil.Completed, patch);
+            FailoverGroupResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            FailoverGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateFailoverGroup()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/FailoverGroupUpdate.json
+            // this example is just showing the usage of "FailoverGroups_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FailoverGroupResource created on azure
+            // for more information of creating FailoverGroupResource, please refer to the document of FailoverGroupResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "Default";
+            string serverName = "failover-group-primary-server";
+            string failoverGroupName = "failover-group-test-1";
+            ResourceIdentifier failoverGroupResourceId = FailoverGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, failoverGroupName);
+            FailoverGroupResource failoverGroup = client.GetFailoverGroupResource(failoverGroupResourceId);
+
+            // invoke the operation
+            FailoverGroupPatch patch = new FailoverGroupPatch
+            {
+                ReadWriteEndpoint = new FailoverGroupReadWriteEndpoint(ReadWriteEndpointFailoverPolicy.Automatic)
+                {
+                    FailoverWithDataLossGracePeriodMinutes = 120,
+                },
+                FailoverDatabases = { new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default/providers/Microsoft.Sql/servers/failover-group-primary-server/databases/testdb-1") },
             };
             ArmOperation<FailoverGroupResource> lro = await failoverGroup.UpdateAsync(WaitUntil.Completed, patch);
             FailoverGroupResource result = lro.Value;
@@ -118,7 +159,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Failover_PlannedFailoverOfAFailoverGroup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/FailoverGroupFailover.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/FailoverGroupFailover.json
             // this example is just showing the usage of "FailoverGroups_Failover" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -150,7 +191,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ForceFailoverAllowDataLoss_ForcedFailoverOfAFailoverGroupAllowingDataLoss()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/FailoverGroupForceFailoverAllowDataLoss.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/FailoverGroupForceFailoverAllowDataLoss.json
             // this example is just showing the usage of "FailoverGroups_ForceFailoverAllowDataLoss" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -169,6 +210,38 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // invoke the operation
             ArmOperation<FailoverGroupResource> lro = await failoverGroup.ForceFailoverAllowDataLossAsync(WaitUntil.Completed);
+            FailoverGroupResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            FailoverGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task TryPlannedBeforeForcedFailover_TryPlannedBeforeForcedFailoverOfAFailoverGroup()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/FailoverGroupTryPlannedBeforeForcedFailover.json
+            // this example is just showing the usage of "FailoverGroups_TryPlannedBeforeForcedFailover" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FailoverGroupResource created on azure
+            // for more information of creating FailoverGroupResource, please refer to the document of FailoverGroupResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "Default";
+            string serverName = "failovergroupsecondaryserver";
+            string failoverGroupName = "failovergrouptest3";
+            ResourceIdentifier failoverGroupResourceId = FailoverGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, failoverGroupName);
+            FailoverGroupResource failoverGroup = client.GetFailoverGroupResource(failoverGroupResourceId);
+
+            // invoke the operation
+            ArmOperation<FailoverGroupResource> lro = await failoverGroup.TryPlannedBeforeForcedFailoverAsync(WaitUntil.Completed);
             FailoverGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

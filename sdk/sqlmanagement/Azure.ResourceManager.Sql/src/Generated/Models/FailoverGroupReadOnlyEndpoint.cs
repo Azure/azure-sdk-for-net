@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Read-only endpoint of the failover group instance. </summary>
-    internal partial class FailoverGroupReadOnlyEndpoint
+    public partial class FailoverGroupReadOnlyEndpoint
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,15 +53,20 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of <see cref="FailoverGroupReadOnlyEndpoint"/>. </summary>
         /// <param name="failoverPolicy"> Failover policy of the read-only endpoint for the failover group. </param>
+        /// <param name="targetServer"> The target partner server where the read-only endpoint points to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FailoverGroupReadOnlyEndpoint(ReadOnlyEndpointFailoverPolicy? failoverPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FailoverGroupReadOnlyEndpoint(ReadOnlyEndpointFailoverPolicy? failoverPolicy, ResourceIdentifier targetServer, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FailoverPolicy = failoverPolicy;
+            TargetServer = targetServer;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Failover policy of the read-only endpoint for the failover group. </summary>
         [WirePath("failoverPolicy")]
         public ReadOnlyEndpointFailoverPolicy? FailoverPolicy { get; set; }
+        /// <summary> The target partner server where the read-only endpoint points to. </summary>
+        [WirePath("targetServer")]
+        public ResourceIdentifier TargetServer { get; set; }
     }
 }

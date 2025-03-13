@@ -8,10 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -59,6 +61,17 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("lastAvailableBackupDate"u8);
                 writer.WriteStringValue(LastAvailableBackupOn.Value, "O");
             }
+            if (Optional.IsCollectionDefined(Keys))
+            {
+                writer.WritePropertyName("keys"u8);
+                writer.WriteStartObject();
+                foreach (var item in Keys)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
             writer.WriteEndObject();
         }
 
@@ -90,6 +103,7 @@ namespace Azure.ResourceManager.Sql
             string serviceLevelObjective = default;
             string elasticPoolName = default;
             DateTimeOffset? lastAvailableBackupDate = default;
+            IDictionary<string, SqlDatabaseKey> keys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,6 +165,20 @@ namespace Azure.ResourceManager.Sql
                             lastAvailableBackupDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("keys"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, SqlDatabaseKey> dictionary = new Dictionary<string, SqlDatabaseKey>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, SqlDatabaseKey.DeserializeSqlDatabaseKey(property1.Value, options));
+                            }
+                            keys = dictionary;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -169,6 +197,7 @@ namespace Azure.ResourceManager.Sql
                 serviceLevelObjective,
                 elasticPoolName,
                 lastAvailableBackupDate,
+                keys ?? new ChangeTrackingDictionary<string, SqlDatabaseKey>(),
                 serializedAdditionalRawData);
         }
 
@@ -320,6 +349,30 @@ namespace Azure.ResourceManager.Sql
                     builder.Append("    lastAvailableBackupDate: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LastAvailableBackupOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Keys), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    keys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Keys))
+                {
+                    if (Keys.Any())
+                    {
+                        builder.Append("    keys: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Keys)
+                        {
+                            builder.Append($"        '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 6, false, "    keys: ");
+                        }
+                        builder.AppendLine("    }");
+                    }
                 }
             }
 

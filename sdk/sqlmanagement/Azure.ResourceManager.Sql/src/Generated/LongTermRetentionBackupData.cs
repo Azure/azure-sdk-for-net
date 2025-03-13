@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="backupExpireOn"> The time the long term retention backup will expire. </param>
         /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
         /// <param name="requestedBackupStorageRedundancy"> The storage redundancy type of the backup. </param>
+        /// <param name="isBackupImmutable"> The setting whether the LTR backup is immutable. </param>
+        /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backup. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverName, DateTimeOffset? serverCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, SqlBackupStorageRedundancy? backupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal LongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverName, DateTimeOffset? serverCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, SqlBackupStorageRedundancy? backupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isBackupImmutable, SqlBackupStorageAccessTier? backupStorageAccessTier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ServerName = serverName;
             ServerCreateOn = serverCreateOn;
@@ -80,6 +82,8 @@ namespace Azure.ResourceManager.Sql
             BackupExpireOn = backupExpireOn;
             BackupStorageRedundancy = backupStorageRedundancy;
             RequestedBackupStorageRedundancy = requestedBackupStorageRedundancy;
+            IsBackupImmutable = isBackupImmutable;
+            BackupStorageAccessTier = backupStorageAccessTier;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -107,5 +111,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The storage redundancy type of the backup. </summary>
         [WirePath("properties.requestedBackupStorageRedundancy")]
         public SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
+        /// <summary> The setting whether the LTR backup is immutable. </summary>
+        [WirePath("properties.isBackupImmutable")]
+        public bool? IsBackupImmutable { get; set; }
+        /// <summary> The BackupStorageAccessTier for the LTR backup. </summary>
+        [WirePath("properties.backupStorageAccessTier")]
+        public SqlBackupStorageAccessTier? BackupStorageAccessTier { get; }
     }
 }

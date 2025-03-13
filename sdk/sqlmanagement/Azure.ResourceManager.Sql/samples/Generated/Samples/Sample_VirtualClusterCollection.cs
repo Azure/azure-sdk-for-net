@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetVirtualCluster()
+        public async Task Get_GetsAVirtualCluster()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/VirtualClusterGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/VirtualClusterGet.json
             // this example is just showing the usage of "VirtualClusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Samples
             VirtualClusterCollection collection = resourceGroupResource.GetVirtualClusters();
 
             // invoke the operation
-            string virtualClusterName = "vc-subnet1-f769ed71-b3ad-491a-a9d5-26eeceaa6be2";
+            string virtualClusterName = "vc-f769ed71-b3ad-491a-a9d5-26eeceaa6be2";
             VirtualClusterResource result = await collection.GetAsync(virtualClusterName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListVirtualClustersByResourceGroup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/VirtualClusterListByResourceGroup.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/VirtualClusterListByResourceGroup.json
             // this example is just showing the usage of "VirtualClusters_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetVirtualCluster()
+        public async Task Exists_GetsAVirtualCluster()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/VirtualClusterGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/VirtualClusterGet.json
             // this example is just showing the usage of "VirtualClusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Sql.Samples
             VirtualClusterCollection collection = resourceGroupResource.GetVirtualClusters();
 
             // invoke the operation
-            string virtualClusterName = "vc-subnet1-f769ed71-b3ad-491a-a9d5-26eeceaa6be2";
+            string virtualClusterName = "vc-f769ed71-b3ad-491a-a9d5-26eeceaa6be2";
             bool result = await collection.ExistsAsync(virtualClusterName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -115,9 +115,9 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetVirtualCluster()
+        public async Task GetIfExists_GetsAVirtualCluster()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/VirtualClusterGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/VirtualClusterGet.json
             // this example is just showing the usage of "VirtualClusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Sql.Samples
             VirtualClusterCollection collection = resourceGroupResource.GetVirtualClusters();
 
             // invoke the operation
-            string virtualClusterName = "vc-subnet1-f769ed71-b3ad-491a-a9d5-26eeceaa6be2";
+            string virtualClusterName = "vc-f769ed71-b3ad-491a-a9d5-26eeceaa6be2";
             NullableResponse<VirtualClusterResource> response = await collection.GetIfExistsAsync(virtualClusterName);
             VirtualClusterResource result = response.HasValue ? response.Value : null;
 

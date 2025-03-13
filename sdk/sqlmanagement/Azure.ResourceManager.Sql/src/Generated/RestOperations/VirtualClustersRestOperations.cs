@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-11-01";
+            _apiVersion = apiVersion ?? "2022-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Updates a virtual cluster. </summary>
+        /// <summary> Updates an existing virtual cluster. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Updates a virtual cluster. </summary>
+        /// <summary> Updates an existing virtual cluster. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UpdateManagedInstanceDnsServersOperation>> UpdateDnsServersAsync(string subscriptionId, string resourceGroupName, string virtualClusterName, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateDnsServersAsync(string subscriptionId, string resourceGroupName, string virtualClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -527,12 +527,8 @@ namespace Azure.ResourceManager.Sql
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        UpdateManagedInstanceDnsServersOperation value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = UpdateManagedInstanceDnsServersOperation.DeserializeUpdateManagedInstanceDnsServersOperation(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -545,7 +541,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UpdateManagedInstanceDnsServersOperation> UpdateDnsServers(string subscriptionId, string resourceGroupName, string virtualClusterName, CancellationToken cancellationToken = default)
+        public Response UpdateDnsServers(string subscriptionId, string resourceGroupName, string virtualClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -556,12 +552,8 @@ namespace Azure.ResourceManager.Sql
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        UpdateManagedInstanceDnsServersOperation value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = UpdateManagedInstanceDnsServersOperation.DeserializeUpdateManagedInstanceDnsServersOperation(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }

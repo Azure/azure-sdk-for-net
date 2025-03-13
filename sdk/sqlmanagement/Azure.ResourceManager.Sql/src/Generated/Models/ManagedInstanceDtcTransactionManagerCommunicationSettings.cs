@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> A recoverable managed database resource. </summary>
-    public partial class UpdateManagedInstanceDnsServersOperation : ResourceData
+    /// <summary> The Transaction Manager Communication Settings of managed instance DTC. </summary>
+    public partial class ManagedInstanceDtcTransactionManagerCommunicationSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,26 +45,32 @@ namespace Azure.ResourceManager.Sql.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UpdateManagedInstanceDnsServersOperation"/>. </summary>
-        public UpdateManagedInstanceDnsServersOperation()
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceDtcTransactionManagerCommunicationSettings"/>. </summary>
+        public ManagedInstanceDtcTransactionManagerCommunicationSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpdateManagedInstanceDnsServersOperation"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="status"> The status of the DNS refresh operation. </param>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceDtcTransactionManagerCommunicationSettings"/>. </summary>
+        /// <param name="allowInboundEnabled"> Allow Inbound traffic to managed instance DTC. </param>
+        /// <param name="allowOutboundEnabled"> Allow Outbound traffic of managed instance DTC. </param>
+        /// <param name="authentication"> Authentication type of managed instance DTC. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateManagedInstanceDnsServersOperation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DnsRefreshConfigurationPropertiesStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ManagedInstanceDtcTransactionManagerCommunicationSettings(bool? allowInboundEnabled, bool? allowOutboundEnabled, string authentication, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Status = status;
+            AllowInboundEnabled = allowInboundEnabled;
+            AllowOutboundEnabled = allowOutboundEnabled;
+            Authentication = authentication;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The status of the DNS refresh operation. </summary>
-        [WirePath("properties.status")]
-        public DnsRefreshConfigurationPropertiesStatus? Status { get; }
+        /// <summary> Allow Inbound traffic to managed instance DTC. </summary>
+        [WirePath("allowInboundEnabled")]
+        public bool? AllowInboundEnabled { get; set; }
+        /// <summary> Allow Outbound traffic of managed instance DTC. </summary>
+        [WirePath("allowOutboundEnabled")]
+        public bool? AllowOutboundEnabled { get; set; }
+        /// <summary> Authentication type of managed instance DTC. </summary>
+        [WirePath("authentication")]
+        public string Authentication { get; set; }
     }
 }
