@@ -1,6 +1,6 @@
 # Azure SDK for .NET - Management Plane SDK Polishing Configurations
 
-To ensure the quality of the Azure SDK for .NET and adherence to the [naming conventions](.\Mgmt-Naming-Conventions.md), the CSharp CodeGen offers flexible configurations. These configurations allow for changes to the names of classes, methods, properties, and parameters, as well as the data types of properties and parameters.
+To ensure the quality of the Azure SDK for .NET and adherence to the [naming conventions](https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/Mgmt-Naming-Conventions.md), the CSharp CodeGen offers flexible configurations. These configurations allow for changes to the names of classes, methods, properties, and parameters, as well as the data types of properties and parameters.
 
 # Guidelines for Data Type Changes
 
