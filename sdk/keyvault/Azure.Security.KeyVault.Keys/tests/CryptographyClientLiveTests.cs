@@ -540,12 +540,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     return await Client.CreateEcKeyAsync(new CreateEcKeyOptions(keyName, false) { CurveName = KeyCurveName.P384 });
                 case SignatureAlgorithm.ES512Value:
                     return await Client.CreateEcKeyAsync(new CreateEcKeyOptions(keyName, false) { CurveName = KeyCurveName.P521 });
-                case SignatureAlgorithm.HS256Value:
-                    return await Client.CreateOctKeyAsync(new CreateOctKeyOptions(keyName) { KeySize = 256 });
-                case SignatureAlgorithm.HS384Value:
-                    return await Client.CreateOctKeyAsync(new CreateOctKeyOptions(keyName) { KeySize = 384 });
-                case SignatureAlgorithm.HS512Value:
-                    return await Client.CreateOctKeyAsync(new CreateOctKeyOptions(keyName) { KeySize = 512 });
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
             }

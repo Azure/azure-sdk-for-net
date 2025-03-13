@@ -46,12 +46,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             nameof(EncryptionAlgorithm.A128Cbc),
             nameof(EncryptionAlgorithm.A192Cbc),
             nameof(EncryptionAlgorithm.A256Cbc),
-            nameof(EncryptionAlgorithm.CkmAesKeyWrap),
             nameof(EncryptionAlgorithm.A128CbcPad),
             nameof(EncryptionAlgorithm.A192CbcPad),
-            nameof(EncryptionAlgorithm.A256CbcPad),
-            nameof(EncryptionAlgorithm.CkmAesKeyWrapPad)
-            )] EncryptionAlgorithm algorithm)
+            nameof(EncryptionAlgorithm.A256CbcPad))] EncryptionAlgorithm algorithm)
         {
             int keySizeInBytes = algorithm.GetAesCbcEncryptionAlgorithm().KeySizeInBytes;
             JsonWebKey jwk = KeyUtilities.CreateAesKey(keySizeInBytes, s_aesKeyOps);

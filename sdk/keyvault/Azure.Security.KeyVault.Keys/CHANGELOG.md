@@ -10,8 +10,6 @@
 
 ### Other Changes
 
-- The default service version is now "7.6-preview.2".
-
 ## 4.7.0 (2024-10-14)
 
 ### Features Added
