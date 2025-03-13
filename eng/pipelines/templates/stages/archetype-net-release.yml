@@ -163,6 +163,7 @@ stages:
                     # Sparse checkout defaults to $(System.DefaultWorkingDirectory) so we must specify a custom path
                     - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
                       parameters:
+                        SkipCheckoutNone: true
                         Repositories:
                           - Name: $(Build.Repository.Name)
                             Commitish: $(Build.SourceVersion)
