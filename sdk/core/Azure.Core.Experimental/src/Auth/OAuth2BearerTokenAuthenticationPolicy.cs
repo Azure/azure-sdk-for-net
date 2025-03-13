@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
-namespace System.ClientModel.Auth;
+namespace System.ClientModel.Primitives;
 
 /// <summary>
 /// A <see cref="PipelinePolicy"/> that uses an <see cref="AuthenticationTokenProvider"/> to authenticate requests.
@@ -69,7 +69,7 @@ public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
     {
         foreach (var context in contexts)
         {
-            var createdContext = tokenProvider.CreateContext(context);
+            var createdContext = tokenProvider.CreateTokenOptions(context);
             if (createdContext is not null)
             {
                 return createdContext;

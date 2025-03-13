@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Auth;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -40,6 +39,7 @@ public class TokenProviderTests
         private readonly IReadOnlyDictionary<string, object> _emptyProperties = new Dictionary<string, object>();
 
         private ClientPipeline _pipeline;
+        private static readonly string[] readScope = ["read"];
 
         public FooClient(Uri uri, ApiKeyCredential credential)
         {
@@ -71,7 +71,7 @@ public class TokenProviderTests
         {
             var message = _pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier.Create([200]);
-            message.SetProperty(typeof(GetTokenOptions), new GetTokenOptions(["read"], _emptyProperties));
+            message.SetProperty(typeof(GetTokenOptions), new GetTokenOptions(readScope, _emptyProperties));
 
             PipelineRequest request = message.Request;
             request.Method = "GET";
@@ -120,6 +120,11 @@ public class TokenProviderTests
                 // Verify the decoded credentials
                 Assert.AreEqual($"{_clientId}:{_clientSecret}", decodedCredentials, "Decoded credentials don't match expected values");
 
+                // Validate form content
+                var content = req.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                Assert.That(content, Contains.Substring("grant_type=client_credentials"), "grant_type should be client_credentials");
+                Assert.That(content, Contains.Substring("scope=baselineScope+read"), "scope should be baselineScope+read");
+
                 return mockResponse;
             });
 
@@ -137,7 +142,7 @@ public class TokenProviderTests
             return await GetAccessTokenInternal(true, properties, cancellationToken).ConfigureAwait(false);
         }
 
-        public override GetTokenOptions CreateContext(IReadOnlyDictionary<string, object> properties)
+        public override GetTokenOptions CreateTokenOptions(IReadOnlyDictionary<string, object> properties)
         {
             if (properties.TryGetValue(GetTokenOptions.ScopesPropertyName, out var scopes) && scopes is string[] scopeArray &&
                 properties.TryGetValue(GetTokenOptions.TokenUrlPropertyName, out var tokenUri) && tokenUri is string tokenUriValue &&
@@ -166,11 +171,11 @@ public class TokenProviderTests
             request.Headers.Authorization = new AuthenticationHeaderValue("Basic", authHeader);
 
             // Create form content
-            var formContent = new FormUrlEncodedContent(new[]
-            {
+            var formContent = new FormUrlEncodedContent(
+            [
                 new KeyValuePair<string, string>("grant_type", "client_credentials"),
-                new KeyValuePair<string, string>("scope", properties.Scopes.Span[0])
-            });
+                new KeyValuePair<string, string>("scope", string.Join(" ", properties.Scopes.Span.ToArray()))
+            ]);
 
             request.Content = formContent;
 

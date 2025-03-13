@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace System.ClientModel.Auth;
+namespace System.ClientModel.Primitives;
 
 /// <summary>
 /// An interface implemented by auth flow interfaces supporting scopes.
@@ -47,9 +47,9 @@ public class GetTokenOptions
     /// </summary>
     /// <param name="scopes">The scopes to be used in a call to <see cref="AuthenticationTokenProvider.GetToken(GetTokenOptions, Threading.CancellationToken)"/> or <see cref="AuthenticationTokenProvider.GetTokenAsync(GetTokenOptions, Threading.CancellationToken)"/></param>
     /// <param name="properties">The properties to be used for token requests.</param>
-    public GetTokenOptions(string[] scopes, IReadOnlyDictionary<string, object> properties)
+    public GetTokenOptions(ReadOnlyMemory<string> scopes, IReadOnlyDictionary<string, object> properties)
     {
-        Scopes = new(scopes);
+        Scopes = scopes;
         Properties = properties switch
         {
             Dictionary<string, object> dict => new ReadOnlyDictionary<string, object>(dict),

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Auth;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,7 +18,7 @@ public abstract class AuthenticationTokenProvider
     /// </summary>
     /// <param name="properties"></param>
     /// <returns></returns>
-    public abstract GetTokenOptions? CreateContext(IReadOnlyDictionary<string, object> properties);
+    public abstract GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties);
 
     /// <summary>
     /// Gets a token from the auth provider.

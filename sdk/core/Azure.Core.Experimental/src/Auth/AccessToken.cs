@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace System.ClientModel.Auth;
+namespace System.ClientModel.Primitives;
 
 /// <summary>
 /// Represents an OAuth token and its metadata.
@@ -53,11 +53,11 @@ public class AccessToken
     /// <summary>
     /// Indicates whether the token can be refreshed.
     /// </summary>
-    public virtual bool SupportRefresh => false;
+    public virtual bool IsRefreshSupported => false;
 
     /// <summary>
-    /// Refreshes the token if <see cref="SupportRefresh"/> returns true.
-    /// <exception cref="InvalidOperationException">When <see cref="SupportRefresh"/> is false.</exception>
+    /// Refreshes the token if <see cref="IsRefreshSupported"/> returns true.
+    /// <exception cref="InvalidOperationException">When <see cref="IsRefreshSupported"/> is false.</exception>
     /// </summary>
     public virtual Task<AccessToken> RefreshAsync(CancellationToken cancellationToken) => throw new InvalidOperationException("This token cannot be refreshed.");
 }

@@ -125,22 +125,22 @@ namespace System.ClientModel
     public abstract partial class AuthenticationTokenProvider
     {
         protected AuthenticationTokenProvider() { }
-        public abstract System.ClientModel.Auth.GetTokenOptions? CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
-        public abstract System.ClientModel.Auth.AccessToken GetToken(System.ClientModel.Auth.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Auth.AccessToken> GetTokenAsync(System.ClientModel.Auth.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken);
+        public abstract System.ClientModel.Primitives.GetTokenOptions? CreateTokenOptions(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
+        public abstract System.ClientModel.Primitives.AccessToken GetToken(System.ClientModel.Primitives.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.AccessToken> GetTokenAsync(System.ClientModel.Primitives.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken);
     }
 }
-namespace System.ClientModel.Auth
+namespace System.ClientModel.Primitives
 {
     public partial class AccessToken
     {
         public AccessToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) { }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
+        public virtual bool IsRefreshSupported { get { throw null; } }
         public System.DateTimeOffset? RefreshOn { get { throw null; } }
-        public virtual bool SupportRefresh { get { throw null; } }
         public string TokenType { get { throw null; } }
         public string TokenValue { get { throw null; } }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.Auth.AccessToken> RefreshAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.Primitives.AccessToken> RefreshAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class GetTokenOptions
     {
@@ -148,10 +148,10 @@ namespace System.ClientModel.Auth
         public const string RefreshUrlPropertyName = "refreshUrl";
         public const string ScopesPropertyName = "scopes";
         public const string TokenUrlPropertyName = "tokenUrl";
-        public GetTokenOptions(string[] scopes, System.Collections.Generic.IReadOnlyDictionary<string, object> properties) { }
+        public GetTokenOptions(System.ReadOnlyMemory<string> scopes, System.Collections.Generic.IReadOnlyDictionary<string, object> properties) { }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> Properties { get { throw null; } }
         public System.ReadOnlyMemory<string> Scopes { get { throw null; } }
-        public System.ClientModel.Auth.GetTokenOptions WithAdditionalScopes(System.ReadOnlyMemory<string> additionalScopes) { throw null; }
+        public System.ClientModel.Primitives.GetTokenOptions WithAdditionalScopes(System.ReadOnlyMemory<string> additionalScopes) { throw null; }
     }
     public partial class OAuth2BearerTokenAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
