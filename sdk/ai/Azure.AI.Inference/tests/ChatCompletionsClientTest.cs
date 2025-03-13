@@ -23,7 +23,9 @@ namespace Azure.AI.Inference.Tests
         {
             MistralSmall,
             GitHubGpt4o,
-            AoaiGpt4Turbo,
+            AoaiGpt4o,
+            AoaiAudioModel,
+            PhiAudioModel
         }
 
         public enum ToolChoiceTestType
@@ -48,26 +50,57 @@ namespace Azure.AI.Inference.Tests
         {
             TestDiagnostics = false;
             JsonPathSanitizers.Add("$.messages[*].content[*].image_url.url");
+            JsonPathSanitizers.Add("$.messages[*].content[*].audio_url.url");
         }
 
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
 
         [RecordedTest]
-        public async Task TestChatCompletions()
+        [TestCase(TargetModel.MistralSmall)]
+        [TestCase(TargetModel.GitHubGpt4o)]
+        [TestCase(TargetModel.AoaiGpt4o)]
+        public async Task TestChatCompletions(TargetModel targetModel)
         {
-            var mistralSmallEndpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
-            var mistralSmallCredential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
+            var endpoint = targetModel switch
+            {
+                TargetModel.MistralSmall => new Uri(TestEnvironment.MistralSmallEndpoint),
+                TargetModel.GitHubGpt4o => new Uri(TestEnvironment.GithubEndpoint),
+                TargetModel.AoaiGpt4o => new Uri(TestEnvironment.AoaiEndpoint),
+                _ => throw new ArgumentException(nameof(targetModel)),
+            };
 
-            var client = CreateClient(mistralSmallEndpoint, mistralSmallCredential, new AzureAIInferenceClientOptions());
+            var credential = targetModel switch
+            {
+                TargetModel.MistralSmall => new AzureKeyCredential(TestEnvironment.MistralSmallApiKey),
+                TargetModel.GitHubGpt4o => new AzureKeyCredential(TestEnvironment.GithubToken),
+                TargetModel.AoaiGpt4o => new AzureKeyCredential(TestEnvironment.AoaiKey),
+                _ => throw new ArgumentException(nameof(targetModel)),
+            };
+
+            var client = CreateClient(endpoint, credential, new AzureAIInferenceClientOptions());
+
+            IList<ChatRequestMessage> messages = new List<ChatRequestMessage>();
+
+            if (targetModel == TargetModel.AoaiGpt4o)
+            {
+                messages.Add(new ChatRequestDeveloperMessage("You are a helpful assistant."));
+            }
+            else
+            {
+                messages.Add(new ChatRequestSystemMessage("You are a helpful assistant."));
+            }
+
+            messages.Add(new ChatRequestUserMessage("How many feet are in a mile?"));
 
             var requestOptions = new ChatCompletionsOptions()
             {
-                Messages =
-                {
-                    new ChatRequestSystemMessage("You are a helpful assistant."),
-                    new ChatRequestUserMessage("How many feet are in a mile?"),
-                },
+                Messages = messages,
             };
+
+            if (targetModel == TargetModel.GitHubGpt4o)
+            {
+                requestOptions.Model = "gpt-4o";
+            }
 
             Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
 
@@ -456,9 +489,9 @@ namespace Azure.AI.Inference.Tests
             ChatMessageImageContentItem imageContentItem = imageSourceKind switch
             {
                 ImageTestSourceKind.UsingInternetLocation => new(GetTestImageInternetUri(), ChatMessageImageDetailLevel.Low),
-                ImageTestSourceKind.UsingStream => new(GetTestImageStream("image/jpg"), "image/jpg", ChatMessageImageDetailLevel.Low),
-                ImageTestSourceKind.UsingBinaryData => new(GetTestImageData("image/jpg"), "image/jpg", ChatMessageImageDetailLevel.Low),
-                ImageTestSourceKind.UsingFilePath => new(TestEnvironment.TestImageJpgInputPath, "image/jpg", ChatMessageImageDetailLevel.Low),
+                ImageTestSourceKind.UsingStream => new(GetTestImageStream("image/png"), "image/png", ChatMessageImageDetailLevel.Low),
+                ImageTestSourceKind.UsingBinaryData => new(GetTestImageData("image/png"), "image/png", ChatMessageImageDetailLevel.Low),
+                ImageTestSourceKind.UsingFilePath => new(TestEnvironment.TestImagePngInputPath, "image/png", ChatMessageImageDetailLevel.Low),
                 _ => throw new ArgumentException(nameof(imageSourceKind)),
             };
 
@@ -473,6 +506,111 @@ namespace Azure.AI.Inference.Tests
                 },
                 MaxTokens = 2048,
             };
+
+            Response<ChatCompletions> response = null;
+            try
+            {
+                response = await client.CompleteAsync(requestOptions);
+            }
+            catch (Exception ex)
+            {
+                var requestPayload = captureRequestPayloadPolicy._requestContent;
+                var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
+                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+            }
+
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
+            ChatCompletions result = response.Value;
+            Assert.That(result.Id, Is.Not.Null.Or.Empty);
+            Assert.That(result.Created, Is.Not.Null.Or.Empty);
+            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+        }
+
+        [RecordedTest]
+        [TestCase(TargetModel.AoaiAudioModel)]
+        [TestCase(TargetModel.PhiAudioModel)]
+        public async Task TestChatCompletionsWithAudio(TargetModel targetModel)
+        {
+            if (targetModel == TargetModel.AoaiAudioModel && Mode == RecordedTestMode.Playback)
+            {
+                Assert.Inconclusive("Unable to run test with file path in playback mode.");
+            }
+
+            var endpoint = targetModel switch
+            {
+                TargetModel.AoaiAudioModel => new Uri(TestEnvironment.AoaiAudioEndpoint),
+                TargetModel.PhiAudioModel => new Uri(TestEnvironment.PhiAudioEndpoint),
+                _ => throw new ArgumentException(nameof(targetModel)),
+            };
+
+            var credential = targetModel switch
+            {
+                TargetModel.AoaiAudioModel => new AzureKeyCredential(TestEnvironment.AoaiAudioKey),
+                TargetModel.PhiAudioModel => new AzureKeyCredential(TestEnvironment.PhiAudioKey),
+                _ => throw new ArgumentException(nameof(targetModel)),
+            };
+
+            CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+            clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
+
+            // Uncomment the following lines to enable enhanced log output
+            // AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
+            // clientOptions.Diagnostics.IsLoggingContentEnabled = true;\
+
+            if (targetModel == TargetModel.AoaiAudioModel)
+            {
+                OverrideApiVersionPolicy overrideApiVersionPolicy = new OverrideApiVersionPolicy("2024-11-01-preview");
+                clientOptions.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerCall);
+            }
+
+            var client = CreateClient(endpoint, credential, clientOptions);
+
+            ChatMessageAudioContentItem audioContentItem = targetModel switch
+            {
+                TargetModel.AoaiAudioModel => new(TestEnvironment.TestAudioMp3InputPath, AudioContentFormat.Mp3),
+                TargetModel.PhiAudioModel => new(GetTestAudioInternetUri()),
+                _ => throw new ArgumentException(nameof(targetModel)),
+            };
+
+            List<ChatRequestMessage> messages = new List<ChatRequestMessage>();
+
+            if (targetModel == TargetModel.PhiAudioModel)
+            {
+                messages.Add(new ChatRequestSystemMessage("You are a helpful assistant that helps describe audio."));
+                messages.Add(
+                    new ChatRequestUserMessage(
+                        new ChatMessageTextContentItem("Please describe this audio clip."),
+                        audioContentItem));
+            }
+            else
+            {
+                messages.Add(new ChatRequestSystemMessage("You are a helpful assistant that helps provide translations."));
+                messages.Add(
+                    new ChatRequestUserMessage(
+                        new ChatMessageTextContentItem("Please translate this audio snippet to spanish."),
+                        audioContentItem));
+            }
+
+            var requestOptions = new ChatCompletionsOptions()
+            {
+                Messages =
+                {
+                    new ChatRequestSystemMessage("You are a helpful assistant that helps provide translations."),
+                    new ChatRequestUserMessage(
+                        new ChatMessageTextContentItem("Please translate this audio snippet to spanish."),
+                        audioContentItem),
+                },
+                MaxTokens = 2048,
+            };
+
+            if (targetModel == TargetModel.PhiAudioModel)
+            {
+                requestOptions.Model = "phi-4-multimodal-instruct-1";
+            }
 
             Response<ChatCompletions> response = null;
             try
@@ -542,7 +680,7 @@ namespace Azure.AI.Inference.Tests
         [TestCase(ToolChoiceTestType.UseNonePresetToolChoice, TargetModel.MistralSmall)]
         [TestCase(ToolChoiceTestType.UseRequiredPresetToolChoice, TargetModel.MistralSmall, IgnoreReason = "Endpoint needs to be updated to support")]
         [TestCase(ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice, TargetModel.GitHubGpt4o)]
-        [TestCase(ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice, TargetModel.AoaiGpt4Turbo)]
+        [TestCase(ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice, TargetModel.AoaiGpt4o)]
         [TestCase(ToolChoiceTestType.UseFunctionByImplicitToolDefinitionForToolChoice, TargetModel.GitHubGpt4o)]
         public async Task TestChatCompletionsFunctionToolHandlingWithStreaming(ToolChoiceTestType toolChoiceType, TargetModel targetModel)
         {
@@ -576,7 +714,7 @@ namespace Azure.AI.Inference.Tests
             {
                 TargetModel.MistralSmall => new Uri(TestEnvironment.MistralSmallEndpoint),
                 TargetModel.GitHubGpt4o => new Uri(TestEnvironment.GithubEndpoint),
-                TargetModel.AoaiGpt4Turbo => new Uri(TestEnvironment.AoaiEndpoint),
+                TargetModel.AoaiGpt4o => new Uri(TestEnvironment.AoaiEndpoint),
                 _ => throw new ArgumentException(nameof(targetModel)),
             };
 
@@ -584,7 +722,7 @@ namespace Azure.AI.Inference.Tests
             {
                 TargetModel.MistralSmall => new AzureKeyCredential(TestEnvironment.MistralSmallApiKey),
                 TargetModel.GitHubGpt4o => new AzureKeyCredential(TestEnvironment.GithubToken),
-                TargetModel.AoaiGpt4Turbo => new AzureKeyCredential(TestEnvironment.AoaiKey),
+                TargetModel.AoaiGpt4o => new AzureKeyCredential(TestEnvironment.AoaiKey),
                 _ => throw new ArgumentException(nameof(targetModel)),
             };
 
@@ -722,6 +860,131 @@ namespace Azure.AI.Inference.Tests
             #endregion
         }
 
+        [RecordedTest]
+        [TestCase(TargetModel.GitHubGpt4o)]
+        [TestCase(TargetModel.AoaiGpt4o)]
+        public async Task TestChatCompletionsResponseFormat(TargetModel targetModel)
+        {
+            var endpoint = targetModel switch
+            {
+                TargetModel.GitHubGpt4o => new Uri(TestEnvironment.GithubEndpoint),
+                TargetModel.AoaiGpt4o => new Uri(TestEnvironment.AoaiEndpoint),
+                _ => throw new ArgumentException(nameof(targetModel)),
+            };
+
+            var credential = targetModel switch
+            {
+                TargetModel.GitHubGpt4o => new AzureKeyCredential(TestEnvironment.GithubToken),
+                TargetModel.AoaiGpt4o => new AzureKeyCredential(TestEnvironment.AoaiKey),
+                _ => throw new ArgumentException(nameof(targetModel)),
+            };
+
+            var githubModelName = "gpt-4o";
+
+            CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+            clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
+
+            // Uncomment the following lines to enable enhanced log output
+            // AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
+            // clientOptions.Diagnostics.IsLoggingContentEnabled = true;
+
+            if (targetModel == TargetModel.AoaiGpt4o)
+            {
+                OverrideApiVersionPolicy overrideApiVersionPolicy = new OverrideApiVersionPolicy("2024-08-01-preview");
+                clientOptions.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerCall);
+            }
+            else if (targetModel == TargetModel.GitHubGpt4o)
+            {
+                OverrideApiVersionPolicy overrideApiVersionPolicy = new OverrideApiVersionPolicy("2024-08-01-preview");
+                clientOptions.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerCall);
+            }
+
+            var client = CreateClient(endpoint, credential, clientOptions);
+
+            var messages = new List<ChatRequestMessage>()
+            {
+                new ChatRequestSystemMessage("You are a helpful assistant."),
+                new ChatRequestUserMessage("Please give me directions and ingredients to bake a chocolate cake."),
+            };
+
+            var requestOptions = new ChatCompletionsOptions(messages);
+
+            if (targetModel == TargetModel.GitHubGpt4o)
+            {
+                requestOptions.Model = githubModelName;
+            }
+
+            Dictionary<string, BinaryData> jsonSchema = new Dictionary<string, BinaryData>
+            {
+                { "type", BinaryData.FromString("\"object\"") },
+                { "properties", BinaryData.FromString("""
+                    {
+                        "ingredients": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "steps": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "ingredients": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "directions": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "prep_time": {
+                            "type": "string"
+                        },
+                        "bake_time": {
+                            "type": "string"
+                        }
+                    }
+                    """) },
+                { "required", BinaryData.FromString("[\"ingredients\", \"steps\", \"bake_time\"]") },
+                { "additionalProperties", BinaryData.FromString("false") }
+            };
+
+            requestOptions.ResponseFormat = ChatCompletionsResponseFormat.CreateJsonFormat("cakeBakingDirections", jsonSchema);
+
+            Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
+
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
+            ChatCompletions result = response.Value;
+            Assert.That(result.Id, Is.Not.Null.Or.Empty);
+            Assert.That(result.Created, Is.Not.Null.Or.Empty);
+            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+
+            using JsonDocument structuredJson = JsonDocument.Parse(result.Content);
+            structuredJson.RootElement.TryGetProperty("ingredients", out var ingredients);
+            structuredJson.RootElement.TryGetProperty("steps", out var steps);
+            structuredJson.RootElement.TryGetProperty("bake_time", out var bakeTime);
+
+            Assert.AreEqual(ingredients.ValueKind, JsonValueKind.Array);
+            Assert.AreEqual(steps.ValueKind, JsonValueKind.Array);
+            foreach (JsonElement stepElement in steps.EnumerateArray())
+            {
+                stepElement.TryGetProperty("ingredients", out var stepIngredients);
+                stepElement.TryGetProperty("directions", out var stepDirections);
+                Assert.AreEqual(stepIngredients.ValueKind, JsonValueKind.Array);
+                Assert.AreEqual(stepDirections.ValueKind, JsonValueKind.String);
+            }
+            Assert.AreEqual(bakeTime.ValueKind, JsonValueKind.String);
+        }
+
         #region Helpers
         private class CaptureRequestPayloadPolicy : HttpPipelinePolicy
         {
@@ -748,6 +1011,30 @@ namespace Azure.AI.Inference.Tests
                 _requestContent = Encoding.UTF8.GetString(memStream.ToArray());
 
                 _requestHeaders = message.Request.Headers.ToDictionary(a => a.Name, a => a.Value);
+
+                return task;
+            }
+        }
+
+        private class OverrideApiVersionPolicy : HttpPipelinePolicy
+        {
+            private string ApiVersion { get; }
+
+            public OverrideApiVersionPolicy(string apiVersion)
+            {
+                ApiVersion = apiVersion;
+            }
+
+            public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                message.Request.Uri.Query = $"?api-version={ApiVersion}";
+                ProcessNext(message, pipeline);
+            }
+
+            public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                message.Request.Uri.Query = $"?api-version={ApiVersion}";
+                var task = ProcessNextAsync(message, pipeline);
 
                 return task;
             }
@@ -829,13 +1116,22 @@ namespace Azure.AI.Inference.Tests
             }
             return File.OpenRead(mimeType switch
             {
-                "image/jpg" => TestEnvironment.TestImageJpgInputPath,
+                "image/png" => TestEnvironment.TestImagePngInputPath,
                 _ => throw new ArgumentException(nameof(mimeType)),
             });
         }
 
         private BinaryData GetTestImageData(string mimeType)
             => BinaryData.FromStream(GetTestImageStream(mimeType));
+
+        private Uri GetTestAudioInternetUri()
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return new Uri("https://sanitized");
+            }
+            return new Uri("https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba-online-audio-converter.com_-1.wav");
+        }
 
         private async Task ProcessStreamingResponse(StreamingResponse<StreamingChatCompletionsUpdate> response, List<ChatRequestMessage> messages)
         {

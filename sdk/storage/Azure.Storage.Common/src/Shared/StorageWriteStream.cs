@@ -330,15 +330,45 @@ namespace Azure.Storage.Shared
 
             if (disposing)
             {
-                Flush();
-                ValidateCallerCrcIfAny();
-                _accumulatedDisposables.Dispose();
+                try
+                {
+                    Flush();
+                    ValidateCallerCrcIfAny();
+                }
+                finally
+                {
+                    _accumulatedDisposables.Dispose();
+                }
             }
 
             _disposed = true;
 
             base.Dispose(disposing);
         }
+
+#if NETCOREAPP3_0_OR_GREATER || NETCORESTANDARD2_1_OR_GREATER
+        public override async ValueTask DisposeAsync()
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            try
+            {
+                await FlushAsync(cancellationToken: default).ConfigureAwait(false);
+                ValidateCallerCrcIfAny();
+            }
+            finally
+            {
+                _accumulatedDisposables.Dispose();
+            }
+
+            _disposed = true;
+
+            await base.DisposeAsync().ConfigureAwait(false);
+        }
+#endif
 
         private void ValidateCallerCrcIfAny()
         {

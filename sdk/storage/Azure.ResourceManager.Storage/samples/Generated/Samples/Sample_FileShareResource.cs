@@ -18,9 +18,71 @@ namespace Azure.ResourceManager.Storage.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetSharePaidBursting()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/FileSharesGet_PaidBursting.json
+            // this example is just showing the usage of "FileShares_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FileShareResource created on azure
+            // for more information of creating FileShareResource, please refer to the document of FileShareResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9871";
+            string accountName = "sto6217";
+            string shareName = "share1634";
+            ResourceIdentifier fileShareResourceId = FileShareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareName);
+            FileShareResource fileShare = client.GetFileShareResource(fileShareResourceId);
+
+            // invoke the operation
+            FileShareResource result = await fileShare.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            FileShareData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetShareProvisionedV2()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/FileSharesGet_ProvisionedV2.json
+            // this example is just showing the usage of "FileShares_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FileShareResource created on azure
+            // for more information of creating FileShareResource, please refer to the document of FileShareResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9871";
+            string accountName = "sto6217";
+            string shareName = "share1634";
+            ResourceIdentifier fileShareResourceId = FileShareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareName);
+            FileShareResource fileShare = client.GetFileShareResource(fileShareResourceId);
+
+            // invoke the operation
+            FileShareResource result = await fileShare.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            FileShareData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetShareStats()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/FileSharesGet_Stats.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/FileSharesGet_Stats.json
             // this example is just showing the usage of "FileShares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +114,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetShares()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/FileSharesGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/FileSharesGet.json
             // this example is just showing the usage of "FileShares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -83,7 +145,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteShares()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/FileSharesDelete.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/FileSharesDelete.json
             // this example is just showing the usage of "FileShares_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +172,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateShareAcls()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/FileShareAclsPatch.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/FileShareAclsPatch.json
             // this example is just showing the usage of "FileShares_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -152,9 +214,86 @@ Permission = "rwd",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateSharePaidBursting()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/FileSharesPatch_PaidBursting.json
+            // this example is just showing the usage of "FileShares_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FileShareResource created on azure
+            // for more information of creating FileShareResource, please refer to the document of FileShareResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res3376";
+            string accountName = "sto328";
+            string shareName = "share6185";
+            ResourceIdentifier fileShareResourceId = FileShareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareName);
+            FileShareResource fileShare = client.GetFileShareResource(fileShareResourceId);
+
+            // invoke the operation
+            FileShareData data = new FileShareData
+            {
+                FileSharePaidBursting = new FileSharePropertiesFileSharePaidBursting
+                {
+                    PaidBurstingEnabled = true,
+                    PaidBurstingMaxIops = 102400,
+                    PaidBurstingMaxBandwidthMibps = 10340,
+                },
+            };
+            FileShareResource result = await fileShare.UpdateAsync(data);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            FileShareData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateShareProvisionedV2()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/FileSharesPatch_ProvisionedV2.json
+            // this example is just showing the usage of "FileShares_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FileShareResource created on azure
+            // for more information of creating FileShareResource, please refer to the document of FileShareResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res3376";
+            string accountName = "sto328";
+            string shareName = "share6185";
+            ResourceIdentifier fileShareResourceId = FileShareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareName);
+            FileShareResource fileShare = client.GetFileShareResource(fileShareResourceId);
+
+            // invoke the operation
+            FileShareData data = new FileShareData
+            {
+                ShareQuota = 100,
+                ProvisionedIops = 5000,
+                ProvisionedBandwidthMibps = 200,
+            };
+            FileShareResource result = await fileShare.UpdateAsync(data);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            FileShareData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateShares()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/FileSharesPatch.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/FileSharesPatch.json
             // this example is just showing the usage of "FileShares_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -192,7 +331,7 @@ Permission = "rwd",
         [Ignore("Only validating compilation of examples")]
         public async Task Restore_RestoreShares()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/FileSharesRestore.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/FileSharesRestore.json
             // this example is just showing the usage of "FileShares_Restore" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -220,7 +359,7 @@ Permission = "rwd",
         [Ignore("Only validating compilation of examples")]
         public async Task Lease_AcquireALeaseOnAShare()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/FileSharesLease_Acquire.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/FileSharesLease_Acquire.json
             // this example is just showing the usage of "FileShares_Lease" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -254,7 +393,7 @@ Permission = "rwd",
         [Ignore("Only validating compilation of examples")]
         public async Task Lease_BreakALeaseOnAShare()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/FileSharesLease_Break.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/FileSharesLease_Break.json
             // this example is just showing the usage of "FileShares_Lease" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

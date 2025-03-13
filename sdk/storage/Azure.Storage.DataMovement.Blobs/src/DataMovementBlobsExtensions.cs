@@ -552,7 +552,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 BlobType = default,
                 _isBlobTypeSet = false,
-                BlobDirectoryPrefix = directoryPrefix,
+                BlobPrefix = directoryPrefix,
                 BlobOptions = new(checkpointDetails),
             };
         }
@@ -562,7 +562,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 BlobType = options?.BlobType,
                 _isBlobTypeSet = options?._isBlobTypeSet ?? false,
-                BlobDirectoryPrefix = options?.BlobDirectoryPrefix,
+                BlobPrefix = options?.BlobPrefix,
                 BlobOptions = new BlobStorageResourceOptions(options?.BlobOptions)
             };
 

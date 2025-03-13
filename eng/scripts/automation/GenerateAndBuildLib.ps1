@@ -45,8 +45,7 @@ function Get-SwaggerInfo()
     }
     catch
     {
-        Write-Error "Error parsing swagger info"
-        Write-Error $_
+        Write-Host "[ERROR] Error parsing swagger info: $_"
     }
     Write-Host "Cannot find swagger info"
     exit 1
@@ -263,8 +262,7 @@ function Update-DataPlanePackageFolder() {
     CreateOrUpdateAutorestConfigFile -autorestFilePath $file -namespace $namespace -inputfile "$inputfile" -readme "$readme" -autorestConfigYaml "$autorestConfigYaml"
     Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
   } else {
-    Write-Error "Project directory doesn't exist. It is a new .NET SDK."
-    Write-Error "We will not support onboard a new SDK from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+    Write-Host "[ERROR] Project directory doesn't exist. It is a new .NET SDK. We will not support onboard a new SDK from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
     exit 1
   }
 
@@ -312,8 +310,7 @@ function Update-MgmtPackageFolder() {
       $mgmtPackageName = $folderinfo.Name
       $projectFolder = "$sdkPath/sdk/$packageName/$mgmtPackageName"
     } else {
-      Write-Error "Project directory doesn't exist. It is a new .NET SDK."
-      Write-Error "We will not support onboard a new service SDK from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+      Write-Host "[ERROR] Project directory doesn't exist. It is a new .NET SDK. We will not support onboard a new service SDK from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
       exit 1
     }
 
@@ -546,7 +543,7 @@ Invoke-GenerateAndBuildSDK -readmeAbsolutePath <path-to-readme> -sdkRootPath <pa
 
 #>
 
-$DotNetSupportChannelLink = "https://aka.ms/azsdk/donet-teams-channel"
+$DotNetSupportChannelLink = "https://aka.ms/azsdk/dotnet-teams-channel"
 function Invoke-GenerateAndBuildSDK () {
     param(
         [string]$readmeAbsolutePath,
@@ -561,7 +558,7 @@ function Invoke-GenerateAndBuildSDK () {
     Write-Host "service:$service, serviceType:$serviceType"
 
     if (!$readmeFile.StartsWith("http") -And !(Test-Path -Path $readmeFile)) {
-        Write-Error "[ERROR] readme file '$readmeFile' does not exist. Please provide a valid readme file path."
+        Write-Host "[ERROR] readme file '$readmeFile' does not exist. Please provide a valid readme file path."
         exit 1
     }
 
@@ -570,17 +567,15 @@ function Invoke-GenerateAndBuildSDK () {
     if ( $serviceType -eq "resource-manager" ) {
         Write-Host "Generate resource-manager SDK client library."
         $package = $service
-        if ($packageNameHash[$service] -ne "") {
+        if ($null -ne $packageNameHash[$service] -and $packageNameHash[$service] -ne "") {
             $package = $packageNameHash[$service]
+            Write-Host "rename package name to $package"
         }
         $projectFolder = (Join-Path $sdkRootPath "sdk" $package "Azure.ResourceManager.*")
         if (Test-Path -Path $projectFolder) {
             Update-MgmtPackageFolder -service $service -packageName $package -sdkPath $sdkRootPath -commitid $commitid -readme $readmeFile -outputJsonFile $newpackageoutput
             if ( !$?) {
-                Write-Host "[ERROR] Failed to create sdk project folder.service:$service,package:$package,"
-                Write-Host "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile.exit code: $?."
-                Write-Host "[ERROR] Please review the detail errors for potential fixes."
-                Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                Write-Host "[ERROR] Failed to create sdk project folder.service:$service,package:$package, sdkPath:$sdkRootPath,readme:$readmeFile.exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 exit 1
             }
             $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
@@ -588,7 +583,7 @@ function Invoke-GenerateAndBuildSDK () {
             Remove-Item $newPackageOutput
         } else {
             Write-Host "Path doesn't exist. create template."
-            Write-Error "[ERROR] The service $service is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+            Write-Host "[ERROR] The service $service is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
             exit 1
         }
     } else {
@@ -618,10 +613,7 @@ function Invoke-GenerateAndBuildSDK () {
                 Write-Host "Path exists!"
                 Update-DataPlanePackageFolder -service $service -namespace $namespace -sdkPath $sdkRootPath -readme $readmeFile -autorestConfigYaml "$autorestConfigYaml" -outputJsonFile $newpackageoutput
                 if ( !$? ) {
-                    Write-Host "[ERROR] Failed to create sdk project folder.service:$service,namespace:$namespace,"
-                    Write-Host "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile,autorestConfigYaml:$autorestConfigYaml.exit code: $?."
-                    Write-Host "[ERROR] Please review the detail errors for potential fixes."
-                    Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                    Write-Host "[ERROR] Failed to create sdk project folder.service:$service,namespace:$namespace, sdkPath:$sdkRootPath,readme:$readmeFile,autorestConfigYaml:$autorestConfigYaml.exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                     exit 1
                 }
                 $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
@@ -629,7 +621,7 @@ function Invoke-GenerateAndBuildSDK () {
                 Remove-Item $newPackageOutput
             } else {
                 Write-Host "SDK project folder doesn't exist."
-                Write-Error "[ERROR] The service $service is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                Write-Host "[ERROR] The service $service is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 exit 1
             }
         } else {
@@ -653,12 +645,9 @@ function Invoke-GenerateAndBuildSDK () {
                         $projectFolder=(Join-Path $sdkRootPath "sdk" $service $folder)
                         if (Test-Path -Path $projectFolder) {
                             Write-Host "Path exists!"
-                            New-DataPlanePackageFolder -service $service -namespace $folder -sdkPath $sdkRootPath -readme $readmeFile -outputJsonFile $newpackageoutput
+                            Update-DataPlanePackageFolder -service $service -namespace $folder -sdkPath $sdkRootPath -readme $readmeFile -outputJsonFile $newpackageoutput
                             if ( !$? ) {
-                                Write-Host "[ERROR] Failed to create sdk project folder.service:$service,namespace:$folder,"
-                                Write-Host "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile. exit code: $?."
-                                Write-Host "[ERROR] Please review the detail errors for potential fixes."
-                                Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                                Write-Host "[ERROR] Failed to create sdk project folder.service:$service,namespace:$folder, sdkPath:$sdkRootPath,readme:$readmeFile. exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                                 exit 1
                             }
                             $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
@@ -666,7 +655,7 @@ function Invoke-GenerateAndBuildSDK () {
                             Remove-Item $newPackageOutput
                         } else {
                             Write-Host "SDK project folder doesn't exist."
-                            Write-Error "[ERROR] The service $service is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                            Write-Host "[ERROR] The service $service is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                             exit 1
                         }
                     }
@@ -724,9 +713,7 @@ function GeneratePackage()
             dotnet build /t:GenerateCode $srcPath /p:SpecRepoRoot=$specRepoRoot
         }
         if ( !$?) {
-            Write-Host "[ERROR] Failed to generate sdk for package:$packageName. Exit code: $?."
-            Write-Host "[ERROR] Please review the detail errors for potential fixes."
-            Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+            Write-Host "[ERROR] Failed to generate sdk for package:$packageName. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
             $result = "failed"
             $isGenerateSuccess = $false
         }
@@ -741,9 +728,7 @@ function GeneratePackage()
         Write-Host "Start to build sdk project: $srcPath"
         dotnet build $srcPath /p:RunApiCompat=$false
         if ( !$?) {
-            Write-Host "[ERROR] Failed to build the sdk project: $packageName for service: $service. Exit code: $?."
-            Write-Host "[ERROR] Please review the detail errors for potential fixes."
-            Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+            Write-Host "[ERROR] Failed to build the sdk project: $packageName for service: $service. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
             $result = "failed"
         } else {
             # Build the whole solution and generate artifacts if the project build successfully
@@ -752,18 +737,14 @@ function GeneratePackage()
             $serviceProjFilePath = Join-Path $sdkRootPath 'eng' 'service.proj'
             dotnet build /p:Scope=$service /p:Project=$packageName /p:RunApiCompat=$false $serviceProjFilePath
             if ( !$? ) {
-                Write-Host "[ERROR] Failed to build sdk solution:$packageName. Exit code: $?."
-                Write-Host "[ERROR] Please review the detail errors for potential fixes."
-                Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                Write-Host "[ERROR] Failed to build sdk solution:$packageName. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 $result = "failed"
             }
             # pack
             Write-Host "Start to pack sdk"
             dotnet pack $srcPath /p:RunApiCompat=$false
             if ( !$? ) {
-                Write-Host "[ERROR] Failed to pack the sdk package: $packageName for service: $service. Exit code: $?."
-                Write-Host "[ERROR] Please review the detail errors for potential fixes."
-                Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                Write-Host "[ERROR] Failed to pack the sdk package: $packageName for service: $service. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 $result = "failed"
             } else {
                 # artifacts
@@ -777,9 +758,7 @@ function GeneratePackage()
                     # check the artifact in Release folder
                     $artifactsPath = (Join-Path "artifacts" "packages" "Release" $packageName)
                     if (-not (Test-Path $artifactsPath)) {
-                        Write-Host "[ERROR] Artifact folder not found for $artifactsPath."
-                        Write-Host "[ERROR] Please review the detail errors for potential fixes."
-                        Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                        Write-Host "[ERROR] Artifact folder not found for $artifactsPath. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                     }
                     else {
                         $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -exclude *.symbols.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
@@ -787,8 +766,7 @@ function GeneratePackage()
                 }
                 $apiViewArtifact = ""
                 if ( $artifacts.count -eq 0) {
-                    Write-Host "[ERROR] Failed to generate sdk artifact. Please review the detail errors for potential fixes."
-                    Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                    Write-Host "[ERROR] Failed to generate sdk artifact. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 } else {
                     $apiViewArtifact = $artifacts[0]
                 }
@@ -807,8 +785,7 @@ function GeneratePackage()
             Write-Host "Start to export api for $service"
             & $sdkRootPath/eng/scripts/Export-API.ps1 $service
             if ( !$? ) {
-                Write-Host "[ERROR] Failed to export api for sdk. exit code: $?. Please review the detail errors for potential fixes."
-                Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                Write-Host "[ERROR] Failed to export api for sdk. exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 $result = "failed"
             }
             # breaking change validation

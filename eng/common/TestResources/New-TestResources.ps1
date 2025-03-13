@@ -121,6 +121,8 @@ param (
 . $PSScriptRoot/TestResources-Helpers.ps1
 . $PSScriptRoot/SubConfig-Helpers.ps1
 
+$wellKnownTMETenants = @('70a036f6-8e4d-4615-bad6-149c02e7720d')
+
 if (!$ServicePrincipalAuth) {
     # Clear secrets if not using Service Principal auth. This prevents secrets
     # from being passed to pre- and post-scripts.
@@ -320,8 +322,14 @@ try {
     # Make sure the provisioner OID is set so we can pass it through to the deployment.
     if (!$ProvisionerApplicationId -and !$ProvisionerApplicationOid) {
         if ($context.Account.Type -eq 'User') {
-            # Use -Mail as the lookup works in both corp and TME tenants
+            # Support corp tenant and TME tenant user id lookups
             $user = Get-AzADUser -Mail $context.Account.Id
+            if ($user -eq $null -or !$user.Id) {
+                $user = Get-AzADUser -UserPrincipalName $context.Account.Id
+            }
+            if ($user -eq $null -or !$user.Id) {
+                throw "Failed to find entra object ID for the current user"
+            }
             $ProvisionerApplicationOid = $user.Id
         } elseif ($context.Account.Type -eq 'ServicePrincipal') {
             $sp = Get-AzADServicePrincipal -ApplicationId $context.Account.Id
@@ -391,8 +399,14 @@ try {
             Write-Warning "The specified TestApplicationId '$TestApplicationId' will be ignored when -ServicePrincipalAutth is not set."
         }
 
-        # Use -Mail as the lookup works in both corp and TME tenants
+        # Support corp tenant and TME tenant user id lookups
         $userAccount = (Get-AzADUser -Mail (Get-AzContext).Account.Id)
+        if ($userAccount -eq $null -or !$userAccount.Id) {
+            $userAccount = (Get-AzADUser -UserPrincipalName (Get-AzContext).Account)
+        }
+        if ($userAccount -eq $null -or !$userAccount.Id) {
+            throw "Failed to find entra object ID for the current user"
+        }
         $TestApplicationOid = $userAccount.Id
         $TestApplicationId = $testApplicationOid
         $userAccountName = $userAccount.UserPrincipalName
@@ -515,7 +529,11 @@ try {
     if ($CI -and $Environment -eq 'AzureCloud' -and $env:PoolSubnet) {
         $templateParameters.Add('azsdkPipelineSubnetList', @($env:PoolSubnet))
     }
-
+    # The TME tenants are our place for local auth testing so we do not support safe secret standard there.
+    # Some arm/bicep templates may want to change deployment settings like local auth in sandboxed TME tenants.
+    # The pipeline account context does not have the .Tenant.Name property, so check against subscription via
+    # naming convention instead.
+    $templateParameters.Add('supportsSafeSecretStandard', (!$wellKnownTMETenants.Contains($TenantId)))
     $defaultCloudParameters = LoadCloudConfig $Environment
     MergeHashes $defaultCloudParameters $(Get-Variable templateParameters)
     MergeHashes $ArmTemplateParameters $(Get-Variable templateParameters)

@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCustomLocationEnabledResourceType(document.RootElement, options);
                     }
                 default:
