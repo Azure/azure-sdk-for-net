@@ -1,7 +1,7 @@
 # Azure SDK for .NET - Management Plane SDK Naming Conventions
 
 This document describes the naming conventions for the Azure Management Plane SDK for .NET.
-In addition to adhering to the [General Naming Conventions of .NET](https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/general-naming-conventions), there are specific guidelines related to the naming of classes, properties, and methods. These include rules for using abbreviations and acronyms, as well as recommendations for avoiding Azure-specific names.
+In addition to adhering to the [General Naming Conventions of .NET](https://learn.microsoft.com/dotnet/standard/design-guidelines/general-naming-conventions), there are specific guidelines related to the naming of classes, properties, and methods. These include rules for using abbreviations and acronyms, as well as recommendations for avoiding Azure-specific names.
 
 ## General Guidelines
 
@@ -9,7 +9,7 @@ In addition to adhering to the [General Naming Conventions of .NET](https://lear
 
 **DO** 2 letter acronyms are special which uppercase all if not part of longer compound identifiers, but still have some except like `Vm`, `Id` and etc.  
 
-**DO** Use a singular type name for an enumeration unless its values are bit fields. Use a plural type name for an enumeration with bit fields as values, also called flags enum. For more details, please check [here](https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+**DO** Use a singular type name for an enumeration unless its values are bit fields. Use a plural type name for an enumeration with bit fields as values, also called flags enum. For more details, please check [here](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
 
 **DO** The name of PATCH operation's body parameter should be: `[Model]Patch`.  For the model of a property in the `[Model]Patch`, if you need to rename the suffix, use `Content` instead of `Patch` since properties are not patchable, they will be set as the property model is.
 

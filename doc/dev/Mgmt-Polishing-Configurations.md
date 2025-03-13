@@ -4,7 +4,7 @@ To ensure the quality of the Azure SDK for .NET and adherence to the [naming con
 
 # Guidelines for Data Type Changes
 
-In the API specifications, many properties and parameters are defined as string types but have special formats in .NET. We need to correct these in the Azure .NET SDK.
+In the API specifications, many properties and parameters are defined as string types but have special formats in .NET. We need to correct these types in the Azure .NET SDK.
 
 - The data type of a property should be `uuid` if its name is end of `Id` / `Guid` and value is really a uuid.
 
@@ -16,9 +16,9 @@ In the API specifications, many properties and parameters are defined as string 
 
 - The data type of a property might be `AzureLocation` if its name is end with `location` / `locations` .
 
-- `Binary` / `String` property may change to `BinaryData` type.
+- `Binary` / `String` property might change to `BinaryData` type.
 
-- Pay attention to models similar to common type models and confirm whether they really cannot be replaced by the common types from ResourceManager(Optional). 
+- Pay attention to models similar to common type models and confirm whether they really can't be replaced by the common types from ResourceManager(Optional). 
 
 # Guidelines for Operation Changes
 
@@ -26,7 +26,7 @@ In the API specifications, many properties and parameters are defined as string 
 
 - All `ListOperations` method should be removed because it's not useful in SDK and the SDK itself can show all the available operations in it through public APIs. 
 
-# Configruations for Generating SDK from TypeSpec Specifications
+# Configruation for Generating SDK from TypeSpec Specifications
 
 For SDKs generated from TypeSpec specifications, we can update the client.tsp file located in the same folder as the main.tsp to address APIView review comments in the .NET SDK.
 
@@ -157,17 +157,17 @@ For example, in the above configuration, the `ETag` and `location` are full matc
 Here is list of the format we support:
 | Format | Data type |
 | :--- | :--- |
-| arm-id | [ResourceIdentifier](https://docs.microsoft.com/en-us/dotnet/api/azure.core.resourceidentifier?view=azure-dotnet) |
-| azure-location | [AzureLocation](https://docs.microsoft.com/en-us/dotnet/api/azure.core.azurelocation?view=azure-dotnet) |
-| datetime | [DateTimeOffset](https://docs.microsoft.com/en-us/dotnet/api/system.datetimeoffset?view=net-6.0) |
-| duration-constant | [TimeSpan](https://docs.microsoft.com/en-us/dotnet/api/system.timespan) |
-| etag | [ETag](https://docs.microsoft.com/en-us/dotnet/api/azure.etag?view=azure-dotnet) |
-| ip-address | [IPAddress](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress?view=net-6.0) |
-| object | [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object?view=net-6.0) |
-| resource-type | [ResourceType](https://docs.microsoft.com/en-us/dotnet/api/azure.core.resourcetype?view=azure-dotnet) |
-| content-type | [ContentType](https://docs.microsoft.com/en-us/dotnet/api/azure.core.contenttype?view=azure-dotnet) |
-| uri | [Uri](https://docs.microsoft.com/en-us/dotnet/api/system.uri?view=net-6.0) |
-| uuid | [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid?view=net-6.0) |
+| arm-id | [ResourceIdentifier](https://docs.microsoft.com/dotnet/api/azure.core.resourceidentifier?view=azure-dotnet) |
+| azure-location | [AzureLocation](https://docs.microsoft.com/dotnet/api/azure.core.azurelocation?view=azure-dotnet) |
+| datetime | [DateTimeOffset](https://docs.microsoft.com/dotnet/api/system.datetimeoffset?view=net-6.0) |
+| duration-constant | [TimeSpan](https://docs.microsoft.com/dotnet/api/system.timespan) |
+| etag | [ETag](https://docs.microsoft.com/dotnet/api/azure.etag?view=azure-dotnet) |
+| ip-address | [IPAddress](https://docs.microsoft.com/dotnet/api/system.net.ipaddress?view=net-6.0) |
+| object | [Object](https://docs.microsoft.com/dotnet/api/system.object?view=net-6.0) |
+| resource-type | [ResourceType](https://docs.microsoft.com/dotnet/api/azure.core.resourcetype?view=azure-dotnet) |
+| content-type | [ContentType](https://docs.microsoft.com/dotnet/api/azure.core.contenttype?view=azure-dotnet) |
+| uri | [Uri](https://docs.microsoft.com/dotnet/api/system.uri?view=net-6.0) |
+| uuid | [Guid](https://docs.microsoft.com/dotnet/api/system.guid?view=net-6.0) |
 
 ## Rename mapping
 
