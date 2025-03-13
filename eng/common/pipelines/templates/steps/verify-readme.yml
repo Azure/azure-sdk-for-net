@@ -20,11 +20,6 @@ parameters:
   default: succeeded()
 
 steps:
-- task: UsePythonVersion@0
-  displayName: 'Use Python 3.11'
-  inputs:
-    versionSpec: '3.11'
-
 - task: PowerShell@2
   displayName: "Verify Readmes"
   condition: ${{ parameters.Condition }}
