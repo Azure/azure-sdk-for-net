@@ -2269,6 +2269,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public AzurePostgreSqlSink() { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> PreCopyScript { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<System.Collections.Generic.IList<string>> UpsertKeys { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum? WriteMethod { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlSink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlSink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlSink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2299,6 +2301,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlTableDataset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlTableDataset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlTableDataset>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlTableDataset>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzurePostgreSqlWriteMethodEnum : System.IEquatable<Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzurePostgreSqlWriteMethodEnum(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum BulkInsert { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum CopyCommand { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum Upsert { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum left, Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum left, Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AzureQueueSink : Azure.ResourceManager.DataFactory.Models.CopySink, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AzureQueueSink>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AzureQueueSink>
     {
@@ -9457,6 +9478,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class PrestoLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.PrestoLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.PrestoLinkedService>
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public PrestoLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> host, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> serverVersion, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> catalog, Azure.ResourceManager.DataFactory.Models.PrestoAuthenticationType authenticationType) { }
         public PrestoLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> host, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> catalog, Azure.ResourceManager.DataFactory.Models.PrestoAuthenticationType authenticationType) { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> AllowHostNameCNMismatch { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> AllowSelfSignedServerCert { get { throw null; } set { } }
