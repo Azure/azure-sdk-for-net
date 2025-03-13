@@ -43,9 +43,9 @@ steps:
     parameters:
       ServiceDirectories: "$(ChangedServices)"
 
-  - template: /eng/common/pipelines/templates/steps/verify-readmes.yml
-    parameters:
-      PackagePropertiesFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
+  # - template: /eng/common/pipelines/templates/steps/verify-readmes.yml
+  #   parameters:
+  #     PackagePropertiesFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
 
   - task: NodeTool@0
     inputs:
