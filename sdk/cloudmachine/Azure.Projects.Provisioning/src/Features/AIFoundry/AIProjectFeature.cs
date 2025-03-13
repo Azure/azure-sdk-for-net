@@ -91,7 +91,7 @@ namespace Azure.Projects.AIFoundry
 
             if (_connectionString != null)
             {
-                EmitConnections(infrastructure, "Azure.AI.Projects.AIProjectClient", _connectionString);
+                EmitConnection(infrastructure, "Azure.AI.Projects.AIProjectClient", _connectionString);
             }
         }
     }

@@ -156,7 +156,7 @@ public class BlobContainerFeature : AzureProjectFeature
         };
         infrastructure.AddConstruct(Id, blobContainer);
 
-        EmitConnections(infrastructure,
+        EmitConnection(infrastructure,
             $"Azure.Storage.Blobs.BlobContainerClient@{ContainerName}",
             $"https://{Service.Account.Name}.blob.core.windows.net/{ContainerName}"
         );

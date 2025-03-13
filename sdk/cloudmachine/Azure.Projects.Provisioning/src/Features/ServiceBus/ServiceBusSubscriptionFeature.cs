@@ -58,6 +58,6 @@ internal class ServiceBusSubscriptionFeature : AzureProjectFeature
 
         infrastructure.AddConstruct(Id, subscription);
 
-        EmitConnections(infrastructure, Name, $"{_topicName}/{Name}");
+        EmitConnection(infrastructure, Name, $"{_topicName}/{Name}");
     }
 }

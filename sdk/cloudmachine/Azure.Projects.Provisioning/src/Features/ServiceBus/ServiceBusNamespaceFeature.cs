@@ -46,7 +46,7 @@ public class ServiceBusNamespaceFeature : AzureProjectFeature
             ServiceBusBuiltInRole.AzureServiceBusDataOwner.ToString()
         );
 
-        EmitConnections(infrastructure,
+        EmitConnection(infrastructure,
             "Azure.Messaging.ServiceBus.ServiceBusClient",
             $"https://{infrastructure.ProjectId}.servicebus.windows.net/"
         );

@@ -33,6 +33,6 @@ internal class OpenAIAccountFeature : AzureProjectFeature
             CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor.ToString()
         );
 
-        EmitConnections(infrastructure, "Azure.AI.OpenAI.AzureOpenAIClient", $"https://{infrastructure.ProjectId}.openai.azure.com");
+        EmitConnection(infrastructure, "Azure.AI.OpenAI.AzureOpenAIClient", $"https://{infrastructure.ProjectId}.openai.azure.com");
     }
 }

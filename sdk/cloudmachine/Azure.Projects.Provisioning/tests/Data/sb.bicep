@@ -17,7 +17,7 @@ resource appConfiguration 'Microsoft.AppConfiguration/configurationStores@2024-0
   }
 }
 
-resource appConfiguration_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource appConfiguration_admin_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid('appConfiguration', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b'))
   properties: {
     principalId: principalId
@@ -46,7 +46,7 @@ resource cm_servicebus 'Microsoft.ServiceBus/namespaces@2024-01-01' = {
   }
 }
 
-resource cm_servicebus_AzureServiceBusDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource cm_servicebus_admin_AzureServiceBusDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid('cm_servicebus', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '090c5cfd-751d-490a-894a-3ce6f1109419'))
   properties: {
     principalId: principalId
@@ -78,7 +78,7 @@ resource cm_servicebus_auth_rule 'Microsoft.ServiceBus/namespaces/AuthorizationR
   parent: cm_servicebus
 }
 
-resource app_config_setting2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection20 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Messaging.ServiceBus.ServiceBusClient'
   properties: {
     value: 'https://cm0c420d2f21084cd.servicebus.windows.net/'

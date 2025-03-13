@@ -17,7 +17,7 @@ resource appConfiguration 'Microsoft.AppConfiguration/configurationStores@2024-0
   }
 }
 
-resource appConfiguration_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource appConfiguration_admin_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid('appConfiguration', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b'))
   properties: {
     principalId: principalId
@@ -57,7 +57,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   }
 }
 
-resource storageAccount_StorageBlobDataContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource storageAccount_admin_StorageBlobDataContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid('storageAccount', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'))
   properties: {
     principalId: principalId
@@ -77,7 +77,7 @@ resource storageAccount_projectIdentity_StorageBlobDataContributor 'Microsoft.Au
   scope: storageAccount
 }
 
-resource storageAccount_StorageTableDataContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource storageAccount_admin_StorageTableDataContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid('storageAccount', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3'))
   properties: {
     principalId: principalId
@@ -112,7 +112,7 @@ resource storageBlobContainer_container2 'Microsoft.Storage/storageAccounts/blob
   parent: storageBlobService
 }
 
-resource app_config_setting2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection10 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Storage.Blobs.BlobContainerClient@container1'
   properties: {
     value: 'https://cm0c420d2f21084cd.blob.core.windows.net/container1'
@@ -120,7 +120,7 @@ resource app_config_setting2 'Microsoft.AppConfiguration/configurationStores/key
   parent: appConfiguration
 }
 
-resource app_config_setting3 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection11 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Storage.Blobs.BlobContainerClient@container2'
   properties: {
     value: 'https://cm0c420d2f21084cd.blob.core.windows.net/container2'

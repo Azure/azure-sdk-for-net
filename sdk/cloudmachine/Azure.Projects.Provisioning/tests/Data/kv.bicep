@@ -17,7 +17,7 @@ resource appConfiguration 'Microsoft.AppConfiguration/configurationStores@2024-0
   }
 }
 
-resource appConfiguration_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource appConfiguration_admin_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid('appConfiguration', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b'))
   properties: {
     principalId: principalId
@@ -62,7 +62,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
   }
 }
 
-resource keyVault_KeyVaultAdministrator 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource keyVault_admin_KeyVaultAdministrator 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid('keyVault', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483'))
   properties: {
     principalId: principalId
@@ -82,7 +82,7 @@ resource keyVault_projectIdentity_KeyVaultAdministrator 'Microsoft.Authorization
   scope: keyVault
 }
 
-resource app_config_setting2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection16 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Security.KeyVault.Secrets.SecretClient'
   properties: {
     value: 'https://cm0c420d2f21084cd.vault.azure.net/'

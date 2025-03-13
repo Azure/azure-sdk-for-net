@@ -54,7 +54,7 @@ internal class ServiceBusTopicFeature : AzureProjectFeature
 
         infrastructure.AddConstruct(Id, topic);
 
-        EmitConnections(infrastructure, Name, Name);
+        EmitConnection(infrastructure, Name, Name);
     }
 
     public override string ToString() => CreateId(_namespaceName, Name);

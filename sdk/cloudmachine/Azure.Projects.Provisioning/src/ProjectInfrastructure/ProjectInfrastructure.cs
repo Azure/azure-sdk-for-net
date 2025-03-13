@@ -133,14 +133,6 @@ public partial class ProjectInfrastructure
         return _infrastructure.Build(context);
     }
 
-    private int _index = 0;
-    internal string CreateUniqueBicepIdentifier(string baseIdentifier)
-    {
-        int index = Interlocked.Increment(ref _index);
-        if (index == 1) return baseIdentifier;
-        return $"{baseIdentifier}{index}";
-    }
-
     private class ProjectInfrastructureDebugView
     {
         private readonly ProjectInfrastructure _projectInfrastructure;

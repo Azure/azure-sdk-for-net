@@ -43,7 +43,7 @@ public class BicepGenerationTests
     }
 
     [Test]
-    public void OneContainer()
+    public void Blobs()
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
         infrastructure.AddFeature(new BlobContainerFeature("testcontainer", isObservable: false));
@@ -55,7 +55,7 @@ public class BicepGenerationTests
     }
 
     [Test]
-    public void TwoContainers()
+    public void BlobsTwoContainers()
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
         infrastructure.AddFeature(new BlobContainerFeature("container1", isObservable: false));
@@ -68,7 +68,7 @@ public class BicepGenerationTests
     }
 
     [Test]
-    public void ObservableContainer()
+    public void BlobsObservableContainer()
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
         infrastructure.AddFeature(new BlobContainerFeature("default", isObservable: true));

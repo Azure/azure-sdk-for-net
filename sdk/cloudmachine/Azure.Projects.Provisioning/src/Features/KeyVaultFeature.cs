@@ -47,7 +47,7 @@ public class KeyVaultFeature : AzureProjectFeature
             KeyVaultBuiltInRole.KeyVaultAdministrator.ToString()
         );
 
-        EmitConnections(infrastructure,
+        EmitConnection(infrastructure,
             "Azure.Security.KeyVault.Secrets.SecretClient",
             $"https://{infrastructure.ProjectId}.vault.azure.net/"
         );

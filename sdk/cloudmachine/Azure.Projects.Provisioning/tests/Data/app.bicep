@@ -17,7 +17,7 @@ resource appConfiguration 'Microsoft.AppConfiguration/configurationStores@2024-0
   }
 }
 
-resource appConfiguration_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource appConfiguration_admin_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid('appConfiguration', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b'))
   properties: {
     principalId: principalId
@@ -62,7 +62,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
   }
 }
 
-resource keyVault_KeyVaultAdministrator 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource keyVault_admin_KeyVaultAdministrator 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid('keyVault', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483'))
   properties: {
     principalId: principalId
@@ -95,7 +95,7 @@ resource openai 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
   }
 }
 
-resource openai_CognitiveServicesOpenAIContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource openai_admin_CognitiveServicesOpenAIContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid('openai', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'a001fd3d-188f-4b5d-821b-7da978bf7442'))
   properties: {
     principalId: principalId
@@ -195,7 +195,7 @@ resource appServiceWebsite 'Microsoft.Web/sites@2024-04-01' = {
   }
 }
 
-resource app_config_setting2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Security.KeyVault.Secrets.SecretClient'
   properties: {
     value: 'https://cm0c420d2f21084cd.vault.azure.net/'
@@ -203,7 +203,7 @@ resource app_config_setting2 'Microsoft.AppConfiguration/configurationStores/key
   parent: appConfiguration
 }
 
-resource app_config_setting3 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.AI.OpenAI.AzureOpenAIClient'
   properties: {
     value: 'https://cm0c420d2f21084cd.openai.azure.com'
@@ -211,7 +211,7 @@ resource app_config_setting3 'Microsoft.AppConfiguration/configurationStores/key
   parent: appConfiguration
 }
 
-resource app_config_setting4 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection3 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'OpenAI.Chat.ChatClient'
   properties: {
     value: 'cm0c420d2f21084cd_chat'
@@ -219,7 +219,7 @@ resource app_config_setting4 'Microsoft.AppConfiguration/configurationStores/key
   parent: appConfiguration
 }
 
-resource app_config_setting5 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection4 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'OpenAI.Embeddings.EmbeddingClient'
   properties: {
     value: 'cm0c420d2f21084cd_embedding'

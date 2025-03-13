@@ -17,7 +17,7 @@ resource appConfiguration 'Microsoft.AppConfiguration/configurationStores@2024-0
   }
 }
 
-resource appConfiguration_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource appConfiguration_admin_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid('appConfiguration', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b'))
   properties: {
     principalId: principalId
@@ -57,7 +57,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   }
 }
 
-resource storageAccount_StorageBlobDataContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource storageAccount_admin_StorageBlobDataContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid('storageAccount', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'))
   properties: {
     principalId: principalId
@@ -77,7 +77,7 @@ resource storageAccount_projectIdentity_StorageBlobDataContributor 'Microsoft.Au
   scope: storageAccount
 }
 
-resource storageAccount_StorageTableDataContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource storageAccount_admin_StorageTableDataContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid('storageAccount', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3'))
   properties: {
     principalId: principalId
@@ -116,7 +116,7 @@ resource cm_servicebus 'Microsoft.ServiceBus/namespaces@2024-01-01' = {
   }
 }
 
-resource cm_servicebus_AzureServiceBusDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource cm_servicebus_admin_AzureServiceBusDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid('cm_servicebus', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '090c5cfd-751d-490a-894a-3ce6f1109419'))
   properties: {
     principalId: principalId
@@ -237,7 +237,7 @@ resource cm_servicebus_subscription_private 'Microsoft.ServiceBus/namespaces/top
   parent: cm_servicebus_topic_private
 }
 
-resource app_config_setting2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection12 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Storage.Blobs.BlobContainerClient@cm'
   properties: {
     value: 'https://cm0c420d2f21084cd.blob.core.windows.net/cm'
@@ -245,7 +245,7 @@ resource app_config_setting2 'Microsoft.AppConfiguration/configurationStores/key
   parent: appConfiguration
 }
 
-resource app_config_setting3 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection13 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Messaging.ServiceBus.ServiceBusClient'
   properties: {
     value: 'https://cm0c420d2f21084cd.servicebus.windows.net/'
@@ -253,7 +253,7 @@ resource app_config_setting3 'Microsoft.AppConfiguration/configurationStores/key
   parent: appConfiguration
 }
 
-resource app_config_setting4 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection14 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'cm_servicebus_topic_private'
   properties: {
     value: 'cm_servicebus_topic_private'
@@ -261,7 +261,7 @@ resource app_config_setting4 'Microsoft.AppConfiguration/configurationStores/key
   parent: appConfiguration
 }
 
-resource app_config_setting5 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection15 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'cm_servicebus_subscription_private'
   properties: {
     value: 'cm_servicebus_topic_private/cm_servicebus_subscription_private'

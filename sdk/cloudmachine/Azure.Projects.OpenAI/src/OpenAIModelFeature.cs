@@ -125,7 +125,7 @@ public class OpenAIModelFeature : AzureProjectFeature
         infrastructure.AddConstruct(Id, deployment);
 
         string clientId = Kind == AIModelKind.Chat ? "OpenAI.Chat.ChatClient" : "OpenAI.Embeddings.EmbeddingClient";
-        EmitConnections(infrastructure, clientId, resourceName);
+        EmitConnection(infrastructure, clientId, resourceName);
 
         OpenAIModelFeature? FindPrevious(ProjectInfrastructure infrastructure, OpenAIModelFeature current)
         {

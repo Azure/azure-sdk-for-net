@@ -29,9 +29,9 @@ public abstract partial class AzureProjectFeature
 
     protected internal abstract void EmitConstructs(ProjectInfrastructure infrastructure);
 
-    protected void EmitConnections(ProjectInfrastructure infrastructure, string connectionId, string endpoint)
+    protected void EmitConnection(ProjectInfrastructure infrastructure, string connectionId, string endpoint)
     {
-        AppConfigurationSettingFeature connection = new(connectionId, endpoint);
+        AppConfigurationSettingFeature connection = new(connectionId, endpoint, "projectConnection");
         infrastructure.AddFeature(connection);
     }
 
