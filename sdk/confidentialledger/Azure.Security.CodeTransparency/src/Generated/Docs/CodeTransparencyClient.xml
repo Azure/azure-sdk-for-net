@@ -101,58 +101,6 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("keys")[0].GetProperty("kty").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateEntryAsync(BinaryData,CancellationToken)">
-      <example>
-This sample shows how to call CreateEntryAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
-
-Response<BinaryData> response = await client.CreateEntryAsync(BinaryData.FromObjectAsJson("{binary}"));
-]]></code></example>
-    </member>
-    <member name="CreateEntry(BinaryData,CancellationToken)">
-      <example>
-This sample shows how to call CreateEntry.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
-
-Response<BinaryData> response = client.CreateEntry(BinaryData.FromObjectAsJson("{binary}"));
-]]></code></example>
-    </member>
-    <member name="CreateEntryAsync(RequestContent,RequestContext)">
-      <example>
-This sample shows how to call CreateEntryAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create("{binary}");
-Response response = await client.CreateEntryAsync(content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code></example>
-    </member>
-    <member name="CreateEntry(RequestContent,RequestContext)">
-      <example>
-This sample shows how to call CreateEntry and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create("{binary}");
-Response response = client.CreateEntry(content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code></example>
-    </member>
     <member name="GetOperationAsync(string,CancellationToken)">
       <example>
 This sample shows how to call GetOperationAsync.

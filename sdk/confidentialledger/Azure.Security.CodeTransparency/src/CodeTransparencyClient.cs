@@ -15,6 +15,10 @@ using Azure.Security.CodeTransparency.Receipt;
 
 namespace Azure.Security.CodeTransparency
 {
+    [CodeGenSuppress("CreateEntry", typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("CreateEntryAsync", typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("CreateEntry", typeof(BinaryData), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateEntryAsync", typeof(BinaryData),typeof(CancellationToken))]
     public partial class CodeTransparencyClient
     {
         private readonly string _serviceName;
@@ -104,6 +108,113 @@ namespace Azure.Security.CodeTransparency
             }
 
             return new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = args => CertValidationCheck(args.Certificate) };
+        }
+
+        /// <summary> Post an entry to be registered on the CodeTransparency instance, mandatory in IETF SCITT draft. </summary>
+        /// <param name="body"> CoseSign1 signature envelope. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Operation<BinaryData> CreateEntry(BinaryData body, CancellationToken cancellationToken = default)
+        {
+            using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntry");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateEntryRequest(content, context);
+                Response response = _pipeline.ProcessMessage(message, context, cancellationToken);
+
+                BinaryData result = Response.FromValue(response.Content, response);
+
+                string operationId = string.Empty;
+
+                // Read cbor response to get the operationId
+                CborReader cborReader = new(response.Content);
+                cborReader.ReadStartMap();
+                while (cborReader.PeekState() != CborReaderState.EndMap)
+                {
+                    string key = cborReader.ReadTextString();
+                    if (string.Equals(key, "OperationId", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        operationId = cborReader.ReadTextString();
+                        break;
+                    }
+                    else
+                        cborReader.SkipValue();
+                }
+
+                if (string.IsNullOrEmpty(operationId))
+                {
+                    throw new RequestFailedException(response);
+                }
+                else
+                {
+                    return new CreateEntryOperation(this, operationId);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Post an entry to be registered on the CodeTransparency instance, mandatory in IETF SCITT draft. </summary>
+        /// <param name="body"> CoseSign1 signature envelope. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<Operation<BinaryData>> CreateEntryAsync(BinaryData body, CancellationToken cancellationToken = default)
+        {
+            using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntryAsync");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateEntryRequest(content, context);
+                Response response = await _pipeline.ProcessMessageAsync(message, context, cancellationToken).ConfigureAwait(false);
+
+                BinaryData result = Response.FromValue(response.Content, response);
+
+                string operationId = string.Empty;
+
+                try
+                {
+                    // Read cbor response to get the operationId
+                    CborReader cborReader = new(response.Content);
+                    cborReader.ReadStartMap();
+                    while (cborReader.PeekState() != CborReaderState.EndMap)
+                    {
+                        string key = cborReader.ReadTextString();
+                        if (string.Equals(key, "OperationId", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            operationId = cborReader.ReadTextString();
+                            break;
+                        }
+                        else
+                            cborReader.SkipValue();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new RequestFailedException("Failed to parse the Cbor response.", ex);
+                }
+
+                if (string.IsNullOrEmpty(operationId))
+                {
+                    throw new RequestFailedException(response);
+                }
+                else
+                {
+                    return new CreateEntryOperation(this, operationId);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

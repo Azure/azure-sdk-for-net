@@ -223,114 +223,6 @@ namespace Azure.Security.CodeTransparency
             }
         }
 
-        /// <summary> Post an entry to be registered on the CodeTransparency instance, mandatory in IETF SCITT draft. </summary>
-        /// <param name="body"> CoseSign1 signature envelope. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='CreateEntryAsync(BinaryData,CancellationToken)']/*" />
-        public virtual async Task<Response<BinaryData>> CreateEntryAsync(BinaryData body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body;
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateEntryAsync(content, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
-        }
-
-        /// <summary> Post an entry to be registered on the CodeTransparency instance, mandatory in IETF SCITT draft. </summary>
-        /// <param name="body"> CoseSign1 signature envelope. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='CreateEntry(BinaryData,CancellationToken)']/*" />
-        public virtual Response<BinaryData> CreateEntry(BinaryData body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body;
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateEntry(content, context);
-            return Response.FromValue(response.Content, response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Post an entry to be registered on the CodeTransparency instance, mandatory in IETF SCITT draft
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateEntryAsync(BinaryData,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='CreateEntryAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateEntryAsync(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntry");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateEntryRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Post an entry to be registered on the CodeTransparency instance, mandatory in IETF SCITT draft
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateEntry(BinaryData,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='CreateEntry(RequestContent,RequestContext)']/*" />
-        public virtual Response CreateEntry(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntry");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateEntryRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Get status of the long running registration operation, mandatory in IETF SCITT draft. </summary>
         /// <param name="operationId"> ID of the operation to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -663,7 +555,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetTransparencyConfigCborRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200500503);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -677,7 +569,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetPublicKeysRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200400404429500503);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -691,7 +583,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateCreateEntryRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier201202400404429500503);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier201202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -707,7 +599,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetOperationRequest(string operationId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200202400404429500503);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -722,7 +614,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetEntryRequest(string entryId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200400404429500503);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -737,7 +629,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetEntryStatementRequest(string entryId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200400404429500503);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -762,13 +654,11 @@ namespace Azure.Security.CodeTransparency
             return new RequestContext() { CancellationToken = cancellationToken };
         }
 
-        private static ResponseClassifier _responseClassifier200500503;
-        private static ResponseClassifier ResponseClassifier200500503 => _responseClassifier200500503 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 500, 503 });
-        private static ResponseClassifier _responseClassifier200400404429500503;
-        private static ResponseClassifier ResponseClassifier200400404429500503 => _responseClassifier200400404429500503 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 400, 404, 429, 500, 503 });
-        private static ResponseClassifier _responseClassifier201202400404429500503;
-        private static ResponseClassifier ResponseClassifier201202400404429500503 => _responseClassifier201202400404429500503 ??= new StatusCodeClassifier(stackalloc ushort[] { 201, 202, 400, 404, 429, 500, 503 });
-        private static ResponseClassifier _responseClassifier200202400404429500503;
-        private static ResponseClassifier ResponseClassifier200202400404429500503 => _responseClassifier200202400404429500503 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202, 400, 404, 429, 500, 503 });
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier201202;
+        private static ResponseClassifier ResponseClassifier201202 => _responseClassifier201202 ??= new StatusCodeClassifier(stackalloc ushort[] { 201, 202 });
+        private static ResponseClassifier _responseClassifier200202;
+        private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
     }
 }

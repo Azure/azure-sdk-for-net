@@ -37,10 +37,10 @@ namespace Azure.Security.CodeTransparency.Receipt
         /// </summary>
         /// <param name="jsonWebKey">The service certificate key (JWK).</param>
         /// <param name="receiptBytes">Receipt in COSE_Sign1 cbor bytes.</param>
-        /// <param name="signedStatement">The input signed statement bytes.</param>
-        public static void VerifyTransparentStatementReceipt(JsonWebKey jsonWebKey, byte[] receiptBytes, byte[] signedStatement)
+        /// <param name="signedStatementBytes">The input signed statement bytes.</param>
+        public static void VerifyTransparentStatementReceipt(JsonWebKey jsonWebKey, byte[] receiptBytes, byte[] signedStatementBytes)
         {
-            byte[] claimsDigest = s_sha256.ComputeHash(signedStatement);
+            byte[] claimsDigest = s_sha256.ComputeHash(signedStatementBytes);
 
             // Extract the expected KID from the public key used for verification,
             // and check it against the value set in the COSE header before using

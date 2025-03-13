@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -114,58 +113,6 @@ namespace Azure.Security.CodeTransparency.Samples
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
             Response<JwksDocument> response = await client.GetPublicKeysAsync();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_CodeTransparency_CreateEntry_CreateEntry()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create("{binary}");
-            Response response = client.CreateEntry(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CodeTransparency_CreateEntry_CreateEntry_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create("{binary}");
-            Response response = await client.CreateEntryAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_CodeTransparency_CreateEntry_CreateEntry_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
-
-            Response<BinaryData> response = client.CreateEntry(BinaryData.FromObjectAsJson("{binary}"));
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CodeTransparency_CreateEntry_CreateEntry_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
-
-            Response<BinaryData> response = await client.CreateEntryAsync(BinaryData.FromObjectAsJson("{binary}"));
         }
 
         [Test]

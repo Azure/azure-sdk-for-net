@@ -45,10 +45,24 @@ To submit the signature, use the following code:
 CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
 FileStream fileStream = File.OpenRead("signature.cose");
 BinaryData content = BinaryData.FromStream(fileStream);
-Operation<GetOperationResult> operation = await client.CreateEntryAsync(content);
-Response<GetOperationResult> operationResult = await operation.WaitForCompletionAsync();
-Console.WriteLine($"The entry id to use to get the entry and receipt is {{{operationResult.Value.EntryId}}}");
-Response<BinaryData> signatureWithReceiptResponse = await client.GetEntryAsync(operationResult.Value.EntryId, true);
+Operation<BinaryData> operation = await client.CreateEntryAsync(content);
+Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
+
+string entryId = string.Empty;
+CborReader cborReader = new CborReader(operationResult.Value);
+cborReader.ReadStartMap();
+while (cborReader.PeekState() != CborReaderState.EndMap)
+{
+    string key = cborReader.ReadTextString();
+    if (key == "EntryId")
+    {
+        entryId = cborReader.ReadTextString();
+    }
+    else
+        cborReader.SkipValue();
+}
+Console.WriteLine($"The entry id to use to get the entry and receipt is {{{entryId}}}");
+Response<BinaryData> signatureWithReceiptResponse = await client.GetEntryAsync(entryId);
 BinaryData signatureWithReceipt = signatureWithReceiptResponse.Value;
 byte[] signatureWithReceiptBytes = signatureWithReceipt.ToArray();
 ```
@@ -56,7 +70,7 @@ byte[] signatureWithReceiptBytes = signatureWithReceipt.ToArray();
 Once you have the receipt and the signature, you can verify whether the signature was actually included in the Code Transparency service by running the receipt verification logic. The verifier checks if the receipt was issued for a given signature and if the receipt signature was endorsed by the service.
 
 ```C# Snippet:CodeTransparencyVerification
-CcfReceiptVerifier.RunVerification(signatureWithReceiptBytes);
+client.VerifyTransparentStatementReceipt(signatureWithReceiptBytes, content.ToArray());
 ```
 
 If the verification completes without exception, you can trust the signature and the receipt. This allows you to safely inspect the contents of the files, especially the contents of the payload embedded in a cose signature envelope.
@@ -94,8 +108,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [COSE_RFC]: https://www.rfc-editor.org/rfc/rfc8152.txt
-[SCITT_ARCHITECTURE_RFC]: https://www.ietf.org/archive/id/draft-ietf-scitt-architecture-01.txt
-[SCITT_RECEIPT_RFC]: https://www.ietf.org/archive/id/draft-birkholz-scitt-receipts-03.txt
+[SCITT_ARCHITECTURE_RFC]: https://www.ietf.org/archive/id/draft-ietf-scitt-architecture-11.txt
+[SCITT_RECEIPT_RFC]: https://www.ietf.org/archive/id/draft-ietf-cose-merkle-tree-proofs-08.txt
 [API_reference]: https://learn.microsoft.com/dotnet/api/azure.security.keyvault.keys
 [Service_source_code]: https://github.com/microsoft/scitt-ccf-ledger
 [CTS_claim_generator_script]: https://github.com/microsoft/scitt-ccf-ledger/tree/main/demo/cts_poc
