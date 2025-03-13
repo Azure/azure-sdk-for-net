@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2025-03-13)
 
 ### Features Added
 
@@ -10,10 +10,6 @@
 ### Breaking Changes
 
 * `assistantId` has been renamed to `agentId` throughout the package.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.4 (2025-02-28)
 
