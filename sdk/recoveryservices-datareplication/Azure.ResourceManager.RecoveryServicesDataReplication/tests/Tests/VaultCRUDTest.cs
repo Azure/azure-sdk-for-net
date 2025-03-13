@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
     public class VaultCRUDTest: RecoveryServicesDataReplicationManagementTestBase
     {
         public VaultCRUDTest(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Playback)
         {
         }
 
