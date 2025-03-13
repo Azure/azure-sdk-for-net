@@ -46,11 +46,11 @@ namespace Azure.AI.Projects.Tests
         }
 
         [RecordedTest]
-        public async Task CustomerTest()
+        public async Task TranslatorTest()
         {
             ConnectionsClient connectionsClient = GetClient();
             ConnectionResponse conn = await connectionsClient.GetConnectionAsync(
-                connectionName: "nirovinstranslator"
+                connectionName: "sampleconnection"
                 );
             Assert.IsNotNull(conn);
         }
