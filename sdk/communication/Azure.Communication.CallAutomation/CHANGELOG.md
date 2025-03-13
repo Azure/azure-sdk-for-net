@@ -29,6 +29,7 @@
 
 ### Other Changes
 - Introduced audio streaming data parsing capabilities.
+- Note: The ordering of the events input parameters has been changed. This modification won't affect existing code, but if you have used unit tests for the events, you may need to update the parameter order accordingly.
 
 ### Breaking Changes
 
