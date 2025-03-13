@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Create or update a cloud service. Please note some properties can be set only during cloud service creation. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="data"> The cloud service object. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Create or update a cloud service. Please note some properties can be set only during cloud service creation. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="data"> The cloud service object. </param>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Update a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="patch"> The cloud service object. </param>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Update a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="patch"> The cloud service object. </param>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Deletes a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Deletes a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Display information about a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Display information about a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets the status of a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets the status of a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets a list of all cloud services in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets a list of all cloud services in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets a list of all cloud services under a resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets a list of all cloud services under a resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Starts the cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Starts the cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Power off the cloud service. Note that resources are still attached and you are getting charged for the resources. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Power off the cloud service. Note that resources are still attached and you are getting charged for the resources. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Restarts one or more role instances in a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstances"> List of cloud service role instance names. </param>
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Restarts one or more role instances in a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstances"> List of cloud service role instance names. </param>
@@ -969,7 +969,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Reimage asynchronous operation reinstalls the operating system on instances of web roles or worker roles. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstances"> List of cloud service role instance names. </param>
@@ -995,7 +995,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Reimage asynchronous operation reinstalls the operating system on instances of web roles or worker roles. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstances"> List of cloud service role instance names. </param>
@@ -1064,7 +1064,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Rebuild Role Instances reinstalls the operating system on instances of web roles or worker roles and initializes the storage resources that are used by them. If you do not want to initialize storage resources, you can use Reimage Role Instances. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstances"> List of cloud service role instance names. </param>
@@ -1090,7 +1090,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Rebuild Role Instances reinstalls the operating system on instances of web roles or worker roles and initializes the storage resources that are used by them. If you do not want to initialize storage resources, you can use Reimage Role Instances. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstances"> List of cloud service role instance names. </param>
@@ -1159,7 +1159,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Deletes role instances in a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstances"> List of cloud service role instance names. </param>
@@ -1185,7 +1185,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Deletes role instances in a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstances"> List of cloud service role instance names. </param>
@@ -1234,7 +1234,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets a list of all cloud services in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1261,7 +1261,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets a list of all cloud services in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1310,7 +1310,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets a list of all cloud services under a resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -1339,7 +1339,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets a list of all cloud services under a resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>

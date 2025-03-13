@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan, options);
+                writer.WriteObjectValue<DiskPurchasePlan>(PurchasePlan, options);
             }
             if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue(SupportedCapabilities, options);
+                writer.WriteObjectValue<SupportedCapabilities>(SupportedCapabilities, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FamilyId))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile, options);
+                writer.WriteObjectValue<DiskSecurityProfile>(SecurityProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LogicalSectorSize))
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value, options);
+                            supportedCapabilities = Models.SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("familyId"u8))

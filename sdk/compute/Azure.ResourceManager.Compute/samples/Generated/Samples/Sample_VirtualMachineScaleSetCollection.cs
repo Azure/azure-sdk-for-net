@@ -3547,7 +3547,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_A8m_v2",
                     Tier = "Standard",
-                    Capacity = 2L,
+                    Capacity = 10L,
                 },
                 Properties = new VirtualMachineScaleSetProperties
                 {
@@ -3563,9 +3563,9 @@ EnableIPForwarding = true,
                         {
                             ImageReference = new ImageReference
                             {
-                                Publisher = "Canonical",
-                                Offer = "0001-com-ubuntu-server-focal",
-                                Sku = "20_04-lts-gen2",
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
                                 Version = "latest",
                             },
                             OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
@@ -3582,29 +3582,22 @@ EnableIPForwarding = true,
                             NetworkInterfaceConfigurations = {new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
 Primary = true,
-EnableAcceleratedNetworking = false,
 IPConfigurations = {new VirtualMachineScaleSetIPConfiguration("{vmss-name}")
 {
 SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-Primary = true,
-PublicIPAddressConfiguration = new VirtualMachineScaleSetPublicIPAddressConfiguration("{vmss-name}")
-{
-IdleTimeoutInMinutes = 15,
-},
-ApplicationGatewayBackendAddressPools = {},
-LoadBalancerBackendAddressPools = {},
 }},
 EnableIPForwarding = true,
 }},
-                            NetworkApiVersion = NetworkApiVersion.TwoThousandTwenty1101,
                         },
                         Priority = VirtualMachinePriorityType.Spot,
+                        EvictionPolicy = VirtualMachineEvictionPolicyType.Deallocate,
+                        BillingMaxPrice = -1,
                     },
-                    PlatformFaultDomainCount = 1,
+                    SinglePlacementGroup = false,
                     OrchestrationMode = OrchestrationMode.Flexible,
                     PriorityMixPolicy = new VirtualMachineScaleSetPriorityMixPolicy
                     {
-                        BaseRegularPriorityCount = 10,
+                        BaseRegularPriorityCount = 4,
                         RegularPriorityPercentageAboveBase = 50,
                     },
                 },

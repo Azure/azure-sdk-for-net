@@ -10,14 +10,13 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/bf420af156ea90b4226e96582bdb4c9647491ae6/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/82477a058b5e5997f0bdb01879c9a8e56d936f1a/specification/compute/resource-manager/readme.md
 #tag: package-2024-03-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
-  sample: false
 skip-csproj: true
 modelerfour:
   flatten-payloads: false

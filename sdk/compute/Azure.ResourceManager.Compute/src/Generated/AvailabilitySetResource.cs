@@ -369,7 +369,8 @@ namespace Azure.ResourceManager.Compute
         public virtual AsyncPageable<VirtualMachineSize> GetAvailableSizesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availabilitySetRestClient.CreateListAvailableSizesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineSize.DeserializeVirtualMachineSize(e), _availabilitySetClientDiagnostics, Pipeline, "AvailabilitySetResource.GetAvailableSizes", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _availabilitySetRestClient.CreateListAvailableSizesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => VirtualMachineSize.DeserializeVirtualMachineSize(e), _availabilitySetClientDiagnostics, Pipeline, "AvailabilitySetResource.GetAvailableSizes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -398,7 +399,8 @@ namespace Azure.ResourceManager.Compute
         public virtual Pageable<VirtualMachineSize> GetAvailableSizes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availabilitySetRestClient.CreateListAvailableSizesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineSize.DeserializeVirtualMachineSize(e), _availabilitySetClientDiagnostics, Pipeline, "AvailabilitySetResource.GetAvailableSizes", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _availabilitySetRestClient.CreateListAvailableSizesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => VirtualMachineSize.DeserializeVirtualMachineSize(e), _availabilitySetClientDiagnostics, Pipeline, "AvailabilitySetResource.GetAvailableSizes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

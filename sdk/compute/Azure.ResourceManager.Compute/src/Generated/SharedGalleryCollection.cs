@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref="SharedGalleryCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         internal SharedGalleryCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
             _location = location;
