@@ -14,7 +14,7 @@ $packageSet = "$ProjectNames" -split ","
 $packageProperties = Get-ChildItem -Recurse "$PackageInfoFolder" *.json `
 | Foreach-Object { Get-Content -Raw -Path $_.FullName | ConvertFrom-Json }
 
-# filter the package info files to only those that are part of the targted batch (present in $ProjectNames arg)
+# filter the package info files to only those that are part of the targeted batch (present in $ProjectNames arg)
 # so that we can accurate determine the affected services for the current batch
 $changedServicesArray = $packageProperties | Where-Object { $packageSet -contains $_.ArtifactName } `
     | ForEach-Object { $_.ServiceDirectory } | Get-Unique
