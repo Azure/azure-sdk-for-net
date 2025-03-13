@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    public partial class InternalConnectionPropertiesCustomKeysAuth : IUtf8JsonSerializable, IJsonModel<InternalConnectionPropertiesCustomKeysAuth>
+    public partial class InternalConnectionPropertiesCustomAuth : IUtf8JsonSerializable, IJsonModel<InternalConnectionPropertiesCustomAuth>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalConnectionPropertiesCustomKeysAuth>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalConnectionPropertiesCustomAuth>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<InternalConnectionPropertiesCustomKeysAuth>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<InternalConnectionPropertiesCustomAuth>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,28 +28,28 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionPropertiesCustomKeysAuth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionPropertiesCustomAuth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalConnectionPropertiesCustomKeysAuth)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalConnectionPropertiesCustomAuth)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
         }
 
-        InternalConnectionPropertiesCustomKeysAuth IJsonModel<InternalConnectionPropertiesCustomKeysAuth>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        InternalConnectionPropertiesCustomAuth IJsonModel<InternalConnectionPropertiesCustomAuth>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionPropertiesCustomKeysAuth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionPropertiesCustomAuth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalConnectionPropertiesCustomKeysAuth)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalConnectionPropertiesCustomAuth)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalConnectionPropertiesCustomKeysAuth(document.RootElement, options);
+            return DeserializeInternalConnectionPropertiesCustomAuth(document.RootElement, options);
         }
 
-        internal static InternalConnectionPropertiesCustomKeysAuth DeserializeInternalConnectionPropertiesCustomKeysAuth(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static InternalConnectionPropertiesCustomAuth DeserializeInternalConnectionPropertiesCustomAuth(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -85,46 +85,46 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InternalConnectionPropertiesCustomKeysAuth(authType, category, target, serializedAdditionalRawData);
+            return new InternalConnectionPropertiesCustomAuth(authType, category, target, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<InternalConnectionPropertiesCustomKeysAuth>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<InternalConnectionPropertiesCustomAuth>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionPropertiesCustomKeysAuth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionPropertiesCustomAuth>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InternalConnectionPropertiesCustomKeysAuth)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalConnectionPropertiesCustomAuth)} does not support writing '{options.Format}' format.");
             }
         }
 
-        InternalConnectionPropertiesCustomKeysAuth IPersistableModel<InternalConnectionPropertiesCustomKeysAuth>.Create(BinaryData data, ModelReaderWriterOptions options)
+        InternalConnectionPropertiesCustomAuth IPersistableModel<InternalConnectionPropertiesCustomAuth>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionPropertiesCustomKeysAuth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionPropertiesCustomAuth>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInternalConnectionPropertiesCustomKeysAuth(document.RootElement, options);
+                        return DeserializeInternalConnectionPropertiesCustomAuth(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalConnectionPropertiesCustomKeysAuth)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalConnectionPropertiesCustomAuth)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<InternalConnectionPropertiesCustomKeysAuth>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InternalConnectionPropertiesCustomAuth>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new InternalConnectionPropertiesCustomKeysAuth FromResponse(Response response)
+        internal static new InternalConnectionPropertiesCustomAuth FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeInternalConnectionPropertiesCustomKeysAuth(document.RootElement);
+            return DeserializeInternalConnectionPropertiesCustomAuth(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

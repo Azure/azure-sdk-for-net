@@ -16,7 +16,7 @@ namespace Azure.AI.Projects
             ConnectionType.AzureBlobStorage => "AzureBlob",
             ConnectionType.AzureAIServices => "AIServices",
             ConnectionType.AzureAISearch => "CognitiveSearch",
-            ConnectionType.CustomKeys => "CustomKeys",
+            ConnectionType.Custom => "CustomKeys",
             ConnectionType.ApiKey => "ApiKey",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConnectionType value.")
         };
@@ -29,7 +29,7 @@ namespace Azure.AI.Projects
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "AIServices")) return ConnectionType.AzureAIServices;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "CognitiveSearch")) return ConnectionType.AzureAISearch;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "ApiKey")) return ConnectionType.ApiKey;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomKeys")) return ConnectionType.CustomKeys;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomKeys")) return ConnectionType.Custom;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConnectionType value.");
         }
     }

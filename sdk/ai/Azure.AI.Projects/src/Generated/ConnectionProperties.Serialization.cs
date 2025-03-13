@@ -83,7 +83,7 @@ namespace Azure.AI.Projects
                 {
                     case "AAD": return InternalConnectionPropertiesAADAuth.DeserializeInternalConnectionPropertiesAADAuth(element, options);
                     case "ApiKey": return ConnectionPropertiesApiKeyAuth.DeserializeConnectionPropertiesApiKeyAuth(element, options);
-                    case "CustomKeys": return InternalConnectionPropertiesCustomKeysAuth.DeserializeInternalConnectionPropertiesCustomKeysAuth(element, options);
+                    case "CustomKeys": return InternalConnectionPropertiesCustomAuth.DeserializeInternalConnectionPropertiesCustomAuth(element, options);
                     case "None": return InternalConnectionPropertiesNoAuth.DeserializeInternalConnectionPropertiesNoAuth(element, options);
                     case "SAS": return InternalConnectionPropertiesSASAuth.DeserializeInternalConnectionPropertiesSASAuth(element, options);
                 }

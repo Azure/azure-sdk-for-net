@@ -18,7 +18,7 @@ namespace Azure.AI.Projects
         AzureAISearch,
         /// <summary> Bing Grounding. </summary>
         ApiKey,
-        /// <summary> Custom Keys (sharepoint) </summary>
-        CustomKeys
+        /// <summary> Custom (sharepoint, fabric) </summary>
+        Custom
     }
 }
