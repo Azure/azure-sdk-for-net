@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(BackupType left, BackupType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupType"/> values are not the same. </summary>
         public static bool operator !=(BackupType left, BackupType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackupType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupType"/>. </summary>
         public static implicit operator BackupType(string value) => new BackupType(value);
 
         /// <inheritdoc />

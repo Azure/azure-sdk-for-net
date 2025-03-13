@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ApplicationGatewayFirewallRateLimitDuration left, ApplicationGatewayFirewallRateLimitDuration right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayFirewallRateLimitDuration"/> values are not the same. </summary>
         public static bool operator !=(ApplicationGatewayFirewallRateLimitDuration left, ApplicationGatewayFirewallRateLimitDuration right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationGatewayFirewallRateLimitDuration"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayFirewallRateLimitDuration"/>. </summary>
         public static implicit operator ApplicationGatewayFirewallRateLimitDuration(string value) => new ApplicationGatewayFirewallRateLimitDuration(value);
 
         /// <inheritdoc />

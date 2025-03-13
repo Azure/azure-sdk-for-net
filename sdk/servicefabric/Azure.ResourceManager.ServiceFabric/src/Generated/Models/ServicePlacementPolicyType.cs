@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static bool operator ==(ServicePlacementPolicyType left, ServicePlacementPolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServicePlacementPolicyType"/> values are not the same. </summary>
         public static bool operator !=(ServicePlacementPolicyType left, ServicePlacementPolicyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServicePlacementPolicyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServicePlacementPolicyType"/>. </summary>
         public static implicit operator ServicePlacementPolicyType(string value) => new ServicePlacementPolicyType(value);
 
         /// <inheritdoc />

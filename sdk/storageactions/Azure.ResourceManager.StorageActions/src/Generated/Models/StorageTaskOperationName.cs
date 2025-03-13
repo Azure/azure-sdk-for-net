@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         public static bool operator ==(StorageTaskOperationName left, StorageTaskOperationName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageTaskOperationName"/> values are not the same. </summary>
         public static bool operator !=(StorageTaskOperationName left, StorageTaskOperationName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageTaskOperationName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageTaskOperationName"/>. </summary>
         public static implicit operator StorageTaskOperationName(string value) => new StorageTaskOperationName(value);
 
         /// <inheritdoc />

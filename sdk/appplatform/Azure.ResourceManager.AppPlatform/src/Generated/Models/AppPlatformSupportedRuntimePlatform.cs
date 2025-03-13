@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static bool operator ==(AppPlatformSupportedRuntimePlatform left, AppPlatformSupportedRuntimePlatform right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformSupportedRuntimePlatform"/> values are not the same. </summary>
         public static bool operator !=(AppPlatformSupportedRuntimePlatform left, AppPlatformSupportedRuntimePlatform right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppPlatformSupportedRuntimePlatform"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppPlatformSupportedRuntimePlatform"/>. </summary>
         public static implicit operator AppPlatformSupportedRuntimePlatform(string value) => new AppPlatformSupportedRuntimePlatform(value);
 
         /// <inheritdoc />

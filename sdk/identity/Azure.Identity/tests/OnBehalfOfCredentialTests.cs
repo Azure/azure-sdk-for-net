@@ -53,6 +53,7 @@ namespace Azure.Identity.Tests
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                AuthorityHost = config.AuthorityHost,
             };
             if (config.Transport != null)
             {
@@ -146,7 +147,12 @@ namespace Azure.Identity.Tests
             var _transport = CredentialTestHelpers.Createx5cValidatingTransport(sendCertChain, expectedToken);
             var _pipeline = new HttpPipeline(_transport, new[] { new BearerTokenAuthenticationPolicy(new MockCredential(), "scope") });
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+
+#if NET9_0_OR_GREATER
+            var mockCert= X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
             var mockCert = new X509Certificate2(certificatePath);
+#endif
 
             options = new OnBehalfOfCredentialOptions
             {
@@ -190,7 +196,12 @@ namespace Azure.Identity.Tests
             var _transport = new MockTransport(factory);
             var _pipeline = new HttpPipeline(_transport, new[] { new BearerTokenAuthenticationPolicy(new MockCredential(), "scope") });
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+
+#if NET9_0_OR_GREATER
+           var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
             var mockCert = new X509Certificate2(certificatePath);
+#endif
 
             options = new OnBehalfOfCredentialOptions
             {

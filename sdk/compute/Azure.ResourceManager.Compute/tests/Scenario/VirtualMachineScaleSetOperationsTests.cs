@@ -62,15 +62,12 @@ namespace Azure.ResourceManager.Compute.Tests
             await vmss.DeallocateAsync(WaitUntil.Completed);
             var update = new VirtualMachineScaleSetPatch()
             {
-                ProximityPlacementGroup = new WritableSubResource()
-                {
-                    Id = ppg.Id
-                }
+                ProximityPlacementGroupId = ppg.Id
             };
             var lro = await vmss.UpdateAsync(WaitUntil.Completed, update);
             VirtualMachineScaleSetResource updatedVM = lro.Value;
 
-            Assert.AreEqual(ppg.Id, updatedVM.Data.ProximityPlacementGroup.Id);
+            Assert.AreEqual(ppg.Id, updatedVM.Data.Properties.ProximityPlacementGroupId);
         }
 
         [TestCase]

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(StorageTaskRunResult left, StorageTaskRunResult right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageTaskRunResult"/> values are not the same. </summary>
         public static bool operator !=(StorageTaskRunResult left, StorageTaskRunResult right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageTaskRunResult"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageTaskRunResult"/>. </summary>
         public static implicit operator StorageTaskRunResult(string value) => new StorageTaskRunResult(value);
 
         /// <inheritdoc />

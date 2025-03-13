@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(DynamicCompressionEnabled left, DynamicCompressionEnabled right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynamicCompressionEnabled"/> values are not the same. </summary>
         public static bool operator !=(DynamicCompressionEnabled left, DynamicCompressionEnabled right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DynamicCompressionEnabled"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DynamicCompressionEnabled"/>. </summary>
         public static implicit operator DynamicCompressionEnabled(string value) => new DynamicCompressionEnabled(value);
 
         /// <inheritdoc />

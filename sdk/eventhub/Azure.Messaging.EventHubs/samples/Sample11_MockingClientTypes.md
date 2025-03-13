@@ -20,8 +20,8 @@ For more general information and examples on mocking with the Azure SDK, please 
 
 ## Publishing events with the `EventHubProducerClient`
 
-When using batches to publish to Event Hubs, the key interactions with the `EventHubProducerClient` are calling `CreateBatchAsync` to create the batch and `SendAsync` to publish it. 
- Mocked batches accept a `List<EventData>` that is used as a backing store and can be inspected to verify that the application is adding events to the batch as expected.  The custom `TryAdd` callback can be used to control the decision for whether an event is accepted into the batch or is rejected.   
+When using batches to publish to Event Hubs, the key interactions with the `EventHubProducerClient` are calling `CreateBatchAsync` to create the batch and `SendAsync` to publish it.
+ Mocked batches accept a `List<EventData>` that is used as a backing store and can be inspected to verify that the application is adding events to the batch as expected.  The custom `TryAdd` callback can be used to control the decision for whether an event is accepted into the batch or is rejected.
 
 This snippet demonstrates mocking the `EventHubProducerClient`, and creating `EventDataBatch` instances using the `EventHubsModelFactory`.
 
@@ -220,7 +220,7 @@ Mock<EventHubConsumerClient> mockConsumer = new();
 
 LastEnqueuedEventProperties lastEnqueueEventProperties = EventHubsModelFactory.LastEnqueuedEventProperties(
     lastSequenceNumber : 1234,
-    lastOffset : 234,
+    lastOffsetString : "234:1:954-2",
     lastEnqueuedTime : DateTimeOffset.Parse("1:24 AM"),
     lastReceivedTime : DateTimeOffset.Parse("1:26 AM"));
 
@@ -246,7 +246,7 @@ async IAsyncEnumerable<PartitionEvent> mockReturn()
         systemProperties: new Dictionary<string, object>(), //arbitrary value
         partitionKey: "sample-key",
         sequenceNumber: 1000,
-        offset: 1500,
+        offsetString: "1500:44:59492",
         enqueuedTime: DateTimeOffset.Parse("11:36 PM"));
 
     EventData eventData2 = EventHubsModelFactory.EventData(
@@ -254,7 +254,7 @@ async IAsyncEnumerable<PartitionEvent> mockReturn()
         systemProperties: new Dictionary<string, object>(), //arbitrary value
         partitionKey: "sample-key",
         sequenceNumber: 1000,
-        offset: 1500,
+        offsetString: "1500:2:1111",
         enqueuedTime: DateTimeOffset.Parse("11:36 PM"));
 
     // This creates a mock PartitionEvent to return from the consumer client.
@@ -321,7 +321,7 @@ await foreach (PartitionEvent receivedEvent in consumer.ReadEventsFromPartitionA
 
 ## Consuming events using the `PartitionReceiver`
 
-The sample below illustrates how to mock a `PartitionReceiver`, and set up its `ReceiveBatchAsync` method to return a simple data batch. 
+The sample below illustrates how to mock a `PartitionReceiver`, and set up its `ReceiveBatchAsync` method to return a simple data batch.
 
 Given the purpose of the `PartitionReceiver`, it is anticipated that most applications will have complex code surrounding their receivers, so this snippet is intentionally simple, with the focus being on using the `EventHubsModelFactory` to mock events being returned from the broker.
 
@@ -341,7 +341,7 @@ for (int index = 0; index < 10; index++)
         systemProperties: new Dictionary<string, object>(), //arbitrary value
         partitionKey: $"sample-key-{index}",
         sequenceNumber: 1234,
-        offset: 234,
+        offsetString: "234:5:93928381.1",
         enqueuedTime: DateTimeOffset.Parse("9:25 AM"));
 
     receivedEvents.Add(eventData);
@@ -431,7 +431,7 @@ Dictionary<string, PartitionProperties> partitionProperties = new()
         isEmpty : true,
         beginningSequenceNumber: 1000,
         lastSequenceNumber : 1100,
-        lastOffset : 500,
+        lastOffsetString : "500:1:7863",
         lastEnqueuedTime : DateTime.UtcNow) },
 
     // Empty partition
@@ -441,7 +441,7 @@ Dictionary<string, PartitionProperties> partitionProperties = new()
         isEmpty : false,
         beginningSequenceNumber : 2000,
         lastSequenceNumber : 2000,
-        lastOffset : 760,
+        lastOffsetString : "760:1:8800",
         lastEnqueuedTime : DateTime.UtcNow) }
 };
 

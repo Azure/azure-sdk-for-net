@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Text
         public static bool operator ==(PolicyKind left, PolicyKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyKind"/> values are not the same. </summary>
         public static bool operator !=(PolicyKind left, PolicyKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PolicyKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyKind"/>. </summary>
         public static implicit operator PolicyKind(string value) => new PolicyKind(value);
 
         /// <inheritdoc />

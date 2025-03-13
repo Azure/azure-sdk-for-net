@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(RepositoryAccessKind left, RepositoryAccessKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RepositoryAccessKind"/> values are not the same. </summary>
         public static bool operator !=(RepositoryAccessKind left, RepositoryAccessKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RepositoryAccessKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RepositoryAccessKind"/>. </summary>
         public static implicit operator RepositoryAccessKind(string value) => new RepositoryAccessKind(value);
 
         /// <inheritdoc />

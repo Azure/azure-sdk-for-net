@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(HDInsightActivityDebugInfoOption left, HDInsightActivityDebugInfoOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightActivityDebugInfoOption"/> values are not the same. </summary>
         public static bool operator !=(HDInsightActivityDebugInfoOption left, HDInsightActivityDebugInfoOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HDInsightActivityDebugInfoOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightActivityDebugInfoOption"/>. </summary>
         public static implicit operator HDInsightActivityDebugInfoOption(string value) => new HDInsightActivityDebugInfoOption(value);
 
         /// <inheritdoc />

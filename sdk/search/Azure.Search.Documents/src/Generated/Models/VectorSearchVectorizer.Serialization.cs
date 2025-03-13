@@ -33,6 +33,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "aiServicesVision": return AIServicesVisionVectorizer.DeserializeAIServicesVisionVectorizer(element);
+                    case "aml": return AzureMachineLearningVectorizer.DeserializeAzureMachineLearningVectorizer(element);
                     case "azureOpenAI": return AzureOpenAIVectorizer.DeserializeAzureOpenAIVectorizer(element);
                     case "customWebApi": return WebApiVectorizer.DeserializeWebApiVectorizer(element);
                 }
@@ -44,7 +46,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static VectorSearchVectorizer FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeVectorSearchVectorizer(document.RootElement);
         }
 

@@ -11,156 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApplicationInsights.Samples
 {
     public partial class Sample_ApplicationInsightsWebTestCollection
     {
-        // webTestListByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_WebTestListByResourceGroup()
-        {
-            // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/WebTestListByResourceGroup.json
-            // this example is just showing the usage of "WebTests_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "my-resource-group";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this ApplicationInsightsWebTestResource
-            ApplicationInsightsWebTestCollection collection = resourceGroupResource.GetApplicationInsightsWebTests();
-
-            // invoke the operation and iterate over the result
-            await foreach (ApplicationInsightsWebTestResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ApplicationInsightsWebTestData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // webTestGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_WebTestGet()
-        {
-            // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/WebTestGet.json
-            // this example is just showing the usage of "WebTests_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "my-resource-group";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this ApplicationInsightsWebTestResource
-            ApplicationInsightsWebTestCollection collection = resourceGroupResource.GetApplicationInsightsWebTests();
-
-            // invoke the operation
-            string webTestName = "my-webtest-01-mywebservice";
-            ApplicationInsightsWebTestResource result = await collection.GetAsync(webTestName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApplicationInsightsWebTestData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // webTestGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_WebTestGet()
-        {
-            // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/WebTestGet.json
-            // this example is just showing the usage of "WebTests_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "my-resource-group";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this ApplicationInsightsWebTestResource
-            ApplicationInsightsWebTestCollection collection = resourceGroupResource.GetApplicationInsightsWebTests();
-
-            // invoke the operation
-            string webTestName = "my-webtest-01-mywebservice";
-            bool result = await collection.ExistsAsync(webTestName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // webTestGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_WebTestGet()
-        {
-            // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/WebTestGet.json
-            // this example is just showing the usage of "WebTests_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "my-resource-group";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this ApplicationInsightsWebTestResource
-            ApplicationInsightsWebTestCollection collection = resourceGroupResource.GetApplicationInsightsWebTests();
-
-            // invoke the operation
-            string webTestName = "my-webtest-01-mywebservice";
-            NullableResponse<ApplicationInsightsWebTestResource> response = await collection.GetIfExistsAsync(webTestName);
-            ApplicationInsightsWebTestResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ApplicationInsightsWebTestData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // webTestCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_WebTestCreate()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/WebTestCreate.json
@@ -194,13 +52,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
                 TimeoutInSeconds = 120,
                 WebTestKind = WebTestKind.Ping,
                 IsRetryEnabled = true,
-                Locations =
-{
-new WebTestGeolocation()
+                Locations = {new WebTestGeolocation
 {
 Location = new AzureLocation("us-fl-mia-edge"),
-}
-},
+}},
                 WebTest = "<WebTest Name=\"my-webtest\" Id=\"678ddf96-1ab8-44c8-9274-123456789abc\" Enabled=\"True\" CssProjectStructure=\"\" CssIteration=\"\" Timeout=\"120\" WorkItemIds=\"\" xmlns=\"http://microsoft.com/schemas/VisualStudio/TeamTest/2010\" Description=\"\" CredentialUserName=\"\" CredentialPassword=\"\" PreAuthenticate=\"True\" Proxy=\"default\" StopOnError=\"False\" RecordedResultFile=\"\" ResultsLocale=\"\" ><Items><Request Method=\"GET\" Guid=\"a4162485-9114-fcfc-e086-123456789abc\" Version=\"1.1\" Url=\"http://my-component.azurewebsites.net\" ThinkTime=\"0\" Timeout=\"120\" ParseDependentRequests=\"True\" FollowRedirects=\"True\" RecordResult=\"True\" Cache=\"False\" ResponseTimeGoal=\"0\" Encoding=\"utf-8\" ExpectedHttpStatusCode=\"200\" ExpectedResponseUrl=\"\" ReportingName=\"\" IgnoreHttpStatusCode=\"False\" /></Items></WebTest>",
             };
             ArmOperation<ApplicationInsightsWebTestResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, webTestName, data);
@@ -213,9 +68,8 @@ Location = new AzureLocation("us-fl-mia-edge"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // webTestCreateStandard
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_WebTestCreateStandard()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/WebTestCreateStandard.json
@@ -248,32 +102,26 @@ Location = new AzureLocation("us-fl-mia-edge"),
                 TimeoutInSeconds = 120,
                 WebTestKind = WebTestKind.Standard,
                 IsRetryEnabled = true,
-                Locations =
-{
-new WebTestGeolocation()
+                Locations = {new WebTestGeolocation
 {
 Location = new AzureLocation("us-fl-mia-edge"),
-}
-},
-                Request = new WebTestRequest()
+}},
+                Request = new WebTestRequest
                 {
                     RequestUri = new Uri("https://bing.com"),
-                    Headers =
-{
-new WebTestRequestHeaderField()
+                    Headers = {new WebTestRequestHeaderField
 {
 HeaderFieldName = "Content-Language",
 HeaderFieldValue = "de-DE",
-},new WebTestRequestHeaderField()
+}, new WebTestRequestHeaderField
 {
 HeaderFieldName = "Accept-Language",
 HeaderFieldValue = "de-DE",
-}
-},
+}},
                     HttpVerb = "POST",
                     RequestBody = "SGVsbG8gd29ybGQ=",
                 },
-                ValidationRules = new WebTestValidationRules()
+                ValidationRules = new WebTestValidationRules
                 {
                     CheckSsl = true,
                     SslCertRemainingLifetimeCheck = 100,
@@ -289,9 +137,8 @@ HeaderFieldValue = "de-DE",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // webTestUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_WebTestUpdate()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/WebTestUpdate.json
@@ -322,16 +169,13 @@ HeaderFieldValue = "de-DE",
                 FrequencyInSeconds = 600,
                 TimeoutInSeconds = 30,
                 WebTestKind = WebTestKind.Ping,
-                Locations =
-{
-new WebTestGeolocation()
+                Locations = {new WebTestGeolocation
 {
 Location = new AzureLocation("us-fl-mia-edge"),
-},new WebTestGeolocation()
+}, new WebTestGeolocation
 {
 Location = new AzureLocation("apac-hk-hkn-azr"),
-}
-},
+}},
                 WebTest = "<WebTest Name=\"my-webtest\" Id=\"678ddf96-1ab8-44c8-9274-123456789abc\" Enabled=\"True\" CssProjectStructure=\"\" CssIteration=\"\" Timeout=\"30\" WorkItemIds=\"\" xmlns=\"http://microsoft.com/schemas/VisualStudio/TeamTest/2010\" Description=\"\" CredentialUserName=\"\" CredentialPassword=\"\" PreAuthenticate=\"True\" Proxy=\"default\" StopOnError=\"False\" RecordedResultFile=\"\" ResultsLocale=\"\" ><Items><Request Method=\"GET\" Guid=\"a4162485-9114-fcfc-e086-123456789abc\" Version=\"1.1\" Url=\"http://my-component.azurewebsites.net\" ThinkTime=\"0\" Timeout=\"30\" ParseDependentRequests=\"True\" FollowRedirects=\"True\" RecordResult=\"True\" Cache=\"False\" ResponseTimeGoal=\"0\" Encoding=\"utf-8\" ExpectedHttpStatusCode=\"200\" ExpectedResponseUrl=\"\" ReportingName=\"\" IgnoreHttpStatusCode=\"False\" /></Items></WebTest>",
             };
             ArmOperation<ApplicationInsightsWebTestResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, webTestName, data);
@@ -342,6 +186,144 @@ Location = new AzureLocation("apac-hk-hkn-azr"),
             ApplicationInsightsWebTestData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_WebTestGet()
+        {
+            // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/WebTestGet.json
+            // this example is just showing the usage of "WebTests_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "my-resource-group";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ApplicationInsightsWebTestResource
+            ApplicationInsightsWebTestCollection collection = resourceGroupResource.GetApplicationInsightsWebTests();
+
+            // invoke the operation
+            string webTestName = "my-webtest-01-mywebservice";
+            ApplicationInsightsWebTestResource result = await collection.GetAsync(webTestName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApplicationInsightsWebTestData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_WebTestListByResourceGroup()
+        {
+            // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/WebTestListByResourceGroup.json
+            // this example is just showing the usage of "WebTests_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "my-resource-group";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ApplicationInsightsWebTestResource
+            ApplicationInsightsWebTestCollection collection = resourceGroupResource.GetApplicationInsightsWebTests();
+
+            // invoke the operation and iterate over the result
+            await foreach (ApplicationInsightsWebTestResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ApplicationInsightsWebTestData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_WebTestGet()
+        {
+            // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/WebTestGet.json
+            // this example is just showing the usage of "WebTests_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "my-resource-group";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ApplicationInsightsWebTestResource
+            ApplicationInsightsWebTestCollection collection = resourceGroupResource.GetApplicationInsightsWebTests();
+
+            // invoke the operation
+            string webTestName = "my-webtest-01-mywebservice";
+            bool result = await collection.ExistsAsync(webTestName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_WebTestGet()
+        {
+            // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/WebTestGet.json
+            // this example is just showing the usage of "WebTests_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "my-resource-group";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ApplicationInsightsWebTestResource
+            ApplicationInsightsWebTestCollection collection = resourceGroupResource.GetApplicationInsightsWebTests();
+
+            // invoke the operation
+            string webTestName = "my-webtest-01-mywebservice";
+            NullableResponse<ApplicationInsightsWebTestResource> response = await collection.GetIfExistsAsync(webTestName);
+            ApplicationInsightsWebTestResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ApplicationInsightsWebTestData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(CosmosDBPartitionKind left, CosmosDBPartitionKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBPartitionKind"/> values are not the same. </summary>
         public static bool operator !=(CosmosDBPartitionKind left, CosmosDBPartitionKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CosmosDBPartitionKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBPartitionKind"/>. </summary>
         public static implicit operator CosmosDBPartitionKind(string value) => new CosmosDBPartitionKind(value);
 
         /// <inheritdoc />

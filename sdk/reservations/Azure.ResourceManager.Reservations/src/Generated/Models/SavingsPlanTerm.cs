@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator ==(SavingsPlanTerm left, SavingsPlanTerm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SavingsPlanTerm"/> values are not the same. </summary>
         public static bool operator !=(SavingsPlanTerm left, SavingsPlanTerm right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SavingsPlanTerm"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SavingsPlanTerm"/>. </summary>
         public static implicit operator SavingsPlanTerm(string value) => new SavingsPlanTerm(value);
 
         /// <inheritdoc />

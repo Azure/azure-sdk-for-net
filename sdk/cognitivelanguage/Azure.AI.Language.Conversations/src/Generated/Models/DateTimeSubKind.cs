@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static bool operator ==(DateTimeSubKind left, DateTimeSubKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DateTimeSubKind"/> values are not the same. </summary>
         public static bool operator !=(DateTimeSubKind left, DateTimeSubKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DateTimeSubKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DateTimeSubKind"/>. </summary>
         public static implicit operator DateTimeSubKind(string value) => new DateTimeSubKind(value);
 
         /// <inheritdoc />

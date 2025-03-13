@@ -36,7 +36,7 @@ namespace Azure.Analytics.Defender.Easm
         public static bool operator ==(TaskResourcePhase left, TaskResourcePhase right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TaskResourcePhase"/> values are not the same. </summary>
         public static bool operator !=(TaskResourcePhase left, TaskResourcePhase right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TaskResourcePhase"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TaskResourcePhase"/>. </summary>
         public static implicit operator TaskResourcePhase(string value) => new TaskResourcePhase(value);
 
         /// <inheritdoc />

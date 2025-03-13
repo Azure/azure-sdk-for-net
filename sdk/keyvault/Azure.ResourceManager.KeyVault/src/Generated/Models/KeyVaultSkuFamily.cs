@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator ==(KeyVaultSkuFamily left, KeyVaultSkuFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultSkuFamily"/> values are not the same. </summary>
         public static bool operator !=(KeyVaultSkuFamily left, KeyVaultSkuFamily right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KeyVaultSkuFamily"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KeyVaultSkuFamily"/>. </summary>
         public static implicit operator KeyVaultSkuFamily(string value) => new KeyVaultSkuFamily(value);
 
         /// <inheritdoc />

@@ -70,7 +70,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
         CustomEntityRecognitionOperationResult customClassificationResult = (CustomEntityRecognitionOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
-        foreach (EntityActionResult entitiesDocument in customClassificationResult.Results.Documents)
+        foreach (CustomEntityActionResult entitiesDocument in customClassificationResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{entitiesDocument.Id}\":");
             Console.WriteLine($"  Recognized {entitiesDocument.Entities.Count} Entities:");

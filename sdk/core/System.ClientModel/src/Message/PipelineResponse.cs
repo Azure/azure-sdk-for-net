@@ -12,9 +12,6 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public abstract class PipelineResponse : IDisposable
 {
-    // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
-    internal static readonly BinaryData s_EmptyBinaryData = new(Array.Empty<byte>());
-
     /// <summary>
     /// Gets the status code of the HTTP response.
     /// </summary>

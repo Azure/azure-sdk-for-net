@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(ScheduledActionKind left, ScheduledActionKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduledActionKind"/> values are not the same. </summary>
         public static bool operator !=(ScheduledActionKind left, ScheduledActionKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScheduledActionKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledActionKind"/>. </summary>
         public static implicit operator ScheduledActionKind(string value) => new ScheduledActionKind(value);
 
         /// <inheritdoc />

@@ -20,17 +20,11 @@ public class BasicRedisTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "The cache location."
-                    };
+                Infrastructure infra = new();
 
                 RedisResource cache =
                     new(nameof(cache), "2020-06-01")
                     {
-                        Location = location,
                         EnableNonSslPort = false,
                         MinimumTlsVersion = RedisTlsVersion.Tls1_2,
                         Sku =
@@ -41,24 +35,27 @@ public class BasicRedisTests(bool async)
                                 Capacity = 1
                             },
                     };
+                infra.Add(cache);
+
+                return infra;
             })
         .Compare(
             """
-            @description('The cache location.')
+            @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
             resource cache 'Microsoft.Cache/redis@2020-06-01' = {
-                name: take('cache-${uniqueString(resourceGroup().id)}', 63)
-                location: location
-                properties: {
-                    sku: {
-                        name: 'Standard'
-                        family: 'C'
-                        capacity: 1
-                    }
-                    enableNonSslPort: false
-                    minimumTlsVersion: '1.2'
+              name: take('cache-${uniqueString(resourceGroup().id)}', 63)
+              location: location
+              properties: {
+                sku: {
+                  name: 'Standard'
+                  family: 'C'
+                  capacity: 1
                 }
+                enableNonSslPort: false
+                minimumTlsVersion: '1.2'
+              }
             }
             """)
         .Lint()

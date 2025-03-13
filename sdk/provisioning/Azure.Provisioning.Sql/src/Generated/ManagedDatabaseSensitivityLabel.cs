@@ -15,118 +15,179 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedDatabaseSensitivityLabel.
 /// </summary>
-public partial class ManagedDatabaseSensitivityLabel : Resource
+public partial class ManagedDatabaseSensitivityLabel : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The information type.
     /// </summary>
-    public BicepValue<string> InformationType { get => _informationType; set => _informationType.Assign(value); }
-    private readonly BicepValue<string> _informationType;
+    public BicepValue<string> InformationType 
+    {
+        get { Initialize(); return _informationType!; }
+        set { Initialize(); _informationType!.Assign(value); }
+    }
+    private BicepValue<string>? _informationType;
 
     /// <summary>
     /// The information type ID.
     /// </summary>
-    public BicepValue<string> InformationTypeId { get => _informationTypeId; set => _informationTypeId.Assign(value); }
-    private readonly BicepValue<string> _informationTypeId;
+    public BicepValue<string> InformationTypeId 
+    {
+        get { Initialize(); return _informationTypeId!; }
+        set { Initialize(); _informationTypeId!.Assign(value); }
+    }
+    private BicepValue<string>? _informationTypeId;
 
     /// <summary>
     /// The label ID.
     /// </summary>
-    public BicepValue<string> LabelId { get => _labelId; set => _labelId.Assign(value); }
-    private readonly BicepValue<string> _labelId;
+    public BicepValue<string> LabelId 
+    {
+        get { Initialize(); return _labelId!; }
+        set { Initialize(); _labelId!.Assign(value); }
+    }
+    private BicepValue<string>? _labelId;
 
     /// <summary>
     /// The label name.
     /// </summary>
-    public BicepValue<string> LabelName { get => _labelName; set => _labelName.Assign(value); }
-    private readonly BicepValue<string> _labelName;
+    public BicepValue<string> LabelName 
+    {
+        get { Initialize(); return _labelName!; }
+        set { Initialize(); _labelName!.Assign(value); }
+    }
+    private BicepValue<string>? _labelName;
 
     /// <summary>
     /// Gets or sets the rank.
     /// </summary>
-    public BicepValue<SensitivityLabelRank> Rank { get => _rank; set => _rank.Assign(value); }
-    private readonly BicepValue<SensitivityLabelRank> _rank;
+    public BicepValue<SensitivityLabelRank> Rank 
+    {
+        get { Initialize(); return _rank!; }
+        set { Initialize(); _rank!.Assign(value); }
+    }
+    private BicepValue<SensitivityLabelRank>? _rank;
 
     /// <summary>
     /// The column name.
     /// </summary>
-    public BicepValue<string> ColumnName { get => _columnName; }
-    private readonly BicepValue<string> _columnName;
+    public BicepValue<string> ColumnName 
+    {
+        get { Initialize(); return _columnName!; }
+    }
+    private BicepValue<string>? _columnName;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Is sensitivity recommendation disabled. Applicable for recommended
     /// sensitivity label only. Specifies whether the sensitivity
     /// recommendation on this column is disabled (dismissed) or not.
     /// </summary>
-    public BicepValue<bool> IsDisabled { get => _isDisabled; }
-    private readonly BicepValue<bool> _isDisabled;
+    public BicepValue<bool> IsDisabled 
+    {
+        get { Initialize(); return _isDisabled!; }
+    }
+    private BicepValue<bool>? _isDisabled;
 
     /// <summary>
     /// Resource that manages the sensitivity label.
     /// </summary>
-    public BicepValue<string> ManagedBy { get => _managedBy; }
-    private readonly BicepValue<string> _managedBy;
+    public BicepValue<string> ManagedBy 
+    {
+        get { Initialize(); return _managedBy!; }
+    }
+    private BicepValue<string>? _managedBy;
 
     /// <summary>
     /// The schema name.
     /// </summary>
-    public BicepValue<string> SchemaName { get => _schemaName; }
-    private readonly BicepValue<string> _schemaName;
+    public BicepValue<string> SchemaName 
+    {
+        get { Initialize(); return _schemaName!; }
+    }
+    private BicepValue<string>? _schemaName;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// The table name.
     /// </summary>
-    public BicepValue<string> TableName { get => _tableName; }
-    private readonly BicepValue<string> _tableName;
+    public BicepValue<string> TableName 
+    {
+        get { Initialize(); return _tableName!; }
+    }
+    private BicepValue<string>? _tableName;
 
     /// <summary>
     /// Creates a new ManagedDatabaseSensitivityLabel.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedDatabaseSensitivityLabel.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedDatabaseSensitivityLabel
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedDatabaseSensitivityLabel.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedDatabaseSensitivityLabel(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/databases/schemas/tables/columns/sensitivityLabels", resourceVersion, context)
+    public ManagedDatabaseSensitivityLabel(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/databases/schemas/tables/columns/sensitivityLabels", resourceVersion)
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _informationType = BicepValue<string>.DefineProperty(this, "InformationType", ["properties", "informationType"]);
-        _informationTypeId = BicepValue<string>.DefineProperty(this, "InformationTypeId", ["properties", "informationTypeId"]);
-        _labelId = BicepValue<string>.DefineProperty(this, "LabelId", ["properties", "labelId"]);
-        _labelName = BicepValue<string>.DefineProperty(this, "LabelName", ["properties", "labelName"]);
-        _rank = BicepValue<SensitivityLabelRank>.DefineProperty(this, "Rank", ["properties", "rank"]);
-        _columnName = BicepValue<string>.DefineProperty(this, "ColumnName", ["properties", "columnName"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _isDisabled = BicepValue<bool>.DefineProperty(this, "IsDisabled", ["properties", "isDisabled"], isOutput: true);
-        _managedBy = BicepValue<string>.DefineProperty(this, "ManagedBy", ["managedBy"], isOutput: true);
-        _schemaName = BicepValue<string>.DefineProperty(this, "SchemaName", ["properties", "schemaName"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _tableName = BicepValue<string>.DefineProperty(this, "TableName", ["properties", "tableName"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ManagedDatabaseSensitivityLabel.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _informationType = DefineProperty<string>("InformationType", ["properties", "informationType"]);
+        _informationTypeId = DefineProperty<string>("InformationTypeId", ["properties", "informationTypeId"]);
+        _labelId = DefineProperty<string>("LabelId", ["properties", "labelId"]);
+        _labelName = DefineProperty<string>("LabelName", ["properties", "labelName"]);
+        _rank = DefineProperty<SensitivityLabelRank>("Rank", ["properties", "rank"]);
+        _columnName = DefineProperty<string>("ColumnName", ["properties", "columnName"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _isDisabled = DefineProperty<bool>("IsDisabled", ["properties", "isDisabled"], isOutput: true);
+        _managedBy = DefineProperty<string>("ManagedBy", ["managedBy"], isOutput: true);
+        _schemaName = DefineProperty<string>("SchemaName", ["properties", "schemaName"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _tableName = DefineProperty<string>("TableName", ["properties", "tableName"], isOutput: true);
     }
 
     /// <summary>
     /// Creates a reference to an existing ManagedDatabaseSensitivityLabel.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedDatabaseSensitivityLabel.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedDatabaseSensitivityLabel
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedDatabaseSensitivityLabel.</param>
     /// <returns>The existing ManagedDatabaseSensitivityLabel resource.</returns>
-    public static ManagedDatabaseSensitivityLabel FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedDatabaseSensitivityLabel FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

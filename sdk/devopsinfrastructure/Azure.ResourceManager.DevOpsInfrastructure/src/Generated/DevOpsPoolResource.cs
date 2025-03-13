@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pools_Get</description>
+        /// <description>Pool_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,11 +144,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pools_Get</description>
+        /// <description>Pool_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,11 +184,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pools_Delete</description>
+        /// <description>Pool_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,11 +226,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pools_Delete</description>
+        /// <description>Pool_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -268,11 +268,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pools_Update</description>
+        /// <description>Pool_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -314,11 +314,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pools_Update</description>
+        /// <description>Pool_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -412,11 +412,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pools_Get</description>
+        /// <description>Pool_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -474,11 +474,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pools_Get</description>
+        /// <description>Pool_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -536,11 +536,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pools_Get</description>
+        /// <description>Pool_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -593,11 +593,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pools_Get</description>
+        /// <description>Pool_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -650,11 +650,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pools_Get</description>
+        /// <description>Pool_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -710,11 +710,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pools_Get</description>
+        /// <description>Pool_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
+        /// <description>2024-10-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

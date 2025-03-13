@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(RedirectType left, RedirectType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedirectType"/> values are not the same. </summary>
         public static bool operator !=(RedirectType left, RedirectType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RedirectType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RedirectType"/>. </summary>
         public static implicit operator RedirectType(string value) => new RedirectType(value);
 
         /// <inheritdoc />

@@ -79,7 +79,7 @@ namespace Azure.Security.ConfidentialLedger
                     new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) },
                 transportOptions,
                 new ConfidentialLedgerResponseClassifier());
-            _ledgerEndpoint = ledgerEndpoint;
+            _endpoint = ledgerEndpoint;
             _apiVersion = actualOptions.Version;
         }
 

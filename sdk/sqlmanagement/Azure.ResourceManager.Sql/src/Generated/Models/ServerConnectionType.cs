@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(ServerConnectionType left, ServerConnectionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerConnectionType"/> values are not the same. </summary>
         public static bool operator !=(ServerConnectionType left, ServerConnectionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServerConnectionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServerConnectionType"/>. </summary>
         public static implicit operator ServerConnectionType(string value) => new ServerConnectionType(value);
 
         /// <inheritdoc />

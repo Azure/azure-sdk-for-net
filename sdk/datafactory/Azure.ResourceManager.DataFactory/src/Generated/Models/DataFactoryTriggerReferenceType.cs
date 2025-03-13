@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(DataFactoryTriggerReferenceType left, DataFactoryTriggerReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFactoryTriggerReferenceType"/> values are not the same. </summary>
         public static bool operator !=(DataFactoryTriggerReferenceType left, DataFactoryTriggerReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataFactoryTriggerReferenceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFactoryTriggerReferenceType"/>. </summary>
         public static implicit operator DataFactoryTriggerReferenceType(string value) => new DataFactoryTriggerReferenceType(value);
 
         /// <inheritdoc />

@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(TaskType left, TaskType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TaskType"/> values are not the same. </summary>
         public static bool operator !=(TaskType left, TaskType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TaskType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TaskType"/>. </summary>
         public static implicit operator TaskType(string value) => new TaskType(value);
 
         /// <inheritdoc />

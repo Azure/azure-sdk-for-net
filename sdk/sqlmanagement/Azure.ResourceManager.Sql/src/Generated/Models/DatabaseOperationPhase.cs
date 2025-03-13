@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(DatabaseOperationPhase left, DatabaseOperationPhase right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatabaseOperationPhase"/> values are not the same. </summary>
         public static bool operator !=(DatabaseOperationPhase left, DatabaseOperationPhase right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DatabaseOperationPhase"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DatabaseOperationPhase"/>. </summary>
         public static implicit operator DatabaseOperationPhase(string value) => new DatabaseOperationPhase(value);
 
         /// <inheritdoc />

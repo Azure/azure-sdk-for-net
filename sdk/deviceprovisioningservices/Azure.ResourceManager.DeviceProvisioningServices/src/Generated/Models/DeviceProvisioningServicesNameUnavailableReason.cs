@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static bool operator ==(DeviceProvisioningServicesNameUnavailableReason left, DeviceProvisioningServicesNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesNameUnavailableReason"/> values are not the same. </summary>
         public static bool operator !=(DeviceProvisioningServicesNameUnavailableReason left, DeviceProvisioningServicesNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesNameUnavailableReason"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceProvisioningServicesNameUnavailableReason"/>. </summary>
         public static implicit operator DeviceProvisioningServicesNameUnavailableReason(string value) => new DeviceProvisioningServicesNameUnavailableReason(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Models
         public static bool operator ==(PiiDomain left, PiiDomain right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PiiDomain"/> values are not the same. </summary>
         public static bool operator !=(PiiDomain left, PiiDomain right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PiiDomain"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PiiDomain"/>. </summary>
         public static implicit operator PiiDomain(string value) => new PiiDomain(value);
 
         /// <inheritdoc />

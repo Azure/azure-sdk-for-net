@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(FrontDoorProtocol left, FrontDoorProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorProtocol"/> values are not the same. </summary>
         public static bool operator !=(FrontDoorProtocol left, FrontDoorProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FrontDoorProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorProtocol"/>. </summary>
         public static implicit operator FrontDoorProtocol(string value) => new FrontDoorProtocol(value);
 
         /// <inheritdoc />

@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: HybridCompute
 namespace: Azure.ResourceManager.HybridCompute
-require: https://github.com/Azure/azure-rest-api-specs/blob/b48d5d72073a296514d3d4db77887d8711526ccc/specification/hybridcompute/resource-manager/readme.md
-#tag: package-preview-2024-05
+require: https://github.com/Azure/azure-rest-api-specs/blob/0f300277e21972f20b32ffbff96180217875909b/specification/hybridcompute/resource-manager/readme.md
+tag: package-preview-2024-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -30,7 +30,6 @@ prepend-rp-prefix:
   - CloudMetadata
   - ConfigurationExtension
   - ConnectionDetail
-  - ExecutionState
   - ExtensionValue
   - IpAddress
   - License
@@ -64,9 +63,14 @@ prepend-rp-prefix:
   - ProvisioningIssue
   - ProvisioningIssueSeverity
   - ProvisioningIssueType
-  - Gateway
-  - GatewayUpdate
-  - GatewayType
+  - LicenseProfile
+  - LicenseProfileUpdate
+  - ProductFeatureUpdate
+  - Disk
+  - HardwareProfile
+  - Processor
+  - ExecutionState
+  - FirmwareProfile
 
 list-exception: 
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{baseProvider}/{baseResourceType}/{baseResourceName}/providers/Microsoft.HybridCompute/settings/{settingsResourceName}
@@ -99,17 +103,19 @@ rename-mapping:
   PatchServiceUsed.YUM: Yum
   PatchServiceUsed.APT: Apt
   PrivateLinkScopeValidationDetails.id: -|arm-id
-  RunCommandManagedIdentity.clientId: -|uuid
-  RunCommandManagedIdentity.objectId: -|uuid
   StatusLevelTypes: HybridComputeStatusLevelType
   StatusTypes: HybridComputeStatusType
   OSProfileWindowsConfiguration.patchSettings.enableHotpatching: IsHotpatchingEnabled
   PatchSettingsStatus: HybridComputePatchSettingsStatus
-  Settings: HybridComputeTargetResourceSettings
   OSProfileLinuxConfiguration.patchSettings.enableHotpatching: IsHotpatchingEnabled
-
-override-operation-name:
-  Settings_Update: UpdateTargetResourceSetting
+  GatewayType: ArcGatewayType
+  GatewayUpdate: ArcGatewayUpdate
+  Gateway: ArcGateway
+  Settings: ArcSettings
+  NetworkInterface.id: -|arm-id
+  RunCommandManagedIdentity.clientId: -|uuid
+  RunCommandManagedIdentity.objectId: -|uuid
+  Disk.id: -|arm-id
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -185,6 +191,10 @@ directive:
     where: $.definitions.MachineAssessPatchesResult.properties.assessmentActivityId
     transform: $['format'] = 'uuid'
 
+  - from: HybridCompute.json
+    where: $.definitions.GatewayProperties.properties.gatewayId
+    transform: $['format'] = 'arm-id'
+
   # set expand property of list and show to be both strings
   - from: HybridCompute.json
     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}"].get.parameters
@@ -218,7 +228,7 @@ directive:
           }
         ]
 
-  # add 200 response to run-command delete
+  # add 200 response to run-command delete - comment out for stable release
   - from: HybridCompute.json
     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}"].delete.responses
     transform: >-
@@ -250,13 +260,13 @@ directive:
         "default": {
           "description": "Error response describing why the operation failed.",
           "schema": {
-            "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/f6278b35fb38d62aadb7a4327a876544d5d7e1e4/specification/common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse"
           }
         }
       }
 
-  # we don't want user to interact with them / we don't support some operations
-  - remove-operation: MachineRunCommands_Update #PATCH
+  # we don't want user to interact with them / we don't support some operations - comment out for stable release
+  # - remove-operation: MachineRunCommands_Update #PATCH
   # internal operations
   - remove-operation: AgentVersion_List
   - remove-operation: AgentVersion_Get

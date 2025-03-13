@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(SecurityEventSource left, SecurityEventSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityEventSource"/> values are not the same. </summary>
         public static bool operator !=(SecurityEventSource left, SecurityEventSource right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityEventSource"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityEventSource"/>. </summary>
         public static implicit operator SecurityEventSource(string value) => new SecurityEventSource(value);
 
         /// <inheritdoc />

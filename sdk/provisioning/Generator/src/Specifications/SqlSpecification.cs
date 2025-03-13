@@ -3,6 +3,7 @@
 
 using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager.AppService;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;
 
@@ -22,7 +23,6 @@ public class SqlSpecification() :
         RemoveProperty<FailoverGroupResource>("ReadOnlyEndpointFailoverPolicy");
         RemoveProperty<FailoverGroupResource>("Databases");
         RemoveProperty<GeoBackupPolicyResource>("GeoBackupPolicyName");
-        RemoveProperty<IPv6FirewallRuleResource>("Data");
         RemoveProperty<LedgerDigestUploadResource>("LedgerDigestUploads");
         RemoveProperty<LogicalDatabaseTransparentDataEncryptionResource>("TdeName");
         RemoveProperty<LongTermRetentionPolicyResource>("PolicyName");
@@ -55,7 +55,6 @@ public class SqlSpecification() :
         RemoveProperty<SqlDatabaseVulnerabilityAssessmentResource>("VulnerabilityAssessmentName");
         RemoveProperty<SqlDatabaseVulnerabilityAssessmentRuleBaselineResource>("BaselineName");
         RemoveProperty<SqlDatabaseVulnerabilityAssessmentRuleBaselineResource>("RuleId");
-        RemoveProperty<SqlFirewallRuleResource>("Data");
         RemoveProperty<SqlServerAzureADAdministratorResource>("AdministratorName");
         RemoveProperty<SqlServerAzureADOnlyAuthenticationResource>("AuthenticationName");
         RemoveProperty<SqlServerBlobAuditingPolicyResource>("BlobAuditingPolicyName");
@@ -72,6 +71,9 @@ public class SqlSpecification() :
         // Patch models
         RemoveModel<DiffBackupIntervalInHours>(); // TODO: Maybe support extensible enums of other types?
         CustomizeProperty<BackupShortTermRetentionPolicyResource>("DiffBackupIntervalInHours", p => p.PropertyType = TypeRegistry.Get<int>());
+        CustomizePropertyIsoDuration<SqlServerJobSchedule>("Interval");
+        // Not generated today:
+        // CustomizePropertyIsoDuration<MaintenanceWindowTimeRange>("Duration");
 
         // Naming requirements
         AddNameRequirements<ManagedInstanceResource>(min: 1, max: 63, lower: true, digits: true, hyphen: true);

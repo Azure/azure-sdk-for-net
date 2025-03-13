@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Marketplace.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Marketplace.Samples
 {
     public partial class Sample_MarketplaceApprovalRequestResource
     {
-        // GetApprovalRequest
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetApprovalRequest()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/GetRequestApproval.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.Marketplace.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreateApprovalRequest
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateApprovalRequest()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/CreateApprovalRequest.json
@@ -77,9 +76,8 @@ namespace Azure.ResourceManager.Marketplace.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // QueryRequestApproval
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task QueryApprovalRequest_QueryRequestApproval()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/QueryRequestApproval.json
@@ -98,22 +96,18 @@ namespace Azure.ResourceManager.Marketplace.Samples
             MarketplaceApprovalRequestResource marketplaceApprovalRequest = client.GetMarketplaceApprovalRequestResource(marketplaceApprovalRequestResourceId);
 
             // invoke the operation
-            QueryApprovalRequestContent content = new QueryApprovalRequestContent()
+            QueryApprovalRequestContent content = new QueryApprovalRequestContent
             {
                 PublisherId = "marketplacetestthirdparty",
-                PlanIds =
-{
-"testPlanA","testPlanB","*"
-},
+                PlanIds = { "testPlanA", "testPlanB", "*" },
             };
             QueryApprovalRequestResult result = await marketplaceApprovalRequest.QueryApprovalRequestAsync(content: content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // WithdrawPlan
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task WithdrawPlan_WithdrawPlan()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/WithdrawPlan.json
@@ -132,14 +126,14 @@ namespace Azure.ResourceManager.Marketplace.Samples
             MarketplaceApprovalRequestResource marketplaceApprovalRequest = client.GetMarketplaceApprovalRequestResource(marketplaceApprovalRequestResourceId);
 
             // invoke the operation
-            WithdrawPlanContent content = new WithdrawPlanContent()
+            WithdrawPlanContent content = new WithdrawPlanContent
             {
                 PlanId = "*",
                 PublisherId = "marketplacetestthirdparty",
             };
             await marketplaceApprovalRequest.WithdrawPlanAsync(content: content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

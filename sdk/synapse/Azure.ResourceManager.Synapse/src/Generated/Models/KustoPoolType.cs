@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(KustoPoolType left, KustoPoolType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoPoolType"/> values are not the same. </summary>
         public static bool operator !=(KustoPoolType left, KustoPoolType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KustoPoolType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoPoolType"/>. </summary>
         public static implicit operator KustoPoolType(string value) => new KustoPoolType(value);
 
         /// <inheritdoc />

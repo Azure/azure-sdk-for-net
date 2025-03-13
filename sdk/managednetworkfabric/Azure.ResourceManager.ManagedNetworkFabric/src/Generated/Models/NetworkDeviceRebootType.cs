@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(NetworkDeviceRebootType left, NetworkDeviceRebootType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkDeviceRebootType"/> values are not the same. </summary>
         public static bool operator !=(NetworkDeviceRebootType left, NetworkDeviceRebootType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkDeviceRebootType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkDeviceRebootType"/>. </summary>
         public static implicit operator NetworkDeviceRebootType(string value) => new NetworkDeviceRebootType(value);
 
         /// <inheritdoc />

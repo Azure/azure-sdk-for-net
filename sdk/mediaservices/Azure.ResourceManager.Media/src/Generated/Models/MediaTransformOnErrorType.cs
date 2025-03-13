@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(MediaTransformOnErrorType left, MediaTransformOnErrorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaTransformOnErrorType"/> values are not the same. </summary>
         public static bool operator !=(MediaTransformOnErrorType left, MediaTransformOnErrorType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MediaTransformOnErrorType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MediaTransformOnErrorType"/>. </summary>
         public static implicit operator MediaTransformOnErrorType(string value) => new MediaTransformOnErrorType(value);
 
         /// <inheritdoc />

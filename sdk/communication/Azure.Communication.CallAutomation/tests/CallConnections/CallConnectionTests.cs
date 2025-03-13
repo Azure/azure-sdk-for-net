@@ -132,6 +132,16 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             verifyOperationContext(response);
         }
 
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsAppTarget))]
+        public async Task TransferCallToParticipantAsync_simpleMethod_MicrosoftTeamsAppAsTarget_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+        }
+
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
         public async Task TransferCallToParticipantAsync_202Accepted(CallInvite callInvite)
         {
@@ -545,6 +555,19 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         private static IEnumerable<object?[]> TestData_TransferCallToParticipant()
         {
             var callInvite = new CallInvite(new CommunicationUserIdentifier("userId"));
+            callInvite.CustomCallingContext.AddVoip("key1", "value1");
+            return new[]
+            {
+                new object?[]
+                {
+                    callInvite
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_MicrosoftTeamsAppTarget()
+        {
+            var callInvite = new CallInvite(new MicrosoftTeamsAppIdentifier("userId"));
             callInvite.CustomCallingContext.AddVoip("key1", "value1");
             return new[]
             {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static bool operator ==(DevCenterNameUnavailableReason left, DevCenterNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevCenterNameUnavailableReason"/> values are not the same. </summary>
         public static bool operator !=(DevCenterNameUnavailableReason left, DevCenterNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevCenterNameUnavailableReason"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevCenterNameUnavailableReason"/>. </summary>
         public static implicit operator DevCenterNameUnavailableReason(string value) => new DevCenterNameUnavailableReason(value);
 
         /// <inheritdoc />

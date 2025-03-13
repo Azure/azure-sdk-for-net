@@ -18,13 +18,13 @@ namespace Azure.Health.Deidentification.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeidentificationJob_GetJob_ShortVersion()
+        public void Example_DeidentificationJob_GetJob_GetADeIdentificationJob()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response response = client.GetJob("<name>", null);
+            Response response = client.GetJob("job_smith_documents_1", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -39,13 +39,13 @@ namespace Azure.Health.Deidentification.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidentificationJob_GetJob_ShortVersion_Async()
+        public async Task Example_DeidentificationJob_GetJob_GetADeIdentificationJob_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response response = await client.GetJobAsync("<name>", null);
+            Response response = await client.GetJobAsync("job_smith_documents_1", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -60,127 +60,35 @@ namespace Azure.Health.Deidentification.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeidentificationJob_GetJob_ShortVersion_Convenience()
+        public void Example_DeidentificationJob_GetJob_GetADeIdentificationJob_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response<DeidentificationJob> response = client.GetJob("<name>");
+            Response<DeidentificationJob> response = client.GetJob("job_smith_documents_1");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidentificationJob_GetJob_ShortVersion_Convenience_Async()
+        public async Task Example_DeidentificationJob_GetJob_GetADeIdentificationJob_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response<DeidentificationJob> response = await client.GetJobAsync("<name>");
+            Response<DeidentificationJob> response = await client.GetJobAsync("job_smith_documents_1");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeidentificationJob_GetJob_AllParameters()
+        public void Example_DeidServices_CancelJob_CancelADeIdentificationJob()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response response = client.GetJob("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
-            Console.WriteLine(result.GetProperty("targetLocation").GetProperty("location").ToString());
-            Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("operation").ToString());
-            Console.WriteLine(result.GetProperty("dataType").ToString());
-            Console.WriteLine(result.GetProperty("redactionFormat").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
-            Console.WriteLine(result.GetProperty("createdAt").ToString());
-            Console.WriteLine(result.GetProperty("startedAt").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("successful").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("failed").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("canceled").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("total").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("bytesProcessed").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidentificationJob_GetJob_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            Response response = await client.GetJobAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
-            Console.WriteLine(result.GetProperty("targetLocation").GetProperty("location").ToString());
-            Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("operation").ToString());
-            Console.WriteLine(result.GetProperty("dataType").ToString());
-            Console.WriteLine(result.GetProperty("redactionFormat").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
-            Console.WriteLine(result.GetProperty("createdAt").ToString());
-            Console.WriteLine(result.GetProperty("startedAt").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("successful").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("failed").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("canceled").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("total").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("bytesProcessed").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeidentificationJob_GetJob_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            Response<DeidentificationJob> response = client.GetJob("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidentificationJob_GetJob_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            Response<DeidentificationJob> response = await client.GetJobAsync("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeidServices_CancelJob_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            Response response = client.CancelJob("<name>", null);
+            Response response = client.CancelJob("job_smith_documents_1", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -195,13 +103,13 @@ namespace Azure.Health.Deidentification.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidServices_CancelJob_ShortVersion_Async()
+        public async Task Example_DeidServices_CancelJob_CancelADeIdentificationJob_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response response = await client.CancelJobAsync("<name>", null);
+            Response response = await client.CancelJobAsync("job_smith_documents_1", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -216,183 +124,70 @@ namespace Azure.Health.Deidentification.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeidServices_CancelJob_ShortVersion_Convenience()
+        public void Example_DeidServices_CancelJob_CancelADeIdentificationJob_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response<DeidentificationJob> response = client.CancelJob("<name>");
+            Response<DeidentificationJob> response = client.CancelJob("job_smith_documents_1");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidServices_CancelJob_ShortVersion_Convenience_Async()
+        public async Task Example_DeidServices_CancelJob_CancelADeIdentificationJob_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response<DeidentificationJob> response = await client.CancelJobAsync("<name>");
+            Response<DeidentificationJob> response = await client.CancelJobAsync("job_smith_documents_1");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeidServices_CancelJob_AllParameters()
+        public void Example_DeidentificationJob_DeleteJob_DeleteADeIdentificationJob()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response response = client.CancelJob("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
-            Console.WriteLine(result.GetProperty("targetLocation").GetProperty("location").ToString());
-            Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("operation").ToString());
-            Console.WriteLine(result.GetProperty("dataType").ToString());
-            Console.WriteLine(result.GetProperty("redactionFormat").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
-            Console.WriteLine(result.GetProperty("createdAt").ToString());
-            Console.WriteLine(result.GetProperty("startedAt").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("successful").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("failed").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("canceled").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("total").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("bytesProcessed").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidServices_CancelJob_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            Response response = await client.CancelJobAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
-            Console.WriteLine(result.GetProperty("targetLocation").GetProperty("location").ToString());
-            Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("operation").ToString());
-            Console.WriteLine(result.GetProperty("dataType").ToString());
-            Console.WriteLine(result.GetProperty("redactionFormat").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
-            Console.WriteLine(result.GetProperty("createdAt").ToString());
-            Console.WriteLine(result.GetProperty("startedAt").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("successful").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("failed").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("canceled").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("total").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("bytesProcessed").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeidServices_CancelJob_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            Response<DeidentificationJob> response = client.CancelJob("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidServices_CancelJob_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            Response<DeidentificationJob> response = await client.CancelJobAsync("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeidentificationJob_DeleteJob_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            Response response = client.DeleteJob("<name>");
+            Response response = client.DeleteJob("job_smith_documents_1");
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidentificationJob_DeleteJob_ShortVersion_Async()
+        public async Task Example_DeidentificationJob_DeleteJob_DeleteADeIdentificationJob_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response response = await client.DeleteJobAsync("<name>");
+            Response response = await client.DeleteJobAsync("job_smith_documents_1");
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeidentificationJob_DeleteJob_AllParameters()
+        public void Example_DeidServices_DeidentifyText_DeIdentifyText()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            Response response = client.DeleteJob("<name>");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidentificationJob_DeleteJob_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            Response response = await client.DeleteJobAsync("<name>");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeidServices_Deidentify_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
-                inputText = "<inputText>",
+                inputText = "Hello my name is John Smith.",
+                operation = "Redact",
+                customizations = new
+                {
+                    redactionFormat = "[{type}]",
+                },
             });
-            Response response = client.Deidentify(content);
+            Response response = client.DeidentifyText(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -400,17 +195,22 @@ namespace Azure.Health.Deidentification.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidServices_Deidentify_ShortVersion_Async()
+        public async Task Example_DeidServices_DeidentifyText_DeIdentifyText_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
-                inputText = "<inputText>",
+                inputText = "Hello my name is John Smith.",
+                operation = "Redact",
+                customizations = new
+                {
+                    redactionFormat = "[{type}]",
+                },
             });
-            Response response = await client.DeidentifyAsync(content);
+            Response response = await client.DeidentifyTextAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -418,452 +218,70 @@ namespace Azure.Health.Deidentification.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeidServices_Deidentify_ShortVersion_Convenience()
+        public void Example_DeidServices_DeidentifyText_DeIdentifyText_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            DeidentificationContent body = new DeidentificationContent("<inputText>");
-            Response<DeidentificationResult> response = client.Deidentify(body);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidServices_Deidentify_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            DeidentificationContent body = new DeidentificationContent("<inputText>");
-            Response<DeidentificationResult> response = await client.DeidentifyAsync(body);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeidServices_Deidentify_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
+            DeidentificationContent content = new DeidentificationContent("Hello my name is John Smith.")
             {
-                inputText = "<inputText>",
-                operation = "Redact",
-                dataType = "Plaintext",
-                redactionFormat = "<redactionFormat>",
-            });
-            Response response = client.Deidentify(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("outputText").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("offset").GetProperty("utf8").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("offset").GetProperty("utf16").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("offset").GetProperty("codePoint").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("length").GetProperty("utf8").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("length").GetProperty("utf16").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("length").GetProperty("codePoint").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("text").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("confidenceScore").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("path").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("etag").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidServices_Deidentify_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                inputText = "<inputText>",
-                operation = "Redact",
-                dataType = "Plaintext",
-                redactionFormat = "<redactionFormat>",
-            });
-            Response response = await client.DeidentifyAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("outputText").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("offset").GetProperty("utf8").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("offset").GetProperty("utf16").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("offset").GetProperty("codePoint").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("length").GetProperty("utf8").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("length").GetProperty("utf16").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("length").GetProperty("codePoint").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("text").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("confidenceScore").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("path").ToString());
-            Console.WriteLine(result.GetProperty("taggerResult").GetProperty("etag").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeidServices_Deidentify_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            DeidentificationContent body = new DeidentificationContent("<inputText>")
-            {
-                Operation = OperationType.Redact,
-                DataType = DocumentDataType.Plaintext,
-                RedactionFormat = "<redactionFormat>",
+                Operation = DeidentificationOperationType.Redact,
+                Customizations = new DeidentificationCustomizationOptions
+                {
+                    RedactionFormat = "[{type}]",
+                },
             };
-            Response<DeidentificationResult> response = client.Deidentify(body);
+            Response<DeidentificationResult> response = client.DeidentifyText(content);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidServices_Deidentify_AllParameters_Convenience_Async()
+        public async Task Example_DeidServices_DeidentifyText_DeIdentifyText_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            DeidentificationContent body = new DeidentificationContent("<inputText>")
+            DeidentificationContent content = new DeidentificationContent("Hello my name is John Smith.")
             {
-                Operation = OperationType.Redact,
-                DataType = DocumentDataType.Plaintext,
-                RedactionFormat = "<redactionFormat>",
+                Operation = DeidentificationOperationType.Redact,
+                Customizations = new DeidentificationCustomizationOptions
+                {
+                    RedactionFormat = "[{type}]",
+                },
             };
-            Response<DeidentificationResult> response = await client.DeidentifyAsync(body);
+            Response<DeidentificationResult> response = await client.DeidentifyTextAsync(content);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeidentificationJob_GetJobs_ShortVersion()
+        public void Example_DeidentificationJob_DeidentifyDocuments_CreateADeIdentificationJob()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            foreach (BinaryData item in client.GetJobs(null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
-                Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
-                Console.WriteLine(result.GetProperty("targetLocation").GetProperty("location").ToString());
-                Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
-                Console.WriteLine(result.GetProperty("createdAt").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidentificationJob_GetJobs_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetJobsAsync(null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
-                Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
-                Console.WriteLine(result.GetProperty("targetLocation").GetProperty("location").ToString());
-                Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
-                Console.WriteLine(result.GetProperty("createdAt").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeidentificationJob_GetJobs_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            foreach (DeidentificationJob item in client.GetJobs())
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidentificationJob_GetJobs_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            await foreach (DeidentificationJob item in client.GetJobsAsync())
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeidentificationJob_GetJobs_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            foreach (BinaryData item in client.GetJobs(1234, "<continuationToken>", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
-                Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
-                Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
-                Console.WriteLine(result.GetProperty("targetLocation").GetProperty("location").ToString());
-                Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToString());
-                Console.WriteLine(result.GetProperty("operation").ToString());
-                Console.WriteLine(result.GetProperty("dataType").ToString());
-                Console.WriteLine(result.GetProperty("redactionFormat").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
-                Console.WriteLine(result.GetProperty("createdAt").ToString());
-                Console.WriteLine(result.GetProperty("startedAt").ToString());
-                Console.WriteLine(result.GetProperty("summary").GetProperty("successful").ToString());
-                Console.WriteLine(result.GetProperty("summary").GetProperty("failed").ToString());
-                Console.WriteLine(result.GetProperty("summary").GetProperty("canceled").ToString());
-                Console.WriteLine(result.GetProperty("summary").GetProperty("total").ToString());
-                Console.WriteLine(result.GetProperty("summary").GetProperty("bytesProcessed").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidentificationJob_GetJobs_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetJobsAsync(1234, "<continuationToken>", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
-                Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
-                Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
-                Console.WriteLine(result.GetProperty("targetLocation").GetProperty("location").ToString());
-                Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToString());
-                Console.WriteLine(result.GetProperty("operation").ToString());
-                Console.WriteLine(result.GetProperty("dataType").ToString());
-                Console.WriteLine(result.GetProperty("redactionFormat").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
-                Console.WriteLine(result.GetProperty("createdAt").ToString());
-                Console.WriteLine(result.GetProperty("startedAt").ToString());
-                Console.WriteLine(result.GetProperty("summary").GetProperty("successful").ToString());
-                Console.WriteLine(result.GetProperty("summary").GetProperty("failed").ToString());
-                Console.WriteLine(result.GetProperty("summary").GetProperty("canceled").ToString());
-                Console.WriteLine(result.GetProperty("summary").GetProperty("total").ToString());
-                Console.WriteLine(result.GetProperty("summary").GetProperty("bytesProcessed").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeidentificationJob_GetJobs_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            foreach (DeidentificationJob item in client.GetJobs(maxpagesize: 1234, continuationToken: "<continuationToken>"))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidentificationJob_GetJobs_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            await foreach (DeidentificationJob item in client.GetJobsAsync(maxpagesize: 1234, continuationToken: "<continuationToken>"))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentDetails_GetJobDocuments_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            foreach (BinaryData item in client.GetJobDocuments("<name>", null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("input").GetProperty("path").ToString());
-                Console.WriteLine(result.GetProperty("input").GetProperty("etag").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentDetails_GetJobDocuments_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetJobDocumentsAsync("<name>", null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("input").GetProperty("path").ToString());
-                Console.WriteLine(result.GetProperty("input").GetProperty("etag").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentDetails_GetJobDocuments_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            foreach (DocumentDetails item in client.GetJobDocuments("<name>"))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentDetails_GetJobDocuments_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            await foreach (DocumentDetails item in client.GetJobDocumentsAsync("<name>"))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentDetails_GetJobDocuments_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            foreach (BinaryData item in client.GetJobDocuments("<name>", 1234, "<continuationToken>", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("input").GetProperty("path").ToString());
-                Console.WriteLine(result.GetProperty("input").GetProperty("etag").ToString());
-                Console.WriteLine(result.GetProperty("output").GetProperty("path").ToString());
-                Console.WriteLine(result.GetProperty("output").GetProperty("etag").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentDetails_GetJobDocuments_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetJobDocumentsAsync("<name>", 1234, "<continuationToken>", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("input").GetProperty("path").ToString());
-                Console.WriteLine(result.GetProperty("input").GetProperty("etag").ToString());
-                Console.WriteLine(result.GetProperty("output").GetProperty("path").ToString());
-                Console.WriteLine(result.GetProperty("output").GetProperty("etag").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentDetails_GetJobDocuments_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            foreach (DocumentDetails item in client.GetJobDocuments("<name>", maxpagesize: 1234, continuationToken: "<continuationToken>"))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentDetails_GetJobDocuments_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            await foreach (DocumentDetails item in client.GetJobDocumentsAsync("<name>", maxpagesize: 1234, continuationToken: "<continuationToken>"))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeidentificationJob_CreateJob_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
+                operation = "Redact",
                 sourceLocation = new
                 {
-                    location = "http://localhost:3000",
-                    prefix = "<prefix>",
+                    location = "https://blobtest.blob.core.windows.net/container",
+                    prefix = "documents/",
                 },
                 targetLocation = new
                 {
-                    location = "http://localhost:3000",
-                    prefix = "<prefix>",
+                    location = "https://blobtest.blob.core.windows.net/container",
+                    prefix = "_output/",
+                    overwrite = true,
+                },
+                customizations = new
+                {
+                    redactionFormat = "[{type}]",
                 },
             });
-            Operation<BinaryData> operation = client.CreateJob(WaitUntil.Completed, "<name>", content);
+            Operation<BinaryData> operation = client.DeidentifyDocuments(WaitUntil.Completed, "job_smith_documents_1", content);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -879,26 +297,32 @@ namespace Azure.Health.Deidentification.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidentificationJob_CreateJob_ShortVersion_Async()
+        public async Task Example_DeidentificationJob_DeidentifyDocuments_CreateADeIdentificationJob_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
+                operation = "Redact",
                 sourceLocation = new
                 {
-                    location = "http://localhost:3000",
-                    prefix = "<prefix>",
+                    location = "https://blobtest.blob.core.windows.net/container",
+                    prefix = "documents/",
                 },
                 targetLocation = new
                 {
-                    location = "http://localhost:3000",
-                    prefix = "<prefix>",
+                    location = "https://blobtest.blob.core.windows.net/container",
+                    prefix = "_output/",
+                    overwrite = true,
+                },
+                customizations = new
+                {
+                    redactionFormat = "[{type}]",
                 },
             });
-            Operation<BinaryData> operation = await client.CreateJobAsync(WaitUntil.Completed, "<name>", content);
+            Operation<BinaryData> operation = await client.DeidentifyDocumentsAsync(WaitUntil.Completed, "job_smith_documents_1", content);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -914,181 +338,47 @@ namespace Azure.Health.Deidentification.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeidentificationJob_CreateJob_ShortVersion_Convenience()
+        public void Example_DeidentificationJob_DeidentifyDocuments_CreateADeIdentificationJob_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"));
-            Operation<DeidentificationJob> operation = client.CreateJob(WaitUntil.Completed, "<name>", resource);
+            DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("https://blobtest.blob.core.windows.net/container"), "documents/"), new TargetStorageLocation(new Uri("https://blobtest.blob.core.windows.net/container"), "_output/")
+            {
+                Overwrite = true,
+            })
+            {
+                Operation = DeidentificationOperationType.Redact,
+                Customizations = new DeidentificationJobCustomizationOptions
+                {
+                    RedactionFormat = "[{type}]",
+                },
+            };
+            Operation<DeidentificationJob> operation = client.DeidentifyDocuments(WaitUntil.Completed, "job_smith_documents_1", resource);
             DeidentificationJob responseData = operation.Value;
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidentificationJob_CreateJob_ShortVersion_Convenience_Async()
+        public async Task Example_DeidentificationJob_DeidentifyDocuments_CreateADeIdentificationJob_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"));
-            Operation<DeidentificationJob> operation = await client.CreateJobAsync(WaitUntil.Completed, "<name>", resource);
-            DeidentificationJob responseData = operation.Value;
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeidentificationJob_CreateJob_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
+            DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("https://blobtest.blob.core.windows.net/container"), "documents/"), new TargetStorageLocation(new Uri("https://blobtest.blob.core.windows.net/container"), "_output/")
             {
-                sourceLocation = new
+                Overwrite = true,
+            })
+            {
+                Operation = DeidentificationOperationType.Redact,
+                Customizations = new DeidentificationJobCustomizationOptions
                 {
-                    location = "http://localhost:3000",
-                    prefix = "<prefix>",
-                    extensions = new object[]
-            {
-"<extensions>"
-            },
+                    RedactionFormat = "[{type}]",
                 },
-                targetLocation = new
-                {
-                    location = "http://localhost:3000",
-                    prefix = "<prefix>",
-                },
-                operation = "Redact",
-                dataType = "Plaintext",
-                redactionFormat = "<redactionFormat>",
-            });
-            Operation<BinaryData> operation = client.CreateJob(WaitUntil.Completed, "<name>", content);
-            BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
-            Console.WriteLine(result.GetProperty("targetLocation").GetProperty("location").ToString());
-            Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("operation").ToString());
-            Console.WriteLine(result.GetProperty("dataType").ToString());
-            Console.WriteLine(result.GetProperty("redactionFormat").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
-            Console.WriteLine(result.GetProperty("createdAt").ToString());
-            Console.WriteLine(result.GetProperty("startedAt").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("successful").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("failed").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("canceled").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("total").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("bytesProcessed").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidentificationJob_CreateJob_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                sourceLocation = new
-                {
-                    location = "http://localhost:3000",
-                    prefix = "<prefix>",
-                    extensions = new object[]
-            {
-"<extensions>"
-            },
-                },
-                targetLocation = new
-                {
-                    location = "http://localhost:3000",
-                    prefix = "<prefix>",
-                },
-                operation = "Redact",
-                dataType = "Plaintext",
-                redactionFormat = "<redactionFormat>",
-            });
-            Operation<BinaryData> operation = await client.CreateJobAsync(WaitUntil.Completed, "<name>", content);
-            BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
-            Console.WriteLine(result.GetProperty("targetLocation").GetProperty("location").ToString());
-            Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("operation").ToString());
-            Console.WriteLine(result.GetProperty("dataType").ToString());
-            Console.WriteLine(result.GetProperty("redactionFormat").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
-            Console.WriteLine(result.GetProperty("createdAt").ToString());
-            Console.WriteLine(result.GetProperty("startedAt").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("successful").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("failed").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("canceled").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("total").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("bytesProcessed").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeidentificationJob_CreateJob_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>")
-            {
-                Extensions = { "<extensions>" },
-            }, new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"))
-            {
-                Operation = OperationType.Redact,
-                DataType = DocumentDataType.Plaintext,
-                RedactionFormat = "<redactionFormat>",
             };
-            Operation<DeidentificationJob> operation = client.CreateJob(WaitUntil.Completed, "<name>", resource);
-            DeidentificationJob responseData = operation.Value;
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeidentificationJob_CreateJob_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
-
-            DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>")
-            {
-                Extensions = { "<extensions>" },
-            }, new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"))
-            {
-                Operation = OperationType.Redact,
-                DataType = DocumentDataType.Plaintext,
-                RedactionFormat = "<redactionFormat>",
-            };
-            Operation<DeidentificationJob> operation = await client.CreateJobAsync(WaitUntil.Completed, "<name>", resource);
+            Operation<DeidentificationJob> operation = await client.DeidentifyDocumentsAsync(WaitUntil.Completed, "job_smith_documents_1", resource);
             DeidentificationJob responseData = operation.Value;
         }
     }

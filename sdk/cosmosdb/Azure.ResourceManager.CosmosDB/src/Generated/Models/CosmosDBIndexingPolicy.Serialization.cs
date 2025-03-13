@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<CosmosDBIndexingPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBIndexingPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBIndexingPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(IsAutomatic))
             {
                 writer.WritePropertyName("automatic"u8);
@@ -88,6 +96,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(VectorIndexes))
+            {
+                writer.WritePropertyName("vectorIndexes"u8);
+                writer.WriteStartArray();
+                foreach (var item in VectorIndexes)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -96,14 +114,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CosmosDBIndexingPolicy IJsonModel<CosmosDBIndexingPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -132,6 +149,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             IList<CosmosDBExcludedPath> excludedPaths = default;
             IList<IList<CosmosDBCompositePath>> compositeIndexes = default;
             IList<SpatialSpec> spatialIndexes = default;
+            IList<CosmosDBVectorIndex> vectorIndexes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -222,6 +240,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     spatialIndexes = array;
                     continue;
                 }
+                if (property.NameEquals("vectorIndexes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CosmosDBVectorIndex> array = new List<CosmosDBVectorIndex>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CosmosDBVectorIndex.DeserializeCosmosDBVectorIndex(item, options));
+                    }
+                    vectorIndexes = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -235,6 +267,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 excludedPaths ?? new ChangeTrackingList<CosmosDBExcludedPath>(),
                 compositeIndexes ?? new ChangeTrackingList<IList<CosmosDBCompositePath>>(),
                 spatialIndexes ?? new ChangeTrackingList<SpatialSpec>(),
+                vectorIndexes ?? new ChangeTrackingList<CosmosDBVectorIndex>(),
                 serializedAdditionalRawData);
         }
 
@@ -382,6 +415,29 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VectorIndexes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vectorIndexes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(VectorIndexes))
+                {
+                    if (VectorIndexes.Any())
+                    {
+                        builder.Append("  vectorIndexes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in VectorIndexes)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  vectorIndexes: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
@@ -409,7 +465,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCosmosDBIndexingPolicy(document.RootElement, options);
                     }
                 default:

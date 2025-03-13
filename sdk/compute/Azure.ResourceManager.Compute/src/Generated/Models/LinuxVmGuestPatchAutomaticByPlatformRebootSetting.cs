@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(LinuxVmGuestPatchAutomaticByPlatformRebootSetting left, LinuxVmGuestPatchAutomaticByPlatformRebootSetting right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinuxVmGuestPatchAutomaticByPlatformRebootSetting"/> values are not the same. </summary>
         public static bool operator !=(LinuxVmGuestPatchAutomaticByPlatformRebootSetting left, LinuxVmGuestPatchAutomaticByPlatformRebootSetting right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LinuxVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LinuxVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
         public static implicit operator LinuxVmGuestPatchAutomaticByPlatformRebootSetting(string value) => new LinuxVmGuestPatchAutomaticByPlatformRebootSetting(value);
 
         /// <inheritdoc />

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator ==(MySqlVirtualNetworkRuleState left, MySqlVirtualNetworkRuleState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlVirtualNetworkRuleState"/> values are not the same. </summary>
         public static bool operator !=(MySqlVirtualNetworkRuleState left, MySqlVirtualNetworkRuleState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MySqlVirtualNetworkRuleState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlVirtualNetworkRuleState"/>. </summary>
         public static implicit operator MySqlVirtualNetworkRuleState(string value) => new MySqlVirtualNetworkRuleState(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(HttpCorrelationProtocol left, HttpCorrelationProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HttpCorrelationProtocol"/> values are not the same. </summary>
         public static bool operator !=(HttpCorrelationProtocol left, HttpCorrelationProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HttpCorrelationProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HttpCorrelationProtocol"/>. </summary>
         public static implicit operator HttpCorrelationProtocol(string value) => new HttpCorrelationProtocol(value);
 
         /// <inheritdoc />

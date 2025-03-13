@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(ApiOperationInvokableProtocol left, ApiOperationInvokableProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiOperationInvokableProtocol"/> values are not the same. </summary>
         public static bool operator !=(ApiOperationInvokableProtocol left, ApiOperationInvokableProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApiOperationInvokableProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiOperationInvokableProtocol"/>. </summary>
         public static implicit operator ApiOperationInvokableProtocol(string value) => new ApiOperationInvokableProtocol(value);
 
         /// <inheritdoc />

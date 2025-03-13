@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlFlexibleServerIdentityType left, PostgreSqlFlexibleServerIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerIdentityType"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlFlexibleServerIdentityType left, PostgreSqlFlexibleServerIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerIdentityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerIdentityType"/>. </summary>
         public static implicit operator PostgreSqlFlexibleServerIdentityType(string value) => new PostgreSqlFlexibleServerIdentityType(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(DiffDiskPlacement left, DiffDiskPlacement right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiffDiskPlacement"/> values are not the same. </summary>
         public static bool operator !=(DiffDiskPlacement left, DiffDiskPlacement right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DiffDiskPlacement"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DiffDiskPlacement"/>. </summary>
         public static implicit operator DiffDiskPlacement(string value) => new DiffDiskPlacement(value);
 
         /// <inheritdoc />

@@ -66,7 +66,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="glossaries"> List of Glossary. </param>
         /// <param name="storageSource"> Storage Source. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationTarget(Uri targetUri, string categoryId, string languageCode, IList<TranslationGlossary> glossaries, string storageSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranslationTarget(Uri targetUri, string categoryId, string languageCode, IList<TranslationGlossary> glossaries, TranslationStorageSource? storageSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetUri = targetUri;
             CategoryId = categoryId;
@@ -82,5 +82,7 @@ namespace Azure.AI.Translation.Document
         }
         /// <summary> List of Glossary. </summary>
         public IList<TranslationGlossary> Glossaries { get; }
+        /// <summary> Storage Source. </summary>
+        public TranslationStorageSource? StorageSource { get; set; }
     }
 }

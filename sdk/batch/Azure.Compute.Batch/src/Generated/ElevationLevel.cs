@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(ElevationLevel left, ElevationLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElevationLevel"/> values are not the same. </summary>
         public static bool operator !=(ElevationLevel left, ElevationLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ElevationLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ElevationLevel"/>. </summary>
         public static implicit operator ElevationLevel(string value) => new ElevationLevel(value);
 
         /// <inheritdoc />

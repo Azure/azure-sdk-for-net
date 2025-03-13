@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Maps.Models
 
         void IJsonModel<MapsAccountPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MapsAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MapsAccountPatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -85,6 +93,11 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WritePropertyName("cors"u8);
                 writer.WriteObjectValue(Cors, options);
             }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,14 +107,13 @@ namespace Azure.ResourceManager.Maps.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MapsAccountPatch IJsonModel<MapsAccountPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -133,6 +145,7 @@ namespace Azure.ResourceManager.Maps.Models
             string provisioningState = default;
             IList<MapsLinkedResource> linkedResources = default;
             CorsRules cors = default;
+            MapsEncryption encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -233,6 +246,15 @@ namespace Azure.ResourceManager.Maps.Models
                             cors = CorsRules.DeserializeCorsRules(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("encryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryption = MapsEncryption.DeserializeMapsEncryption(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -252,6 +274,7 @@ namespace Azure.ResourceManager.Maps.Models
                 provisioningState,
                 linkedResources ?? new ChangeTrackingList<MapsLinkedResource>(),
                 cors,
+                encryption,
                 serializedAdditionalRawData);
         }
 
@@ -276,7 +299,7 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMapsAccountPatch(document.RootElement, options);
                     }
                 default:

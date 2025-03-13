@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ContainerRegistry.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerRegistry.Samples
 {
     public partial class Sample_ContainerRegistryTaskResource
     {
-        // Tasks_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_TasksGet()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/TasksGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Tasks_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_TasksDelete()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/TasksDelete.json
@@ -72,12 +71,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             // invoke the operation
             await containerRegistryTask.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Tasks_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_TasksUpdate()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/TasksUpdate.json
@@ -98,61 +96,52 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             ContainerRegistryTaskResource containerRegistryTask = client.GetContainerRegistryTaskResource(containerRegistryTaskResourceId);
 
             // invoke the operation
-            ContainerRegistryTaskPatch patch = new ContainerRegistryTaskPatch()
+            ContainerRegistryTaskPatch patch = new ContainerRegistryTaskPatch
             {
                 Tags =
 {
-["testkey"] = "value",
+["testkey"] = "value"
 },
                 Status = ContainerRegistryTaskStatus.Enabled,
                 AgentCpu = 3,
-                Step = new ContainerRegistryDockerBuildStepUpdateContent()
+                Step = new ContainerRegistryDockerBuildStepUpdateContent
                 {
-                    ImageNames =
-{
-"azurerest:testtag1"
-},
+                    ImageNames = { "azurerest:testtag1" },
                     DockerFilePath = "src/DockerFile",
                 },
-                Trigger = new ContainerRegistryTriggerUpdateContent()
+                Trigger = new ContainerRegistryTriggerUpdateContent
                 {
-                    SourceTriggers =
+                    SourceTriggers = {new ContainerRegistrySourceTriggerUpdateContent("mySourceTrigger")
 {
-new ContainerRegistrySourceTriggerUpdateContent("mySourceTrigger")
+SourceRepository = new SourceCodeRepoUpdateContent
 {
-SourceRepository = new SourceCodeRepoUpdateContent()
-{
-SourceControlAuthProperties = new SourceCodeRepoAuthInfoUpdateContent()
+SourceControlAuthProperties = new SourceCodeRepoAuthInfoUpdateContent
 {
 TokenType = SourceCodeRepoAuthTokenType.Pat,
 Token = "xxxxx",
 },
 },
-SourceTriggerEvents =
-{
-ContainerRegistrySourceTriggerEvent.Commit
-},
-}
-},
+SourceTriggerEvents = {ContainerRegistrySourceTriggerEvent.Commit},
+}},
                 },
-                Credentials = new ContainerRegistryCredentials()
+                Credentials = new ContainerRegistryCredentials
                 {
                     CustomRegistries =
 {
-["myregistry.azurecr.io"] = new CustomRegistryCredentials()
+["myregistry.azurecr.io"] = new CustomRegistryCredentials
 {
-UserName = new ContainerRegistrySecretObject()
+UserName = new ContainerRegistrySecretObject
 {
 Value = "username",
 ObjectType = ContainerRegistrySecretObjectType.Opaque,
 },
-Password = new ContainerRegistrySecretObject()
+Password = new ContainerRegistrySecretObject
 {
 Value = "https://myacbvault.vault.azure.net/secrets/password",
 ObjectType = ContainerRegistrySecretObjectType.VaultSecret,
 },
 Identity = "[system]",
-},
+}
 },
                 },
                 LogTemplate = "acr/tasks:{{.Run.OS}}",
@@ -167,9 +156,8 @@ Identity = "[system]",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Tasks_Update_QuickTask
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_TasksUpdateQuickTask()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/TasksUpdate_QuickTask.json
@@ -190,11 +178,11 @@ Identity = "[system]",
             ContainerRegistryTaskResource containerRegistryTask = client.GetContainerRegistryTaskResource(containerRegistryTaskResourceId);
 
             // invoke the operation
-            ContainerRegistryTaskPatch patch = new ContainerRegistryTaskPatch()
+            ContainerRegistryTaskPatch patch = new ContainerRegistryTaskPatch
             {
                 Tags =
 {
-["testkey"] = "value",
+["testkey"] = "value"
 },
                 Status = ContainerRegistryTaskStatus.Enabled,
                 LogTemplate = "acr/tasks:{{.Run.OS}}",
@@ -209,9 +197,8 @@ Identity = "[system]",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Tasks_Update_WithKeyVaultCustomCredentials
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_TasksUpdateWithKeyVaultCustomCredentials()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/ManagedIdentity/TasksUpdate_WithKeyVaultCustomCredentials.json
@@ -232,61 +219,52 @@ Identity = "[system]",
             ContainerRegistryTaskResource containerRegistryTask = client.GetContainerRegistryTaskResource(containerRegistryTaskResourceId);
 
             // invoke the operation
-            ContainerRegistryTaskPatch patch = new ContainerRegistryTaskPatch()
+            ContainerRegistryTaskPatch patch = new ContainerRegistryTaskPatch
             {
                 Tags =
 {
-["testkey"] = "value",
+["testkey"] = "value"
 },
                 Status = ContainerRegistryTaskStatus.Enabled,
                 AgentCpu = 3,
-                Step = new ContainerRegistryDockerBuildStepUpdateContent()
+                Step = new ContainerRegistryDockerBuildStepUpdateContent
                 {
-                    ImageNames =
-{
-"azurerest:testtag1"
-},
+                    ImageNames = { "azurerest:testtag1" },
                     DockerFilePath = "src/DockerFile",
                 },
-                Trigger = new ContainerRegistryTriggerUpdateContent()
+                Trigger = new ContainerRegistryTriggerUpdateContent
                 {
-                    SourceTriggers =
+                    SourceTriggers = {new ContainerRegistrySourceTriggerUpdateContent("mySourceTrigger")
 {
-new ContainerRegistrySourceTriggerUpdateContent("mySourceTrigger")
+SourceRepository = new SourceCodeRepoUpdateContent
 {
-SourceRepository = new SourceCodeRepoUpdateContent()
-{
-SourceControlAuthProperties = new SourceCodeRepoAuthInfoUpdateContent()
+SourceControlAuthProperties = new SourceCodeRepoAuthInfoUpdateContent
 {
 TokenType = SourceCodeRepoAuthTokenType.Pat,
 Token = "xxxxx",
 },
 },
-SourceTriggerEvents =
-{
-ContainerRegistrySourceTriggerEvent.Commit
-},
-}
-},
+SourceTriggerEvents = {ContainerRegistrySourceTriggerEvent.Commit},
+}},
                 },
-                Credentials = new ContainerRegistryCredentials()
+                Credentials = new ContainerRegistryCredentials
                 {
                     CustomRegistries =
 {
-["myregistry.azurecr.io"] = new CustomRegistryCredentials()
+["myregistry.azurecr.io"] = new CustomRegistryCredentials
 {
-UserName = new ContainerRegistrySecretObject()
+UserName = new ContainerRegistrySecretObject
 {
 Value = "https://myacbvault.vault.azure.net/secrets/username",
 ObjectType = ContainerRegistrySecretObjectType.VaultSecret,
 },
-Password = new ContainerRegistrySecretObject()
+Password = new ContainerRegistrySecretObject
 {
 Value = "https://myacbvault.vault.azure.net/secrets/password",
 ObjectType = ContainerRegistrySecretObjectType.VaultSecret,
 },
 Identity = "[system]",
-},
+}
 },
                 },
                 LogTemplate = null,
@@ -301,9 +279,8 @@ Identity = "[system]",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Tasks_Update_WithMSICustomCredentials
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_TasksUpdateWithMSICustomCredentials()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/ManagedIdentity/TasksUpdate_WithMSICustomCredentials.json
@@ -324,51 +301,42 @@ Identity = "[system]",
             ContainerRegistryTaskResource containerRegistryTask = client.GetContainerRegistryTaskResource(containerRegistryTaskResourceId);
 
             // invoke the operation
-            ContainerRegistryTaskPatch patch = new ContainerRegistryTaskPatch()
+            ContainerRegistryTaskPatch patch = new ContainerRegistryTaskPatch
             {
                 Tags =
 {
-["testkey"] = "value",
+["testkey"] = "value"
 },
                 Status = ContainerRegistryTaskStatus.Enabled,
                 AgentCpu = 3,
-                Step = new ContainerRegistryDockerBuildStepUpdateContent()
+                Step = new ContainerRegistryDockerBuildStepUpdateContent
                 {
-                    ImageNames =
-{
-"azurerest:testtag1"
-},
+                    ImageNames = { "azurerest:testtag1" },
                     DockerFilePath = "src/DockerFile",
                 },
-                Trigger = new ContainerRegistryTriggerUpdateContent()
+                Trigger = new ContainerRegistryTriggerUpdateContent
                 {
-                    SourceTriggers =
+                    SourceTriggers = {new ContainerRegistrySourceTriggerUpdateContent("mySourceTrigger")
 {
-new ContainerRegistrySourceTriggerUpdateContent("mySourceTrigger")
+SourceRepository = new SourceCodeRepoUpdateContent
 {
-SourceRepository = new SourceCodeRepoUpdateContent()
-{
-SourceControlAuthProperties = new SourceCodeRepoAuthInfoUpdateContent()
+SourceControlAuthProperties = new SourceCodeRepoAuthInfoUpdateContent
 {
 TokenType = SourceCodeRepoAuthTokenType.Pat,
 Token = "xxxxx",
 },
 },
-SourceTriggerEvents =
-{
-ContainerRegistrySourceTriggerEvent.Commit
-},
-}
-},
+SourceTriggerEvents = {ContainerRegistrySourceTriggerEvent.Commit},
+}},
                 },
-                Credentials = new ContainerRegistryCredentials()
+                Credentials = new ContainerRegistryCredentials
                 {
                     CustomRegistries =
 {
-["myregistry.azurecr.io"] = new CustomRegistryCredentials()
+["myregistry.azurecr.io"] = new CustomRegistryCredentials
 {
 Identity = "[system]",
-},
+}
 },
                 },
                 LogTemplate = null,
@@ -383,9 +351,8 @@ Identity = "[system]",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Tasks_Update_WithOpaqueCustomCredentials
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_TasksUpdateWithOpaqueCustomCredentials()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/TasksUpdate_WithOpaqueCustomCredentials.json
@@ -406,60 +373,51 @@ Identity = "[system]",
             ContainerRegistryTaskResource containerRegistryTask = client.GetContainerRegistryTaskResource(containerRegistryTaskResourceId);
 
             // invoke the operation
-            ContainerRegistryTaskPatch patch = new ContainerRegistryTaskPatch()
+            ContainerRegistryTaskPatch patch = new ContainerRegistryTaskPatch
             {
                 Tags =
 {
-["testkey"] = "value",
+["testkey"] = "value"
 },
                 Status = ContainerRegistryTaskStatus.Enabled,
                 AgentCpu = 3,
-                Step = new ContainerRegistryDockerBuildStepUpdateContent()
+                Step = new ContainerRegistryDockerBuildStepUpdateContent
                 {
-                    ImageNames =
-{
-"azurerest:testtag1"
-},
+                    ImageNames = { "azurerest:testtag1" },
                     DockerFilePath = "src/DockerFile",
                 },
-                Trigger = new ContainerRegistryTriggerUpdateContent()
+                Trigger = new ContainerRegistryTriggerUpdateContent
                 {
-                    SourceTriggers =
+                    SourceTriggers = {new ContainerRegistrySourceTriggerUpdateContent("mySourceTrigger")
 {
-new ContainerRegistrySourceTriggerUpdateContent("mySourceTrigger")
+SourceRepository = new SourceCodeRepoUpdateContent
 {
-SourceRepository = new SourceCodeRepoUpdateContent()
-{
-SourceControlAuthProperties = new SourceCodeRepoAuthInfoUpdateContent()
+SourceControlAuthProperties = new SourceCodeRepoAuthInfoUpdateContent
 {
 TokenType = SourceCodeRepoAuthTokenType.Pat,
 Token = "xxxxx",
 },
 },
-SourceTriggerEvents =
-{
-ContainerRegistrySourceTriggerEvent.Commit
-},
-}
-},
+SourceTriggerEvents = {ContainerRegistrySourceTriggerEvent.Commit},
+}},
                 },
-                Credentials = new ContainerRegistryCredentials()
+                Credentials = new ContainerRegistryCredentials
                 {
                     CustomRegistries =
 {
-["myregistry.azurecr.io"] = new CustomRegistryCredentials()
+["myregistry.azurecr.io"] = new CustomRegistryCredentials
 {
-UserName = new ContainerRegistrySecretObject()
+UserName = new ContainerRegistrySecretObject
 {
 Value = "username",
 ObjectType = ContainerRegistrySecretObjectType.Opaque,
 },
-Password = new ContainerRegistrySecretObject()
+Password = new ContainerRegistrySecretObject
 {
 Value = "***",
 ObjectType = ContainerRegistrySecretObjectType.Opaque,
 },
-},
+}
 },
                 },
                 LogTemplate = null,
@@ -474,9 +432,8 @@ ObjectType = ContainerRegistrySecretObjectType.Opaque,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Tasks_GetDetails
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDetails_TasksGetDetails()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/TasksGetDetails.json

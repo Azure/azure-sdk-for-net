@@ -7,6 +7,7 @@ using Azure.ResourceManager.Resources;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.StandbyPool.Models;
 
 namespace Azure.ResourceManager.StandbyPool.Tests
 {
@@ -21,17 +22,23 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         {
         }
 
-        protected async Task<StandbyVirtualMachinePoolResource> CreateStandbyVirtualMachinePoolResource(ResourceGroupResource resourceGroup, string standbyVirtualMachinePoolName, long maxReadyCapacity, AzureLocation location, ResourceIdentifier vmssId)
+        protected async Task<StandbyVirtualMachinePoolResource> CreateStandbyVirtualMachinePoolResource(ResourceGroupResource resourceGroup, string standbyVirtualMachinePoolName, long maxReadyCapacity, AzureLocation location, ResourceIdentifier vmssId, string virtualMachineState = "Running", long minReadyCapacity = 1)
         {
+            StandbyVirtualMachinePoolProperties properties = new StandbyVirtualMachinePoolProperties()
+            {
+                VirtualMachineState = virtualMachineState,
+                ElasticityProfile = new Models.StandbyVirtualMachinePoolElasticityProfile()
+                {
+                    MaxReadyCapacity = maxReadyCapacity,
+                    MinReadyCapacity = minReadyCapacity
+                },
+                AttachedVirtualMachineScaleSetId = vmssId
+            };
+
             StandbyVirtualMachinePoolData input = new StandbyVirtualMachinePoolData(location)
             {
                 Location = location,
-                VirtualMachineState = "Running",
-                ElasticityProfile = new Models.StandbyVirtualMachinePoolElasticityProfile()
-                {
-                    MaxReadyCapacity = maxReadyCapacity
-                },
-                AttachedVirtualMachineScaleSetId = vmssId
+                Properties = properties
             };
             StandbyVirtualMachinePoolCollection collection = resourceGroup.GetStandbyVirtualMachinePools();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, standbyVirtualMachinePoolName, input);

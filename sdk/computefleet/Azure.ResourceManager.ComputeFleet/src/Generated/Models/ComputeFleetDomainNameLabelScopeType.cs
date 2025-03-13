@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(ComputeFleetDomainNameLabelScopeType left, ComputeFleetDomainNameLabelScopeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeFleetDomainNameLabelScopeType"/> values are not the same. </summary>
         public static bool operator !=(ComputeFleetDomainNameLabelScopeType left, ComputeFleetDomainNameLabelScopeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeFleetDomainNameLabelScopeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetDomainNameLabelScopeType"/>. </summary>
         public static implicit operator ComputeFleetDomainNameLabelScopeType(string value) => new ComputeFleetDomainNameLabelScopeType(value);
 
         /// <inheritdoc />

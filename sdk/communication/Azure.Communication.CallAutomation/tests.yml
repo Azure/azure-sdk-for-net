@@ -5,16 +5,11 @@ extends:
   parameters:
     ServiceDirectory: communication
     Project: Azure.Communication.CallAutomation
-    UseFederatedAuth: true
     CloudConfig:
       Public:
-        ServiceConnection: azure-sdk-tests
-        SubscriptionConfigurationFilePaths:
-          - eng/common/TestResources/sub-config/AzurePublicMsft.json   
         SubscriptionConfigurations:
           - $(sub-config-communication-services-cloud-test-resources-common)
           - $(sub-config-communication-services-cloud-test-resources-net)
-    Clouds: Public
     TestResourceDirectories:
       - communication/
     EnvVars:

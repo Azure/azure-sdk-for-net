@@ -21,32 +21,26 @@ namespace Azure.ResourceManager.Network
 
         void IJsonModel<SubnetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SubnetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SubnetData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
-            }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(ResourceType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -210,21 +204,15 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("defaultOutboundAccess"u8);
                 writer.WriteBooleanValue(DefaultOutboundAccess.Value);
             }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsCollectionDefined(IpamPoolPrefixAllocations))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("ipamPoolPrefixAllocations"u8);
+                writer.WriteStartArray();
+                foreach (var item in IpamPoolPrefixAllocations)
                 {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WriteObjectValue(item, options);
                 }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
@@ -274,6 +262,7 @@ namespace Azure.ResourceManager.Network
             IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations = default;
             SharingScope? sharingScope = default;
             bool? defaultOutboundAccess = default;
+            IList<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -555,6 +544,20 @@ namespace Azure.ResourceManager.Network
                             defaultOutboundAccess = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("ipamPoolPrefixAllocations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<IpamPoolPrefixAllocation> array = new List<IpamPoolPrefixAllocation>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(IpamPoolPrefixAllocation.DeserializeIpamPoolPrefixAllocation(item, options));
+                            }
+                            ipamPoolPrefixAllocations = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -590,7 +593,8 @@ namespace Azure.ResourceManager.Network
                 privateLinkServiceNetworkPolicies,
                 applicationGatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>(),
                 sharingScope,
-                defaultOutboundAccess);
+                defaultOutboundAccess,
+                ipamPoolPrefixAllocations ?? new ChangeTrackingList<IpamPoolPrefixAllocation>());
         }
 
         BinaryData IPersistableModel<SubnetData>.Write(ModelReaderWriterOptions options)
@@ -614,7 +618,7 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSubnetData(document.RootElement, options);
                     }
                 default:

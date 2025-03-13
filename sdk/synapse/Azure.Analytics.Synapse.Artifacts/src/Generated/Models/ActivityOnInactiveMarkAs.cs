@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(ActivityOnInactiveMarkAs left, ActivityOnInactiveMarkAs right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ActivityOnInactiveMarkAs"/> values are not the same. </summary>
         public static bool operator !=(ActivityOnInactiveMarkAs left, ActivityOnInactiveMarkAs right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ActivityOnInactiveMarkAs"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ActivityOnInactiveMarkAs"/>. </summary>
         public static implicit operator ActivityOnInactiveMarkAs(string value) => new ActivityOnInactiveMarkAs(value);
 
         /// <inheritdoc />

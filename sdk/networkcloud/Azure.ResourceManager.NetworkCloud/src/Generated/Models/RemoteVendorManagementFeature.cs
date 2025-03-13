@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(RemoteVendorManagementFeature left, RemoteVendorManagementFeature right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RemoteVendorManagementFeature"/> values are not the same. </summary>
         public static bool operator !=(RemoteVendorManagementFeature left, RemoteVendorManagementFeature right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RemoteVendorManagementFeature"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RemoteVendorManagementFeature"/>. </summary>
         public static implicit operator RemoteVendorManagementFeature(string value) => new RemoteVendorManagementFeature(value);
 
         /// <inheritdoc />

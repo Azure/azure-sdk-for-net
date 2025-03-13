@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static bool operator ==(BillingBenefitsReservedResourceType left, BillingBenefitsReservedResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingBenefitsReservedResourceType"/> values are not the same. </summary>
         public static bool operator !=(BillingBenefitsReservedResourceType left, BillingBenefitsReservedResourceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BillingBenefitsReservedResourceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingBenefitsReservedResourceType"/>. </summary>
         public static implicit operator BillingBenefitsReservedResourceType(string value) => new BillingBenefitsReservedResourceType(value);
 
         /// <inheritdoc />

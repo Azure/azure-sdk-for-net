@@ -19,10 +19,13 @@ namespace Azure.ResourceManager.Avs.Tests
 
         protected AzureLocation DefaultLocation => AzureLocation.EastUS;
 
-        public const string RESOURCE_GROUP_NAME = "avs-sdk-test";
-        public const string PRIVATE_CLOUD_NAME = "avs-sdk-test";
+        public const string RESOURCE_GROUP_NAME = "avs-dotnet-test";
+        public const string PRIVATE_CLOUD_NAME = "avs-dotnet-test-w2";
         public const string CLUSTER1_NAME = "Cluster-1";
         public const string CLUSTER2_NAME = "Cluster-2";
+        public const string ISCSI_PATH_NAME = "default";
+        public const string WORKLOAD_NETWORK_NAME = "a8b7ddce-a5d6-11e8-a7e5-43344e310957";
+
         protected AvsManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
@@ -65,6 +68,27 @@ namespace Azure.ResourceManager.Avs.Tests
             AvsPrivateCloudClusterResource avsPrivateCloudCluster = Client.GetAvsPrivateCloudClusterResource(avsPrivateCloudClusterResourceId);
             avsPrivateCloudCluster = await avsPrivateCloudCluster.GetAsync();
             return avsPrivateCloudCluster;
+        }
+        protected IscsiPathResource getIscsiPathResource()
+        {
+            string subscriptionId = DefaultSubscription.Data.SubscriptionId;
+            ResourceIdentifier iscsiPathResourceId = IscsiPathResource.CreateResourceIdentifier(subscriptionId, RESOURCE_GROUP_NAME, PRIVATE_CLOUD_NAME);
+            IscsiPathResource iscsiPath = Client.GetIscsiPathResource(iscsiPathResourceId);
+            return iscsiPath;
+        }
+        protected WorkloadNetworkResource getWorkloadNetworkResource()
+        {
+            string subscriptionId = DefaultSubscription.Data.SubscriptionId;
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, RESOURCE_GROUP_NAME, PRIVATE_CLOUD_NAME);
+            WorkloadNetworkResource workloadNetwork = Client.GetWorkloadNetworkResource(workloadNetworkResourceId);
+            return workloadNetwork;
+        }
+        protected AvsPrivateCloudResource getWorkloadNetworkResourceOld()
+        {
+            string subscriptionId = DefaultSubscription.Data.SubscriptionId;
+            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, RESOURCE_GROUP_NAME, PRIVATE_CLOUD_NAME);
+            AvsPrivateCloudResource avsPrivateCloud = Client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            return avsPrivateCloud;
         }
     }
 }

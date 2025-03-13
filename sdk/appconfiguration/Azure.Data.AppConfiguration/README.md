@@ -247,26 +247,24 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact [opencode@microsoft.com][email_opencode] with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fappconfiguration%2FAzure.Data.AppConfiguration%2FREADME.png)
-
 <!-- LINKS -->
-[azconfig_docs]: https://docs.microsoft.com/azure/azure-app-configuration/
+[azconfig_docs]: https://learn.microsoft.com/azure/azure-app-configuration/
 [azconfig_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/CONTRIBUTING.md
-[azconfig_setting_concepts]: https://docs.microsoft.com/azure/azure-app-configuration/concept-key-value
-[azconfig_asof_snapshot]: https://docs.microsoft.com/azure/azure-app-configuration/concept-point-time-snapshot
-[aad_grant_access]: https://docs.microsoft.com/powershell/module/az.Resources/New-azRoleAssignment?view=azps-1.8.0
-[aad_register_app]: https://docs.microsoft.com/azure/app-service/configure-authentication-provider-aad#-configure-with-advanced-settings
+[azconfig_setting_concepts]: https://learn.microsoft.com/azure/azure-app-configuration/concept-key-value
+[azconfig_asof_snapshot]: https://learn.microsoft.com/azure/azure-app-configuration/concept-point-time-snapshot
+[aad_grant_access]: https://learn.microsoft.com/powershell/module/az.Resources/New-azRoleAssignment?view=azps-1.8.0
+[aad_register_app]: https://learn.microsoft.com/azure/app-service/configure-authentication-provider-aad#-configure-with-advanced-settings
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity
 [azure_identity_dac]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [azure_portal]: https://portal.azure.com
 [source_root]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/src
 [source_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples
 [reference_docs]: https://azure.github.io/azure-sdk-for-net/appconfiguration.html
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [configuration_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/src/ConfigurationClient.cs
-[configuration_store]: https://docs.microsoft.com/azure/azure-app-configuration/quickstart-dotnet-core-app#create-an-app-configuration-store
-[label_concept]: https://docs.microsoft.com/azure/azure-app-configuration/concept-key-value#label-keys
+[configuration_store]: https://learn.microsoft.com/azure/azure-app-configuration/quickstart-dotnet-core-app#create-an-app-configuration-store
+[label_concept]: https://learn.microsoft.com/azure/azure-app-configuration/concept-key-value#label-keys
 [nuget]: https://www.nuget.org/
 [package]: https://www.nuget.org/packages/Azure.Data.AppConfiguration/
 [samples_readme]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/README.md

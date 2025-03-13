@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(SyntaxFormatType left, SyntaxFormatType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyntaxFormatType"/> values are not the same. </summary>
         public static bool operator !=(SyntaxFormatType left, SyntaxFormatType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SyntaxFormatType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SyntaxFormatType"/>. </summary>
         public static implicit operator SyntaxFormatType(string value) => new SyntaxFormatType(value);
 
         /// <inheritdoc />

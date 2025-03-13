@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(IntegrationRuntimeInternalChannelEncryptionMode left, IntegrationRuntimeInternalChannelEncryptionMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationRuntimeInternalChannelEncryptionMode"/> values are not the same. </summary>
         public static bool operator !=(IntegrationRuntimeInternalChannelEncryptionMode left, IntegrationRuntimeInternalChannelEncryptionMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IntegrationRuntimeInternalChannelEncryptionMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IntegrationRuntimeInternalChannelEncryptionMode"/>. </summary>
         public static implicit operator IntegrationRuntimeInternalChannelEncryptionMode(string value) => new IntegrationRuntimeInternalChannelEncryptionMode(value);
 
         /// <inheritdoc />

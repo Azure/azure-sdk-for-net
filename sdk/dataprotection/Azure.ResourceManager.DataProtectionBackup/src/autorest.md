@@ -17,7 +17,7 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-#mgmt-debug: 
+# mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -235,6 +235,7 @@ rename-mapping:
   DeletedBackupInstance: DeletedDataProtectionBackupInstanceProperties
   BackupDatasourceParameters: BackupDataSourceSettings
   BlobBackupDatasourceParameters: BlobBackupDataSourceSettings
+  AdlsBlobBackupDatasourceParameters: AdlsBlobBackupDataSourceSettings
   KubernetesClusterBackupDatasourceParameters: KubernetesClusterBackupDataSourceSettings
   KubernetesClusterBackupDatasourceParameters.snapshotVolumes: IsSnapshotVolumesEnabled
   KubernetesClusterBackupDatasourceParameters.includeClusterScopeResources: IsClusterScopeResourcesIncluded
@@ -257,6 +258,7 @@ rename-mapping:
   SecureScoreLevel: BackupVaultSecureScoreLevel
   FeatureSettings: BackupVaultFeatureSettings
   IdentityDetails: DataProtectionIdentityDetails
+  IdentityDetails.userAssignedIdentityArmUrl: UserAssignedIdentityId|arm-id
   NamespacedNameResource: NamespacedName
   CrossRegionRestoreDetails.sourceBackupInstanceId : -|arm-id
   CrossRegionRestoreDetails.sourceRegion  : -|azure-location

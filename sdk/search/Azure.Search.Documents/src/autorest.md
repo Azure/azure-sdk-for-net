@@ -11,8 +11,8 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/dc27f9b32787533cd4d07fe0de5245f2f8354dbe/specification/search/data-plane/Azure.Search/stable/2024-07-01/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/dc27f9b32787533cd4d07fe0de5245f2f8354dbe/specification/search/data-plane/Azure.Search/stable/2024-07-01/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/8c53aa7023e66a9ec24ede6a9fad0ed730d62515/specification/search/data-plane/Azure.Search/preview/2025-03-01-preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/8c53aa7023e66a9ec24ede6a9fad0ed730d62515/specification/search/data-plane/Azure.Search/preview/2025-03-01-preview/searchservice.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
@@ -58,6 +58,15 @@ directive:
     $["discriminator"] = "@odata.type";
 ```
 
+## Renaming models after the AI Studio rebrand to AI Foundry
+These should eventually be fixed in the swagger files.
+```yaml
+directive:
+- from: "searchservice.json"
+  where: $.definitions.AIStudioModelCatalogName
+  transform: $["x-ms-enum"].name = "AIFoundryModelCatalogName";
+```
+
 ### Mark definitions as objects
 The modeler warns about models without an explicit type.
 ``` yaml
@@ -81,7 +90,18 @@ directive:
     $.additionalProperties = true;
 ```
 
-### Archboard feedback for 2024-07-01
+### Fix `SearchResult["@search.documentDebugInfo"]`
+``` yaml
+directive:
+  - from: searchindex.json
+    where: $.definitions.SearchResult.properties
+    transform: >
+      $["@search.documentDebugInfo"]["$ref"] = $["@search.documentDebugInfo"].items["$ref"];
+      delete $["@search.documentDebugInfo"].type;
+      delete $["@search.documentDebugInfo"].items;
+```
+
+### Archboard feedback for 11.6.0
 
 ```yaml
 directive:

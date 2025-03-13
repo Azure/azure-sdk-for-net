@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static bool operator ==(DeterministicOutboundIP left, DeterministicOutboundIP right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeterministicOutboundIP"/> values are not the same. </summary>
         public static bool operator !=(DeterministicOutboundIP left, DeterministicOutboundIP right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeterministicOutboundIP"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeterministicOutboundIP"/>. </summary>
         public static implicit operator DeterministicOutboundIP(string value) => new DeterministicOutboundIP(value);
 
         /// <inheritdoc />

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static bool operator ==(ServiceLoadMetricWeight left, ServiceLoadMetricWeight right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceLoadMetricWeight"/> values are not the same. </summary>
         public static bool operator !=(ServiceLoadMetricWeight left, ServiceLoadMetricWeight right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceLoadMetricWeight"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceLoadMetricWeight"/>. </summary>
         public static implicit operator ServiceLoadMetricWeight(string value) => new ServiceLoadMetricWeight(value);
 
         /// <inheritdoc />

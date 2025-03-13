@@ -9,18 +9,18 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Quota.Samples
 {
     public partial class Sample_GroupQuotaSubscriptionResource
     {
-        // GroupQuotaSubscriptions_Patch_Subscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_GroupQuotaSubscriptionsPatchSubscriptions()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GroupQuotaSubscriptionsGetSubscriptions()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/PatchGroupQuotasSubscription.json
-            // this example is just showing the usage of "GroupQuotaSubscriptions_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2025-03-01/examples/GroupQuotasSubscriptions/GetGroupQuotaSubscriptions.json
+            // this example is just showing the usage of "GroupQuotaSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -36,8 +36,7 @@ namespace Azure.ResourceManager.Quota.Samples
             GroupQuotaSubscriptionResource groupQuotaSubscription = client.GetGroupQuotaSubscriptionResource(groupQuotaSubscriptionResourceId);
 
             // invoke the operation
-            ArmOperation<GroupQuotaSubscriptionResource> lro = await groupQuotaSubscription.UpdateAsync(WaitUntil.Completed);
-            GroupQuotaSubscriptionResource result = lro.Value;
+            GroupQuotaSubscriptionResource result = await groupQuotaSubscription.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -46,12 +45,11 @@ namespace Azure.ResourceManager.Quota.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GroupQuotaSubscriptions_Delete_Subscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_GroupQuotaSubscriptionsDeleteSubscriptions()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/DeleteGroupQuotaSubscriptions.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2025-03-01/examples/GroupQuotasSubscriptions/DeleteGroupQuotaSubscriptions.json
             // this example is just showing the usage of "GroupQuotaSubscriptions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,16 +68,15 @@ namespace Azure.ResourceManager.Quota.Samples
             // invoke the operation
             await groupQuotaSubscription.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GroupQuotaSubscriptions_Get_Subscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GroupQuotaSubscriptionsGetSubscriptions()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_GroupQuotaSubscriptionsPatchSubscriptions()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/GetGroupQuotaSubscriptions.json
-            // this example is just showing the usage of "GroupQuotaSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2025-03-01/examples/GroupQuotasSubscriptions/PatchGroupQuotasSubscription.json
+            // this example is just showing the usage of "GroupQuotaSubscriptions_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -95,7 +92,8 @@ namespace Azure.ResourceManager.Quota.Samples
             GroupQuotaSubscriptionResource groupQuotaSubscription = client.GetGroupQuotaSubscriptionResource(groupQuotaSubscriptionResourceId);
 
             // invoke the operation
-            GroupQuotaSubscriptionResource result = await groupQuotaSubscription.GetAsync();
+            ArmOperation<GroupQuotaSubscriptionResource> lro = await groupQuotaSubscription.UpdateAsync(WaitUntil.Completed);
+            GroupQuotaSubscriptionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

@@ -271,4 +271,4 @@ Console.WriteLine($"Job has been assigned a priority value: {queriedJob2.Value.P
 ```
 
 <!-- LINKS -->
-[azure-func-js-quickstart]: https://docs.microsoft.com/azure/azure-functions/create-first-function-vs-code-node
+[azure-func-js-quickstart]: https://learn.microsoft.com/azure/azure-functions/create-first-function-vs-code-node

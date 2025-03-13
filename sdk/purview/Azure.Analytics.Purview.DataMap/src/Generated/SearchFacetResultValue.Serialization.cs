@@ -19,13 +19,21 @@ namespace Azure.Analytics.Purview.DataMap
 
         void IJsonModel<SearchFacetResultValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SearchFacetResultValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchFacetResultValue)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(EntityType))
             {
                 writer.WritePropertyName("entityType"u8);
@@ -134,14 +142,13 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SearchFacetResultValue IJsonModel<SearchFacetResultValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -359,7 +366,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSearchFacetResultValue(document.RootElement, options);
                     }
                 default:
@@ -373,7 +380,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SearchFacetResultValue FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSearchFacetResultValue(document.RootElement);
         }
 

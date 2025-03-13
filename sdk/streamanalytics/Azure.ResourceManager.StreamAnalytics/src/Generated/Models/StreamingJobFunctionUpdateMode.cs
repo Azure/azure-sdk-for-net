@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static bool operator ==(StreamingJobFunctionUpdateMode left, StreamingJobFunctionUpdateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingJobFunctionUpdateMode"/> values are not the same. </summary>
         public static bool operator !=(StreamingJobFunctionUpdateMode left, StreamingJobFunctionUpdateMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StreamingJobFunctionUpdateMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StreamingJobFunctionUpdateMode"/>. </summary>
         public static implicit operator StreamingJobFunctionUpdateMode(string value) => new StreamingJobFunctionUpdateMode(value);
 
         /// <inheritdoc />

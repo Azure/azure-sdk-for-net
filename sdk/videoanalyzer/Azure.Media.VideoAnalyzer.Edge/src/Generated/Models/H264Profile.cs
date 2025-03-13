@@ -39,7 +39,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static bool operator ==(H264Profile left, H264Profile right) => left.Equals(right);
         /// <summary> Determines if two <see cref="H264Profile"/> values are not the same. </summary>
         public static bool operator !=(H264Profile left, H264Profile right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="H264Profile"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="H264Profile"/>. </summary>
         public static implicit operator H264Profile(string value) => new H264Profile(value);
 
         /// <inheritdoc />

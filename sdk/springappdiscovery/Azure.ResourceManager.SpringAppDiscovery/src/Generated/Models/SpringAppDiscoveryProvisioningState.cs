@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public static bool operator ==(SpringAppDiscoveryProvisioningState left, SpringAppDiscoveryProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SpringAppDiscoveryProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(SpringAppDiscoveryProvisioningState left, SpringAppDiscoveryProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SpringAppDiscoveryProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SpringAppDiscoveryProvisioningState"/>. </summary>
         public static implicit operator SpringAppDiscoveryProvisioningState(string value) => new SpringAppDiscoveryProvisioningState(value);
 
         /// <inheritdoc />

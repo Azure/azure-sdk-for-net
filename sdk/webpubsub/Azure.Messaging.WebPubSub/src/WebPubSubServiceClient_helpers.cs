@@ -387,6 +387,7 @@ namespace Azure.Messaging.WebPubSub
         {
             WebPubSubClientProtocol.Default => $"client/hubs/{_hub}",
             WebPubSubClientProtocol.Mqtt => $"clients/mqtt/hubs/{_hub}",
+            WebPubSubClientProtocol.SocketIO => $"clients/socketio/hubs/{_hub}",
             _ => throw new ArgumentOutOfRangeException(nameof(clientProtocol))
         };
 
@@ -407,6 +408,7 @@ namespace Azure.Messaging.WebPubSub
             {
                 WebPubSubClientProtocol.Default => "default",
                 WebPubSubClientProtocol.Mqtt => "mqtt",
+                WebPubSubClientProtocol.SocketIO => "socketio",
                 _ => throw new ArgumentOutOfRangeException(nameof(clientAccess))
             };
             if (_tokenCredential != null)

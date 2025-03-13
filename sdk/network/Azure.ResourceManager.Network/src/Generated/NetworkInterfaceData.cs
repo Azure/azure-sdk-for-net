@@ -45,6 +45,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="macAddress"> The MAC address of the network interface. </param>
         /// <param name="primary"> Whether this is a primary network interface on a virtual machine. </param>
         /// <param name="vnetEncryptionSupported"> Whether the virtual machine this nic is attached to supports encryption. </param>
+        /// <param name="defaultOutboundConnectivityEnabled"> Whether default outbound connectivity for nic was configured or not. </param>
         /// <param name="enableAcceleratedNetworking"> If the network interface is configured for accelerated networking. Not applicable to VM sizes which require accelerated networking. </param>
         /// <param name="disableTcpStateTracking"> Indicates whether to disable tcp state tracking. </param>
         /// <param name="enableIPForwarding"> Indicates whether IP forwarding is enabled on this network interface. </param>
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="migrationPhase"> Migration phase of Network Interface resource. </param>
         /// <param name="auxiliaryMode"> Auxiliary mode of Network Interface resource. </param>
         /// <param name="auxiliarySku"> Auxiliary sku of Network Interface resource. </param>
-        internal NetworkInterfaceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, WritableSubResource virtualMachine, NetworkSecurityGroupData networkSecurityGroup, PrivateEndpointData privateEndpoint, IList<NetworkInterfaceIPConfigurationData> ipConfigurations, IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations, NetworkInterfaceDnsSettings dnsSettings, string macAddress, bool? primary, bool? vnetEncryptionSupported, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableIPForwarding, IReadOnlyList<string> hostedWorkloads, WritableSubResource dscpConfiguration, Guid? resourceGuid, NetworkProvisioningState? provisioningState, string workloadType, NetworkInterfaceNicType? nicType, PrivateLinkServiceData privateLinkService, NetworkInterfaceMigrationPhase? migrationPhase, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal NetworkInterfaceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, WritableSubResource virtualMachine, NetworkSecurityGroupData networkSecurityGroup, PrivateEndpointData privateEndpoint, IList<NetworkInterfaceIPConfigurationData> ipConfigurations, IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations, NetworkInterfaceDnsSettings dnsSettings, string macAddress, bool? primary, bool? vnetEncryptionSupported, bool? defaultOutboundConnectivityEnabled, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableIPForwarding, IReadOnlyList<string> hostedWorkloads, WritableSubResource dscpConfiguration, Guid? resourceGuid, NetworkProvisioningState? provisioningState, string workloadType, NetworkInterfaceNicType? nicType, PrivateLinkServiceData privateLinkService, NetworkInterfaceMigrationPhase? migrationPhase, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ExtendedLocation = extendedLocation;
             ETag = etag;
@@ -71,6 +72,7 @@ namespace Azure.ResourceManager.Network
             MacAddress = macAddress;
             Primary = primary;
             VnetEncryptionSupported = vnetEncryptionSupported;
+            DefaultOutboundConnectivityEnabled = defaultOutboundConnectivityEnabled;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
             DisableTcpStateTracking = disableTcpStateTracking;
             EnableIPForwarding = enableIPForwarding;
@@ -114,6 +116,8 @@ namespace Azure.ResourceManager.Network
         public bool? Primary { get; }
         /// <summary> Whether the virtual machine this nic is attached to supports encryption. </summary>
         public bool? VnetEncryptionSupported { get; }
+        /// <summary> Whether default outbound connectivity for nic was configured or not. </summary>
+        public bool? DefaultOutboundConnectivityEnabled { get; }
         /// <summary> If the network interface is configured for accelerated networking. Not applicable to VM sizes which require accelerated networking. </summary>
         public bool? EnableAcceleratedNetworking { get; set; }
         /// <summary> Indicates whether to disable tcp state tracking. </summary>

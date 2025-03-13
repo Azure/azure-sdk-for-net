@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(WorkloadOperationType left, WorkloadOperationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadOperationType"/> values are not the same. </summary>
         public static bool operator !=(WorkloadOperationType left, WorkloadOperationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkloadOperationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadOperationType"/>. </summary>
         public static implicit operator WorkloadOperationType(string value) => new WorkloadOperationType(value);
 
         /// <inheritdoc />

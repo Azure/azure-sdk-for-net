@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(SetMultiVmSyncStatus left, SetMultiVmSyncStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SetMultiVmSyncStatus"/> values are not the same. </summary>
         public static bool operator !=(SetMultiVmSyncStatus left, SetMultiVmSyncStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SetMultiVmSyncStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SetMultiVmSyncStatus"/>. </summary>
         public static implicit operator SetMultiVmSyncStatus(string value) => new SetMultiVmSyncStatus(value);
 
         /// <inheritdoc />

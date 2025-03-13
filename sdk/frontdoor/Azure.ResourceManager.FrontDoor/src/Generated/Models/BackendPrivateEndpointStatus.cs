@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(BackendPrivateEndpointStatus left, BackendPrivateEndpointStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackendPrivateEndpointStatus"/> values are not the same. </summary>
         public static bool operator !=(BackendPrivateEndpointStatus left, BackendPrivateEndpointStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackendPrivateEndpointStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackendPrivateEndpointStatus"/>. </summary>
         public static implicit operator BackendPrivateEndpointStatus(string value) => new BackendPrivateEndpointStatus(value);
 
         /// <inheritdoc />

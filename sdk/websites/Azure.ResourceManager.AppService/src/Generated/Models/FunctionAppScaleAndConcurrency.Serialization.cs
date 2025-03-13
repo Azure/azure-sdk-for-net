@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<FunctionAppScaleAndConcurrency>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FunctionAppScaleAndConcurrency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FunctionAppScaleAndConcurrency)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AlwaysReady))
             {
                 writer.WritePropertyName("alwaysReady"u8);
@@ -38,15 +46,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaximumInstanceCount))
+            if (Optional.IsDefined(FunctionAppMaximumInstanceCount))
             {
                 writer.WritePropertyName("maximumInstanceCount"u8);
-                writer.WriteNumberValue(MaximumInstanceCount.Value);
+                writer.WriteNumberValue(FunctionAppMaximumInstanceCount.Value);
             }
-            if (Optional.IsDefined(InstanceMemoryMB))
+            if (Optional.IsDefined(FunctionAppInstanceMemoryMB))
             {
                 writer.WritePropertyName("instanceMemoryMB"u8);
-                writer.WriteNumberValue(InstanceMemoryMB.Value);
+                writer.WriteNumberValue(FunctionAppInstanceMemoryMB.Value);
             }
             if (Optional.IsDefined(Triggers))
             {
@@ -61,14 +69,13 @@ namespace Azure.ResourceManager.AppService.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FunctionAppScaleAndConcurrency IJsonModel<FunctionAppScaleAndConcurrency>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -92,8 +99,8 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             IList<FunctionAppAlwaysReadyConfig> alwaysReady = default;
-            float? maximumInstanceCount = default;
-            float? instanceMemoryMB = default;
+            int? maximumInstanceCount = default;
+            int? instanceMemoryMB = default;
             FunctionsScaleAndConcurrencyTriggers triggers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -119,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    maximumInstanceCount = property.Value.GetSingle();
+                    maximumInstanceCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("instanceMemoryMB"u8))
@@ -128,7 +135,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    instanceMemoryMB = property.Value.GetSingle();
+                    instanceMemoryMB = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("triggers"u8))
@@ -183,7 +190,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumInstanceCount), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionAppMaximumInstanceCount), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  maximumInstanceCount: ");
@@ -191,14 +198,14 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(MaximumInstanceCount))
+                if (Optional.IsDefined(FunctionAppMaximumInstanceCount))
                 {
                     builder.Append("  maximumInstanceCount: ");
-                    builder.AppendLine($"'{MaximumInstanceCount.Value.ToString()}'");
+                    builder.AppendLine($"{FunctionAppMaximumInstanceCount.Value}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceMemoryMB), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionAppInstanceMemoryMB), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  instanceMemoryMB: ");
@@ -206,14 +213,14 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(InstanceMemoryMB))
+                if (Optional.IsDefined(FunctionAppInstanceMemoryMB))
                 {
                     builder.Append("  instanceMemoryMB: ");
-                    builder.AppendLine($"'{InstanceMemoryMB.Value.ToString()}'");
+                    builder.AppendLine($"{FunctionAppInstanceMemoryMB.Value}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("HttpPerInstanceConcurrency", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ConcurrentHttpPerInstanceConcurrency", out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  triggers: ");
@@ -260,7 +267,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFunctionAppScaleAndConcurrency(document.RootElement, options);
                     }
                 default:

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="GatewaysListResult"/>. </summary>
         /// <param name="value"> The list of Gateways. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal GatewaysListResult(IEnumerable<HybridComputeGatewayData> value)
+        internal GatewaysListResult(IEnumerable<ArcGatewayData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="value"> The list of Gateways. </param>
         /// <param name="nextLink"> The URI to fetch the next page of Gateways. Call ListNext() with this URI to fetch the next page of Gateways. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GatewaysListResult(IReadOnlyList<HybridComputeGatewayData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GatewaysListResult(IReadOnlyList<ArcGatewayData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The list of Gateways. </summary>
-        public IReadOnlyList<HybridComputeGatewayData> Value { get; }
+        public IReadOnlyList<ArcGatewayData> Value { get; }
         /// <summary> The URI to fetch the next page of Gateways. Call ListNext() with this URI to fetch the next page of Gateways. </summary>
         public string NextLink { get; }
     }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Analysis.Models
         public static bool operator ==(AnalysisSkuTier left, AnalysisSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalysisSkuTier"/> values are not the same. </summary>
         public static bool operator !=(AnalysisSkuTier left, AnalysisSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AnalysisSkuTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AnalysisSkuTier"/>. </summary>
         public static implicit operator AnalysisSkuTier(string value) => new AnalysisSkuTier(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(StorageDnsEndpointType left, StorageDnsEndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageDnsEndpointType"/> values are not the same. </summary>
         public static bool operator !=(StorageDnsEndpointType left, StorageDnsEndpointType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageDnsEndpointType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageDnsEndpointType"/>. </summary>
         public static implicit operator StorageDnsEndpointType(string value) => new StorageDnsEndpointType(value);
 
         /// <inheritdoc />

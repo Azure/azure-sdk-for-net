@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-15-preview";
+            _apiVersion = apiVersion ?? "2024-12-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CassandraClusterListResult.DeserializeCassandraClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CassandraClusterListResult.DeserializeCassandraClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CassandraClusterListResult.DeserializeCassandraClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CassandraClusterListResult.DeserializeCassandraClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraClusterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CassandraClusterData.DeserializeCassandraClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraClusterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CassandraClusterData.DeserializeCassandraClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         ListCommands value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListCommands.DeserializeListCommands(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         ListCommands value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListCommands.DeserializeListCommands(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="commandId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="commandId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListCommands>> GetCommandAsyncAsync(string subscriptionId, string resourceGroupName, string clusterName, string commandId, CancellationToken cancellationToken = default)
+        public async Task<Response<CassandraClusterCommand>> GetCommandAsyncAsync(string subscriptionId, string resourceGroupName, string clusterName, string commandId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -809,9 +809,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        ListCommands value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ListCommands.DeserializeListCommands(document.RootElement);
+                        CassandraClusterCommand value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = CassandraClusterCommand.DeserializeCassandraClusterCommand(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="commandId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="commandId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListCommands> GetCommandAsync(string subscriptionId, string resourceGroupName, string clusterName, string commandId, CancellationToken cancellationToken = default)
+        public Response<CassandraClusterCommand> GetCommandAsync(string subscriptionId, string resourceGroupName, string clusterName, string commandId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -840,9 +840,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        ListCommands value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ListCommands.DeserializeListCommands(document.RootElement);
+                        CassandraClusterCommand value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = CassandraClusterCommand.DeserializeCassandraClusterCommand(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -906,7 +906,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         ListBackups value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = Models.ListBackups.DeserializeListBackups(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         ListBackups value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = Models.ListBackups.DeserializeListBackups(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1004,7 +1004,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraClusterBackupResourceInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CassandraClusterBackupResourceInfo.DeserializeCassandraClusterBackupResourceInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1035,7 +1035,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraClusterBackupResourceInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CassandraClusterBackupResourceInfo.DeserializeCassandraClusterBackupResourceInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1274,7 +1274,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraClusterPublicStatus value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CassandraClusterPublicStatus.DeserializeCassandraClusterPublicStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1303,7 +1303,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraClusterPublicStatus value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CassandraClusterPublicStatus.DeserializeCassandraClusterPublicStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

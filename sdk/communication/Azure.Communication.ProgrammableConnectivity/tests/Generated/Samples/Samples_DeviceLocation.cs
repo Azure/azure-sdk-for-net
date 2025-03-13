@@ -18,9 +18,9 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeviceLocation_Verify_ShortVersion()
+        public void Example_DeviceLocation_Verify_DeviceLocationVerify()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 
@@ -28,105 +28,29 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             {
                 networkIdentifier = new
                 {
-                    identifierType = "<identifierType>",
-                    identifier = "<identifier>",
+                    identifierType = "ipv4",
+                    identifier = "12.12.12.12",
                 },
-                latitude = 123.45,
-                longitude = 123.45,
-                accuracy = 1234,
-                device = new object(),
-            });
-            Response response = client.Verify("<apcGatewayId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("verificationResult").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeviceLocation_Verify_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                networkIdentifier = new
-                {
-                    identifierType = "<identifierType>",
-                    identifier = "<identifier>",
-                },
-                latitude = 123.45,
-                longitude = 123.45,
-                accuracy = 1234,
-                device = new object(),
-            });
-            Response response = await client.VerifyAsync("<apcGatewayId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("verificationResult").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeviceLocation_Verify_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
-
-            DeviceLocationVerificationContent body = new DeviceLocationVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"), 123.45, 123.45, 1234, new LocationDevice());
-            Response<DeviceLocationVerificationResult> response = client.Verify("<apcGatewayId>", body);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeviceLocation_Verify_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
-
-            DeviceLocationVerificationContent body = new DeviceLocationVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"), 123.45, 123.45, 1234, new LocationDevice());
-            Response<DeviceLocationVerificationResult> response = await client.VerifyAsync("<apcGatewayId>", body);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeviceLocation_Verify_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                networkIdentifier = new
-                {
-                    identifierType = "<identifierType>",
-                    identifier = "<identifier>",
-                },
-                latitude = 123.45,
-                longitude = 123.45,
-                accuracy = 1234,
+                latitude = 70,
+                longitude = -161,
+                accuracy = 91,
                 device = new
                 {
-                    networkAccessIdentifier = "<networkAccessIdentifier>",
-                    phoneNumber = "<phoneNumber>",
+                    networkAccessIdentifier = "122345@domain.com",
+                    phoneNumber = "+447000000000",
                     ipv4Address = new
                     {
-                        ipv4 = "<ipv4>",
-                        port = 1234,
+                        ipv4 = "12.12.12.12",
+                        port = 2442,
                     },
                     ipv6Address = new
                     {
-                        ipv6 = "<ipv6>",
-                        port = 1234,
+                        ipv6 = "3001:0da8:75a3:0000:0000:8a2e:0370:7334",
+                        port = 1643,
                     },
                 },
             });
-            Response response = client.Verify("<apcGatewayId>", content);
+            Response response = client.Verify("zdgrzzaxlodrvewbksn", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("verificationResult").ToString());
@@ -134,9 +58,9 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeviceLocation_Verify_AllParameters_Async()
+        public async Task Example_DeviceLocation_Verify_DeviceLocationVerify_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 
@@ -144,29 +68,29 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             {
                 networkIdentifier = new
                 {
-                    identifierType = "<identifierType>",
-                    identifier = "<identifier>",
+                    identifierType = "ipv4",
+                    identifier = "12.12.12.12",
                 },
-                latitude = 123.45,
-                longitude = 123.45,
-                accuracy = 1234,
+                latitude = 70,
+                longitude = -161,
+                accuracy = 91,
                 device = new
                 {
-                    networkAccessIdentifier = "<networkAccessIdentifier>",
-                    phoneNumber = "<phoneNumber>",
+                    networkAccessIdentifier = "122345@domain.com",
+                    phoneNumber = "+447000000000",
                     ipv4Address = new
                     {
-                        ipv4 = "<ipv4>",
-                        port = 1234,
+                        ipv4 = "12.12.12.12",
+                        port = 2442,
                     },
                     ipv6Address = new
                     {
-                        ipv6 = "<ipv6>",
-                        port = 1234,
+                        ipv6 = "3001:0da8:75a3:0000:0000:8a2e:0370:7334",
+                        port = 1643,
                     },
                 },
             });
-            Response response = await client.VerifyAsync("<apcGatewayId>", content);
+            Response response = await client.VerifyAsync("zdgrzzaxlodrvewbksn", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("verificationResult").ToString());
@@ -174,38 +98,38 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeviceLocation_Verify_AllParameters_Convenience()
+        public void Example_DeviceLocation_Verify_DeviceLocationVerify_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 
-            DeviceLocationVerificationContent body = new DeviceLocationVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"), 123.45, 123.45, 1234, new LocationDevice
+            DeviceLocationVerificationContent body = new DeviceLocationVerificationContent(new NetworkIdentifier("ipv4", "12.12.12.12"), 70, -161, 91, new LocationDevice
             {
-                NetworkAccessIdentifier = "<networkAccessIdentifier>",
-                PhoneNumber = "<phoneNumber>",
-                Ipv4Address = new Ipv4Address("<ipv4>", 1234),
-                Ipv6Address = new Ipv6Address("<ipv6>", 1234),
+                NetworkAccessIdentifier = "122345@domain.com",
+                PhoneNumber = "+447000000000",
+                Ipv4Address = new Ipv4Address("12.12.12.12", 2442),
+                Ipv6Address = new Ipv6Address("3001:0da8:75a3:0000:0000:8a2e:0370:7334", 1643),
             });
-            Response<DeviceLocationVerificationResult> response = client.Verify("<apcGatewayId>", body);
+            Response<DeviceLocationVerificationResult> response = client.Verify("zdgrzzaxlodrvewbksn", body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeviceLocation_Verify_AllParameters_Convenience_Async()
+        public async Task Example_DeviceLocation_Verify_DeviceLocationVerify_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 
-            DeviceLocationVerificationContent body = new DeviceLocationVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"), 123.45, 123.45, 1234, new LocationDevice
+            DeviceLocationVerificationContent body = new DeviceLocationVerificationContent(new NetworkIdentifier("ipv4", "12.12.12.12"), 70, -161, 91, new LocationDevice
             {
-                NetworkAccessIdentifier = "<networkAccessIdentifier>",
-                PhoneNumber = "<phoneNumber>",
-                Ipv4Address = new Ipv4Address("<ipv4>", 1234),
-                Ipv6Address = new Ipv6Address("<ipv6>", 1234),
+                NetworkAccessIdentifier = "122345@domain.com",
+                PhoneNumber = "+447000000000",
+                Ipv4Address = new Ipv4Address("12.12.12.12", 2442),
+                Ipv6Address = new Ipv6Address("3001:0da8:75a3:0000:0000:8a2e:0370:7334", 1643),
             });
-            Response<DeviceLocationVerificationResult> response = await client.VerifyAsync("<apcGatewayId>", body);
+            Response<DeviceLocationVerificationResult> response = await client.VerifyAsync("zdgrzzaxlodrvewbksn", body);
         }
     }
 }

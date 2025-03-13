@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator ==(ReservationProvisioningState left, ReservationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReservationProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ReservationProvisioningState left, ReservationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ReservationProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ReservationProvisioningState"/>. </summary>
         public static implicit operator ReservationProvisioningState(string value) => new ReservationProvisioningState(value);
 
         /// <inheritdoc />

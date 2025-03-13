@@ -27,7 +27,6 @@ modelerfour:
   flatten-payloads: false
   flatten-models: false
 use-model-reader-writer: true
-
 #mgmt-debug: 
 #  show-serialized-names: true
 

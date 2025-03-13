@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(CommunityActionType left, CommunityActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunityActionType"/> values are not the same. </summary>
         public static bool operator !=(CommunityActionType left, CommunityActionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CommunityActionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CommunityActionType"/>. </summary>
         public static implicit operator CommunityActionType(string value) => new CommunityActionType(value);
 
         /// <inheritdoc />

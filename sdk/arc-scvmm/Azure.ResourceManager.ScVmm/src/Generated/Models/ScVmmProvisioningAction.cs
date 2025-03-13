@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static bool operator ==(ScVmmProvisioningAction left, ScVmmProvisioningAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScVmmProvisioningAction"/> values are not the same. </summary>
         public static bool operator !=(ScVmmProvisioningAction left, ScVmmProvisioningAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScVmmProvisioningAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScVmmProvisioningAction"/>. </summary>
         public static implicit operator ScVmmProvisioningAction(string value) => new ScVmmProvisioningAction(value);
 
         /// <inheritdoc />

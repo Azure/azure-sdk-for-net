@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static bool operator ==(TrafficManagerHeatMapType left, TrafficManagerHeatMapType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrafficManagerHeatMapType"/> values are not the same. </summary>
         public static bool operator !=(TrafficManagerHeatMapType left, TrafficManagerHeatMapType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TrafficManagerHeatMapType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TrafficManagerHeatMapType"/>. </summary>
         public static implicit operator TrafficManagerHeatMapType(string value) => new TrafficManagerHeatMapType(value);
 
         /// <inheritdoc />

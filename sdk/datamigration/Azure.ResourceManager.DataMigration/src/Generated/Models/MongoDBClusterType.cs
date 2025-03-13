@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(MongoDBClusterType left, MongoDBClusterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MongoDBClusterType"/> values are not the same. </summary>
         public static bool operator !=(MongoDBClusterType left, MongoDBClusterType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MongoDBClusterType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoDBClusterType"/>. </summary>
         public static implicit operator MongoDBClusterType(string value) => new MongoDBClusterType(value);
 
         /// <inheritdoc />

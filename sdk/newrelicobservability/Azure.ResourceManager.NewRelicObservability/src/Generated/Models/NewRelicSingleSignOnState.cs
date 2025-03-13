@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static bool operator ==(NewRelicSingleSignOnState left, NewRelicSingleSignOnState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NewRelicSingleSignOnState"/> values are not the same. </summary>
         public static bool operator !=(NewRelicSingleSignOnState left, NewRelicSingleSignOnState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NewRelicSingleSignOnState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NewRelicSingleSignOnState"/>. </summary>
         public static implicit operator NewRelicSingleSignOnState(string value) => new NewRelicSingleSignOnState(value);
 
         /// <inheritdoc />

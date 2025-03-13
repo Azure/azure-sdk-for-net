@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static bool operator ==(NaptState left, NaptState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NaptState"/> values are not the same. </summary>
         public static bool operator !=(NaptState left, NaptState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NaptState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NaptState"/>. </summary>
         public static implicit operator NaptState(string value) => new NaptState(value);
 
         /// <inheritdoc />

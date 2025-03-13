@@ -4,18 +4,18 @@ This sample demonstrates how to build a custom model with your own data. A custo
 
 Please note that models can also be created using a graphical user interface such as the [Document Intelligence Studio][di_studio].
 
-To get started you'll need a Cognitive Services resource or a Document Intelligence resource. See [README][README] for prerequisites and instructions.
+To get started you'll need an Azure AI services resource or a Document Intelligence resource. See [README][README] for prerequisites and instructions.
 
 ## Creating a `DocumentIntelligenceAdministrationClient`
 
-To create a new `DocumentIntelligenceAdministrationClient` you need the endpoint and credentials from your resource. In the sample below you'll use a Document Intelligence API key credential by creating an `AzureKeyCredential` object that, if needed, will allow you to update the API key without creating a new client.
+To create a new `DocumentIntelligenceAdministrationClient` you need the endpoint and credentials from your resource. In the sample below you'll make use of identity-based authentication by creating a `DefaultAzureCredential` object.
 
-You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
+You can set `endpoint` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:CreateDocumentIntelligenceAdministrationClient
 string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+var credential = new DefaultAzureCredential();
+var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), credential);
 ```
 
 ## Build a custom model
@@ -44,19 +44,17 @@ Uri blobContainerUri = new Uri("<blobContainerUri>");
 // build modes and their differences, see:
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
-var content = new BuildDocumentModelContent(modelId, DocumentBuildMode.Template)
-{
-    AzureBlobSource = new AzureBlobContentSource(blobContainerUri)
-};
+var blobSource = new BlobContentSource(blobContainerUri);
+var options = new BuildDocumentModelOptions(modelId, DocumentBuildMode.Template, blobSource);
 
-Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
+Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, options);
 DocumentModelDetails model = operation.Value;
 
 Console.WriteLine($"Model ID: {model.ModelId}");
 Console.WriteLine($"Created on: {model.CreatedOn}");
 
 Console.WriteLine("Document types the model can recognize:");
-foreach (KeyValuePair<string, DocumentTypeDetails> docType in model.DocTypes)
+foreach (KeyValuePair<string, DocumentTypeDetails> docType in model.DocumentTypes)
 {
     Console.WriteLine($"  Document type: '{docType.Key}', which has the following fields:");
     foreach (KeyValuePair<string, DocumentFieldSchema> schema in docType.Value.FieldSchema)

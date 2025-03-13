@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static bool operator ==(TroubleshooterValidationScope left, TroubleshooterValidationScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TroubleshooterValidationScope"/> values are not the same. </summary>
         public static bool operator !=(TroubleshooterValidationScope left, TroubleshooterValidationScope right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TroubleshooterValidationScope"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TroubleshooterValidationScope"/>. </summary>
         public static implicit operator TroubleshooterValidationScope(string value) => new TroubleshooterValidationScope(value);
 
         /// <inheritdoc />

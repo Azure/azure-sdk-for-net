@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(AmazonRdsForOraclePartitionOption left, AmazonRdsForOraclePartitionOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AmazonRdsForOraclePartitionOption"/> values are not the same. </summary>
         public static bool operator !=(AmazonRdsForOraclePartitionOption left, AmazonRdsForOraclePartitionOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AmazonRdsForOraclePartitionOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AmazonRdsForOraclePartitionOption"/>. </summary>
         public static implicit operator AmazonRdsForOraclePartitionOption(string value) => new AmazonRdsForOraclePartitionOption(value);
 
         /// <inheritdoc />

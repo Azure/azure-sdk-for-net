@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/aa23ddc02b2b1c5a34c56a49d83b77c0a1aaa614/specification/netapp/resource-manager/readme.md
-tag: package-2024-03
+require: https://github.com/Azure/azure-rest-api-specs/blob/dc6126aca1852126259a71852672555a6e69dbc2/specification/netapp/resource-manager/readme.md
+tag: package-2024-09-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -103,6 +103,12 @@ prepend-rp-prefix:
   - RegionInfo
   - EncryptionIdentity
   - BackupVault
+  - ChangeKeyVault
+  - DestinationReplication
+  - EncryptionTransitionRequest
+  - KeyVaultPrivateEndpoint
+  - ReplicationType
+  - VolumeLanguage
 
 rename-mapping:
   CapacityPool.properties.poolId: -|uuid
@@ -241,7 +247,15 @@ rename-mapping:
   Backup.properties.volumeResourceId: -|arm-id
   Backup.properties.backupPolicyResourceId: BackupPolicyArmResourceId
   KeyVaultProperties.keyVaultResourceId: keyVaultArmResourceId
-  
+  ClusterPeerCommandResponse: ClusterPeerCommandResult
+  SvmPeerCommandResponse: SvmPeerCommandResult
+  Volume.properties.snapshotId: -|string
+  VolumeRevert.snapshotId: -|string
+  Volume.properties.backupId: -|string
+  BackupsMigrationRequest.backupVaultId: -|string
+  ListQuotaReportResponse: NetAppVolumeQuotaReportListResult
+  QuotaReport: NetAppVolumeQuotaReport
+  GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties
@@ -250,7 +264,7 @@ list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
 
 directive:
-  # remove this operation because the Snapshots_Update defines an empty object
+  # remove this operation because the Snapshots_Update defines an empty object-
   - remove-operation: Snapshots_Update
 
 ```

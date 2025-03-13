@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(RegularPriorityAllocationStrategy left, RegularPriorityAllocationStrategy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RegularPriorityAllocationStrategy"/> values are not the same. </summary>
         public static bool operator !=(RegularPriorityAllocationStrategy left, RegularPriorityAllocationStrategy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RegularPriorityAllocationStrategy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RegularPriorityAllocationStrategy"/>. </summary>
         public static implicit operator RegularPriorityAllocationStrategy(string value) => new RegularPriorityAllocationStrategy(value);
 
         /// <inheritdoc />

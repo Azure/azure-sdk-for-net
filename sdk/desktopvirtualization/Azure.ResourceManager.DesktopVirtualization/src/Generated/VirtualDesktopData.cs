@@ -77,12 +77,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> ObjectId of Desktop. (internal use). </summary>
+        [WirePath("properties.objectId")]
         public string ObjectId { get; }
         /// <summary> Description of Desktop. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Friendly name of Desktop. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; set; }
         /// <summary> Hash of the icon. </summary>
+        [WirePath("properties.iconHash")]
         public string IconHash { get; }
         /// <summary>
         /// The icon a 64 bit string as a byte array.
@@ -114,6 +118,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.iconContent")]
         public BinaryData IconContent { get; }
     }
 }

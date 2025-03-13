@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         void IJsonModel<CognitiveServicesAccountProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CognitiveServicesAccountProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -87,6 +95,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AmlWorkspace))
+            {
+                writer.WritePropertyName("amlWorkspace"u8);
+                writer.WriteObjectValue(AmlWorkspace, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -194,6 +207,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("abusePenalty"u8);
                 writer.WriteObjectValue(AbusePenalty, options);
             }
+            if (Optional.IsDefined(RaiMonitorConfig))
+            {
+                writer.WritePropertyName("raiMonitorConfig"u8);
+                writer.WriteObjectValue(RaiMonitorConfig, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -202,14 +220,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CognitiveServicesAccountProperties IJsonModel<CognitiveServicesAccountProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -242,6 +259,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CognitiveServicesNetworkRuleSet networkAcls = default;
             ServiceAccountEncryptionProperties encryption = default;
             IList<ServiceAccountUserOwnedStorage> userOwnedStorage = default;
+            UserOwnedAmlWorkspace amlWorkspace = default;
             IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
             ServiceAccountPublicNetworkAccess? publicNetworkAccess = default;
             ServiceAccountApiProperties apiProperties = default;
@@ -259,6 +277,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CognitiveServicesMultiRegionSettings locations = default;
             IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations = default;
             AbusePenalty abusePenalty = default;
+            RaiMonitorConfig raiMonitorConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -349,6 +368,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         array.Add(ServiceAccountUserOwnedStorage.DeserializeServiceAccountUserOwnedStorage(item, options));
                     }
                     userOwnedStorage = array;
+                    continue;
+                }
+                if (property.NameEquals("amlWorkspace"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    amlWorkspace = UserOwnedAmlWorkspace.DeserializeUserOwnedAmlWorkspace(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("privateEndpointConnections"u8))
@@ -520,6 +548,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     abusePenalty = AbusePenalty.DeserializeAbusePenalty(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("raiMonitorConfig"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    raiMonitorConfig = RaiMonitorConfig.DeserializeRaiMonitorConfig(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -537,6 +574,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 networkAcls,
                 encryption,
                 userOwnedStorage ?? new ChangeTrackingList<ServiceAccountUserOwnedStorage>(),
+                amlWorkspace,
                 privateEndpointConnections ?? new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>(),
                 publicNetworkAccess,
                 apiProperties,
@@ -554,6 +592,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 locations,
                 commitmentPlanAssociations ?? new ChangeTrackingList<CommitmentPlanAssociation>(),
                 abusePenalty,
+                raiMonitorConfig,
                 serializedAdditionalRawData);
         }
 
@@ -756,6 +795,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         }
                         builder.AppendLine("  ]");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AmlWorkspace), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  amlWorkspace: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AmlWorkspace))
+                {
+                    builder.Append("  amlWorkspace: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AmlWorkspace, options, 2, false, "  amlWorkspace: ");
                 }
             }
 
@@ -1087,6 +1141,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RaiMonitorConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  raiMonitorConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RaiMonitorConfig))
+                {
+                    builder.Append("  raiMonitorConfig: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RaiMonitorConfig, options, 2, false, "  raiMonitorConfig: ");
+                }
+            }
+
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
@@ -1114,7 +1183,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCognitiveServicesAccountProperties(document.RootElement, options);
                     }
                 default:

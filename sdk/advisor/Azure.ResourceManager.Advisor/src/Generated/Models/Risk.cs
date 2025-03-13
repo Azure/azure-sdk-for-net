@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Advisor.Models
         public static bool operator ==(Risk left, Risk right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Risk"/> values are not the same. </summary>
         public static bool operator !=(Risk left, Risk right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="Risk"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="Risk"/>. </summary>
         public static implicit operator Risk(string value) => new Risk(value);
 
         /// <inheritdoc />

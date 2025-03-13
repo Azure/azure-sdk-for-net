@@ -36,7 +36,7 @@ namespace Azure.Maps.Routing
         public static bool operator ==(RouteRepresentationForBestOrder left, RouteRepresentationForBestOrder right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RouteRepresentationForBestOrder"/> values are not the same. </summary>
         public static bool operator !=(RouteRepresentationForBestOrder left, RouteRepresentationForBestOrder right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RouteRepresentationForBestOrder"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RouteRepresentationForBestOrder"/>. </summary>
         public static implicit operator RouteRepresentationForBestOrder(string value) => new RouteRepresentationForBestOrder(value);
 
         /// <inheritdoc />

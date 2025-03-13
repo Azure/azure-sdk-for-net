@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(ComputeFleetSecurityEncryptionType left, ComputeFleetSecurityEncryptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeFleetSecurityEncryptionType"/> values are not the same. </summary>
         public static bool operator !=(ComputeFleetSecurityEncryptionType left, ComputeFleetSecurityEncryptionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeFleetSecurityEncryptionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetSecurityEncryptionType"/>. </summary>
         public static implicit operator ComputeFleetSecurityEncryptionType(string value) => new ComputeFleetSecurityEncryptionType(value);
 
         /// <inheritdoc />

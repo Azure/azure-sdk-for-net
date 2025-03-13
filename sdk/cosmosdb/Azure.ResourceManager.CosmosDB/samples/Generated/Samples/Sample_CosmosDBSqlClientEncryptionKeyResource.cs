@@ -6,21 +6,22 @@
 #nullable disable
 
 using System;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CosmosDB.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
 {
     public partial class Sample_CosmosDBSqlClientEncryptionKeyResource
     {
-        // CosmosDBClientEncryptionKeyGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CosmosDBClientEncryptionKeyGet()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-05-15-preview/examples/CosmosDBSqlClientEncryptionKeyGet.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBSqlClientEncryptionKeyGet.json
             // this example is just showing the usage of "SqlResources_GetClientEncryptionKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -48,12 +49,11 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBClientEncryptionKeyCreateUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CosmosDBClientEncryptionKeyCreateUpdate()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-05-15-preview/examples/CosmosDBSqlClientEncryptionKeyCreateUpdate.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBSqlClientEncryptionKeyCreateUpdate.json
             // this example is just showing the usage of "SqlResources_CreateUpdateClientEncryptionKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             CosmosDBSqlClientEncryptionKeyResource cosmosDBSqlClientEncryptionKey = client.GetCosmosDBSqlClientEncryptionKeyResource(cosmosDBSqlClientEncryptionKeyResourceId);
 
             // invoke the operation
-            CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent content = new CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(new CosmosDBSqlClientEncryptionKeyResourceInfo()
+            CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent content = new CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(new CosmosDBSqlClientEncryptionKeyResourceInfo
             {
                 Id = "cekName",
                 EncryptionAlgorithm = "AEAD_AES_256_CBC_HMAC_SHA256",
-                WrappedDataEncryptionKey = Convert.FromBase64String("VGhpcyBpcyBhY3R1YWxseSBhbiBhcnJheSBvZiBieXRlcy4gVGhpcyByZXF1ZXN0L3Jlc3BvbnNlIGlzIGJlaW5nIHByZXNlbnRlZCBhcyBhIHN0cmluZyBmb3IgcmVhZGFiaWxpdHkgaW4gdGhlIGV4YW1wbGU="),
-                KeyWrapMetadata = new CosmosDBKeyWrapMetadata()
+                WrappedDataEncryptionKey = Encoding.UTF8.GetBytes("VGhpcyBpcyBhY3R1YWxseSBhbiBhcnJheSBvZiBieXRlcy4gVGhpcyByZXF1ZXN0L3Jlc3BvbnNlIGlzIGJlaW5nIHByZXNlbnRlZCBhcyBhIHN0cmluZyBmb3IgcmVhZGFiaWxpdHkgaW4gdGhlIGV4YW1wbGU="),
+                KeyWrapMetadata = new CosmosDBKeyWrapMetadata
                 {
                     Name = "customerManagedKey",
                     CosmosDBKeyWrapMetadataType = "AzureKeyVault",

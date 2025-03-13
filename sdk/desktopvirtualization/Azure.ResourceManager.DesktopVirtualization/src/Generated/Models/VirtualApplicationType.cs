@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator ==(VirtualApplicationType left, VirtualApplicationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualApplicationType"/> values are not the same. </summary>
         public static bool operator !=(VirtualApplicationType left, VirtualApplicationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualApplicationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualApplicationType"/>. </summary>
         public static implicit operator VirtualApplicationType(string value) => new VirtualApplicationType(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static bool operator ==(StreamAnalyticsAuthenticationMode left, StreamAnalyticsAuthenticationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamAnalyticsAuthenticationMode"/> values are not the same. </summary>
         public static bool operator !=(StreamAnalyticsAuthenticationMode left, StreamAnalyticsAuthenticationMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StreamAnalyticsAuthenticationMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StreamAnalyticsAuthenticationMode"/>. </summary>
         public static implicit operator StreamAnalyticsAuthenticationMode(string value) => new StreamAnalyticsAuthenticationMode(value);
 
         /// <inheritdoc />

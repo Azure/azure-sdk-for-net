@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator ==(ClusterJobType left, ClusterJobType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterJobType"/> values are not the same. </summary>
         public static bool operator !=(ClusterJobType left, ClusterJobType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClusterJobType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterJobType"/>. </summary>
         public static implicit operator ClusterJobType(string value) => new ClusterJobType(value);
 
         /// <inheritdoc />

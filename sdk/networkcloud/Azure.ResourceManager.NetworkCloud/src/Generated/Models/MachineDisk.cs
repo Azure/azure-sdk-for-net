@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineDisk"/>. </summary>
-        /// <param name="capacityGB"> The maximum amount of storage in GB. </param>
+        /// <param name="capacityGB"> The maximum amount of storage. Measured in gibibytes. </param>
         /// <param name="connection"> The connection type of the rack SKU resource. </param>
         /// <param name="diskType"> The disk type of rack SKU resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The maximum amount of storage in GB. </summary>
+        /// <summary> The maximum amount of storage. Measured in gibibytes. </summary>
         public long? CapacityGB { get; }
         /// <summary> The connection type of the rack SKU resource. </summary>
         public MachineSkuDiskConnectionType? Connection { get; }

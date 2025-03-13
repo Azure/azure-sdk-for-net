@@ -111,7 +111,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static bool operator ==(VolumeUnit left, VolumeUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VolumeUnit"/> values are not the same. </summary>
         public static bool operator !=(VolumeUnit left, VolumeUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VolumeUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VolumeUnit"/>. </summary>
         public static implicit operator VolumeUnit(string value) => new VolumeUnit(value);
 
         /// <inheritdoc />

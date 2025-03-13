@@ -78,7 +78,7 @@ namespace Azure.AI.DocumentIntelligence
         public static bool operator ==(DocumentBarcodeKind left, DocumentBarcodeKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentBarcodeKind"/> values are not the same. </summary>
         public static bool operator !=(DocumentBarcodeKind left, DocumentBarcodeKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DocumentBarcodeKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentBarcodeKind"/>. </summary>
         public static implicit operator DocumentBarcodeKind(string value) => new DocumentBarcodeKind(value);
 
         /// <inheritdoc />

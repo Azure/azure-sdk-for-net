@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(ShareAccessProtocol left, ShareAccessProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ShareAccessProtocol"/> values are not the same. </summary>
         public static bool operator !=(ShareAccessProtocol left, ShareAccessProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ShareAccessProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ShareAccessProtocol"/>. </summary>
         public static implicit operator ShareAccessProtocol(string value) => new ShareAccessProtocol(value);
 
         /// <inheritdoc />

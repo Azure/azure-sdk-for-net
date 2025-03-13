@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator ==(EdgeOrderAddressType left, EdgeOrderAddressType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeOrderAddressType"/> values are not the same. </summary>
         public static bool operator !=(EdgeOrderAddressType left, EdgeOrderAddressType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EdgeOrderAddressType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeOrderAddressType"/>. </summary>
         public static implicit operator EdgeOrderAddressType(string value) => new EdgeOrderAddressType(value);
 
         /// <inheritdoc />

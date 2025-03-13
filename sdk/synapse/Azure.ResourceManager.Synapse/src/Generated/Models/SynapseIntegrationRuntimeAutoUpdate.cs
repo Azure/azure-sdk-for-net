@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SynapseIntegrationRuntimeAutoUpdate left, SynapseIntegrationRuntimeAutoUpdate right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeAutoUpdate"/> values are not the same. </summary>
         public static bool operator !=(SynapseIntegrationRuntimeAutoUpdate left, SynapseIntegrationRuntimeAutoUpdate right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SynapseIntegrationRuntimeAutoUpdate"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SynapseIntegrationRuntimeAutoUpdate"/>. </summary>
         public static implicit operator SynapseIntegrationRuntimeAutoUpdate(string value) => new SynapseIntegrationRuntimeAutoUpdate(value);
 
         /// <inheritdoc />

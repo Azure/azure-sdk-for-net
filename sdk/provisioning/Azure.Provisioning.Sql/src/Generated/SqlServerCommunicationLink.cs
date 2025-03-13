@@ -15,74 +15,112 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerCommunicationLink.
 /// </summary>
-public partial class SqlServerCommunicationLink : Resource
+public partial class SqlServerCommunicationLink : ProvisionableResource
 {
     /// <summary>
     /// The name of the server communication link.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The name of the partner server.
     /// </summary>
-    public BicepValue<string> PartnerServer { get => _partnerServer; set => _partnerServer.Assign(value); }
-    private readonly BicepValue<string> _partnerServer;
+    public BicepValue<string> PartnerServer 
+    {
+        get { Initialize(); return _partnerServer!; }
+        set { Initialize(); _partnerServer!.Assign(value); }
+    }
+    private BicepValue<string>? _partnerServer;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Communication link kind.  This property is used for Azure Portal
     /// metadata.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Communication link location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The state.
     /// </summary>
-    public BicepValue<string> State { get => _state; }
-    private readonly BicepValue<string> _state;
+    public BicepValue<string> State 
+    {
+        get { Initialize(); return _state!; }
+    }
+    private BicepValue<string>? _state;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlServer.
     /// </summary>
-    public SqlServer? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlServer> _parent;
+    public SqlServer? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlServer>? _parent;
 
     /// <summary>
     /// Creates a new SqlServerCommunicationLink.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerCommunicationLink.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlServerCommunicationLink
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerCommunicationLink.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerCommunicationLink(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/communicationLinks", resourceVersion ?? "2014-04-01", context)
+    public SqlServerCommunicationLink(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/communicationLinks", resourceVersion ?? "2014-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _partnerServer = BicepValue<string>.DefineProperty(this, "PartnerServer", ["properties", "partnerServer"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _state = BicepValue<string>.DefineProperty(this, "State", ["properties", "state"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SqlServerCommunicationLink.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _partnerServer = DefineProperty<string>("PartnerServer", ["properties", "partnerServer"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _kind = DefineProperty<string>("Kind", ["kind"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _state = DefineProperty<string>("State", ["properties", "state"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SqlServer>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -90,11 +128,6 @@ public partial class SqlServerCommunicationLink : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2014-04-01-preview.
-        /// </summary>
-        public static readonly string V2014_04_01_preview = "2014-04-01-preview";
-
         /// <summary>
         /// 2014-04-01.
         /// </summary>
@@ -109,9 +142,14 @@ public partial class SqlServerCommunicationLink : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerCommunicationLink.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerCommunicationLink.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlServerCommunicationLink
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerCommunicationLink.</param>
     /// <returns>The existing SqlServerCommunicationLink resource.</returns>
-    public static SqlServerCommunicationLink FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerCommunicationLink FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

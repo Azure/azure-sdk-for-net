@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(ConsoleDetailedStatus left, ConsoleDetailedStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConsoleDetailedStatus"/> values are not the same. </summary>
         public static bool operator !=(ConsoleDetailedStatus left, ConsoleDetailedStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConsoleDetailedStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConsoleDetailedStatus"/>. </summary>
         public static implicit operator ConsoleDetailedStatus(string value) => new ConsoleDetailedStatus(value);
 
         /// <inheritdoc />

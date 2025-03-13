@@ -15,31 +15,30 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task ClassifyDocumentFromUriAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            var adminClient = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
+            var adminClient = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), TestEnvironment.Credential);
 
             string setupClassifierId = Guid.NewGuid().ToString();
             Uri blobContainerUri = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
 
-            var sourceA = new AzureBlobContentSource(blobContainerUri) { Prefix = "IRS-1040-A/train" };
-            var sourceB = new AzureBlobContentSource(blobContainerUri) { Prefix = "IRS-1040-B/train" };
-            var docTypeA = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceA };
-            var docTypeB = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceB };
+            var sourceA = new BlobContentSource(blobContainerUri) { Prefix = "IRS-1040-A/train" };
+            var sourceB = new BlobContentSource(blobContainerUri) { Prefix = "IRS-1040-B/train" };
+            var docTypeA = new ClassifierDocumentTypeDetails(sourceA);
+            var docTypeB = new ClassifierDocumentTypeDetails(sourceB);
             var docTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
                 { "IRS-1040-A", docTypeA },
                 { "IRS-1040-B", docTypeB }
             };
 
-            var buildContent = new BuildDocumentClassifierContent(setupClassifierId, docTypes);
+            var buildOptions = new BuildClassifierOptions(setupClassifierId, docTypes);
 
             // Firstly, create a document classifier we can use to classify the custom document. Note that
             // classifiers can also be built using a graphical user interface such as the Document Intelligence
             // Studio found here:
             // https://aka.ms/azsdk/formrecognizer/formrecognizerstudio
 
-            await adminClient.BuildClassifierAsync(WaitUntil.Completed, buildContent);
+            await adminClient.BuildClassifierAsync(WaitUntil.Completed, buildOptions);
 
             // Proceed with the document classification.
 
@@ -52,19 +51,16 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("IRS-1040_2.pdf");
 #endif
 
-            var content = new ClassifyDocumentContent()
-            {
-                UrlSource = uriSource
-            };
+            var options = new ClassifyDocumentOptions(classifierId, uriSource);
 
-            Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, content);
+            Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, options);
             AnalyzeResult result = operation.Value;
 
             Console.WriteLine($"Input was classified by the classifier with ID '{result.ModelId}'.");
 
             foreach (AnalyzedDocument document in result.Documents)
             {
-                Console.WriteLine($"Found a document of type: {document.DocType}");
+                Console.WriteLine($"Found a document of type: {document.DocumentType}");
             }
             #endregion
 

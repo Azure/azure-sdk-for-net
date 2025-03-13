@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SynapseIotHubDataFormat left, SynapseIotHubDataFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseIotHubDataFormat"/> values are not the same. </summary>
         public static bool operator !=(SynapseIotHubDataFormat left, SynapseIotHubDataFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SynapseIotHubDataFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SynapseIotHubDataFormat"/>. </summary>
         public static implicit operator SynapseIotHubDataFormat(string value) => new SynapseIotHubDataFormat(value);
 
         /// <inheritdoc />

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(RouteMapMatchCondition left, RouteMapMatchCondition right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RouteMapMatchCondition"/> values are not the same. </summary>
         public static bool operator !=(RouteMapMatchCondition left, RouteMapMatchCondition right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RouteMapMatchCondition"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RouteMapMatchCondition"/>. </summary>
         public static implicit operator RouteMapMatchCondition(string value) => new RouteMapMatchCondition(value);
 
         /// <inheritdoc />

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static bool operator ==(RecoveryServicesAuthType left, RecoveryServicesAuthType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecoveryServicesAuthType"/> values are not the same. </summary>
         public static bool operator !=(RecoveryServicesAuthType left, RecoveryServicesAuthType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RecoveryServicesAuthType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryServicesAuthType"/>. </summary>
         public static implicit operator RecoveryServicesAuthType(string value) => new RecoveryServicesAuthType(value);
 
         /// <inheritdoc />

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(BillingAccountSubType left, BillingAccountSubType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingAccountSubType"/> values are not the same. </summary>
         public static bool operator !=(BillingAccountSubType left, BillingAccountSubType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BillingAccountSubType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingAccountSubType"/>. </summary>
         public static implicit operator BillingAccountSubType(string value) => new BillingAccountSubType(value);
 
         /// <inheritdoc />

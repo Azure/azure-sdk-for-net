@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ExpressRouteCircuitSkuTier left, ExpressRouteCircuitSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRouteCircuitSkuTier"/> values are not the same. </summary>
         public static bool operator !=(ExpressRouteCircuitSkuTier left, ExpressRouteCircuitSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExpressRouteCircuitSkuTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressRouteCircuitSkuTier"/>. </summary>
         public static implicit operator ExpressRouteCircuitSkuTier(string value) => new ExpressRouteCircuitSkuTier(value);
 
         /// <inheritdoc />

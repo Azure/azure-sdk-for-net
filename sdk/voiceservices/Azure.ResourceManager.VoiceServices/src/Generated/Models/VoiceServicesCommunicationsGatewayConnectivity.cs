@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
         public static bool operator ==(VoiceServicesCommunicationsGatewayConnectivity left, VoiceServicesCommunicationsGatewayConnectivity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VoiceServicesCommunicationsGatewayConnectivity"/> values are not the same. </summary>
         public static bool operator !=(VoiceServicesCommunicationsGatewayConnectivity left, VoiceServicesCommunicationsGatewayConnectivity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VoiceServicesCommunicationsGatewayConnectivity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VoiceServicesCommunicationsGatewayConnectivity"/>. </summary>
         public static implicit operator VoiceServicesCommunicationsGatewayConnectivity(string value) => new VoiceServicesCommunicationsGatewayConnectivity(value);
 
         /// <inheritdoc />

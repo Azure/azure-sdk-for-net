@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(AutoRebuildSetting left, AutoRebuildSetting right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutoRebuildSetting"/> values are not the same. </summary>
         public static bool operator !=(AutoRebuildSetting left, AutoRebuildSetting right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutoRebuildSetting"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutoRebuildSetting"/>. </summary>
         public static implicit operator AutoRebuildSetting(string value) => new AutoRebuildSetting(value);
 
         /// <inheritdoc />

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(SchemaMigrationStage left, SchemaMigrationStage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SchemaMigrationStage"/> values are not the same. </summary>
         public static bool operator !=(SchemaMigrationStage left, SchemaMigrationStage right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SchemaMigrationStage"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SchemaMigrationStage"/>. </summary>
         public static implicit operator SchemaMigrationStage(string value) => new SchemaMigrationStage(value);
 
         /// <inheritdoc />

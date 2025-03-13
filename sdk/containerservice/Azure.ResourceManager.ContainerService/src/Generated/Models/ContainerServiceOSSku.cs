@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static bool operator ==(ContainerServiceOSSku left, ContainerServiceOSSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceOSSku"/> values are not the same. </summary>
         public static bool operator !=(ContainerServiceOSSku left, ContainerServiceOSSku right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerServiceOSSku"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceOSSku"/>. </summary>
         public static implicit operator ContainerServiceOSSku(string value) => new ContainerServiceOSSku(value);
 
         /// <inheritdoc />

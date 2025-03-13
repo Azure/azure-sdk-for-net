@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator ==(SapVirtualInstanceStatus left, SapVirtualInstanceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapVirtualInstanceStatus"/> values are not the same. </summary>
         public static bool operator !=(SapVirtualInstanceStatus left, SapVirtualInstanceStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapVirtualInstanceStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapVirtualInstanceStatus"/>. </summary>
         public static implicit operator SapVirtualInstanceStatus(string value) => new SapVirtualInstanceStatus(value);
 
         /// <inheritdoc />

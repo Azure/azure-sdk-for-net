@@ -42,7 +42,7 @@ namespace Azure.AI.FormRecognizer
         public static bool operator ==(FormRecognizerLocale left, FormRecognizerLocale right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FormRecognizerLocale"/> values are not the same. </summary>
         public static bool operator !=(FormRecognizerLocale left, FormRecognizerLocale right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FormRecognizerLocale"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FormRecognizerLocale"/>. </summary>
         public static implicit operator FormRecognizerLocale(string value) => new FormRecognizerLocale(value);
 
         /// <inheritdoc />

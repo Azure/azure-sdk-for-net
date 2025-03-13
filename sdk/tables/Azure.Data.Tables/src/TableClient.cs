@@ -234,7 +234,7 @@ namespace Azure.Data.Tables
             _version = options.VersionString;
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
-            _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
+            _batchOperations = new TableRestClient(_diagnostics, _batchPipeline, _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
             Uri = new TableUriBuilder(_endpoint) { Query = null, Sas = null, Tablename = Name }.ToUri();
         }
@@ -275,7 +275,7 @@ namespace Azure.Data.Tables
 
             var pipelineOptions = new HttpPipelineOptions(options)
             {
-                PerRetryPolicies = { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
+                PerRetryPolicies = { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, _isCosmosEndpoint ? TableConstants.CosmosScope : TableConstants.StorageScope, options.EnableTenantDiscovery) },
                 ResponseClassifier = new ResponseClassifier(),
                 RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
             };
@@ -286,7 +286,7 @@ namespace Azure.Data.Tables
             _version = options.VersionString;
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
-            _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
+            _batchOperations = new TableRestClient(_diagnostics, _batchPipeline, _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
             Uri = new TableUriBuilder(_endpoint) { Query = null, Sas = null, Tablename = Name }.ToUri();
         }
@@ -337,7 +337,7 @@ namespace Azure.Data.Tables
             _version = options.VersionString;
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
-            _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
+            _batchOperations = new TableRestClient(_diagnostics, _batchPipeline, _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
             Uri = new TableUriBuilder(_endpoint) { Query = null, Sas = null, Tablename = Name }.ToUri();
         }
@@ -363,7 +363,7 @@ namespace Azure.Data.Tables
             {
                 _tableOperations = tableOperations;
             }
-            _batchOperations = new TableRestClient(diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
+            _batchOperations = new TableRestClient(diagnostics, _batchPipeline, _tableOperations.endpoint, _tableOperations.clientVersion);
             _version = version;
             Name = table;
             Uri = new TableUriBuilder(_endpoint) { Query = null, Sas = null, Tablename = Name }.ToUri();
@@ -1041,6 +1041,15 @@ namespace Azure.Data.Tables
         /// <param name="filter">
         /// Returns only entities that satisfy the specified filter expression.
         /// For example, the following expression would filter entities with a PartitionKey of 'foo': <c>e => e.PartitionKey == "foo"</c>.
+        /// <para>
+        /// The following string comparison methods are supported as part of a filter expression:
+        /// <list type="bullet">
+        /// <item><description><see cref="string.Equals(string)"/></description></item>
+        /// <item><description><see cref="string.Equals(string, string)"/></description></item>
+        /// <item><description><see cref="string.CompareTo(string)"/></description></item>
+        /// <item><description><see cref="string.Compare(string, string)"/></description></item>
+        /// </list>
+        /// </para>
         /// </param>
         /// <param name="maxPerPage">
         /// The maximum number of entities that will be returned per page. If unspecified, the default value is 1000 for storage accounts and is not limited for Cosmos DB table API.
@@ -1079,6 +1088,15 @@ namespace Azure.Data.Tables
         /// <param name="filter">
         /// Returns only entities that satisfy the specified filter expression.
         /// For example, the following expression would filter entities with a PartitionKey of 'foo': <c>e => e.PartitionKey == "foo"</c>.
+        /// <para>
+        /// The following string comparison methods are supported as part of a filter expression:
+        /// <list type="bullet">
+        /// <item><description><see cref="string.Equals(string)"/></description></item>
+        /// <item><description><see cref="string.Equals(string, string)"/></description></item>
+        /// <item><description><see cref="string.CompareTo(string)"/></description></item>
+        /// <item><description><see cref="string.Compare(string, string)"/></description></item>
+        /// </list>
+        /// </para>
         /// </param>
         /// <param name="maxPerPage">
         /// The maximum number of entities that will be returned per page. If unspecified, the default value is 1000 for storage accounts and is not limited for Cosmos DB table API.
@@ -1494,7 +1512,18 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <typeparam name="T">The type of the entity being queried. Typically this will be derived from <see cref="ITableEntity"/>
         /// or <see cref="Dictionary{String, Object}"/>.</typeparam>
-        /// <param name="filter">A filter expression.</param>
+        /// <param name="filter">A filter expression.
+        /// for example: <c>e => e.PartitionKey == "foo"</c>.
+        /// <para>
+        /// The following string comparison methods are supported as part of a filter expression:
+        /// <list type="bullet">
+        /// <item><description><see cref="string.Equals(string)"/></description></item>
+        /// <item><description><see cref="string.Equals(string, string)"/></description></item>
+        /// <item><description><see cref="string.CompareTo(string)"/></description></item>
+        /// <item><description><see cref="string.Compare(string, string)"/></description></item>
+        /// </list>
+        /// </para>
+        /// </param>
         /// <returns>The string representation of the filter expression.</returns>
         public static string CreateQueryFilter<T>(Expression<Func<T, bool>> filter) => Bind(filter);
 
@@ -1713,6 +1742,8 @@ namespace Azure.Data.Tables
 
             return msg;
         }
+
+        private static readonly HttpPipeline _batchPipeline = CreateBatchPipeline();
 
         /// <summary>
         /// Creates a pipeline to use for processing sub-operations before they are combined into a single multipart request.

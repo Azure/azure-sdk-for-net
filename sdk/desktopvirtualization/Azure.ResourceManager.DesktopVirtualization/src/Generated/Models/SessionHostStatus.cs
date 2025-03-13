@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator ==(SessionHostStatus left, SessionHostStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SessionHostStatus"/> values are not the same. </summary>
         public static bool operator !=(SessionHostStatus left, SessionHostStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SessionHostStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SessionHostStatus"/>. </summary>
         public static implicit operator SessionHostStatus(string value) => new SessionHostStatus(value);
 
         /// <inheritdoc />

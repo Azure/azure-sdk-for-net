@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(NetworkDeviceInterfaceType left, NetworkDeviceInterfaceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkDeviceInterfaceType"/> values are not the same. </summary>
         public static bool operator !=(NetworkDeviceInterfaceType left, NetworkDeviceInterfaceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkDeviceInterfaceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkDeviceInterfaceType"/>. </summary>
         public static implicit operator NetworkDeviceInterfaceType(string value) => new NetworkDeviceInterfaceType(value);
 
         /// <inheritdoc />

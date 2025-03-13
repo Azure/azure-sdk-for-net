@@ -19,28 +19,36 @@ namespace Azure.AI.Inference
 
         void IJsonModel<ChatCompletions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ChatCompletions)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("created"u8);
             writer.WriteNumberValue(Created, "U");
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
-            writer.WritePropertyName("usage"u8);
-            writer.WriteObjectValue(Usage, options);
             writer.WritePropertyName("choices"u8);
             writer.WriteStartArray();
             foreach (var item in Choices)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<ChatChoice>(item, options);
             }
             writer.WriteEndArray();
+            writer.WritePropertyName("usage"u8);
+            writer.WriteObjectValue(Usage, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -49,14 +57,13 @@ namespace Azure.AI.Inference
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ChatCompletions IJsonModel<ChatCompletions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -82,8 +89,8 @@ namespace Azure.AI.Inference
             string id = default;
             DateTimeOffset created = default;
             string model = default;
-            CompletionsUsage usage = default;
             IReadOnlyList<ChatChoice> choices = default;
+            CompletionsUsage usage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,11 +110,6 @@ namespace Azure.AI.Inference
                     model = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("usage"u8))
-                {
-                    usage = CompletionsUsage.DeserializeCompletionsUsage(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("choices"u8))
                 {
                     List<ChatChoice> array = new List<ChatChoice>();
@@ -116,6 +118,11 @@ namespace Azure.AI.Inference
                         array.Add(ChatChoice.DeserializeChatChoice(item, options));
                     }
                     choices = array;
+                    continue;
+                }
+                if (property.NameEquals("usage"u8))
+                {
+                    usage = CompletionsUsage.DeserializeCompletionsUsage(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -128,8 +135,8 @@ namespace Azure.AI.Inference
                 id,
                 created,
                 model,
-                usage,
                 choices,
+                usage,
                 serializedAdditionalRawData);
         }
 
@@ -154,7 +161,7 @@ namespace Azure.AI.Inference
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeChatCompletions(document.RootElement, options);
                     }
                 default:
@@ -168,7 +175,7 @@ namespace Azure.AI.Inference
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ChatCompletions FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeChatCompletions(document.RootElement);
         }
 

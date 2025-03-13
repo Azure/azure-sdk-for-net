@@ -5,12 +5,12 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> Model factory for models. </summary>
     public static partial class ArmContainerInstanceModelFactory
     {
         // we have this customization because the order of properties changed in the consolidation when a model has multiple `allOf` in their swagger definition.
@@ -75,6 +75,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 extensions,
                 confidentialComputeCcePolicy,
                 priority,
+                null,
+                null,
+                null,
                 zones);
         }
     }

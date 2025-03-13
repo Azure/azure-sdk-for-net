@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator ==(ReservedResourceType left, ReservedResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReservedResourceType"/> values are not the same. </summary>
         public static bool operator !=(ReservedResourceType left, ReservedResourceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ReservedResourceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ReservedResourceType"/>. </summary>
         public static implicit operator ReservedResourceType(string value) => new ReservedResourceType(value);
 
         /// <inheritdoc />

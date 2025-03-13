@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(OptimizationType left, OptimizationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OptimizationType"/> values are not the same. </summary>
         public static bool operator !=(OptimizationType left, OptimizationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OptimizationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OptimizationType"/>. </summary>
         public static implicit operator OptimizationType(string value) => new OptimizationType(value);
 
         /// <inheritdoc />

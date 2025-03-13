@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         public static bool operator ==(InformaticaPlatformType left, InformaticaPlatformType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InformaticaPlatformType"/> values are not the same. </summary>
         public static bool operator !=(InformaticaPlatformType left, InformaticaPlatformType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InformaticaPlatformType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InformaticaPlatformType"/>. </summary>
         public static implicit operator InformaticaPlatformType(string value) => new InformaticaPlatformType(value);
 
         /// <inheritdoc />

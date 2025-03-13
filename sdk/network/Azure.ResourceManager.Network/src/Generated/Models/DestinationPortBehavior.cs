@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(DestinationPortBehavior left, DestinationPortBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DestinationPortBehavior"/> values are not the same. </summary>
         public static bool operator !=(DestinationPortBehavior left, DestinationPortBehavior right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DestinationPortBehavior"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DestinationPortBehavior"/>. </summary>
         public static implicit operator DestinationPortBehavior(string value) => new DestinationPortBehavior(value);
 
         /// <inheritdoc />

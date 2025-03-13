@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Dns.Models
         public static bool operator ==(CreatedByType left, CreatedByType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CreatedByType"/> values are not the same. </summary>
         public static bool operator !=(CreatedByType left, CreatedByType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CreatedByType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CreatedByType"/>. </summary>
         public static implicit operator CreatedByType(string value) => new CreatedByType(value);
 
         /// <inheritdoc />

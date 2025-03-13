@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public static bool operator ==(TrustedSigningAccountNameUnavailabilityReason left, TrustedSigningAccountNameUnavailabilityReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrustedSigningAccountNameUnavailabilityReason"/> values are not the same. </summary>
         public static bool operator !=(TrustedSigningAccountNameUnavailabilityReason left, TrustedSigningAccountNameUnavailabilityReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TrustedSigningAccountNameUnavailabilityReason"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TrustedSigningAccountNameUnavailabilityReason"/>. </summary>
         public static implicit operator TrustedSigningAccountNameUnavailabilityReason(string value) => new TrustedSigningAccountNameUnavailabilityReason(value);
 
         /// <inheritdoc />

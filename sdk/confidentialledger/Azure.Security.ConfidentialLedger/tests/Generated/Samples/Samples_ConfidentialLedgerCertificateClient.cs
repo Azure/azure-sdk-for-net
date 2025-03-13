@@ -20,7 +20,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetLedgerIdentity_ShortVersion()
         {
-            ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
+            ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(null);
 
             Response response = client.GetLedgerIdentity("<ledgerId>");
 
@@ -32,7 +32,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetLedgerIdentity_ShortVersion_Async()
         {
-            ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
+            ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(null);
 
             Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
 
@@ -44,7 +44,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetLedgerIdentity_AllParameters()
         {
-            ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
+            ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(null);
 
             Response response = client.GetLedgerIdentity("<ledgerId>");
 
@@ -57,7 +57,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetLedgerIdentity_AllParameters_Async()
         {
-            ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
+            ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(null);
 
             Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
 

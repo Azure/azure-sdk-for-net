@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         public static bool operator ==(ChangeType left, ChangeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChangeType"/> values are not the same. </summary>
         public static bool operator !=(ChangeType left, ChangeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ChangeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ChangeType"/>. </summary>
         public static implicit operator ChangeType(string value) => new ChangeType(value);
 
         /// <inheritdoc />

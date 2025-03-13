@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator ==(SapOSType left, SapOSType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapOSType"/> values are not the same. </summary>
         public static bool operator !=(SapOSType left, SapOSType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapOSType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapOSType"/>. </summary>
         public static implicit operator SapOSType(string value) => new SapOSType(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static bool operator ==(OutputSelectorProperty left, OutputSelectorProperty right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OutputSelectorProperty"/> values are not the same. </summary>
         public static bool operator !=(OutputSelectorProperty left, OutputSelectorProperty right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OutputSelectorProperty"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OutputSelectorProperty"/>. </summary>
         public static implicit operator OutputSelectorProperty(string value) => new OutputSelectorProperty(value);
 
         /// <inheritdoc />

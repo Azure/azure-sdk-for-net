@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(CapacityModeTransitionStatus left, CapacityModeTransitionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CapacityModeTransitionStatus"/> values are not the same. </summary>
         public static bool operator !=(CapacityModeTransitionStatus left, CapacityModeTransitionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CapacityModeTransitionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CapacityModeTransitionStatus"/>. </summary>
         public static implicit operator CapacityModeTransitionStatus(string value) => new CapacityModeTransitionStatus(value);
 
         /// <inheritdoc />

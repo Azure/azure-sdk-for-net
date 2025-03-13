@@ -46,7 +46,7 @@ namespace Azure.Developer.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OSDisk"/>. </summary>
-        internal OSDisk()
+        public OSDisk()
         {
         }
 

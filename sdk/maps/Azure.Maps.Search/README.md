@@ -2,7 +2,7 @@
 
 Azure Maps Search is a library that can query for locations, points of interests or search within a geometric area.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://docs.microsoft.com/rest/api/maps/search) | [Product documentation](https://docs.microsoft.com/azure/azure-maps/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/src) | [API reference documentation](https://learn.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://learn.microsoft.com/rest/api/maps/search) | [Product documentation](https://learn.microsoft.com/azure/azure-maps/)
 
 ## Getting started
 
@@ -16,7 +16,7 @@ dotnet add package Azure.Maps.Search --prerelease
 
 ### Prerequisites
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure Maps account](https://docs.microsoft.com/azure/azure-maps/quick-demo-map-app#create-an-azure-maps-account).
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure Maps account](https://learn.microsoft.com/azure/azure-maps/quick-demo-map-app#create-an-azure-maps-account).
 
 To create a new Azure Maps account, you can use the Azure Portal, Azure PowerShell, or the Azure CLI. Here's an example using the Azure CLI:
 
@@ -167,7 +167,7 @@ List<GeocodingQuery> queries = new List<GeocodingQuery>
         };
 Response<GeocodingBatchResponse> results = client.GetGeocodingBatch(queries);
 
-//Print coordinates
+// Print coordinates
 for (var i = 0; i < results.Value.BatchItems.Count; i++)
 {
     for (var j = 0; j < results.Value.BatchItems[i].Features.Count; j++)
@@ -187,14 +187,18 @@ GetPolygonOptions options = new GetPolygonOptions()
     Resolution = ResolutionEnum.Small,
 };
 Response<Boundary> result = client.GetPolygon(options);
-var count = ((GeoJsonPolygon)((GeoJsonGeometryCollection)result.Value.Geometry).Geometries[0]).Coordinates.Count;
-for (var i = 0; i < count; i++)
+
+// Print polygon information
+Console.WriteLine($"Boundary copyright URL: {result.Value.Properties?.CopyrightUrl}");
+Console.WriteLine($"Boundary copyright: {result.Value.Properties?.Copyright}");
+
+Console.WriteLine($"{result.Value.Geometry.Count} polygons in the result.");
+Console.WriteLine($"First polygon coordinates (latitude, longitude):");
+
+// Print polygon coordinates
+foreach (var coordinate in ((GeoPolygon)result.Value.Geometry[0]).Coordinates[0])
 {
-    var coorCount = ((GeoJsonPolygon)((GeoJsonGeometryCollection)result.Value.Geometry).Geometries[0]).Coordinates[i].Count;
-    for (var j = 0; j < coorCount; j++)
-    {
-        Console.WriteLine(string.Join(",", ((GeoJsonPolygon)((GeoJsonGeometryCollection)result.Value.Geometry).Geometries[0]).Coordinates[i][j]));
-    }
+    Console.WriteLine($"{coordinate.Latitude:N5}, {coordinate.Longitude:N5}");
 }
 ```
 
@@ -204,7 +208,7 @@ for (var i = 0; i < count; i++)
 GeoPosition coordinates = new GeoPosition(-122.138685, 47.6305637);
 Response<GeocodingResponse> result = client.GetReverseGeocoding(coordinates);
 
-//Print addresses
+// Print addresses
 for (int i = 0; i < result.Value.Features.Count; i++)
 {
     Console.WriteLine(result.Value.Features[i].Properties.Address.FormattedAddress);
@@ -228,7 +232,7 @@ List<ReverseGeocodingQuery> items = new List<ReverseGeocodingQuery>
         };
 Response<GeocodingBatchResponse> result = client.GetReverseGeocodingBatch(items);
 
-//Print addresses
+// Print addresses
 for (var i = 0; i < result.Value.BatchItems.Count; i++)
 {
     Console.WriteLine(result.Value.BatchItems[i].Features[0].Properties.Address.AddressLine);
@@ -257,5 +261,3 @@ This project welcomes contributions and suggestions. Most contributions require 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact <opencode@microsoft.com> with any additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/maps/Azure.Maps.Search/README.png)

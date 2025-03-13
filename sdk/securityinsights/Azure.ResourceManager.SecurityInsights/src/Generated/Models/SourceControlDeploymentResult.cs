@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(SourceControlDeploymentResult left, SourceControlDeploymentResult right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceControlDeploymentResult"/> values are not the same. </summary>
         public static bool operator !=(SourceControlDeploymentResult left, SourceControlDeploymentResult right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SourceControlDeploymentResult"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceControlDeploymentResult"/>. </summary>
         public static implicit operator SourceControlDeploymentResult(string value) => new SourceControlDeploymentResult(value);
 
         /// <inheritdoc />

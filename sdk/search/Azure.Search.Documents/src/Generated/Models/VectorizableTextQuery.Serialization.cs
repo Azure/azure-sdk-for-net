@@ -17,6 +17,11 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
+            if (Optional.IsDefined(QueryRewrites))
+            {
+                writer.WritePropertyName("queryRewrites"u8);
+                writer.WriteStringValue(QueryRewrites.Value.ToString());
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(KNearestNeighborsCount))
@@ -44,6 +49,16 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
+            if (Optional.IsDefined(Threshold))
+            {
+                writer.WritePropertyName("threshold"u8);
+                writer.WriteObjectValue(Threshold);
+            }
+            if (Optional.IsDefined(FilterOverride))
+            {
+                writer.WritePropertyName("filterOverride"u8);
+                writer.WriteStringValue(FilterOverride);
+            }
             writer.WriteEndObject();
         }
 
@@ -54,17 +69,29 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             string text = default;
+            QueryRewritesType? queryRewrites = default;
             VectorQueryKind kind = default;
             int? k = default;
             string fields = default;
             bool? exhaustive = default;
             double? oversampling = default;
             float? weight = default;
+            VectorThreshold threshold = default;
+            string filterOverride = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("queryRewrites"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    queryRewrites = new QueryRewritesType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -113,6 +140,20 @@ namespace Azure.Search.Documents.Models
                     weight = property.Value.GetSingle();
                     continue;
                 }
+                if (property.NameEquals("threshold"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    threshold = VectorThreshold.DeserializeVectorThreshold(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("filterOverride"u8))
+                {
+                    filterOverride = property.Value.GetString();
+                    continue;
+                }
             }
             return new VectorizableTextQuery(
                 kind,
@@ -121,14 +162,17 @@ namespace Azure.Search.Documents.Models
                 exhaustive,
                 oversampling,
                 weight,
-                text);
+                threshold,
+                filterOverride,
+                text,
+                queryRewrites);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new VectorizableTextQuery FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeVectorizableTextQuery(document.RootElement);
         }
 

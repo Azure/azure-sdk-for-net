@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ApplicationGatewayRedirectType left, ApplicationGatewayRedirectType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayRedirectType"/> values are not the same. </summary>
         public static bool operator !=(ApplicationGatewayRedirectType left, ApplicationGatewayRedirectType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationGatewayRedirectType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayRedirectType"/>. </summary>
         public static implicit operator ApplicationGatewayRedirectType(string value) => new ApplicationGatewayRedirectType(value);
 
         /// <inheritdoc />

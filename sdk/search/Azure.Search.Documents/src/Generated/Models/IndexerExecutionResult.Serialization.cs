@@ -20,6 +20,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IndexerExecutionStatus status = default;
+            IndexerExecutionStatusDetail? statusDetail = default;
+            IndexerState currentState = default;
             string errorMessage = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
@@ -34,6 +36,25 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString().ToIndexerExecutionStatus();
+                    continue;
+                }
+                if (property.NameEquals("statusDetail"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        statusDetail = null;
+                        continue;
+                    }
+                    statusDetail = new IndexerExecutionStatusDetail(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("currentState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    currentState = IndexerState.DeserializeIndexerState(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errorMessage"u8))
@@ -103,6 +124,8 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new IndexerExecutionResult(
                 status,
+                statusDetail,
+                currentState,
                 errorMessage,
                 startTime,
                 endTime,
@@ -118,7 +141,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static IndexerExecutionResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeIndexerExecutionResult(document.RootElement);
         }
     }

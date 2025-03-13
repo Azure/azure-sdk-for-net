@@ -10,12 +10,31 @@
 
 ### Other Changes
 
+## 5.3.4 (2025-02-11)
+
+### Bugs Fixed
+- Fixed bug where calling StopAsync in QueueListener while drain mode was enabled would cancel the execution cancellation token.
+- Fixed bug where the cancellation token passed to QueueListener.ProcessMessageAsync was being propagated to the QueueProcessor.CompleteProcessingMessageAsync call. Since this token is always canceled when QueueListener.StopAsync is invoked, it caused messages to be processed but not deleted.
+
+
+## 5.3.3 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 5.3.2 (2024-09-19)
+
+### Bugs Fixed
+- When grabbing Queue Metrics for amount of messages, will now use the QueueTriggerMetrics.QueueLength instead of the ApproximateMessagesCount for less stale metrics.
+
+### Other Changes
+- Improvement in logging exceptions when retrieving queue metrics.
+
 ## 5.3.1 (2024-07-17)
 
 ### Bugs Fixed
 - Rely on PeekMessagesAsync when calculating message queue length
 - Fixing target base scale instance concurrency for queues
-- When grabbing Queue Metrics for amount of messages, will now use the QueueTriggerMetrics.QueueLength instead of the ApproximateMessagesCount for less stale metrics.
 
 ## 5.3.0 (2024-04-18)
 - Includes all features from 5.3.0-beta.1.

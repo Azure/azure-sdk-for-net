@@ -18,15 +18,31 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
+            string callConnectionId = default;
+            string serverCallId = default;
+            string correlationId = default;
             string recordingId = default;
             RecordingState state = default;
             DateTimeOffset? startDateTime = default;
             RecordingKind? recordingKind = default;
-            string callConnectionId = default;
-            string serverCallId = default;
-            string correlationId = default;
+            ResultInformation resultInformation = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("callConnectionId"u8))
+                {
+                    callConnectionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serverCallId"u8))
+                {
+                    serverCallId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("correlationId"u8))
+                {
+                    correlationId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("recordingId"u8))
                 {
                     recordingId = property.Value.GetString();
@@ -59,37 +75,32 @@ namespace Azure.Communication.CallAutomation
                     recordingKind = new RecordingKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("callConnectionId"u8))
+                if (property.NameEquals("resultInformation"u8))
                 {
-                    callConnectionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serverCallId"u8))
-                {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationId"u8))
-                {
-                    correlationId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
             }
             return new RecordingStateChanged(
+                callConnectionId,
+                serverCallId,
+                correlationId,
                 recordingId,
                 state,
                 startDateTime,
                 recordingKind,
-                callConnectionId,
-                serverCallId,
-                correlationId);
+                resultInformation);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static RecordingStateChanged FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeRecordingStateChanged(document.RootElement);
         }
     }

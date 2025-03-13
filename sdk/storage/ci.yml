@@ -9,11 +9,12 @@ trigger:
   paths:
     include:
     - sdk/storage/
-    exclude:
-    - sdk/storage/Azure.ResourceManager.Storage/
     - sdk/storage/Azure.Storage.DataMovement/
     - sdk/storage/Azure.Storage.DataMovement.Blobs/
     - sdk/storage/Azure.Storage.DataMovement.Files/
+    - sdk/storage/Azure.Storage.DataMovement.Blobs.Files.Shares/
+    exclude:
+    - sdk/storage/Azure.ResourceManager.Storage/
     - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage/
     - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs/
     - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common/
@@ -34,6 +35,7 @@ pr:
     - sdk/storage/Azure.Storage.DataMovement/
     - sdk/storage/Azure.Storage.DataMovement.Blobs/
     - sdk/storage/Azure.Storage.DataMovement.Files/
+    - sdk/storage/Azure.Storage.DataMovement.Blobs.Files.Shares/
     - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage/
     - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs/
     - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common/
@@ -71,3 +73,7 @@ extends:
       skipSmokeTests: true
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.Storage.Blobs
+      ExpectedWarningsFilepath: None

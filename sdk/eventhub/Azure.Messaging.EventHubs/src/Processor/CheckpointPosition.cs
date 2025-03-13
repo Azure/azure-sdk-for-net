@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
+using System.Globalization;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -16,10 +16,42 @@ namespace Azure.Messaging.EventHubs.Processor
     public struct CheckpointPosition : IEquatable<CheckpointPosition>
     {
         /// <summary>
-        ///   The sequence number to associate with the checkpoint. This indicates that a processor should begin reading from the next event in the stream.
+        ///   The sequence number to associate with the checkpoint. The sequence number is intended to be informational, and will only be used for
+        ///   positioning if no <see cref="Offset"/> is set.
         /// </summary>
         ///
         public long SequenceNumber { get; }
+
+        /// <summary>
+        ///   Obsolete.
+        ///   A numeric representation of the offset to associate with the checkpoint. This indicates that a processor
+        ///   should begin reading from the next event in the stream.
+        /// </summary>
+        ///
+        /// <value>
+        ///   This value is obsolete and should no longer be used.  Please use <see cref="OffsetString"/> instead.
+        /// </value>
+        ///
+        [Obsolete(AttributeMessageText.LongOffsetOffsetPropertyObsolete, false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public long Offset
+        {
+            get
+            {
+                if (long.TryParse(OffsetString, out var value))
+                {
+                    return value;
+                }
+
+                throw new NotSupportedException(Resources.LongOffsetOffsetUnsupported);
+            }
+        }
+
+        /// <summary>
+        ///   The offset to associate with the checkpoint. This indicates that a processor should begin reading from the next event in the stream.
+        /// </summary>
+        ///
+        public string OffsetString { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="CheckpointPosition"/> struct.
@@ -27,9 +59,64 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="sequenceNumber">The sequence number to associate with the checkpoint. This indicates that a processor should begin reading from the next event in the stream.</param>
         ///
+        /// <remarks>
+        ///   This constructor is not compatible when processing a geo-replicated Event Hub. Use <see cref="CheckpointPosition(string, long)"/> or
+        ///   <see cref="FromEvent(EventData)"/> instead.
+        /// </remarks>
+        ///
+        [Obsolete(AttributeMessageText.SequenceNumberOnlyCheckpointObsolete, false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public CheckpointPosition(long sequenceNumber)
         {
             SequenceNumber = sequenceNumber;
+        }
+
+        /// <summary>
+        ///   Obsolete.
+        ///
+        ///   Initializes a new instance of the <see cref="CheckpointPosition"/> struct.
+        /// </summary>
+        ///
+        /// <param name="offset">The offset to associate with the checkpoint. This indicates that a processor should begin reading from the next event in the stream.</param>
+        /// <param name="sequenceNumber">The sequence number to associate with the checkpoint. This is used as informational metadata.</param>
+        ///
+        /// <remarks>
+        ///   This constructor is obsolete and should no longer be used.  Please use <see cref="CheckpointPosition(string, long)"/> instead.
+        /// </remarks>
+        ///
+        [Obsolete(AttributeMessageText.LongOffsetCheckpointObsolete, false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public CheckpointPosition(long offset,
+                                  long sequenceNumber = long.MinValue)
+        {
+            SequenceNumber = sequenceNumber;
+            OffsetString = (offset != long.MinValue) ? offset.ToString(CultureInfo.InvariantCulture) : null;
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="CheckpointPosition"/> struct.
+        /// </summary>
+        /// <param name="offsetString">The offset to associate with the checkpoint. This indicates that a processor should begin reading from the next event in the stream.</param>
+        /// <param name="sequenceNumber">The sequence number to associate with the checkpoint. This is used as informational metadata.</param>
+        ///
+        public CheckpointPosition(string offsetString,
+                                  long sequenceNumber = long.MinValue)
+        {
+            Argument.AssertNotNullOrEmpty(offsetString, nameof(offsetString));
+
+            SequenceNumber = sequenceNumber;
+            OffsetString = offsetString;
+        }
+
+        /// <summary>
+        ///   Initializes an empty <see cref="CheckpointPosition"/> which can be used
+        ///   to clear existing checkpoint data.
+        /// </summary>
+        ///
+        public CheckpointPosition()
+        {
+            SequenceNumber = long.MinValue;
+            OffsetString = null;
         }
 
         /// <summary>
@@ -38,10 +125,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="eventData">The <see cref="EventData"/> to use to determine the starting point of a checkpoint, indicating that an event processor should begin reading from the next event in the stream.</param>
         ///
-        public static CheckpointPosition FromEvent(EventData eventData)
-        {
-            return new CheckpointPosition(eventData.SequenceNumber);
-        }
+        public static CheckpointPosition FromEvent(EventData eventData) =>
+            new CheckpointPosition(eventData.OffsetString, eventData.SequenceNumber);
 
         /// <summary>
         ///   Determines whether the specified <see cref="CheckpointPosition" /> is equal to this instance.
@@ -53,7 +138,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public bool Equals(CheckpointPosition other)
         {
-            return (SequenceNumber == other.SequenceNumber);
+            return ((SequenceNumber == other.SequenceNumber)
+                   && (OffsetString == other.OffsetString));
         }
 
         /// <summary>
@@ -83,6 +169,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             var hashCode = new HashCodeBuilder();
             hashCode.Add(SequenceNumber);
+            hashCode.Add(OffsetString);
 
             return hashCode.ToHashCode();
         }
@@ -95,7 +182,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public override string ToString()
         {
-            return $"Sequence Number: [{SequenceNumber}]";
+            return $"Offset: [{OffsetString}] Sequence Number: [{SequenceNumber}]";
         }
 
         /// <summary>

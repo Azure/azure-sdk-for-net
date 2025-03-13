@@ -76,7 +76,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 availabilityZone,
                 replicationRole,
                 replicaCapacity,
+                default,
                 createMode,
+                default,
                 serializedAdditionalRawData: null);
         }
 
@@ -264,7 +266,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 default,
                 default,
                 supportedIops,
+                default,
                 storageSizeInMB,
+                default,
+                default,
+                default,
                 default,
                 supportedUpgradableTierList.ToList());
         }
@@ -320,6 +326,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 supportedMemoryPerVCoreInMB,
                 status,
                 default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerNetwork"/>. </summary>
+        /// <param name="publicNetworkAccess"> public network access is enabled or not. </param>
+        /// <param name="delegatedSubnetResourceId"> Delegated subnet arm resource id. This is required to be passed during create, in case we want the server to be VNET injected, i.e. Private access server. During update, pass this only if we want to update the value for Private DNS zone. </param>
+        /// <param name="privateDnsZoneArmResourceId"> Private dns zone arm resource id. This is required to be passed during create, in case we want the server to be VNET injected, i.e. Private access server. During update, pass this only if we want to update the value for Private DNS zone. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerNetwork"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerNetwork PostgreSqlFlexibleServerNetwork(PostgreSqlFlexibleServerPublicNetworkAccessState? publicNetworkAccess = null, ResourceIdentifier delegatedSubnetResourceId = null, ResourceIdentifier privateDnsZoneArmResourceId = null)
+        {
+            return new PostgreSqlFlexibleServerNetwork(publicNetworkAccess, delegatedSubnetResourceId, privateDnsZoneArmResourceId, serializedAdditionalRawData: null);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(SnowflakeAuthenticationType left, SnowflakeAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SnowflakeAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(SnowflakeAuthenticationType left, SnowflakeAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SnowflakeAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SnowflakeAuthenticationType"/>. </summary>
         public static implicit operator SnowflakeAuthenticationType(string value) => new SnowflakeAuthenticationType(value);
 
         /// <inheritdoc />

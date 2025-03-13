@@ -78,4 +78,3 @@ namespace Azure.AI.OpenAI
         internal bool Filtered { get; set; }
     }
 }
-

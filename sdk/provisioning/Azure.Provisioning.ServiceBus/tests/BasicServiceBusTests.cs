@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Provisioning.Expressions;
@@ -20,79 +21,76 @@ public class BasicServiceBusTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "The SB location."
-                    };
-                BicepParameter queueName =
+                Infrastructure infra = new();
+
+                ProvisioningParameter queueName =
                     new(nameof(queueName), typeof(string))
                     {
                         Value = "orders",
                         Description = "The name of the SB queue."
                     };
+                infra.Add(queueName);
 
                 ServiceBusNamespace sb =
                     new(nameof(sb), ServiceBusNamespace.ResourceVersions.V2021_11_01)
                     {
-                        Location = location,
                         Sku = new ServiceBusSku { Name = ServiceBusSkuName.Standard },
                     };
+                infra.Add(sb);
 
                 ServiceBusQueue queue =
                     new(nameof(queue), ServiceBusNamespace.ResourceVersions.V2021_11_01)
                     {
                         Parent = sb,
                         Name = queueName,
-                        // Hack around TimeSpan not serializing ISO durations
-                        // correctly using a Bicep string literal expression.
-                        // TODO: Change these to regular strings when patched.
-                        LockDuration = new StringLiteral("PT5M"),
+                        LockDuration = TimeSpan.FromMinutes(5),
                         MaxSizeInMegabytes = 1024,
                         RequiresDuplicateDetection = false,
                         RequiresSession = false,
-                        DefaultMessageTimeToLive = new StringLiteral("P10675199DT2H48M5.4775807S"),
+                        DefaultMessageTimeToLive = TimeSpan.MaxValue,
                         DeadLetteringOnMessageExpiration = false,
-                        DuplicateDetectionHistoryTimeWindow = new StringLiteral("PT10M"),
+                        DuplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(10),
                         MaxDeliveryCount = 10,
-                        AutoDeleteOnIdle = new StringLiteral("P10675199DT2H48M5.4775807S"),
+                        AutoDeleteOnIdle = TimeSpan.MaxValue,
                         EnablePartitioning = false,
                         EnableExpress = false
                     };
+                infra.Add(queue);
+
+                return infra;
             })
         .Compare(
             """
-            @description('The SB location.')
-            param location string = resourceGroup().location
-
             @description('The name of the SB queue.')
             param queueName string = 'orders'
 
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
             resource sb 'Microsoft.ServiceBus/namespaces@2021-11-01' = {
-                name: take('sb-${uniqueString(resourceGroup().id)}', 50)
-                location: location
-                sku: {
-                    name: 'Standard'
-                }
+              name: take('sb-${uniqueString(resourceGroup().id)}', 50)
+              location: location
+              sku: {
+                name: 'Standard'
+              }
             }
 
             resource queue 'Microsoft.ServiceBus/namespaces/queues@2021-11-01' = {
-                name: queueName
-                properties: {
-                    autoDeleteOnIdle: 'P10675199DT2H48M5.4775807S'
-                    deadLetteringOnMessageExpiration: false
-                    defaultMessageTimeToLive: 'P10675199DT2H48M5.4775807S'
-                    duplicateDetectionHistoryTimeWindow: 'PT10M'
-                    enableExpress: false
-                    enablePartitioning: false
-                    lockDuration: 'PT5M'
-                    maxDeliveryCount: 10
-                    maxSizeInMegabytes: 1024
-                    requiresDuplicateDetection: false
-                    requiresSession: false
-                }
-                parent: sb
+              name: queueName
+              properties: {
+                autoDeleteOnIdle: 'P10675199DT2H48M5.4775807S'
+                deadLetteringOnMessageExpiration: false
+                defaultMessageTimeToLive: 'P10675199DT2H48M5.4775807S'
+                duplicateDetectionHistoryTimeWindow: 'PT10M'
+                enableExpress: false
+                enablePartitioning: false
+                lockDuration: 'PT5M'
+                maxDeliveryCount: 10
+                maxSizeInMegabytes: 1024
+                requiresDuplicateDetection: false
+                requiresSession: false
+              }
+              parent: sb
             }
             """)
         .Lint()

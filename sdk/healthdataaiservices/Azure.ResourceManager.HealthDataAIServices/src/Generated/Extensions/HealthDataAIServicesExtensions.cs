@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidServices_Get</description>
+        /// <description>DeidService_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-28-preview</description>
+        /// <description>2024-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidServices_Get</description>
+        /// <description>DeidService_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-28-preview</description>
+        /// <description>2024-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-28-preview</description>
+        /// <description>2024-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-28-preview</description>
+        /// <description>2024-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

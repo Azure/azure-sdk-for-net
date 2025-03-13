@@ -23,32 +23,32 @@ namespace Azure.AI.Language.Conversations.Models
         }
 
         private const string AddressValue = "Address";
-        private const string CreditCardNumberValue = "CreditCardNumber";
+        private const string CreditCardValue = "CreditCard";
         private const string EmailValue = "Email";
         private const string PersonValue = "Person";
         private const string NumericIdentifierValue = "NumericIdentifier";
-        private const string PhoneNumberValue = "PhoneNumber";
+        private const string PhoneValue = "Phone";
         private const string UsSocialSecurityNumberValue = "USSocialSecurityNumber";
 
         /// <summary> Address category. </summary>
         public static ConversationPiiCategoryExclusions Address { get; } = new ConversationPiiCategoryExclusions(AddressValue);
-        /// <summary> Credit card number category. </summary>
-        public static ConversationPiiCategoryExclusions CreditCardNumber { get; } = new ConversationPiiCategoryExclusions(CreditCardNumberValue);
+        /// <summary> Credit card category. </summary>
+        public static ConversationPiiCategoryExclusions CreditCard { get; } = new ConversationPiiCategoryExclusions(CreditCardValue);
         /// <summary> Email category. </summary>
         public static ConversationPiiCategoryExclusions Email { get; } = new ConversationPiiCategoryExclusions(EmailValue);
         /// <summary> Person category. </summary>
         public static ConversationPiiCategoryExclusions Person { get; } = new ConversationPiiCategoryExclusions(PersonValue);
         /// <summary> Numeric identifier category. </summary>
         public static ConversationPiiCategoryExclusions NumericIdentifier { get; } = new ConversationPiiCategoryExclusions(NumericIdentifierValue);
-        /// <summary> Phone number category. </summary>
-        public static ConversationPiiCategoryExclusions PhoneNumber { get; } = new ConversationPiiCategoryExclusions(PhoneNumberValue);
+        /// <summary> Phone category. </summary>
+        public static ConversationPiiCategoryExclusions Phone { get; } = new ConversationPiiCategoryExclusions(PhoneValue);
         /// <summary> US social security number category. </summary>
         public static ConversationPiiCategoryExclusions UsSocialSecurityNumber { get; } = new ConversationPiiCategoryExclusions(UsSocialSecurityNumberValue);
         /// <summary> Determines if two <see cref="ConversationPiiCategoryExclusions"/> values are the same. </summary>
         public static bool operator ==(ConversationPiiCategoryExclusions left, ConversationPiiCategoryExclusions right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConversationPiiCategoryExclusions"/> values are not the same. </summary>
         public static bool operator !=(ConversationPiiCategoryExclusions left, ConversationPiiCategoryExclusions right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConversationPiiCategoryExclusions"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConversationPiiCategoryExclusions"/>. </summary>
         public static implicit operator ConversationPiiCategoryExclusions(string value) => new ConversationPiiCategoryExclusions(value);
 
         /// <inheritdoc />

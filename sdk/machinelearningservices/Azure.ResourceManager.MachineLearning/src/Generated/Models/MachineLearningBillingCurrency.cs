@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningBillingCurrency left, MachineLearningBillingCurrency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningBillingCurrency"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningBillingCurrency left, MachineLearningBillingCurrency right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningBillingCurrency"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningBillingCurrency"/>. </summary>
         public static implicit operator MachineLearningBillingCurrency(string value) => new MachineLearningBillingCurrency(value);
 
         /// <inheritdoc />

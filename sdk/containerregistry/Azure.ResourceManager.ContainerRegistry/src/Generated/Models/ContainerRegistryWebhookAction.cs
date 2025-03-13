@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator ==(ContainerRegistryWebhookAction left, ContainerRegistryWebhookAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryWebhookAction"/> values are not the same. </summary>
         public static bool operator !=(ContainerRegistryWebhookAction left, ContainerRegistryWebhookAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerRegistryWebhookAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryWebhookAction"/>. </summary>
         public static implicit operator ContainerRegistryWebhookAction(string value) => new ContainerRegistryWebhookAction(value);
 
         /// <inheritdoc />

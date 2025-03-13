@@ -24,15 +24,7 @@ namespace Azure.Identity
             _context = context;
             _scopeHandler = scopeHandler;
         }
-#if PREVIEW_FEATURE_FLAG
-        public CredentialDiagnosticScope(ClientDiagnostics diagnostics, string name, PopTokenRequestContext context, IScopeHandler scopeHandler)
-        {
-            _name = name;
-            _scope = scopeHandler.CreateScope(diagnostics, name);
-            _context = new TokenRequestContext(context.Scopes, context.ParentRequestId, context.Claims);
-            _scopeHandler = scopeHandler;
-        }
-#endif
+
         public void Start()
         {
             AzureIdentityEventSource.Singleton.GetToken(_name, _context);
@@ -66,7 +58,7 @@ namespace Azure.Identity
 
         private bool TryWrapException(ref Exception exception, string additionalMessageText = null, bool isCredentialUnavailable = false)
         {
-            if (exception is OperationCanceledException || exception is AuthenticationFailedException)
+            if (!isCredentialUnavailable && (exception is OperationCanceledException || exception is AuthenticationFailedException || exception is CredentialUnavailableException))
             {
                 return false;
             }

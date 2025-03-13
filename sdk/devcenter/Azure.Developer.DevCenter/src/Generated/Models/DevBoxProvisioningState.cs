@@ -63,7 +63,7 @@ namespace Azure.Developer.DevCenter.Models
         public static bool operator ==(DevBoxProvisioningState left, DevBoxProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevBoxProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(DevBoxProvisioningState left, DevBoxProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevBoxProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevBoxProvisioningState"/>. </summary>
         public static implicit operator DevBoxProvisioningState(string value) => new DevBoxProvisioningState(value);
 
         /// <inheritdoc />

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(ComputeFleetNetworkApiVersion left, ComputeFleetNetworkApiVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeFleetNetworkApiVersion"/> values are not the same. </summary>
         public static bool operator !=(ComputeFleetNetworkApiVersion left, ComputeFleetNetworkApiVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeFleetNetworkApiVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetNetworkApiVersion"/>. </summary>
         public static implicit operator ComputeFleetNetworkApiVersion(string value) => new ComputeFleetNetworkApiVersion(value);
 
         /// <inheritdoc />

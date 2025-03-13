@@ -42,7 +42,7 @@ namespace Azure.Communication.JobRouter
         public static bool operator ==(QueueSelectorAttachmentKind left, QueueSelectorAttachmentKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueueSelectorAttachmentKind"/> values are not the same. </summary>
         public static bool operator !=(QueueSelectorAttachmentKind left, QueueSelectorAttachmentKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="QueueSelectorAttachmentKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="QueueSelectorAttachmentKind"/>. </summary>
         public static implicit operator QueueSelectorAttachmentKind(string value) => new QueueSelectorAttachmentKind(value);
 
         /// <inheritdoc />

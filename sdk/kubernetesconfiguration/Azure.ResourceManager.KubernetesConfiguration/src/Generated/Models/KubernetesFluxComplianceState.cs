@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static bool operator ==(KubernetesFluxComplianceState left, KubernetesFluxComplianceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubernetesFluxComplianceState"/> values are not the same. </summary>
         public static bool operator !=(KubernetesFluxComplianceState left, KubernetesFluxComplianceState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KubernetesFluxComplianceState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KubernetesFluxComplianceState"/>. </summary>
         public static implicit operator KubernetesFluxComplianceState(string value) => new KubernetesFluxComplianceState(value);
 
         /// <inheritdoc />

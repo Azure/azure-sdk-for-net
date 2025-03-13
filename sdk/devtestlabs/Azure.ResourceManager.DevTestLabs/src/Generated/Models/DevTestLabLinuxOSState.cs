@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static bool operator ==(DevTestLabLinuxOSState left, DevTestLabLinuxOSState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabLinuxOSState"/> values are not the same. </summary>
         public static bool operator !=(DevTestLabLinuxOSState left, DevTestLabLinuxOSState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevTestLabLinuxOSState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevTestLabLinuxOSState"/>. </summary>
         public static implicit operator DevTestLabLinuxOSState(string value) => new DevTestLabLinuxOSState(value);
 
         /// <inheritdoc />

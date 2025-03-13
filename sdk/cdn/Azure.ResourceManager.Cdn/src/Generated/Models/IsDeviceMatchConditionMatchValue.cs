@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(IsDeviceMatchConditionMatchValue left, IsDeviceMatchConditionMatchValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IsDeviceMatchConditionMatchValue"/> values are not the same. </summary>
         public static bool operator !=(IsDeviceMatchConditionMatchValue left, IsDeviceMatchConditionMatchValue right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IsDeviceMatchConditionMatchValue"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IsDeviceMatchConditionMatchValue"/>. </summary>
         public static implicit operator IsDeviceMatchConditionMatchValue(string value) => new IsDeviceMatchConditionMatchValue(value);
 
         /// <inheritdoc />

@@ -10,47 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ContainerService.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerService.Samples
 {
     public partial class Sample_AgentPoolSnapshotResource
     {
-        // List Snapshots
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAgentPoolSnapshots_ListSnapshots()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/SnapshotsList.json
-            // this example is just showing the usage of "Snapshots_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (AgentPoolSnapshotResource item in subscriptionResource.GetAgentPoolSnapshotsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AgentPoolSnapshotData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get Snapshot
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSnapshot()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/SnapshotsGet.json
@@ -79,48 +46,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update Snapshot Tags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateSnapshotTags()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/SnapshotsUpdateTags.json
-            // this example is just showing the usage of "Snapshots_UpdateTags" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AgentPoolSnapshotResource created on azure
-            // for more information of creating AgentPoolSnapshotResource, please refer to the document of AgentPoolSnapshotResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "snapshot1";
-            ResourceIdentifier agentPoolSnapshotResourceId = AgentPoolSnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            AgentPoolSnapshotResource agentPoolSnapshot = client.GetAgentPoolSnapshotResource(agentPoolSnapshotResourceId);
-
-            // invoke the operation
-            ContainerServiceTagsObject containerServiceTagsObject = new ContainerServiceTagsObject()
-            {
-                Tags =
-{
-["key2"] = "new-val2",
-["key3"] = "val3",
-},
-            };
-            AgentPoolSnapshotResource result = await agentPoolSnapshot.UpdateAsync(containerServiceTagsObject);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AgentPoolSnapshotData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Delete Snapshot
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteSnapshot()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/SnapshotsDelete.json
@@ -142,7 +69,45 @@ namespace Azure.ResourceManager.ContainerService.Samples
             // invoke the operation
             await agentPoolSnapshot.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateSnapshotTags()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/SnapshotsUpdateTags.json
+            // this example is just showing the usage of "Snapshots_UpdateTags" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AgentPoolSnapshotResource created on azure
+            // for more information of creating AgentPoolSnapshotResource, please refer to the document of AgentPoolSnapshotResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "snapshot1";
+            ResourceIdentifier agentPoolSnapshotResourceId = AgentPoolSnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            AgentPoolSnapshotResource agentPoolSnapshot = client.GetAgentPoolSnapshotResource(agentPoolSnapshotResourceId);
+
+            // invoke the operation
+            ContainerServiceTagsObject containerServiceTagsObject = new ContainerServiceTagsObject
+            {
+                Tags =
+{
+["key2"] = "new-val2",
+["key3"] = "val3"
+},
+            };
+            AgentPoolSnapshotResource result = await agentPoolSnapshot.UpdateAsync(containerServiceTagsObject);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AgentPoolSnapshotData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

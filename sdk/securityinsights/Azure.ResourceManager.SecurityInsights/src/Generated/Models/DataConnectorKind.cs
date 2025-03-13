@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(DataConnectorKind left, DataConnectorKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataConnectorKind"/> values are not the same. </summary>
         public static bool operator !=(DataConnectorKind left, DataConnectorKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataConnectorKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataConnectorKind"/>. </summary>
         public static implicit operator DataConnectorKind(string value) => new DataConnectorKind(value);
 
         /// <inheritdoc />

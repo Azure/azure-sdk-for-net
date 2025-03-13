@@ -28,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator ==(BoundaryMeasureType left, BoundaryMeasureType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BoundaryMeasureType"/> values are not the same. </summary>
         public static bool operator !=(BoundaryMeasureType left, BoundaryMeasureType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BoundaryMeasureType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BoundaryMeasureType"/>. </summary>
         public static implicit operator BoundaryMeasureType(string value) => new BoundaryMeasureType(value);
 
         /// <inheritdoc />

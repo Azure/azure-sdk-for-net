@@ -42,8 +42,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public async Task GlobalTeardown()
         {
-            await _sqlDatabase.DeleteAsync(WaitUntil.Completed);
-            await _databaseAccount.DeleteAsync(WaitUntil.Completed);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await _sqlDatabase.DeleteAsync(WaitUntil.Completed);
+                await _databaseAccount.DeleteAsync(WaitUntil.Completed);
+            }
         }
 
         [SetUp]
@@ -55,12 +58,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (await SqlContainerCollection.ExistsAsync(_containerName))
+            if (Mode != RecordedTestMode.Playback)
             {
-                var id = SqlContainerCollection.Id;
-                id = CosmosDBSqlContainerResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _containerName);
-                CosmosDBSqlContainerResource container = this.ArmClient.GetCosmosDBSqlContainerResource(id);
-                await container.DeleteAsync(WaitUntil.Completed);
+                if (await SqlContainerCollection.ExistsAsync(_containerName))
+                {
+                    var id = SqlContainerCollection.Id;
+                    id = CosmosDBSqlContainerResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _containerName);
+                    CosmosDBSqlContainerResource container = this.ArmClient.GetCosmosDBSqlContainerResource(id);
+                    await container.DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 
@@ -117,13 +123,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
             var restorableDatabaseAccount = restorableAccounts.SingleOrDefault(account => account.Data.AccountName == _databaseAccount.Data.Name);
             DateTimeOffset timestampInUtc = DateTimeOffset.FromUnixTimeSeconds((int)container.Data.Resource.Timestamp.Value);
-            AddDelayInSeconds(60);
+            AddDelayInSeconds(120);
 
             String restoreSource = restorableDatabaseAccount.Id;
             ResourceRestoreParameters RestoreParameters = new ResourceRestoreParameters
             {
                 RestoreSource = restoreSource,
-                RestoreTimestampInUtc = timestampInUtc.AddSeconds(60),
+                RestoreTimestampInUtc = timestampInUtc.AddSeconds(80),
                 IsRestoreWithTtlDisabled = true
             };
 
@@ -138,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 CreateMode = CosmosDBAccountCreateMode.Restore
             };
             // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-            var updateOptions = new CosmosDBSqlContainerCreateOrUpdateContent(AzureLocation.WestUS, resource);
+            var updateOptions = new CosmosDBSqlContainerCreateOrUpdateContent(container.Data.Location, resource);
 
             // restore
             var container3 = (await SqlContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, updateOptions)).Value;
@@ -294,7 +300,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                                     {
                                         new CosmosDBSpatialType("Point")
                                     }, null),
-                        }, null)
+                        },
+                        new List<CosmosDBVectorIndex>(),
+                        serializedAdditionalRawData: new Dictionary<string, BinaryData>())
                 })
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

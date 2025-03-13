@@ -10,126 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DesktopVirtualization.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Samples
 {
     public partial class Sample_ScalingPlanPersonalScheduleCollection
     {
-        // ScalingPlanPersonalSchedules_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_ScalingPlanPersonalSchedulesGet()
-        {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2023-09-05/examples/ScalingPlanPersonalSchedule_Get.json
-            // this example is just showing the usage of "ScalingPlanPersonalSchedules_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ScalingPlanResource created on azure
-            // for more information of creating ScalingPlanResource, please refer to the document of ScalingPlanResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
-            string resourceGroupName = "resourceGroup1";
-            string scalingPlanName = "PersonalScalingPlan1";
-            ResourceIdentifier scalingPlanResourceId = ScalingPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scalingPlanName);
-            ScalingPlanResource scalingPlan = client.GetScalingPlanResource(scalingPlanResourceId);
-
-            // get the collection of this ScalingPlanPersonalScheduleResource
-            ScalingPlanPersonalScheduleCollection collection = scalingPlan.GetScalingPlanPersonalSchedules();
-
-            // invoke the operation
-            string scalingPlanScheduleName = "PersonalScalingPlanSchedule";
-            ScalingPlanPersonalScheduleResource result = await collection.GetAsync(scalingPlanScheduleName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ScalingPlanPersonalScheduleData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ScalingPlanPersonalSchedules_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_ScalingPlanPersonalSchedulesGet()
-        {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2023-09-05/examples/ScalingPlanPersonalSchedule_Get.json
-            // this example is just showing the usage of "ScalingPlanPersonalSchedules_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ScalingPlanResource created on azure
-            // for more information of creating ScalingPlanResource, please refer to the document of ScalingPlanResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
-            string resourceGroupName = "resourceGroup1";
-            string scalingPlanName = "PersonalScalingPlan1";
-            ResourceIdentifier scalingPlanResourceId = ScalingPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scalingPlanName);
-            ScalingPlanResource scalingPlan = client.GetScalingPlanResource(scalingPlanResourceId);
-
-            // get the collection of this ScalingPlanPersonalScheduleResource
-            ScalingPlanPersonalScheduleCollection collection = scalingPlan.GetScalingPlanPersonalSchedules();
-
-            // invoke the operation
-            string scalingPlanScheduleName = "PersonalScalingPlanSchedule";
-            bool result = await collection.ExistsAsync(scalingPlanScheduleName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ScalingPlanPersonalSchedules_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_ScalingPlanPersonalSchedulesGet()
-        {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2023-09-05/examples/ScalingPlanPersonalSchedule_Get.json
-            // this example is just showing the usage of "ScalingPlanPersonalSchedules_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ScalingPlanResource created on azure
-            // for more information of creating ScalingPlanResource, please refer to the document of ScalingPlanResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
-            string resourceGroupName = "resourceGroup1";
-            string scalingPlanName = "PersonalScalingPlan1";
-            ResourceIdentifier scalingPlanResourceId = ScalingPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scalingPlanName);
-            ScalingPlanResource scalingPlan = client.GetScalingPlanResource(scalingPlanResourceId);
-
-            // get the collection of this ScalingPlanPersonalScheduleResource
-            ScalingPlanPersonalScheduleCollection collection = scalingPlan.GetScalingPlanPersonalSchedules();
-
-            // invoke the operation
-            string scalingPlanScheduleName = "PersonalScalingPlanSchedule";
-            NullableResponse<ScalingPlanPersonalScheduleResource> response = await collection.GetIfExistsAsync(scalingPlanScheduleName);
-            ScalingPlanPersonalScheduleResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ScalingPlanPersonalScheduleData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // ScalingPlanPersonalSchedules_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ScalingPlanPersonalSchedulesCreate()
         {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2023-09-05/examples/ScalingPlanPersonalSchedule_Create.json
+            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/ScalingPlanPersonalSchedule_Create.json
             // this example is just showing the usage of "ScalingPlanPersonalSchedules_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -150,12 +41,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // invoke the operation
             string scalingPlanScheduleName = "scalingPlanScheduleWeekdays1";
-            ScalingPlanPersonalScheduleData data = new ScalingPlanPersonalScheduleData()
+            ScalingPlanPersonalScheduleData data = new ScalingPlanPersonalScheduleData
             {
-                DaysOfWeek =
-{
-DesktopVirtualizationDayOfWeek.Monday,DesktopVirtualizationDayOfWeek.Tuesday,DesktopVirtualizationDayOfWeek.Wednesday,DesktopVirtualizationDayOfWeek.Thursday,DesktopVirtualizationDayOfWeek.Friday
-},
+                DaysOfWeek = { DesktopVirtualizationDayOfWeek.Monday, DesktopVirtualizationDayOfWeek.Tuesday, DesktopVirtualizationDayOfWeek.Wednesday, DesktopVirtualizationDayOfWeek.Thursday, DesktopVirtualizationDayOfWeek.Friday },
                 RampUpStartTime = new ScalingActionTime(6, 0),
                 RampUpAutoStartHosts = StartupBehavior.All,
                 RampUpStartVmOnConnect = SetStartVmOnConnect.Enable,
@@ -192,12 +80,45 @@ DesktopVirtualizationDayOfWeek.Monday,DesktopVirtualizationDayOfWeek.Tuesday,Des
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ScalingPlanPersonalSchedules_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_ScalingPlanPersonalSchedulesGet()
+        {
+            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/ScalingPlanPersonalSchedule_Get.json
+            // this example is just showing the usage of "ScalingPlanPersonalSchedules_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ScalingPlanResource created on azure
+            // for more information of creating ScalingPlanResource, please refer to the document of ScalingPlanResource
+            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string resourceGroupName = "resourceGroup1";
+            string scalingPlanName = "PersonalScalingPlan1";
+            ResourceIdentifier scalingPlanResourceId = ScalingPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scalingPlanName);
+            ScalingPlanResource scalingPlan = client.GetScalingPlanResource(scalingPlanResourceId);
+
+            // get the collection of this ScalingPlanPersonalScheduleResource
+            ScalingPlanPersonalScheduleCollection collection = scalingPlan.GetScalingPlanPersonalSchedules();
+
+            // invoke the operation
+            string scalingPlanScheduleName = "PersonalScalingPlanSchedule";
+            ScalingPlanPersonalScheduleResource result = await collection.GetAsync(scalingPlanScheduleName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ScalingPlanPersonalScheduleData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ScalingPlanPersonalSchedulesList()
         {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2023-09-05/examples/ScalingPlanPersonalSchedule_List.json
+            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/ScalingPlanPersonalSchedule_List.json
             // this example is just showing the usage of "ScalingPlanPersonalSchedules_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -229,7 +150,79 @@ DesktopVirtualizationDayOfWeek.Monday,DesktopVirtualizationDayOfWeek.Tuesday,Des
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_ScalingPlanPersonalSchedulesGet()
+        {
+            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/ScalingPlanPersonalSchedule_Get.json
+            // this example is just showing the usage of "ScalingPlanPersonalSchedules_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ScalingPlanResource created on azure
+            // for more information of creating ScalingPlanResource, please refer to the document of ScalingPlanResource
+            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string resourceGroupName = "resourceGroup1";
+            string scalingPlanName = "PersonalScalingPlan1";
+            ResourceIdentifier scalingPlanResourceId = ScalingPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scalingPlanName);
+            ScalingPlanResource scalingPlan = client.GetScalingPlanResource(scalingPlanResourceId);
+
+            // get the collection of this ScalingPlanPersonalScheduleResource
+            ScalingPlanPersonalScheduleCollection collection = scalingPlan.GetScalingPlanPersonalSchedules();
+
+            // invoke the operation
+            string scalingPlanScheduleName = "PersonalScalingPlanSchedule";
+            bool result = await collection.ExistsAsync(scalingPlanScheduleName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_ScalingPlanPersonalSchedulesGet()
+        {
+            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/ScalingPlanPersonalSchedule_Get.json
+            // this example is just showing the usage of "ScalingPlanPersonalSchedules_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ScalingPlanResource created on azure
+            // for more information of creating ScalingPlanResource, please refer to the document of ScalingPlanResource
+            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string resourceGroupName = "resourceGroup1";
+            string scalingPlanName = "PersonalScalingPlan1";
+            ResourceIdentifier scalingPlanResourceId = ScalingPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scalingPlanName);
+            ScalingPlanResource scalingPlan = client.GetScalingPlanResource(scalingPlanResourceId);
+
+            // get the collection of this ScalingPlanPersonalScheduleResource
+            ScalingPlanPersonalScheduleCollection collection = scalingPlan.GetScalingPlanPersonalSchedules();
+
+            // invoke the operation
+            string scalingPlanScheduleName = "PersonalScalingPlanSchedule";
+            NullableResponse<ScalingPlanPersonalScheduleResource> response = await collection.GetIfExistsAsync(scalingPlanScheduleName);
+            ScalingPlanPersonalScheduleResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ScalingPlanPersonalScheduleData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

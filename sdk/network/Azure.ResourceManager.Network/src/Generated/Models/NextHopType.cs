@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(NextHopType left, NextHopType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NextHopType"/> values are not the same. </summary>
         public static bool operator !=(NextHopType left, NextHopType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NextHopType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NextHopType"/>. </summary>
         public static implicit operator NextHopType(string value) => new NextHopType(value);
 
         /// <inheritdoc />

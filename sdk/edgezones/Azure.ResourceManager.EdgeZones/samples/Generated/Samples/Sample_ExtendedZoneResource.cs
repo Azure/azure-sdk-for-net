@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.EdgeZones.Samples
 {
     public partial class Sample_ExtendedZoneResource
     {
-        // GetExtendedZone
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetExtendedZone()
         {
             // Generated from example definition: specification/edgezones/resource-manager/Microsoft.EdgeZones/preview/2024-04-01-preview/examples/ExtendedZones_Get.json
@@ -44,9 +44,8 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RegisterExtendedZone
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Register_RegisterExtendedZone()
         {
             // Generated from example definition: specification/edgezones/resource-manager/Microsoft.EdgeZones/preview/2024-04-01-preview/examples/ExtendedZones_Register.json
@@ -74,9 +73,8 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // UnregisterExtendedZone
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Unregister_UnregisterExtendedZone()
         {
             // Generated from example definition: specification/edgezones/resource-manager/Microsoft.EdgeZones/preview/2024-04-01-preview/examples/ExtendedZones_Unregister.json

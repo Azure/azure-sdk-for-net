@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-04</description>
+        /// <description>2024-11-04</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-04</description>
+        /// <description>2024-11-04</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-04</description>
+        /// <description>2024-11-04</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-04</description>
+        /// <description>2024-11-04</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1593,7 +1593,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'instanceView'. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'virtualMachines/$ref'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AvailabilitySetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailabilitySetResource> GetAvailabilitySetsAsync(string expand = null, CancellationToken cancellationToken = default)
@@ -1624,7 +1624,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'instanceView'. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'virtualMachines/$ref'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvailabilitySetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailabilitySetResource> GetAvailabilitySets(string expand = null, CancellationToken cancellationToken = default)
@@ -2629,7 +2629,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2659,7 +2659,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2689,7 +2689,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-04</description>
+        /// <description>2024-11-04</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2719,7 +2719,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-04</description>
+        /// <description>2024-11-04</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

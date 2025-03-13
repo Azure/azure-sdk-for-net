@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(SecretsType left, SecretsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecretsType"/> values are not the same. </summary>
         public static bool operator !=(SecretsType left, SecretsType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecretsType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecretsType"/>. </summary>
         public static implicit operator SecretsType(string value) => new SecretsType(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static bool operator ==(DynatraceMonitoringStatus left, DynatraceMonitoringStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynatraceMonitoringStatus"/> values are not the same. </summary>
         public static bool operator !=(DynatraceMonitoringStatus left, DynatraceMonitoringStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DynatraceMonitoringStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DynatraceMonitoringStatus"/>. </summary>
         public static implicit operator DynatraceMonitoringStatus(string value) => new DynatraceMonitoringStatus(value);
 
         /// <inheritdoc />

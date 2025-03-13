@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static bool operator ==(BlobOutputWriteMode left, BlobOutputWriteMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobOutputWriteMode"/> values are not the same. </summary>
         public static bool operator !=(BlobOutputWriteMode left, BlobOutputWriteMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BlobOutputWriteMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BlobOutputWriteMode"/>. </summary>
         public static implicit operator BlobOutputWriteMode(string value) => new BlobOutputWriteMode(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(WindowsSetupAdditionalInformationComponentName left, WindowsSetupAdditionalInformationComponentName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WindowsSetupAdditionalInformationComponentName"/> values are not the same. </summary>
         public static bool operator !=(WindowsSetupAdditionalInformationComponentName left, WindowsSetupAdditionalInformationComponentName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WindowsSetupAdditionalInformationComponentName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WindowsSetupAdditionalInformationComponentName"/>. </summary>
         public static implicit operator WindowsSetupAdditionalInformationComponentName(string value) => new WindowsSetupAdditionalInformationComponentName(value);
 
         /// <inheritdoc />

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static bool operator ==(CertificateProvisioningState left, CertificateProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CertificateProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(CertificateProvisioningState left, CertificateProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CertificateProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CertificateProvisioningState"/>. </summary>
         public static implicit operator CertificateProvisioningState(string value) => new CertificateProvisioningState(value);
 
         /// <inheritdoc />

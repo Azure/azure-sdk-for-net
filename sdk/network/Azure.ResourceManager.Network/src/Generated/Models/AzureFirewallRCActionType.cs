@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(AzureFirewallRCActionType left, AzureFirewallRCActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureFirewallRCActionType"/> values are not the same. </summary>
         public static bool operator !=(AzureFirewallRCActionType left, AzureFirewallRCActionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AzureFirewallRCActionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureFirewallRCActionType"/>. </summary>
         public static implicit operator AzureFirewallRCActionType(string value) => new AzureFirewallRCActionType(value);
 
         /// <inheritdoc />

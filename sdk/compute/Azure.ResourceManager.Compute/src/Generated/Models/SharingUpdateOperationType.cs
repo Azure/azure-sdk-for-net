@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(SharingUpdateOperationType left, SharingUpdateOperationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SharingUpdateOperationType"/> values are not the same. </summary>
         public static bool operator !=(SharingUpdateOperationType left, SharingUpdateOperationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SharingUpdateOperationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SharingUpdateOperationType"/>. </summary>
         public static implicit operator SharingUpdateOperationType(string value) => new SharingUpdateOperationType(value);
 
         /// <inheritdoc />

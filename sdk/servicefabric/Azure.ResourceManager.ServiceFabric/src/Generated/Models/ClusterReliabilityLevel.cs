@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static bool operator ==(ClusterReliabilityLevel left, ClusterReliabilityLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterReliabilityLevel"/> values are not the same. </summary>
         public static bool operator !=(ClusterReliabilityLevel left, ClusterReliabilityLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClusterReliabilityLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterReliabilityLevel"/>. </summary>
         public static implicit operator ClusterReliabilityLevel(string value) => new ClusterReliabilityLevel(value);
 
         /// <inheritdoc />

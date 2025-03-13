@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PlacementPolicyProperties"/>. </summary>
-        /// <param name="policyType"> placement policy type. </param>
+        /// <param name="policyType"> Placement Policy type. </param>
         /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
         /// <param name="displayName"> Display name of the placement policy. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Avs.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> placement policy type. </summary>
+        /// <summary> Placement Policy type. </summary>
         internal PlacementPolicyType PolicyType { get; set; }
         /// <summary> Whether the placement policy is enabled or disabled. </summary>
         public PlacementPolicyState? State { get; set; }

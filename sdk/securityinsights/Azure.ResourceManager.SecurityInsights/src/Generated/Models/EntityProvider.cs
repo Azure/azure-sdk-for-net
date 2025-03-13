@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(EntityProvider left, EntityProvider right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EntityProvider"/> values are not the same. </summary>
         public static bool operator !=(EntityProvider left, EntityProvider right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EntityProvider"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EntityProvider"/>. </summary>
         public static implicit operator EntityProvider(string value) => new EntityProvider(value);
 
         /// <inheritdoc />

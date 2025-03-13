@@ -13,7 +13,7 @@ The scenarios in this directory provide a suite of stress tests that test the Da
 
 ### Prerequisites
 
-When tests are run locally, Azure resources need to be created prior to running the test. This can be done through the Azure CLI, an ARM pr bicep file, or the Azure Portal. The bicep file included in this directory can be used to [deploy all resources](https://docs.microsoft.com/azure/azure-resource-manager/bicep/deploy-to-resource-group?tabs=azure-cli) aside from the application insights portal.
+When tests are run locally, Azure resources need to be created prior to running the test. This can be done through the Azure CLI, an ARM pr bicep file, or the Azure Portal. The bicep file included in this directory can be used to [deploy all resources](https://learn.microsoft.com/azure/azure-resource-manager/bicep/deploy-to-resource-group?tabs=azure-cli) aside from the application insights portal.
 
 To run the compiled .dll file, navigate to the `<git root>/artifacts/bin/Azure.Storage.DataMovement.Blobs.Stress/Release/net7.0` directory.
 
@@ -45,7 +45,7 @@ See the `Metrics.cs` file for more information about individual metrics and what
 
 ### Deploying a stress test
 In order to deploy stress tests to be run in kubernetes clusters, run:
-```cmd 
+```cmd
 (env) <git root>/eng/common/scripts/stress-testing/deploy-stress-tests.ps1 `
 >>     -Login `
 >>     -PushImages
@@ -60,7 +60,7 @@ This command requires Azure login credentials.
 
 ### Deploying a stress test
 In order to deploy stress tests to be run in kubernetes clusters, run:
-```cmd 
+```cmd
 (env) <git root>/eng/common/scripts/stress-testing/deploy-stress-tests.ps1 `
 >>     -Login `
 >>     -PushImages
@@ -76,5 +76,3 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 Please see our [contributing guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/CONTRIBUTING.md) for more information.
-  
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FREADME.png)

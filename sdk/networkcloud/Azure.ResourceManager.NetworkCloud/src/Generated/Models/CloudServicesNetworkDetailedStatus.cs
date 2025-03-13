@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(CloudServicesNetworkDetailedStatus left, CloudServicesNetworkDetailedStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CloudServicesNetworkDetailedStatus"/> values are not the same. </summary>
         public static bool operator !=(CloudServicesNetworkDetailedStatus left, CloudServicesNetworkDetailedStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CloudServicesNetworkDetailedStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CloudServicesNetworkDetailedStatus"/>. </summary>
         public static implicit operator CloudServicesNetworkDetailedStatus(string value) => new CloudServicesNetworkDetailedStatus(value);
 
         /// <inheritdoc />

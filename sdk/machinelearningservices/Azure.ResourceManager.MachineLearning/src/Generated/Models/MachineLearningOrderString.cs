@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningOrderString left, MachineLearningOrderString right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningOrderString"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningOrderString left, MachineLearningOrderString right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningOrderString"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningOrderString"/>. </summary>
         public static implicit operator MachineLearningOrderString(string value) => new MachineLearningOrderString(value);
 
         /// <inheritdoc />

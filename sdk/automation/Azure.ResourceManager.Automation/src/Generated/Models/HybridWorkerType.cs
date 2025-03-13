@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator ==(HybridWorkerType left, HybridWorkerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HybridWorkerType"/> values are not the same. </summary>
         public static bool operator !=(HybridWorkerType left, HybridWorkerType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HybridWorkerType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridWorkerType"/>. </summary>
         public static implicit operator HybridWorkerType(string value) => new HybridWorkerType(value);
 
         /// <inheritdoc />

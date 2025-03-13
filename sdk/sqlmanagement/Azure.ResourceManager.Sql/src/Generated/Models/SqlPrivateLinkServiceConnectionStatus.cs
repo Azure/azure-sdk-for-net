@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(SqlPrivateLinkServiceConnectionStatus left, SqlPrivateLinkServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlPrivateLinkServiceConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(SqlPrivateLinkServiceConnectionStatus left, SqlPrivateLinkServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlPrivateLinkServiceConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlPrivateLinkServiceConnectionStatus"/>. </summary>
         public static implicit operator SqlPrivateLinkServiceConnectionStatus(string value) => new SqlPrivateLinkServiceConnectionStatus(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(StorageCapabilityStorageAccountType left, StorageCapabilityStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageCapabilityStorageAccountType"/> values are not the same. </summary>
         public static bool operator !=(StorageCapabilityStorageAccountType left, StorageCapabilityStorageAccountType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageCapabilityStorageAccountType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageCapabilityStorageAccountType"/>. </summary>
         public static implicit operator StorageCapabilityStorageAccountType(string value) => new StorageCapabilityStorageAccountType(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(SyslogProtocol left, SyslogProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyslogProtocol"/> values are not the same. </summary>
         public static bool operator !=(SyslogProtocol left, SyslogProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SyslogProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SyslogProtocol"/>. </summary>
         public static implicit operator SyslogProtocol(string value) => new SyslogProtocol(value);
 
         /// <inheritdoc />

@@ -13,9 +13,11 @@ trigger:
     - sdk/provisioning/Azure.Provisioning.AppContainers
     - sdk/provisioning/Azure.Provisioning.ApplicationInsights
     - sdk/provisioning/Azure.Provisioning.AppService
+    - sdk/provisioning/Azure.Provisioning.CloudMachine
     - sdk/provisioning/Azure.Provisioning.Communication
     - sdk/provisioning/Azure.Provisioning.ContainerRegistry
     - sdk/provisioning/Azure.Provisioning.ContainerService
+    - sdk/provisioning/Azure.Provisioning.Deployment
     - sdk/provisioning/Azure.Provisioning.EventGrid
     - sdk/provisioning/Azure.Provisioning.Kubernetes
     - sdk/provisioning/Azure.Provisioning.KubernetesConfiguration
@@ -37,9 +39,11 @@ pr:
     - sdk/provisioning/Azure.Provisioning.AppContainers
     - sdk/provisioning/Azure.Provisioning.ApplicationInsights
     - sdk/provisioning/Azure.Provisioning.AppService
+    - sdk/provisioning/Azure.Provisioning.CloudMachine
     - sdk/provisioning/Azure.Provisioning.Communication
     - sdk/provisioning/Azure.Provisioning.ContainerRegistry
     - sdk/provisioning/Azure.Provisioning.ContainerService
+    - sdk/provisioning/Azure.Provisioning.Deployment
     - sdk/provisioning/Azure.Provisioning.EventGrid
     - sdk/provisioning/Azure.Provisioning.Kubernetes
     - sdk/provisioning/Azure.Provisioning.KubernetesConfiguration
@@ -62,12 +66,16 @@ extends:
       safeName: AzureProvisioningApplicationInsights
     - name: Azure.Provisioning.AppService
       safeName: AzureProvisioningAppService
+    - name: Azure.Provisioning.CloudMachine
+      safeName: AzureProvisioningCloudMachine
     - name: Azure.Provisioning.Communication
       safeName: AzureProvisioningCommunication
     - name: Azure.Provisioning.ContainerRegistry
       safeName: AzureProvisioningContainerRegistry
     - name: Azure.Provisioning.ContainerService
       safeName: AzureProvisioningContainerService
+    - name: Azure.Provisioning.Deployment
+      safeName: AzureProvisioningDeployment
     - name: Azure.Provisioning.EventGrid
       safeName: AzureProvisioningEventGrid
     - name: Azure.Provisioning.Kubernetes

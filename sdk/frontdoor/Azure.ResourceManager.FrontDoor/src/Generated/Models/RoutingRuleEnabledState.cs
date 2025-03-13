@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(RoutingRuleEnabledState left, RoutingRuleEnabledState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoutingRuleEnabledState"/> values are not the same. </summary>
         public static bool operator !=(RoutingRuleEnabledState left, RoutingRuleEnabledState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RoutingRuleEnabledState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RoutingRuleEnabledState"/>. </summary>
         public static implicit operator RoutingRuleEnabledState(string value) => new RoutingRuleEnabledState(value);
 
         /// <inheritdoc />

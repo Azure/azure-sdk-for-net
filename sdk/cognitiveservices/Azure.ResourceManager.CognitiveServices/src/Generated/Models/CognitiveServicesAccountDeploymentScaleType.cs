@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static bool operator ==(CognitiveServicesAccountDeploymentScaleType left, CognitiveServicesAccountDeploymentScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CognitiveServicesAccountDeploymentScaleType"/> values are not the same. </summary>
         public static bool operator !=(CognitiveServicesAccountDeploymentScaleType left, CognitiveServicesAccountDeploymentScaleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CognitiveServicesAccountDeploymentScaleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CognitiveServicesAccountDeploymentScaleType"/>. </summary>
         public static implicit operator CognitiveServicesAccountDeploymentScaleType(string value) => new CognitiveServicesAccountDeploymentScaleType(value);
 
         /// <inheritdoc />

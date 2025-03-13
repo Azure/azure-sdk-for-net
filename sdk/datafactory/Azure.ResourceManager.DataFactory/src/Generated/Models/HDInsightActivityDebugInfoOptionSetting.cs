@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(HDInsightActivityDebugInfoOptionSetting left, HDInsightActivityDebugInfoOptionSetting right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightActivityDebugInfoOptionSetting"/> values are not the same. </summary>
         public static bool operator !=(HDInsightActivityDebugInfoOptionSetting left, HDInsightActivityDebugInfoOptionSetting right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HDInsightActivityDebugInfoOptionSetting"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightActivityDebugInfoOptionSetting"/>. </summary>
         public static implicit operator HDInsightActivityDebugInfoOptionSetting(string value) => new HDInsightActivityDebugInfoOptionSetting(value);
 
         /// <inheritdoc />

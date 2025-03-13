@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(CopyBehaviorType left, CopyBehaviorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CopyBehaviorType"/> values are not the same. </summary>
         public static bool operator !=(CopyBehaviorType left, CopyBehaviorType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CopyBehaviorType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CopyBehaviorType"/>. </summary>
         public static implicit operator CopyBehaviorType(string value) => new CopyBehaviorType(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(IpAddressProvisioningType left, IpAddressProvisioningType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IpAddressProvisioningType"/> values are not the same. </summary>
         public static bool operator !=(IpAddressProvisioningType left, IpAddressProvisioningType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IpAddressProvisioningType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IpAddressProvisioningType"/>. </summary>
         public static implicit operator IpAddressProvisioningType(string value) => new IpAddressProvisioningType(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static bool operator ==(LegacyPeeringsKind left, LegacyPeeringsKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LegacyPeeringsKind"/> values are not the same. </summary>
         public static bool operator !=(LegacyPeeringsKind left, LegacyPeeringsKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LegacyPeeringsKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LegacyPeeringsKind"/>. </summary>
         public static implicit operator LegacyPeeringsKind(string value) => new LegacyPeeringsKind(value);
 
         /// <inheritdoc />

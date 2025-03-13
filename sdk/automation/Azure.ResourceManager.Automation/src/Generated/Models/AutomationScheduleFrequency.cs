@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator ==(AutomationScheduleFrequency left, AutomationScheduleFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationScheduleFrequency"/> values are not the same. </summary>
         public static bool operator !=(AutomationScheduleFrequency left, AutomationScheduleFrequency right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutomationScheduleFrequency"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationScheduleFrequency"/>. </summary>
         public static implicit operator AutomationScheduleFrequency(string value) => new AutomationScheduleFrequency(value);
 
         /// <inheritdoc />

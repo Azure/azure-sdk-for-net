@@ -23,13 +23,22 @@ namespace Azure.ResourceManager.HybridCompute
 
         void IJsonModel<HybridComputeMachineData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeMachineData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HybridComputeMachineData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
@@ -50,39 +59,6 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(LocationData))
@@ -99,6 +75,21 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 writer.WritePropertyName("serviceStatuses"u8);
                 writer.WriteObjectValue(ServiceStatuses, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(HardwareProfile))
+            {
+                writer.WritePropertyName("hardwareProfile"u8);
+                writer.WriteObjectValue(HardwareProfile, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StorageProfile))
+            {
+                writer.WritePropertyName("storageProfile"u8);
+                writer.WriteObjectValue(StorageProfile, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FirmwareProfile))
+            {
+                writer.WritePropertyName("firmwareProfile"u8);
+                writer.WriteObjectValue(FirmwareProfile, options);
             }
             if (Optional.IsDefined(CloudMetadata))
             {
@@ -257,22 +248,6 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WriteObjectValue(NetworkProfile, options);
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         HybridComputeMachineData IJsonModel<HybridComputeMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -307,6 +282,9 @@ namespace Azure.ResourceManager.HybridCompute
             HybridComputeLocation locationData = default;
             AgentConfiguration agentConfiguration = default;
             HybridComputeServiceStatuses serviceStatuses = default;
+            HybridComputeHardwareProfile hardwareProfile = default;
+            StorageProfile storageProfile = default;
+            HybridComputeFirmwareProfile firmwareProfile = default;
             HybridComputeCloudMetadata cloudMetadata = default;
             AgentUpgrade agentUpgrade = default;
             HybridComputeOSProfile osProfile = default;
@@ -448,6 +426,33 @@ namespace Azure.ResourceManager.HybridCompute
                                 continue;
                             }
                             serviceStatuses = HybridComputeServiceStatuses.DeserializeHybridComputeServiceStatuses(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("hardwareProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hardwareProfile = HybridComputeHardwareProfile.DeserializeHybridComputeHardwareProfile(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("storageProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageProfile = StorageProfile.DeserializeStorageProfile(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("firmwareProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            firmwareProfile = HybridComputeFirmwareProfile.DeserializeHybridComputeFirmwareProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cloudMetadata"u8))
@@ -683,6 +688,9 @@ namespace Azure.ResourceManager.HybridCompute
                 locationData,
                 agentConfiguration,
                 serviceStatuses,
+                hardwareProfile,
+                storageProfile,
+                firmwareProfile,
                 cloudMetadata,
                 agentUpgrade,
                 osProfile,
@@ -924,6 +932,56 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     builder.Append("    serviceStatuses: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ServiceStatuses, options, 4, false, "    serviceStatuses: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HardwareProfile), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    hardwareProfile: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HardwareProfile))
+                {
+                    builder.Append("    hardwareProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, HardwareProfile, options, 4, false, "    hardwareProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("StorageDisks", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    storageProfile: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      storageProfile: {");
+                builder.Append("        disks: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageProfile))
+                {
+                    builder.Append("    storageProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, StorageProfile, options, 4, false, "    storageProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FirmwareProfile), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    firmwareProfile: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FirmwareProfile))
+                {
+                    builder.Append("    firmwareProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FirmwareProfile, options, 4, false, "    firmwareProfile: ");
                 }
             }
 
@@ -1536,7 +1594,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHybridComputeMachineData(document.RootElement, options);
                     }
                 default:

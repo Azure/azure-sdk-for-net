@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public static bool operator ==(AvailableLabServicesSkuTier left, AvailableLabServicesSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvailableLabServicesSkuTier"/> values are not the same. </summary>
         public static bool operator !=(AvailableLabServicesSkuTier left, AvailableLabServicesSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AvailableLabServicesSkuTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvailableLabServicesSkuTier"/>. </summary>
         public static implicit operator AvailableLabServicesSkuTier(string value) => new AvailableLabServicesSkuTier(value);
 
         /// <inheritdoc />

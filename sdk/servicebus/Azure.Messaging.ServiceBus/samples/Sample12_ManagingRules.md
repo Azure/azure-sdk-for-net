@@ -5,11 +5,12 @@ As shown in the article on [Topic filters and actions](https://learn.microsoft.c
 It is also possible to perform these rule management operations using the `ServiceBusRuleManager` type. The major benefit to using this type is that you only need `Listen` rights for the subscription you wish to manage rules for, which corresponds to the [Service Bus Data Receiver role](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#azure-service-bus-data-receiver). The following snippet provides an example of how to use this type.
 
 ```C# Snippet:ServiceBusManageRules
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string topicName = "<topic_name>";
 string subscriptionName = "<subscription_name>";
+DefaultAzureCredential credential = new();
 
-await using var client = new ServiceBusClient(connectionString);
+await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 
 await using ServiceBusRuleManager ruleManager = client.CreateRuleManager(topicName, subscriptionName);
 
@@ -24,9 +25,9 @@ ServiceBusSender sender = client.CreateSender(topicName);
 
 ServiceBusMessage[] messages =
 {
-    new ServiceBusMessage { Subject = "Ford", ApplicationProperties = { { "Price", 25000 } } },
-    new ServiceBusMessage { Subject = "Toyota", ApplicationProperties = { { "Price", 28000 } } },
-    new ServiceBusMessage { Subject = "Honda", ApplicationProperties = { { "Price", 35000 } } }
+    new ServiceBusMessage() { Subject = "Ford", ApplicationProperties = { { "Price", 25000 } } },
+    new ServiceBusMessage() { Subject = "Toyota", ApplicationProperties = { { "Price", 28000 } } },
+    new ServiceBusMessage() { Subject = "Honda", ApplicationProperties = { { "Price", 35000 } } }
 };
 
 // send the messages

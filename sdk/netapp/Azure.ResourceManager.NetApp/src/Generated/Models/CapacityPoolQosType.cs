@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(CapacityPoolQosType left, CapacityPoolQosType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CapacityPoolQosType"/> values are not the same. </summary>
         public static bool operator !=(CapacityPoolQosType left, CapacityPoolQosType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CapacityPoolQosType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CapacityPoolQosType"/>. </summary>
         public static implicit operator CapacityPoolQosType(string value) => new CapacityPoolQosType(value);
 
         /// <inheritdoc />

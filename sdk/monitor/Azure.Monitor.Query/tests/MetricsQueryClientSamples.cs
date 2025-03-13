@@ -307,5 +307,47 @@ namespace Azure.Monitor.Query.Tests
                 logsQueryClientOptions);
             #endregion
         }
+
+        [Test]
+        public async Task QueryResourcesMetricsWithOptionsStartTimeEndTime()
+        {
+            #region Snippet:QueryResourcesMetricsWithOptionsStartTimeEndTime
+#if SNIPPET
+            string resourceId =
+                "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
+            var client = new MetricsClient(
+                new Uri("https://<region>.metrics.monitor.azure.com"),
+                new DefaultAzureCredential());
+#else
+            string resourceId = TestEnvironment.StorageAccountId;
+            var client = new MetricsClient(
+                new Uri(TestEnvironment.ConstructMetricsClientUri()),
+                new DefaultAzureCredential(),
+                new MetricsClientOptions()
+                {
+                    Audience = TestEnvironment.GetMetricsClientAudience()
+                });
+#endif
+            var options = new MetricsQueryResourcesOptions
+            {
+                StartTime = DateTimeOffset.Now.AddHours(-4),
+                EndTime = DateTimeOffset.Now.AddHours(-1),
+                OrderBy = "sum asc",
+                Size = 10
+            };
+
+            Response<MetricsQueryResourcesResult> result = await client.QueryResourcesAsync(
+                resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
+                metricNames: new List<string> { "Ingress" },
+                metricNamespace: "Microsoft.Storage/storageAccounts",
+                options).ConfigureAwait(false);
+
+            MetricsQueryResourcesResult metricsQueryResults = result.Value;
+            foreach (MetricsQueryResult value in metricsQueryResults.Values)
+            {
+                Console.WriteLine(value.Metrics.Count);
+            }
+            #endregion Snippet:QueryResourcesMetricsWithOptionsStartTimeEndTime
+        }
     }
 }

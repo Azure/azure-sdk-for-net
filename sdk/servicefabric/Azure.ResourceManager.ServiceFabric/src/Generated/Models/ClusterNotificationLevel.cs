@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static bool operator ==(ClusterNotificationLevel left, ClusterNotificationLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterNotificationLevel"/> values are not the same. </summary>
         public static bool operator !=(ClusterNotificationLevel left, ClusterNotificationLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClusterNotificationLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterNotificationLevel"/>. </summary>
         public static implicit operator ClusterNotificationLevel(string value) => new ClusterNotificationLevel(value);
 
         /// <inheritdoc />

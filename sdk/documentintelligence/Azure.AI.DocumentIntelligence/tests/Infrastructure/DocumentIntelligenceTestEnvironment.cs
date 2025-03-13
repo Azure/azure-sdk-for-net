@@ -33,6 +33,10 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         public string ClassifierTrainingSasUrl => GetRecordedVariable("CLASSIFIER_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
 
+        public string BatchSourceBlobSasUrl => GetRecordedVariable("BATCH_SOURCE_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
+
+        public string BatchResultBlobSasUrl => GetRecordedVariable("BATCH_RESULT_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
+
         public static string CreatePath(string filename)
         {
             return Path.Combine(s_currentWorkingDirectory, AssetsFolderName, filename);
@@ -56,12 +60,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
         protected override async ValueTask<bool> IsEnvironmentReadyAsync()
         {
             var endpoint = new Uri(Endpoint);
-            var keyCredential = new AzureKeyCredential(ApiKey);
-            var keyCredentialClient = new DocumentIntelligenceAdministrationClient(endpoint, keyCredential);
+            var credential = Credential;
+            var client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             try
             {
-                await keyCredentialClient.GetResourceInfoAsync();
+                await client.GetResourceDetailsAsync();
             }
             catch (RequestFailedException e) when (e.Status == 401)
             {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator ==(SessionHostLoadBalancingAlgorithm left, SessionHostLoadBalancingAlgorithm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SessionHostLoadBalancingAlgorithm"/> values are not the same. </summary>
         public static bool operator !=(SessionHostLoadBalancingAlgorithm left, SessionHostLoadBalancingAlgorithm right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SessionHostLoadBalancingAlgorithm"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SessionHostLoadBalancingAlgorithm"/>. </summary>
         public static implicit operator SessionHostLoadBalancingAlgorithm(string value) => new SessionHostLoadBalancingAlgorithm(value);
 
         /// <inheritdoc />

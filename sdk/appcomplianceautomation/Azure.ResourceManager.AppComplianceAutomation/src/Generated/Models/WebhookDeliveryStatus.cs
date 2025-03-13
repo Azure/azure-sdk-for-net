@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static bool operator ==(WebhookDeliveryStatus left, WebhookDeliveryStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebhookDeliveryStatus"/> values are not the same. </summary>
         public static bool operator !=(WebhookDeliveryStatus left, WebhookDeliveryStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WebhookDeliveryStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WebhookDeliveryStatus"/>. </summary>
         public static implicit operator WebhookDeliveryStatus(string value) => new WebhookDeliveryStatus(value);
 
         /// <inheritdoc />

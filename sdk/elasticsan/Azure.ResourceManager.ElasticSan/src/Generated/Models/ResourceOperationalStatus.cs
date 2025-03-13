@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public static bool operator ==(ResourceOperationalStatus left, ResourceOperationalStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceOperationalStatus"/> values are not the same. </summary>
         public static bool operator !=(ResourceOperationalStatus left, ResourceOperationalStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResourceOperationalStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceOperationalStatus"/>. </summary>
         public static implicit operator ResourceOperationalStatus(string value) => new ResourceOperationalStatus(value);
 
         /// <inheritdoc />

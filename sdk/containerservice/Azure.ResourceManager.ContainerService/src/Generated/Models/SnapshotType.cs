@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static bool operator ==(SnapshotType left, SnapshotType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SnapshotType"/> values are not the same. </summary>
         public static bool operator !=(SnapshotType left, SnapshotType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SnapshotType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SnapshotType"/>. </summary>
         public static implicit operator SnapshotType(string value) => new SnapshotType(value);
 
         /// <inheritdoc />

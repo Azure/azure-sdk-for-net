@@ -13,6 +13,34 @@ namespace Azure.Storage.Files.DataLake.Models
     /// </summary>
     public static partial class DataLakeModelFactory
     {
+        #region DataLakeFileReadResult
+        /// <summary>
+        /// Creates a new <see cref="DataLakeFileReadResult"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileReadResult DataLakeFileReadResult(
+            BinaryData content,
+            FileDownloadDetails details)
+            => new DataLakeFileReadResult()
+            {
+                Content = content,
+                Details = details
+            };
+        #endregion DataLakeFileReadResult
+
+        #region DataLakeFileReadStreamingResult
+        /// <summary>
+        /// Creates a new <see cref="DataLakeFileReadStreamingResult"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileReadStreamingResult DataLakeFileReadStreamingResult(
+            Stream content,
+            FileDownloadDetails details)
+            => new DataLakeFileReadStreamingResult()
+            {
+                Content = content,
+                Details = details
+            };
+        #endregion DataLakeFileReadStreamingResult
+
         #region FileDownloadDetails
         /// <summary>
         /// Creates a new FileDownloadDetails instance for mocking.
@@ -235,6 +263,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Creates a new <see cref="FileDownloadInfo"/> instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static FileDownloadInfo FileDownloadInfo(
             long contentLength,
             Stream content,

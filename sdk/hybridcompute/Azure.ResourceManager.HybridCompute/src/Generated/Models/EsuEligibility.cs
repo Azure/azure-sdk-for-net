@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static bool operator ==(EsuEligibility left, EsuEligibility right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EsuEligibility"/> values are not the same. </summary>
         public static bool operator !=(EsuEligibility left, EsuEligibility right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EsuEligibility"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EsuEligibility"/>. </summary>
         public static implicit operator EsuEligibility(string value) => new EsuEligibility(value);
 
         /// <inheritdoc />

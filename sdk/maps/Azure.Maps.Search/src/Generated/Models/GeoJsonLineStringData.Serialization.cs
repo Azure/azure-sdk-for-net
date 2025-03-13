@@ -7,10 +7,11 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonLineStringData
+    internal partial class GeoJsonLineStringData
     {
         internal static GeoJsonLineStringData DeserializeGeoJsonLineStringData(JsonElement element)
         {
@@ -51,7 +52,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static GeoJsonLineStringData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeGeoJsonLineStringData(document.RootElement);
         }
     }

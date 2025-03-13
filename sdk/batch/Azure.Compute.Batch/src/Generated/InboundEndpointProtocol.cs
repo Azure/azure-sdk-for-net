@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(InboundEndpointProtocol left, InboundEndpointProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InboundEndpointProtocol"/> values are not the same. </summary>
         public static bool operator !=(InboundEndpointProtocol left, InboundEndpointProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InboundEndpointProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InboundEndpointProtocol"/>. </summary>
         public static implicit operator InboundEndpointProtocol(string value) => new InboundEndpointProtocol(value);
 
         /// <inheritdoc />

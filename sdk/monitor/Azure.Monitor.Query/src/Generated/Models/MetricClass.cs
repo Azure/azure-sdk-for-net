@@ -42,7 +42,7 @@ namespace Azure.Monitor.Query.Models
         public static bool operator ==(MetricClass left, MetricClass right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricClass"/> values are not the same. </summary>
         public static bool operator !=(MetricClass left, MetricClass right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MetricClass"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MetricClass"/>. </summary>
         public static implicit operator MetricClass(string value) => new MetricClass(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(ScrubbingRuleEntryState left, ScrubbingRuleEntryState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScrubbingRuleEntryState"/> values are not the same. </summary>
         public static bool operator !=(ScrubbingRuleEntryState left, ScrubbingRuleEntryState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScrubbingRuleEntryState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScrubbingRuleEntryState"/>. </summary>
         public static implicit operator ScrubbingRuleEntryState(string value) => new ScrubbingRuleEntryState(value);
 
         /// <inheritdoc />

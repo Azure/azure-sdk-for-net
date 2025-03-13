@@ -11,7 +11,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Quota.Models;
 
 namespace Azure.ResourceManager.Quota
 {
@@ -32,11 +31,11 @@ namespace Azure.ResourceManager.Quota
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-01-preview";
+            _apiVersion = apiVersion ?? "2025-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string managementGroupId, string groupQuotaName, string resourceProviderName, string resourceName, string filter)
+        internal RequestUriBuilder CreateListRequestUri(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -47,13 +46,12 @@ namespace Azure.ResourceManager.Quota
             uri.AppendPath("/resourceProviders/", false);
             uri.AppendPath(resourceProviderName, true);
             uri.AppendPath("/groupQuotaLimits/", false);
-            uri.AppendPath(resourceName, true);
+            uri.AppendPath(location, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("$filter", filter, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string managementGroupId, string groupQuotaName, string resourceProviderName, string resourceName, string filter)
+        internal HttpMessage CreateListRequest(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,322 +65,73 @@ namespace Azure.ResourceManager.Quota
             uri.AppendPath("/resourceProviders/", false);
             uri.AppendPath(resourceProviderName, true);
             uri.AppendPath("/groupQuotaLimits/", false);
-            uri.AppendPath(resourceName, true);
+            uri.AppendPath(location, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("$filter", filter, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary>
-        /// Gets the GroupQuotaLimits for the specific resource for a specific resource based on the resourceProviders, resourceName and $filter passed.
-        /// The $filter=location eq {location} is required to location specific resources groupQuota.
-        /// </summary>
+        /// <summary> Gets the GroupQuotaLimits for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. </summary>
         /// <param name="managementGroupId"> Management Group Id. </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="resourceName"> Resource name. </param>
-        /// <param name="filter">
-        /// | Field | Supported operators
-        /// |---------------------|------------------------
-        ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
-        /// </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/>, <paramref name="resourceName"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GroupQuotaLimitData>> GetAsync(string managementGroupId, string groupQuotaName, string resourceProviderName, string resourceName, string filter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<GroupQuotaLimitListData>> ListAsync(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateGetRequest(managementGroupId, groupQuotaName, resourceProviderName, resourceName, filter);
+            using var message = CreateListRequest(managementGroupId, groupQuotaName, resourceProviderName, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        GroupQuotaLimitData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GroupQuotaLimitData.DeserializeGroupQuotaLimitData(document.RootElement);
+                        GroupQuotaLimitListData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = GroupQuotaLimitListData.DeserializeGroupQuotaLimitListData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((GroupQuotaLimitData)null, message.Response);
+                    return Response.FromValue((GroupQuotaLimitListData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary>
-        /// Gets the GroupQuotaLimits for the specific resource for a specific resource based on the resourceProviders, resourceName and $filter passed.
-        /// The $filter=location eq {location} is required to location specific resources groupQuota.
-        /// </summary>
+        /// <summary> Gets the GroupQuotaLimits for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. </summary>
         /// <param name="managementGroupId"> Management Group Id. </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="resourceName"> Resource name. </param>
-        /// <param name="filter">
-        /// | Field | Supported operators
-        /// |---------------------|------------------------
-        ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
-        /// </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/>, <paramref name="resourceName"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GroupQuotaLimitData> Get(string managementGroupId, string groupQuotaName, string resourceProviderName, string resourceName, string filter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<GroupQuotaLimitListData> List(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateGetRequest(managementGroupId, groupQuotaName, resourceProviderName, resourceName, filter);
+            using var message = CreateListRequest(managementGroupId, groupQuotaName, resourceProviderName, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        GroupQuotaLimitData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GroupQuotaLimitData.DeserializeGroupQuotaLimitData(document.RootElement);
+                        GroupQuotaLimitListData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = GroupQuotaLimitListData.DeserializeGroupQuotaLimitListData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((GroupQuotaLimitData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListRequestUri(string managementGroupId, string groupQuotaName, string resourceProviderName, string filter)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
-            uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/providers/Microsoft.Quota/groupQuotas/", false);
-            uri.AppendPath(groupQuotaName, true);
-            uri.AppendPath("/resourceProviders/", false);
-            uri.AppendPath(resourceProviderName, true);
-            uri.AppendPath("/groupQuotaLimits", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("$filter", filter, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string managementGroupId, string groupQuotaName, string resourceProviderName, string filter)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
-            uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/providers/Microsoft.Quota/groupQuotas/", false);
-            uri.AppendPath(groupQuotaName, true);
-            uri.AppendPath("/resourceProviders/", false);
-            uri.AppendPath(resourceProviderName, true);
-            uri.AppendPath("/groupQuotaLimits", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("$filter", filter, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary>
-        /// Gets the GroupQuotaLimits for the all resource for a specific  resourceProvider and $filter passed.
-        /// The $filter=location eq {location} is required to location specific resources groupQuota.
-        /// </summary>
-        /// <param name="managementGroupId"> Management Group Id. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="filter">
-        /// | Field | Supported operators
-        /// |---------------------|------------------------
-        ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GroupQuotaLimitList>> ListAsync(string managementGroupId, string groupQuotaName, string resourceProviderName, string filter, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            using var message = CreateListRequest(managementGroupId, groupQuotaName, resourceProviderName, filter);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GroupQuotaLimitList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GroupQuotaLimitList.DeserializeGroupQuotaLimitList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary>
-        /// Gets the GroupQuotaLimits for the all resource for a specific  resourceProvider and $filter passed.
-        /// The $filter=location eq {location} is required to location specific resources groupQuota.
-        /// </summary>
-        /// <param name="managementGroupId"> Management Group Id. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="filter">
-        /// | Field | Supported operators
-        /// |---------------------|------------------------
-        ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GroupQuotaLimitList> List(string managementGroupId, string groupQuotaName, string resourceProviderName, string filter, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            using var message = CreateListRequest(managementGroupId, groupQuotaName, resourceProviderName, filter);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GroupQuotaLimitList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GroupQuotaLimitList.DeserializeGroupQuotaLimitList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string managementGroupId, string groupQuotaName, string resourceProviderName, string filter)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string managementGroupId, string groupQuotaName, string resourceProviderName, string filter)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary>
-        /// Gets the GroupQuotaLimits for the all resource for a specific  resourceProvider and $filter passed.
-        /// The $filter=location eq {location} is required to location specific resources groupQuota.
-        /// </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="managementGroupId"> Management Group Id. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="filter">
-        /// | Field | Supported operators
-        /// |---------------------|------------------------
-        ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GroupQuotaLimitList>> ListNextPageAsync(string nextLink, string managementGroupId, string groupQuotaName, string resourceProviderName, string filter, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            using var message = CreateListNextPageRequest(nextLink, managementGroupId, groupQuotaName, resourceProviderName, filter);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GroupQuotaLimitList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GroupQuotaLimitList.DeserializeGroupQuotaLimitList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary>
-        /// Gets the GroupQuotaLimits for the all resource for a specific  resourceProvider and $filter passed.
-        /// The $filter=location eq {location} is required to location specific resources groupQuota.
-        /// </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="managementGroupId"> Management Group Id. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="filter">
-        /// | Field | Supported operators
-        /// |---------------------|------------------------
-        ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GroupQuotaLimitList> ListNextPage(string nextLink, string managementGroupId, string groupQuotaName, string resourceProviderName, string filter, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            using var message = CreateListNextPageRequest(nextLink, managementGroupId, groupQuotaName, resourceProviderName, filter);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GroupQuotaLimitList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GroupQuotaLimitList.DeserializeGroupQuotaLimitList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                    return Response.FromValue((GroupQuotaLimitListData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

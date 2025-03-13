@@ -55,5 +55,20 @@ namespace Microsoft.Azure.WebJobs.Samples
         {
         }
         #endregion
+
+        [FunctionName("connect")]
+        public static WebPubSubEventResponse Run(
+        [WebPubSubTrigger("hub", WebPubSubEventType.System, "connect")] ConnectEventRequest request,
+        ILogger log)
+        {
+            if (request.ConnectionContext.ConnectionId != "attacker")
+            {
+                return request.CreateResponse(request.ConnectionContext.UserId, new string[] { "group1", "group2" }, "websocket-subprotocol", new string[] { "webpubsub.joinLeaveGroup.group1", "webpubsub.sendToGroup.group2" });
+            }
+            else
+            {
+                return request.CreateErrorResponse(WebPubSubErrorCode.Unauthorized, "Unauthorized connection");
+            }
+        }
     }
 }

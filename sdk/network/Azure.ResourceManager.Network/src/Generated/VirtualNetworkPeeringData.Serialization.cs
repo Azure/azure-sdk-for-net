@@ -21,32 +21,26 @@ namespace Azure.ResourceManager.Network
 
         void IJsonModel<VirtualNetworkPeeringData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkPeeringData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
-            }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(ResourceType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -161,22 +155,6 @@ namespace Azure.ResourceManager.Network
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         VirtualNetworkPeeringData IJsonModel<VirtualNetworkPeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -208,10 +186,10 @@ namespace Azure.ResourceManager.Network
             bool? allowGatewayTransit = default;
             bool? useRemoteGateways = default;
             WritableSubResource remoteVirtualNetwork = default;
-            AddressSpace localAddressSpace = default;
-            AddressSpace localVirtualNetworkAddressSpace = default;
-            AddressSpace remoteAddressSpace = default;
-            AddressSpace remoteVirtualNetworkAddressSpace = default;
+            VirtualNetworkAddressSpace localAddressSpace = default;
+            VirtualNetworkAddressSpace localVirtualNetworkAddressSpace = default;
+            VirtualNetworkAddressSpace remoteAddressSpace = default;
+            VirtualNetworkAddressSpace remoteVirtualNetworkAddressSpace = default;
             VirtualNetworkBgpCommunities remoteBgpCommunities = default;
             VirtualNetworkEncryption remoteVirtualNetworkEncryption = default;
             VirtualNetworkPeeringState? peeringState = default;
@@ -319,7 +297,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            localAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
+                            localAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("localVirtualNetworkAddressSpace"u8))
@@ -328,7 +306,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            localVirtualNetworkAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
+                            localVirtualNetworkAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("remoteAddressSpace"u8))
@@ -337,7 +315,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
+                            remoteAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("remoteVirtualNetworkAddressSpace"u8))
@@ -346,7 +324,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteVirtualNetworkAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
+                            remoteVirtualNetworkAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("remoteBgpCommunities"u8))
@@ -516,7 +494,7 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualNetworkPeeringData(document.RootElement, options);
                     }
                 default:

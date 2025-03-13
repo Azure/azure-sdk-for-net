@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(NspAccessRuleDirection left, NspAccessRuleDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NspAccessRuleDirection"/> values are not the same. </summary>
         public static bool operator !=(NspAccessRuleDirection left, NspAccessRuleDirection right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NspAccessRuleDirection"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NspAccessRuleDirection"/>. </summary>
         public static implicit operator NspAccessRuleDirection(string value) => new NspAccessRuleDirection(value);
 
         /// <inheritdoc />

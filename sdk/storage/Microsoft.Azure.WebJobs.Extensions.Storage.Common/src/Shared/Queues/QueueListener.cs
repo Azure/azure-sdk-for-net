@@ -169,10 +169,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            if (_drainModeManager?.IsDrainModeEnabled ?? false)
+            if (!_drainModeManager?.IsDrainModeEnabled ?? true)
             {
+                // Cancel the execution token when drain mode is not enabled or drain mode manager is not set.
                 _executionCancellationTokenSource.Cancel();
             }
+
             using (cancellationToken.Register(() => _shutdownCancellationTokenSource.Cancel()))
             {
                 ThrowIfDisposed();
@@ -417,7 +419,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                     // Use a different cancellation token for shutdown to allow graceful shutdown.
                     // Specifically, don't cancel the completion or update of the message itself during graceful shutdown.
                     // Only cancel completion or update of the message if a non-graceful shutdown is requested via _shutdownCancellationTokenSource.
-                    await _queueProcessor.CompleteProcessingMessageAsync(message, result, linkedCts.Token).ConfigureAwait(false);
+                    await _queueProcessor.CompleteProcessingMessageAsync(message, result, _shutdownCancellationTokenSource.Token).ConfigureAwait(false);
                 }
             }
             catch (TaskCanceledException)

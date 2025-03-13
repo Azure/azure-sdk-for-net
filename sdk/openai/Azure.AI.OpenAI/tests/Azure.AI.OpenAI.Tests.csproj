@@ -15,6 +15,14 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
+    
+    <!--
+      Microsoft.NET.Test.Sdk has a transitive dependency to Newtonsoft.Json. In order to pick up the
+      right version from Packages.data.props, we need to add an explicit reference to it here.
+      We can remove it once we update Microsoft.NET.Test.Sdk or support central package version
+      management for transitive dependencies.
+      -->
+    <PackageReference Include="Newtonsoft.Json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +38,20 @@
                Include="$([System.IO.Path]::GetFileName('$(ExternalAzureCoreLibrary)'))"
                HintPath="$(ExternalAzureCoreLibrary)" />
   </ItemGroup>
+
+  <Choose>
+    <When Condition="'$(GAServiceVersionLabel)' != ''">
+      <PropertyGroup>
+        <DefineConstants>AZURE_OPENAI_GA</DefineConstants>
+        <VersionSuffix/>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <VersionSuffix>beta.6</VersionSuffix>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
 
   <ItemGroup>
     <Using Include="NUnit.Framework" />

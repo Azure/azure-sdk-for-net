@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(DataConnectorLicenseState left, DataConnectorLicenseState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataConnectorLicenseState"/> values are not the same. </summary>
         public static bool operator !=(DataConnectorLicenseState left, DataConnectorLicenseState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataConnectorLicenseState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataConnectorLicenseState"/>. </summary>
         public static implicit operator DataConnectorLicenseState(string value) => new DataConnectorLicenseState(value);
 
         /// <inheritdoc />

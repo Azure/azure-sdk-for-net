@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator ==(PublishingProfileFormat left, PublishingProfileFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PublishingProfileFormat"/> values are not the same. </summary>
         public static bool operator !=(PublishingProfileFormat left, PublishingProfileFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PublishingProfileFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PublishingProfileFormat"/>. </summary>
         public static implicit operator PublishingProfileFormat(string value) => new PublishingProfileFormat(value);
 
         /// <inheritdoc />

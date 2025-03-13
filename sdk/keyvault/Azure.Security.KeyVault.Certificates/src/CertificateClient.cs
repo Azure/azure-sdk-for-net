@@ -893,7 +893,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Post, importCertificateOptions, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, "/", importCertificateOptions.Name, "/import");
+                return _pipeline.SendRequest(RequestMethod.Post, importCertificateOptions, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, importCertificateOptions.Name, "/import");
             }
             catch (Exception e)
             {
@@ -923,7 +923,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, importCertificateOptions, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, "/", importCertificateOptions.Name, "/import").ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, importCertificateOptions, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, importCertificateOptions.Name, "/import").ConfigureAwait(false);
             }
             catch (Exception e)
             {

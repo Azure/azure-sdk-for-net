@@ -28,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator ==(SnoozeScope left, SnoozeScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SnoozeScope"/> values are not the same. </summary>
         public static bool operator !=(SnoozeScope left, SnoozeScope right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SnoozeScope"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SnoozeScope"/>. </summary>
         public static implicit operator SnoozeScope(string value) => new SnoozeScope(value);
 
         /// <inheritdoc />

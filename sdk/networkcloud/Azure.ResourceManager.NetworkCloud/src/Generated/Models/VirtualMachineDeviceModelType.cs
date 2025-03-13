@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(VirtualMachineDeviceModelType left, VirtualMachineDeviceModelType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachineDeviceModelType"/> values are not the same. </summary>
         public static bool operator !=(VirtualMachineDeviceModelType left, VirtualMachineDeviceModelType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualMachineDeviceModelType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachineDeviceModelType"/>. </summary>
         public static implicit operator VirtualMachineDeviceModelType(string value) => new VirtualMachineDeviceModelType(value);
 
         /// <inheritdoc />

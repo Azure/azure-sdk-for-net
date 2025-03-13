@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(RecoveryPointSyncType left, RecoveryPointSyncType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecoveryPointSyncType"/> values are not the same. </summary>
         public static bool operator !=(RecoveryPointSyncType left, RecoveryPointSyncType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RecoveryPointSyncType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryPointSyncType"/>. </summary>
         public static implicit operator RecoveryPointSyncType(string value) => new RecoveryPointSyncType(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         public static bool operator ==(HealthDataAIServicesPrivateEndpointServiceConnectionStatus left, HealthDataAIServicesPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthDataAIServicesPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(HealthDataAIServicesPrivateEndpointServiceConnectionStatus left, HealthDataAIServicesPrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HealthDataAIServicesPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HealthDataAIServicesPrivateEndpointServiceConnectionStatus"/>. </summary>
         public static implicit operator HealthDataAIServicesPrivateEndpointServiceConnectionStatus(string value) => new HealthDataAIServicesPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc />

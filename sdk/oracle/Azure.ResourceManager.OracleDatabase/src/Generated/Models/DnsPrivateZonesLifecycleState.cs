@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(DnsPrivateZonesLifecycleState left, DnsPrivateZonesLifecycleState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsPrivateZonesLifecycleState"/> values are not the same. </summary>
         public static bool operator !=(DnsPrivateZonesLifecycleState left, DnsPrivateZonesLifecycleState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DnsPrivateZonesLifecycleState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DnsPrivateZonesLifecycleState"/>. </summary>
         public static implicit operator DnsPrivateZonesLifecycleState(string value) => new DnsPrivateZonesLifecycleState(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(NetworkApiVersion left, NetworkApiVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkApiVersion"/> values are not the same. </summary>
         public static bool operator !=(NetworkApiVersion left, NetworkApiVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkApiVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkApiVersion"/>. </summary>
         public static implicit operator NetworkApiVersion(string value) => new NetworkApiVersion(value);
 
         /// <inheritdoc />

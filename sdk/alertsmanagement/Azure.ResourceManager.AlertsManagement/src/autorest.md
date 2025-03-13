@@ -18,7 +18,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-use-write-core: true
 
 rename-mapping:
   AlertModification.modifiedAt: modifiedOn|date-time

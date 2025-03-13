@@ -39,7 +39,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(BatchNodeDeallocationOption left, BatchNodeDeallocationOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchNodeDeallocationOption"/> values are not the same. </summary>
         public static bool operator !=(BatchNodeDeallocationOption left, BatchNodeDeallocationOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BatchNodeDeallocationOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchNodeDeallocationOption"/>. </summary>
         public static implicit operator BatchNodeDeallocationOption(string value) => new BatchNodeDeallocationOption(value);
 
         /// <inheritdoc />

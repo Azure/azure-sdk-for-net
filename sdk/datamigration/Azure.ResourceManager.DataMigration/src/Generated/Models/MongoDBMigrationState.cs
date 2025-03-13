@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(MongoDBMigrationState left, MongoDBMigrationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MongoDBMigrationState"/> values are not the same. </summary>
         public static bool operator !=(MongoDBMigrationState left, MongoDBMigrationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MongoDBMigrationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoDBMigrationState"/>. </summary>
         public static implicit operator MongoDBMigrationState(string value) => new MongoDBMigrationState(value);
 
         /// <inheritdoc />

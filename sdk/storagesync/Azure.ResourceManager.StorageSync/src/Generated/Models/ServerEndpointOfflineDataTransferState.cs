@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static bool operator ==(ServerEndpointOfflineDataTransferState left, ServerEndpointOfflineDataTransferState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerEndpointOfflineDataTransferState"/> values are not the same. </summary>
         public static bool operator !=(ServerEndpointOfflineDataTransferState left, ServerEndpointOfflineDataTransferState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServerEndpointOfflineDataTransferState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServerEndpointOfflineDataTransferState"/>. </summary>
         public static implicit operator ServerEndpointOfflineDataTransferState(string value) => new ServerEndpointOfflineDataTransferState(value);
 
         /// <inheritdoc />

@@ -9,5 +9,5 @@ namespace Azure.Provisioning.Sql;
 public partial class SqlServerAzureADAdministrator
 {
     private partial BicepValue<string> GetNameDefaultValue() =>
-        new StringLiteral("ActiveDirectory");
+        new StringLiteralExpression("ActiveDirectory");
 }

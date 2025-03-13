@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(SkipShutdown left, SkipShutdown right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SkipShutdown"/> values are not the same. </summary>
         public static bool operator !=(SkipShutdown left, SkipShutdown right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SkipShutdown"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SkipShutdown"/>. </summary>
         public static implicit operator SkipShutdown(string value) => new SkipShutdown(value);
 
         /// <inheritdoc />

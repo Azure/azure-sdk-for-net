@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator ==(MessageFilterType left, MessageFilterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MessageFilterType"/> values are not the same. </summary>
         public static bool operator !=(MessageFilterType left, MessageFilterType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MessageFilterType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MessageFilterType"/>. </summary>
         public static implicit operator MessageFilterType(string value) => new MessageFilterType(value);
 
         /// <inheritdoc />

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(MicrosoftSecurityProductName left, MicrosoftSecurityProductName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MicrosoftSecurityProductName"/> values are not the same. </summary>
         public static bool operator !=(MicrosoftSecurityProductName left, MicrosoftSecurityProductName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MicrosoftSecurityProductName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MicrosoftSecurityProductName"/>. </summary>
         public static implicit operator MicrosoftSecurityProductName(string value) => new MicrosoftSecurityProductName(value);
 
         /// <inheritdoc />

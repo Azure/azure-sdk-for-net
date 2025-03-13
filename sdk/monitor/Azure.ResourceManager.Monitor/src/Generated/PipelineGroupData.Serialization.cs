@@ -22,125 +22,32 @@ namespace Azure.ResourceManager.Monitor
 
         void IJsonModel<PipelineGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PipelineGroupData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Replicas))
-            {
-                writer.WritePropertyName("replicas"u8);
-                writer.WriteNumberValue(Replicas.Value);
-            }
-            if (Optional.IsCollectionDefined(Receivers))
-            {
-                writer.WritePropertyName("receivers"u8);
-                writer.WriteStartArray();
-                foreach (var item in Receivers)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Processors))
-            {
-                writer.WritePropertyName("processors"u8);
-                writer.WriteStartArray();
-                foreach (var item in Processors)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Exporters))
-            {
-                writer.WritePropertyName("exporters"u8);
-                writer.WriteStartArray();
-                foreach (var item in Exporters)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Service))
-            {
-                writer.WritePropertyName("service"u8);
-                writer.WriteObjectValue(Service, options);
-            }
-            if (Optional.IsCollectionDefined(NetworkingConfigurations))
-            {
-                writer.WritePropertyName("networkingConfigurations"u8);
-                writer.WriteStartArray();
-                foreach (var item in NetworkingConfigurations)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         PipelineGroupData IJsonModel<PipelineGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -163,6 +70,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
+            PipelineGroupProperties properties = default;
             ExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -170,17 +78,19 @@ namespace Azure.ResourceManager.Monitor
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            int? replicas = default;
-            IList<PipelineGroupReceiver> receivers = default;
-            IList<PipelineGroupProcessor> processors = default;
-            IList<PipelineGroupExporter> exporters = default;
-            PipelineGroupService service = default;
-            IList<PipelineGroupNetworkingConfiguration> networkingConfigurations = default;
-            MonitorProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = PipelineGroupProperties.DeserializePipelineGroupProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("extendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -233,101 +143,6 @@ namespace Azure.ResourceManager.Monitor
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("replicas"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            replicas = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("receivers"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<PipelineGroupReceiver> array = new List<PipelineGroupReceiver>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(PipelineGroupReceiver.DeserializePipelineGroupReceiver(item, options));
-                            }
-                            receivers = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("processors"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<PipelineGroupProcessor> array = new List<PipelineGroupProcessor>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(PipelineGroupProcessor.DeserializePipelineGroupProcessor(item, options));
-                            }
-                            processors = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("exporters"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<PipelineGroupExporter> array = new List<PipelineGroupExporter>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(PipelineGroupExporter.DeserializePipelineGroupExporter(item, options));
-                            }
-                            exporters = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("service"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            service = PipelineGroupService.DeserializePipelineGroupService(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("networkingConfigurations"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<PipelineGroupNetworkingConfiguration> array = new List<PipelineGroupNetworkingConfiguration>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(PipelineGroupNetworkingConfiguration.DeserializePipelineGroupNetworkingConfiguration(item, options));
-                            }
-                            networkingConfigurations = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new MonitorProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -341,14 +156,8 @@ namespace Azure.ResourceManager.Monitor
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                properties,
                 extendedLocation,
-                replicas,
-                receivers ?? new ChangeTrackingList<PipelineGroupReceiver>(),
-                processors ?? new ChangeTrackingList<PipelineGroupProcessor>(),
-                exporters ?? new ChangeTrackingList<PipelineGroupExporter>(),
-                service,
-                networkingConfigurations ?? new ChangeTrackingList<PipelineGroupNetworkingConfiguration>(),
-                provisioningState,
                 serializedAdditionalRawData);
         }
 
@@ -373,7 +182,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePipelineGroupData(document.RootElement, options);
                     }
                 default:

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(SecurityCenterCloudName left, SecurityCenterCloudName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityCenterCloudName"/> values are not the same. </summary>
         public static bool operator !=(SecurityCenterCloudName left, SecurityCenterCloudName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityCenterCloudName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityCenterCloudName"/>. </summary>
         public static implicit operator SecurityCenterCloudName(string value) => new SecurityCenterCloudName(value);
 
         /// <inheritdoc />

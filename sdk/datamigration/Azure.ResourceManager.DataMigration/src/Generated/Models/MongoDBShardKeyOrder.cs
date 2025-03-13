@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(MongoDBShardKeyOrder left, MongoDBShardKeyOrder right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MongoDBShardKeyOrder"/> values are not the same. </summary>
         public static bool operator !=(MongoDBShardKeyOrder left, MongoDBShardKeyOrder right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MongoDBShardKeyOrder"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoDBShardKeyOrder"/>. </summary>
         public static implicit operator MongoDBShardKeyOrder(string value) => new MongoDBShardKeyOrder(value);
 
         /// <inheritdoc />

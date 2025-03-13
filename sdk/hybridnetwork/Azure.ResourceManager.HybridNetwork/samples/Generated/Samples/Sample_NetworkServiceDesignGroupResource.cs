@@ -10,42 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HybridNetwork.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridNetwork.Samples
 {
     public partial class Sample_NetworkServiceDesignGroupResource
     {
-        // Delete a network function group resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteANetworkFunctionGroupResource()
-        {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkServiceDesignGroupDelete.json
-            // this example is just showing the usage of "NetworkServiceDesignGroups_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkServiceDesignGroupResource created on azure
-            // for more information of creating NetworkServiceDesignGroupResource, please refer to the document of NetworkServiceDesignGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            string publisherName = "TestPublisher";
-            string networkServiceDesignGroupName = "TestNetworkServiceDesignGroupName";
-            ResourceIdentifier networkServiceDesignGroupResourceId = NetworkServiceDesignGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, publisherName, networkServiceDesignGroupName);
-            NetworkServiceDesignGroupResource networkServiceDesignGroup = client.GetNetworkServiceDesignGroupResource(networkServiceDesignGroupResourceId);
-
-            // invoke the operation
-            await networkServiceDesignGroup.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get a networkServiceDesign group resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetANetworkServiceDesignGroupResource()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkServiceDesignGroupGet.json
@@ -75,9 +47,35 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update the network service design group resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteANetworkFunctionGroupResource()
+        {
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkServiceDesignGroupDelete.json
+            // this example is just showing the usage of "NetworkServiceDesignGroups_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkServiceDesignGroupResource created on azure
+            // for more information of creating NetworkServiceDesignGroupResource, please refer to the document of NetworkServiceDesignGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            string publisherName = "TestPublisher";
+            string networkServiceDesignGroupName = "TestNetworkServiceDesignGroupName";
+            ResourceIdentifier networkServiceDesignGroupResourceId = NetworkServiceDesignGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, publisherName, networkServiceDesignGroupName);
+            NetworkServiceDesignGroupResource networkServiceDesignGroup = client.GetNetworkServiceDesignGroupResource(networkServiceDesignGroupResourceId);
+
+            // invoke the operation
+            await networkServiceDesignGroup.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateTheNetworkServiceDesignGroupResource()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkServiceDesignGroupUpdateTags.json
@@ -98,12 +96,12 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
             NetworkServiceDesignGroupResource networkServiceDesignGroup = client.GetNetworkServiceDesignGroupResource(networkServiceDesignGroupResourceId);
 
             // invoke the operation
-            TagsObject tagsObject = new TagsObject()
+            TagsObject tagsObject = new TagsObject
             {
                 Tags =
 {
 ["tag1"] = "value1",
-["tag2"] = "value2",
+["tag2"] = "value2"
 },
             };
             NetworkServiceDesignGroupResource result = await networkServiceDesignGroup.UpdateAsync(tagsObject);

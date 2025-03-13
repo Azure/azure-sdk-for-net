@@ -33,7 +33,7 @@ namespace Azure.Quantum.Jobs.Models
         public static bool operator ==(MeterPeriod left, MeterPeriod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MeterPeriod"/> values are not the same. </summary>
         public static bool operator !=(MeterPeriod left, MeterPeriod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MeterPeriod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MeterPeriod"/>. </summary>
         public static implicit operator MeterPeriod(string value) => new MeterPeriod(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Authorization.Models
         public static bool operator ==(RoleManagementScopeType left, RoleManagementScopeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleManagementScopeType"/> values are not the same. </summary>
         public static bool operator !=(RoleManagementScopeType left, RoleManagementScopeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RoleManagementScopeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RoleManagementScopeType"/>. </summary>
         public static implicit operator RoleManagementScopeType(string value) => new RoleManagementScopeType(value);
 
         /// <inheritdoc />

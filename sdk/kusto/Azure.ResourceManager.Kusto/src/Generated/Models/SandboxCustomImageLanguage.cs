@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public static bool operator ==(SandboxCustomImageLanguage left, SandboxCustomImageLanguage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SandboxCustomImageLanguage"/> values are not the same. </summary>
         public static bool operator !=(SandboxCustomImageLanguage left, SandboxCustomImageLanguage right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SandboxCustomImageLanguage"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SandboxCustomImageLanguage"/>. </summary>
         public static implicit operator SandboxCustomImageLanguage(string value) => new SandboxCustomImageLanguage(value);
 
         /// <inheritdoc />

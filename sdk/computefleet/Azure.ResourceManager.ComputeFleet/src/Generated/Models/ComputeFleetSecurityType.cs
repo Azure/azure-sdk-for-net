@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(ComputeFleetSecurityType left, ComputeFleetSecurityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeFleetSecurityType"/> values are not the same. </summary>
         public static bool operator !=(ComputeFleetSecurityType left, ComputeFleetSecurityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeFleetSecurityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetSecurityType"/>. </summary>
         public static implicit operator ComputeFleetSecurityType(string value) => new ComputeFleetSecurityType(value);
 
         /// <inheritdoc />

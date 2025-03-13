@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenAI.FineTuning;
+#if !AZURE_OPENAI_GA
+
+using System.ClientModel;
 using System.ClientModel.Primitives;
 
 namespace Azure.AI.OpenAI.FineTuning;
@@ -25,9 +27,16 @@ internal partial class AzureFineTuningClient : FineTuningClient
         options ??= new();
 
         _endpoint = endpoint;
-        _apiVersion = options.Version;
+        _apiVersion = options.GetRawServiceApiValueForClient(this);
     }
 
     protected AzureFineTuningClient()
     { }
+
+    internal override FineTuningJobOperation CreateCreateJobOperation(string jobId, string status, PipelineResponse response)
+    {
+        return new AzureFineTuningJobOperation(Pipeline, _endpoint, jobId, status, response, _apiVersion);
+    }
 }
+
+#endif

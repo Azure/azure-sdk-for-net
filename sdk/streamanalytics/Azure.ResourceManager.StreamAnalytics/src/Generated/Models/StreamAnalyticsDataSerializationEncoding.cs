@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static bool operator ==(StreamAnalyticsDataSerializationEncoding left, StreamAnalyticsDataSerializationEncoding right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamAnalyticsDataSerializationEncoding"/> values are not the same. </summary>
         public static bool operator !=(StreamAnalyticsDataSerializationEncoding left, StreamAnalyticsDataSerializationEncoding right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StreamAnalyticsDataSerializationEncoding"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StreamAnalyticsDataSerializationEncoding"/>. </summary>
         public static implicit operator StreamAnalyticsDataSerializationEncoding(string value) => new StreamAnalyticsDataSerializationEncoding(value);
 
         /// <inheritdoc />

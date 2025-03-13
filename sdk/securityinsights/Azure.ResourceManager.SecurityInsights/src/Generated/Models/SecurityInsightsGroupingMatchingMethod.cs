@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(SecurityInsightsGroupingMatchingMethod left, SecurityInsightsGroupingMatchingMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsGroupingMatchingMethod"/> values are not the same. </summary>
         public static bool operator !=(SecurityInsightsGroupingMatchingMethod left, SecurityInsightsGroupingMatchingMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityInsightsGroupingMatchingMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsGroupingMatchingMethod"/>. </summary>
         public static implicit operator SecurityInsightsGroupingMatchingMethod(string value) => new SecurityInsightsGroupingMatchingMethod(value);
 
         /// <inheritdoc />

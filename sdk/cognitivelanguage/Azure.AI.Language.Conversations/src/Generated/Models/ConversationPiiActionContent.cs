@@ -60,8 +60,13 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="redactionSource"> For transcript conversations, this parameter provides information regarding which content type (ITN, Text, Lexical, Masked ITN) should be used for entity detection. The details of the entities detected - like the offset, length and the text itself - will correspond to the text type selected here. </param>
         /// <param name="redactionCharacter"> Optional parameter to use a Custom Character to be used for redaction in PII responses. Default character will be * as before. We allow specific ascii characters for redaction. </param>
         /// <param name="excludePiiCategories"> List of categories that need to be excluded instead of included. </param>
+        /// <param name="redactionPolicy">
+        /// Optional parameter determine what type of redaction to use.
+        /// Please note <see cref="BaseRedactionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskTypePolicyType"/> and <see cref="NoMaskPolicyType"/>.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationPiiActionContent(bool? loggingOptOut, string modelVersion, IList<ConversationPiiCategories> piiCategories, bool? redactAudioTiming, TranscriptContentType? redactionSource, RedactionCharacter? redactionCharacter, IList<ConversationPiiCategoryExclusions> excludePiiCategories, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationPiiActionContent(bool? loggingOptOut, string modelVersion, IList<ConversationPiiCategories> piiCategories, bool? redactAudioTiming, TranscriptContentType? redactionSource, RedactionCharacter? redactionCharacter, IList<ConversationPiiCategoryExclusions> excludePiiCategories, BaseRedactionPolicy redactionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;
@@ -70,6 +75,7 @@ namespace Azure.AI.Language.Conversations.Models
             RedactionSource = redactionSource;
             RedactionCharacter = redactionCharacter;
             ExcludePiiCategories = excludePiiCategories;
+            RedactionPolicy = redactionPolicy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -87,5 +93,11 @@ namespace Azure.AI.Language.Conversations.Models
         public RedactionCharacter? RedactionCharacter { get; set; }
         /// <summary> List of categories that need to be excluded instead of included. </summary>
         public IList<ConversationPiiCategoryExclusions> ExcludePiiCategories { get; }
+        /// <summary>
+        /// Optional parameter determine what type of redaction to use.
+        /// Please note <see cref="BaseRedactionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskTypePolicyType"/> and <see cref="NoMaskPolicyType"/>.
+        /// </summary>
+        public BaseRedactionPolicy RedactionPolicy { get; set; }
     }
 }

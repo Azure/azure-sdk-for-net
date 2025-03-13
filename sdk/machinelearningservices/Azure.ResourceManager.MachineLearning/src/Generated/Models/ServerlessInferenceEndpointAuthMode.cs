@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(ServerlessInferenceEndpointAuthMode left, ServerlessInferenceEndpointAuthMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerlessInferenceEndpointAuthMode"/> values are not the same. </summary>
         public static bool operator !=(ServerlessInferenceEndpointAuthMode left, ServerlessInferenceEndpointAuthMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServerlessInferenceEndpointAuthMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServerlessInferenceEndpointAuthMode"/>. </summary>
         public static implicit operator ServerlessInferenceEndpointAuthMode(string value) => new ServerlessInferenceEndpointAuthMode(value);
 
         /// <inheritdoc />

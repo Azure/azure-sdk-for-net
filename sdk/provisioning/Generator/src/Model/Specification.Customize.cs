@@ -57,7 +57,10 @@ public abstract partial class Specification : ModelBase
 
     protected void CustomizeProperty<T>(string propertyName, Action<Property> action) =>
         CustomizeProperty(GetModel<T>(), propertyName, action);
-    
+
+    protected void CustomizePropertyIsoDuration<T>(string propertyName) =>
+        CustomizeProperty(GetModel<T>(), propertyName, p => p.Format = "P");
+
     protected void CustomizeProperty(string modelName, string propertyName, Action<Property> action) =>
         CustomizeProperty(ModelNameMapping.GetValueOrDefault(modelName) ??
             throw new InvalidOperationException($"Failed to find {modelName} to customize!"), propertyName, action);

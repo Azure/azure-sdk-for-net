@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(FrontDoorUsageUnit left, FrontDoorUsageUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorUsageUnit"/> values are not the same. </summary>
         public static bool operator !=(FrontDoorUsageUnit left, FrontDoorUsageUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FrontDoorUsageUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorUsageUnit"/>. </summary>
         public static implicit operator FrontDoorUsageUnit(string value) => new FrontDoorUsageUnit(value);
 
         /// <inheritdoc />

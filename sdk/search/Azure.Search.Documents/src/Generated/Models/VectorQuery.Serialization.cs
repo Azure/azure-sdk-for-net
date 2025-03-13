@@ -42,6 +42,16 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
+            if (Optional.IsDefined(Threshold))
+            {
+                writer.WritePropertyName("threshold"u8);
+                writer.WriteObjectValue(Threshold);
+            }
+            if (Optional.IsDefined(FilterOverride))
+            {
+                writer.WritePropertyName("filterOverride"u8);
+                writer.WriteStringValue(FilterOverride);
+            }
             writer.WriteEndObject();
         }
 
@@ -55,6 +65,8 @@ namespace Azure.Search.Documents.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "imageBinary": return VectorizableImageBinaryQuery.DeserializeVectorizableImageBinaryQuery(element);
+                    case "imageUrl": return VectorizableImageUrlQuery.DeserializeVectorizableImageUrlQuery(element);
                     case "text": return VectorizableTextQuery.DeserializeVectorizableTextQuery(element);
                     case "vector": return VectorizedQuery.DeserializeVectorizedQuery(element);
                 }
@@ -66,7 +78,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static VectorQuery FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeVectorQuery(document.RootElement);
         }
 

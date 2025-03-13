@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.11 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -10,12 +10,28 @@
 
 ### Other Changes
 
+## 1.1.0-beta.1 (2024-12-02)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2024-05' to 'package-preview-2024-07'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/0f300277e21972f20b32ffbff96180217875909b/specification/hybridcompute/resource-manager/readme.md.
+    - Added license profile operations for hybrid machine
+    - Added gateway and settings operations for hybrid machine
+
+## 1.0.0 (2024-10-18)
+
+This is the first stable release of the Hybrid Compute library.
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2024-05' to 'package-2024-07'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/15b16d1b5c3cccdecdd1cfe936f6a8005680c557/specification/hybridcompute/resource-manager/readme.md.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
 ## 1.0.0-beta.10 (2024-07-19)
 
 ### Features Added
 
 - Upgraded api-version tag from 'package-preview-2024-03' to 'package-preview-2024-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b48d5d72073a296514d3d4db77887d8711526ccc/specification/hybridcompute/resource-manager/readme.md
-- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 - Added experimental Bicep serialization.
 
 ## 1.0.0-beta.9 (2024-06-07)
@@ -103,4 +119,4 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-> NOTE: For more information about unified authentication, refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+> NOTE: For more information about unified authentication, refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(PrivateEndpointConnectionStatus left, PrivateEndpointConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PrivateEndpointConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(PrivateEndpointConnectionStatus left, PrivateEndpointConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PrivateEndpointConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PrivateEndpointConnectionStatus"/>. </summary>
         public static implicit operator PrivateEndpointConnectionStatus(string value) => new PrivateEndpointConnectionStatus(value);
 
         /// <inheritdoc />

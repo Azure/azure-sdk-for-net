@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Network
     {
         ConnectionResetSharedKey IOperationSource<ConnectionResetSharedKey>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return ConnectionResetSharedKey.DeserializeConnectionResetSharedKey(document.RootElement);
         }
 
         async ValueTask<ConnectionResetSharedKey> IOperationSource<ConnectionResetSharedKey>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return ConnectionResetSharedKey.DeserializeConnectionResetSharedKey(document.RootElement);
         }
     }

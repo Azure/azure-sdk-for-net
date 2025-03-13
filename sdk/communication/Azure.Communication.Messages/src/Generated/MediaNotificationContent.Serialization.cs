@@ -19,13 +19,22 @@ namespace Azure.Communication.Messages
 
         void IJsonModel<MediaNotificationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MediaNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MediaNotificationContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
@@ -33,33 +42,6 @@ namespace Azure.Communication.Messages
             }
             writer.WritePropertyName("mediaUri"u8);
             writer.WriteStringValue(MediaUri.AbsoluteUri);
-            writer.WritePropertyName("channelRegistrationId"u8);
-            writer.WriteStringValue(ChannelRegistrationId);
-            writer.WritePropertyName("to"u8);
-            writer.WriteStartArray();
-            foreach (var item in To)
-            {
-                writer.WriteStringValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         MediaNotificationContent IJsonModel<MediaNotificationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -157,7 +139,7 @@ namespace Azure.Communication.Messages
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMediaNotificationContent(document.RootElement, options);
                     }
                 default:
@@ -171,7 +153,7 @@ namespace Azure.Communication.Messages
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new MediaNotificationContent FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeMediaNotificationContent(document.RootElement);
         }
 

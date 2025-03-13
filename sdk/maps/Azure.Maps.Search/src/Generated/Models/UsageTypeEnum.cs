@@ -33,7 +33,7 @@ namespace Azure.Maps.Search.Models
         public static bool operator ==(UsageTypeEnum left, UsageTypeEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UsageTypeEnum"/> values are not the same. </summary>
         public static bool operator !=(UsageTypeEnum left, UsageTypeEnum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UsageTypeEnum"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UsageTypeEnum"/>. </summary>
         public static implicit operator UsageTypeEnum(string value) => new UsageTypeEnum(value);
 
         /// <inheritdoc />

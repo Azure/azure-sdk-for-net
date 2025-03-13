@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator ==(AppServiceSkuName left, AppServiceSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppServiceSkuName"/> values are not the same. </summary>
         public static bool operator !=(AppServiceSkuName left, AppServiceSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppServiceSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServiceSkuName"/>. </summary>
         public static implicit operator AppServiceSkuName(string value) => new AppServiceSkuName(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(RuleCacheBehavior left, RuleCacheBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RuleCacheBehavior"/> values are not the same. </summary>
         public static bool operator !=(RuleCacheBehavior left, RuleCacheBehavior right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RuleCacheBehavior"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RuleCacheBehavior"/>. </summary>
         public static implicit operator RuleCacheBehavior(string value) => new RuleCacheBehavior(value);
 
         /// <inheritdoc />

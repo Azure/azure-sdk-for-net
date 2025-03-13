@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator ==(LogicSkuName left, LogicSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicSkuName"/> values are not the same. </summary>
         public static bool operator !=(LogicSkuName left, LogicSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogicSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogicSkuName"/>. </summary>
         public static implicit operator LogicSkuName(string value) => new LogicSkuName(value);
 
         /// <inheritdoc />

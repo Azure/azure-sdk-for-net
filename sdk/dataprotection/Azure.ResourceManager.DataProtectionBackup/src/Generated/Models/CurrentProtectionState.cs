@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static bool operator ==(CurrentProtectionState left, CurrentProtectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CurrentProtectionState"/> values are not the same. </summary>
         public static bool operator !=(CurrentProtectionState left, CurrentProtectionState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CurrentProtectionState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CurrentProtectionState"/>. </summary>
         public static implicit operator CurrentProtectionState(string value) => new CurrentProtectionState(value);
 
         /// <inheritdoc />

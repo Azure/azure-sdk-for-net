@@ -28,14 +28,17 @@ public class ArmSpecification : Specification
         RemoveProperty<ManagementGroupSubscriptionResource>("SubscriptionId");
         RemoveProperty<PolicyAssignmentResource>("Identity");
         RemoveProperty<SubscriptionResource>("Arg");
+        RemoveProperty<TenantResource>("Arg");
 
         // Patch models
         CustomizeResource<ResourceGroupResource>(r => r.FromExpression = true);
         CustomizeModel<GenericResource>(m => m.Name = "GenericResource");
         CustomizeModel<TagResource>(m => m.Name = "TagResource");
+        CustomizeModel<WritableSubResource>(m => m.Name = "WritableSubResource");
         CustomizeModel<ExtendedLocation>(m => m.Name = "ExtendedAzureLocation");
         CustomizeModel<UserAssignedIdentity>(m => m.Name = "UserAssignedIdentityDetails");
         CustomizeResource<SubscriptionResource>(r => r.FromExpression = true);
+        CustomizeResource<TenantResource>(r => r.FromExpression = true);
         CustomizeProperty<ManagedServiceIdentity>("PrincipalId", p => p.Path = ["principalId"]);
         CustomizeProperty<ManagedServiceIdentity>("TenantId", p => p.Path = ["tenantId"]);
         CustomizeProperty<ManagedServiceIdentity>("ManagedServiceIdentityType", p => p.Path = ["type"]);

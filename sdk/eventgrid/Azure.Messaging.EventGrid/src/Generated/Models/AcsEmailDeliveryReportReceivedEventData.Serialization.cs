@@ -22,6 +22,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             string sender = default;
             string recipient = default;
+            string internetMessageId = default;
             string messageId = default;
             AcsEmailDeliveryReportStatus? status = default;
             AcsEmailDeliveryReportStatusDetails deliveryStatusDetails = default;
@@ -36,6 +37,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 if (property.NameEquals("recipient"u8))
                 {
                     recipient = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("internetMessageId"u8))
+                {
+                    internetMessageId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("messageId"u8))
@@ -74,6 +80,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new AcsEmailDeliveryReportReceivedEventData(
                 sender,
                 recipient,
+                internetMessageId,
                 messageId,
                 status,
                 deliveryStatusDetails,
@@ -84,7 +91,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AcsEmailDeliveryReportReceivedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsEmailDeliveryReportReceivedEventData(document.RootElement);
         }
 

@@ -17,9 +17,9 @@ namespace Azure.AI.Inference.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Client1_GetModelInfo_ShortVersion()
+        public void Example_Client1_GetModelInfo_MaximumSetModelInformation()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
@@ -33,9 +33,9 @@ namespace Azure.AI.Inference.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Client1_GetModelInfo_ShortVersion_Async()
+        public async Task Example_Client1_GetModelInfo_MaximumSetModelInformation_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
@@ -49,9 +49,9 @@ namespace Azure.AI.Inference.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Client1_GetModelInfo_ShortVersion_Convenience()
+        public void Example_Client1_GetModelInfo_MaximumSetModelInformation_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
@@ -60,9 +60,9 @@ namespace Azure.AI.Inference.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Client1_GetModelInfo_ShortVersion_Convenience_Async()
+        public async Task Example_Client1_GetModelInfo_MaximumSetModelInformation_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
@@ -71,9 +71,9 @@ namespace Azure.AI.Inference.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Client1_GetModelInfo_AllParameters()
+        public void Example_Client1_GetModelInfo_MinimumSetModelInformation()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
@@ -87,9 +87,9 @@ namespace Azure.AI.Inference.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Client1_GetModelInfo_AllParameters_Async()
+        public async Task Example_Client1_GetModelInfo_MinimumSetModelInformation_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
@@ -103,9 +103,9 @@ namespace Azure.AI.Inference.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Client1_GetModelInfo_AllParameters_Convenience()
+        public void Example_Client1_GetModelInfo_MinimumSetModelInformation_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
@@ -114,9 +114,9 @@ namespace Azure.AI.Inference.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Client1_GetModelInfo_AllParameters_Convenience_Async()
+        public async Task Example_Client1_GetModelInfo_MinimumSetModelInformation_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 

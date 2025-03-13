@@ -55,7 +55,7 @@ namespace Azure.AI.Inference
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
         /// <param name="delta"> An update to the chat message for a given chat completions prompt. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="delta"/> is null. </exception>
-        internal StreamingChatChoiceUpdate(int index, CompletionsFinishReason? finishReason, ChatResponseMessage delta)
+        internal StreamingChatChoiceUpdate(int index, CompletionsFinishReason? finishReason, StreamingChatResponseMessageUpdate delta)
         {
             Argument.AssertNotNull(delta, nameof(delta));
 
@@ -69,7 +69,7 @@ namespace Azure.AI.Inference
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
         /// <param name="delta"> An update to the chat message for a given chat completions prompt. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StreamingChatChoiceUpdate(int index, CompletionsFinishReason? finishReason, ChatResponseMessage delta, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StreamingChatChoiceUpdate(int index, CompletionsFinishReason? finishReason, StreamingChatResponseMessageUpdate delta, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Index = index;
             FinishReason = finishReason;
@@ -86,7 +86,5 @@ namespace Azure.AI.Inference
         public int Index { get; }
         /// <summary> The reason that this chat completions choice completed its generated. </summary>
         public CompletionsFinishReason? FinishReason { get; }
-        /// <summary> An update to the chat message for a given chat completions prompt. </summary>
-        public ChatResponseMessage Delta { get; }
     }
 }

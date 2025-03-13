@@ -33,7 +33,7 @@ namespace Azure.Communication.ShortCodes.Models
         public static bool operator ==(MessageDirectionality left, MessageDirectionality right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MessageDirectionality"/> values are not the same. </summary>
         public static bool operator !=(MessageDirectionality left, MessageDirectionality right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MessageDirectionality"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MessageDirectionality"/>. </summary>
         public static implicit operator MessageDirectionality(string value) => new MessageDirectionality(value);
 
         /// <inheritdoc />

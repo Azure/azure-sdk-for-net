@@ -13,13 +13,15 @@ namespace Azure.AI.Vision.Face
     /// <summary> Client options for Azure.AI.Vision.Face library clients. </summary>
     public partial class AzureAIVisionFaceClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V1_1_Preview_1;
+        private const ServiceVersion LatestVersion = ServiceVersion.V1_2_Preview_1;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> Service version "v1.1-preview.1". </summary>
             V1_1_Preview_1 = 1,
+            /// <summary> Service version "v1.2-preview.1". </summary>
+            V1_2_Preview_1 = 2,
         }
 
         internal string Version { get; }
@@ -30,6 +32,7 @@ namespace Azure.AI.Vision.Face
             Version = version switch
             {
                 ServiceVersion.V1_1_Preview_1 => "v1.1-preview.1",
+                ServiceVersion.V1_2_Preview_1 => "v1.2-preview.1",
                 _ => throw new NotSupportedException()
             };
         }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static bool operator ==(ApplicationServiceKind left, ApplicationServiceKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationServiceKind"/> values are not the same. </summary>
         public static bool operator !=(ApplicationServiceKind left, ApplicationServiceKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationServiceKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationServiceKind"/>. </summary>
         public static implicit operator ApplicationServiceKind(string value) => new ApplicationServiceKind(value);
 
         /// <inheritdoc />

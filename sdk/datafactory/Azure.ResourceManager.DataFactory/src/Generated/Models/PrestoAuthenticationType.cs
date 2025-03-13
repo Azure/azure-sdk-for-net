@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(PrestoAuthenticationType left, PrestoAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PrestoAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(PrestoAuthenticationType left, PrestoAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PrestoAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PrestoAuthenticationType"/>. </summary>
         public static implicit operator PrestoAuthenticationType(string value) => new PrestoAuthenticationType(value);
 
         /// <inheritdoc />

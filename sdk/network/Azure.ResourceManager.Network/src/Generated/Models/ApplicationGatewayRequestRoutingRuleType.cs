@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ApplicationGatewayRequestRoutingRuleType left, ApplicationGatewayRequestRoutingRuleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayRequestRoutingRuleType"/> values are not the same. </summary>
         public static bool operator !=(ApplicationGatewayRequestRoutingRuleType left, ApplicationGatewayRequestRoutingRuleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationGatewayRequestRoutingRuleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayRequestRoutingRuleType"/>. </summary>
         public static implicit operator ApplicationGatewayRequestRoutingRuleType(string value) => new ApplicationGatewayRequestRoutingRuleType(value);
 
         /// <inheritdoc />

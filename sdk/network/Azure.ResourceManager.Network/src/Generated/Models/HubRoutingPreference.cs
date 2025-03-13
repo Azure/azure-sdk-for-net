@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(HubRoutingPreference left, HubRoutingPreference right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HubRoutingPreference"/> values are not the same. </summary>
         public static bool operator !=(HubRoutingPreference left, HubRoutingPreference right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HubRoutingPreference"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HubRoutingPreference"/>. </summary>
         public static implicit operator HubRoutingPreference(string value) => new HubRoutingPreference(value);
 
         /// <inheritdoc />

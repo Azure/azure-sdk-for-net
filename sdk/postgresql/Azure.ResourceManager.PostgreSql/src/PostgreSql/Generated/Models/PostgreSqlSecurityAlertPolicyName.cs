@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static bool operator ==(PostgreSqlSecurityAlertPolicyName left, PostgreSqlSecurityAlertPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlSecurityAlertPolicyName"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlSecurityAlertPolicyName left, PostgreSqlSecurityAlertPolicyName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlSecurityAlertPolicyName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlSecurityAlertPolicyName"/>. </summary>
         public static implicit operator PostgreSqlSecurityAlertPolicyName(string value) => new PostgreSqlSecurityAlertPolicyName(value);
 
         /// <inheritdoc />

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,7 +8,32 @@
 
 ### Bugs Fixed
 
+- fix the issue of data type mismatch in the AsyncPageable return values. Issue at 'https://github.com/Azure/azure-sdk-for-net/issues/47267
+
 ### Other Changes
+
+## 1.3.0 (2024-11-19)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-12' to 'package-2024-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/0410d404c68289cb1737d06bba92133bb84b515c/specification/web/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.41.0 to 1.44.1
+- Upgraded Azure.ResourceManager from 1.12.0 to 1.13.0
+
+## 1.3.0-beta.2 (2024-11-11)
+
+### Bugs Fixed
+
+- Added status code 202 and allow some properties to be empty. Issue at 'https://github.com/Azure/azure-sdk-for-net/issues/46854.
+
+## 1.3.0-beta.1 (2024-10-14)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.2.0 (2024-07-29)
 
@@ -149,8 +174,8 @@ Polishing since last public beta release:
 - Prepended `AppService` prefix to all single / simple model names.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
-- Corrected all acronyms that not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
-- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected all acronyms that not follow [.Net Naming Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://learn.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
 - Corrected the suffix of `DateTimeOffset` properties / parameters.
 - Corrected the name of interval / duration properties / parameters that end with units.
 - Optimized the name of some models and functions.
@@ -320,4 +345,4 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

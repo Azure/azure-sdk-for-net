@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.OracleDatabase.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.OracleDatabase.Samples
 {
     public partial class Sample_AutonomousDatabaseBackupCollection
     {
-        // AutonomousDatabaseBackups_ListByAutonomousDatabase
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_AutonomousDatabaseBackupsListByAutonomousDatabase()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_AutonomousDatabaseBackupsCreateOrUpdate()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_listByParent.json
-            // this example is just showing the usage of "AutonomousDatabaseBackups_ListByAutonomousDatabase" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_create.json
+            // this example is just showing the usage of "AutonomousDatabaseBackups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,26 +39,32 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             // get the collection of this AutonomousDatabaseBackupResource
             AutonomousDatabaseBackupCollection collection = autonomousDatabase.GetAutonomousDatabaseBackups();
 
-            // invoke the operation and iterate over the result
-            await foreach (AutonomousDatabaseBackupResource item in collection.GetAllAsync())
+            // invoke the operation
+            string adbbackupid = "1711644130";
+            AutonomousDatabaseBackupData data = new AutonomousDatabaseBackupData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AutonomousDatabaseBackupData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Properties = new AutonomousDatabaseBackupProperties
+                {
+                    DisplayName = "Nightly Backup",
+                    RetentionPeriodInDays = 365,
+                },
+            };
+            ArmOperation<AutonomousDatabaseBackupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, adbbackupid, data);
+            AutonomousDatabaseBackupResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AutonomousDatabaseBackupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List Autonomous Database Backups by Autonomous Database.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListAutonomousDatabaseBackupsByAutonomousDatabase()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAutonomousDatabaseBackup()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_listByParent.json
-            // this example is just showing the usage of "AutonomousDatabaseBackups_ListByAutonomousDatabase" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_create.json
+            // this example is just showing the usage of "AutonomousDatabaseBackups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -76,22 +82,28 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             // get the collection of this AutonomousDatabaseBackupResource
             AutonomousDatabaseBackupCollection collection = autonomousDatabase.GetAutonomousDatabaseBackups();
 
-            // invoke the operation and iterate over the result
-            await foreach (AutonomousDatabaseBackupResource item in collection.GetAllAsync())
+            // invoke the operation
+            string adbbackupid = "1711644130";
+            AutonomousDatabaseBackupData data = new AutonomousDatabaseBackupData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AutonomousDatabaseBackupData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Properties = new AutonomousDatabaseBackupProperties
+                {
+                    DisplayName = "Nightly Backup",
+                    RetentionPeriodInDays = 365,
+                },
+            };
+            ArmOperation<AutonomousDatabaseBackupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, adbbackupid, data);
+            AutonomousDatabaseBackupResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AutonomousDatabaseBackupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AutonomousDatabaseBackups_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AutonomousDatabaseBackupsGet()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_get.json
@@ -124,83 +136,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AutonomousDatabaseBackups_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_AutonomousDatabaseBackupsGet()
-        {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_get.json
-            // this example is just showing the usage of "AutonomousDatabaseBackups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutonomousDatabaseResource created on azure
-            // for more information of creating AutonomousDatabaseResource, please refer to the document of AutonomousDatabaseResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg000";
-            string autonomousdatabasename = "databasedb1";
-            ResourceIdentifier autonomousDatabaseResourceId = AutonomousDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autonomousdatabasename);
-            AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
-
-            // get the collection of this AutonomousDatabaseBackupResource
-            AutonomousDatabaseBackupCollection collection = autonomousDatabase.GetAutonomousDatabaseBackups();
-
-            // invoke the operation
-            string adbbackupid = "1711644130";
-            bool result = await collection.ExistsAsync(adbbackupid);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // AutonomousDatabaseBackups_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_AutonomousDatabaseBackupsGet()
-        {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_get.json
-            // this example is just showing the usage of "AutonomousDatabaseBackups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutonomousDatabaseResource created on azure
-            // for more information of creating AutonomousDatabaseResource, please refer to the document of AutonomousDatabaseResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg000";
-            string autonomousdatabasename = "databasedb1";
-            ResourceIdentifier autonomousDatabaseResourceId = AutonomousDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autonomousdatabasename);
-            AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
-
-            // get the collection of this AutonomousDatabaseBackupResource
-            AutonomousDatabaseBackupCollection collection = autonomousDatabase.GetAutonomousDatabaseBackups();
-
-            // invoke the operation
-            string adbbackupid = "1711644130";
-            NullableResponse<AutonomousDatabaseBackupResource> response = await collection.GetIfExistsAsync(adbbackupid);
-            AutonomousDatabaseBackupResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AutonomousDatabaseBackupData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Get Autonomous Database Backup.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAutonomousDatabaseBackup()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_get.json
@@ -233,9 +170,110 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Autonomous Database Backup.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_AutonomousDatabaseBackupsListByAutonomousDatabase()
+        {
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_listByParent.json
+            // this example is just showing the usage of "AutonomousDatabaseBackups_ListByAutonomousDatabase" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutonomousDatabaseResource created on azure
+            // for more information of creating AutonomousDatabaseResource, please refer to the document of AutonomousDatabaseResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg000";
+            string autonomousdatabasename = "databasedb1";
+            ResourceIdentifier autonomousDatabaseResourceId = AutonomousDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autonomousdatabasename);
+            AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
+
+            // get the collection of this AutonomousDatabaseBackupResource
+            AutonomousDatabaseBackupCollection collection = autonomousDatabase.GetAutonomousDatabaseBackups();
+
+            // invoke the operation and iterate over the result
+            await foreach (AutonomousDatabaseBackupResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AutonomousDatabaseBackupData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListAutonomousDatabaseBackupsByAutonomousDatabase()
+        {
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_listByParent.json
+            // this example is just showing the usage of "AutonomousDatabaseBackups_ListByAutonomousDatabase" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutonomousDatabaseResource created on azure
+            // for more information of creating AutonomousDatabaseResource, please refer to the document of AutonomousDatabaseResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg000";
+            string autonomousdatabasename = "databasedb1";
+            ResourceIdentifier autonomousDatabaseResourceId = AutonomousDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autonomousdatabasename);
+            AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
+
+            // get the collection of this AutonomousDatabaseBackupResource
+            AutonomousDatabaseBackupCollection collection = autonomousDatabase.GetAutonomousDatabaseBackups();
+
+            // invoke the operation and iterate over the result
+            await foreach (AutonomousDatabaseBackupResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AutonomousDatabaseBackupData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_AutonomousDatabaseBackupsGet()
+        {
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_get.json
+            // this example is just showing the usage of "AutonomousDatabaseBackups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutonomousDatabaseResource created on azure
+            // for more information of creating AutonomousDatabaseResource, please refer to the document of AutonomousDatabaseResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg000";
+            string autonomousdatabasename = "databasedb1";
+            ResourceIdentifier autonomousDatabaseResourceId = AutonomousDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autonomousdatabasename);
+            AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
+
+            // get the collection of this AutonomousDatabaseBackupResource
+            AutonomousDatabaseBackupCollection collection = autonomousDatabase.GetAutonomousDatabaseBackups();
+
+            // invoke the operation
+            string adbbackupid = "1711644130";
+            bool result = await collection.ExistsAsync(adbbackupid);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAutonomousDatabaseBackup()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_get.json
@@ -264,9 +302,50 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Autonomous Database Backup.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_AutonomousDatabaseBackupsGet()
+        {
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_get.json
+            // this example is just showing the usage of "AutonomousDatabaseBackups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutonomousDatabaseResource created on azure
+            // for more information of creating AutonomousDatabaseResource, please refer to the document of AutonomousDatabaseResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg000";
+            string autonomousdatabasename = "databasedb1";
+            ResourceIdentifier autonomousDatabaseResourceId = AutonomousDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autonomousdatabasename);
+            AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
+
+            // get the collection of this AutonomousDatabaseBackupResource
+            AutonomousDatabaseBackupCollection collection = autonomousDatabase.GetAutonomousDatabaseBackups();
+
+            // invoke the operation
+            string adbbackupid = "1711644130";
+            NullableResponse<AutonomousDatabaseBackupResource> response = await collection.GetIfExistsAsync(adbbackupid);
+            AutonomousDatabaseBackupResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AutonomousDatabaseBackupData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAutonomousDatabaseBackup()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_get.json
@@ -295,7 +374,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -305,94 +384,6 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        // AutonomousDatabaseBackups_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_AutonomousDatabaseBackupsCreateOrUpdate()
-        {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_create.json
-            // this example is just showing the usage of "AutonomousDatabaseBackups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutonomousDatabaseResource created on azure
-            // for more information of creating AutonomousDatabaseResource, please refer to the document of AutonomousDatabaseResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg000";
-            string autonomousdatabasename = "databasedb1";
-            ResourceIdentifier autonomousDatabaseResourceId = AutonomousDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autonomousdatabasename);
-            AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
-
-            // get the collection of this AutonomousDatabaseBackupResource
-            AutonomousDatabaseBackupCollection collection = autonomousDatabase.GetAutonomousDatabaseBackups();
-
-            // invoke the operation
-            string adbbackupid = "1711644130";
-            AutonomousDatabaseBackupData data = new AutonomousDatabaseBackupData()
-            {
-                Properties = new AutonomousDatabaseBackupProperties()
-                {
-                    DisplayName = "Nightly Backup",
-                    RetentionPeriodInDays = 365,
-                },
-            };
-            ArmOperation<AutonomousDatabaseBackupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, adbbackupid, data);
-            AutonomousDatabaseBackupResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AutonomousDatabaseBackupData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create Autonomous Database Backup.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAutonomousDatabaseBackup()
-        {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_create.json
-            // this example is just showing the usage of "AutonomousDatabaseBackups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutonomousDatabaseResource created on azure
-            // for more information of creating AutonomousDatabaseResource, please refer to the document of AutonomousDatabaseResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg000";
-            string autonomousdatabasename = "databasedb1";
-            ResourceIdentifier autonomousDatabaseResourceId = AutonomousDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autonomousdatabasename);
-            AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
-
-            // get the collection of this AutonomousDatabaseBackupResource
-            AutonomousDatabaseBackupCollection collection = autonomousDatabase.GetAutonomousDatabaseBackups();
-
-            // invoke the operation
-            string adbbackupid = "1711644130";
-            AutonomousDatabaseBackupData data = new AutonomousDatabaseBackupData()
-            {
-                Properties = new AutonomousDatabaseBackupProperties()
-                {
-                    DisplayName = "Nightly Backup",
-                    RetentionPeriodInDays = 365,
-                },
-            };
-            ArmOperation<AutonomousDatabaseBackupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, adbbackupid, data);
-            AutonomousDatabaseBackupResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AutonomousDatabaseBackupData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

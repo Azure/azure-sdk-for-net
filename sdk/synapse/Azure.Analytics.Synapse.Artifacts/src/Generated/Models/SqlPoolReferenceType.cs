@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(SqlPoolReferenceType left, SqlPoolReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlPoolReferenceType"/> values are not the same. </summary>
         public static bool operator !=(SqlPoolReferenceType left, SqlPoolReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlPoolReferenceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlPoolReferenceType"/>. </summary>
         public static implicit operator SqlPoolReferenceType(string value) => new SqlPoolReferenceType(value);
 
         /// <inheritdoc />

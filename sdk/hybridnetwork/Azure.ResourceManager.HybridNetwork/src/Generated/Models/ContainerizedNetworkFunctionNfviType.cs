@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static bool operator ==(ContainerizedNetworkFunctionNfviType left, ContainerizedNetworkFunctionNfviType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerizedNetworkFunctionNfviType"/> values are not the same. </summary>
         public static bool operator !=(ContainerizedNetworkFunctionNfviType left, ContainerizedNetworkFunctionNfviType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerizedNetworkFunctionNfviType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerizedNetworkFunctionNfviType"/>. </summary>
         public static implicit operator ContainerizedNetworkFunctionNfviType(string value) => new ContainerizedNetworkFunctionNfviType(value);
 
         /// <inheritdoc />

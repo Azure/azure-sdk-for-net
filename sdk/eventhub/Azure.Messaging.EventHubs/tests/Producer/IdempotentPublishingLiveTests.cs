@@ -36,13 +36,17 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
-
                 var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-                await using var producer = new EventHubProducerClient(connectionString, options);
+                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
+
+                await using var producer = new EventHubProducerClient(
+                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                    scope.EventHubName,
+                    EventHubsTestEnvironment.Instance.Credential,
+                    options);
+
                 Assert.That(async () => await producer.GetPartitionIdsAsync(cancellationSource.Token), Throws.Nothing);
             }
         }
@@ -59,13 +63,16 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+                 var cancellationSource = new CancellationTokenSource();
+                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
                 var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true, ConnectionOptions = new EventHubConnectionOptions { TransportType = transportType } };
 
-                await using var producer = new EventHubProducerClient(connectionString, options);
-
-                var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+                await using var producer = new EventHubProducerClient(
+                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                    scope.EventHubName,
+                    EventHubsTestEnvironment.Instance.Credential,
+                    options);
 
                 var partition = (await producer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                 var sendOptions = new SendEventOptions { PartitionId = partition };
@@ -87,13 +94,16 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true, ConnectionOptions = new EventHubConnectionOptions { TransportType = transportType } };
-
-                await using var producer = new EventHubProducerClient(connectionString, options);
-
                 var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true, ConnectionOptions = new EventHubConnectionOptions { TransportType = transportType } };
+
+                await using var producer = new EventHubProducerClient(
+                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                    scope.EventHubName,
+                    EventHubsTestEnvironment.Instance.Credential,
+                    options);
 
                 var partition = (await producer.GetPartitionIdsAsync()).First();
                 var batchOptions = new CreateBatchOptions { PartitionId = partition };
@@ -123,10 +133,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
                 var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
 
-                await using var producer = new EventHubProducerClient(connectionString, options);
+                await using var producer = new EventHubProducerClient(
+                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                    scope.EventHubName,
+                    EventHubsTestEnvironment.Instance.Credential,
+                    options);
 
                 var partition = (await producer.GetPartitionIdsAsync()).First();
                 var sendOptions = new SendEventOptions { PartitionId = partition };
@@ -167,10 +180,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
                 var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
 
-                await using var producer = new EventHubProducerClient(connectionString, options);
+                await using var producer = new EventHubProducerClient(
+                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                    scope.EventHubName,
+                    EventHubsTestEnvironment.Instance.Credential,
+                    options);
 
                 var partition = (await producer.GetPartitionIdsAsync()).First();
                 var batchOptions = new CreateBatchOptions { PartitionId = partition };
@@ -214,13 +230,16 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
-
-                await using var producer = new EventHubProducerClient(connectionString, options);
-
                 var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
+
+                await using var producer = new EventHubProducerClient(
+                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                    scope.EventHubName,
+                    EventHubsTestEnvironment.Instance.Credential,
+                    options);
 
                 var partition = (await producer.GetPartitionIdsAsync(cancellationSource.Token)).Last();
                 var partitionProperties = await producer.GetPartitionPublishingPropertiesAsync(partition);
@@ -243,13 +262,16 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
-
-                await using var producer = new EventHubProducerClient(connectionString, options);
-
                 var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
+
+                await using var producer = new EventHubProducerClient(
+                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                    scope.EventHubName,
+                    EventHubsTestEnvironment.Instance.Credential,
+                    options);
 
                 var partition = (await producer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                 var sendOptions = new SendEventOptions { PartitionId = partition };
@@ -276,13 +298,16 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
-
-                await using var producer = new EventHubProducerClient(connectionString, options);
-
                 var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
+
+                await using var producer = new EventHubProducerClient(
+                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                    scope.EventHubName,
+                    EventHubsTestEnvironment.Instance.Credential,
+                    options);
 
                 var partition = (await producer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                 var sendOptions = new SendEventOptions { PartitionId = partition };
@@ -313,13 +338,16 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
-
-                await using var producer = new EventHubProducerClient(connectionString, options);
-
                 var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
+
+                await using var producer = new EventHubProducerClient(
+                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                    scope.EventHubName,
+                    EventHubsTestEnvironment.Instance.Credential,
+                    options);
 
                 var partition = (await producer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                 var batchOptions = new CreateBatchOptions { PartitionId = partition };
@@ -356,13 +384,16 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(4))
             {
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+                 var cancellationSource = new CancellationTokenSource();
+                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
                 var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
 
-                await using var producer = new EventHubProducerClient(connectionString, options);
-
-                var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+                await using var producer = new EventHubProducerClient(
+                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                    scope.EventHubName,
+                    EventHubsTestEnvironment.Instance.Credential,
+                    options);
 
                 async Task sendEvents(string partition, int delayMilliseconds)
                 {
@@ -393,13 +424,16 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
-
-                await using var producer = new EventHubProducerClient(connectionString, options);
-
                 var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
+
+                await using var producer = new EventHubProducerClient(
+                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                    scope.EventHubName,
+                    EventHubsTestEnvironment.Instance.Credential,
+                    options);
 
                 var partition = (await producer.GetPartitionIdsAsync(cancellationSource.Token)).Last();
                 var sendOptions = new SendEventOptions { PartitionId = partition };
@@ -430,13 +464,16 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
-
-                await using var producer = new EventHubProducerClient(connectionString, options);
-
                 var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
+
+                await using var producer = new EventHubProducerClient(
+                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                    scope.EventHubName,
+                    EventHubsTestEnvironment.Instance.Credential,
+                    options);
 
                 var partition = (await producer.GetPartitionIdsAsync(cancellationSource.Token)).Last();
                 var batchOptions = new CreateBatchOptions { PartitionId = partition };
@@ -479,13 +516,16 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
-
-                await using var producer = new EventHubProducerClient(connectionString, options);
-
                 var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
+
+                await using var producer = new EventHubProducerClient(
+                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                    scope.EventHubName,
+                    EventHubsTestEnvironment.Instance.Credential,
+                    options);
 
                 var partition = (await producer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                 var initialPartitionProperties = await producer.GetPartitionPublishingPropertiesAsync(partition);
@@ -512,13 +552,16 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
-
-                await using var producer = new EventHubProducerClient(connectionString, options);
-
                 var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
+
+                await using var producer = new EventHubProducerClient(
+                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                    scope.EventHubName,
+                    EventHubsTestEnvironment.Instance.Credential,
+                    options);
 
                 var partition = (await producer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                 var initialPartitionProperties = await producer.GetPartitionPublishingPropertiesAsync(partition);
@@ -549,7 +592,6 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
                 var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
 
                 var cancellationSource = new CancellationTokenSource();
@@ -560,7 +602,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 // Create a producer for a small scope that will Send some events and read the properties.
 
-                await using (var initialProducer = new EventHubProducerClient(connectionString, options))
+                await using (var initialProducer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, EventHubsTestEnvironment.Instance.Credential, options))
                 {
                     partition = (await initialProducer.GetPartitionIdsAsync(cancellationSource.Token)).Last();
 
@@ -577,7 +619,12 @@ namespace Azure.Messaging.EventHubs.Tests
                     StartingSequenceNumber = partitionProperties.LastPublishedSequenceNumber
                 });
 
-                await using var producer = new EventHubProducerClient(connectionString, options);
+                await using var producer = new EventHubProducerClient(
+                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                    scope.EventHubName,
+                    EventHubsTestEnvironment.Instance.Credential,
+                    options);
+
                 Assert.That(async () => await producer.SendAsync(EventGenerator.CreateEvents(10), new SendEventOptions { PartitionId = partition }, cancellationSource.Token), Throws.Nothing);
             }
         }
@@ -592,7 +639,6 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
                 var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
 
                 var cancellationSource = new CancellationTokenSource();
@@ -603,7 +649,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 // Create a producer for a small scope that will Send some events and read the properties.
 
-                await using (var initialProducer = new EventHubProducerClient(connectionString, options))
+                await using (var initialProducer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, EventHubsTestEnvironment.Instance.Credential, options))
                 {
                     partition = (await initialProducer.GetPartitionIdsAsync(cancellationSource.Token)).Last();
 
@@ -620,7 +666,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 });
 
                 Assert.That(options.PartitionOptions[partition].StartingSequenceNumber.HasValue, Is.False, "The partition options should not specifiy a starting sequence number.");
-                await using var producer = new EventHubProducerClient(connectionString, options);
+
+                await using var producer = new EventHubProducerClient(
+                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                    scope.EventHubName,
+                    EventHubsTestEnvironment.Instance.Credential,
+                    options);
 
                 // Verify that the properties were fully initialized when using partial options.
 
@@ -647,7 +698,6 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
                 var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
 
                 var cancellationSource = new CancellationTokenSource();
@@ -658,7 +708,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 // Create a producer for a small scope that will Send some events and read the properties.
 
-                await using (var initialProducer = new EventHubProducerClient(connectionString, options))
+                await using (var initialProducer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, EventHubsTestEnvironment.Instance.Credential, options))
                 {
                     partition = (await initialProducer.GetPartitionIdsAsync(cancellationSource.Token)).Last();
 
@@ -675,7 +725,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     StartingSequenceNumber = (partitionProperties.LastPublishedSequenceNumber - 5)
                 });
 
-                await using var producer = new EventHubProducerClient(connectionString, options);
+                await using var producer = new EventHubProducerClient(
+                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                    scope.EventHubName,
+                    EventHubsTestEnvironment.Instance.Credential,
+                    options);
 
                 Assert.That(async () => await producer.SendAsync(EventGenerator.CreateEvents(10), new SendEventOptions { PartitionId = partition }, cancellationSource.Token),
                     Throws.InstanceOf<EventHubsException>().And.Property("Reason").EqualTo(EventHubsException.FailureReason.InvalidClientState));

@@ -32,7 +32,7 @@ namespace Azure.Search.Documents
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public DataSourcesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2024-07-01")
+        public DataSourcesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2025-03-01-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -41,7 +41,7 @@ namespace Azure.Search.Documents
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch, string ifNoneMatch, bool? skipIndexerResetRequirementForCache)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -52,6 +52,10 @@ namespace Azure.Search.Documents
             uri.AppendPath(dataSourceName, true);
             uri.AppendPath("')", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipIndexerResetRequirementForCache != null)
+            {
+                uri.AppendQuery("ignoreResetRequirements", skipIndexerResetRequirementForCache.Value, true);
+            }
             request.Uri = uri;
             if (ifMatch != null)
             {
@@ -75,9 +79,10 @@ namespace Azure.Search.Documents
         /// <param name="dataSource"> The definition of the datasource to create or update. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> or <paramref name="dataSource"/> is null. </exception>
-        public async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateAsync(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateAsync(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch = null, string ifNoneMatch = null, bool? skipIndexerResetRequirementForCache = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -88,7 +93,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(dataSource));
             }
 
-            using var message = CreateCreateOrUpdateRequest(dataSourceName, dataSource, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(dataSourceName, dataSource, ifMatch, ifNoneMatch, skipIndexerResetRequirementForCache);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -96,7 +101,7 @@ namespace Azure.Search.Documents
                 case 201:
                     {
                         SearchIndexerDataSourceConnection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -110,9 +115,10 @@ namespace Azure.Search.Documents
         /// <param name="dataSource"> The definition of the datasource to create or update. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> or <paramref name="dataSource"/> is null. </exception>
-        public Response<SearchIndexerDataSourceConnection> CreateOrUpdate(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<SearchIndexerDataSourceConnection> CreateOrUpdate(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch = null, string ifNoneMatch = null, bool? skipIndexerResetRequirementForCache = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -123,7 +129,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(dataSource));
             }
 
-            using var message = CreateCreateOrUpdateRequest(dataSourceName, dataSource, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(dataSourceName, dataSource, ifMatch, ifNoneMatch, skipIndexerResetRequirementForCache);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -131,7 +137,7 @@ namespace Azure.Search.Documents
                 case 201:
                     {
                         SearchIndexerDataSourceConnection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -248,7 +254,7 @@ namespace Azure.Search.Documents
                 case 200:
                     {
                         SearchIndexerDataSourceConnection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -275,7 +281,7 @@ namespace Azure.Search.Documents
                 case 200:
                     {
                         SearchIndexerDataSourceConnection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -314,7 +320,7 @@ namespace Azure.Search.Documents
                 case 200:
                     {
                         ListDataSourcesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListDataSourcesResult.DeserializeListDataSourcesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -335,7 +341,7 @@ namespace Azure.Search.Documents
                 case 200:
                     {
                         ListDataSourcesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListDataSourcesResult.DeserializeListDataSourcesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -380,7 +386,7 @@ namespace Azure.Search.Documents
                 case 201:
                     {
                         SearchIndexerDataSourceConnection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -407,7 +413,7 @@ namespace Azure.Search.Documents
                 case 201:
                     {
                         SearchIndexerDataSourceConnection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

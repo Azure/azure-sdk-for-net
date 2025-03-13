@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         public static bool operator ==(VCoreSkuTier left, VCoreSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VCoreSkuTier"/> values are not the same. </summary>
         public static bool operator !=(VCoreSkuTier left, VCoreSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VCoreSkuTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VCoreSkuTier"/>. </summary>
         public static implicit operator VCoreSkuTier(string value) => new VCoreSkuTier(value);
 
         /// <inheritdoc />

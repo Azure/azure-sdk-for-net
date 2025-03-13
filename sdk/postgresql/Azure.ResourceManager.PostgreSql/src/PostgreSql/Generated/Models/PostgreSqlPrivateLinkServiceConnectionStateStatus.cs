@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static bool operator ==(PostgreSqlPrivateLinkServiceConnectionStateStatus left, PostgreSqlPrivateLinkServiceConnectionStateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlPrivateLinkServiceConnectionStateStatus"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlPrivateLinkServiceConnectionStateStatus left, PostgreSqlPrivateLinkServiceConnectionStateStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlPrivateLinkServiceConnectionStateStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlPrivateLinkServiceConnectionStateStatus"/>. </summary>
         public static implicit operator PostgreSqlPrivateLinkServiceConnectionStateStatus(string value) => new PostgreSqlPrivateLinkServiceConnectionStateStatus(value);
 
         /// <inheritdoc />

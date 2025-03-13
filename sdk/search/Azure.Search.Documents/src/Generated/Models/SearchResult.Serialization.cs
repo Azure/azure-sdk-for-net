@@ -22,6 +22,7 @@ namespace Azure.Search.Documents.Models
             double? searchRerankerScore = default;
             IReadOnlyDictionary<string, IList<string>> searchHighlights = default;
             IReadOnlyList<QueryCaptionResult> searchCaptions = default;
+            DocumentDebugInfo searchDocumentDebugInfo = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -82,17 +83,33 @@ namespace Azure.Search.Documents.Models
                     searchCaptions = array;
                     continue;
                 }
+                if (property.NameEquals("@search.documentDebugInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        searchDocumentDebugInfo = null;
+                        continue;
+                    }
+                    searchDocumentDebugInfo = DocumentDebugInfo.DeserializeDocumentDebugInfo(property.Value);
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SearchResult(searchScore, searchRerankerScore, searchHighlights ?? new ChangeTrackingDictionary<string, IList<string>>(), searchCaptions ?? new ChangeTrackingList<QueryCaptionResult>(), additionalProperties);
+            return new SearchResult(
+                searchScore,
+                searchRerankerScore,
+                searchHighlights ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                searchCaptions ?? new ChangeTrackingList<QueryCaptionResult>(),
+                searchDocumentDebugInfo,
+                additionalProperties);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SearchResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSearchResult(document.RootElement);
         }
     }

@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HybridCompute.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridCompute.Samples
 {
     public partial class Sample_MachineRunCommandResource
     {
-        // Create or Update a Run Command
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_CreateOrUpdateARunCommand()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetARunCommand()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-05-20-preview/examples/runCommand/RunCommands_CreateOrUpdate.json
-            // this example is just showing the usage of "MachineRunCommands_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_Get.json
+            // this example is just showing the usage of "MachineRunCommands_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,25 +38,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             MachineRunCommandResource machineRunCommand = client.GetMachineRunCommandResource(machineRunCommandResourceId);
 
             // invoke the operation
-            MachineRunCommandData data = new MachineRunCommandData(new AzureLocation("eastus2"))
-            {
-                Source = new MachineRunCommandScriptSource()
-                {
-                    Script = "Write-Host Hello World!",
-                },
-                Parameters =
-{
-new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("param2","value2")
-},
-                AsyncExecution = false,
-                RunAsUser = "user1",
-                RunAsPassword = "<runAsPassword>",
-                TimeoutInSeconds = 3600,
-                OutputBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/myscriptoutputcontainer/MyScriptoutput.txt"),
-                ErrorBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/mycontainer/MyScriptError.txt"),
-            };
-            ArmOperation<MachineRunCommandResource> lro = await machineRunCommand.UpdateAsync(WaitUntil.Completed, data);
-            MachineRunCommandResource result = lro.Value;
+            MachineRunCommandResource result = await machineRunCommand.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -65,12 +47,11 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a Machine Run Command
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAMachineRunCommand()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-05-20-preview/examples/runCommand/RunCommands_Delete.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_Delete.json
             // this example is just showing the usage of "MachineRunCommands_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,16 +71,15 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
             // invoke the operation
             await machineRunCommand.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get a Run Command
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetARunCommand()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_CreateOrUpdateARunCommand()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-05-20-preview/examples/runCommand/RunCommands_Get.json
-            // this example is just showing the usage of "MachineRunCommands_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_CreateOrUpdate.json
+            // this example is just showing the usage of "MachineRunCommands_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -116,7 +96,22 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
             MachineRunCommandResource machineRunCommand = client.GetMachineRunCommandResource(machineRunCommandResourceId);
 
             // invoke the operation
-            MachineRunCommandResource result = await machineRunCommand.GetAsync();
+            MachineRunCommandData data = new MachineRunCommandData(new AzureLocation("eastus2"))
+            {
+                Source = new MachineRunCommandScriptSource
+                {
+                    Script = "Write-Host Hello World!",
+                },
+                Parameters = { new RunCommandInputParameter("param1", "value1"), new RunCommandInputParameter("param2", "value2") },
+                AsyncExecution = false,
+                RunAsUser = "user1",
+                RunAsPassword = "<runAsPassword>",
+                TimeoutInSeconds = 3600,
+                OutputBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/myscriptoutputcontainer/MyScriptoutput.txt"),
+                ErrorBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/mycontainer/MyScriptError.txt"),
+            };
+            ArmOperation<MachineRunCommandResource> lro = await machineRunCommand.UpdateAsync(WaitUntil.Completed, data);
+            MachineRunCommandResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(AzureFirewallPacketCaptureFlagsType left, AzureFirewallPacketCaptureFlagsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureFirewallPacketCaptureFlagsType"/> values are not the same. </summary>
         public static bool operator !=(AzureFirewallPacketCaptureFlagsType left, AzureFirewallPacketCaptureFlagsType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AzureFirewallPacketCaptureFlagsType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureFirewallPacketCaptureFlagsType"/>. </summary>
         public static implicit operator AzureFirewallPacketCaptureFlagsType(string value) => new AzureFirewallPacketCaptureFlagsType(value);
 
         /// <inheritdoc />

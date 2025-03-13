@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(MarketplacePurchasesPolicy left, MarketplacePurchasesPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MarketplacePurchasesPolicy"/> values are not the same. </summary>
         public static bool operator !=(MarketplacePurchasesPolicy left, MarketplacePurchasesPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MarketplacePurchasesPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MarketplacePurchasesPolicy"/>. </summary>
         public static implicit operator MarketplacePurchasesPolicy(string value) => new MarketplacePurchasesPolicy(value);
 
         /// <inheritdoc />

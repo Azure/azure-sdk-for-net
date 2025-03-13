@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static bool operator ==(DevTestLabCostThresholdStatus left, DevTestLabCostThresholdStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabCostThresholdStatus"/> values are not the same. </summary>
         public static bool operator !=(DevTestLabCostThresholdStatus left, DevTestLabCostThresholdStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevTestLabCostThresholdStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevTestLabCostThresholdStatus"/>. </summary>
         public static implicit operator DevTestLabCostThresholdStatus(string value) => new DevTestLabCostThresholdStatus(value);
 
         /// <inheritdoc />

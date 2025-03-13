@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(UriPathOperator left, UriPathOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UriPathOperator"/> values are not the same. </summary>
         public static bool operator !=(UriPathOperator left, UriPathOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UriPathOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UriPathOperator"/>. </summary>
         public static implicit operator UriPathOperator(string value) => new UriPathOperator(value);
 
         /// <inheritdoc />

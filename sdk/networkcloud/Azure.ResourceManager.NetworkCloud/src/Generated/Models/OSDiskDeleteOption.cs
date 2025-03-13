@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(OSDiskDeleteOption left, OSDiskDeleteOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OSDiskDeleteOption"/> values are not the same. </summary>
         public static bool operator !=(OSDiskDeleteOption left, OSDiskDeleteOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OSDiskDeleteOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OSDiskDeleteOption"/>. </summary>
         public static implicit operator OSDiskDeleteOption(string value) => new OSDiskDeleteOption(value);
 
         /// <inheritdoc />

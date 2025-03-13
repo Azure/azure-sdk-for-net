@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(ProjectTargetPlatform left, ProjectTargetPlatform right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProjectTargetPlatform"/> values are not the same. </summary>
         public static bool operator !=(ProjectTargetPlatform left, ProjectTargetPlatform right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProjectTargetPlatform"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProjectTargetPlatform"/>. </summary>
         public static implicit operator ProjectTargetPlatform(string value) => new ProjectTargetPlatform(value);
 
         /// <inheritdoc />

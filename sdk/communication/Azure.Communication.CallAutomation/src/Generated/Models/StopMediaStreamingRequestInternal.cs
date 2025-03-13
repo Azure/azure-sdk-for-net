@@ -20,9 +20,11 @@ namespace Azure.Communication.CallAutomation
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </param>
-        internal StopMediaStreamingRequestInternal(string operationCallbackUri)
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        internal StopMediaStreamingRequestInternal(string operationCallbackUri, string operationContext)
         {
             OperationCallbackUri = operationCallbackUri;
+            OperationContext = operationContext;
         }
 
         /// <summary>
@@ -30,5 +32,7 @@ namespace Azure.Communication.CallAutomation
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
         public string OperationCallbackUri { get; set; }
+        /// <summary> The value to identify context of the operation. </summary>
+        public string OperationContext { get; set; }
     }
 }

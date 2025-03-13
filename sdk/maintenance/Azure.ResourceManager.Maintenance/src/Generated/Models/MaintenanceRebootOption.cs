@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static bool operator ==(MaintenanceRebootOption left, MaintenanceRebootOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MaintenanceRebootOption"/> values are not the same. </summary>
         public static bool operator !=(MaintenanceRebootOption left, MaintenanceRebootOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MaintenanceRebootOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MaintenanceRebootOption"/>. </summary>
         public static implicit operator MaintenanceRebootOption(string value) => new MaintenanceRebootOption(value);
 
         /// <inheritdoc />

@@ -53,11 +53,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="UserArtifactSettings"/>. </summary>
         /// <param name="packageFileName"> Optional. The name to assign the downloaded package file on the VM. This is limited to 4096 characters. If not specified, the package file will be named the same as the Gallery Application name. </param>
         /// <param name="configFileName"> Optional. The name to assign the downloaded config file on the VM. This is limited to 4096 characters. If not specified, the config file will be named the Gallery Application name appended with "_config". </param>
+        /// <param name="scriptBehaviorAfterReboot"> Optional. The action to be taken with regards to install/update/remove of the gallery application in the event of a reboot. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserArtifactSettings(string packageFileName, string configFileName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UserArtifactSettings(string packageFileName, string configFileName, GalleryApplicationScriptRebootBehavior? scriptBehaviorAfterReboot, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PackageFileName = packageFileName;
             ConfigFileName = configFileName;
+            ScriptBehaviorAfterReboot = scriptBehaviorAfterReboot;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -65,5 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string PackageFileName { get; set; }
         /// <summary> Optional. The name to assign the downloaded config file on the VM. This is limited to 4096 characters. If not specified, the config file will be named the Gallery Application name appended with "_config". </summary>
         public string ConfigFileName { get; set; }
+        /// <summary> Optional. The action to be taken with regards to install/update/remove of the gallery application in the event of a reboot. </summary>
+        public GalleryApplicationScriptRebootBehavior? ScriptBehaviorAfterReboot { get; set; }
     }
 }

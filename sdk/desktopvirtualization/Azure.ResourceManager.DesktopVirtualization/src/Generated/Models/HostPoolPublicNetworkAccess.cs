@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator ==(HostPoolPublicNetworkAccess left, HostPoolPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HostPoolPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(HostPoolPublicNetworkAccess left, HostPoolPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HostPoolPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HostPoolPublicNetworkAccess"/>. </summary>
         public static implicit operator HostPoolPublicNetworkAccess(string value) => new HostPoolPublicNetworkAccess(value);
 
         /// <inheritdoc />

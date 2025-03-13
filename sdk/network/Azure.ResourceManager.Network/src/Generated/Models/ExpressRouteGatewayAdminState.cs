@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ExpressRouteGatewayAdminState left, ExpressRouteGatewayAdminState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRouteGatewayAdminState"/> values are not the same. </summary>
         public static bool operator !=(ExpressRouteGatewayAdminState left, ExpressRouteGatewayAdminState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExpressRouteGatewayAdminState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressRouteGatewayAdminState"/>. </summary>
         public static implicit operator ExpressRouteGatewayAdminState(string value) => new ExpressRouteGatewayAdminState(value);
 
         /// <inheritdoc />

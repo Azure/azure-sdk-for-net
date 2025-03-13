@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(EffectiveSecurityRuleProtocol left, EffectiveSecurityRuleProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EffectiveSecurityRuleProtocol"/> values are not the same. </summary>
         public static bool operator !=(EffectiveSecurityRuleProtocol left, EffectiveSecurityRuleProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EffectiveSecurityRuleProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EffectiveSecurityRuleProtocol"/>. </summary>
         public static implicit operator EffectiveSecurityRuleProtocol(string value) => new EffectiveSecurityRuleProtocol(value);
 
         /// <inheritdoc />

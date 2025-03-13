@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static bool operator ==(AlertsManagementDayOfWeek left, AlertsManagementDayOfWeek right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlertsManagementDayOfWeek"/> values are not the same. </summary>
         public static bool operator !=(AlertsManagementDayOfWeek left, AlertsManagementDayOfWeek right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AlertsManagementDayOfWeek"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AlertsManagementDayOfWeek"/>. </summary>
         public static implicit operator AlertsManagementDayOfWeek(string value) => new AlertsManagementDayOfWeek(value);
 
         /// <inheritdoc />

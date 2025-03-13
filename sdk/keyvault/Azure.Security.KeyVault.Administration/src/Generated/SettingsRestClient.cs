@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public SettingsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.6-preview.1")
+        public SettingsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.5")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -84,7 +84,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 200:
                     {
                         KeyVaultSetting value0 = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value0 = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement);
                         return Response.FromValue(value0, message.Response);
                     }
@@ -122,7 +122,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 200:
                     {
                         KeyVaultSetting value0 = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value0 = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement);
                         return Response.FromValue(value0, message.Response);
                     }
@@ -170,7 +170,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 200:
                     {
                         KeyVaultSetting value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -203,7 +203,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 200:
                     {
                         KeyVaultSetting value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -245,7 +245,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 200:
                     {
                         GetSettingsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GetSettingsResult.DeserializeGetSettingsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -273,7 +273,7 @@ namespace Azure.Security.KeyVault.Administration
                 case 200:
                     {
                         GetSettingsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GetSettingsResult.DeserializeGetSettingsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

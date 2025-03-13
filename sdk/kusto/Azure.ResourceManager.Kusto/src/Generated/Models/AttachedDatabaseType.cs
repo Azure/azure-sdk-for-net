@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public static bool operator ==(AttachedDatabaseType left, AttachedDatabaseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AttachedDatabaseType"/> values are not the same. </summary>
         public static bool operator !=(AttachedDatabaseType left, AttachedDatabaseType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AttachedDatabaseType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AttachedDatabaseType"/>. </summary>
         public static implicit operator AttachedDatabaseType(string value) => new AttachedDatabaseType(value);
 
         /// <inheritdoc />

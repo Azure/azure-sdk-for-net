@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static bool operator ==(DataShareOutputType left, DataShareOutputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataShareOutputType"/> values are not the same. </summary>
         public static bool operator !=(DataShareOutputType left, DataShareOutputType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataShareOutputType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataShareOutputType"/>. </summary>
         public static implicit operator DataShareOutputType(string value) => new DataShareOutputType(value);
 
         /// <inheritdoc />

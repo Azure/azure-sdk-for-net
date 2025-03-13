@@ -18,50 +18,50 @@ internal class TestConfig
 {
     private const string AZURE_OPENAI_ENV_KEY_PREFIX = "AZURE_OPENAI";
 
-    private readonly bool _isPlayback;
-    private readonly IReadOnlyDictionary<string, JsonConfig> _jsonConfig;
+    private readonly Func<RecordedTestMode> _getRecordedMode;
     private SortedDictionary<string, SanitizedJsonConfig> _recordedConfig;
+    private readonly IReadOnlyDictionary<string, JsonConfig> _liveConfig;
+    private readonly IReadOnlyDictionary<string, JsonConfig> _playbackConfig;
 
     public virtual string AssetsSubFolder => "Assets";
     public virtual string AssetsJson => "test_config.json";
     public virtual string PlaybackAssetsJson => $"playback_{AssetsJson}";
 
-    public TestConfig(RecordedTestMode? mode)
+    protected bool IsPlayback => _getRecordedMode() == RecordedTestMode.Playback;
+
+    // When in playback mode, we always use the playback configuration. This ensures that we run in the same way in CI/CD
+    // as we do locally.
+    protected IReadOnlyDictionary<string, JsonConfig> CurrentConfig => IsPlayback ? _playbackConfig : _liveConfig;
+
+    public TestConfig(Func<RecordedTestMode> getRecordedMode)
     {
-        _isPlayback = mode == RecordedTestMode.Playback;
+        _getRecordedMode = getRecordedMode ?? throw new ArgumentNullException(nameof(getRecordedMode));
         _recordedConfig = new(new DefaultFirstStringComparer());
 
         // Load the previous playback configuration and use that to initialize the recorded config
         string playbackConfigJson = Path.Combine(AssetsSubFolder, PlaybackAssetsJson);
-        var playbackConfig = ReadJsonConfig(playbackConfigJson);
-        if (playbackConfig != null)
+        _playbackConfig = ReadJsonConfig(playbackConfigJson)!;
+        if (_playbackConfig == null)
         {
-            foreach (var kvp in playbackConfig)
-            {
-                _recordedConfig.Add(kvp.Key, new SanitizedJsonConfig(kvp.Value));
-            }
+            throw new InvalidOperationException($"The playback config file was not found: {playbackConfigJson}");
         }
 
-        // When in playback mode, we always use the playback configuration. This ensures that we run in the same way in CI/CD
-        // as we do locally.
-        if (_isPlayback)
+        foreach (var kvp in _playbackConfig)
         {
-            _jsonConfig = playbackConfig
-                ?? throw new InvalidOperationException($"The playback config file was not found: {playbackConfigJson}");
+            _recordedConfig.Add(kvp.Key, new SanitizedJsonConfig(kvp.Value));
         }
-        else
-        {
-            _jsonConfig = new[]
-                {
-                    AssetsJson,
-                    Path.Combine(AssetsSubFolder, AssetsJson),
-                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".azure", AssetsSubFolder, AssetsJson),
-                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".azure", AssetsSubFolder, AssetsJson),
-                }
-                .Select(f => ReadJsonConfig(f))
-                .FirstOrDefault(c => c != null)
-                ?? new Dictionary<string, JsonConfig>();
-        }
+
+        // Try to load the configuration to use against the real service (e.g. recording or live mode)
+        _liveConfig = new[]
+            {
+                AssetsJson,
+                Path.Combine(AssetsSubFolder, AssetsJson),
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".azure", AssetsSubFolder, AssetsJson),
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".azure", AssetsSubFolder, AssetsJson),
+            }
+            .Select(f => ReadJsonConfig(f))
+            .FirstOrDefault(c => c != null)
+            ?? new Dictionary<string, JsonConfig>();
     }
 
     public virtual IConfiguration? GetConfig<TClient>()
@@ -72,16 +72,16 @@ internal class TestConfig
         // In order to populate each property of the Config object, the search order is as follows:
         // 1. Getting the specific config for the name in the JSON config file
         // 2. Getting the value from the default config
-        // 3. (Not in playback) Getting the value from the AZURE_OPENAI_<NAME>_<PROEPRTYNAME> environment variable
-        // 4. (Not in playback) Getting the value from the AZURE_OPENAI_<PROEPRTYNAME> environment variable
+        // 3. (Not in playback) Getting the value from the AZURE_OPENAI_<NAME>_<PROPERTY_NAME> environment variable
+        // 4. (Not in playback) Getting the value from the AZURE_OPENAI_<PROPERTY_NAME> environment variable
         // It will fall through each one if the value is null
 
         return new FlattenedConfig(
             [
-                new NamedConfig(_jsonConfig.GetValueOrDefault(name), name),
-                new NamedConfig(_jsonConfig.GetValueOrDefault(JsonConfig.DEFAULT_CONFIG_NAME), null),
-                _isPlayback ? null : new EnvironmentValuesConfig(AZURE_OPENAI_ENV_KEY_PREFIX, name),
-                _isPlayback ? null : new EnvironmentValuesConfig(AZURE_OPENAI_ENV_KEY_PREFIX)
+                new NamedConfig(CurrentConfig.GetValueOrDefault(name), name),
+                new NamedConfig(CurrentConfig.GetValueOrDefault(JsonConfig.DEFAULT_CONFIG_NAME), null),
+                IsPlayback ? null : new EnvironmentValuesConfig(AZURE_OPENAI_ENV_KEY_PREFIX, name),
+                IsPlayback ? null : new EnvironmentValuesConfig(AZURE_OPENAI_ENV_KEY_PREFIX)
             ], _recordedConfig);
     }
 

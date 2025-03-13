@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static bool operator ==(FirmwareAnalysisSummaryType left, FirmwareAnalysisSummaryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FirmwareAnalysisSummaryType"/> values are not the same. </summary>
         public static bool operator !=(FirmwareAnalysisSummaryType left, FirmwareAnalysisSummaryType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FirmwareAnalysisSummaryType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FirmwareAnalysisSummaryType"/>. </summary>
         public static implicit operator FirmwareAnalysisSummaryType(string value) => new FirmwareAnalysisSummaryType(value);
 
         /// <inheritdoc />

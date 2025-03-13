@@ -9,18 +9,18 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.Samples
 {
     public partial class Sample_PostgreSqlDatabaseResource
     {
-        // DatabaseCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_DatabaseCreate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_DatabaseGet()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2017-12-01/examples/DatabaseCreate.json
-            // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2017-12-01/examples/DatabaseGet.json
+            // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -37,13 +37,7 @@ namespace Azure.ResourceManager.PostgreSql.Samples
             PostgreSqlDatabaseResource postgreSqlDatabase = client.GetPostgreSqlDatabaseResource(postgreSqlDatabaseResourceId);
 
             // invoke the operation
-            PostgreSqlDatabaseData data = new PostgreSqlDatabaseData()
-            {
-                Charset = "UTF8",
-                Collation = "English_United States.1252",
-            };
-            ArmOperation<PostgreSqlDatabaseResource> lro = await postgreSqlDatabase.UpdateAsync(WaitUntil.Completed, data);
-            PostgreSqlDatabaseResource result = lro.Value;
+            PostgreSqlDatabaseResource result = await postgreSqlDatabase.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -52,9 +46,8 @@ namespace Azure.ResourceManager.PostgreSql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DatabaseDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DatabaseDelete()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2017-12-01/examples/DatabaseDelete.json
@@ -77,16 +70,15 @@ namespace Azure.ResourceManager.PostgreSql.Samples
             // invoke the operation
             await postgreSqlDatabase.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // DatabaseGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_DatabaseGet()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_DatabaseCreate()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2017-12-01/examples/DatabaseGet.json
-            // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2017-12-01/examples/DatabaseCreate.json
+            // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -103,7 +95,13 @@ namespace Azure.ResourceManager.PostgreSql.Samples
             PostgreSqlDatabaseResource postgreSqlDatabase = client.GetPostgreSqlDatabaseResource(postgreSqlDatabaseResourceId);
 
             // invoke the operation
-            PostgreSqlDatabaseResource result = await postgreSqlDatabase.GetAsync();
+            PostgreSqlDatabaseData data = new PostgreSqlDatabaseData
+            {
+                Charset = "UTF8",
+                Collation = "English_United States.1252",
+            };
+            ArmOperation<PostgreSqlDatabaseResource> lro = await postgreSqlDatabase.UpdateAsync(WaitUntil.Completed, data);
+            PostgreSqlDatabaseResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

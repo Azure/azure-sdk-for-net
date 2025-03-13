@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI.Assistants
         public static bool operator ==(OpenAIPageableListOfAssistantFileObject left, OpenAIPageableListOfAssistantFileObject right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OpenAIPageableListOfAssistantFileObject"/> values are not the same. </summary>
         public static bool operator !=(OpenAIPageableListOfAssistantFileObject left, OpenAIPageableListOfAssistantFileObject right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OpenAIPageableListOfAssistantFileObject"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OpenAIPageableListOfAssistantFileObject"/>. </summary>
         public static implicit operator OpenAIPageableListOfAssistantFileObject(string value) => new OpenAIPageableListOfAssistantFileObject(value);
 
         /// <inheritdoc />

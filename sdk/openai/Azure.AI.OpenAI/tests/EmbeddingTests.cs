@@ -21,7 +21,7 @@ public class EmbeddingTests : AoaiTestBase<EmbeddingClient>
     public async Task SimpleEmbeddingWithTopLevelClient()
     {
         EmbeddingClient embeddingClient = GetTestClient();
-        ClientResult<Embedding> embeddingResult = await embeddingClient.GenerateEmbeddingAsync("sample text to embed");
-        Assert.That(embeddingResult?.Value?.Vector.Length, Is.GreaterThan(0));
+        ClientResult<OpenAIEmbedding> embeddingResult = await embeddingClient.GenerateEmbeddingAsync("sample text to embed");
+        Assert.That(embeddingResult?.Value?.ToFloats().Length, Is.GreaterThan(0));
     }
 }

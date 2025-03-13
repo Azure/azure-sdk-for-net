@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlMigrationCancel left, PostgreSqlMigrationCancel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationCancel"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlMigrationCancel left, PostgreSqlMigrationCancel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlMigrationCancel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlMigrationCancel"/>. </summary>
         public static implicit operator PostgreSqlMigrationCancel(string value) => new PostgreSqlMigrationCancel(value);
 
         /// <inheritdoc />

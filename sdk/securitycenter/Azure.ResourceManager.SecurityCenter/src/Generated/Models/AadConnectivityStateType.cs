@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(AadConnectivityStateType left, AadConnectivityStateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AadConnectivityStateType"/> values are not the same. </summary>
         public static bool operator !=(AadConnectivityStateType left, AadConnectivityStateType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AadConnectivityStateType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AadConnectivityStateType"/>. </summary>
         public static implicit operator AadConnectivityStateType(string value) => new AadConnectivityStateType(value);
 
         /// <inheritdoc />

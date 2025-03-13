@@ -11,14 +11,14 @@ using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Automation.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automation.Samples
 {
     public partial class Sample_SoftwareUpdateConfigurationCollection
     {
-        // Create software update configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateSoftwareUpdateConfiguration()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/softwareUpdateConfiguration/createSoftwareUpdateConfiguration.json
@@ -44,99 +44,67 @@ namespace Azure.ResourceManager.Automation.Samples
             string softwareUpdateConfigurationName = "testpatch";
             SoftwareUpdateConfigurationData data = new SoftwareUpdateConfigurationData(new SoftwareUpdateConfigurationSpecificProperties(SoftwareUpdateConfigurationOperatingSystemType.Windows)
             {
-                Windows = new WindowsUpdateConfigurationProperties()
+                Windows = new WindowsUpdateConfigurationProperties
                 {
                     IncludedUpdateClassifications = WindowsUpdateClassification.Critical,
-                    ExcludedKBNumbers =
-{
-"168934","168973"
-},
+                    ExcludedKBNumbers = { "168934", "168973" },
                     RebootSetting = "IfRequired",
                 },
                 Duration = XmlConvert.ToTimeSpan("PT2H0M"),
-                AzureVirtualMachines =
-{
-"/subscriptions/5ae68d89-69a4-454f-b5ce-e443cc4e0067/resourceGroups/myresources/providers/Microsoft.Compute/virtualMachines/vm-01","/subscriptions/5ae68d89-69a4-454f-b5ce-e443cc4e0067/resourceGroups/myresources/providers/Microsoft.Compute/virtualMachines/vm-02","/subscriptions/5ae68d89-69a4-454f-b5ce-e443cc4e0067/resourceGroups/myresources/providers/Microsoft.Compute/virtualMachines/vm-03"
-},
-                NonAzureComputerNames =
-{
-"box1.contoso.com","box2.contoso.com"
-},
-                Targets = new SoftwareUpdateConfigurationTargetProperties()
+                AzureVirtualMachines = { "/subscriptions/5ae68d89-69a4-454f-b5ce-e443cc4e0067/resourceGroups/myresources/providers/Microsoft.Compute/virtualMachines/vm-01", "/subscriptions/5ae68d89-69a4-454f-b5ce-e443cc4e0067/resourceGroups/myresources/providers/Microsoft.Compute/virtualMachines/vm-02", "/subscriptions/5ae68d89-69a4-454f-b5ce-e443cc4e0067/resourceGroups/myresources/providers/Microsoft.Compute/virtualMachines/vm-03" },
+                NonAzureComputerNames = { "box1.contoso.com", "box2.contoso.com" },
+                Targets = new SoftwareUpdateConfigurationTargetProperties
                 {
-                    AzureQueries =
+                    AzureQueries = {new AzureQueryProperties
 {
-new AzureQueryProperties()
-{
-Scope =
-{
-"/subscriptions/5ae68d89-69a4-454f-b5ce-e443cc4e0067/resourceGroups/myresources","/subscriptions/5ae68d89-69a4-454f-b5ce-e443cc4e0067"
-},
-Locations =
-{
-new AzureLocation("Japan East"),new AzureLocation("UK South")
-},
-TagSettings = new QueryTagSettingsProperties()
+Scope = {"/subscriptions/5ae68d89-69a4-454f-b5ce-e443cc4e0067/resourceGroups/myresources", "/subscriptions/5ae68d89-69a4-454f-b5ce-e443cc4e0067"},
+Locations = {new AzureLocation("Japan East"), new AzureLocation("UK South")},
+TagSettings = new QueryTagSettingsProperties
 {
 Tags =
 {
-["tag1"] = new string[]
-{
-"tag1Value1","tag1Value2","tag1Value3"
-},
-["tag2"] = new string[]
-{
-"tag2Value1","tag2Value2","tag2Value3"
-},
+["tag1"] = new string[]{"tag1Value1", "tag1Value2", "tag1Value3"},
+["tag2"] = new string[]{"tag2Value1", "tag2Value2", "tag2Value3"}
 },
 FilterOperator = QueryTagOperator.All,
 },
-}
-},
-                    NonAzureQueries =
-{
-new NonAzureQueryProperties()
+}},
+                    NonAzureQueries = {new NonAzureQueryProperties
 {
 FunctionAlias = "SavedSearch1",
 WorkspaceId = "WorkspaceId1",
-},new NonAzureQueryProperties()
+}, new NonAzureQueryProperties
 {
 FunctionAlias = "SavedSearch2",
 WorkspaceId = "WorkspaceId2",
-}
-},
+}},
                 },
-            }, new SoftwareUpdateConfigurationScheduleProperties()
+            }, new SoftwareUpdateConfigurationScheduleProperties
             {
                 StartOn = DateTimeOffset.Parse("2017-10-19T12:22:57+00:00"),
                 ExpireOn = DateTimeOffset.Parse("2018-11-09T11:22:57+00:00"),
-                Interval = 1,
+                Interval = 1L,
                 Frequency = AutomationScheduleFrequency.Hour,
                 TimeZone = "America/Los_Angeles",
-                AdvancedSchedule = new AutomationAdvancedSchedule()
+                AdvancedSchedule = new AutomationAdvancedSchedule
                 {
-                    WeekDays =
-{
-"Monday","Thursday"
-},
+                    WeekDays = { "Monday", "Thursday" },
                 },
             })
             {
-                Tasks = new SoftwareUpdateConfigurationTasks()
+                Tasks = new SoftwareUpdateConfigurationTasks
                 {
-                    PreTask = new SoftwareUpdateConfigurationTaskProperties()
+                    PreTask = new SoftwareUpdateConfigurationTaskProperties
                     {
                         Parameters =
 {
-["COMPUTERNAME"] = "Computer1",
+["COMPUTERNAME"] = "Computer1"
 },
                         Source = "HelloWorld",
                     },
-                    PostTask = new SoftwareUpdateConfigurationTaskProperties()
+                    PostTask = new SoftwareUpdateConfigurationTaskProperties
                     {
-                        Parameters =
-{
-},
+                        Parameters = { },
                         Source = "GetCache",
                     },
                 },
@@ -151,9 +119,8 @@ WorkspaceId = "WorkspaceId2",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get software update configuration by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSoftwareUpdateConfigurationByName()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/softwareUpdateConfiguration/getSoftwareUpdateConfigurationByName.json
@@ -186,83 +153,8 @@ WorkspaceId = "WorkspaceId2",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get software update configuration by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetSoftwareUpdateConfigurationByName()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/softwareUpdateConfiguration/getSoftwareUpdateConfigurationByName.json
-            // this example is just showing the usage of "SoftwareUpdateConfigurations_GetByName" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomationAccountResource created on azure
-            // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
-            string resourceGroupName = "mygroup";
-            string automationAccountName = "myaccount";
-            ResourceIdentifier automationAccountResourceId = AutomationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName);
-            AutomationAccountResource automationAccount = client.GetAutomationAccountResource(automationAccountResourceId);
-
-            // get the collection of this SoftwareUpdateConfigurationResource
-            SoftwareUpdateConfigurationCollection collection = automationAccount.GetSoftwareUpdateConfigurations();
-
-            // invoke the operation
-            string softwareUpdateConfigurationName = "mypatch";
-            bool result = await collection.ExistsAsync(softwareUpdateConfigurationName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get software update configuration by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetSoftwareUpdateConfigurationByName()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/softwareUpdateConfiguration/getSoftwareUpdateConfigurationByName.json
-            // this example is just showing the usage of "SoftwareUpdateConfigurations_GetByName" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomationAccountResource created on azure
-            // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
-            string resourceGroupName = "mygroup";
-            string automationAccountName = "myaccount";
-            ResourceIdentifier automationAccountResourceId = AutomationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName);
-            AutomationAccountResource automationAccount = client.GetAutomationAccountResource(automationAccountResourceId);
-
-            // get the collection of this SoftwareUpdateConfigurationResource
-            SoftwareUpdateConfigurationCollection collection = automationAccount.GetSoftwareUpdateConfigurations();
-
-            // invoke the operation
-            string softwareUpdateConfigurationName = "mypatch";
-            NullableResponse<SoftwareUpdateConfigurationResource> response = await collection.GetIfExistsAsync(softwareUpdateConfigurationName);
-            SoftwareUpdateConfigurationResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SoftwareUpdateConfigurationData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // List software update configurations
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListSoftwareUpdateConfigurations()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/softwareUpdateConfiguration/listSoftwareUpdateConfigurations.json
@@ -290,12 +182,11 @@ WorkspaceId = "WorkspaceId2",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List software update configurations Targeting a specific azure virtual machine
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListSoftwareUpdateConfigurationsTargetingASpecificAzureVirtualMachine()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/softwareUpdateConfiguration/listSoftwareUpdateConfigurationsByVm.json
@@ -324,7 +215,79 @@ WorkspaceId = "WorkspaceId2",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetSoftwareUpdateConfigurationByName()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/softwareUpdateConfiguration/getSoftwareUpdateConfigurationByName.json
+            // this example is just showing the usage of "SoftwareUpdateConfigurations_GetByName" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomationAccountResource created on azure
+            // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
+            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string resourceGroupName = "mygroup";
+            string automationAccountName = "myaccount";
+            ResourceIdentifier automationAccountResourceId = AutomationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName);
+            AutomationAccountResource automationAccount = client.GetAutomationAccountResource(automationAccountResourceId);
+
+            // get the collection of this SoftwareUpdateConfigurationResource
+            SoftwareUpdateConfigurationCollection collection = automationAccount.GetSoftwareUpdateConfigurations();
+
+            // invoke the operation
+            string softwareUpdateConfigurationName = "mypatch";
+            bool result = await collection.ExistsAsync(softwareUpdateConfigurationName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetSoftwareUpdateConfigurationByName()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/softwareUpdateConfiguration/getSoftwareUpdateConfigurationByName.json
+            // this example is just showing the usage of "SoftwareUpdateConfigurations_GetByName" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomationAccountResource created on azure
+            // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
+            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string resourceGroupName = "mygroup";
+            string automationAccountName = "myaccount";
+            ResourceIdentifier automationAccountResourceId = AutomationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName);
+            AutomationAccountResource automationAccount = client.GetAutomationAccountResource(automationAccountResourceId);
+
+            // get the collection of this SoftwareUpdateConfigurationResource
+            SoftwareUpdateConfigurationCollection collection = automationAccount.GetSoftwareUpdateConfigurations();
+
+            // invoke the operation
+            string softwareUpdateConfigurationName = "mypatch";
+            NullableResponse<SoftwareUpdateConfigurationResource> response = await collection.GetIfExistsAsync(softwareUpdateConfigurationName);
+            SoftwareUpdateConfigurationResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SoftwareUpdateConfigurationData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

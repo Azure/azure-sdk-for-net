@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public static bool operator ==(DeviceUpdateSku left, DeviceUpdateSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceUpdateSku"/> values are not the same. </summary>
         public static bool operator !=(DeviceUpdateSku left, DeviceUpdateSku right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeviceUpdateSku"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceUpdateSku"/>. </summary>
         public static implicit operator DeviceUpdateSku(string value) => new DeviceUpdateSku(value);
 
         /// <inheritdoc />

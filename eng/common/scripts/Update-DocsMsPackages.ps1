@@ -20,20 +20,13 @@ docs generation from pacakges which are not published to the default feed). This
 variable is meant to be used in the domain-specific business logic in
 &$UpdateDocsMsPackagesFn
 
-.PARAMETER ImageId
-Optional The docker image for package validation in format of '$containerRegistry/$imageName:$tag'.
-e.g. azuresdkimages.azurecr.io/jsrefautocr:latest
-
 #>
 param (
   [Parameter(Mandatory = $true)]
   [string] $DocRepoLocation, # the location of the cloned doc repo
 
   [Parameter(Mandatory = $false)]
-  [string] $PackageSourceOverride,
-
-  [Parameter(Mandatory = $false)]
-  [string] $ImageId
+  [string] $PackageSourceOverride
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -54,14 +47,13 @@ function GetMetadata($moniker) {
   return $metadata
 }
 
-function ValidatePackageForOnboarding2($package) {
+function PackageIsValidForDocsOnboarding($package) {
   if (!(Test-Path "Function:$ValidateDocsMsPackagesFn")) {
     return $true
   }
 
   return &$ValidateDocsMsPackagesFn `
     -PackageInfo $package `
-    -DocValidationImageId $ImageId `
     -DocRepoLocation $DocRepoLocation
 }
 
@@ -88,7 +80,7 @@ foreach ($moniker in $MONIKERS) {
         if ($package.ContainsKey('_SkipDocsValidation') -and $true -eq $package['_SkipDocsValidation']) {
           Write-Host "Skip validation for package: $($packageIdentity)"
         }
-        elseif (!(ValidatePackageForOnboarding2 $package)) {
+        elseif (!(PackageIsValidForDocsOnboarding $package)) {
           LogWarning "Skip adding package that did not pass validation: $($packageIdentity)"
           continue
         }
@@ -101,7 +93,7 @@ foreach ($moniker in $MONIKERS) {
       $oldPackage = $alreadyOnboardedPackages[$packageIdentity]
 
       if ($oldPackage.Version -ne $package.Version) {
-        if (!(ValidatePackageForOnboarding2 $package)) {
+        if (!(PackageIsValidForDocsOnboarding $package)) {
           LogWarning "Omitting package that failed validation: $($packageIdentity)@$($package.Version)"
           continue
         }

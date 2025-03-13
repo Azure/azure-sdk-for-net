@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using Azure.Provisioning.Generator.Model;
+using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.EventGrid;
+using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.Provisioning.Generator.Specifications;
 
@@ -16,6 +18,7 @@ public class EventGridSpecification() :
 
         // Patch models
         CustomizeModel<EventGridNamespaceClientResource>(m => m.Name = "EventGridNamespaceClientResource");
+        CustomizePropertyIsoDuration<QueueInfo>("EventTimeToLive");
 
         // Naming requirements
         AddNameRequirements<EventGridDomainResource>(min: 3, max: 50, lower: true, upper: true, digits: true, hyphen: true);

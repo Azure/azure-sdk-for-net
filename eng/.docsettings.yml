@@ -164,6 +164,7 @@ known_content_issues:
   - ['sdk/provisioning/Azure.Provisioning.Communication/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/provisioning/Azure.Provisioning.ApplicationInsights/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/provisioning/Azure.Provisioning.ContainerService/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.Deployment/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:

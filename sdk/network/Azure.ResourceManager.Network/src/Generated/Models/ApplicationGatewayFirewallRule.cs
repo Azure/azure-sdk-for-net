@@ -57,14 +57,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleIdString"> The string representation of the web application firewall rule identifier. </param>
         /// <param name="state"> The string representation of the web application firewall rule state. </param>
         /// <param name="action"> The string representation of the web application firewall rule action. </param>
+        /// <param name="sensitivity"> The string representation of the web application firewall rule sensitivity. </param>
         /// <param name="description"> The description of the web application firewall rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayFirewallRule(int ruleId, string ruleIdString, ApplicationGatewayWafRuleStateType? state, ApplicationGatewayWafRuleActionType? action, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationGatewayFirewallRule(int ruleId, string ruleIdString, ApplicationGatewayWafRuleStateType? state, ApplicationGatewayWafRuleActionType? action, ApplicationGatewayWafRuleSensitivityType? sensitivity, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleId = ruleId;
             RuleIdString = ruleIdString;
             State = state;
             Action = action;
+            Sensitivity = sensitivity;
             Description = description;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -82,6 +84,8 @@ namespace Azure.ResourceManager.Network.Models
         public ApplicationGatewayWafRuleStateType? State { get; set; }
         /// <summary> The string representation of the web application firewall rule action. </summary>
         public ApplicationGatewayWafRuleActionType? Action { get; set; }
+        /// <summary> The string representation of the web application firewall rule sensitivity. </summary>
+        public ApplicationGatewayWafRuleSensitivityType? Sensitivity { get; set; }
         /// <summary> The description of the web application firewall rule. </summary>
         public string Description { get; set; }
     }

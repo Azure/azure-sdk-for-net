@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(FirewallPolicyRuleApplicationProtocolType left, FirewallPolicyRuleApplicationProtocolType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FirewallPolicyRuleApplicationProtocolType"/> values are not the same. </summary>
         public static bool operator !=(FirewallPolicyRuleApplicationProtocolType left, FirewallPolicyRuleApplicationProtocolType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FirewallPolicyRuleApplicationProtocolType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallPolicyRuleApplicationProtocolType"/>. </summary>
         public static implicit operator FirewallPolicyRuleApplicationProtocolType(string value) => new FirewallPolicyRuleApplicationProtocolType(value);
 
         /// <inheritdoc />

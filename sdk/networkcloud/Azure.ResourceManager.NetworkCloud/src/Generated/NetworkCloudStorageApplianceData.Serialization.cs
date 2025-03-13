@@ -22,48 +22,24 @@ namespace Azure.ResourceManager.NetworkCloud
 
         void IJsonModel<NetworkCloudStorageApplianceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudStorageApplianceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkCloudStorageApplianceData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation, options);
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("administratorCredentials"u8);
@@ -98,6 +74,16 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("managementIpv4Address"u8);
                 writer.WriteStringValue(ManagementIPv4Address.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(Manufacturer))
+            {
+                writer.WritePropertyName("manufacturer"u8);
+                writer.WriteStringValue(Manufacturer);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Model))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(Model);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -117,25 +103,24 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("remoteVendorManagementStatus"u8);
                 writer.WriteStringValue(RemoteVendorManagementStatus.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SecretRotationStatus))
+            {
+                writer.WritePropertyName("secretRotationStatus"u8);
+                writer.WriteStartArray();
+                foreach (var item in SecretRotationStatus)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("serialNumber"u8);
             writer.WriteStringValue(SerialNumber);
             writer.WritePropertyName("storageApplianceSkuId"u8);
             writer.WriteStringValue(StorageApplianceSkuId);
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
             }
             writer.WriteEndObject();
         }
@@ -174,13 +159,17 @@ namespace Azure.ResourceManager.NetworkCloud
             StorageApplianceDetailedStatus? detailedStatus = default;
             string detailedStatusMessage = default;
             IPAddress managementIPv4Address = default;
+            string manufacturer = default;
+            string model = default;
             StorageApplianceProvisioningState? provisioningState = default;
             ResourceIdentifier rackId = default;
             long rackSlot = default;
             RemoteVendorManagementFeature? remoteVendorManagementFeature = default;
             RemoteVendorManagementStatus? remoteVendorManagementStatus = default;
+            IReadOnlyList<SecretRotationStatus> secretRotationStatus = default;
             string serialNumber = default;
             string storageApplianceSkuId = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -297,6 +286,16 @@ namespace Azure.ResourceManager.NetworkCloud
                             managementIPv4Address = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("manufacturer"u8))
+                        {
+                            manufacturer = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("model"u8))
+                        {
+                            model = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -334,6 +333,20 @@ namespace Azure.ResourceManager.NetworkCloud
                             remoteVendorManagementStatus = new RemoteVendorManagementStatus(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("secretRotationStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<SecretRotationStatus> array = new List<SecretRotationStatus>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(Models.SecretRotationStatus.DeserializeSecretRotationStatus(item, options));
+                            }
+                            secretRotationStatus = array;
+                            continue;
+                        }
                         if (property0.NameEquals("serialNumber"u8))
                         {
                             serialNumber = property0.Value.GetString();
@@ -342,6 +355,11 @@ namespace Azure.ResourceManager.NetworkCloud
                         if (property0.NameEquals("storageApplianceSkuId"u8))
                         {
                             storageApplianceSkuId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("version"u8))
+                        {
+                            version = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -368,13 +386,17 @@ namespace Azure.ResourceManager.NetworkCloud
                 detailedStatus,
                 detailedStatusMessage,
                 managementIPv4Address,
+                manufacturer,
+                model,
                 provisioningState,
                 rackId,
                 rackSlot,
                 remoteVendorManagementFeature,
                 remoteVendorManagementStatus,
+                secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>(),
                 serialNumber,
                 storageApplianceSkuId,
+                version,
                 serializedAdditionalRawData);
         }
 
@@ -399,7 +421,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkCloudStorageApplianceData(document.RootElement, options);
                     }
                 default:

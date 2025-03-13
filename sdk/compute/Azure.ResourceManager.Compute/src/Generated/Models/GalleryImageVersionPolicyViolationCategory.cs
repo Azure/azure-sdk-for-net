@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(GalleryImageVersionPolicyViolationCategory left, GalleryImageVersionPolicyViolationCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GalleryImageVersionPolicyViolationCategory"/> values are not the same. </summary>
         public static bool operator !=(GalleryImageVersionPolicyViolationCategory left, GalleryImageVersionPolicyViolationCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GalleryImageVersionPolicyViolationCategory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GalleryImageVersionPolicyViolationCategory"/>. </summary>
         public static implicit operator GalleryImageVersionPolicyViolationCategory(string value) => new GalleryImageVersionPolicyViolationCategory(value);
 
         /// <inheritdoc />

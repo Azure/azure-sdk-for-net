@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(DataFactoryPipelineReferenceType left, DataFactoryPipelineReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFactoryPipelineReferenceType"/> values are not the same. </summary>
         public static bool operator !=(DataFactoryPipelineReferenceType left, DataFactoryPipelineReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataFactoryPipelineReferenceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFactoryPipelineReferenceType"/>. </summary>
         public static implicit operator DataFactoryPipelineReferenceType(string value) => new DataFactoryPipelineReferenceType(value);
 
         /// <inheritdoc />

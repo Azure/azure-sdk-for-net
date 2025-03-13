@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(ExternalSecuritySolutionKind left, ExternalSecuritySolutionKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExternalSecuritySolutionKind"/> values are not the same. </summary>
         public static bool operator !=(ExternalSecuritySolutionKind left, ExternalSecuritySolutionKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExternalSecuritySolutionKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExternalSecuritySolutionKind"/>. </summary>
         public static implicit operator ExternalSecuritySolutionKind(string value) => new ExternalSecuritySolutionKind(value);
 
         /// <inheritdoc />

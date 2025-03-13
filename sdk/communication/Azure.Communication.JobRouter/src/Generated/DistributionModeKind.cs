@@ -36,7 +36,7 @@ namespace Azure.Communication.JobRouter
         public static bool operator ==(DistributionModeKind left, DistributionModeKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DistributionModeKind"/> values are not the same. </summary>
         public static bool operator !=(DistributionModeKind left, DistributionModeKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DistributionModeKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DistributionModeKind"/>. </summary>
         public static implicit operator DistributionModeKind(string value) => new DistributionModeKind(value);
 
         /// <inheritdoc />

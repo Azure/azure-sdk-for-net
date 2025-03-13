@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(NetworkHttpConfigurationMethod left, NetworkHttpConfigurationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkHttpConfigurationMethod"/> values are not the same. </summary>
         public static bool operator !=(NetworkHttpConfigurationMethod left, NetworkHttpConfigurationMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkHttpConfigurationMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkHttpConfigurationMethod"/>. </summary>
         public static implicit operator NetworkHttpConfigurationMethod(string value) => new NetworkHttpConfigurationMethod(value);
 
         /// <inheritdoc />

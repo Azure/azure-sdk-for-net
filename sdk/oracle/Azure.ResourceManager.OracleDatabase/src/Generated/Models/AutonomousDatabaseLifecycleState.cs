@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(AutonomousDatabaseLifecycleState left, AutonomousDatabaseLifecycleState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutonomousDatabaseLifecycleState"/> values are not the same. </summary>
         public static bool operator !=(AutonomousDatabaseLifecycleState left, AutonomousDatabaseLifecycleState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutonomousDatabaseLifecycleState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutonomousDatabaseLifecycleState"/>. </summary>
         public static implicit operator AutonomousDatabaseLifecycleState(string value) => new AutonomousDatabaseLifecycleState(value);
 
         /// <inheritdoc />

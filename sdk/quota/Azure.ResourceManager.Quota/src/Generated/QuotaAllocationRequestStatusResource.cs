@@ -27,10 +27,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="managementGroupId"> The managementGroupId. </param>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="groupQuotaName"> The groupQuotaName. </param>
+        /// <param name="resourceProviderName"> The resourceProviderName. </param>
         /// <param name="allocationId"> The allocationId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string subscriptionId, string groupQuotaName, string allocationId)
+        public static ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName, string allocationId)
         {
-            var resourceId = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/quotaAllocationRequests/{allocationId}";
+            var resourceId = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{allocationId}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Quota
         private readonly QuotaAllocationRequestStatusData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Quota/groupQuotas/quotaAllocationRequests";
+        public static readonly ResourceType ResourceType = "Microsoft.Quota/groupQuotas/resourceProviders/quotaAllocationRequests";
 
         /// <summary> Initializes a new instance of the <see cref="QuotaAllocationRequestStatusResource"/> class for mocking. </summary>
         protected QuotaAllocationRequestStatusResource()
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Quota
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/quotaAllocationRequests/{allocationId}</description>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{allocationId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.Quota
             scope.Start();
             try
             {
-                var response = await _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.GetAsync(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.GetAsync(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new QuotaAllocationRequestStatusResource(Client, response.Value), response.GetRawResponse());
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Quota
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/quotaAllocationRequests/{allocationId}</description>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{allocationId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.Quota
             scope.Start();
             try
             {
-                var response = _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.Get(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _quotaAllocationRequestStatusGroupQuotaSubscriptionAllocationRequestRestClient.Get(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new QuotaAllocationRequestStatusResource(Client, response.Value), response.GetRawResponse());

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(VirtualWanSecurityProviderType left, VirtualWanSecurityProviderType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualWanSecurityProviderType"/> values are not the same. </summary>
         public static bool operator !=(VirtualWanSecurityProviderType left, VirtualWanSecurityProviderType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualWanSecurityProviderType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualWanSecurityProviderType"/>. </summary>
         public static implicit operator VirtualWanSecurityProviderType(string value) => new VirtualWanSecurityProviderType(value);
 
         /// <inheritdoc />

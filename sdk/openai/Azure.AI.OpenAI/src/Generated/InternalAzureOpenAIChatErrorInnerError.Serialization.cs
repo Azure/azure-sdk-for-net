@@ -14,13 +14,21 @@ namespace Azure.AI.OpenAI
     {
         void IJsonModel<InternalAzureOpenAIChatErrorInnerError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<InternalAzureOpenAIChatErrorInnerError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InternalAzureOpenAIChatErrorInnerError)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (SerializedAdditionalRawData?.ContainsKey("code") != true && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
@@ -55,7 +63,6 @@ namespace Azure.AI.OpenAI
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         InternalAzureOpenAIChatErrorInnerError IJsonModel<InternalAzureOpenAIChatErrorInnerError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -80,7 +87,7 @@ namespace Azure.AI.OpenAI
             }
             InternalAzureOpenAIChatErrorInnerErrorCode? code = default;
             string revisedPrompt = default;
-            ContentFilterResultForPrompt contentFilterResults = default;
+            RequestContentFilterResult contentFilterResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +112,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    contentFilterResults = ContentFilterResultForPrompt.DeserializeContentFilterResultForPrompt(property.Value, options);
+                    contentFilterResults = RequestContentFilterResult.DeserializeRequestContentFilterResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,4 +171,3 @@ namespace Azure.AI.OpenAI
         }
     }
 }
-

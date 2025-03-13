@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(DynamicsSinkWriteBehavior left, DynamicsSinkWriteBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynamicsSinkWriteBehavior"/> values are not the same. </summary>
         public static bool operator !=(DynamicsSinkWriteBehavior left, DynamicsSinkWriteBehavior right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DynamicsSinkWriteBehavior"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DynamicsSinkWriteBehavior"/>. </summary>
         public static implicit operator DynamicsSinkWriteBehavior(string value) => new DynamicsSinkWriteBehavior(value);
 
         /// <inheritdoc />

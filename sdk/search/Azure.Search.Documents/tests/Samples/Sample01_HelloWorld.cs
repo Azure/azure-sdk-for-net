@@ -18,6 +18,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2025_03_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_03_01_Preview)]
     public partial class HelloWorld : SearchTestBase
     {
         public HelloWorld(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -166,6 +167,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [AsyncOnly]
+        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/48588")]
         public async Task CreateIndexerAsync()
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAsync(this, populate: true, true);
@@ -300,7 +302,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 #region Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_Skillset
                 // Translate English descriptions to French.
-                // See https://docs.microsoft.com/azure/search/cognitive-search-skill-text-translation for details of the Text Translation skill.
+                // See https://learn.microsoft.com/azure/search/cognitive-search-skill-text-translation for details of the Text Translation skill.
                 TextTranslationSkill translationSkill = new TextTranslationSkill(
                     inputs: new[]
                     {
@@ -318,7 +320,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 };
 
                 // Use the human-translated French description if available; otherwise, use the translated description.
-                // See https://docs.microsoft.com/azure/search/cognitive-search-skill-conditional for details of the Conditional skill.
+                // See https://learn.microsoft.com/azure/search/cognitive-search-skill-conditional for details of the Conditional skill.
                 ConditionalSkill conditionalSkill = new ConditionalSkill(
                     inputs: new[]
                     {

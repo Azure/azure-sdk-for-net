@@ -39,7 +39,7 @@ namespace Azure.Maps.Search.Models
         public static bool operator ==(ResolutionEnum left, ResolutionEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResolutionEnum"/> values are not the same. </summary>
         public static bool operator !=(ResolutionEnum left, ResolutionEnum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResolutionEnum"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResolutionEnum"/>. </summary>
         public static implicit operator ResolutionEnum(string value) => new ResolutionEnum(value);
 
         /// <inheritdoc />

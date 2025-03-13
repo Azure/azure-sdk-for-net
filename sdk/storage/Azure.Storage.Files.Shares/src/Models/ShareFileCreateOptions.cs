@@ -22,6 +22,7 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary>
         /// Optional SMB properties to set for the file.
+        /// Note that this property is only applicable to files created in SMB shares.
         /// </summary>
         public FileSmbProperties SmbProperties { get; set; }
 
@@ -29,5 +30,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// Optional file permission to set on file.
         /// </summary>
         public ShareFilePermission FilePermission { get; set; }
+
+        /// <summary>
+        /// Optional properties to set on NFS files.
+        /// Note that this property is only applicable to files created in NFS shares.
+        /// </summary>
+        public FilePosixProperties PosixProperties { get; set; }
     }
 }

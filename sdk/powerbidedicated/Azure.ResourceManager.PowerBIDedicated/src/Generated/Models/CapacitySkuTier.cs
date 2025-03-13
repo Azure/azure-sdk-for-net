@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         public static bool operator ==(CapacitySkuTier left, CapacitySkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CapacitySkuTier"/> values are not the same. </summary>
         public static bool operator !=(CapacitySkuTier left, CapacitySkuTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CapacitySkuTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CapacitySkuTier"/>. </summary>
         public static implicit operator CapacitySkuTier(string value) => new CapacitySkuTier(value);
 
         /// <inheritdoc />

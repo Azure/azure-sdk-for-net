@@ -17,110 +17,162 @@ namespace Azure.Provisioning.AppConfiguration;
 /// <summary>
 /// AppConfigurationKeyValue.
 /// </summary>
-public partial class AppConfigurationKeyValue : Resource
+public partial class AppConfigurationKeyValue : ProvisionableResource
 {
     /// <summary>
     /// Identifier of key and label combination. Key and label are joined by $
     /// character. Label is optional.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The content type of the key-value&apos;s value.             Providing a
     /// proper content-type can enable transformations of values when they are
     /// retrieved by applications.
     /// </summary>
-    public BicepValue<string> ContentType { get => _contentType; set => _contentType.Assign(value); }
-    private readonly BicepValue<string> _contentType;
+    public BicepValue<string> ContentType 
+    {
+        get { Initialize(); return _contentType!; }
+        set { Initialize(); _contentType!.Assign(value); }
+    }
+    private BicepValue<string>? _contentType;
 
     /// <summary>
     /// A dictionary of tags that can help identify what a key-value may be
     /// applicable for.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// The value of the key-value.
     /// </summary>
-    public BicepValue<string> Value { get => _value; set => _value.Assign(value); }
-    private readonly BicepValue<string> _value;
+    public BicepValue<string> Value 
+    {
+        get { Initialize(); return _value!; }
+        set { Initialize(); _value!.Assign(value); }
+    }
+    private BicepValue<string>? _value;
 
     /// <summary>
     /// An ETag indicating the state of a key-value within a configuration
     /// store.
     /// </summary>
-    public BicepValue<ETag> ETag { get => _eTag; }
-    private readonly BicepValue<ETag> _eTag;
+    public BicepValue<ETag> ETag 
+    {
+        get { Initialize(); return _eTag!; }
+    }
+    private BicepValue<ETag>? _eTag;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// A value indicating whether the key-value is locked.             A
     /// locked key-value may not be modified until it is unlocked.
     /// </summary>
-    public BicepValue<bool> IsLocked { get => _isLocked; }
-    private readonly BicepValue<bool> _isLocked;
+    public BicepValue<bool> IsLocked 
+    {
+        get { Initialize(); return _isLocked!; }
+    }
+    private BicepValue<bool>? _isLocked;
 
     /// <summary>
     /// The primary identifier of a key-value.             The key is used in
     /// unison with the label to uniquely identify a key-value.
     /// </summary>
-    public BicepValue<string> Key { get => _key; }
-    private readonly BicepValue<string> _key;
+    public BicepValue<string> Key 
+    {
+        get { Initialize(); return _key!; }
+    }
+    private BicepValue<string>? _key;
 
     /// <summary>
     /// A value used to group key-values.             The label is used in
     /// unison with the key to uniquely identify a key-value.
     /// </summary>
-    public BicepValue<string> Label { get => _label; }
-    private readonly BicepValue<string> _label;
+    public BicepValue<string> Label 
+    {
+        get { Initialize(); return _label!; }
+    }
+    private BicepValue<string>? _label;
 
     /// <summary>
     /// The last time a modifying operation was performed on the given
     /// key-value.
     /// </summary>
-    public BicepValue<DateTimeOffset> LastModifiedOn { get => _lastModifiedOn; }
-    private readonly BicepValue<DateTimeOffset> _lastModifiedOn;
+    public BicepValue<DateTimeOffset> LastModifiedOn 
+    {
+        get { Initialize(); return _lastModifiedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _lastModifiedOn;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent AppConfigurationStore.
     /// </summary>
-    public AppConfigurationStore? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<AppConfigurationStore> _parent;
+    public AppConfigurationStore? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<AppConfigurationStore>? _parent;
 
     /// <summary>
     /// Creates a new AppConfigurationKeyValue.
     /// </summary>
-    /// <param name="resourceName">Name of the AppConfigurationKeyValue.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the AppConfigurationKeyValue resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AppConfigurationKeyValue.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public AppConfigurationKeyValue(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.AppConfiguration/configurationStores/keyValues", resourceVersion ?? "2024-05-01", context)
+    public AppConfigurationKeyValue(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.AppConfiguration/configurationStores/keyValues", resourceVersion ?? "2024-05-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _contentType = BicepValue<string>.DefineProperty(this, "ContentType", ["properties", "contentType"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["properties", "tags"]);
-        _value = BicepValue<string>.DefineProperty(this, "Value", ["properties", "value"]);
-        _eTag = BicepValue<ETag>.DefineProperty(this, "ETag", ["properties", "eTag"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _isLocked = BicepValue<bool>.DefineProperty(this, "IsLocked", ["properties", "locked"], isOutput: true);
-        _key = BicepValue<string>.DefineProperty(this, "Key", ["properties", "key"], isOutput: true);
-        _label = BicepValue<string>.DefineProperty(this, "Label", ["properties", "label"], isOutput: true);
-        _lastModifiedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "LastModifiedOn", ["properties", "lastModified"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<AppConfigurationStore>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of AppConfigurationKeyValue.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _contentType = DefineProperty<string>("ContentType", ["properties", "contentType"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["properties", "tags"]);
+        _value = DefineProperty<string>("Value", ["properties", "value"]);
+        _eTag = DefineProperty<ETag>("ETag", ["properties", "eTag"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _isLocked = DefineProperty<bool>("IsLocked", ["properties", "locked"], isOutput: true);
+        _key = DefineProperty<string>("Key", ["properties", "key"], isOutput: true);
+        _label = DefineProperty<string>("Label", ["properties", "label"], isOutput: true);
+        _lastModifiedOn = DefineProperty<DateTimeOffset>("LastModifiedOn", ["properties", "lastModified"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<AppConfigurationStore>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -147,9 +199,14 @@ public partial class AppConfigurationKeyValue : Resource
     /// <summary>
     /// Creates a reference to an existing AppConfigurationKeyValue.
     /// </summary>
-    /// <param name="resourceName">Name of the AppConfigurationKeyValue.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the AppConfigurationKeyValue resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AppConfigurationKeyValue.</param>
     /// <returns>The existing AppConfigurationKeyValue resource.</returns>
-    public static AppConfigurationKeyValue FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static AppConfigurationKeyValue FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

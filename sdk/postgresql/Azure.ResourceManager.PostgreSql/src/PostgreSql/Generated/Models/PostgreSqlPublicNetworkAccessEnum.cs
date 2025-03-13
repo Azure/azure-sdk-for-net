@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static bool operator ==(PostgreSqlPublicNetworkAccessEnum left, PostgreSqlPublicNetworkAccessEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlPublicNetworkAccessEnum"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlPublicNetworkAccessEnum left, PostgreSqlPublicNetworkAccessEnum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlPublicNetworkAccessEnum"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlPublicNetworkAccessEnum"/>. </summary>
         public static implicit operator PostgreSqlPublicNetworkAccessEnum(string value) => new PostgreSqlPublicNetworkAccessEnum(value);
 
         /// <inheritdoc />

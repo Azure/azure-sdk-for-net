@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="value"> Value of the configuration. </param>
+        /// <param name="value"> Value of the configuration. Required to update the configuration. </param>
         /// <param name="description"> Description of the configuration. </param>
         /// <param name="defaultValue"> Default value of the configuration. </param>
         /// <param name="dataType"> Data type of the configuration. </param>
         /// <param name="allowedValues"> Allowed values of the configuration. </param>
-        /// <param name="source"> Source of the configuration. </param>
+        /// <param name="source"> Source of the configuration. Required to update the configuration. </param>
         /// <param name="isDynamicConfig"> Configuration dynamic or static. </param>
         /// <param name="isReadOnly"> Configuration read-only or not. </param>
         /// <param name="isConfigPendingRestart"> Configuration is pending restart or not. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Value of the configuration. </summary>
+        /// <summary> Value of the configuration. Required to update the configuration. </summary>
         [WirePath("properties.value")]
         public string Value { get; set; }
         /// <summary> Description of the configuration. </summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> Allowed values of the configuration. </summary>
         [WirePath("properties.allowedValues")]
         public string AllowedValues { get; }
-        /// <summary> Source of the configuration. </summary>
+        /// <summary> Source of the configuration. Required to update the configuration. </summary>
         [WirePath("properties.source")]
         public string Source { get; set; }
         /// <summary> Configuration dynamic or static. </summary>

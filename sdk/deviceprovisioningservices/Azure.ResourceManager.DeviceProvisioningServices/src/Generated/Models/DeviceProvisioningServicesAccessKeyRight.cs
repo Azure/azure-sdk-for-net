@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static bool operator ==(DeviceProvisioningServicesAccessKeyRight left, DeviceProvisioningServicesAccessKeyRight right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesAccessKeyRight"/> values are not the same. </summary>
         public static bool operator !=(DeviceProvisioningServicesAccessKeyRight left, DeviceProvisioningServicesAccessKeyRight right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesAccessKeyRight"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceProvisioningServicesAccessKeyRight"/>. </summary>
         public static implicit operator DeviceProvisioningServicesAccessKeyRight(string value) => new DeviceProvisioningServicesAccessKeyRight(value);
 
         /// <inheritdoc />

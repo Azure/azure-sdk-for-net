@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(AutomationRulePropertyChangedConditionSupportedPropertyType left, AutomationRulePropertyChangedConditionSupportedPropertyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationRulePropertyChangedConditionSupportedPropertyType"/> values are not the same. </summary>
         public static bool operator !=(AutomationRulePropertyChangedConditionSupportedPropertyType left, AutomationRulePropertyChangedConditionSupportedPropertyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutomationRulePropertyChangedConditionSupportedPropertyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationRulePropertyChangedConditionSupportedPropertyType"/>. </summary>
         public static implicit operator AutomationRulePropertyChangedConditionSupportedPropertyType(string value) => new AutomationRulePropertyChangedConditionSupportedPropertyType(value);
 
         /// <inheritdoc />

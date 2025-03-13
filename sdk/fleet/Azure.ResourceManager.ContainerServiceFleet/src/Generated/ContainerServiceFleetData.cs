@@ -67,12 +67,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="identity"> Managed identity. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="hubProfile"> The FleetHubProfile configures the Fleet's hub. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, ManagedServiceIdentity identity, FleetProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerServiceFleetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, ManagedServiceIdentity identity, FleetProvisioningState? provisioningState, FleetHubProfile hubProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = eTag;
             Identity = identity;
             ProvisioningState = provisioningState;
+            HubProfile = hubProfile;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -87,5 +89,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The status of the last operation. </summary>
         public FleetProvisioningState? ProvisioningState { get; }
+        /// <summary> The FleetHubProfile configures the Fleet's hub. </summary>
+        public FleetHubProfile HubProfile { get; set; }
     }
 }

@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(PhoenixAuthenticationType left, PhoenixAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PhoenixAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(PhoenixAuthenticationType left, PhoenixAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PhoenixAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PhoenixAuthenticationType"/>. </summary>
         public static implicit operator PhoenixAuthenticationType(string value) => new PhoenixAuthenticationType(value);
 
         /// <inheritdoc />

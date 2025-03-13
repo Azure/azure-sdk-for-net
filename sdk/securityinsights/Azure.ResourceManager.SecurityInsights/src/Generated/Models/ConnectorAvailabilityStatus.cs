@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(ConnectorAvailabilityStatus left, ConnectorAvailabilityStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectorAvailabilityStatus"/> values are not the same. </summary>
         public static bool operator !=(ConnectorAvailabilityStatus left, ConnectorAvailabilityStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConnectorAvailabilityStatus"/>. </summary>
+        /// <summary> Converts a <see cref="int"/> to a <see cref="ConnectorAvailabilityStatus"/>. </summary>
         public static implicit operator ConnectorAvailabilityStatus(int value) => new ConnectorAvailabilityStatus(value);
 
         /// <inheritdoc />

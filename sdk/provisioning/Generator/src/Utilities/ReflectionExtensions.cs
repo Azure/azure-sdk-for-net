@@ -9,6 +9,7 @@ using System.Net;
 using System.Reflection;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.Provisioning.Generator;
 
@@ -70,7 +71,9 @@ public static class ReflectionExtensions
         return true;
     }
 
-    public static bool IsResourceData(this Type type) => typeof(ResourceData).IsAssignableFrom(type);
+    public static bool IsResourceData(this Type type) =>
+        typeof(ResourceData).IsAssignableFrom(type) ||
+        typeof(ResourceWithWritableName).IsAssignableFrom(type);
 
     public static bool IsModelType(this Type type, List<Type>? visited = default) =>
         type.IsClass &&

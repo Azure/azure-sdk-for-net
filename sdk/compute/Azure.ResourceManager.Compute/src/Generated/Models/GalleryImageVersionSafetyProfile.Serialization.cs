@@ -19,13 +19,22 @@ namespace Azure.ResourceManager.Compute.Models
 
         void IJsonModel<GalleryImageVersionSafetyProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionSafetyProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GalleryImageVersionSafetyProfile)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(IsReportedForPolicyViolation))
             {
                 writer.WritePropertyName("reportedForPolicyViolation"u8);
@@ -41,27 +50,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllowDeletionOfReplicatedLocations))
+            if (Optional.IsDefined(IsBlockedDeletionBeforeEndOfLife))
             {
-                writer.WritePropertyName("allowDeletionOfReplicatedLocations"u8);
-                writer.WriteBooleanValue(AllowDeletionOfReplicatedLocations.Value);
+                writer.WritePropertyName("blockDeletionBeforeEndOfLife"u8);
+                writer.WriteBooleanValue(IsBlockedDeletionBeforeEndOfLife.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         GalleryImageVersionSafetyProfile IJsonModel<GalleryImageVersionSafetyProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -86,6 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             bool? reportedForPolicyViolation = default;
             IReadOnlyList<GalleryImageVersionPolicyViolation> policyViolations = default;
+            bool? blockDeletionBeforeEndOfLife = default;
             bool? allowDeletionOfReplicatedLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -114,6 +108,15 @@ namespace Azure.ResourceManager.Compute.Models
                     policyViolations = array;
                     continue;
                 }
+                if (property.NameEquals("blockDeletionBeforeEndOfLife"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    blockDeletionBeforeEndOfLife = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("allowDeletionOfReplicatedLocations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -129,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GalleryImageVersionSafetyProfile(allowDeletionOfReplicatedLocations, serializedAdditionalRawData, reportedForPolicyViolation, policyViolations ?? new ChangeTrackingList<GalleryImageVersionPolicyViolation>());
+            return new GalleryImageVersionSafetyProfile(allowDeletionOfReplicatedLocations, serializedAdditionalRawData, reportedForPolicyViolation, policyViolations ?? new ChangeTrackingList<GalleryImageVersionPolicyViolation>(), blockDeletionBeforeEndOfLife);
         }
 
         BinaryData IPersistableModel<GalleryImageVersionSafetyProfile>.Write(ModelReaderWriterOptions options)
@@ -153,7 +156,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGalleryImageVersionSafetyProfile(document.RootElement, options);
                     }
                 default:

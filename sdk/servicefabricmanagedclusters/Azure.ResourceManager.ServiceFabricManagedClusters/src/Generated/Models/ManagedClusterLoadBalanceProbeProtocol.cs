@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator ==(ManagedClusterLoadBalanceProbeProtocol left, ManagedClusterLoadBalanceProbeProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterLoadBalanceProbeProtocol"/> values are not the same. </summary>
         public static bool operator !=(ManagedClusterLoadBalanceProbeProtocol left, ManagedClusterLoadBalanceProbeProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedClusterLoadBalanceProbeProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterLoadBalanceProbeProtocol"/>. </summary>
         public static implicit operator ManagedClusterLoadBalanceProbeProtocol(string value) => new ManagedClusterLoadBalanceProbeProtocol(value);
 
         /// <inheritdoc />

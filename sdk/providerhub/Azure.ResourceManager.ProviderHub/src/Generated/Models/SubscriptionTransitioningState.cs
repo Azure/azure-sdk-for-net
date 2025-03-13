@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static bool operator ==(SubscriptionTransitioningState left, SubscriptionTransitioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SubscriptionTransitioningState"/> values are not the same. </summary>
         public static bool operator !=(SubscriptionTransitioningState left, SubscriptionTransitioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SubscriptionTransitioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SubscriptionTransitioningState"/>. </summary>
         public static implicit operator SubscriptionTransitioningState(string value) => new SubscriptionTransitioningState(value);
 
         /// <inheritdoc />

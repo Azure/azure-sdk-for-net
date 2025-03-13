@@ -25,6 +25,19 @@ public class ServiceBusSpecification() :
         CustomizeProperty<ServiceBusAccessKeys>("PrimaryKey", p => p.IsSecure = true);
         CustomizeProperty<ServiceBusAccessKeys>("SecondaryKey", p => p.IsSecure = true);
 
+        // Set durations
+        CustomizePropertyIsoDuration<ServiceBusSubscriptionResource>("LockDuration");
+        CustomizePropertyIsoDuration<ServiceBusSubscriptionResource>("DefaultMessageTimeToLive");
+        CustomizePropertyIsoDuration<ServiceBusSubscriptionResource>("DuplicateDetectionHistoryTimeWindow");
+        CustomizePropertyIsoDuration<ServiceBusSubscriptionResource>("AutoDeleteOnIdle");
+        CustomizePropertyIsoDuration<ServiceBusQueueResource>("LockDuration");
+        CustomizePropertyIsoDuration<ServiceBusQueueResource>("DefaultMessageTimeToLive");
+        CustomizePropertyIsoDuration<ServiceBusQueueResource>("DuplicateDetectionHistoryTimeWindow");
+        CustomizePropertyIsoDuration<ServiceBusQueueResource>("AutoDeleteOnIdle");
+        CustomizePropertyIsoDuration<ServiceBusTopicResource>("DefaultMessageTimeToLive");
+        CustomizePropertyIsoDuration<ServiceBusTopicResource>("DuplicateDetectionHistoryTimeWindow");
+        CustomizePropertyIsoDuration<ServiceBusTopicResource>("AutoDeleteOnIdle");
+        
         // Naming requirements
         AddNameRequirements<ServiceBusNamespaceResource>(min: 6, max: 50, lower: true, upper: true, digits: true, hyphen: true);
         AddNameRequirements<ServiceBusNamespaceAuthorizationRuleResource>(min: 1, max: 50, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);

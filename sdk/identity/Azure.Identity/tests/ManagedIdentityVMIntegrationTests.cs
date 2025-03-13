@@ -29,7 +29,7 @@ namespace Azure.Identity.Tests
                 ManagedIdentityIdType.ObjectId => ManagedIdentityId.FromUserAssignedObjectId(TestEnvironment.VMUserAssignedManagedIdentityObjectId),
                 _ => ManagedIdentityId.SystemAssigned
             };
-            ManagedIdentityCredentialOptions options = new ManagedIdentityCredentialOptions() { ManagedIdentityId = managedIdentityId };
+            ManagedIdentityCredentialOptions options = new ManagedIdentityCredentialOptions(managedIdentityId);
 
             var cred = new ManagedIdentityCredential(options);
             var token = await cred.GetTokenAsync(new(CredentialTestHelpers.DefaultScope));

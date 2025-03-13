@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static bool operator ==(InputModality left, InputModality right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InputModality"/> values are not the same. </summary>
         public static bool operator !=(InputModality left, InputModality right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InputModality"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InputModality"/>. </summary>
         public static implicit operator InputModality(string value) => new InputModality(value);
 
         /// <inheritdoc />

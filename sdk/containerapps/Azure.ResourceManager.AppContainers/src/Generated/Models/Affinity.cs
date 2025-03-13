@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static bool operator ==(Affinity left, Affinity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Affinity"/> values are not the same. </summary>
         public static bool operator !=(Affinity left, Affinity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="Affinity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="Affinity"/>. </summary>
         public static implicit operator Affinity(string value) => new Affinity(value);
 
         /// <inheritdoc />

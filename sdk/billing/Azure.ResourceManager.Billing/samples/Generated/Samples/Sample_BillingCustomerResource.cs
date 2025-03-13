@@ -10,74 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Billing.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Billing.Samples
 {
     public partial class Sample_BillingCustomerResource
     {
-        // BillingPermissionsListByCustomerAtBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetBillingPermissionsByCustomerAtBillingAccount_BillingPermissionsListByCustomerAtBillingAccount()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingPermissionsListByCustomerAtBillingAccount.json
-            // this example is just showing the usage of "BillingPermissions_ListByCustomerAtBillingAccount" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingCustomerResource created on azure
-            // for more information of creating BillingCustomerResource, please refer to the document of BillingCustomerResource
-            string billingAccountName = "10000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            string customerName = "11111111-1111-1111-1111-111111111111";
-            ResourceIdentifier billingCustomerResourceId = BillingCustomerResource.CreateResourceIdentifier(billingAccountName, customerName);
-            BillingCustomerResource billingCustomer = client.GetBillingCustomerResource(billingCustomerResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (BillingPermission item in billingCustomer.GetBillingPermissionsByCustomerAtBillingAccountAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // BillingSubscriptionsListByCustomerAtBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetBillingSubscriptionsByCustomerAtBillingAccount_BillingSubscriptionsListByCustomerAtBillingAccount()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionsListByCustomerAtBillingAccount.json
-            // this example is just showing the usage of "BillingSubscriptions_ListByCustomerAtBillingAccount" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingCustomerResource created on azure
-            // for more information of creating BillingCustomerResource, please refer to the document of BillingCustomerResource
-            string billingAccountName = "a1a9c77e-4cec-4a6c-a089-867d973a6074:a80d3b1f-c626-4e5e-82ed-1173bd91c838_2019-05-31";
-            string customerName = "Q7GV-UUVA-PJA-TGB";
-            ResourceIdentifier billingCustomerResourceId = BillingCustomerResource.CreateResourceIdentifier(billingAccountName, customerName);
-            BillingCustomerResource billingCustomer = client.GetBillingCustomerResource(billingCustomerResourceId);
-
-            // invoke the operation and iterate over the result
-            BillingCustomerResourceGetBillingSubscriptionsByCustomerAtBillingAccountOptions options = new BillingCustomerResourceGetBillingSubscriptionsByCustomerAtBillingAccountOptions() { };
-            await foreach (BillingSubscriptionData item in billingCustomer.GetBillingSubscriptionsByCustomerAtBillingAccountAsync(options))
-            {
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {item.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // CustomersGetByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CustomersGetByBillingAccount()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/customersGetByBillingAccount.json
@@ -105,9 +45,66 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ProductsListByCustomer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetBillingPermissionsByCustomerAtBillingAccount_BillingPermissionsListByCustomerAtBillingAccount()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingPermissionsListByCustomerAtBillingAccount.json
+            // this example is just showing the usage of "BillingPermissions_ListByCustomerAtBillingAccount" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingCustomerResource created on azure
+            // for more information of creating BillingCustomerResource, please refer to the document of BillingCustomerResource
+            string billingAccountName = "10000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            string customerName = "11111111-1111-1111-1111-111111111111";
+            ResourceIdentifier billingCustomerResourceId = BillingCustomerResource.CreateResourceIdentifier(billingAccountName, customerName);
+            BillingCustomerResource billingCustomer = client.GetBillingCustomerResource(billingCustomerResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (BillingPermission item in billingCustomer.GetBillingPermissionsByCustomerAtBillingAccountAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetBillingSubscriptionsByCustomerAtBillingAccount_BillingSubscriptionsListByCustomerAtBillingAccount()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionsListByCustomerAtBillingAccount.json
+            // this example is just showing the usage of "BillingSubscriptions_ListByCustomerAtBillingAccount" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingCustomerResource created on azure
+            // for more information of creating BillingCustomerResource, please refer to the document of BillingCustomerResource
+            string billingAccountName = "a1a9c77e-4cec-4a6c-a089-867d973a6074:a80d3b1f-c626-4e5e-82ed-1173bd91c838_2019-05-31";
+            string customerName = "Q7GV-UUVA-PJA-TGB";
+            ResourceIdentifier billingCustomerResourceId = BillingCustomerResource.CreateResourceIdentifier(billingAccountName, customerName);
+            BillingCustomerResource billingCustomer = client.GetBillingCustomerResource(billingCustomerResourceId);
+
+            // invoke the operation and iterate over the result
+            BillingCustomerResourceGetBillingSubscriptionsByCustomerAtBillingAccountOptions options = new BillingCustomerResourceGetBillingSubscriptionsByCustomerAtBillingAccountOptions();
+            await foreach (BillingSubscriptionData item in billingCustomer.GetBillingSubscriptionsByCustomerAtBillingAccountAsync(options))
+            {
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {item.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetProducts_ProductsListByCustomer()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/productsListByCustomer.json
@@ -126,7 +123,7 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingCustomerResource billingCustomer = client.GetBillingCustomerResource(billingCustomerResourceId);
 
             // invoke the operation and iterate over the result
-            BillingCustomerResourceGetProductsOptions options = new BillingCustomerResourceGetProductsOptions() { };
+            BillingCustomerResourceGetProductsOptions options = new BillingCustomerResourceGetProductsOptions();
             await foreach (BillingProductResource item in billingCustomer.GetProductsAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -136,7 +133,7 @@ namespace Azure.ResourceManager.Billing.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

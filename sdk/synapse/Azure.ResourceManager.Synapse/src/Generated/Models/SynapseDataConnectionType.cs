@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SynapseDataConnectionType left, SynapseDataConnectionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseDataConnectionType"/> values are not the same. </summary>
         public static bool operator !=(SynapseDataConnectionType left, SynapseDataConnectionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SynapseDataConnectionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SynapseDataConnectionType"/>. </summary>
         public static implicit operator SynapseDataConnectionType(string value) => new SynapseDataConnectionType(value);
 
         /// <inheritdoc />

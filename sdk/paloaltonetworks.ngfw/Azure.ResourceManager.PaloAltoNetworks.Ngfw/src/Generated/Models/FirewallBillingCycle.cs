@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static bool operator ==(FirewallBillingCycle left, FirewallBillingCycle right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FirewallBillingCycle"/> values are not the same. </summary>
         public static bool operator !=(FirewallBillingCycle left, FirewallBillingCycle right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FirewallBillingCycle"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallBillingCycle"/>. </summary>
         public static implicit operator FirewallBillingCycle(string value) => new FirewallBillingCycle(value);
 
         /// <inheritdoc />

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebPubSub.Common;
 
 internal class WebPubSubClientCertificateJsonConverter : JsonConverter<WebPubSubClientCertificate>
 {
-    public override WebPubSubClientCertificate Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override WebPubSubClientCertificate? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         string? thumbprint = null;
         string? content = null;
@@ -46,12 +46,12 @@ internal class WebPubSubClientCertificateJsonConverter : JsonConverter<WebPubSub
         }
 
         // Ensure that the required 'thumbprint' property is present
-        if (thumbprint == null)
+        if (thumbprint == null && content == null)
         {
-            throw new JsonException($"Missing required property '{WebPubSubClientCertificate.ThumbprintProperty}'.");
+            return null;
         }
 
-        return new WebPubSubClientCertificate(thumbprint, content);
+        return new WebPubSubClientCertificate(thumbprint!, content);
     }
 
     public override void Write(Utf8JsonWriter writer, WebPubSubClientCertificate value, JsonSerializerOptions options)

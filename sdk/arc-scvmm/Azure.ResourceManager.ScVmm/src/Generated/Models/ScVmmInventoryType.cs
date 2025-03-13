@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static bool operator ==(ScVmmInventoryType left, ScVmmInventoryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScVmmInventoryType"/> values are not the same. </summary>
         public static bool operator !=(ScVmmInventoryType left, ScVmmInventoryType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScVmmInventoryType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScVmmInventoryType"/>. </summary>
         public static implicit operator ScVmmInventoryType(string value) => new ScVmmInventoryType(value);
 
         /// <inheritdoc />

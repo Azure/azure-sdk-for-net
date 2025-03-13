@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static bool operator ==(TranscriptContentType left, TranscriptContentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TranscriptContentType"/> values are not the same. </summary>
         public static bool operator !=(TranscriptContentType left, TranscriptContentType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TranscriptContentType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TranscriptContentType"/>. </summary>
         public static implicit operator TranscriptContentType(string value) => new TranscriptContentType(value);
 
         /// <inheritdoc />

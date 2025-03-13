@@ -9,7 +9,8 @@ csharp: true
 library-name: HybridConnectivity
 namespace: Azure.ResourceManager.HybridConnectivity
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/3c162c839b8fe17544d9a3be8383a835dd42eb28/specification/hybridconnectivity/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/5f869da70574588b5af7c46a20de802cb8edc093/specification/hybridconnectivity/resource-manager/readme.md
+#tag: package-2023-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -19,6 +20,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+
+#mgmt-debug: 
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -50,18 +54,38 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
 
+prepend-rp-prefix:
+  # - CloudNativeType
+  - EndpointProperties
+  # - HostType
+  # - InventoryProperties
+  - ProvisioningState
+  # - ResourceProvisioningState
+  - ServiceName
+  # - SolutionConfiguration
+  # - PublicCloudConnector
+  # - OperationStatusResult
+  # - SolutionTypeProperties
+
+rename-mapping:
+  EndpointResource: HybridConnectivityEndpoint
+  # InventoryResource: HybridConnectivityInventory
+  ServiceConfigurationResource: HybridConnectivityServiceConfiguration
+  # SolutionTypeResource: HybridConnectivitySolutionType
+  IngressGatewayResource: IngressGatewayAsset
+  ManagedProxyResource: ManagedProxyAsset
+  IngressGatewayResource.ingress.aadProfile.serverId: -|uuid
+  # PublicCloudConnectorProperties.connectorPrimaryIdentifier: -|uuid
+  EndpointProperties.resourceId: -|arm-id
+  # InventoryProperties.azureResourceId: -|arm-id
+  ServiceConfigurationResource.properties.resourceId: -|arm-id
+  # GenerateAwsTemplateRequest.connectorId: -|arm-id
+  EndpointAccessResource: TargetResourceEndpointAccess
+
 directive:
-  - rename-model:
-      from: EndpointAccessResource
-      to: TargetResourceEndpointAccess
   - from: swagger-document
     where: $.definitions.EndpointProperties.properties.type
     transform: >
-      $["x-ms-client-name"] = "EndpointType";
-      $["x-ms-enum"]["name"] = "EndpointType"
-  - from: swagger-document
-    where: $.parameters.ResourceUriParameter
-    transform: >
-      $["x-ms-client-name"] = "scope"
+      $["x-ms-enum"]["name"] = "HybridConnectivityEndpointType"
 
 ```

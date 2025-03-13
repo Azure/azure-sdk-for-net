@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(DedicatedGatewayType left, DedicatedGatewayType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DedicatedGatewayType"/> values are not the same. </summary>
         public static bool operator !=(DedicatedGatewayType left, DedicatedGatewayType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DedicatedGatewayType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DedicatedGatewayType"/>. </summary>
         public static implicit operator DedicatedGatewayType(string value) => new DedicatedGatewayType(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(ImageState left, ImageState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageState"/> values are not the same. </summary>
         public static bool operator !=(ImageState left, ImageState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ImageState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ImageState"/>. </summary>
         public static implicit operator ImageState(string value) => new ImageState(value);
 
         /// <inheritdoc />

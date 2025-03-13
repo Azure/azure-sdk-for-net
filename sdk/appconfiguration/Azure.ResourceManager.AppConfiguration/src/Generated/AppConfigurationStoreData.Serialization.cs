@@ -23,13 +23,22 @@ namespace Azure.ResourceManager.AppConfiguration
 
         void IJsonModel<AppConfigurationStoreData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationStoreData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppConfigurationStoreData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -37,39 +46,6 @@ namespace Azure.ResourceManager.AppConfiguration
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -129,26 +105,15 @@ namespace Azure.ResourceManager.AppConfiguration
                 writer.WritePropertyName("enablePurgeProtection"u8);
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
+            if (Optional.IsDefined(DataPlaneProxy))
+            {
+                writer.WritePropertyName("dataPlaneProxy"u8);
+                writer.WriteObjectValue(DataPlaneProxy, options);
+            }
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToSerialString());
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
             }
             writer.WriteEndObject();
         }
@@ -190,6 +155,7 @@ namespace Azure.ResourceManager.AppConfiguration
             bool? disableLocalAuth = default;
             int? softDeleteRetentionInDays = default;
             bool? enablePurgeProtection = default;
+            AppConfigurationDataPlaneProxyProperties dataPlaneProxy = default;
             AppConfigurationCreateMode? createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -344,6 +310,15 @@ namespace Azure.ResourceManager.AppConfiguration
                             enablePurgeProtection = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("dataPlaneProxy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dataPlaneProxy = AppConfigurationDataPlaneProxyProperties.DeserializeAppConfigurationDataPlaneProxyProperties(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("createMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -380,6 +355,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 disableLocalAuth,
                 softDeleteRetentionInDays,
                 enablePurgeProtection,
+                dataPlaneProxy,
                 createMode,
                 serializedAdditionalRawData);
         }
@@ -691,6 +667,21 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataPlaneProxy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    dataPlaneProxy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataPlaneProxy))
+                {
+                    builder.Append("    dataPlaneProxy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DataPlaneProxy, options, 4, false, "    dataPlaneProxy: ");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreateMode), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -734,7 +725,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAppConfigurationStoreData(document.RootElement, options);
                     }
                 default:

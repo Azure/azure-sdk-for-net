@@ -76,14 +76,14 @@ namespace TopicSubscriptionWithRuleOperationsSample
             // 2nd Subscription: Add SqlFilter on Subscription 2
             // In this scenario, rather than deleting the default rule after creating the subscription,
             // we will create the subscription along with our desired rule in a single operation.
-            // See https://docs.microsoft.com/en-us/azure/service-bus-messaging/topic-filters to learn more about topic filters.
+            // See https://learn.microsoft.com/azure/service-bus-messaging/topic-filters to learn more about topic filters.
             Console.WriteLine($"Creating subscription {SqlFilterOnlySubscriptionName}");
             await s_adminClient.CreateSubscriptionAsync(
                 new CreateSubscriptionOptions(TopicName, SqlFilterOnlySubscriptionName),
                 new CreateRuleOptions { Name = "RedSqlRule", Filter = new SqlRuleFilter("Color = 'Red'") });
 
             // 3rd Subscription: Add the SqlFilter Rule and Action
-            // See https://docs.microsoft.com/en-us/azure/service-bus-messaging/topic-filters#actions to learn more about actions.
+            // See https://learn.microsoft.com/azure/service-bus-messaging/topic-filters#actions to learn more about actions.
             Console.WriteLine($"Creating subscription {SqlFilterWithActionSubscriptionName}");
             await s_adminClient.CreateSubscriptionAsync(
                 new CreateSubscriptionOptions(TopicName, SqlFilterWithActionSubscriptionName),

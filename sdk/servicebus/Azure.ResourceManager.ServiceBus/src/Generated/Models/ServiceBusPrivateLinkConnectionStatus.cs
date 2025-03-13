@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static bool operator ==(ServiceBusPrivateLinkConnectionStatus left, ServiceBusPrivateLinkConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceBusPrivateLinkConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(ServiceBusPrivateLinkConnectionStatus left, ServiceBusPrivateLinkConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceBusPrivateLinkConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceBusPrivateLinkConnectionStatus"/>. </summary>
         public static implicit operator ServiceBusPrivateLinkConnectionStatus(string value) => new ServiceBusPrivateLinkConnectionStatus(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(DefenderForStorageSettingName left, DefenderForStorageSettingName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DefenderForStorageSettingName"/> values are not the same. </summary>
         public static bool operator !=(DefenderForStorageSettingName left, DefenderForStorageSettingName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DefenderForStorageSettingName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DefenderForStorageSettingName"/>. </summary>
         public static implicit operator DefenderForStorageSettingName(string value) => new DefenderForStorageSettingName(value);
 
         /// <inheritdoc />

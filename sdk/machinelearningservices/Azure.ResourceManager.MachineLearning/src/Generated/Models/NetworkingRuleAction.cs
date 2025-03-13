@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(NetworkingRuleAction left, NetworkingRuleAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkingRuleAction"/> values are not the same. </summary>
         public static bool operator !=(NetworkingRuleAction left, NetworkingRuleAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkingRuleAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkingRuleAction"/>. </summary>
         public static implicit operator NetworkingRuleAction(string value) => new NetworkingRuleAction(value);
 
         /// <inheritdoc />

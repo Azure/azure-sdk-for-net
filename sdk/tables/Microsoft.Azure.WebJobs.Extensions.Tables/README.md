@@ -79,7 +79,7 @@ When using user-assigned manageed identity the `clientId` and `credential` setti
 
 #### Using shared key credential
 
-When using [shared key authentication](https://docs.microsoft.com/rest/api/storageservices/authorize-with-shared-key) the `endpoint`, `accountKey` and `accountName` need to be provided.
+When using [shared key authentication](https://learn.microsoft.com/rest/api/storageservices/authorize-with-shared-key) the `endpoint`, `accountKey` and `accountName` need to be provided.
 
 `<ConnectionName>__endpoint` = `https://...table.core.windows.net`
 
@@ -91,13 +91,13 @@ When using [shared key authentication](https://docs.microsoft.com/rest/api/stora
 
 The input binding allows you to read table as input to an Azure Function. The output binding allows you to modify and delete table rows in an Azure Function.
 
-Please follow the [input binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-table-input?tabs=csharp) and [output binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-table-output?tabs=csharp) to learn about using this extension for accessing table service.
+Please follow the [input binding tutorial](https://learn.microsoft.com/azure/azure-functions/functions-bindings-storage-table-input?tabs=csharp) and [output binding tutorial](https://learn.microsoft.com/azure/azure-functions/functions-bindings-storage-table-output?tabs=csharp) to learn about using this extension for accessing table service.
 
 ## Examples
 
 Tables extensions provides only bindings. Bindings by themselves can't trigger a function. It can only read or write entries to the table.
 
-In the following example we use [HTTP trigger](https://docs.microsoft.com/azure/azure-functions/functions-bindings-http-webhook-trigger?tabs=csharp) to invoke the function.
+In the following example we use [HTTP trigger](https://learn.microsoft.com/azure/azure-functions/functions-bindings-http-webhook-trigger?tabs=csharp) to invoke the function.
 
 ### Binding to a single entity
 
@@ -275,11 +275,11 @@ public class BindTableClient
 
 ## Troubleshooting
 
-Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.
+Please refer to [Monitor Azure Functions](https://learn.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.
 
 ## Next steps
 
-Read the [introduction to Azure Function](https://docs.microsoft.com/azure/azure-functions/functions-overview) or [creating an Azure Function guide](https://docs.microsoft.com/azure/azure-functions/functions-create-first-azure-function).
+Read the [introduction to Azure Function](https://learn.microsoft.com/azure/azure-functions/functions-overview) or [creating an Azure Function guide](https://learn.microsoft.com/azure/azure-functions/functions-create-first-azure-function).
 
 ## Contributing
 
@@ -296,24 +296,22 @@ For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Webjobs.Tables%2FREADME.png)
-
 <!-- LINKS -->
 [nuget]: https://www.nuget.org/
-[storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
-[storage_account_create_ps]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
-[storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
-[storage_account_create_portal]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
+[storage_account_docs]: https://learn.microsoft.com/azure/storage/common/storage-account-overview
+[storage_account_create_ps]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
+[storage_account_create_cli]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
+[storage_account_create_portal]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
 
-[cosmos_tables_account_docs]: https://docs.microsoft.com/azure/cosmos-db/table/introduction
-[cosmos_tables_create_ps]: https://docs.microsoft.com/azure/cosmos-db/scripts/powershell/table/create
-[cosmos_tables_create_cli]: https://docs.microsoft.com/azure/cosmos-db/scripts/cli/table/create
-[cosmos_tables_create_portal]: https://docs.microsoft.com/azure/cosmos-db/table/how-to-create-container
+[cosmos_tables_account_docs]: https://learn.microsoft.com/azure/cosmos-db/table/introduction
+[cosmos_tables_create_ps]: https://learn.microsoft.com/azure/cosmos-db/scripts/powershell/table/create
+[cosmos_tables_create_cli]: https://learn.microsoft.com/azure/cosmos-db/scripts/cli/table/create
+[cosmos_tables_create_portal]: https://learn.microsoft.com/azure/cosmos-db/table/how-to-create-container
 
 [identity_dac]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 
-[appsettings_portal]: https://docs.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=portal
-[local_settings_json]: https://docs.microsoft.com/azure/azure-functions/functions-host-json#override-hostjson-values
+[appsettings_portal]: https://learn.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=portal
+[local_settings_json]: https://learn.microsoft.com/azure/azure-functions/functions-host-json#override-hostjson-values
 
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(ConfigurationName left, ConfigurationName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfigurationName"/> values are not the same. </summary>
         public static bool operator !=(ConfigurationName left, ConfigurationName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConfigurationName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfigurationName"/>. </summary>
         public static implicit operator ConfigurationName(string value) => new ConfigurationName(value);
 
         /// <inheritdoc />

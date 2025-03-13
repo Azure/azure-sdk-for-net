@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(NetworkIPAllocationType left, NetworkIPAllocationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkIPAllocationType"/> values are not the same. </summary>
         public static bool operator !=(NetworkIPAllocationType left, NetworkIPAllocationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkIPAllocationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkIPAllocationType"/>. </summary>
         public static implicit operator NetworkIPAllocationType(string value) => new NetworkIPAllocationType(value);
 
         /// <inheritdoc />

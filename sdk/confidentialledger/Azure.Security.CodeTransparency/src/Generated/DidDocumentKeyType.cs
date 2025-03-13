@@ -30,7 +30,7 @@ namespace Azure.Security.CodeTransparency
         public static bool operator ==(DidDocumentKeyType left, DidDocumentKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DidDocumentKeyType"/> values are not the same. </summary>
         public static bool operator !=(DidDocumentKeyType left, DidDocumentKeyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DidDocumentKeyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DidDocumentKeyType"/>. </summary>
         public static implicit operator DidDocumentKeyType(string value) => new DidDocumentKeyType(value);
 
         /// <inheritdoc />

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(SpendingLimitType left, SpendingLimitType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SpendingLimitType"/> values are not the same. </summary>
         public static bool operator !=(SpendingLimitType left, SpendingLimitType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SpendingLimitType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SpendingLimitType"/>. </summary>
         public static implicit operator SpendingLimitType(string value) => new SpendingLimitType(value);
 
         /// <inheritdoc />

@@ -15,95 +15,156 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlConfiguration.
 /// </summary>
-public partial class PostgreSqlConfiguration : Resource
+public partial class PostgreSqlConfiguration : ProvisionableResource
 {
     /// <summary>
     /// The name of the server configuration.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Source of the configuration.
     /// </summary>
-    public BicepValue<string> Source { get => _source; set => _source.Assign(value); }
-    private readonly BicepValue<string> _source;
+    public BicepValue<string> Source 
+    {
+        get { Initialize(); return _source!; }
+        set { Initialize(); _source!.Assign(value); }
+    }
+    private BicepValue<string>? _source;
 
     /// <summary>
     /// Value of the configuration.
     /// </summary>
-    public BicepValue<string> Value { get => _value; set => _value.Assign(value); }
-    private readonly BicepValue<string> _value;
+    public BicepValue<string> Value 
+    {
+        get { Initialize(); return _value!; }
+        set { Initialize(); _value!.Assign(value); }
+    }
+    private BicepValue<string>? _value;
 
     /// <summary>
     /// Allowed values of the configuration.
     /// </summary>
-    public BicepValue<string> AllowedValues { get => _allowedValues; }
-    private readonly BicepValue<string> _allowedValues;
+    public BicepValue<string> AllowedValues 
+    {
+        get { Initialize(); return _allowedValues!; }
+    }
+    private BicepValue<string>? _allowedValues;
 
     /// <summary>
     /// Data type of the configuration.
     /// </summary>
-    public BicepValue<string> DataType { get => _dataType; }
-    private readonly BicepValue<string> _dataType;
+    public BicepValue<string> DataType 
+    {
+        get { Initialize(); return _dataType!; }
+    }
+    private BicepValue<string>? _dataType;
 
     /// <summary>
     /// Default value of the configuration.
     /// </summary>
-    public BicepValue<string> DefaultValue { get => _defaultValue; }
-    private readonly BicepValue<string> _defaultValue;
+    public BicepValue<string> DefaultValue 
+    {
+        get { Initialize(); return _defaultValue!; }
+    }
+    private BicepValue<string>? _defaultValue;
 
     /// <summary>
     /// Description of the configuration.
     /// </summary>
-    public BicepValue<string> Description { get => _description; }
-    private readonly BicepValue<string> _description;
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+    }
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent PostgreSqlServer.
     /// </summary>
-    public PostgreSqlServer? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<PostgreSqlServer> _parent;
+    public PostgreSqlServer? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<PostgreSqlServer>? _parent;
 
     /// <summary>
     /// Creates a new PostgreSqlConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlConfiguration.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the PostgreSqlConfiguration resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlConfiguration.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlConfiguration(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/configurations", resourceVersion, context)
+    public PostgreSqlConfiguration(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/servers/configurations", resourceVersion ?? "2017-12-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _source = BicepValue<string>.DefineProperty(this, "Source", ["properties", "source"]);
-        _value = BicepValue<string>.DefineProperty(this, "Value", ["properties", "value"]);
-        _allowedValues = BicepValue<string>.DefineProperty(this, "AllowedValues", ["properties", "allowedValues"], isOutput: true);
-        _dataType = BicepValue<string>.DefineProperty(this, "DataType", ["properties", "dataType"], isOutput: true);
-        _defaultValue = BicepValue<string>.DefineProperty(this, "DefaultValue", ["properties", "defaultValue"], isOutput: true);
-        _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<PostgreSqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of PostgreSqlConfiguration.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _source = DefineProperty<string>("Source", ["properties", "source"]);
+        _value = DefineProperty<string>("Value", ["properties", "value"]);
+        _allowedValues = DefineProperty<string>("AllowedValues", ["properties", "allowedValues"], isOutput: true);
+        _dataType = DefineProperty<string>("DataType", ["properties", "dataType"], isOutput: true);
+        _defaultValue = DefineProperty<string>("DefaultValue", ["properties", "defaultValue"], isOutput: true);
+        _description = DefineProperty<string>("Description", ["properties", "description"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<PostgreSqlServer>("Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported PostgreSqlConfiguration resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2017-12-01.
+        /// </summary>
+        public static readonly string V2017_12_01 = "2017-12-01";
     }
 
     /// <summary>
     /// Creates a reference to an existing PostgreSqlConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlConfiguration.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the PostgreSqlConfiguration resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlConfiguration.</param>
     /// <returns>The existing PostgreSqlConfiguration resource.</returns>
-    public static PostgreSqlConfiguration FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

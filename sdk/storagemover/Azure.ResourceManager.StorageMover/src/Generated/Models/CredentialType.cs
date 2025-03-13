@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static bool operator ==(CredentialType left, CredentialType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CredentialType"/> values are not the same. </summary>
         public static bool operator !=(CredentialType left, CredentialType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CredentialType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CredentialType"/>. </summary>
         public static implicit operator CredentialType(string value) => new CredentialType(value);
 
         /// <inheritdoc />

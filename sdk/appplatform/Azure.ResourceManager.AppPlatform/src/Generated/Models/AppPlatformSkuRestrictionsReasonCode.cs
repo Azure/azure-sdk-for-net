@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static bool operator ==(AppPlatformSkuRestrictionsReasonCode left, AppPlatformSkuRestrictionsReasonCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformSkuRestrictionsReasonCode"/> values are not the same. </summary>
         public static bool operator !=(AppPlatformSkuRestrictionsReasonCode left, AppPlatformSkuRestrictionsReasonCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppPlatformSkuRestrictionsReasonCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppPlatformSkuRestrictionsReasonCode"/>. </summary>
         public static implicit operator AppPlatformSkuRestrictionsReasonCode(string value) => new AppPlatformSkuRestrictionsReasonCode(value);
 
         /// <inheritdoc />

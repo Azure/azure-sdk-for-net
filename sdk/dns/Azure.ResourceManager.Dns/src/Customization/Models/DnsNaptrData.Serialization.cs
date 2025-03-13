@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Dns
             }
             if (Optional.IsCollectionDefined(DnsNaptrRecords))
             {
-                writer.WritePropertyName("NaptrRecords"u8);
+                writer.WritePropertyName("NAPTRRecords"u8);
                 writer.WriteStartArray();
                 foreach (var item in DnsNaptrRecords)
                 {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Dns
                             trafficManagementProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
-                        if (property0.NameEquals("NaptrRecords"u8))
+                        if (property0.NameEquals("NAPTRRecords"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

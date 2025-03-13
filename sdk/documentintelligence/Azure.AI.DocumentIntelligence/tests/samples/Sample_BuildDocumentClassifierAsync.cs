@@ -14,8 +14,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task BuildDocumentClassifierAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceSampleBuildClassifier
             // For this sample, you can use the training documents found in the `classifierTrainingFiles` folder.
@@ -33,26 +32,26 @@ namespace Azure.AI.DocumentIntelligence.Samples
             string classifierId = Guid.NewGuid().ToString();
             Uri blobContainerUri = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
 #endif
-            var sourceA = new AzureBlobContentSource(blobContainerUri) { Prefix = "IRS-1040-A/train" };
-            var sourceB = new AzureBlobContentSource(blobContainerUri) { Prefix = "IRS-1040-B/train" };
-            var docTypeA = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceA };
-            var docTypeB = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceB };
+            var sourceA = new BlobContentSource(blobContainerUri) { Prefix = "IRS-1040-A/train" };
+            var sourceB = new BlobContentSource(blobContainerUri) { Prefix = "IRS-1040-B/train" };
+            var docTypeA = new ClassifierDocumentTypeDetails(sourceA);
+            var docTypeB = new ClassifierDocumentTypeDetails(sourceB);
             var docTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
                 { "IRS-1040-A", docTypeA },
                 { "IRS-1040-B", docTypeB }
             };
 
-            var content = new BuildDocumentClassifierContent(classifierId, docTypes);
+            var options = new BuildClassifierOptions(classifierId, docTypes);
 
-            Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, content);
+            Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, options);
             DocumentClassifierDetails classifier = operation.Value;
 
             Console.WriteLine($"Classifier ID: {classifier.ClassifierId}");
             Console.WriteLine($"Created on: {classifier.CreatedOn}");
 
             Console.WriteLine("Document types the classifier can recognize:");
-            foreach (KeyValuePair<string, ClassifierDocumentTypeDetails> docType in classifier.DocTypes)
+            foreach (KeyValuePair<string, ClassifierDocumentTypeDetails> docType in classifier.DocumentTypes)
             {
                 Console.WriteLine($"  {docType.Key}");
             }

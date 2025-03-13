@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(ResourceStatusMode left, ResourceStatusMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceStatusMode"/> values are not the same. </summary>
         public static bool operator !=(ResourceStatusMode left, ResourceStatusMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResourceStatusMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceStatusMode"/>. </summary>
         public static implicit operator ResourceStatusMode(string value) => new ResourceStatusMode(value);
 
         /// <inheritdoc />

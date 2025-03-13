@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static bool operator ==(TimeRangeFilter left, TimeRangeFilter right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TimeRangeFilter"/> values are not the same. </summary>
         public static bool operator !=(TimeRangeFilter left, TimeRangeFilter right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TimeRangeFilter"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TimeRangeFilter"/>. </summary>
         public static implicit operator TimeRangeFilter(string value) => new TimeRangeFilter(value);
 
         /// <inheritdoc />

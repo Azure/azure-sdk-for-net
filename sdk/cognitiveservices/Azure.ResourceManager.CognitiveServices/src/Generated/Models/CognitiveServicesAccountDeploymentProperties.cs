@@ -55,14 +55,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentProperties"/>. </summary>
         /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
         /// <param name="model"> Properties of Cognitive Services account deployment model. </param>
-        /// <param name="scaleSettings"> Properties of Cognitive Services account deployment model. </param>
+        /// <param name="scaleSettings"> Properties of Cognitive Services account deployment model. (Deprecated, please use Deployment.sku instead.). </param>
         /// <param name="capabilities"> The capabilities. </param>
         /// <param name="raiPolicyName"> The name of RAI policy. </param>
         /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
         /// <param name="rateLimits"></param>
         /// <param name="versionUpgradeOption"> Deployment model version upgrade option. </param>
+        /// <param name="isDynamicThrottlingEnabled"> If the dynamic throttling is enabled. </param>
+        /// <param name="currentCapacity"> The current capacity. </param>
+        /// <param name="capacitySettings"> Internal use only. </param>
+        /// <param name="parentDeploymentName"> The name of parent deployment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IReadOnlyList<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IReadOnlyList<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Model = model;
@@ -72,6 +76,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CallRateLimit = callRateLimit;
             RateLimits = rateLimits;
             VersionUpgradeOption = versionUpgradeOption;
+            IsDynamicThrottlingEnabled = isDynamicThrottlingEnabled;
+            CurrentCapacity = currentCapacity;
+            CapacitySettings = capacitySettings;
+            ParentDeploymentName = parentDeploymentName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -81,7 +89,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Properties of Cognitive Services account deployment model. </summary>
         [WirePath("model")]
         public CognitiveServicesAccountDeploymentModel Model { get; set; }
-        /// <summary> Properties of Cognitive Services account deployment model. </summary>
+        /// <summary> Properties of Cognitive Services account deployment model. (Deprecated, please use Deployment.sku instead.). </summary>
         [WirePath("scaleSettings")]
         public CognitiveServicesAccountDeploymentScaleSettings ScaleSettings { get; set; }
         /// <summary> The capabilities. </summary>
@@ -99,5 +107,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Deployment model version upgrade option. </summary>
         [WirePath("versionUpgradeOption")]
         public DeploymentModelVersionUpgradeOption? VersionUpgradeOption { get; set; }
+        /// <summary> If the dynamic throttling is enabled. </summary>
+        [WirePath("dynamicThrottlingEnabled")]
+        public bool? IsDynamicThrottlingEnabled { get; }
+        /// <summary> The current capacity. </summary>
+        [WirePath("currentCapacity")]
+        public int? CurrentCapacity { get; set; }
+        /// <summary> Internal use only. </summary>
+        [WirePath("capacitySettings")]
+        public DeploymentCapacitySettings CapacitySettings { get; set; }
+        /// <summary> The name of parent deployment. </summary>
+        [WirePath("parentDeploymentName")]
+        public string ParentDeploymentName { get; set; }
     }
 }

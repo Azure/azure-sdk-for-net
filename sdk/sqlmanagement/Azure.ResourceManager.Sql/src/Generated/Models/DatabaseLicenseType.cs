@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(DatabaseLicenseType left, DatabaseLicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatabaseLicenseType"/> values are not the same. </summary>
         public static bool operator !=(DatabaseLicenseType left, DatabaseLicenseType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DatabaseLicenseType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DatabaseLicenseType"/>. </summary>
         public static implicit operator DatabaseLicenseType(string value) => new DatabaseLicenseType(value);
 
         /// <inheritdoc />

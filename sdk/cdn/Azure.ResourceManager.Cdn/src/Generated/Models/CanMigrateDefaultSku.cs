@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(CanMigrateDefaultSku left, CanMigrateDefaultSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CanMigrateDefaultSku"/> values are not the same. </summary>
         public static bool operator !=(CanMigrateDefaultSku left, CanMigrateDefaultSku right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CanMigrateDefaultSku"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CanMigrateDefaultSku"/>. </summary>
         public static implicit operator CanMigrateDefaultSku(string value) => new CanMigrateDefaultSku(value);
 
         /// <inheritdoc />

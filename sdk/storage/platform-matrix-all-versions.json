@@ -3,11 +3,11 @@
     "Agent": {
       "ubuntu-20.04": {
           "OSVmImage": "env:LINUXVMIMAGE",
-          "Pool": "azsdk-pool-mms-ubuntu-2004-storage"
+          "Pool": "env:LINUXPOOL"
       },
       "windows-2022": {
           "OSVmImage": "env:WINDOWSVMIMAGE",
-          "Pool": "azsdk-pool-mms-win-2022-storage"
+          "Pool": "env:WINDOWSPOOL"
       }
     },
     "TestTargetFramework": [

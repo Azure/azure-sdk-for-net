@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(ScriptType left, ScriptType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptType"/> values are not the same. </summary>
         public static bool operator !=(ScriptType left, ScriptType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScriptType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScriptType"/>. </summary>
         public static implicit operator ScriptType(string value) => new ScriptType(value);
 
         /// <inheritdoc />

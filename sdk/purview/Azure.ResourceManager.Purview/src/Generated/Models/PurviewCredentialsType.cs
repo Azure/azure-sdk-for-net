@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static bool operator ==(PurviewCredentialsType left, PurviewCredentialsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PurviewCredentialsType"/> values are not the same. </summary>
         public static bool operator !=(PurviewCredentialsType left, PurviewCredentialsType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PurviewCredentialsType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PurviewCredentialsType"/>. </summary>
         public static implicit operator PurviewCredentialsType(string value) => new PurviewCredentialsType(value);
 
         /// <inheritdoc />

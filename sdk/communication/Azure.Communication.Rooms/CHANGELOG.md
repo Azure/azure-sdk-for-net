@@ -1,5 +1,10 @@
 # Release History
 
+## 1.2.0 (2025-03-13)
+
+### Features Added
+General Availability version of participant Collaborator role.
+
 ## 1.1.1 (2024-09-03)
 
 ### Bugs Fixed

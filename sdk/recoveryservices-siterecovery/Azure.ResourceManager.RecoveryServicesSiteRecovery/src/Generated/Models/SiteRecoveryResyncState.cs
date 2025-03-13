@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(SiteRecoveryResyncState left, SiteRecoveryResyncState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SiteRecoveryResyncState"/> values are not the same. </summary>
         public static bool operator !=(SiteRecoveryResyncState left, SiteRecoveryResyncState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SiteRecoveryResyncState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteRecoveryResyncState"/>. </summary>
         public static implicit operator SiteRecoveryResyncState(string value) => new SiteRecoveryResyncState(value);
 
         /// <inheritdoc />

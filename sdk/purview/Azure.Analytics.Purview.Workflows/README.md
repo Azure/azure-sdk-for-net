@@ -28,13 +28,9 @@ Since the Workflow service uses an Azure Active Directory (AAD) bearer token for
 
 ```C# Snippet:Azure_Analytics_Purview_Workflows_CreateClient
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("WORKFLOW_ENDPOINT"));
-string clientId = Environment.GetEnvironmentVariable("ClientId");
-string tenantId = Environment.GetEnvironmentVariable("TenantId");
-string username = Environment.GetEnvironmentVariable("Username");
-string password = Environment.GetEnvironmentVariable("Password");
+TokenCredential credential = new DefaultAzureCredential();
 
-TokenCredential usernamePasswordCredential = new UsernamePasswordCredential(clientId,tenantId, username,password, null);
-var client = new WorkflowsClient(endpoint, usernamePasswordCredential);
+var client = new WorkflowsClient(endpoint, credential);
 ```
 
 ## Examples
@@ -105,7 +101,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [product_documentation]: https://learn.microsoft.com/azure/purview/concept-workflow
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/
-[purview_resource]: https://docs.microsoft.com/azure/purview/create-catalog-portal
+[purview_resource]: https://learn.microsoft.com/azure/purview/create-catalog-portal
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
 [app_registration]: https://learn.microsoft.com/azure/active-directory/develop/quickstart-register-app
 [username_password_credential]: https://learn.microsoft.com/dotnet/api/azure.identity.usernamepasswordcredential?view=azure-dotnet

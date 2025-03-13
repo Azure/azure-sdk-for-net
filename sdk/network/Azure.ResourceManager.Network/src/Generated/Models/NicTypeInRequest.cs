@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(NicTypeInRequest left, NicTypeInRequest right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NicTypeInRequest"/> values are not the same. </summary>
         public static bool operator !=(NicTypeInRequest left, NicTypeInRequest right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NicTypeInRequest"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NicTypeInRequest"/>. </summary>
         public static implicit operator NicTypeInRequest(string value) => new NicTypeInRequest(value);
 
         /// <inheritdoc />

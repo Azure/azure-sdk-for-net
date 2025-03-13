@@ -5,9 +5,7 @@ Azure.Health.Deidentification is a managed service that enables users to tag, re
 
 <!-- TODO Add operation links once docs are generated -->
 
-[Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
-
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/healthdataaiservices/Azure.Health.Deidentification/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/healthdataaiservices/Azure.Health.Deidentification/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://learn.microsoft.com/azure) | [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthdataaiservices/Azure.Health.Deidentification/samples)
 
 ## Getting started
 
@@ -17,7 +15,7 @@ Azure.Health.Deidentification is a managed service that enables users to tag, re
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Health.Deidentification --prerelease
+dotnet add package Azure.Health.Deidentification
 ```
 
 ### Prerequisites
@@ -42,9 +40,9 @@ Basic code snippet to create your Deidentification Client and Deidentify a strin
             new DeidentificationClientOptions()
         );
 
-        DeidentificationContent content = new("Hello, John!", OperationType.Surrogate, DocumentDataType.Plaintext);
+        DeidentificationContent content = new("Hello, John!");
 
-        Response<DeidentificationResult> result = client.Deidentify(content);
+        Response<DeidentificationResult> result = client.DeidentifyText(content);
         string outputString = result.Value.OutputText;
         Console.WriteLine(outputString); // Hello, Tom!
 ```
@@ -119,7 +117,5 @@ additional questions or comments.
 
 <!-- LINKS -->
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
-[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
+[style-guide-msft]: https://learn.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/healthdataaiservices/Azure.Health.Deidentification/README.png)

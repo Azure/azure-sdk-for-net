@@ -11,7 +11,7 @@ using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonPolygon
+    internal partial class GeoJsonPolygon
     {
         internal static GeoJsonPolygon DeserializeGeoJsonPolygon(JsonElement element)
         {
@@ -21,7 +21,7 @@ namespace Azure.Maps.Search.Models
             }
             IReadOnlyList<IList<IList<double>>> coordinates = default;
             GeoJsonObjectType type = default;
-            IReadOnlyList<double> boundingBox = default;
+            IReadOnlyList<double> bbox = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("coordinates"u8))
@@ -63,7 +63,7 @@ namespace Azure.Maps.Search.Models
                     type = new GeoJsonObjectType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("boundingBox"u8))
+                if (property.NameEquals("bbox"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,18 +74,18 @@ namespace Azure.Maps.Search.Models
                     {
                         array.Add(item.GetDouble());
                     }
-                    boundingBox = array;
+                    bbox = array;
                     continue;
                 }
             }
-            return new GeoJsonPolygon(type, boundingBox ?? new ChangeTrackingList<double>(), coordinates);
+            return new GeoJsonPolygon(type, bbox ?? new ChangeTrackingList<double>(), coordinates);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new GeoJsonPolygon FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeGeoJsonPolygon(document.RootElement);
         }
     }

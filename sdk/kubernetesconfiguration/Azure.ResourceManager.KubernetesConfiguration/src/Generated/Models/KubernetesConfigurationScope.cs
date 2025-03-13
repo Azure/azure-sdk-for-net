@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static bool operator ==(KubernetesConfigurationScope left, KubernetesConfigurationScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubernetesConfigurationScope"/> values are not the same. </summary>
         public static bool operator !=(KubernetesConfigurationScope left, KubernetesConfigurationScope right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KubernetesConfigurationScope"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KubernetesConfigurationScope"/>. </summary>
         public static implicit operator KubernetesConfigurationScope(string value) => new KubernetesConfigurationScope(value);
 
         /// <inheritdoc />

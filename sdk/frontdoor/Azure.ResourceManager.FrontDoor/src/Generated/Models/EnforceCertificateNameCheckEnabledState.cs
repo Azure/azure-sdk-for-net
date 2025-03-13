@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(EnforceCertificateNameCheckEnabledState left, EnforceCertificateNameCheckEnabledState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnforceCertificateNameCheckEnabledState"/> values are not the same. </summary>
         public static bool operator !=(EnforceCertificateNameCheckEnabledState left, EnforceCertificateNameCheckEnabledState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EnforceCertificateNameCheckEnabledState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EnforceCertificateNameCheckEnabledState"/>. </summary>
         public static implicit operator EnforceCertificateNameCheckEnabledState(string value) => new EnforceCertificateNameCheckEnabledState(value);
 
         /// <inheritdoc />

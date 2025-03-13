@@ -16,33 +16,33 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="CancelAddParticipantSucceededInternal"/>. </summary>
-        /// <param name="invitationId"> Invitation ID used to cancel the request. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal CancelAddParticipantSucceededInternal(string invitationId, string operationContext, ResultInformation resultInformation, string callConnectionId, string serverCallId, string correlationId)
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="invitationId"> Invitation ID used to cancel the request. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        internal CancelAddParticipantSucceededInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, string invitationId, ResultInformation resultInformation)
         {
-            InvitationId = invitationId;
-            OperationContext = operationContext;
-            ResultInformation = resultInformation;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
+            OperationContext = operationContext;
+            InvitationId = invitationId;
+            ResultInformation = resultInformation;
         }
 
-        /// <summary> Invitation ID used to cancel the request. </summary>
-        public string InvitationId { get; }
-        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
-        public string OperationContext { get; }
-        /// <summary> Gets the result information. </summary>
-        public ResultInformation ResultInformation { get; }
         /// <summary> Call connection ID. </summary>
         public string CallConnectionId { get; }
         /// <summary> Server call ID. </summary>
         public string ServerCallId { get; }
         /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
         public string CorrelationId { get; }
+        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
+        public string OperationContext { get; }
+        /// <summary> Invitation ID used to cancel the request. </summary>
+        public string InvitationId { get; }
+        /// <summary> Contains the resulting SIP code, sub-code and message. </summary>
+        public ResultInformation ResultInformation { get; }
     }
 }

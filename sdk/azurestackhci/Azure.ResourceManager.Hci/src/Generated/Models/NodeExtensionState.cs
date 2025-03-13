@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(NodeExtensionState left, NodeExtensionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NodeExtensionState"/> values are not the same. </summary>
         public static bool operator !=(NodeExtensionState left, NodeExtensionState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NodeExtensionState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NodeExtensionState"/>. </summary>
         public static implicit operator NodeExtensionState(string value) => new NodeExtensionState(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static bool operator ==(DevCenterUsageUnit left, DevCenterUsageUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevCenterUsageUnit"/> values are not the same. </summary>
         public static bool operator !=(DevCenterUsageUnit left, DevCenterUsageUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevCenterUsageUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevCenterUsageUnit"/>. </summary>
         public static implicit operator DevCenterUsageUnit(string value) => new DevCenterUsageUnit(value);
 
         /// <inheritdoc />

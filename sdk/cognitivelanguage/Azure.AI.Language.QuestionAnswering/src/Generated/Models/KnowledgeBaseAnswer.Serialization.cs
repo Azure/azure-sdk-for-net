@@ -118,7 +118,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static KnowledgeBaseAnswer FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeKnowledgeBaseAnswer(document.RootElement);
         }
     }

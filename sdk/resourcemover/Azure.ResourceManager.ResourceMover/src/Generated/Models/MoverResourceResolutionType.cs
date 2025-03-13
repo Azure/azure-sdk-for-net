@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static bool operator ==(MoverResourceResolutionType left, MoverResourceResolutionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MoverResourceResolutionType"/> values are not the same. </summary>
         public static bool operator !=(MoverResourceResolutionType left, MoverResourceResolutionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MoverResourceResolutionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MoverResourceResolutionType"/>. </summary>
         public static implicit operator MoverResourceResolutionType(string value) => new MoverResourceResolutionType(value);
 
         /// <inheritdoc />

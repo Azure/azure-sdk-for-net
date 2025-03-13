@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-05";
+            _apiVersion = apiVersion ?? "2024-04-03";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Expands and Lists MSIX packages in an Image, given the Image Path. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="msixImageUri"> Object containing URI to MSIX Image. </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         ExpandMsixImageList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExpandMsixImageList.DeserializeExpandMsixImageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Expands and Lists MSIX packages in an Image, given the Image Path. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="msixImageUri"> Object containing URI to MSIX Image. </param>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         ExpandMsixImageList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExpandMsixImageList.DeserializeExpandMsixImageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary> Expands and Lists MSIX packages in an Image, given the Image Path. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="msixImageUri"> Object containing URI to MSIX Image. </param>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         ExpandMsixImageList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExpandMsixImageList.DeserializeExpandMsixImageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary> Expands and Lists MSIX packages in an Image, given the Image Path. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="msixImageUri"> Object containing URI to MSIX Image. </param>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     {
                         ExpandMsixImageList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExpandMsixImageList.DeserializeExpandMsixImageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

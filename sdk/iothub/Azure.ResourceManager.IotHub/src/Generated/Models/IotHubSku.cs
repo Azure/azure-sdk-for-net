@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static bool operator ==(IotHubSku left, IotHubSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubSku"/> values are not the same. </summary>
         public static bool operator !=(IotHubSku left, IotHubSku right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IotHubSku"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IotHubSku"/>. </summary>
         public static implicit operator IotHubSku(string value) => new IotHubSku(value);
 
         /// <inheritdoc />

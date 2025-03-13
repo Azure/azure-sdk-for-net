@@ -39,7 +39,7 @@ namespace Azure.Maps.Search.Models
         public static bool operator ==(CalculationMethodEnum left, CalculationMethodEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CalculationMethodEnum"/> values are not the same. </summary>
         public static bool operator !=(CalculationMethodEnum left, CalculationMethodEnum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CalculationMethodEnum"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CalculationMethodEnum"/>. </summary>
         public static implicit operator CalculationMethodEnum(string value) => new CalculationMethodEnum(value);
 
         /// <inheritdoc />

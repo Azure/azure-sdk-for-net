@@ -2888,7 +2888,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                           CancellationToken cancellationToken = default)
             {
                 GetPropertiesInvokedWith = retryPolicy;
-                return Task.FromResult(new EventHubProperties(EventHubName, DateTimeOffset.Parse("2015-10-27T00:00:00Z"), new string[] { "0", "1" }));
+                return Task.FromResult(new EventHubProperties(EventHubName, DateTimeOffset.Parse("2015-10-27T00:00:00Z"), new string[] { "0", "1" }, false));
             }
 
             internal override async Task<string[]> GetPartitionIdsAsync(EventHubsRetryPolicy retryPolicy,

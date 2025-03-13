@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         public static bool operator ==(ResourceConnectorDistro left, ResourceConnectorDistro right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceConnectorDistro"/> values are not the same. </summary>
         public static bool operator !=(ResourceConnectorDistro left, ResourceConnectorDistro right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResourceConnectorDistro"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceConnectorDistro"/>. </summary>
         public static implicit operator ResourceConnectorDistro(string value) => new ResourceConnectorDistro(value);
 
         /// <inheritdoc />

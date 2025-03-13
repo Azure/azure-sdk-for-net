@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(ManagedInstanceLicenseType left, ManagedInstanceLicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedInstanceLicenseType"/> values are not the same. </summary>
         public static bool operator !=(ManagedInstanceLicenseType left, ManagedInstanceLicenseType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedInstanceLicenseType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedInstanceLicenseType"/>. </summary>
         public static implicit operator ManagedInstanceLicenseType(string value) => new ManagedInstanceLicenseType(value);
 
         /// <inheritdoc />

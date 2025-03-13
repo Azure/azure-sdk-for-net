@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static bool operator ==(SqlVmDiskConfigurationType left, SqlVmDiskConfigurationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlVmDiskConfigurationType"/> values are not the same. </summary>
         public static bool operator !=(SqlVmDiskConfigurationType left, SqlVmDiskConfigurationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlVmDiskConfigurationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlVmDiskConfigurationType"/>. </summary>
         public static implicit operator SqlVmDiskConfigurationType(string value) => new SqlVmDiskConfigurationType(value);
 
         /// <inheritdoc />

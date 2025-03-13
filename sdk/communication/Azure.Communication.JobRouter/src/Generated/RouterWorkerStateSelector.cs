@@ -39,7 +39,7 @@ namespace Azure.Communication.JobRouter
         public static bool operator ==(RouterWorkerStateSelector left, RouterWorkerStateSelector right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RouterWorkerStateSelector"/> values are not the same. </summary>
         public static bool operator !=(RouterWorkerStateSelector left, RouterWorkerStateSelector right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RouterWorkerStateSelector"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RouterWorkerStateSelector"/>. </summary>
         public static implicit operator RouterWorkerStateSelector(string value) => new RouterWorkerStateSelector(value);
 
         /// <inheritdoc />

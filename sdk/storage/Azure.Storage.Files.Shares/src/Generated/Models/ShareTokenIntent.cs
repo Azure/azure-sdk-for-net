@@ -30,7 +30,7 @@ namespace Azure.Storage.Files.Shares.Models
         public static bool operator ==(ShareTokenIntent left, ShareTokenIntent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ShareTokenIntent"/> values are not the same. </summary>
         public static bool operator !=(ShareTokenIntent left, ShareTokenIntent right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ShareTokenIntent"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ShareTokenIntent"/>. </summary>
         public static implicit operator ShareTokenIntent(string value) => new ShareTokenIntent(value);
 
         /// <inheritdoc />

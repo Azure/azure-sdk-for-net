@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI.Chat
 {
     /// <summary> The PineconeChatDataSource. </summary>
-    public partial class PineconeChatDataSource : AzureChatDataSource
+    public partial class PineconeChatDataSource : ChatDataSource
     {
     }
 }

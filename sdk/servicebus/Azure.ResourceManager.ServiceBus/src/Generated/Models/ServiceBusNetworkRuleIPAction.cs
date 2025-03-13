@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static bool operator ==(ServiceBusNetworkRuleIPAction left, ServiceBusNetworkRuleIPAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceBusNetworkRuleIPAction"/> values are not the same. </summary>
         public static bool operator !=(ServiceBusNetworkRuleIPAction left, ServiceBusNetworkRuleIPAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceBusNetworkRuleIPAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceBusNetworkRuleIPAction"/>. </summary>
         public static implicit operator ServiceBusNetworkRuleIPAction(string value) => new ServiceBusNetworkRuleIPAction(value);
 
         /// <inheritdoc />

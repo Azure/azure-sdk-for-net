@@ -4,8 +4,6 @@ We build Azure SDK libraries to give developers a consistent, unified experience
 
 Azure SDK Code Generation takes a [TypeSpec](https://microsoft.github.io/typespec/) as input and uses the [autorest.csharp](https://github.com/Azure/autorest.csharp) generator to output a generated library.  It is important that the input TypeSpec files (*.tsp) should comply with TypeSpec lint rules so the output library is consistent with the Azure SDK Guidelines.
 
-**Learn more**: You can learn more about Azure SDK Data Plane Code Generation in the [Azure SDK Code Generation docs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md).
-
 ## Prerequisites
 
 For first time to set up of a new SDK package, please verify you have met the prerequisites, including runtime environment, TypeSpec project, and SDK project folder. You can refer to [SDK Generation Prerequisites](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKGeneration_Prerequistites.md) to set up.
@@ -29,26 +27,8 @@ Run `dotnet build /t:GenerateCode`, and the code will be generated under `sdk\<s
 dotnet build /t:GenerateCode
 ```
 
-## Add package ship requirements
+Now that you have generated your SDK, you can release it by following the following steps:
 
-Before a library package can be released, you will need to add tests and samples. You will also need to update the CHANGELOG.md and README.md as necessary. Please refer to [Azure SDK Package Ship Requirements](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/Azure_SDK_Package_Ship_Requirements.md) for those requirements.
-
-## Code Review
-
-Code review happens on 2 places.
-
-One is the usual GitHub pull request, for developers.
-
-Another is the [apiview](https://apiview.dev/), for architects. GitHub pull request (PR) should automatically trigger the apiview. If this does not happen, please help to file an issue in [azure-sdk-tools](https://github.com/azure/azure-sdk-tools) to report the failure.
-And you can upload one manually:
-
- - Build the SDK, Run `dotnet pack` to create SDK package.
- - Login apiview with GitHub account.
- - Click "Create + review" at bottom-right corner.
- - "Browse" and upload .nupkg (e.g. /home/azure-sdk-for-net/artifacts/package/Debug/Azure.AI.AnomalyDetector/Azure.AI.AnomalyDetector.3.0.0-alpha.20230331.1.nupkg), and comment the result apiview link in the PR.
-
-**Comment @Azure/dpg-devs for awareness in PR to loop in SDK developers for review.**
-
-## Package Release
-
-See [Release Checklist](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/8/Release-Checklist?anchor=prepare-release-script).
+1. Create a [release plan](https://aka.ms/azsdkdocs/release-plans). It will provide you with a workflow of tasks that you
+will need to accomplish to release an SDK. For example, all the neccessary approvals, guidance on testing, release pipeline, and more.
+2. [Enhance the SDK](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/Azure_SDK_Package_Ship_Requirements.md).

@@ -16,19 +16,27 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// TopicSpace.
 /// </summary>
-public partial class TopicSpace : Resource
+public partial class TopicSpace : ProvisionableResource
 {
     /// <summary>
     /// The topic space name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Description for the Topic Space resource.
     /// </summary>
-    public BicepValue<string> Description { get => _description; set => _description.Assign(value); }
-    private readonly BicepValue<string> _description;
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+        set { Initialize(); _description!.Assign(value); }
+    }
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// The topic filters in the topic space.             Example:
@@ -38,57 +46,90 @@ public partial class TopicSpace : Resource
     /// &quot;devices/${principal.name}/${principal.attributes.keyName}&quot;
     /// ].
     /// </summary>
-    public BicepList<string> TopicTemplates { get => _topicTemplates; set => _topicTemplates.Assign(value); }
-    private readonly BicepList<string> _topicTemplates;
+    public BicepList<string> TopicTemplates 
+    {
+        get { Initialize(); return _topicTemplates!; }
+        set { Initialize(); _topicTemplates!.Assign(value); }
+    }
+    private BicepList<string>? _topicTemplates;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the TopicSpace resource.
     /// </summary>
-    public BicepValue<TopicSpaceProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<TopicSpaceProvisioningState> _provisioningState;
+    public BicepValue<TopicSpaceProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<TopicSpaceProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent EventGridNamespace.
     /// </summary>
-    public EventGridNamespace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<EventGridNamespace> _parent;
+    public EventGridNamespace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<EventGridNamespace>? _parent;
 
     /// <summary>
     /// Creates a new TopicSpace.
     /// </summary>
-    /// <param name="resourceName">Name of the TopicSpace.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the TopicSpace resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the TopicSpace.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public TopicSpace(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/topicSpaces", resourceVersion, context)
+    public TopicSpace(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/topicSpaces", resourceVersion)
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
-        _topicTemplates = BicepList<string>.DefineProperty(this, "TopicTemplates", ["properties", "topicTemplates"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<TopicSpaceProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<EventGridNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of TopicSpace.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _topicTemplates = DefineListProperty<string>("TopicTemplates", ["properties", "topicTemplates"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<TopicSpaceProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<EventGridNamespace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
     /// Creates a reference to an existing TopicSpace.
     /// </summary>
-    /// <param name="resourceName">Name of the TopicSpace.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the TopicSpace resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the TopicSpace.</param>
     /// <returns>The existing TopicSpace resource.</returns>
-    public static TopicSpace FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static TopicSpace FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static bool operator ==(TrafficManagerEndpointMonitorStatus left, TrafficManagerEndpointMonitorStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrafficManagerEndpointMonitorStatus"/> values are not the same. </summary>
         public static bool operator !=(TrafficManagerEndpointMonitorStatus left, TrafficManagerEndpointMonitorStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TrafficManagerEndpointMonitorStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TrafficManagerEndpointMonitorStatus"/>. </summary>
         public static implicit operator TrafficManagerEndpointMonitorStatus(string value) => new TrafficManagerEndpointMonitorStatus(value);
 
         /// <inheritdoc />

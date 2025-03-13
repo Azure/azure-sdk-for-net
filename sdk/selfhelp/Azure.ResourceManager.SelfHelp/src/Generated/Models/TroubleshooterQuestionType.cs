@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static bool operator ==(TroubleshooterQuestionType left, TroubleshooterQuestionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TroubleshooterQuestionType"/> values are not the same. </summary>
         public static bool operator !=(TroubleshooterQuestionType left, TroubleshooterQuestionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TroubleshooterQuestionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TroubleshooterQuestionType"/>. </summary>
         public static implicit operator TroubleshooterQuestionType(string value) => new TroubleshooterQuestionType(value);
 
         /// <inheritdoc />

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static bool operator ==(BackupRestoreOperationStatus left, BackupRestoreOperationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupRestoreOperationStatus"/> values are not the same. </summary>
         public static bool operator !=(BackupRestoreOperationStatus left, BackupRestoreOperationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackupRestoreOperationStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupRestoreOperationStatus"/>. </summary>
         public static implicit operator BackupRestoreOperationStatus(string value) => new BackupRestoreOperationStatus(value);
 
         /// <inheritdoc />

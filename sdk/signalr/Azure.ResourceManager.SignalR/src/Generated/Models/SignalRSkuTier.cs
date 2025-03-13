@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public static bool operator ==(SignalRSkuTier left, SignalRSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SignalRSkuTier"/> values are not the same. </summary>
         public static bool operator !=(SignalRSkuTier left, SignalRSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SignalRSkuTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SignalRSkuTier"/>. </summary>
         public static implicit operator SignalRSkuTier(string value) => new SignalRSkuTier(value);
 
         /// <inheritdoc />

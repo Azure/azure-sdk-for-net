@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator ==(SapEnvironmentType left, SapEnvironmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapEnvironmentType"/> values are not the same. </summary>
         public static bool operator !=(SapEnvironmentType left, SapEnvironmentType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapEnvironmentType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapEnvironmentType"/>. </summary>
         public static implicit operator SapEnvironmentType(string value) => new SapEnvironmentType(value);
 
         /// <inheritdoc />

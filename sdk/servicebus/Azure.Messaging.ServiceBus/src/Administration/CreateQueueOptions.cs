@@ -143,6 +143,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// The <see cref="TimeSpan"/> idle interval after which the queue is automatically deleted.
         /// </summary>
         /// <remarks>The minimum duration is 5 minutes. Default value is <see cref="TimeSpan.MaxValue"/>.</remarks>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/message-expiration#idleness">Service Bus: Idleness</seealso>
         public TimeSpan AutoDeleteOnIdle
         {
             get => autoDeleteOnIdle;
@@ -301,7 +302,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>
         /// Gets or sets the maximum message size, in kilobytes, for messages sent to this queue.
         /// This feature is only available when using a Premium namespace and service version "2021-05" or higher.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging"/>
         /// </summary>
         public long? MaxMessageSizeInKilobytes { get; set; }
 

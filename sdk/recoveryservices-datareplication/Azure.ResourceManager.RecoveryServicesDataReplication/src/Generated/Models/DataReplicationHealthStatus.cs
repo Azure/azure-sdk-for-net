@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static bool operator ==(DataReplicationHealthStatus left, DataReplicationHealthStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataReplicationHealthStatus"/> values are not the same. </summary>
         public static bool operator !=(DataReplicationHealthStatus left, DataReplicationHealthStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataReplicationHealthStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataReplicationHealthStatus"/>. </summary>
         public static implicit operator DataReplicationHealthStatus(string value) => new DataReplicationHealthStatus(value);
 
         /// <inheritdoc />

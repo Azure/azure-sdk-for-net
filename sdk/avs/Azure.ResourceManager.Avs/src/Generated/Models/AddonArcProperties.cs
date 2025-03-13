@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AddonArcProperties"/>. </summary>
-        /// <param name="addonType"> The type of private cloud addon. </param>
+        /// <param name="addonType"> Addon type. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vCenter"> The VMware vCenter resource ID. </param>

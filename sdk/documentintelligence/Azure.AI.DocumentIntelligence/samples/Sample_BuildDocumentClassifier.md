@@ -4,18 +4,18 @@ This sample demonstrates how to build a document classifier with your own data. 
 
 Please note that document classifiers can also be created using a graphical user interface such as the [Document Intelligence Studio][di_studio].
 
-To get started you'll need a Cognitive Services resource or a Document Intelligence resource. See [README][README] for prerequisites and instructions.
+To get started you'll need an Azure AI services resource or a Document Intelligence resource. See [README][README] for prerequisites and instructions.
 
 ## Creating a `DocumentIntelligenceAdministrationClient`
 
-To create a new `DocumentIntelligenceAdministrationClient` you need the endpoint and credentials from your resource. In the sample below you'll use a Document Intelligence API key credential by creating an `AzureKeyCredential` object that, if needed, will allow you to update the API key without creating a new client.
+To create a new `DocumentIntelligenceAdministrationClient` you need the endpoint and credentials from your resource. In the sample below you'll make use of identity-based authentication by creating a `DefaultAzureCredential` object.
 
-You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
+You can set `endpoint` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:CreateDocumentIntelligenceAdministrationClient
 string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+var credential = new DefaultAzureCredential();
+var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), credential);
 ```
 
 ## Build a document classifier
@@ -35,26 +35,26 @@ After building, a `DocumentClassifierDetails` instance is returned indicating th
 
 string classifierId = "<classifierId>";
 Uri blobContainerUri = new Uri("<blobContainerUri>");
-var sourceA = new AzureBlobContentSource(blobContainerUri) { Prefix = "IRS-1040-A/train" };
-var sourceB = new AzureBlobContentSource(blobContainerUri) { Prefix = "IRS-1040-B/train" };
-var docTypeA = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceA };
-var docTypeB = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceB };
+var sourceA = new BlobContentSource(blobContainerUri) { Prefix = "IRS-1040-A/train" };
+var sourceB = new BlobContentSource(blobContainerUri) { Prefix = "IRS-1040-B/train" };
+var docTypeA = new ClassifierDocumentTypeDetails(sourceA);
+var docTypeB = new ClassifierDocumentTypeDetails(sourceB);
 var docTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
 {
     { "IRS-1040-A", docTypeA },
     { "IRS-1040-B", docTypeB }
 };
 
-var content = new BuildDocumentClassifierContent(classifierId, docTypes);
+var options = new BuildClassifierOptions(classifierId, docTypes);
 
-Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, content);
+Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, options);
 DocumentClassifierDetails classifier = operation.Value;
 
 Console.WriteLine($"Classifier ID: {classifier.ClassifierId}");
 Console.WriteLine($"Created on: {classifier.CreatedOn}");
 
 Console.WriteLine("Document types the classifier can recognize:");
-foreach (KeyValuePair<string, ClassifierDocumentTypeDetails> docType in classifier.DocTypes)
+foreach (KeyValuePair<string, ClassifierDocumentTypeDetails> docType in classifier.DocumentTypes)
 {
     Console.WriteLine($"  {docType.Key}");
 }

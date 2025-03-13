@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(IngestionMode left, IngestionMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IngestionMode"/> values are not the same. </summary>
         public static bool operator !=(IngestionMode left, IngestionMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IngestionMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IngestionMode"/>. </summary>
         public static implicit operator IngestionMode(string value) => new IngestionMode(value);
 
         /// <inheritdoc />

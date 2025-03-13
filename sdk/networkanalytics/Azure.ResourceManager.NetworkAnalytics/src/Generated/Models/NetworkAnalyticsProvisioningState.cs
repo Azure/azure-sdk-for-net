@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         public static bool operator ==(NetworkAnalyticsProvisioningState left, NetworkAnalyticsProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkAnalyticsProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(NetworkAnalyticsProvisioningState left, NetworkAnalyticsProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkAnalyticsProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkAnalyticsProvisioningState"/>. </summary>
         public static implicit operator NetworkAnalyticsProvisioningState(string value) => new NetworkAnalyticsProvisioningState(value);
 
         /// <inheritdoc />

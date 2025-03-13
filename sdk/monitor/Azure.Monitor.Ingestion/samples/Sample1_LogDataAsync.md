@@ -4,7 +4,7 @@ To use these samples, you'll first need to set up resources. See [getting starte
 
 ## Upload custom logs asynchronously
 
-You can create a client and call the client's `UploadAsync` method. Take note of the data ingestion [limits](https://docs.microsoft.com/azure/azure-monitor/service-limits#custom-logs).
+You can create a client and call the client's `UploadAsync` method. Take note of the data ingestion [limits](https://learn.microsoft.com/azure/azure-monitor/service-limits#custom-logs).
 
 ```C# Snippet:UploadCustomLogsAsync
 var endpoint = new Uri("<data_collection_endpoint>");

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(EventGroupingAggregationKind left, EventGroupingAggregationKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventGroupingAggregationKind"/> values are not the same. </summary>
         public static bool operator !=(EventGroupingAggregationKind left, EventGroupingAggregationKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EventGroupingAggregationKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventGroupingAggregationKind"/>. </summary>
         public static implicit operator EventGroupingAggregationKind(string value) => new EventGroupingAggregationKind(value);
 
         /// <inheritdoc />

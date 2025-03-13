@@ -7,10 +7,11 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonFeatureCollectionData
+    internal partial class GeoJsonFeatureCollectionData
     {
         internal static GeoJsonFeatureCollectionData DeserializeGeoJsonFeatureCollectionData(JsonElement element)
         {
@@ -39,7 +40,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static GeoJsonFeatureCollectionData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeGeoJsonFeatureCollectionData(document.RootElement);
         }
     }

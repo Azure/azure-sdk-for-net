@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static bool operator ==(IotHubAuthenticationType left, IotHubAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(IotHubAuthenticationType left, IotHubAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IotHubAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IotHubAuthenticationType"/>. </summary>
         public static implicit operator IotHubAuthenticationType(string value) => new IotHubAuthenticationType(value);
 
         /// <inheritdoc />

@@ -14,41 +14,11 @@ namespace Azure.Maps.Search.Models
     /// <summary> The FeaturesItem. </summary>
     public partial class FeaturesItem
     {
-        /// <summary> Initializes a new instance of <see cref="FeaturesItem"/>. </summary>
-        /// <param name="geometry"> A valid `GeoJSON Point` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.2) for details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="geometry"/> is null. </exception>
-        internal FeaturesItem(GeoJsonPoint geometry)
-        {
-            Argument.AssertNotNull(geometry, nameof(geometry));
-
-            Geometry = geometry;
-            BoundingBox = new ChangeTrackingList<double>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FeaturesItem"/>. </summary>
-        /// <param name="type"> The type of a feature must be Feature. </param>
-        /// <param name="id"> ID for feature returned. </param>
-        /// <param name="properties"></param>
-        /// <param name="geometry"> A valid `GeoJSON Point` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.2) for details. </param>
-        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
-        internal FeaturesItem(FeatureTypeEnum? type, string id, FeaturesItemProperties properties, GeoJsonPoint geometry, IReadOnlyList<double> boundingBox)
-        {
-            Type = type;
-            Id = id;
-            Properties = properties;
-            Geometry = geometry;
-            BoundingBox = boundingBox;
-        }
-
         /// <summary> The type of a feature must be Feature. </summary>
         public FeatureTypeEnum? Type { get; }
         /// <summary> ID for feature returned. </summary>
         public string Id { get; }
         /// <summary> Gets the properties. </summary>
         public FeaturesItemProperties Properties { get; }
-        /// <summary> A valid `GeoJSON Point` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.2) for details. </summary>
-        public GeoJsonPoint Geometry { get; }
-        /// <summary> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </summary>
-        public IReadOnlyList<double> BoundingBox { get; }
     }
 }

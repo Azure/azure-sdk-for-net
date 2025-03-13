@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator ==(WorkflowState left, WorkflowState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkflowState"/> values are not the same. </summary>
         public static bool operator !=(WorkflowState left, WorkflowState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkflowState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkflowState"/>. </summary>
         public static implicit operator WorkflowState(string value) => new WorkflowState(value);
 
         /// <inheritdoc />

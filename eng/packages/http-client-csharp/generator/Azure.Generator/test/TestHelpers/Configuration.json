@@ -1,0 +1,7 @@
+﻿{
+  "output-folder": "./outputFolder",
+  "project-folder": "./projectFolder",
+  "unknown-bool-property": false,
+  "package-name": "sample-library",
+  "unknown-string-property": "unknownPropertyValue"
+}

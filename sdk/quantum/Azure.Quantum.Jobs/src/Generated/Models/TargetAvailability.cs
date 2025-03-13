@@ -36,7 +36,7 @@ namespace Azure.Quantum.Jobs.Models
         public static bool operator ==(TargetAvailability left, TargetAvailability right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TargetAvailability"/> values are not the same. </summary>
         public static bool operator !=(TargetAvailability left, TargetAvailability right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TargetAvailability"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TargetAvailability"/>. </summary>
         public static implicit operator TargetAvailability(string value) => new TargetAvailability(value);
 
         /// <inheritdoc />

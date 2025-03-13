@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(UriFileExtensionMatchConditionType left, UriFileExtensionMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UriFileExtensionMatchConditionType"/> values are not the same. </summary>
         public static bool operator !=(UriFileExtensionMatchConditionType left, UriFileExtensionMatchConditionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UriFileExtensionMatchConditionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UriFileExtensionMatchConditionType"/>. </summary>
         public static implicit operator UriFileExtensionMatchConditionType(string value) => new UriFileExtensionMatchConditionType(value);
 
         /// <inheritdoc />

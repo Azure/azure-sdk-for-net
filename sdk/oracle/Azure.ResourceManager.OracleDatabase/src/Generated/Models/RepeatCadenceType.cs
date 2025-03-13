@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(RepeatCadenceType left, RepeatCadenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RepeatCadenceType"/> values are not the same. </summary>
         public static bool operator !=(RepeatCadenceType left, RepeatCadenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RepeatCadenceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RepeatCadenceType"/>. </summary>
         public static implicit operator RepeatCadenceType(string value) => new RepeatCadenceType(value);
 
         /// <inheritdoc />

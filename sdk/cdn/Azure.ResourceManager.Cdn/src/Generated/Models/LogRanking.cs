@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(LogRanking left, LogRanking right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogRanking"/> values are not the same. </summary>
         public static bool operator !=(LogRanking left, LogRanking right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogRanking"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogRanking"/>. </summary>
         public static implicit operator LogRanking(string value) => new LogRanking(value);
 
         /// <inheritdoc />

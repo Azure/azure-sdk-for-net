@@ -21,7 +21,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_RadiologyInsightsJob_InferRadiologyInsights_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
@@ -39,7 +39,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_RadiologyInsightsJob_InferRadiologyInsights_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
@@ -57,7 +57,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_RadiologyInsightsJob_InferRadiologyInsights_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
@@ -70,7 +70,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_RadiologyInsightsJob_InferRadiologyInsights_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
@@ -83,7 +83,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_RadiologyInsightsJob_InferRadiologyInsights_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
@@ -1447,7 +1447,7 @@ value = "<value>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_RadiologyInsightsJob_InferRadiologyInsights_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
@@ -2811,7 +2811,7 @@ value = "<value>",
         [Ignore("Only validating compilation of examples")]
         public void Example_RadiologyInsightsJob_InferRadiologyInsights_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
@@ -2988,7 +2988,7 @@ EncounterId = "<encounterId>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_RadiologyInsightsJob_InferRadiologyInsights_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static bool operator ==(ArtifactReplicationStrategy left, ArtifactReplicationStrategy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArtifactReplicationStrategy"/> values are not the same. </summary>
         public static bool operator !=(ArtifactReplicationStrategy left, ArtifactReplicationStrategy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ArtifactReplicationStrategy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ArtifactReplicationStrategy"/>. </summary>
         public static implicit operator ArtifactReplicationStrategy(string value) => new ArtifactReplicationStrategy(value);
 
         /// <inheritdoc />

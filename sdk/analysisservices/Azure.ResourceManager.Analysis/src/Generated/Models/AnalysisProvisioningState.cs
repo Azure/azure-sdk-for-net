@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Analysis.Models
         public static bool operator ==(AnalysisProvisioningState left, AnalysisProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalysisProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(AnalysisProvisioningState left, AnalysisProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AnalysisProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AnalysisProvisioningState"/>. </summary>
         public static implicit operator AnalysisProvisioningState(string value) => new AnalysisProvisioningState(value);
 
         /// <inheritdoc />

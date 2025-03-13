@@ -27,6 +27,10 @@ internal sealed class ResourceAttributeConstants
     internal const string AzureContainerAppsReplicaNameEnvVar = "CONTAINER_APP_REPLICA_NAME";
     internal const string AzureContainerAppsRevisionEnvVar = "CONTAINER_APP_REVISION";
 
+    // Azure Container Apps Jobs environment variables
+    internal const string AzureContainerAppJobNameEnvVar = "CONTAINER_APP_JOB_NAME";
+    internal const string AzureContainerAppJobExecutionNameEnvVar = "CONTAINER_APP_JOB_EXECUTION_NAME";
+
     // Azure resource attributes constant values
     internal const string AzureAppServicePlatformValue = "azure_app_service";
     internal const string AzureCloudProviderValue = "azure";

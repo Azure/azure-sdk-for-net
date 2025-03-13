@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static bool operator ==(StreamingCompressionType left, StreamingCompressionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingCompressionType"/> values are not the same. </summary>
         public static bool operator !=(StreamingCompressionType left, StreamingCompressionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StreamingCompressionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StreamingCompressionType"/>. </summary>
         public static implicit operator StreamingCompressionType(string value) => new StreamingCompressionType(value);
 
         /// <inheritdoc />

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static bool operator ==(MobileNetworkAuthenticationType left, MobileNetworkAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobileNetworkAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(MobileNetworkAuthenticationType left, MobileNetworkAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MobileNetworkAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MobileNetworkAuthenticationType"/>. </summary>
         public static implicit operator MobileNetworkAuthenticationType(string value) => new MobileNetworkAuthenticationType(value);
 
         /// <inheritdoc />

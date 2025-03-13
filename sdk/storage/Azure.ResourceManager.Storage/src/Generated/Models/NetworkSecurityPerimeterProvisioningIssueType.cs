@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(NetworkSecurityPerimeterProvisioningIssueType left, NetworkSecurityPerimeterProvisioningIssueType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkSecurityPerimeterProvisioningIssueType"/> values are not the same. </summary>
         public static bool operator !=(NetworkSecurityPerimeterProvisioningIssueType left, NetworkSecurityPerimeterProvisioningIssueType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterProvisioningIssueType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkSecurityPerimeterProvisioningIssueType"/>. </summary>
         public static implicit operator NetworkSecurityPerimeterProvisioningIssueType(string value) => new NetworkSecurityPerimeterProvisioningIssueType(value);
 
         /// <inheritdoc />

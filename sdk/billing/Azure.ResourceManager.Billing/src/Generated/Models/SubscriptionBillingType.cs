@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(SubscriptionBillingType left, SubscriptionBillingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SubscriptionBillingType"/> values are not the same. </summary>
         public static bool operator !=(SubscriptionBillingType left, SubscriptionBillingType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SubscriptionBillingType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SubscriptionBillingType"/>. </summary>
         public static implicit operator SubscriptionBillingType(string value) => new SubscriptionBillingType(value);
 
         /// <inheritdoc />

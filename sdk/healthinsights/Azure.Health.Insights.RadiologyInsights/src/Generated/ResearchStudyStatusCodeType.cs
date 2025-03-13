@@ -60,7 +60,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static bool operator ==(ResearchStudyStatusCodeType left, ResearchStudyStatusCodeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResearchStudyStatusCodeType"/> values are not the same. </summary>
         public static bool operator !=(ResearchStudyStatusCodeType left, ResearchStudyStatusCodeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResearchStudyStatusCodeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResearchStudyStatusCodeType"/>. </summary>
         public static implicit operator ResearchStudyStatusCodeType(string value) => new ResearchStudyStatusCodeType(value);
 
         /// <inheritdoc />

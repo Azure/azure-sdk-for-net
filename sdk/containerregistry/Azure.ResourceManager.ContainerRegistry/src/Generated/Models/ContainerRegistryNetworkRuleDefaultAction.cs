@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator ==(ContainerRegistryNetworkRuleDefaultAction left, ContainerRegistryNetworkRuleDefaultAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryNetworkRuleDefaultAction"/> values are not the same. </summary>
         public static bool operator !=(ContainerRegistryNetworkRuleDefaultAction left, ContainerRegistryNetworkRuleDefaultAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerRegistryNetworkRuleDefaultAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryNetworkRuleDefaultAction"/>. </summary>
         public static implicit operator ContainerRegistryNetworkRuleDefaultAction(string value) => new ContainerRegistryNetworkRuleDefaultAction(value);
 
         /// <inheritdoc />

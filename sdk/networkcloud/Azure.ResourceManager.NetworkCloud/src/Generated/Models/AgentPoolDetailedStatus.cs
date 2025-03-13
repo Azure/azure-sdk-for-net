@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(AgentPoolDetailedStatus left, AgentPoolDetailedStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentPoolDetailedStatus"/> values are not the same. </summary>
         public static bool operator !=(AgentPoolDetailedStatus left, AgentPoolDetailedStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AgentPoolDetailedStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AgentPoolDetailedStatus"/>. </summary>
         public static implicit operator AgentPoolDetailedStatus(string value) => new AgentPoolDetailedStatus(value);
 
         /// <inheritdoc />

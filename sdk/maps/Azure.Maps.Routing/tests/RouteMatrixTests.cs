@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,15 +28,19 @@ namespace Azure.Maps.Routing.Tests
                     new GeoPosition(123.751, 45.9375),
                     new GeoPosition(123.791, 45.96875)
                 },
-                Destinations = new List<GeoPosition>() { new GeoPosition(123.767, 45.90625) },
+                Destinations = new List<GeoPosition>()
+                {
+                    new GeoPosition(1, 13.5471),
+                    new GeoPosition(123.767, 45.90625),
+                },
             };
             var result = await client.GetImmediateRouteMatrixAsync(routeMatrixQuery);
 
             Assert.AreEqual("0.0.1", result.Value.FormatVersion);
             Assert.AreEqual(2, result.Value.Matrix.Count);
-            Assert.AreEqual(1, result.Value.Matrix[0].Count);
+            Assert.AreEqual(2, result.Value.Matrix[0].Count);
             Assert.AreEqual(2, result.Value.Summary.SuccessfulRoutes);
-            Assert.AreEqual(2, result.Value.Summary.TotalRoutes);
+            Assert.AreEqual(4, result.Value.Summary.TotalRoutes);
         }
 
         [RecordedTest]

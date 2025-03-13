@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(OperationsInsightsStatusType left, OperationsInsightsStatusType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationsInsightsStatusType"/> values are not the same. </summary>
         public static bool operator !=(OperationsInsightsStatusType left, OperationsInsightsStatusType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OperationsInsightsStatusType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationsInsightsStatusType"/>. </summary>
         public static implicit operator OperationsInsightsStatusType(string value) => new OperationsInsightsStatusType(value);
 
         /// <inheritdoc />

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HybridConnectivity
         }
 
         /// <summary>
-        /// Gets a collection of EndpointResources in the ArmClient.
+        /// Gets a collection of HybridConnectivityEndpointResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetEndpointResources(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetHybridConnectivityEndpoints(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> An object representing collection of EndpointResources and their operations over a EndpointResource. </returns>
-        public static EndpointResourceCollection GetEndpointResources(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> An object representing collection of HybridConnectivityEndpointResources and their operations over a HybridConnectivityEndpointResource. </returns>
+        public static HybridConnectivityEndpointCollection GetHybridConnectivityEndpoints(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHybridConnectivityArmClient(client).GetEndpointResources(scope);
+            return GetMockableHybridConnectivityArmClient(client).GetHybridConnectivityEndpoints(scope);
         }
 
         /// <summary>
@@ -52,16 +52,16 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-06-preview</description>
+        /// <description>2023-03-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EndpointResource"/></description>
+        /// <description><see cref="HybridConnectivityEndpointResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetEndpointResourceAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetHybridConnectivityEndpointAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="endpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<EndpointResource>> GetEndpointResourceAsync(this ArmClient client, ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HybridConnectivityEndpointResource>> GetHybridConnectivityEndpointAsync(this ArmClient client, ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableHybridConnectivityArmClient(client).GetEndpointResourceAsync(scope, endpointName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHybridConnectivityArmClient(client).GetHybridConnectivityEndpointAsync(scope, endpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -90,16 +90,16 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-06-preview</description>
+        /// <description>2023-03-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EndpointResource"/></description>
+        /// <description><see cref="HybridConnectivityEndpointResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetEndpointResource(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetHybridConnectivityEndpoint(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -108,30 +108,49 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="endpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<EndpointResource> GetEndpointResource(this ArmClient client, ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
+        public static Response<HybridConnectivityEndpointResource> GetHybridConnectivityEndpoint(this ArmClient client, ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHybridConnectivityArmClient(client).GetEndpointResource(scope, endpointName, cancellationToken);
+            return GetMockableHybridConnectivityArmClient(client).GetHybridConnectivityEndpoint(scope, endpointName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EndpointResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridConnectivityEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridConnectivityEndpointResource.CreateResourceIdentifier" /> to create a <see cref="HybridConnectivityEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetHybridConnectivityEndpointResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EndpointResource"/> object. </returns>
-        public static EndpointResource GetEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridConnectivityEndpointResource"/> object. </returns>
+        public static HybridConnectivityEndpointResource GetHybridConnectivityEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHybridConnectivityArmClient(client).GetEndpointResource(id);
+            return GetMockableHybridConnectivityArmClient(client).GetHybridConnectivityEndpointResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HybridConnectivityServiceConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridConnectivityServiceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="HybridConnectivityServiceConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetHybridConnectivityServiceConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HybridConnectivityServiceConfigurationResource"/> object. </returns>
+        public static HybridConnectivityServiceConfigurationResource GetHybridConnectivityServiceConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHybridConnectivityArmClient(client).GetHybridConnectivityServiceConfigurationResource(id);
         }
     }
 }

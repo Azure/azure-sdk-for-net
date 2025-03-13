@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(PosixComplianceStatus left, PosixComplianceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PosixComplianceStatus"/> values are not the same. </summary>
         public static bool operator !=(PosixComplianceStatus left, PosixComplianceStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PosixComplianceStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PosixComplianceStatus"/>. </summary>
         public static implicit operator PosixComplianceStatus(string value) => new PosixComplianceStatus(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ProbeNoHealthyBackendsBehavior left, ProbeNoHealthyBackendsBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProbeNoHealthyBackendsBehavior"/> values are not the same. </summary>
         public static bool operator !=(ProbeNoHealthyBackendsBehavior left, ProbeNoHealthyBackendsBehavior right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProbeNoHealthyBackendsBehavior"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProbeNoHealthyBackendsBehavior"/>. </summary>
         public static implicit operator ProbeNoHealthyBackendsBehavior(string value) => new ProbeNoHealthyBackendsBehavior(value);
 
         /// <inheritdoc />

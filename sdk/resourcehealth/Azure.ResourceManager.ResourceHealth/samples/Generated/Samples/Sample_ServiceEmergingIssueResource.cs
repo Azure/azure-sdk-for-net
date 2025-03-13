@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ResourceHealth.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ResourceHealth.Samples
 {
     public partial class Sample_ServiceEmergingIssueResource
     {
-        // GetEmergingIssues
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetEmergingIssues()
         {
             // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/preview/2023-10-01-preview/examples/EmergingIssues_Get.json

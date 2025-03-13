@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.HybridCompute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-20-preview";
+            _apiVersion = apiVersion ?? "2024-07-31-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, HybridComputeTargetResourceSettings hybridComputeTargetResourceSettings)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, ArcSettings arcSettings)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HybridCompute
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, HybridComputeTargetResourceSettings hybridComputeTargetResourceSettings)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, ArcSettings arcSettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridCompute
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(hybridComputeTargetResourceSettings, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(arcSettings, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="baseResourceType"> The name of the base Resource Type. </param>
         /// <param name="baseResourceName"> The name of the base resource. </param>
         /// <param name="settingsResourceName"> The name of the settings resource. </param>
-        /// <param name="hybridComputeTargetResourceSettings"> Settings details. </param>
+        /// <param name="arcSettings"> Settings details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/>, <paramref name="settingsResourceName"/> or <paramref name="hybridComputeTargetResourceSettings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/>, <paramref name="settingsResourceName"/> or <paramref name="arcSettings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/> or <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HybridComputeTargetResourceSettings>> UpdateAsync(string subscriptionId, string resourceGroupName, string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, HybridComputeTargetResourceSettings hybridComputeTargetResourceSettings, CancellationToken cancellationToken = default)
+        public async Task<Response<ArcSettings>> UpdateAsync(string subscriptionId, string resourceGroupName, string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, ArcSettings arcSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -105,18 +105,18 @@ namespace Azure.ResourceManager.HybridCompute
             Argument.AssertNotNullOrEmpty(baseResourceType, nameof(baseResourceType));
             Argument.AssertNotNullOrEmpty(baseResourceName, nameof(baseResourceName));
             Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
-            Argument.AssertNotNull(hybridComputeTargetResourceSettings, nameof(hybridComputeTargetResourceSettings));
+            Argument.AssertNotNull(arcSettings, nameof(arcSettings));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName, hybridComputeTargetResourceSettings);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName, arcSettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        HybridComputeTargetResourceSettings value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HybridComputeTargetResourceSettings.DeserializeHybridComputeTargetResourceSettings(document.RootElement);
+                        ArcSettings value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ArcSettings.DeserializeArcSettings(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="baseResourceType"> The name of the base Resource Type. </param>
         /// <param name="baseResourceName"> The name of the base resource. </param>
         /// <param name="settingsResourceName"> The name of the settings resource. </param>
-        /// <param name="hybridComputeTargetResourceSettings"> Settings details. </param>
+        /// <param name="arcSettings"> Settings details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/>, <paramref name="settingsResourceName"/> or <paramref name="hybridComputeTargetResourceSettings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/>, <paramref name="settingsResourceName"/> or <paramref name="arcSettings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/> or <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HybridComputeTargetResourceSettings> Update(string subscriptionId, string resourceGroupName, string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, HybridComputeTargetResourceSettings hybridComputeTargetResourceSettings, CancellationToken cancellationToken = default)
+        public Response<ArcSettings> Update(string subscriptionId, string resourceGroupName, string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, ArcSettings arcSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -143,18 +143,18 @@ namespace Azure.ResourceManager.HybridCompute
             Argument.AssertNotNullOrEmpty(baseResourceType, nameof(baseResourceType));
             Argument.AssertNotNullOrEmpty(baseResourceName, nameof(baseResourceName));
             Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
-            Argument.AssertNotNull(hybridComputeTargetResourceSettings, nameof(hybridComputeTargetResourceSettings));
+            Argument.AssertNotNull(arcSettings, nameof(arcSettings));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName, hybridComputeTargetResourceSettings);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName, arcSettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        HybridComputeTargetResourceSettings value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HybridComputeTargetResourceSettings.DeserializeHybridComputeTargetResourceSettings(document.RootElement);
+                        ArcSettings value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ArcSettings.DeserializeArcSettings(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

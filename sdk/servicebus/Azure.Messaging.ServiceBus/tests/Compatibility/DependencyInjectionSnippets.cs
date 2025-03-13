@@ -56,7 +56,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             public async Task ConfigureServicesAsync(IServiceCollection services)
             {
                 // Query the available queues for the Service Bus namespace.
-                var adminClient = new ServiceBusAdministrationClient("<< SERVICE BUS CONNECTION STRING >>");
+                var adminClient = new ServiceBusAdministrationClient("<< FULLY QUALIFIED NAMESPACE >>", new DefaultAzureCredential());
                 var queueNames = new List<string>();
 
                 // Because the result is async, they need to be captured to a standard list to avoid async
@@ -71,7 +71,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 services.AddAzureClients(builder =>
                 {
-                    builder.AddServiceBusClient("<< SERVICE BUS CONNECTION STRING >>");
+                    builder.AddServiceBusAdministrationClientWithNamespace("<< FULLY QUALIFIED NAMESPACE >>");
 
                     foreach (var queueName in queueNames)
                     {

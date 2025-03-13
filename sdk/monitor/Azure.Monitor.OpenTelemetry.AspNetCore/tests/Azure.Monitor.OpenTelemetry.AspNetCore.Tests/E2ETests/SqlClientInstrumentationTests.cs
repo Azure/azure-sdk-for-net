@@ -4,7 +4,7 @@
 // The following tests were originally copied from OpenTelemetry and modified for Azure Monitor.
 // https://github.com/open-telemetry/opentelemetry-dotnet-contrib/blob/Instrumentation.SqlClient-1.9.0-beta.1/test/OpenTelemetry.Instrumentation.SqlClient.Tests/SqlClientTests.cs
 
-#if !NETFRAMEWORK
+#if NET
 
 using System;
 using System.Collections.Generic;

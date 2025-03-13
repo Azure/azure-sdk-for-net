@@ -14,13 +14,21 @@ namespace Azure.AI.OpenAI.Chat
     {
         void IJsonModel<DataSourceAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DataSourceAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataSourceAuthentication)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (SerializedAdditionalRawData?.ContainsKey("type") != true)
             {
                 writer.WritePropertyName("type"u8);
@@ -45,7 +53,6 @@ namespace Azure.AI.OpenAI.Chat
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataSourceAuthentication IJsonModel<DataSourceAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -79,6 +86,7 @@ namespace Azure.AI.OpenAI.Chat
                     case "key_and_key_id": return InternalAzureChatDataSourceKeyAndKeyIdAuthenticationOptions.DeserializeInternalAzureChatDataSourceKeyAndKeyIdAuthenticationOptions(element, options);
                     case "system_assigned_managed_identity": return InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions.DeserializeInternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions(element, options);
                     case "user_assigned_managed_identity": return InternalAzureChatDataSourceUserAssignedManagedIdentityAuthenticationOptions.DeserializeInternalAzureChatDataSourceUserAssignedManagedIdentityAuthenticationOptions(element, options);
+                    case "username_and_password": return InternalAzureChatDataSourceUsernameAndPasswordAuthenticationOptions.DeserializeInternalAzureChatDataSourceUsernameAndPasswordAuthenticationOptions(element, options);
                 }
             }
             return InternalUnknownAzureChatDataSourceAuthenticationOptions.DeserializeInternalUnknownAzureChatDataSourceAuthenticationOptions(element, options);

@@ -36,7 +36,7 @@ namespace Azure.Maps.Routing
         public static bool operator ==(InclineLevel left, InclineLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InclineLevel"/> values are not the same. </summary>
         public static bool operator !=(InclineLevel left, InclineLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InclineLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InclineLevel"/>. </summary>
         public static implicit operator InclineLevel(string value) => new InclineLevel(value);
 
         /// <inheritdoc />

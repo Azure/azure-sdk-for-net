@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator ==(AppServiceEnvironmentUpgradeAvailability left, AppServiceEnvironmentUpgradeAvailability right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppServiceEnvironmentUpgradeAvailability"/> values are not the same. </summary>
         public static bool operator !=(AppServiceEnvironmentUpgradeAvailability left, AppServiceEnvironmentUpgradeAvailability right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppServiceEnvironmentUpgradeAvailability"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServiceEnvironmentUpgradeAvailability"/>. </summary>
         public static implicit operator AppServiceEnvironmentUpgradeAvailability(string value) => new AppServiceEnvironmentUpgradeAvailability(value);
 
         /// <inheritdoc />

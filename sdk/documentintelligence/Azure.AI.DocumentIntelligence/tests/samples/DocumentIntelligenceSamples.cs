@@ -10,7 +10,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
     [AsyncOnly] // Ensure that each sample will only run once.
     public partial class DocumentIntelligenceSamples : RecordedTestBase<DocumentIntelligenceTestEnvironment>
     {
-        public DocumentIntelligenceSamples(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public DocumentIntelligenceSamples(bool isAsync) : base(isAsync)
         {
         }
     }

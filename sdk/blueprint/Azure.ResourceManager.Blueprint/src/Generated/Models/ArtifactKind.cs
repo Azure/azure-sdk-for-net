@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         public static bool operator ==(ArtifactKind left, ArtifactKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArtifactKind"/> values are not the same. </summary>
         public static bool operator !=(ArtifactKind left, ArtifactKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ArtifactKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ArtifactKind"/>. </summary>
         public static implicit operator ArtifactKind(string value) => new ArtifactKind(value);
 
         /// <inheritdoc />

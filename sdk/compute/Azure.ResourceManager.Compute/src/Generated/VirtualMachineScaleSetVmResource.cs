@@ -911,7 +911,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Power off (stop) a virtual machine in a VM scale set. Note that resources are still attached and you are getting charged for the resources. Instead, use deallocate to release resources and avoid charges.
+        /// Power off (stop) a virtual machine in a VM scale set. Note that resources are still attached and you are getting charged for the resources. Instead, use deallocate to release resources and avoid charges. Additionally, this operation is not allowed on a virtual machine that is being deallocated or already has been deallocated.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Power off (stop) a virtual machine in a VM scale set. Note that resources are still attached and you are getting charged for the resources. Instead, use deallocate to release resources and avoid charges.
+        /// Power off (stop) a virtual machine in a VM scale set. Note that resources are still attached and you are getting charged for the resources. Instead, use deallocate to release resources and avoid charges. Additionally, this operation is not allowed on a virtual machine that is being deallocated or already has been deallocated.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

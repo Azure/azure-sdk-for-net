@@ -148,11 +148,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _sendLink = new FaultTolerantAmqpObject<SendingAmqpLink>(
                 timeout => CreateLinkAndEnsureSenderStateAsync(timeout, CancellationToken.None),
-                link => _connectionScope.CloseLink(link));
+                link => _connectionScope.CloseLink(link, Identifier));
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => OpenManagementLinkAsync(timeout),
-                link => _connectionScope.CloseLink(link));
+                link => _connectionScope.CloseLink(link, Identifier));
             _messageConverter = messageConverter;
         }
 

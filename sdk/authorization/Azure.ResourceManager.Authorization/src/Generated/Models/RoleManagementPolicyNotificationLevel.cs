@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Authorization.Models
         public static bool operator ==(RoleManagementPolicyNotificationLevel left, RoleManagementPolicyNotificationLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleManagementPolicyNotificationLevel"/> values are not the same. </summary>
         public static bool operator !=(RoleManagementPolicyNotificationLevel left, RoleManagementPolicyNotificationLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RoleManagementPolicyNotificationLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RoleManagementPolicyNotificationLevel"/>. </summary>
         public static implicit operator RoleManagementPolicyNotificationLevel(string value) => new RoleManagementPolicyNotificationLevel(value);
 
         /// <inheritdoc />

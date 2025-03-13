@@ -33,7 +33,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public static bool operator ==(ClinicalTrialSource left, ClinicalTrialSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClinicalTrialSource"/> values are not the same. </summary>
         public static bool operator !=(ClinicalTrialSource left, ClinicalTrialSource right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClinicalTrialSource"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClinicalTrialSource"/>. </summary>
         public static implicit operator ClinicalTrialSource(string value) => new ClinicalTrialSource(value);
 
         /// <inheritdoc />

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static bool operator ==(ApplicationRollingUpgradeMode left, ApplicationRollingUpgradeMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationRollingUpgradeMode"/> values are not the same. </summary>
         public static bool operator !=(ApplicationRollingUpgradeMode left, ApplicationRollingUpgradeMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationRollingUpgradeMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationRollingUpgradeMode"/>. </summary>
         public static implicit operator ApplicationRollingUpgradeMode(string value) => new ApplicationRollingUpgradeMode(value);
 
         /// <inheritdoc />

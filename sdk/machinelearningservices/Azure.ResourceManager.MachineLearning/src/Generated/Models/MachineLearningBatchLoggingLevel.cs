@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningBatchLoggingLevel left, MachineLearningBatchLoggingLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningBatchLoggingLevel"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningBatchLoggingLevel left, MachineLearningBatchLoggingLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningBatchLoggingLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningBatchLoggingLevel"/>. </summary>
         public static implicit operator MachineLearningBatchLoggingLevel(string value) => new MachineLearningBatchLoggingLevel(value);
 
         /// <inheritdoc />

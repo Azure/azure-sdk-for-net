@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(VirtualNetworkType left, VirtualNetworkType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkType"/> values are not the same. </summary>
         public static bool operator !=(VirtualNetworkType left, VirtualNetworkType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualNetworkType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkType"/>. </summary>
         public static implicit operator VirtualNetworkType(string value) => new VirtualNetworkType(value);
 
         /// <inheritdoc />

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Identity;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
@@ -36,23 +38,33 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             #region Snippet:EventHubs_Processor_Sample07_ProcessByBatch_Usage
 
 #if SNIPPET
-            var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+            var credential = new DefaultAzureCredential();
+
+            var storageAccountEndpoint = "<< Account Uri (likely similar to https://{your-account}.blob.core.windows.net) >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
 
-            var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 #else
-            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            var blobContainerName = storageScope.ContainerName;
-            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var credential = EventHubsTestEnvironment.Instance.Credential;
+
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
             var eventHubName = eventHubScope.EventHubName;
             var consumerGroup = eventHubScope.ConsumerGroups.First();
+
+            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var blobContainerName = storageScope.ContainerName;
 #endif
 
+            var blobUriBuilder = new BlobUriBuilder(new Uri(storageAccountEndpoint))
+            {
+                BlobContainerName = blobContainerName
+            };
+
             var storageClient = new BlobContainerClient(
-                storageConnectionString,
-                blobContainerName);
+                blobUriBuilder.ToUri(),
+                credential);
 
             var checkpointStore = new BlobCheckpointStore(storageClient);
             var maximumBatchSize = 100;
@@ -61,8 +73,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 checkpointStore,
                 maximumBatchSize,
                 consumerGroup,
-                eventHubsConnectionString,
-                eventHubName);
+                fullyQualifiedNamespace,
+                eventHubName,
+                credential);
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
@@ -103,15 +116,17 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             public SimpleBatchProcessor(CheckpointStore checkpointStore,
                                         int eventBatchMaximumCount,
                                         string consumerGroup,
-                                        string connectionString,
+                                        string fullyQualifiedNamespace,
                                         string eventHubName,
+                                        TokenCredential credential,
                                         EventProcessorOptions clientOptions = default)
                 : base(
                     checkpointStore,
                     eventBatchMaximumCount,
                     consumerGroup,
-                    connectionString,
+                    fullyQualifiedNamespace,
                     eventHubName,
+                    credential,
                     clientOptions)
             {
             }

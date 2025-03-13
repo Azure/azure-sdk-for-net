@@ -44,6 +44,7 @@ namespace Azure.Identity.Tests
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
                 MsalClient = config.MockConfidentialMsalClient,
                 OidcRequestUri = "https://dev.azure.com/myorg/myproject/_apis/serviceendpoint/endpoints?api-version=2.2.2",
+                AuthorityHost = config.AuthorityHost,
             };
             if (config.Transport != null)
             {
@@ -113,10 +114,11 @@ namespace Azure.Identity.Tests
                 var mockTransport = new MockTransport(req => new MockResponse(200).WithContent(
                             $"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"mytoken\" }}"));
 
-                var options = new AzurePipelinesCredentialOptions { Transport = mockTransport };
+                var options = new AzurePipelinesCredentialOptions { Transport = mockTransport, OidcRequestUri = "https://mockCollectionUri" };
                 var cred = new AzurePipelinesCredential(tenantId, clientId, serviceConnectionId, systemAccessToken, options);
 
-                Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new[] { "scope" }), CancellationToken.None));
+                var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new[] { "scope" }), CancellationToken.None));
+                Assert.That(ex.Message, Does.Contain(AzurePipelinesCredential.Troubleshooting));
             }
         }
 
@@ -139,7 +141,10 @@ namespace Azure.Identity.Tests
                 {
                     if (req.Uri.Host == "mockcollectionuri")
                     {
-                        return new MockResponse(responseStatusCode).WithContent($"< not json, but an error >");
+                        return new MockResponse(responseStatusCode)
+                            .WithContent($"< not json, but an error >")
+                            .WithHeader("x-vss-e2eid", "myE2EId")
+                            .WithHeader("x-msedge-ref", "myRef");
                     }
                     return new MockResponse(200).WithContent(
                             $"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"mytoken\" }}");
@@ -157,6 +162,9 @@ namespace Azure.Identity.Tests
                 else
                 {
                     Assert.That(ex.Message, Does.Contain("< not json, but an error >"));
+                    Assert.That(ex.Message, Does.Contain(AzurePipelinesCredential.Troubleshooting));
+                    Assert.That(ex.Message, Does.Contain("myE2EId"));
+                    Assert.That(ex.Message, Does.Contain("myRef"));
                 }
             }
         }

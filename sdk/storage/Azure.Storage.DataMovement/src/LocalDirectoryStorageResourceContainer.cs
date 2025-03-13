@@ -7,7 +7,6 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
@@ -93,14 +92,14 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new LocalSourceCheckpointData();
+            return new LocalSourceCheckpointDetails();
         }
 
-        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
-            return new LocalDestinationCheckpointData();
+            return new LocalDestinationCheckpointDetails();
         }
 
         protected internal override Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)

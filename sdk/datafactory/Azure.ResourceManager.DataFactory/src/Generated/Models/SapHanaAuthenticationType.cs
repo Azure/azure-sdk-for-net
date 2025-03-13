@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(SapHanaAuthenticationType left, SapHanaAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapHanaAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(SapHanaAuthenticationType left, SapHanaAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapHanaAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapHanaAuthenticationType"/>. </summary>
         public static implicit operator SapHanaAuthenticationType(string value) => new SapHanaAuthenticationType(value);
 
         /// <inheritdoc />

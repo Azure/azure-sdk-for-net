@@ -54,7 +54,7 @@ namespace Azure.AI.AnomalyDetector
         public static bool operator ==(TimeGranularity left, TimeGranularity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TimeGranularity"/> values are not the same. </summary>
         public static bool operator !=(TimeGranularity left, TimeGranularity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TimeGranularity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TimeGranularity"/>. </summary>
         public static implicit operator TimeGranularity(string value) => new TimeGranularity(value);
 
         /// <inheritdoc />

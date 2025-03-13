@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(PolicyOverrideKind left, PolicyOverrideKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyOverrideKind"/> values are not the same. </summary>
         public static bool operator !=(PolicyOverrideKind left, PolicyOverrideKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PolicyOverrideKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyOverrideKind"/>. </summary>
         public static implicit operator PolicyOverrideKind(string value) => new PolicyOverrideKind(value);
 
         /// <inheritdoc />

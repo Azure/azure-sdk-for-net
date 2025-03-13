@@ -16,35 +16,31 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="DialogUpdatedInternal"/>. </summary>
-        /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
         /// <param name="dialogInputType"> Determines the type of the dialog. </param>
         /// <param name="dialogId"> Dialog ID. </param>
-        /// <param name="ivrContext"> Ivr Context. </param>
+        /// <param name="ivrContext"> IVR context. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal DialogUpdatedInternal(string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, string dialogId, object ivrContext, string callConnectionId, string serverCallId, string correlationId)
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        internal DialogUpdatedInternal(DialogInputType? dialogInputType, string dialogId, object ivrContext, string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
         {
-            OperationContext = operationContext;
-            ResultInformation = resultInformation;
             DialogInputType = dialogInputType;
             DialogId = dialogId;
             IvrContext = ivrContext;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
+            OperationContext = operationContext;
+            ResultInformation = resultInformation;
         }
 
-        /// <summary> Used by customers when calling answerCall action to correlate the request to the response event. </summary>
-        public string OperationContext { get; }
-        /// <summary> Contains the resulting SIP code/sub-code and message from NGC services. </summary>
-        public ResultInformation ResultInformation { get; }
         /// <summary> Determines the type of the dialog. </summary>
         public DialogInputType? DialogInputType { get; }
         /// <summary> Dialog ID. </summary>
         public string DialogId { get; }
-        /// <summary> Ivr Context. </summary>
+        /// <summary> IVR context. </summary>
         public object IvrContext { get; }
         /// <summary> Call connection ID. </summary>
         public string CallConnectionId { get; }
@@ -52,5 +48,9 @@ namespace Azure.Communication.CallAutomation
         public string ServerCallId { get; }
         /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
         public string CorrelationId { get; }
+        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
+        public string OperationContext { get; }
+        /// <summary> Contains the resulting SIP code, sub-code and message. </summary>
+        public ResultInformation ResultInformation { get; }
     }
 }

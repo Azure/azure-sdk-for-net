@@ -721,6 +721,34 @@ foreach (MetricsQueryResult value in metricsQueryResults.Values)
 }
 ```
 
+The `MetricsQueryResourcesOptions`-typed argument also has a `StartTime` and `EndTime` property to allow for querying a specific time range. If only the `StartTime` is set, the `EndTime` default becomes the current time. When the `EndTime` is specified, the `StartTime` is necessary as well. The following example demonstrates the use of these properties:
+```C# Snippet:QueryResourcesMetricsWithOptionsStartTimeEndTime
+string resourceId =
+    "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
+var client = new MetricsClient(
+    new Uri("https://<region>.metrics.monitor.azure.com"),
+    new DefaultAzureCredential());
+var options = new MetricsQueryResourcesOptions
+{
+    StartTime = DateTimeOffset.Now.AddHours(-4),
+    EndTime = DateTimeOffset.Now.AddHours(-1),
+    OrderBy = "sum asc",
+    Size = 10
+};
+
+Response<MetricsQueryResourcesResult> result = await client.QueryResourcesAsync(
+    resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
+    metricNames: new List<string> { "Ingress" },
+    metricNamespace: "Microsoft.Storage/storageAccounts",
+    options).ConfigureAwait(false);
+
+MetricsQueryResourcesResult metricsQueryResults = result.Value;
+foreach (MetricsQueryResult value in metricsQueryResults.Values)
+{
+    Console.WriteLine(value.Metrics.Count);
+}
+```
+
 #### Register the client with dependency injection
 
 To register a client with the dependency injection container, invoke the corresponding extension method.
@@ -765,5 +793,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fmonitor%2FAzure.Monitor.Query%2FREADME.png)

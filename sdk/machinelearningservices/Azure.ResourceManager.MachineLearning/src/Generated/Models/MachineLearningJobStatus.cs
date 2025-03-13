@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningJobStatus left, MachineLearningJobStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningJobStatus"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningJobStatus left, MachineLearningJobStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningJobStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningJobStatus"/>. </summary>
         public static implicit operator MachineLearningJobStatus(string value) => new MachineLearningJobStatus(value);
 
         /// <inheritdoc />

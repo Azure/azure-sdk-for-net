@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
     public class StandbyContainerGroupPoolCRUDTests : StandbyContainerGroupPoolTestBase
     {
         public StandbyContainerGroupPoolCRUDTests(bool isAsync)
-            : base(isAsync) //, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Playback)
         {
         }
 
@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         public async Task StandbyContainerGroupPoolCRUDTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("standbyPoolRG-");
+            string runtimeView = "latest";
             ResourceGroupResource resourceGroup = await CreateResourceGroup(subscription, resourceGroupName, location);
             var vnet = this.CreateVirtualNetwork(resourceGroup, _genericResourceCollection, location);
             ResourceIdentifier subnetId = GetSubnetId(vnet.Result);
@@ -34,6 +35,15 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             // Get
             StandbyContainerGroupPoolResource standbyContainerGroupPoolResource1 = await standbyContainerGroupPoolResource.GetAsync();
             Assert.AreEqual(standbyContainerGroupPoolResource.Id, standbyContainerGroupPoolResource1.Id);
+
+            // runtimeview
+            ResourceIdentifier standbyContainerGroupPoolRuntimeViewResourceId = StandbyContainerGroupPoolRuntimeViewResource.CreateResourceIdentifier(subscription.Data.SubscriptionId, resourceGroupName, standbyContainerGoupPoolName, runtimeView);
+            StandbyContainerGroupPoolRuntimeViewResource standbyContainerGroupPoolRuntimeViewResource = Client.GetStandbyContainerGroupPoolRuntimeViewResource(standbyContainerGroupPoolRuntimeViewResourceId);
+            // invoke the operation
+            StandbyContainerGroupPoolRuntimeViewResource result = await standbyContainerGroupPoolRuntimeViewResource.GetAsync();
+            Assert.AreEqual(runtimeView, result.Data.Name);
+            Assert.IsTrue(result.Data.Properties.InstanceCountSummary.Count > 0);
+            Assert.IsTrue(result.Data.Properties.InstanceCountSummary[0].InstanceCountsByState.Count > 0);
 
             // Delete
             await standbyContainerGroupPoolResource.DeleteAsync(WaitUntil.Completed);

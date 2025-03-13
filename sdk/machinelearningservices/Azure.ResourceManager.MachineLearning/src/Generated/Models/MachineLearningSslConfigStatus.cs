@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningSslConfigStatus left, MachineLearningSslConfigStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningSslConfigStatus"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningSslConfigStatus left, MachineLearningSslConfigStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningSslConfigStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningSslConfigStatus"/>. </summary>
         public static implicit operator MachineLearningSslConfigStatus(string value) => new MachineLearningSslConfigStatus(value);
 
         /// <inheritdoc />

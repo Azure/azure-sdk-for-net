@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(CapacityPoolEncryptionType left, CapacityPoolEncryptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CapacityPoolEncryptionType"/> values are not the same. </summary>
         public static bool operator !=(CapacityPoolEncryptionType left, CapacityPoolEncryptionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CapacityPoolEncryptionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CapacityPoolEncryptionType"/>. </summary>
         public static implicit operator CapacityPoolEncryptionType(string value) => new CapacityPoolEncryptionType(value);
 
         /// <inheritdoc />

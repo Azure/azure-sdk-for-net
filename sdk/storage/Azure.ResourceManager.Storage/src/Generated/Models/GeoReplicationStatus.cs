@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(GeoReplicationStatus left, GeoReplicationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GeoReplicationStatus"/> values are not the same. </summary>
         public static bool operator !=(GeoReplicationStatus left, GeoReplicationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GeoReplicationStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GeoReplicationStatus"/>. </summary>
         public static implicit operator GeoReplicationStatus(string value) => new GeoReplicationStatus(value);
 
         /// <inheritdoc />

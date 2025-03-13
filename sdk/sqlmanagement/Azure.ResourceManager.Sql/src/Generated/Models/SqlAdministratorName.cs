@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(SqlAdministratorName left, SqlAdministratorName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlAdministratorName"/> values are not the same. </summary>
         public static bool operator !=(SqlAdministratorName left, SqlAdministratorName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlAdministratorName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlAdministratorName"/>. </summary>
         public static implicit operator SqlAdministratorName(string value) => new SqlAdministratorName(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(HostNameMatchConditionType left, HostNameMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HostNameMatchConditionType"/> values are not the same. </summary>
         public static bool operator !=(HostNameMatchConditionType left, HostNameMatchConditionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HostNameMatchConditionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HostNameMatchConditionType"/>. </summary>
         public static implicit operator HostNameMatchConditionType(string value) => new HostNameMatchConditionType(value);
 
         /// <inheritdoc />

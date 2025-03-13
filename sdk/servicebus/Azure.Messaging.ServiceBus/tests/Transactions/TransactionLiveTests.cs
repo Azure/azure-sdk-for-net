@@ -1063,7 +1063,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
         private ServiceBusClient CreateCrossEntityTxnClient() =>
             new ServiceBusClient(
-                TestEnvironment.ServiceBusConnectionString,
+                TestEnvironment.FullyQualifiedNamespace,
+                TestEnvironment.Credential,
                 new ServiceBusClientOptions
                 {
                     EnableCrossEntityTransactions = true,

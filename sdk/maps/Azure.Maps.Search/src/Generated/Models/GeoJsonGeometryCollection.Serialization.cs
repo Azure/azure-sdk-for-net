@@ -11,7 +11,7 @@ using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonGeometryCollection
+    internal partial class GeoJsonGeometryCollection
     {
         internal static GeoJsonGeometryCollection DeserializeGeoJsonGeometryCollection(JsonElement element)
         {
@@ -61,7 +61,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new GeoJsonGeometryCollection FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeGeoJsonGeometryCollection(document.RootElement);
         }
     }

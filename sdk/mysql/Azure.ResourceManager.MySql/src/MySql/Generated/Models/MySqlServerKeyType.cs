@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator ==(MySqlServerKeyType left, MySqlServerKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlServerKeyType"/> values are not the same. </summary>
         public static bool operator !=(MySqlServerKeyType left, MySqlServerKeyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MySqlServerKeyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlServerKeyType"/>. </summary>
         public static implicit operator MySqlServerKeyType(string value) => new MySqlServerKeyType(value);
 
         /// <inheritdoc />

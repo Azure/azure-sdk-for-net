@@ -43,12 +43,12 @@ function RunOrExitOnFailure()
     }
 }
 
-function Login([string]$subscription, [string]$clusterGroup, [switch]$skipPushImages)
+function Login([string]$subscription, [string]$tenant, [string]$clusterGroup, [switch]$skipPushImages)
 {
     Write-Host "Logging in to subscription, cluster and container registry"
     az account show -s "$subscription" *> $null
     if ($LASTEXITCODE) {
-        RunOrExitOnFailure az login --allow-no-subscriptions
+        RunOrExitOnFailure az login --allow-no-subscriptions --tenant $tenant
     }
 
     # Discover cluster name, only one cluster per group is expected
@@ -103,7 +103,7 @@ function DeployStressTests(
     [Parameter(Mandatory=$False)][switch]$Template,
     [Parameter(Mandatory=$False)][switch]$RetryFailedTests,
     [Parameter(Mandatory=$False)][string]$MatrixFileName,
-    [Parameter(Mandatory=$False)][string]$MatrixSelection = "sparse",
+    [Parameter(Mandatory=$False)][string]$MatrixSelection,
     [Parameter(Mandatory=$False)][string]$MatrixDisplayNameFilter,
     [Parameter(Mandatory=$False)][array]$MatrixFilters,
     [Parameter(Mandatory=$False)][array]$MatrixReplace,
@@ -115,25 +115,28 @@ function DeployStressTests(
             Write-Warning "Overriding cluster group and subscription with defaults for 'pg' environment."
         }
         $clusterGroup = 'rg-stress-cluster-pg'
-        $subscription = 'Azure SDK Developer Playground'
+        $subscription = 'Azure SDK Test Resources - TME'
+        $tenant = '70a036f6-8e4d-4615-bad6-149c02e7720d'
     } elseif ($environment -eq 'prod') {
         if ($clusterGroup -or $subscription) {
             Write-Warning "Overriding cluster group and subscription with defaults for 'prod' environment."
         }
         $clusterGroup = 'rg-stress-cluster-prod'
-        $subscription = 'Azure SDK Test Resources'
+        $subscription = 'Azure SDK Test Resources - TME'
+        $tenant = '70a036f6-8e4d-4615-bad6-149c02e7720d'
     } elseif ($environment -eq 'storage') {
         if ($clusterGroup -or $subscription) {
             Write-Warning "Overriding cluster group and subscription with defaults for 'storage' environment."
         }
         $clusterGroup = 'rg-stress-cluster-storage'
-        $subscription = 'XClient'
-    } elseif (!$clusterGroup -or !$subscription) {
-        throw "clusterGroup and subscription parameters must be specified when deploying to an environment that is not pg or prod."
+        $subscription = 'Azure SDK Test Resources - TME'
+        $tenant = '72f988bf-86f1-41af-91ab-2d7cd011db47'
+    } elseif (!$clusterGroup -or !$subscription -or $tenant) {
+        throw "-ClusterGroup, -Subscription and -Tenant parameters must be specified when deploying to an environment that is not pg or prod."
     }
 
     if (!$skipLogin) {
-        Login -subscription $subscription -clusterGroup $clusterGroup -skipPushImages:$skipPushImages
+        Login -subscription $subscription -tenant $tenant -clusterGroup $clusterGroup -skipPushImages:$skipPushImages
     }
 
     $chartRepoName = 'stress-test-charts'
@@ -144,7 +147,7 @@ function DeployStressTests(
         }
         RunOrExitOnFailure helm repo add --force-update $chartRepoName file://$absAddonsPath
     } else {
-        RunOrExitOnFailure helm repo add --force-update $chartRepoName https://stresstestcharts.blob.core.windows.net/helm/
+        RunOrExitOnFailure helm repo add --force-update $chartRepoName https://azuresdkartifacts.z5.web.core.windows.net/stress/
     }
 
     Run helm repo update
@@ -155,8 +158,9 @@ function DeployStressTests(
                 -filters $filters `
                 -CI:$CI `
                 -namespaceOverride $Namespace `
-                -MatrixSelection $MatrixSelection `
                 -MatrixFileName $MatrixFileName `
+                -MatrixSelection $MatrixSelection `
+                -MatrixDisplayNameFilter $MatrixDisplayNameFilter `
                 -MatrixFilters $MatrixFilters `
                 -MatrixReplace $MatrixReplace `
                 -MatrixNonSparseParameters $MatrixNonSparseParameters)
@@ -413,7 +417,7 @@ function CheckDependencies()
         }
     )
 
-    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
 
     $shouldError = $false
     foreach ($dep in $deps) {

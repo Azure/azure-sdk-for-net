@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static bool operator ==(VaultPrivateEndpointState left, VaultPrivateEndpointState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VaultPrivateEndpointState"/> values are not the same. </summary>
         public static bool operator !=(VaultPrivateEndpointState left, VaultPrivateEndpointState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VaultPrivateEndpointState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VaultPrivateEndpointState"/>. </summary>
         public static implicit operator VaultPrivateEndpointState(string value) => new VaultPrivateEndpointState(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(ReportGranularityType left, ReportGranularityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReportGranularityType"/> values are not the same. </summary>
         public static bool operator !=(ReportGranularityType left, ReportGranularityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ReportGranularityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ReportGranularityType"/>. </summary>
         public static implicit operator ReportGranularityType(string value) => new ReportGranularityType(value);
 
         /// <inheritdoc />

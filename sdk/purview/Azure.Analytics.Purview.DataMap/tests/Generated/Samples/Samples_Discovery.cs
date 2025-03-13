@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -18,13 +19,95 @@ namespace Azure.Analytics.Purview.DataMap.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Discovery_Query_ShortVersion()
+        public void Example_Discovery_Query_DiscoveryQuery()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            using RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new
+            {
+                keywords = "exampledata",
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "5714",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5715",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5716",
+["entityType"] = "azure_blob_path"
+}
+            }
+                },
+                limit = 10,
+                orderby = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5720",
+["name"] = "ASC"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5722",
+["updateTime"] = "DESC"
+}
+            },
+                facets = new object[]
+            {
+new
+{
+facet = "assetType",
+count = 0,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "classification",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "contactId",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "label",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "term",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+}
+            },
+            });
             Response response = client.Query(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -33,13 +116,95 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Discovery_Query_ShortVersion_Async()
+        public async Task Example_Discovery_Query_DiscoveryQuery_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            using RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new
+            {
+                keywords = "exampledata",
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "5714",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5715",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5716",
+["entityType"] = "azure_blob_path"
+}
+            }
+                },
+                limit = 10,
+                orderby = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5720",
+["name"] = "ASC"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5722",
+["updateTime"] = "DESC"
+}
+            },
+                facets = new object[]
+            {
+new
+{
+facet = "assetType",
+count = 0,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "classification",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "contactId",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "label",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "term",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+}
+            },
+            });
             Response response = await client.QueryAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -48,251 +213,4215 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Discovery_Query_ShortVersion_Convenience()
+        public void Example_Discovery_Query_DiscoveryQuery_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            QueryConfig body = new QueryConfig();
+            QueryConfig body = new QueryConfig
+            {
+                Keywords = "exampledata",
+                Limit = 10,
+                Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
+{
+["$id"] = "5720",
+["name"] = "ASC"
+}), BinaryData.FromObjectAsJson(new Dictionary<string, object>
+{
+["$id"] = "5722",
+["updateTime"] = "DESC"
+})},
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "5714",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5715",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5716",
+["entityType"] = "azure_blob_path"
+}
+            }
+                }),
+                Facets = {new SearchFacetItem
+{
+Count = 0,
+Facet = "assetType",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "classification",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "contactId",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "label",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "term",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}},
+            };
             Response<QueryResult> response = client.Query(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Discovery_Query_ShortVersion_Convenience_Async()
+        public async Task Example_Discovery_Query_DiscoveryQuery_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            QueryConfig body = new QueryConfig();
+            QueryConfig body = new QueryConfig
+            {
+                Keywords = "exampledata",
+                Limit = 10,
+                Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
+{
+["$id"] = "5720",
+["name"] = "ASC"
+}), BinaryData.FromObjectAsJson(new Dictionary<string, object>
+{
+["$id"] = "5722",
+["updateTime"] = "DESC"
+})},
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "5714",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5715",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5716",
+["entityType"] = "azure_blob_path"
+}
+            }
+                }),
+                Facets = {new SearchFacetItem
+{
+Count = 0,
+Facet = "assetType",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "classification",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "contactId",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "label",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "term",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}},
+            };
             Response<QueryResult> response = await client.QueryAsync(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Discovery_Query_AllParameters()
+        public void Example_Discovery_Query_DiscoveryQueryAnd()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
             using RequestContent content = RequestContent.Create(new
             {
-                keywords = "<keywords>",
-                limit = 1234,
-                continuationToken = "<continuationToken>",
-                orderby = new object[]
-            {
-new object()
-            },
-                filter = new object(),
-                facets = new object[]
-            {
-new
-{
-count = 1234,
-facet = "<facet>",
-sort = new
-{
-count = "asc",
-value = "asc",
-},
-}
-            },
-                taxonomySetting = new
+                limit = 10,
+                filter = new Dictionary<string, object>
                 {
-                    assetTypes = new object[]
+                    ["$id"] = "5799",
+                    ["and"] = new object[]
             {
-"<assetTypes>"
-            },
+new Dictionary<string, object>
+{
+["$id"] = "5800",
+["entityType"] = "azure_blob_path"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5801",
+["attributeName"] = "qualifiedName",
+["operator"] = "contains",
+["attributeValue"] = ".csv"
+}
+            }
                 },
             });
             Response response = client.Query(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("@search.count").ToString());
-            Console.WriteLine(result.GetProperty("@search.count.approximate").ToString());
-            Console.WriteLine(result.GetProperty("continuationToken").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("entityType")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("entityType")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classification")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classification")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("term")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("term")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactId")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactId")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactType")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactType")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("label")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("label")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("glossaryType")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("glossaryType")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("termStatus")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("termStatus")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("termTemplate")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("termTemplate")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.score").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("id")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("qualifiedName")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("name")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("description")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("entityType")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("objectType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("entityType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endorsement").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("classification")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("label")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("glossaryName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("contactType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("glossaryType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("glossary").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("termStatus").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("termTemplate")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("longDescription").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Discovery_Query_AllParameters_Async()
+        public async Task Example_Discovery_Query_DiscoveryQueryAnd_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
             using RequestContent content = RequestContent.Create(new
             {
-                keywords = "<keywords>",
-                limit = 1234,
-                continuationToken = "<continuationToken>",
-                orderby = new object[]
-            {
-new object()
-            },
-                filter = new object(),
-                facets = new object[]
-            {
-new
-{
-count = 1234,
-facet = "<facet>",
-sort = new
-{
-count = "asc",
-value = "asc",
-},
-}
-            },
-                taxonomySetting = new
+                limit = 10,
+                filter = new Dictionary<string, object>
                 {
-                    assetTypes = new object[]
+                    ["$id"] = "5799",
+                    ["and"] = new object[]
             {
-"<assetTypes>"
-            },
+new Dictionary<string, object>
+{
+["$id"] = "5800",
+["entityType"] = "azure_blob_path"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5801",
+["attributeName"] = "qualifiedName",
+["operator"] = "contains",
+["attributeValue"] = ".csv"
+}
+            }
                 },
             });
             Response response = await client.QueryAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("@search.count").ToString());
-            Console.WriteLine(result.GetProperty("@search.count.approximate").ToString());
-            Console.WriteLine(result.GetProperty("continuationToken").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("entityType")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("entityType")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classification")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classification")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("term")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("term")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactId")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactId")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactType")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactType")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("label")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("label")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("glossaryType")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("glossaryType")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("termStatus")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("termStatus")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("termTemplate")[0].GetProperty("count").ToString());
-            Console.WriteLine(result.GetProperty("@search.facets").GetProperty("termTemplate")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.score").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("id")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("qualifiedName")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("name")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("description")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("entityType")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("objectType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("entityType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endorsement").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("classification")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("label")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("glossaryName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("contactType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("glossaryType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("glossary").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("termStatus").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("termTemplate")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("longDescription").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Discovery_Query_AllParameters_Convenience()
+        public void Example_Discovery_Query_DiscoveryQueryAnd_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
             QueryConfig body = new QueryConfig
             {
-                Keywords = "<keywords>",
-                Limit = 1234,
-                ContinuationToken = "<continuationToken>",
-                Orderby = { BinaryData.FromObjectAsJson(new object()) },
-                Filter = BinaryData.FromObjectAsJson(new object()),
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "5799",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5800",
+["entityType"] = "azure_blob_path"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5801",
+["attributeName"] = "qualifiedName",
+["operator"] = "contains",
+["attributeValue"] = ".csv"
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryAnd_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "5799",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5800",
+["entityType"] = "azure_blob_path"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5801",
+["attributeName"] = "qualifiedName",
+["operator"] = "contains",
+["attributeValue"] = ".csv"
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryAndOrNested()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "5852",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5853",
+["entityType"] = "azure_blob_path"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5854",
+["attributeName"] = "qualifiedName",
+["operator"] = "contains",
+["attributeValue"] = ".csv"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5855",
+["or"] = new object[]
+{
+new Dictionary<string, object>
+{
+["$id"] = "5856",
+["attributeName"] = "name",
+["operator"] = "eq",
+["attributeValue"] = "exampledata.csv"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5857",
+["attributeName"] = "qualifiedName",
+["operator"] = "prefix",
+["attributeValue"] = "https://"
+}
+}
+}
+            }
+                },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryAndOrNested_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "5852",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5853",
+["entityType"] = "azure_blob_path"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5854",
+["attributeName"] = "qualifiedName",
+["operator"] = "contains",
+["attributeValue"] = ".csv"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5855",
+["or"] = new object[]
+{
+new Dictionary<string, object>
+{
+["$id"] = "5856",
+["attributeName"] = "name",
+["operator"] = "eq",
+["attributeValue"] = "exampledata.csv"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5857",
+["attributeName"] = "qualifiedName",
+["operator"] = "prefix",
+["attributeValue"] = "https://"
+}
+}
+}
+            }
+                },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryAndOrNested_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "5852",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5853",
+["entityType"] = "azure_blob_path"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5854",
+["attributeName"] = "qualifiedName",
+["operator"] = "contains",
+["attributeValue"] = ".csv"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5855",
+["or"] = new object[]
+{
+new Dictionary<string, object>
+{
+["$id"] = "5856",
+["attributeName"] = "name",
+["operator"] = "eq",
+["attributeValue"] = "exampledata.csv"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5857",
+["attributeName"] = "qualifiedName",
+["operator"] = "prefix",
+["attributeValue"] = "https://"
+}
+}
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryAndOrNested_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "5852",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5853",
+["entityType"] = "azure_blob_path"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5854",
+["attributeName"] = "qualifiedName",
+["operator"] = "contains",
+["attributeValue"] = ".csv"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5855",
+["or"] = new object[]
+{
+new Dictionary<string, object>
+{
+["$id"] = "5856",
+["attributeName"] = "name",
+["operator"] = "eq",
+["attributeValue"] = "exampledata.csv"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5857",
+["attributeName"] = "qualifiedName",
+["operator"] = "prefix",
+["attributeValue"] = "https://"
+}
+}
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryAssetType()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "5910",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5911",
+["assetType"] = "SQL Server"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5912",
+["assetType"] = "Azure SQL Server"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5913",
+["assetType"] = "Azure SQL Database"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5914",
+["assetType"] = "Azure SQL Data Warehouse"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5915",
+["assetType"] = "Azure SQL Managed Instance"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5916",
+["assetType"] = "Azure Storage Account"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5917",
+["assetType"] = "Azure Blob Storage"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5918",
+["assetType"] = "Azure Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5919",
+["assetType"] = "Azure Table Storage"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5920",
+["assetType"] = "Azure Data Lake Storage Gen1"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5921",
+["assetType"] = "Azure Data Lake Storage Gen2"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5922",
+["assetType"] = "Azure Cosmos DB"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5923",
+["assetType"] = "Azure Data Factory"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5924",
+["assetType"] = "Azure Cognitive Search"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5925",
+["assetType"] = "Power BI"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5926",
+["assetType"] = "Azure Data Explorer"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5927",
+["assetType"] = "Amazon S3"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5928",
+["assetType"] = "Azure Data Share"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5929",
+["assetType"] = "Teradata"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5930",
+["assetType"] = "SAP S4HANA"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5931",
+["assetType"] = "SAP ECC"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5932",
+["assetType"] = "SQL Server Integration Services"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5933",
+["assetType"] = "hive"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5934",
+["assetType"] = "Azure Database for MySQL"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5935",
+["assetType"] = "Azure Database for MariaDB"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5936",
+["assetType"] = "Azure Database for PostgreSQL"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5937",
+["assetType"] = "Azure Synapse Analytics"
+}
+            }
+                },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryAssetType_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "5910",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5911",
+["assetType"] = "SQL Server"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5912",
+["assetType"] = "Azure SQL Server"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5913",
+["assetType"] = "Azure SQL Database"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5914",
+["assetType"] = "Azure SQL Data Warehouse"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5915",
+["assetType"] = "Azure SQL Managed Instance"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5916",
+["assetType"] = "Azure Storage Account"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5917",
+["assetType"] = "Azure Blob Storage"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5918",
+["assetType"] = "Azure Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5919",
+["assetType"] = "Azure Table Storage"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5920",
+["assetType"] = "Azure Data Lake Storage Gen1"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5921",
+["assetType"] = "Azure Data Lake Storage Gen2"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5922",
+["assetType"] = "Azure Cosmos DB"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5923",
+["assetType"] = "Azure Data Factory"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5924",
+["assetType"] = "Azure Cognitive Search"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5925",
+["assetType"] = "Power BI"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5926",
+["assetType"] = "Azure Data Explorer"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5927",
+["assetType"] = "Amazon S3"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5928",
+["assetType"] = "Azure Data Share"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5929",
+["assetType"] = "Teradata"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5930",
+["assetType"] = "SAP S4HANA"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5931",
+["assetType"] = "SAP ECC"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5932",
+["assetType"] = "SQL Server Integration Services"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5933",
+["assetType"] = "hive"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5934",
+["assetType"] = "Azure Database for MySQL"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5935",
+["assetType"] = "Azure Database for MariaDB"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5936",
+["assetType"] = "Azure Database for PostgreSQL"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5937",
+["assetType"] = "Azure Synapse Analytics"
+}
+            }
+                },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryAssetType_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "5910",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5911",
+["assetType"] = "SQL Server"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5912",
+["assetType"] = "Azure SQL Server"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5913",
+["assetType"] = "Azure SQL Database"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5914",
+["assetType"] = "Azure SQL Data Warehouse"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5915",
+["assetType"] = "Azure SQL Managed Instance"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5916",
+["assetType"] = "Azure Storage Account"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5917",
+["assetType"] = "Azure Blob Storage"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5918",
+["assetType"] = "Azure Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5919",
+["assetType"] = "Azure Table Storage"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5920",
+["assetType"] = "Azure Data Lake Storage Gen1"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5921",
+["assetType"] = "Azure Data Lake Storage Gen2"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5922",
+["assetType"] = "Azure Cosmos DB"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5923",
+["assetType"] = "Azure Data Factory"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5924",
+["assetType"] = "Azure Cognitive Search"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5925",
+["assetType"] = "Power BI"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5926",
+["assetType"] = "Azure Data Explorer"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5927",
+["assetType"] = "Amazon S3"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5928",
+["assetType"] = "Azure Data Share"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5929",
+["assetType"] = "Teradata"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5930",
+["assetType"] = "SAP S4HANA"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5931",
+["assetType"] = "SAP ECC"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5932",
+["assetType"] = "SQL Server Integration Services"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5933",
+["assetType"] = "hive"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5934",
+["assetType"] = "Azure Database for MySQL"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5935",
+["assetType"] = "Azure Database for MariaDB"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5936",
+["assetType"] = "Azure Database for PostgreSQL"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5937",
+["assetType"] = "Azure Synapse Analytics"
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryAssetType_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "5910",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5911",
+["assetType"] = "SQL Server"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5912",
+["assetType"] = "Azure SQL Server"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5913",
+["assetType"] = "Azure SQL Database"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5914",
+["assetType"] = "Azure SQL Data Warehouse"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5915",
+["assetType"] = "Azure SQL Managed Instance"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5916",
+["assetType"] = "Azure Storage Account"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5917",
+["assetType"] = "Azure Blob Storage"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5918",
+["assetType"] = "Azure Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5919",
+["assetType"] = "Azure Table Storage"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5920",
+["assetType"] = "Azure Data Lake Storage Gen1"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5921",
+["assetType"] = "Azure Data Lake Storage Gen2"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5922",
+["assetType"] = "Azure Cosmos DB"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5923",
+["assetType"] = "Azure Data Factory"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5924",
+["assetType"] = "Azure Cognitive Search"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5925",
+["assetType"] = "Power BI"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5926",
+["assetType"] = "Azure Data Explorer"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5927",
+["assetType"] = "Amazon S3"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5928",
+["assetType"] = "Azure Data Share"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5929",
+["assetType"] = "Teradata"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5930",
+["assetType"] = "SAP S4HANA"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5931",
+["assetType"] = "SAP ECC"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5932",
+["assetType"] = "SQL Server Integration Services"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5933",
+["assetType"] = "hive"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5934",
+["assetType"] = "Azure Database for MySQL"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5935",
+["assetType"] = "Azure Database for MariaDB"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5936",
+["assetType"] = "Azure Database for PostgreSQL"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5937",
+["assetType"] = "Azure Synapse Analytics"
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryAttribute()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "5979",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5980",
+["attributeName"] = "name",
+["operator"] = "eq",
+["attributeValue"] = "exampledata.csv"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5981",
+["attributeName"] = "createTime",
+["operator"] = "ge",
+["attributeValue"] = 1545580800000L
+},
+new Dictionary<string, object>
+{
+["$id"] = "5982",
+["attributeName"] = "modifiedTime",
+["operator"] = "timerange",
+["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+}
+            }
+                },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryAttribute_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "5979",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5980",
+["attributeName"] = "name",
+["operator"] = "eq",
+["attributeValue"] = "exampledata.csv"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5981",
+["attributeName"] = "createTime",
+["operator"] = "ge",
+["attributeValue"] = 1545580800000L
+},
+new Dictionary<string, object>
+{
+["$id"] = "5982",
+["attributeName"] = "modifiedTime",
+["operator"] = "timerange",
+["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+}
+            }
+                },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryAttribute_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "5979",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5980",
+["attributeName"] = "name",
+["operator"] = "eq",
+["attributeValue"] = "exampledata.csv"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5981",
+["attributeName"] = "createTime",
+["operator"] = "ge",
+["attributeValue"] = 1545580800000L
+},
+new Dictionary<string, object>
+{
+["$id"] = "5982",
+["attributeName"] = "modifiedTime",
+["operator"] = "timerange",
+["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryAttribute_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "5979",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "5980",
+["attributeName"] = "name",
+["operator"] = "eq",
+["attributeValue"] = "exampledata.csv"
+},
+new Dictionary<string, object>
+{
+["$id"] = "5981",
+["attributeName"] = "createTime",
+["operator"] = "ge",
+["attributeValue"] = 1545580800000L
+},
+new Dictionary<string, object>
+{
+["$id"] = "5982",
+["attributeName"] = "modifiedTime",
+["operator"] = "timerange",
+["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryBusinessMetadataAttribute()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6044",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6045",
+["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
+["operator"] = "eq|ne|contains|prefix",
+["attributeValue"] = "string value"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6046",
+["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
+["operator"] = "eq|ne|gt|ge|lt|le",
+["attributeValue"] = 123
+},
+new Dictionary<string, object>
+{
+["$id"] = "6047",
+["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
+["operator"] = "eq|ne",
+["attributeValue"] = true
+},
+new Dictionary<string, object>
+{
+["$id"] = "6048",
+["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
+["operator"] = "timerange",
+["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+}
+            }
+                },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryBusinessMetadataAttribute_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6044",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6045",
+["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
+["operator"] = "eq|ne|contains|prefix",
+["attributeValue"] = "string value"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6046",
+["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
+["operator"] = "eq|ne|gt|ge|lt|le",
+["attributeValue"] = 123
+},
+new Dictionary<string, object>
+{
+["$id"] = "6047",
+["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
+["operator"] = "eq|ne",
+["attributeValue"] = true
+},
+new Dictionary<string, object>
+{
+["$id"] = "6048",
+["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
+["operator"] = "timerange",
+["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+}
+            }
+                },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryBusinessMetadataAttribute_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6044",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6045",
+["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
+["operator"] = "eq|ne|contains|prefix",
+["attributeValue"] = "string value"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6046",
+["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
+["operator"] = "eq|ne|gt|ge|lt|le",
+["attributeValue"] = 123
+},
+new Dictionary<string, object>
+{
+["$id"] = "6047",
+["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
+["operator"] = "eq|ne",
+["attributeValue"] = true
+},
+new Dictionary<string, object>
+{
+["$id"] = "6048",
+["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
+["operator"] = "timerange",
+["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryBusinessMetadataAttribute_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6044",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6045",
+["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
+["operator"] = "eq|ne|contains|prefix",
+["attributeValue"] = "string value"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6046",
+["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
+["operator"] = "eq|ne|gt|ge|lt|le",
+["attributeValue"] = 123
+},
+new Dictionary<string, object>
+{
+["$id"] = "6047",
+["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
+["operator"] = "eq|ne",
+["attributeValue"] = true
+},
+new Dictionary<string, object>
+{
+["$id"] = "6048",
+["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
+["operator"] = "timerange",
+["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryClassification()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6071",
+                    ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
+                    ["includeSubClassifications"] = true
+                },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryClassification_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6071",
+                    ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
+                    ["includeSubClassifications"] = true
+                },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryClassification_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6071",
+                    ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
+                    ["includeSubClassifications"] = true
+                }),
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryClassification_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6071",
+                    ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
+                    ["includeSubClassifications"] = true
+                }),
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryCollection()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6121",
+                    ["collectionId"] = "collectionName"
+                },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryCollection_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6121",
+                    ["collectionId"] = "collectionName"
+                },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryCollection_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6121",
+                    ["collectionId"] = "collectionName"
+                }),
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryCollection_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6121",
+                    ["collectionId"] = "collectionName"
+                }),
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryFacet()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6170",
+                    ["objectType"] = "Tables"
+                },
+                limit = 10,
+                facets = new object[]
+            {
+new
+{
+facet = "assetType",
+count = 10,
+},
+new
+{
+facet = "classification",
+count = 10,
+},
+new
+{
+facet = "term",
+count = 10,
+},
+new
+{
+facet = "label",
+count = 10,
+}
+            },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryFacet_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6170",
+                    ["objectType"] = "Tables"
+                },
+                limit = 10,
+                facets = new object[]
+            {
+new
+{
+facet = "assetType",
+count = 10,
+},
+new
+{
+facet = "classification",
+count = 10,
+},
+new
+{
+facet = "term",
+count = 10,
+},
+new
+{
+facet = "label",
+count = 10,
+}
+            },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryFacet_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6170",
+                    ["objectType"] = "Tables"
+                }),
                 Facets = {new SearchFacetItem
 {
-Count = 1234,
-Facet = "<facet>",
+Count = 10,
+Facet = "assetType",
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "classification",
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "term",
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "label",
+}},
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryFacet_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6170",
+                    ["objectType"] = "Tables"
+                }),
+                Facets = {new SearchFacetItem
+{
+Count = 10,
+Facet = "assetType",
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "classification",
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "term",
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "label",
+}},
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryFileExtension()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6300",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6301",
+["fileExtension"] = "txt"
+}
+            }
+                },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryFileExtension_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6300",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6301",
+["fileExtension"] = "txt"
+}
+            }
+                },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryFileExtension_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6300",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6301",
+["fileExtension"] = "txt"
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryFileExtension_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6300",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6301",
+["fileExtension"] = "txt"
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryGlossaryTerm()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                keywords = "<term name>",
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6344",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6345",
+["objectType"] = "Glossary terms"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6346",
+["or"] = new object[]
+{
+new Dictionary<string, object>
+{
+["$id"] = "6347",
+["glossaryType"] = "AtlasGlossary"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6348",
+["glossaryType"] = "AtlasGlossaryTerm"
+}
+}
+}
+            }
+                },
+                facets = new object[]
+            {
+new
+{
+facet = "termStatus",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "termTemplate",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+}
+            },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryGlossaryTerm_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                keywords = "<term name>",
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6344",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6345",
+["objectType"] = "Glossary terms"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6346",
+["or"] = new object[]
+{
+new Dictionary<string, object>
+{
+["$id"] = "6347",
+["glossaryType"] = "AtlasGlossary"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6348",
+["glossaryType"] = "AtlasGlossaryTerm"
+}
+}
+}
+            }
+                },
+                facets = new object[]
+            {
+new
+{
+facet = "termStatus",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "termTemplate",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+}
+            },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryGlossaryTerm_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Keywords = "<term name>",
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6344",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6345",
+["objectType"] = "Glossary terms"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6346",
+["or"] = new object[]
+{
+new Dictionary<string, object>
+{
+["$id"] = "6347",
+["glossaryType"] = "AtlasGlossary"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6348",
+["glossaryType"] = "AtlasGlossaryTerm"
+}
+}
+}
+            }
+                }),
+                Facets = {new SearchFacetItem
+{
+Count = 10,
+Facet = "termStatus",
 Sort = new SearchFacetSort
 {
-Count = SearchSortOrder.Ascend,
-Value = SearchSortOrder.Ascend,
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "termTemplate",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
 },
 }},
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryGlossaryTerm_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Keywords = "<term name>",
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6344",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6345",
+["objectType"] = "Glossary terms"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6346",
+["or"] = new object[]
+{
+new Dictionary<string, object>
+{
+["$id"] = "6347",
+["glossaryType"] = "AtlasGlossary"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6348",
+["glossaryType"] = "AtlasGlossaryTerm"
+}
+}
+}
+            }
+                }),
+                Facets = {new SearchFacetItem
+{
+Count = 10,
+Facet = "termStatus",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "termTemplate",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}},
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryId()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6416",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6417",
+["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
+}
+            }
+                },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryId_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6416",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6417",
+["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
+}
+            }
+                },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryId_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6416",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6417",
+["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryId_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6416",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6417",
+["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryNot()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6445",
+                    ["not"] = new Dictionary<string, object>
+                    {
+                        ["$id"] = "6446",
+                        ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+                    }
+                },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryNot_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6445",
+                    ["not"] = new Dictionary<string, object>
+                    {
+                        ["$id"] = "6446",
+                        ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+                    }
+                },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryNot_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6445",
+                    ["not"] = new Dictionary<string, object>
+                    {
+                        ["$id"] = "6446",
+                        ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+                    }
+                }),
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryNot_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6445",
+                    ["not"] = new Dictionary<string, object>
+                    {
+                        ["$id"] = "6446",
+                        ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+                    }
+                }),
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryObjectType()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6488",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6489",
+["objectType"] = "Dashboards"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6490",
+["objectType"] = "Data pipelines"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6491",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6492",
+["objectType"] = "Folders"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6493",
+["objectType"] = "Glossary terms"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6494",
+["objectType"] = "Reports"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6495",
+["objectType"] = "Stored procedures"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6496",
+["objectType"] = "Tables"
+}
+            }
+                },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryObjectType_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6488",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6489",
+["objectType"] = "Dashboards"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6490",
+["objectType"] = "Data pipelines"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6491",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6492",
+["objectType"] = "Folders"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6493",
+["objectType"] = "Glossary terms"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6494",
+["objectType"] = "Reports"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6495",
+["objectType"] = "Stored procedures"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6496",
+["objectType"] = "Tables"
+}
+            }
+                },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryObjectType_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6488",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6489",
+["objectType"] = "Dashboards"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6490",
+["objectType"] = "Data pipelines"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6491",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6492",
+["objectType"] = "Folders"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6493",
+["objectType"] = "Glossary terms"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6494",
+["objectType"] = "Reports"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6495",
+["objectType"] = "Stored procedures"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6496",
+["objectType"] = "Tables"
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryObjectType_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6488",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6489",
+["objectType"] = "Dashboards"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6490",
+["objectType"] = "Data pipelines"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6491",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6492",
+["objectType"] = "Folders"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6493",
+["objectType"] = "Glossary terms"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6494",
+["objectType"] = "Reports"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6495",
+["objectType"] = "Stored procedures"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6496",
+["objectType"] = "Tables"
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryPaginationContinuationPage()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                keywords = "exampledata",
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6534",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6535",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6536",
+["entityType"] = "azure_blob_path"
+}
+            }
+                },
+                limit = 2,
+                continuationToken = "<token>",
+                orderby = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6541",
+["name"] = "ASC"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6543",
+["updateTime"] = "DESC"
+}
+            },
+                facets = new object[]
+            {
+new
+{
+facet = "assetType",
+count = 0,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "classification",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "contactId",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "label",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "term",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+}
+            },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryPaginationContinuationPage_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                keywords = "exampledata",
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6534",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6535",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6536",
+["entityType"] = "azure_blob_path"
+}
+            }
+                },
+                limit = 2,
+                continuationToken = "<token>",
+                orderby = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6541",
+["name"] = "ASC"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6543",
+["updateTime"] = "DESC"
+}
+            },
+                facets = new object[]
+            {
+new
+{
+facet = "assetType",
+count = 0,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "classification",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "contactId",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "label",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "term",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+}
+            },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryPaginationContinuationPage_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Keywords = "exampledata",
+                Limit = 2,
+                ContinuationToken = "<token>",
+                Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
+{
+["$id"] = "6541",
+["name"] = "ASC"
+}), BinaryData.FromObjectAsJson(new Dictionary<string, object>
+{
+["$id"] = "6543",
+["updateTime"] = "DESC"
+})},
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6534",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6535",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6536",
+["entityType"] = "azure_blob_path"
+}
+            }
+                }),
+                Facets = {new SearchFacetItem
+{
+Count = 0,
+Facet = "assetType",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "classification",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "contactId",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "label",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "term",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}},
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryPaginationContinuationPage_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Keywords = "exampledata",
+                Limit = 2,
+                ContinuationToken = "<token>",
+                Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
+{
+["$id"] = "6541",
+["name"] = "ASC"
+}), BinaryData.FromObjectAsJson(new Dictionary<string, object>
+{
+["$id"] = "6543",
+["updateTime"] = "DESC"
+})},
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6534",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6535",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6536",
+["entityType"] = "azure_blob_path"
+}
+            }
+                }),
+                Facets = {new SearchFacetItem
+{
+Count = 0,
+Facet = "assetType",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "classification",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "contactId",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "label",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "term",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}},
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryPaginationFirstPage()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                keywords = "exampledata",
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6621",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6622",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6623",
+["entityType"] = "azure_blob_path"
+}
+            }
+                },
+                limit = 2,
+                orderby = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6627",
+["name"] = "ASC"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6629",
+["updateTime"] = "DESC"
+}
+            },
+                facets = new object[]
+            {
+new
+{
+facet = "assetType",
+count = 0,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "classification",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "contactId",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "label",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "term",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+}
+            },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryPaginationFirstPage_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                keywords = "exampledata",
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6621",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6622",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6623",
+["entityType"] = "azure_blob_path"
+}
+            }
+                },
+                limit = 2,
+                orderby = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6627",
+["name"] = "ASC"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6629",
+["updateTime"] = "DESC"
+}
+            },
+                facets = new object[]
+            {
+new
+{
+facet = "assetType",
+count = 0,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "classification",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "contactId",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "label",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "term",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+}
+            },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryPaginationFirstPage_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Keywords = "exampledata",
+                Limit = 2,
+                Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
+{
+["$id"] = "6627",
+["name"] = "ASC"
+}), BinaryData.FromObjectAsJson(new Dictionary<string, object>
+{
+["$id"] = "6629",
+["updateTime"] = "DESC"
+})},
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6621",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6622",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6623",
+["entityType"] = "azure_blob_path"
+}
+            }
+                }),
+                Facets = {new SearchFacetItem
+{
+Count = 0,
+Facet = "assetType",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "classification",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "contactId",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "label",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "term",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}},
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryPaginationFirstPage_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Keywords = "exampledata",
+                Limit = 2,
+                Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
+{
+["$id"] = "6627",
+["name"] = "ASC"
+}), BinaryData.FromObjectAsJson(new Dictionary<string, object>
+{
+["$id"] = "6629",
+["updateTime"] = "DESC"
+})},
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6621",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6622",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6623",
+["entityType"] = "azure_blob_path"
+}
+            }
+                }),
+                Facets = {new SearchFacetItem
+{
+Count = 0,
+Facet = "assetType",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "classification",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "contactId",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "label",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "term",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}},
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryPaginationLastPage()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                keywords = "exampledata",
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6707",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6708",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6709",
+["entityType"] = "azure_blob_path"
+}
+            }
+                },
+                limit = 2,
+                continuationToken = "<token>",
+                orderby = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6714",
+["name"] = "ASC"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6716",
+["updateTime"] = "DESC"
+}
+            },
+                facets = new object[]
+            {
+new
+{
+facet = "assetType",
+count = 0,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "classification",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "contactId",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "label",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "term",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+}
+            },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryPaginationLastPage_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                keywords = "exampledata",
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6707",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6708",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6709",
+["entityType"] = "azure_blob_path"
+}
+            }
+                },
+                limit = 2,
+                continuationToken = "<token>",
+                orderby = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6714",
+["name"] = "ASC"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6716",
+["updateTime"] = "DESC"
+}
+            },
+                facets = new object[]
+            {
+new
+{
+facet = "assetType",
+count = 0,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "classification",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "contactId",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "label",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+},
+new
+{
+facet = "term",
+count = 10,
+sort = new
+{
+count = "desc",
+},
+}
+            },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryPaginationLastPage_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Keywords = "exampledata",
+                Limit = 2,
+                ContinuationToken = "<token>",
+                Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
+{
+["$id"] = "6714",
+["name"] = "ASC"
+}), BinaryData.FromObjectAsJson(new Dictionary<string, object>
+{
+["$id"] = "6716",
+["updateTime"] = "DESC"
+})},
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6707",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6708",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6709",
+["entityType"] = "azure_blob_path"
+}
+            }
+                }),
+                Facets = {new SearchFacetItem
+{
+Count = 0,
+Facet = "assetType",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "classification",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "contactId",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "label",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "term",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}},
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryPaginationLastPage_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Keywords = "exampledata",
+                Limit = 2,
+                ContinuationToken = "<token>",
+                Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
+{
+["$id"] = "6714",
+["name"] = "ASC"
+}), BinaryData.FromObjectAsJson(new Dictionary<string, object>
+{
+["$id"] = "6716",
+["updateTime"] = "DESC"
+})},
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6707",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6708",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6709",
+["entityType"] = "azure_blob_path"
+}
+            }
+                }),
+                Facets = {new SearchFacetItem
+{
+Count = 0,
+Facet = "assetType",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "classification",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "contactId",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "label",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}, new SearchFacetItem
+{
+Count = 10,
+Facet = "term",
+Sort = new SearchFacetSort
+{
+Count = SearchSortOrder.Descend,
+},
+}},
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQuerySystemTime()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6793",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6794",
+["createTime"] = new Dictionary<string, object>
+{
+["$id"] = "6795",
+["operator"] = "lt",
+["timeThreshold"] = 1545580800000L
+}
+},
+new Dictionary<string, object>
+{
+["$id"] = "6796",
+["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+}
+            }
+                },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQuerySystemTime_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6793",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6794",
+["createTime"] = new Dictionary<string, object>
+{
+["$id"] = "6795",
+["operator"] = "lt",
+["timeThreshold"] = 1545580800000L
+}
+},
+new Dictionary<string, object>
+{
+["$id"] = "6796",
+["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+}
+            }
+                },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQuerySystemTime_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6793",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6794",
+["createTime"] = new Dictionary<string, object>
+{
+["$id"] = "6795",
+["operator"] = "lt",
+["timeThreshold"] = 1545580800000L
+}
+},
+new Dictionary<string, object>
+{
+["$id"] = "6796",
+["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQuerySystemTime_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6793",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6794",
+["createTime"] = new Dictionary<string, object>
+{
+["$id"] = "6795",
+["operator"] = "lt",
+["timeThreshold"] = 1545580800000L
+}
+},
+new Dictionary<string, object>
+{
+["$id"] = "6796",
+["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryTaxonomy()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                keywords = "exampledata",
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6829",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6830",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6831",
+["not"] = new Dictionary<string, object>
+{
+["$id"] = "6832",
+["or"] = new object[]
+{
+new Dictionary<string, object>
+{
+["$id"] = "6833",
+["attributeName"] = "size",
+["operator"] = "eq",
+["attributeValue"] = 0
+},
+new Dictionary<string, object>
+{
+["$id"] = "6834",
+["attributeName"] = "fileSize",
+["operator"] = "eq",
+["attributeValue"] = 0
+}
+}
+}
+},
+new Dictionary<string, object>
+{
+["$id"] = "6835",
+["not"] = new Dictionary<string, object>
+{
+["$id"] = "6836",
+["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+}
+}
+            }
+                },
+                limit = 10,
+                taxonomySetting = new
+                {
+                    assetTypes = new object[]
+            {
+"Azure Blob Storage"
+            },
+                    facet = new
+                    {
+                        count = 10,
+                        sort = new
+                        {
+                            count = "desc",
+                        },
+                    },
+                },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryTaxonomy_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                keywords = "exampledata",
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6829",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6830",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6831",
+["not"] = new Dictionary<string, object>
+{
+["$id"] = "6832",
+["or"] = new object[]
+{
+new Dictionary<string, object>
+{
+["$id"] = "6833",
+["attributeName"] = "size",
+["operator"] = "eq",
+["attributeValue"] = 0
+},
+new Dictionary<string, object>
+{
+["$id"] = "6834",
+["attributeName"] = "fileSize",
+["operator"] = "eq",
+["attributeValue"] = 0
+}
+}
+}
+},
+new Dictionary<string, object>
+{
+["$id"] = "6835",
+["not"] = new Dictionary<string, object>
+{
+["$id"] = "6836",
+["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+}
+}
+            }
+                },
+                limit = 10,
+                taxonomySetting = new
+                {
+                    assetTypes = new object[]
+            {
+"Azure Blob Storage"
+            },
+                    facet = new
+                    {
+                        count = 10,
+                        sort = new
+                        {
+                            count = "desc",
+                        },
+                    },
+                },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryTaxonomy_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Keywords = "exampledata",
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6829",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6830",
+["objectType"] = "Files"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6831",
+["not"] = new Dictionary<string, object>
+{
+["$id"] = "6832",
+["or"] = new object[]
+{
+new Dictionary<string, object>
+{
+["$id"] = "6833",
+["attributeName"] = "size",
+["operator"] = "eq",
+["attributeValue"] = 0
+},
+new Dictionary<string, object>
+{
+["$id"] = "6834",
+["attributeName"] = "fileSize",
+["operator"] = "eq",
+["attributeValue"] = 0
+}
+}
+}
+},
+new Dictionary<string, object>
+{
+["$id"] = "6835",
+["not"] = new Dictionary<string, object>
+{
+["$id"] = "6836",
+["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+}
+}
+            }
+                }),
                 TaxonomySetting = new SearchTaxonomySetting
                 {
-                    AssetTypes = { "<assetTypes>" },
-                    Facet = default,
+                    AssetTypes = { "Azure Blob Storage" },
+                    Facet = new SearchFacetItem
+                    {
+                        Count = 10,
+                        Sort = new SearchFacetSort
+                        {
+                            Count = SearchSortOrder.Descend,
+                        },
+                    },
                 },
             };
             Response<QueryResult> response = client.Query(body);
@@ -300,33 +4429,73 @@ Value = SearchSortOrder.Ascend,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Discovery_Query_AllParameters_Convenience_Async()
+        public async Task Example_Discovery_Query_DiscoveryQueryTaxonomy_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
             QueryConfig body = new QueryConfig
             {
-                Keywords = "<keywords>",
-                Limit = 1234,
-                ContinuationToken = "<continuationToken>",
-                Orderby = { BinaryData.FromObjectAsJson(new object()) },
-                Filter = BinaryData.FromObjectAsJson(new object()),
-                Facets = {new SearchFacetItem
+                Keywords = "exampledata",
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6829",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
 {
-Count = 1234,
-Facet = "<facet>",
-Sort = new SearchFacetSort
-{
-Count = SearchSortOrder.Ascend,
-Value = SearchSortOrder.Ascend,
+["$id"] = "6830",
+["objectType"] = "Files"
 },
-}},
+new Dictionary<string, object>
+{
+["$id"] = "6831",
+["not"] = new Dictionary<string, object>
+{
+["$id"] = "6832",
+["or"] = new object[]
+{
+new Dictionary<string, object>
+{
+["$id"] = "6833",
+["attributeName"] = "size",
+["operator"] = "eq",
+["attributeValue"] = 0
+},
+new Dictionary<string, object>
+{
+["$id"] = "6834",
+["attributeName"] = "fileSize",
+["operator"] = "eq",
+["attributeValue"] = 0
+}
+}
+}
+},
+new Dictionary<string, object>
+{
+["$id"] = "6835",
+["not"] = new Dictionary<string, object>
+{
+["$id"] = "6836",
+["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+}
+}
+            }
+                }),
                 TaxonomySetting = new SearchTaxonomySetting
                 {
-                    AssetTypes = { "<assetTypes>" },
-                    Facet = default,
+                    AssetTypes = { "Azure Blob Storage" },
+                    Facet = new SearchFacetItem
+                    {
+                        Count = 10,
+                        Sort = new SearchFacetSort
+                        {
+                            Count = SearchSortOrder.Descend,
+                        },
+                    },
                 },
             };
             Response<QueryResult> response = await client.QueryAsync(body);
@@ -334,13 +4503,310 @@ Value = SearchSortOrder.Ascend,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Discovery_Suggest_ShortVersion()
+        public void Example_Discovery_Query_DiscoveryQueryTermAssignment()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            using RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new
+            {
+                keywords = "<asset name>",
+                limit = 3,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6890",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6891",
+["term"] = "ExampleTerm"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6892",
+["term"] = "ExampleTerm",
+["glossary"] = "GlossaryName"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6893",
+["termGuid"] = "<term guid>"
+}
+            }
+                },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryTermAssignment_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                keywords = "<asset name>",
+                limit = 3,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6890",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6891",
+["term"] = "ExampleTerm"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6892",
+["term"] = "ExampleTerm",
+["glossary"] = "GlossaryName"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6893",
+["termGuid"] = "<term guid>"
+}
+            }
+                },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryTermAssignment_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Keywords = "<asset name>",
+                Limit = 3,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6890",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6891",
+["term"] = "ExampleTerm"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6892",
+["term"] = "ExampleTerm",
+["glossary"] = "GlossaryName"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6893",
+["termGuid"] = "<term guid>"
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryTermAssignment_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Keywords = "<asset name>",
+                Limit = 3,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6890",
+                    ["or"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6891",
+["term"] = "ExampleTerm"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6892",
+["term"] = "ExampleTerm",
+["glossary"] = "GlossaryName"
+},
+new Dictionary<string, object>
+{
+["$id"] = "6893",
+["termGuid"] = "<term guid>"
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryType()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6926",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6927",
+["entityType"] = "azure_blob_path",
+["includeSubTypes"] = false
+}
+            }
+                },
+            });
+            Response response = client.Query(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryType_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                limit = 10,
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6926",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6927",
+["entityType"] = "azure_blob_path",
+["includeSubTypes"] = false
+}
+            }
+                },
+            });
+            Response response = await client.QueryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Query_DiscoveryQueryType_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6926",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6927",
+["entityType"] = "azure_blob_path",
+["includeSubTypes"] = false
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = client.Query(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Discovery_Query_DiscoveryQueryType_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            QueryConfig body = new QueryConfig
+            {
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6926",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6927",
+["entityType"] = "azure_blob_path",
+["includeSubTypes"] = false
+}
+            }
+                }),
+            };
+            Response<QueryResult> response = await client.QueryAsync(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Discovery_Suggest_DiscoverySuggest()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                keywords = "exampledata",
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6983",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6984",
+["entityType"] = "azure_blob_path",
+["includeSubTypes"] = false
+}
+            }
+                },
+                limit = 10,
+            });
             Response response = client.Suggest(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -349,13 +4815,30 @@ Value = SearchSortOrder.Ascend,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Discovery_Suggest_ShortVersion_Async()
+        public async Task Example_Discovery_Suggest_DiscoverySuggest_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            using RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new
+            {
+                keywords = "exampledata",
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "6983",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6984",
+["entityType"] = "azure_blob_path",
+["includeSubTypes"] = false
+}
+            }
+                },
+                limit = 10,
+            });
             Response response = await client.SuggestAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -364,161 +4847,88 @@ Value = SearchSortOrder.Ascend,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Discovery_Suggest_ShortVersion_Convenience()
+        public void Example_Discovery_Suggest_DiscoverySuggest_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
-
-            SuggestConfig body = new SuggestConfig();
-            Response<SuggestResult> response = client.Suggest(body);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Discovery_Suggest_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
-
-            SuggestConfig body = new SuggestConfig();
-            Response<SuggestResult> response = await client.SuggestAsync(body);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Discovery_Suggest_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                keywords = "<keywords>",
-                limit = 1234,
-                filter = new object(),
-            });
-            Response response = client.Suggest(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.score").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.text").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("objectType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("entityType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endorsement").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("classification")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("label")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("glossaryName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("contactType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("glossaryType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("glossary").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("termStatus").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("termTemplate")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("longDescription").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Discovery_Suggest_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                keywords = "<keywords>",
-                limit = 1234,
-                filter = new object(),
-            });
-            Response response = await client.SuggestAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.score").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.text").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("objectType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("entityType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endorsement").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("classification")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("label")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("glossaryName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("contactType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("glossaryType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("glossary").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("termStatus").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("termTemplate")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("longDescription").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Discovery_Suggest_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
             SuggestConfig body = new SuggestConfig
             {
-                Keywords = "<keywords>",
-                Limit = 1234,
-                Filter = BinaryData.FromObjectAsJson(new object()),
+                Keywords = "exampledata",
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6983",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6984",
+["entityType"] = "azure_blob_path",
+["includeSubTypes"] = false
+}
+            }
+                }),
             };
             Response<SuggestResult> response = client.Suggest(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Discovery_Suggest_AllParameters_Convenience_Async()
+        public async Task Example_Discovery_Suggest_DiscoverySuggest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
             SuggestConfig body = new SuggestConfig
             {
-                Keywords = "<keywords>",
-                Limit = 1234,
-                Filter = BinaryData.FromObjectAsJson(new object()),
+                Keywords = "exampledata",
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "6983",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "6984",
+["entityType"] = "azure_blob_path",
+["includeSubTypes"] = false
+}
+            }
+                }),
             };
             Response<SuggestResult> response = await client.SuggestAsync(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Discovery_AutoComplete_ShortVersion()
+        public void Example_Discovery_AutoComplete_DiscoveryAutoComplete()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            using RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new
+            {
+                keywords = "exa",
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "7038",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "7039",
+["entityType"] = "azure_blob_path",
+["includeSubTypes"] = false
+}
+            }
+                },
+                limit = 10,
+            });
             Response response = client.AutoComplete(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -527,13 +4937,30 @@ Value = SearchSortOrder.Ascend,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Discovery_AutoComplete_ShortVersion_Async()
+        public async Task Example_Discovery_AutoComplete_DiscoveryAutoComplete_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            using RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new
+            {
+                keywords = "exa",
+                filter = new Dictionary<string, object>
+                {
+                    ["$id"] = "7038",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "7039",
+["entityType"] = "azure_blob_path",
+["includeSubTypes"] = false
+}
+            }
+                },
+                limit = 10,
+            });
             Response response = await client.AutoCompleteAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -542,100 +4969,58 @@ Value = SearchSortOrder.Ascend,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Discovery_AutoComplete_ShortVersion_Convenience()
+        public void Example_Discovery_AutoComplete_DiscoveryAutoComplete_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
-
-            AutoCompleteConfig body = new AutoCompleteConfig();
-            Response<AutoCompleteResult> response = client.AutoComplete(body);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Discovery_AutoComplete_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
-
-            AutoCompleteConfig body = new AutoCompleteConfig();
-            Response<AutoCompleteResult> response = await client.AutoCompleteAsync(body);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Discovery_AutoComplete_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                keywords = "<keywords>",
-                limit = 1234,
-                filter = new object(),
-            });
-            Response response = client.AutoComplete(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("queryPlusText").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Discovery_AutoComplete_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                keywords = "<keywords>",
-                limit = 1234,
-                filter = new object(),
-            });
-            Response response = await client.AutoCompleteAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("queryPlusText").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Discovery_AutoComplete_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
             AutoCompleteConfig body = new AutoCompleteConfig
             {
-                Keywords = "<keywords>",
-                Limit = 1234,
-                Filter = BinaryData.FromObjectAsJson(new object()),
+                Keywords = "exa",
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "7038",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "7039",
+["entityType"] = "azure_blob_path",
+["includeSubTypes"] = false
+}
+            }
+                }),
             };
             Response<AutoCompleteResult> response = client.AutoComplete(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Discovery_AutoComplete_AllParameters_Convenience_Async()
+        public async Task Example_Discovery_AutoComplete_DiscoveryAutoComplete_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
             AutoCompleteConfig body = new AutoCompleteConfig
             {
-                Keywords = "<keywords>",
-                Limit = 1234,
-                Filter = BinaryData.FromObjectAsJson(new object()),
+                Keywords = "exa",
+                Limit = 10,
+                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["$id"] = "7038",
+                    ["and"] = new object[]
+            {
+new Dictionary<string, object>
+{
+["$id"] = "7039",
+["entityType"] = "azure_blob_path",
+["includeSubTypes"] = false
+}
+            }
+                }),
             };
             Response<AutoCompleteResult> response = await client.AutoCompleteAsync(body);
         }

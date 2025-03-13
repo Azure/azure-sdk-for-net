@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(ScriptCleanupOptions left, ScriptCleanupOptions right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptCleanupOptions"/> values are not the same. </summary>
         public static bool operator !=(ScriptCleanupOptions left, ScriptCleanupOptions right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScriptCleanupOptions"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScriptCleanupOptions"/>. </summary>
         public static implicit operator ScriptCleanupOptions(string value) => new ScriptCleanupOptions(value);
 
         /// <inheritdoc />

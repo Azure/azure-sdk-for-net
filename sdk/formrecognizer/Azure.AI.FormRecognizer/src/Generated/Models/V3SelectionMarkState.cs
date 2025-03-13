@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static bool operator ==(V3SelectionMarkState left, V3SelectionMarkState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="V3SelectionMarkState"/> values are not the same. </summary>
         public static bool operator !=(V3SelectionMarkState left, V3SelectionMarkState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="V3SelectionMarkState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="V3SelectionMarkState"/>. </summary>
         public static implicit operator V3SelectionMarkState(string value) => new V3SelectionMarkState(value);
 
         /// <inheritdoc />

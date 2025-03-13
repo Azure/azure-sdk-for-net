@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(WebApplicationRuleMatchOperator left, WebApplicationRuleMatchOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationRuleMatchOperator"/> values are not the same. </summary>
         public static bool operator !=(WebApplicationRuleMatchOperator left, WebApplicationRuleMatchOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WebApplicationRuleMatchOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WebApplicationRuleMatchOperator"/>. </summary>
         public static implicit operator WebApplicationRuleMatchOperator(string value) => new WebApplicationRuleMatchOperator(value);
 
         /// <inheritdoc />

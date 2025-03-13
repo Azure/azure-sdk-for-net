@@ -19,13 +19,13 @@ namespace Azure.Developer.DevCenter.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Project_GetProject_ShortVersion()
+        public void Example_Project_GetProject_GetsAProject()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-            Response response = client.GetProject("<projectName>", null);
+            Response response = client.GetProject("myProject", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -33,13 +33,13 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Project_GetProject_ShortVersion_Async()
+        public async Task Example_Project_GetProject_GetsAProject_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-            Response response = await client.GetProjectAsync("<projectName>", null);
+            Response response = await client.GetProjectAsync("myProject", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -47,85 +47,31 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Project_GetProject_ShortVersion_Convenience()
+        public void Example_Project_GetProject_GetsAProject_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-            Response<DevCenterProject> response = client.GetProject("<projectName>");
+            Response<DevCenterProject> response = client.GetProject("myProject");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Project_GetProject_ShortVersion_Convenience_Async()
+        public async Task Example_Project_GetProject_GetsAProject_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-            Response<DevCenterProject> response = await client.GetProjectAsync("<projectName>");
+            Response<DevCenterProject> response = await client.GetProjectAsync("myProject");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Project_GetProject_AllParameters()
+        public void Example_Project_GetProjects_ListsAllProjects()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevCenterClient client = new DevCenterClient(endpoint, credential);
-
-            Response response = client.GetProject("<projectName>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Project_GetProject_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevCenterClient client = new DevCenterClient(endpoint, credential);
-
-            Response response = await client.GetProjectAsync("<projectName>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Project_GetProject_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevCenterClient client = new DevCenterClient(endpoint, credential);
-
-            Response<DevCenterProject> response = client.GetProject("<projectName>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Project_GetProject_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevCenterClient client = new DevCenterClient(endpoint, credential);
-
-            Response<DevCenterProject> response = await client.GetProjectAsync("<projectName>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Project_GetProjects_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DevCenterClient client = new DevCenterClient(endpoint, credential);
 
@@ -138,9 +84,9 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Project_GetProjects_ShortVersion_Async()
+        public async Task Example_Project_GetProjects_ListsAllProjects_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DevCenterClient client = new DevCenterClient(endpoint, credential);
 
@@ -153,9 +99,9 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Project_GetProjects_ShortVersion_Convenience()
+        public void Example_Project_GetProjects_ListsAllProjects_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DevCenterClient client = new DevCenterClient(endpoint, credential);
 
@@ -166,69 +112,9 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Project_GetProjects_ShortVersion_Convenience_Async()
+        public async Task Example_Project_GetProjects_ListsAllProjects_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevCenterClient client = new DevCenterClient(endpoint, credential);
-
-            await foreach (DevCenterProject item in client.GetProjectsAsync())
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Project_GetProjects_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevCenterClient client = new DevCenterClient(endpoint, credential);
-
-            foreach (BinaryData item in client.GetProjects(null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("description").ToString());
-                Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Project_GetProjects_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevCenterClient client = new DevCenterClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetProjectsAsync(null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("description").ToString());
-                Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Project_GetProjects_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevCenterClient client = new DevCenterClient(endpoint, credential);
-
-            foreach (DevCenterProject item in client.GetProjects())
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Project_GetProjects_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DevCenterClient client = new DevCenterClient(endpoint, credential);
 

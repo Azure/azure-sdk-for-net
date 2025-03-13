@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(SpecialTaxationType left, SpecialTaxationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SpecialTaxationType"/> values are not the same. </summary>
         public static bool operator !=(SpecialTaxationType left, SpecialTaxationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SpecialTaxationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SpecialTaxationType"/>. </summary>
         public static implicit operator SpecialTaxationType(string value) => new SpecialTaxationType(value);
 
         /// <inheritdoc />

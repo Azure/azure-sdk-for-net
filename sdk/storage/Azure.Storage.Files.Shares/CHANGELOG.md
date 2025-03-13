@@ -1,15 +1,72 @@
 # Release History
 
-## 12.20.0-beta.2 (Unreleased)
+## 12.23.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed \[BUG\] Method overload ShareFileClient.OpenReadAsync()/OpenRead() to correctly handle the allowBlobModifications flag #45516
 
 ### Other Changes
+
+## 12.22.0 (2025-03-11)
+
+### Features Added
+- Includes all features from 12.22.0-beta.1
+- Added the following Client Builders: `AddShareServiceClient(Uri, Azure.SasCredential)`, `AddShareServiceClient(Uri, TokenCredential)`
+
+### Bugs Fixed
+- Fixed bug where a `ShareServiceClient`, `ShareClient`, `ShareDirectoryClient`, `ShareFileClient` created with a connection string with an account name specified (e.g. "AccountName=..;"), the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
+- Fixed bug where a `ShareServiceClient`, `ShareClient`, `ShareDirectoryClient`, `ShareFileClient` created with a `StorageSharedKeyCredential`, the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
+
+## 12.22.0-beta.1 (2025-02-11)
+
+### Features Added
+- Added support for service version 2025-05-05.
+- Added support for NFS over REST.
+
+### Breaking Changes
+- The following APIs no longer send the x-ms-file-permission-key, x-ms-file-attributes, x-ms-file-creation-time, and x-ms-file-last-write-time request headers by default.  These headers have been optional in the REST API since x-ms-version 2021-06-08:
+    - ShareFileClient.Create() and .CreateAsync()
+    - ShareFileClient.SetHttpHeaders() and .SetHttpHeadersAsync()
+    - ShareDirectoryClient.Create() and .CreateAsync()
+    - ShareDirectoryClient.SetHttpHeaders() and .SetHttpHeadersAsync()
+
+### Bugs Fixed
+- Fixed \[BUG\] Unable to create directory with only whiteSpaceChars #42891
+
+## 12.21.0 (2024-11-12)
+
+### Features Added
+- Includes all features from 12.21.0-beta.1 and 12.21.0-beta.
+
+## 12.21.0-beta.2 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.20.1 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.21.0-beta.1 (2024-10-08)
+
+### Features Added
+- Added support for service version 2025-01-05.
+- Added support for the provisioned V2 billing model.
+- Added support for specifying the binary file permission format for ShareFileClient.StartCopy() and .StartCopyAsync().
+- Added ShareAccessTier.Premium enum value.
+
+## 12.20.0 (2024-09-18)
+
+### Features Added
+- Includes all features from 12.20.0-beta.1.
+
+### Bugs Fixed
+- Fixed \[BUG\] Method overload ShareFileClient.OpenReadAsync()/OpenRead() to correctly handle the allowBlobModifications flag #45516
+- Fixed \[BUG\] Fixed Equality failures due to implicit cast on ShareErrorCode #44213
 
 ## 12.20.0-beta.1 (2024-08-06)
 

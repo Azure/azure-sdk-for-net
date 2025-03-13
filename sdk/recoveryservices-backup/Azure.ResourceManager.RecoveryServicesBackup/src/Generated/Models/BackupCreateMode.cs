@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(BackupCreateMode left, BackupCreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupCreateMode"/> values are not the same. </summary>
         public static bool operator !=(BackupCreateMode left, BackupCreateMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackupCreateMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupCreateMode"/>. </summary>
         public static implicit operator BackupCreateMode(string value) => new BackupCreateMode(value);
 
         /// <inheritdoc />

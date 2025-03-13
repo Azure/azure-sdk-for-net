@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator ==(ClientCredentialMethod left, ClientCredentialMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClientCredentialMethod"/> values are not the same. </summary>
         public static bool operator !=(ClientCredentialMethod left, ClientCredentialMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClientCredentialMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClientCredentialMethod"/>. </summary>
         public static implicit operator ClientCredentialMethod(string value) => new ClientCredentialMethod(value);
 
         /// <inheritdoc />

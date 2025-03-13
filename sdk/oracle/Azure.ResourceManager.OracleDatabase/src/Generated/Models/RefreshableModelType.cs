@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(RefreshableModelType left, RefreshableModelType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RefreshableModelType"/> values are not the same. </summary>
         public static bool operator !=(RefreshableModelType left, RefreshableModelType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RefreshableModelType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RefreshableModelType"/>. </summary>
         public static implicit operator RefreshableModelType(string value) => new RefreshableModelType(value);
 
         /// <inheritdoc />

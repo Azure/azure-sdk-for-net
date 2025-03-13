@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Inference
 {
     /// <summary> Controls what happens if extra parameters, undefined by the REST API, are passed in the JSON request payload. </summary>
-    public readonly partial struct ExtraParameters : IEquatable<ExtraParameters>
+    internal readonly partial struct ExtraParameters : IEquatable<ExtraParameters>
     {
         private readonly string _value;
 
@@ -36,7 +36,7 @@ namespace Azure.AI.Inference
         public static bool operator ==(ExtraParameters left, ExtraParameters right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExtraParameters"/> values are not the same. </summary>
         public static bool operator !=(ExtraParameters left, ExtraParameters right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExtraParameters"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExtraParameters"/>. </summary>
         public static implicit operator ExtraParameters(string value) => new ExtraParameters(value);
 
         /// <inheritdoc />

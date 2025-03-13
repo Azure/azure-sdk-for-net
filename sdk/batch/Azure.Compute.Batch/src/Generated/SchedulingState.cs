@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(SchedulingState left, SchedulingState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SchedulingState"/> values are not the same. </summary>
         public static bool operator !=(SchedulingState left, SchedulingState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SchedulingState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SchedulingState"/>. </summary>
         public static implicit operator SchedulingState(string value) => new SchedulingState(value);
 
         /// <inheritdoc />

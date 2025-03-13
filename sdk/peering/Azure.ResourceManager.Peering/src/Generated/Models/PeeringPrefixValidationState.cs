@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static bool operator ==(PeeringPrefixValidationState left, PeeringPrefixValidationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringPrefixValidationState"/> values are not the same. </summary>
         public static bool operator !=(PeeringPrefixValidationState left, PeeringPrefixValidationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PeeringPrefixValidationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PeeringPrefixValidationState"/>. </summary>
         public static implicit operator PeeringPrefixValidationState(string value) => new PeeringPrefixValidationState(value);
 
         /// <inheritdoc />

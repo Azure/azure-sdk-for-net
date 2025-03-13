@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.4.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -8,10 +8,27 @@
 
 ### Bugs Fixed
 
-* RPC attributes are now correctly exported to Application Insights as custom properties.
-  ([#45316](https://github.com/Azure/azure-sdk-for-net/pull/45316))
+* Fixed an issue where array attributes on metrics weren't exported correctly.
+  ([#47300](https://github.com/Azure/azure-sdk-for-net/pull/47300))
+
+* Always set Dependency.Target to "server.address" and "server.port" if present.
+  ([#48317](https://github.com/Azure/azure-sdk-for-net/pull/48317))
 
 ### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#48574](https://github.com/Azure/azure-sdk-for-net/pull/48574))
+  - OpenTelemetry 1.11.2
+  - OpenTelemetry.PersistentStorage.FileSystem 1.0.1
+
+## 1.4.0-beta.2 (2024-10-11)
+
+### Bugs Fixed
+
+* RPC attributes are now correctly exported to Application Insights as custom properties.
+  ([#45316](https://github.com/Azure/azure-sdk-for-net/pull/45316))
+* Fixed an issue where unmapped attributes were dropped from telemetry.
+  ([#45909](https://github.com/Azure/azure-sdk-for-net/pull/45909))
 
 ## 1.4.0-beta.1 (2024-07-12)
 

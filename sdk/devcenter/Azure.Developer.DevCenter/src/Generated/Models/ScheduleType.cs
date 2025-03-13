@@ -30,7 +30,7 @@ namespace Azure.Developer.DevCenter.Models
         public static bool operator ==(ScheduleType left, ScheduleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduleType"/> values are not the same. </summary>
         public static bool operator !=(ScheduleType left, ScheduleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScheduleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduleType"/>. </summary>
         public static implicit operator ScheduleType(string value) => new ScheduleType(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlMigrationOverwriteDbsInTarget left, PostgreSqlMigrationOverwriteDbsInTarget right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationOverwriteDbsInTarget"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlMigrationOverwriteDbsInTarget left, PostgreSqlMigrationOverwriteDbsInTarget right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlMigrationOverwriteDbsInTarget"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlMigrationOverwriteDbsInTarget"/>. </summary>
         public static implicit operator PostgreSqlMigrationOverwriteDbsInTarget(string value) => new PostgreSqlMigrationOverwriteDbsInTarget(value);
 
         /// <inheritdoc />

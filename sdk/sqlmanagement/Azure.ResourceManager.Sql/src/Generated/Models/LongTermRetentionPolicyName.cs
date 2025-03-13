@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(LongTermRetentionPolicyName left, LongTermRetentionPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LongTermRetentionPolicyName"/> values are not the same. </summary>
         public static bool operator !=(LongTermRetentionPolicyName left, LongTermRetentionPolicyName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LongTermRetentionPolicyName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LongTermRetentionPolicyName"/>. </summary>
         public static implicit operator LongTermRetentionPolicyName(string value) => new LongTermRetentionPolicyName(value);
 
         /// <inheritdoc />

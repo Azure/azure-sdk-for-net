@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ApplicationGatewayFirewallUserSessionVariable left, ApplicationGatewayFirewallUserSessionVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayFirewallUserSessionVariable"/> values are not the same. </summary>
         public static bool operator !=(ApplicationGatewayFirewallUserSessionVariable left, ApplicationGatewayFirewallUserSessionVariable right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationGatewayFirewallUserSessionVariable"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayFirewallUserSessionVariable"/>. </summary>
         public static implicit operator ApplicationGatewayFirewallUserSessionVariable(string value) => new ApplicationGatewayFirewallUserSessionVariable(value);
 
         /// <inheritdoc />

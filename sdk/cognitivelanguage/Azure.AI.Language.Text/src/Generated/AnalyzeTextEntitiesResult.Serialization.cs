@@ -19,33 +19,24 @@ namespace Azure.AI.Language.Text
 
         void IJsonModel<AnalyzeTextEntitiesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextEntitiesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AnalyzeTextEntitiesResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("results"u8);
             writer.WriteObjectValue(Results, options);
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         AnalyzeTextEntitiesResult IJsonModel<AnalyzeTextEntitiesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +59,7 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            EntitiesResult results = default;
+            EntitiesWithMetadataAutoResult results = default;
             AnalyzeTextResultsKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -76,7 +67,7 @@ namespace Azure.AI.Language.Text
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = EntitiesResult.DeserializeEntitiesResult(property.Value, options);
+                    results = EntitiesWithMetadataAutoResult.DeserializeEntitiesWithMetadataAutoResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -114,7 +105,7 @@ namespace Azure.AI.Language.Text
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAnalyzeTextEntitiesResult(document.RootElement, options);
                     }
                 default:
@@ -128,7 +119,7 @@ namespace Azure.AI.Language.Text
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AnalyzeTextEntitiesResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAnalyzeTextEntitiesResult(document.RootElement);
         }
 

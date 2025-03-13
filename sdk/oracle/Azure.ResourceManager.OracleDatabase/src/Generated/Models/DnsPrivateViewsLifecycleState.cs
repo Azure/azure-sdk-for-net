@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(DnsPrivateViewsLifecycleState left, DnsPrivateViewsLifecycleState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsPrivateViewsLifecycleState"/> values are not the same. </summary>
         public static bool operator !=(DnsPrivateViewsLifecycleState left, DnsPrivateViewsLifecycleState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DnsPrivateViewsLifecycleState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DnsPrivateViewsLifecycleState"/>. </summary>
         public static implicit operator DnsPrivateViewsLifecycleState(string value) => new DnsPrivateViewsLifecycleState(value);
 
         /// <inheritdoc />

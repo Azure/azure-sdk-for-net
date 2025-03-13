@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator ==(AutomationAccountState left, AutomationAccountState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationAccountState"/> values are not the same. </summary>
         public static bool operator !=(AutomationAccountState left, AutomationAccountState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutomationAccountState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationAccountState"/>. </summary>
         public static implicit operator AutomationAccountState(string value) => new AutomationAccountState(value);
 
         /// <inheritdoc />

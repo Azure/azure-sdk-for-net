@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(BastionHostSkuName left, BastionHostSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BastionHostSkuName"/> values are not the same. </summary>
         public static bool operator !=(BastionHostSkuName left, BastionHostSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BastionHostSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BastionHostSkuName"/>. </summary>
         public static implicit operator BastionHostSkuName(string value) => new BastionHostSkuName(value);
 
         /// <inheritdoc />

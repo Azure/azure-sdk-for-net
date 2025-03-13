@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(ViewKpiType left, ViewKpiType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ViewKpiType"/> values are not the same. </summary>
         public static bool operator !=(ViewKpiType left, ViewKpiType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ViewKpiType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ViewKpiType"/>. </summary>
         public static implicit operator ViewKpiType(string value) => new ViewKpiType(value);
 
         /// <inheritdoc />

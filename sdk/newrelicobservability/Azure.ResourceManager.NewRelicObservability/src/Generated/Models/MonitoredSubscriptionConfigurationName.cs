@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static bool operator ==(MonitoredSubscriptionConfigurationName left, MonitoredSubscriptionConfigurationName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitoredSubscriptionConfigurationName"/> values are not the same. </summary>
         public static bool operator !=(MonitoredSubscriptionConfigurationName left, MonitoredSubscriptionConfigurationName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MonitoredSubscriptionConfigurationName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitoredSubscriptionConfigurationName"/>. </summary>
         public static implicit operator MonitoredSubscriptionConfigurationName(string value) => new MonitoredSubscriptionConfigurationName(value);
 
         /// <inheritdoc />

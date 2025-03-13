@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ScopeConnectionState left, ScopeConnectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScopeConnectionState"/> values are not the same. </summary>
         public static bool operator !=(ScopeConnectionState left, ScopeConnectionState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScopeConnectionState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScopeConnectionState"/>. </summary>
         public static implicit operator ScopeConnectionState(string value) => new ScopeConnectionState(value);
 
         /// <inheritdoc />

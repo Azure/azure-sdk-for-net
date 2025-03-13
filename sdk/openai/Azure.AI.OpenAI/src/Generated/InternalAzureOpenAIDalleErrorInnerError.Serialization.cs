@@ -14,13 +14,21 @@ namespace Azure.AI.OpenAI
     {
         void IJsonModel<InternalAzureOpenAIDalleErrorInnerError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<InternalAzureOpenAIDalleErrorInnerError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InternalAzureOpenAIDalleErrorInnerError)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (SerializedAdditionalRawData?.ContainsKey("code") != true && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
@@ -55,7 +63,6 @@ namespace Azure.AI.OpenAI
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         InternalAzureOpenAIDalleErrorInnerError IJsonModel<InternalAzureOpenAIDalleErrorInnerError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -80,7 +87,7 @@ namespace Azure.AI.OpenAI
             }
             InternalAzureOpenAIDalleErrorInnerErrorCode? code = default;
             string revisedPrompt = default;
-            ImageContentFilterResultForPrompt contentFilterResults = default;
+            RequestImageContentFilterResult contentFilterResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +112,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    contentFilterResults = ImageContentFilterResultForPrompt.DeserializeImageContentFilterResultForPrompt(property.Value, options);
+                    contentFilterResults = RequestImageContentFilterResult.DeserializeRequestImageContentFilterResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,4 +171,3 @@ namespace Azure.AI.OpenAI
         }
     }
 }
-

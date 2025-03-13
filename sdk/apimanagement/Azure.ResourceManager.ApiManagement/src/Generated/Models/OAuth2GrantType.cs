@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(OAuth2GrantType left, OAuth2GrantType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OAuth2GrantType"/> values are not the same. </summary>
         public static bool operator !=(OAuth2GrantType left, OAuth2GrantType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OAuth2GrantType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OAuth2GrantType"/>. </summary>
         public static implicit operator OAuth2GrantType(string value) => new OAuth2GrantType(value);
 
         /// <inheritdoc />

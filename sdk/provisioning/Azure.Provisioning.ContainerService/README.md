@@ -9,7 +9,7 @@ Azure.Provisioning.ContainerService simplifies declarative resource provisioning
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.ContainerService
+dotnet add package Azure.Provisioning.ContainerService --prerelease
 ```
 
 ### Prerequisites

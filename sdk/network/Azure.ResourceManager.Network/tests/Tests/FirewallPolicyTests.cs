@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Tests
             VirtualNetworkData vnetData = new VirtualNetworkData()
             {
                 Location = _firewallLocation,
-                AddressSpace = new AddressSpace() { AddressPrefixes = { "10.26.0.0/16", } },
+                AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.26.0.0/16", } },
                 Subnets =
                 {
                     new SubnetData() { Name = "Default", AddressPrefix = "10.26.1.0/26", },

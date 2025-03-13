@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static bool operator ==(StorageMoverProvisioningState left, StorageMoverProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageMoverProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(StorageMoverProvisioningState left, StorageMoverProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageMoverProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageMoverProvisioningState"/>. </summary>
         public static implicit operator StorageMoverProvisioningState(string value) => new StorageMoverProvisioningState(value);
 
         /// <inheritdoc />

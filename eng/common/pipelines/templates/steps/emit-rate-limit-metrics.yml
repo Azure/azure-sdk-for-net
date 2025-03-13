@@ -1,0 +1,36 @@
+parameters:
+  - name: GitHubUser
+    type: string
+  - name: GitHubToken
+    type: string
+
+steps:
+- pwsh: |
+    $headers = @{
+      "Authorization" = "Bearer $env:GITHUB_TOKEN"
+      "X-GitHub-Api-Version" = "2022-11-28"
+    }
+
+    $response = Invoke-RestMethod -Uri 'https://api.github.com/rate_limit' -Headers $headers -Method Get
+    $timestamp = Get-Date
+    foreach ($property in $response.resources.PSObject.Properties)
+    { 
+        $labels = @{ user= $env:GITHUB_USER; resource= $property.Name }
+
+        $remaining = $property.Value.remaining
+        $limit = $property.Value.limit
+        $used = $property.Value.used
+
+        Write-Host "logmetric: $( [ordered]@{ name= "github_ratelimit_remaining_total"; value= $remaining; timestamp= $timestamp; labels= $labels } | ConvertTo-Json -Compress)"
+        Write-Host "logmetric: $( [ordered]@{ name= "github_ratelimit_limit_total"; value= $limit; timestamp= $timestamp; labels= $labels } | ConvertTo-Json -Compress)"
+        Write-Host "logmetric: $( [ordered]@{ name= "github_ratelimit_used_total"; value= $used; timestamp= $timestamp; labels= $labels } | ConvertTo-Json -Compress)"
+
+        if ($limit -ne 0) {
+          $percent = $used / $limit * 100
+          Write-Host "logmetric: $( [ordered]@{ name= "github_ratelimit_used_percent"; value= $percent; timestamp= $timestamp; labels= $labels } | ConvertTo-Json -Compress)"
+        }
+    }          
+  displayName: Check GitHub Rate Limit
+  env:
+    GITHUB_TOKEN: ${{ parameters.GitHubToken}}
+    GITHUB_USER: ${{ parameters.GitHubUser}}

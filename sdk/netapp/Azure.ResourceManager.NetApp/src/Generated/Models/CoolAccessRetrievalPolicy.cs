@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(CoolAccessRetrievalPolicy left, CoolAccessRetrievalPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CoolAccessRetrievalPolicy"/> values are not the same. </summary>
         public static bool operator !=(CoolAccessRetrievalPolicy left, CoolAccessRetrievalPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CoolAccessRetrievalPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CoolAccessRetrievalPolicy"/>. </summary>
         public static implicit operator CoolAccessRetrievalPolicy(string value) => new CoolAccessRetrievalPolicy(value);
 
         /// <inheritdoc />

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI.Chat
 {
     /// <summary> The ElasticsearchChatDataSource. </summary>
-    public partial class ElasticsearchChatDataSource : AzureChatDataSource
+    public partial class ElasticsearchChatDataSource : ChatDataSource
     {
     }
 }

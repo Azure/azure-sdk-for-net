@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(BillingTaxIdentifierType left, BillingTaxIdentifierType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingTaxIdentifierType"/> values are not the same. </summary>
         public static bool operator !=(BillingTaxIdentifierType left, BillingTaxIdentifierType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BillingTaxIdentifierType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingTaxIdentifierType"/>. </summary>
         public static implicit operator BillingTaxIdentifierType(string value) => new BillingTaxIdentifierType(value);
 
         /// <inheritdoc />

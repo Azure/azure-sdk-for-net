@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static bool operator ==(MaintenanceImpactType left, MaintenanceImpactType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MaintenanceImpactType"/> values are not the same. </summary>
         public static bool operator !=(MaintenanceImpactType left, MaintenanceImpactType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MaintenanceImpactType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MaintenanceImpactType"/>. </summary>
         public static implicit operator MaintenanceImpactType(string value) => new MaintenanceImpactType(value);
 
         /// <inheritdoc />

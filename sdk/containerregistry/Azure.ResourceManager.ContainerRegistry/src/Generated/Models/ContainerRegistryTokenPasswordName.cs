@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator ==(ContainerRegistryTokenPasswordName left, ContainerRegistryTokenPasswordName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryTokenPasswordName"/> values are not the same. </summary>
         public static bool operator !=(ContainerRegistryTokenPasswordName left, ContainerRegistryTokenPasswordName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerRegistryTokenPasswordName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryTokenPasswordName"/>. </summary>
         public static implicit operator ContainerRegistryTokenPasswordName(string value) => new ContainerRegistryTokenPasswordName(value);
 
         /// <inheritdoc />

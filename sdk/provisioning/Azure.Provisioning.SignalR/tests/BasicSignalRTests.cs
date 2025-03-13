@@ -21,22 +21,18 @@ public class BasicSignalRTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "The SignalR service location."
-                    };
-                BicepParameter endpointName =
+                Infrastructure infra = new();
+
+                ProvisioningParameter endpointName =
                     new(nameof(endpointName), typeof(string))
                     {
                         Value = "mySignalRService.55e432ab-7428-3695-b637-de57b20d40e5"
                     };
+                infra.Add(endpointName);
 
                 SignalRService signalr =
                     new(nameof(signalr), "2022-02-01")
                     {
-                        Location = location,
                         Sku = new SignalRResourceSku { Name = "Standard_S1", Capacity = 1 },
                         Kind = SignalRServiceKind.SignalR,
                         Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
@@ -89,75 +85,78 @@ public class BasicSignalRTests(bool async)
                             }
                         }
                     };
+                infra.Add(signalr);
+
+                return infra;
             })
         .Compare(
             """
-            @description('The SignalR service location.')
-            param location string = resourceGroup().location
-
             param endpointName string = 'mySignalRService.55e432ab-7428-3695-b637-de57b20d40e5'
 
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
             resource signalr 'Microsoft.SignalRService/signalR@2022-02-01' = {
-                name: take('signalr-${uniqueString(resourceGroup().id)}', 63)
-                location: location
-                properties: {
-                    cors: {
-                        allowedOrigins: [
-                            '*'
-                        ]
-                    }
-                    features: [
-                        {
-                            flag: 'ServiceMode'
-                            value: 'Default'
-                        }
-                        {
-                            flag: 'EnableConnectivityLogs'
-                            value: 'true'
-                        }
-                        {
-                            flag: 'EnableLiveTrace'
-                            value: 'true'
-                        }
+              name: take('signalr-${uniqueString(resourceGroup().id)}', 63)
+              location: location
+              properties: {
+                cors: {
+                  allowedOrigins: [
+                    '*'
+                  ]
+                }
+                features: [
+                  {
+                    flag: 'ServiceMode'
+                    value: 'Default'
+                  }
+                  {
+                    flag: 'EnableConnectivityLogs'
+                    value: 'true'
+                  }
+                  {
+                    flag: 'EnableLiveTrace'
+                    value: 'true'
+                  }
+                ]
+                tls: {
+                  clientCertEnabled: false
+                }
+                networkACLs: {
+                  defaultAction: 'Deny'
+                  publicNetwork: {
+                    allow: [
+                      'ClientConnection'
                     ]
-                    tls: {
-                        clientCertEnabled: false
+                  }
+                  privateEndpoints: [
+                    {
+                      allow: [
+                        'ServerConnection'
+                      ]
+                      name: endpointName
                     }
-                    networkACLs: {
-                        defaultAction: 'Deny'
-                        publicNetwork: {
-                            allow: [
-                                'ClientConnection'
-                            ]
-                        }
-                        privateEndpoints: [
-                            {
-                                allow: [
-                                    'ServerConnection'
-                                ]
-                                name: endpointName
-                            }
-                        ]
+                  ]
+                }
+                upstream: {
+                  templates: [
+                    {
+                      hubPattern: '*'
+                      eventPattern: 'connect,disconnect'
+                      categoryPattern: '*'
+                      urlTemplate: 'https://example.com/chat/api/connect'
                     }
-                    upstream: {
-                        templates: [
-                            {
-                                hubPattern: '*'
-                                eventPattern: 'connect,disconnect'
-                                categoryPattern: '*'
-                                urlTemplate: 'https://example.com/chat/api/connect'
-                            }
-                        ]
-                    }
+                  ]
                 }
-                identity: {
-                    type: 'SystemAssigned'
-                }
-                kind: 'SignalR'
-                sku: {
-                    name: 'Standard_S1'
-                    capacity: 1
-                }
+              }
+              identity: {
+                type: 'SystemAssigned'
+              }
+              kind: 'SignalR'
+              sku: {
+                name: 'Standard_S1'
+                capacity: 1
+              }
             }
             """)
         .Lint()

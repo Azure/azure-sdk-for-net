@@ -1,6 +1,6 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.10.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,25 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.9.0 (2025-02-21)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-07' to 'package-2024-09-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/81330ee21a8300ad377eacbaaf16efabb91d56c0/specification/netapp/resource-manager/readme.md.
+- Added `CoolAccessTiering` to `NetAppVolumePatch`, `NetAppVolumeData`, `NetAppVolumeGroupVolume`
+- Added `TransitionToCmk` `ChangeKeyVault` and `GetKeyVaultStatus` to `NetAppAccountResource`
+
+## 1.8.0 (2024-10-30)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-03' to 'package-2024-07'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f37b54b187bac95237c62478a10b94e9cff236f3/specification/netapp/resource-manager/readme.md.
+- Added support for external migration replication volumes with operations `PeerExternalClusterAsync`, `AuthorizeExternalReplicationAsync`, `PerformReplicationTransferAsync`, `FinalizeExternalReplicationAsync`
+- Added `RemotePath` to `ReplicationObject` 
+- Added `AvailabilityZone` to `FilePathAvailabilityRequest`
+- Added read-only property `EffectiveNetworkFeatures` to `Volume` `VolumeProperties` and `VolumeGroupVolumeProperties`
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.7.0 (2024-08-16)
 
@@ -158,8 +177,8 @@ Polishing since last public beta release:
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.
-- Corrected all acronyms that not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
-- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected all acronyms that not follow [.Net Naming Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://learn.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
 - Corrected the suffix of `DateTimeOffset` properties / parameters.
 - Corrected the name of interval / duration properties / parameters that end with units.
 - Optimized the name of some models and functions.
@@ -192,4 +211,4 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

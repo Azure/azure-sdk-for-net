@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(DataCollectionEndpointProvisioningState left, DataCollectionEndpointProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataCollectionEndpointProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(DataCollectionEndpointProvisioningState left, DataCollectionEndpointProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataCollectionEndpointProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataCollectionEndpointProvisioningState"/>. </summary>
         public static implicit operator DataCollectionEndpointProvisioningState(string value) => new DataCollectionEndpointProvisioningState(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ExpressRouteCircuitPeeringState left, ExpressRouteCircuitPeeringState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRouteCircuitPeeringState"/> values are not the same. </summary>
         public static bool operator !=(ExpressRouteCircuitPeeringState left, ExpressRouteCircuitPeeringState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExpressRouteCircuitPeeringState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressRouteCircuitPeeringState"/>. </summary>
         public static implicit operator ExpressRouteCircuitPeeringState(string value) => new ExpressRouteCircuitPeeringState(value);
 
         /// <inheritdoc />

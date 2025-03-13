@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(SessionAffinityEnabledState left, SessionAffinityEnabledState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SessionAffinityEnabledState"/> values are not the same. </summary>
         public static bool operator !=(SessionAffinityEnabledState left, SessionAffinityEnabledState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SessionAffinityEnabledState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SessionAffinityEnabledState"/>. </summary>
         public static implicit operator SessionAffinityEnabledState(string value) => new SessionAffinityEnabledState(value);
 
         /// <inheritdoc />

@@ -20,39 +20,36 @@ public class BasicSearchTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "The Search service location."
-                    };
+                Infrastructure infra = new();
 
                 SearchService search =
                     new(nameof(search))
                     {
-                        Location = location,
                         SearchSkuName = SearchServiceSkuName.Standard,
                         ReplicaCount = 1,
                         PartitionCount = 1,
                         HostingMode = SearchServiceHostingMode.Default,
                     };
+                infra.Add(search);
+
+                return infra;
             })
         .Compare(
             """
-            @description('The Search service location.')
+            @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
             resource search 'Microsoft.Search/searchServices@2023-11-01' = {
-                name: take('search-${uniqueString(resourceGroup().id)}', 60)
-                location: location
-                properties: {
-                    hostingMode: 'default'
-                    partitionCount: 1
-                    replicaCount: 1
-                }
-                sku: {
-                    name: 'standard'
-                }
+              name: take('search-${uniqueString(resourceGroup().id)}', 60)
+              location: location
+              properties: {
+                hostingMode: 'default'
+                partitionCount: 1
+                replicaCount: 1
+              }
+              sku: {
+                name: 'standard'
+              }
             }
             """)
         .Lint()

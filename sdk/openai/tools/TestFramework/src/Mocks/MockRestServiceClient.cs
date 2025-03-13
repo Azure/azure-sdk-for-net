@@ -6,7 +6,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Globalization;
 using System.Net.Http;
-using OpenAI.TestFramework.Utils;
+using System.Text.Json;
 
 namespace OpenAI.TestFramework.Mocks;
 
@@ -14,7 +14,7 @@ namespace OpenAI.TestFramework.Mocks;
 /// A client for <see cref="MockRestService{TData}"/>.
 /// </summary>
 /// <typeparam name="TData">The type of data used by the client.</typeparam>
-public class MockRestServiceClient<TData> : IDisposable
+public class MockRestServiceClient<TData> : IDisposable where TData : class
 {
     private ClientPipeline _pipeline;
     private Uri _baseUri;
@@ -87,16 +87,16 @@ public class MockRestServiceClient<TData> : IDisposable
             ClientResult result = await SendSyncOrAsync(true, HttpMethod.Get, id, default, token)
                 .ConfigureAwait(false);
 
-            var response = result.GetRawResponse();
+            PipelineResponse response = result.GetRawResponse();
             return ClientResult.FromOptionalValue(
-                response.Content.ToObjectFromJson<MockRestService<TData>.Entry>().data,
+                response.Content?.ToObjectFromJson<MockRestService<TData>.Entry>()?.data,
                 response);
         }
         catch (ClientResultException ex)
         {
             if (ex.GetRawResponse()?.Status == 404)
             {
-                return ClientResult.FromOptionalValue<TData?>(default, ex.GetRawResponse()!);
+                return ClientResult.FromOptionalValue<TData>(default, ex.GetRawResponse()!);
             }
 
             throw;
@@ -117,9 +117,9 @@ public class MockRestServiceClient<TData> : IDisposable
         try
         {
             ClientResult result = SendSyncOrAsync(false, HttpMethod.Get, id, default, token).GetAwaiter().GetResult();
-            var response = result.GetRawResponse();
+            PipelineResponse response = result.GetRawResponse();
             return ClientResult.FromOptionalValue(
-                response.Content.ToObjectFromJson<MockRestService<TData>.Entry>().data,
+                response.Content?.ToObjectFromJson<MockRestService<TData>.Entry>()?.data,
                 response);
         }
         catch (ClientResultException ex)
@@ -241,7 +241,7 @@ public class MockRestServiceClient<TData> : IDisposable
         else
         {
             using MemoryStream stream = new();
-            JsonHelpers.Serialize(stream, data);
+            JsonSerializer.Serialize(stream, data);
             var binaryData = BinaryData.FromBytes(new ReadOnlyMemory<byte>(stream.GetBuffer(), 0, (int)stream.Length));
 
             message.Request.Headers.Set("Content-Length", stream.Length.ToString(CultureInfo.InvariantCulture));
@@ -263,7 +263,7 @@ public class MockRestServiceClient<TData> : IDisposable
             if (message.Response.Content?.ToMemory().Length > 0)
             {
                 var error = message.Response.Content.ToObjectFromJson<MockRestService<TData>.Error>();
-                throw new ClientResultException($"Error {error.error}: {error.message}", message.Response);
+                throw new ClientResultException($"Error {error?.error}: {error?.message}", message.Response);
             }
 
             throw new ClientResultException(message.Response);

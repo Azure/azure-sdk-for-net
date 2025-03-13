@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(LiveEventEncodingType left, LiveEventEncodingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LiveEventEncodingType"/> values are not the same. </summary>
         public static bool operator !=(LiveEventEncodingType left, LiveEventEncodingType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LiveEventEncodingType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LiveEventEncodingType"/>. </summary>
         public static implicit operator LiveEventEncodingType(string value) => new LiveEventEncodingType(value);
 
         /// <inheritdoc />

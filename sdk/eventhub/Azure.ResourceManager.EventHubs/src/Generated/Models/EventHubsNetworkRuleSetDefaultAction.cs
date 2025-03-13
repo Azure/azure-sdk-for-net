@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator ==(EventHubsNetworkRuleSetDefaultAction left, EventHubsNetworkRuleSetDefaultAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsNetworkRuleSetDefaultAction"/> values are not the same. </summary>
         public static bool operator !=(EventHubsNetworkRuleSetDefaultAction left, EventHubsNetworkRuleSetDefaultAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EventHubsNetworkRuleSetDefaultAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsNetworkRuleSetDefaultAction"/>. </summary>
         public static implicit operator EventHubsNetworkRuleSetDefaultAction(string value) => new EventHubsNetworkRuleSetDefaultAction(value);
 
         /// <inheritdoc />

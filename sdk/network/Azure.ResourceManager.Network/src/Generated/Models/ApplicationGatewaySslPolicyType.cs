@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ApplicationGatewaySslPolicyType left, ApplicationGatewaySslPolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewaySslPolicyType"/> values are not the same. </summary>
         public static bool operator !=(ApplicationGatewaySslPolicyType left, ApplicationGatewaySslPolicyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationGatewaySslPolicyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewaySslPolicyType"/>. </summary>
         public static implicit operator ApplicationGatewaySslPolicyType(string value) => new ApplicationGatewaySslPolicyType(value);
 
         /// <inheritdoc />

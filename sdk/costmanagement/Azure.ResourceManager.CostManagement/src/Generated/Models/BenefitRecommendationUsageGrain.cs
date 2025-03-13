@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(BenefitRecommendationUsageGrain left, BenefitRecommendationUsageGrain right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BenefitRecommendationUsageGrain"/> values are not the same. </summary>
         public static bool operator !=(BenefitRecommendationUsageGrain left, BenefitRecommendationUsageGrain right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BenefitRecommendationUsageGrain"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BenefitRecommendationUsageGrain"/>. </summary>
         public static implicit operator BenefitRecommendationUsageGrain(string value) => new BenefitRecommendationUsageGrain(value);
 
         /// <inheritdoc />

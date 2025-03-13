@@ -30,7 +30,7 @@ namespace Azure.Security.KeyVault.Administration
         public static bool operator ==(KeyVaultRoleDefinitionType left, KeyVaultRoleDefinitionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultRoleDefinitionType"/> values are not the same. </summary>
         public static bool operator !=(KeyVaultRoleDefinitionType left, KeyVaultRoleDefinitionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KeyVaultRoleDefinitionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KeyVaultRoleDefinitionType"/>. </summary>
         public static implicit operator KeyVaultRoleDefinitionType(string value) => new KeyVaultRoleDefinitionType(value);
 
         /// <inheritdoc />

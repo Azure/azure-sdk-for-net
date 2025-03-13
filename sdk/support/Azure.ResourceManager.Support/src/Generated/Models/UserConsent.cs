@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Support.Models
         public static bool operator ==(UserConsent left, UserConsent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UserConsent"/> values are not the same. </summary>
         public static bool operator !=(UserConsent left, UserConsent right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UserConsent"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UserConsent"/>. </summary>
         public static implicit operator UserConsent(string value) => new UserConsent(value);
 
         /// <inheritdoc />

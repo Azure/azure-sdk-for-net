@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static bool operator ==(DynatraceOneAgentUpdateStatus left, DynatraceOneAgentUpdateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynatraceOneAgentUpdateStatus"/> values are not the same. </summary>
         public static bool operator !=(DynatraceOneAgentUpdateStatus left, DynatraceOneAgentUpdateStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DynatraceOneAgentUpdateStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DynatraceOneAgentUpdateStatus"/>. </summary>
         public static implicit operator DynatraceOneAgentUpdateStatus(string value) => new DynatraceOneAgentUpdateStatus(value);
 
         /// <inheritdoc />

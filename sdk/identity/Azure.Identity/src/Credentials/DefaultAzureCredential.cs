@@ -103,7 +103,7 @@ namespace Azure.Identity
         /// <summary>
         /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials, returning the first successfully
         /// obtained <see cref="AccessToken"/>. Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see>
-        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances
+        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
         /// to optimize cache effectiveness.
         /// </summary>
         /// <remarks>
@@ -121,7 +121,7 @@ namespace Azure.Identity
         /// <summary>
         /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials, returning the first successfully
         /// obtained <see cref="AccessToken"/>. Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see>
-        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances
+        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
         /// to optimize cache effectiveness.
         /// </summary>
         /// <remarks>

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(PostArgsOperator left, PostArgsOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostArgsOperator"/> values are not the same. </summary>
         public static bool operator !=(PostArgsOperator left, PostArgsOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostArgsOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostArgsOperator"/>. </summary>
         public static implicit operator PostArgsOperator(string value) => new PostArgsOperator(value);
 
         /// <inheritdoc />

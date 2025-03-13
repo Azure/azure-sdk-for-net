@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static bool operator ==(DesiredInstallationState left, DesiredInstallationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DesiredInstallationState"/> values are not the same. </summary>
         public static bool operator !=(DesiredInstallationState left, DesiredInstallationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DesiredInstallationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DesiredInstallationState"/>. </summary>
         public static implicit operator DesiredInstallationState(string value) => new DesiredInstallationState(value);
 
         /// <inheritdoc />

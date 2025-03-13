@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(RegulatoryComplianceState left, RegulatoryComplianceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RegulatoryComplianceState"/> values are not the same. </summary>
         public static bool operator !=(RegulatoryComplianceState left, RegulatoryComplianceState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RegulatoryComplianceState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RegulatoryComplianceState"/>. </summary>
         public static implicit operator RegulatoryComplianceState(string value) => new RegulatoryComplianceState(value);
 
         /// <inheritdoc />

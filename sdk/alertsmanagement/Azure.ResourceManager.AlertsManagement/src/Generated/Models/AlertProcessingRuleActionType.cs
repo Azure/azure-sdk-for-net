@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static bool operator ==(AlertProcessingRuleActionType left, AlertProcessingRuleActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlertProcessingRuleActionType"/> values are not the same. </summary>
         public static bool operator !=(AlertProcessingRuleActionType left, AlertProcessingRuleActionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AlertProcessingRuleActionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AlertProcessingRuleActionType"/>. </summary>
         public static implicit operator AlertProcessingRuleActionType(string value) => new AlertProcessingRuleActionType(value);
 
         /// <inheritdoc />

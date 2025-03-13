@@ -10,79 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Marketplace.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Marketplace.Samples
 {
     public partial class Sample_PrivateStoreCollectionInfoResource
     {
-        // SetCollectionRules
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task SetCollectionRules_SetCollectionRules()
-        {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/SetCollectionRules.json
-            // this example is just showing the usage of "SetCollectionRules" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PrivateStoreCollectionInfoResource created on azure
-            // for more information of creating PrivateStoreCollectionInfoResource, please refer to the document of PrivateStoreCollectionInfoResource
-            Guid privateStoreId = Guid.Parse("a0e28e55-90c4-41d8-8e34-bb7ef7775406");
-            Guid collectionId = Guid.Parse("56a1a02d-8cf8-45df-bf37-d5f7120fcb3d");
-            ResourceIdentifier privateStoreCollectionInfoResourceId = PrivateStoreCollectionInfoResource.CreateResourceIdentifier(privateStoreId, collectionId);
-            PrivateStoreCollectionInfoResource privateStoreCollectionInfo = client.GetPrivateStoreCollectionInfoResource(privateStoreCollectionInfoResourceId);
-
-            // invoke the operation
-            SetRulesContent content = new SetRulesContent()
-            {
-                Value =
-{
-new MarketplaceRule()
-{
-RuleType = MarketplaceRuleType.PrivateProducts,
-}
-},
-            };
-            await privateStoreCollectionInfo.SetCollectionRulesAsync(content: content);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // GetCollectionRules
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task QueryRules_GetCollectionRules()
-        {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/GetCollectionRules.json
-            // this example is just showing the usage of "QueryRules" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PrivateStoreCollectionInfoResource created on azure
-            // for more information of creating PrivateStoreCollectionInfoResource, please refer to the document of PrivateStoreCollectionInfoResource
-            Guid privateStoreId = Guid.Parse("a0e28e55-90c4-41d8-8e34-bb7ef7775406");
-            Guid collectionId = Guid.Parse("56a1a02d-8cf8-45df-bf37-d5f7120fcb3d");
-            ResourceIdentifier privateStoreCollectionInfoResourceId = PrivateStoreCollectionInfoResource.CreateResourceIdentifier(privateStoreId, collectionId);
-            PrivateStoreCollectionInfoResource privateStoreCollectionInfo = client.GetPrivateStoreCollectionInfoResource(privateStoreCollectionInfoResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (MarketplaceRule item in privateStoreCollectionInfo.QueryRulesAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // GetPrivateStoreCollection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPrivateStoreCollection()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/GetPrivateStoreCollection.json
@@ -110,50 +45,8 @@ RuleType = MarketplaceRuleType.PrivateProducts,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreatePrivateStoreCollection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_CreatePrivateStoreCollection()
-        {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/CreatePrivateStoreCollection.json
-            // this example is just showing the usage of "PrivateStoreCollection_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PrivateStoreCollectionInfoResource created on azure
-            // for more information of creating PrivateStoreCollectionInfoResource, please refer to the document of PrivateStoreCollectionInfoResource
-            Guid privateStoreId = Guid.Parse("a0e28e55-90c4-41d8-8e34-bb7ef7775406");
-            Guid collectionId = Guid.Parse("d0f5aa2c-ecc3-4d87-906a-f8c486dcc4f1");
-            ResourceIdentifier privateStoreCollectionInfoResourceId = PrivateStoreCollectionInfoResource.CreateResourceIdentifier(privateStoreId, collectionId);
-            PrivateStoreCollectionInfoResource privateStoreCollectionInfo = client.GetPrivateStoreCollectionInfoResource(privateStoreCollectionInfoResourceId);
-
-            // invoke the operation
-            PrivateStoreCollectionInfoData info = new PrivateStoreCollectionInfoData()
-            {
-                CollectionName = "Test Collection",
-                Claim = "",
-                AreAllSubscriptionsSelected = false,
-                SubscriptionsList =
-{
-"b340914e-353d-453a-85fb-8f9b65b51f91","f2baa04d-5bfc-461b-b6d8-61b403c9ec48"
-},
-            };
-            ArmOperation<PrivateStoreCollectionInfoResource> lro = await privateStoreCollectionInfo.UpdateAsync(WaitUntil.Completed, info);
-            PrivateStoreCollectionInfoResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PrivateStoreCollectionInfoData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // DeletePrivateStoreCollection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletePrivateStoreCollection()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/DeletePrivateStoreCollection.json
@@ -174,16 +67,52 @@ RuleType = MarketplaceRuleType.PrivateProducts,
             // invoke the operation
             await privateStoreCollectionInfo.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PostPrivateStoreCollection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_PostPrivateStoreCollection()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_CreatePrivateStoreCollection()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/PostPrivateStoreCollection.json
-            // this example is just showing the usage of "PrivateStoreCollection_Post" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/CreatePrivateStoreCollection.json
+            // this example is just showing the usage of "PrivateStoreCollection_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PrivateStoreCollectionInfoResource created on azure
+            // for more information of creating PrivateStoreCollectionInfoResource, please refer to the document of PrivateStoreCollectionInfoResource
+            Guid privateStoreId = Guid.Parse("a0e28e55-90c4-41d8-8e34-bb7ef7775406");
+            Guid collectionId = Guid.Parse("d0f5aa2c-ecc3-4d87-906a-f8c486dcc4f1");
+            ResourceIdentifier privateStoreCollectionInfoResourceId = PrivateStoreCollectionInfoResource.CreateResourceIdentifier(privateStoreId, collectionId);
+            PrivateStoreCollectionInfoResource privateStoreCollectionInfo = client.GetPrivateStoreCollectionInfoResource(privateStoreCollectionInfoResourceId);
+
+            // invoke the operation
+            PrivateStoreCollectionInfoData info = new PrivateStoreCollectionInfoData
+            {
+                CollectionName = "Test Collection",
+                Claim = "",
+                AreAllSubscriptionsSelected = false,
+                SubscriptionsList = { "b340914e-353d-453a-85fb-8f9b65b51f91", "f2baa04d-5bfc-461b-b6d8-61b403c9ec48" },
+            };
+            ArmOperation<PrivateStoreCollectionInfoResource> lro = await privateStoreCollectionInfo.UpdateAsync(WaitUntil.Completed, info);
+            PrivateStoreCollectionInfoResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PrivateStoreCollectionInfoData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task SetCollectionRules_SetCollectionRules()
+        {
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/SetCollectionRules.json
+            // this example is just showing the usage of "SetCollectionRules" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -198,14 +127,48 @@ RuleType = MarketplaceRuleType.PrivateProducts,
             PrivateStoreCollectionInfoResource privateStoreCollectionInfo = client.GetPrivateStoreCollectionInfoResource(privateStoreCollectionInfoResourceId);
 
             // invoke the operation
-            await privateStoreCollectionInfo.DeleteAsync();
+            SetRulesContent content = new SetRulesContent
+            {
+                Value = {new MarketplaceRule
+{
+RuleType = MarketplaceRuleType.PrivateProducts,
+}},
+            };
+            await privateStoreCollectionInfo.SetCollectionRulesAsync(content: content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // TransferOffers
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task QueryRules_GetCollectionRules()
+        {
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/GetCollectionRules.json
+            // this example is just showing the usage of "QueryRules" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PrivateStoreCollectionInfoResource created on azure
+            // for more information of creating PrivateStoreCollectionInfoResource, please refer to the document of PrivateStoreCollectionInfoResource
+            Guid privateStoreId = Guid.Parse("a0e28e55-90c4-41d8-8e34-bb7ef7775406");
+            Guid collectionId = Guid.Parse("56a1a02d-8cf8-45df-bf37-d5f7120fcb3d");
+            ResourceIdentifier privateStoreCollectionInfoResourceId = PrivateStoreCollectionInfoResource.CreateResourceIdentifier(privateStoreId, collectionId);
+            PrivateStoreCollectionInfoResource privateStoreCollectionInfo = client.GetPrivateStoreCollectionInfoResource(privateStoreCollectionInfoResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (MarketplaceRule item in privateStoreCollectionInfo.QueryRulesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TransferOffers_TransferOffers()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/TransferOffers.json
@@ -224,26 +187,19 @@ RuleType = MarketplaceRuleType.PrivateProducts,
             PrivateStoreCollectionInfoResource privateStoreCollectionInfo = client.GetPrivateStoreCollectionInfoResource(privateStoreCollectionInfoResourceId);
 
             // invoke the operation
-            TransferOffersContent content = new TransferOffersContent()
+            TransferOffersContent content = new TransferOffersContent
             {
-                TargetCollections =
-{
-"c752f021-1c37-4af5-b82f-74c51c27b44a","f47ef1c7-e908-4f39-ae29-db181634ad8d"
-},
+                TargetCollections = { "c752f021-1c37-4af5-b82f-74c51c27b44a", "f47ef1c7-e908-4f39-ae29-db181634ad8d" },
                 Operation = "copy",
-                OfferIdsList =
-{
-"marketplacetestthirdparty.md-test-third-party-2","marketplacetestthirdparty.md-test-third-party-3"
-},
+                OfferIdsList = { "marketplacetestthirdparty.md-test-third-party-2", "marketplacetestthirdparty.md-test-third-party-3" },
             };
             TransferOffersResult result = await privateStoreCollectionInfo.TransferOffersAsync(content: content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApproveAllItems
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ApproveAllItems_ApproveAllItems()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/ApproveAllItems.json
@@ -271,9 +227,8 @@ RuleType = MarketplaceRuleType.PrivateProducts,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DisableApproveAllItems
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DisableApproveAllItems_DisableApproveAllItems()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/DisableApproveAllItems.json
@@ -301,9 +256,8 @@ RuleType = MarketplaceRuleType.PrivateProducts,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetPrivateStoreCollectionOffersWithFullContext
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateStoreCollectionOffersByContexts_GetPrivateStoreCollectionOffersWithFullContext()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/GetPrivateStoreCollectionOffersWithFullContext.json
@@ -322,19 +276,41 @@ RuleType = MarketplaceRuleType.PrivateProducts,
             PrivateStoreCollectionInfoResource privateStoreCollectionInfo = client.GetPrivateStoreCollectionInfoResource(privateStoreCollectionInfoResourceId);
 
             // invoke the operation and iterate over the result
-            CollectionOffersByAllContextsPayload payload = new CollectionOffersByAllContextsPayload()
+            CollectionOffersByAllContextsPayload payload = new CollectionOffersByAllContextsPayload
             {
-                SubscriptionIds =
-{
-"b340914e-353d-453a-85fb-8f9b65b51f91","f2baa04d-5bfc-461b-b6d8-61b403c9ec48"
-},
+                SubscriptionIds = { "b340914e-353d-453a-85fb-8f9b65b51f91", "f2baa04d-5bfc-461b-b6d8-61b403c9ec48" },
             };
             await foreach (CollectionOffersByContext item in privateStoreCollectionInfo.GetPrivateStoreCollectionOffersByContextsAsync(payload: payload))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_PostPrivateStoreCollection()
+        {
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/PostPrivateStoreCollection.json
+            // this example is just showing the usage of "PrivateStoreCollection_Post" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PrivateStoreCollectionInfoResource created on azure
+            // for more information of creating PrivateStoreCollectionInfoResource, please refer to the document of PrivateStoreCollectionInfoResource
+            Guid privateStoreId = Guid.Parse("a0e28e55-90c4-41d8-8e34-bb7ef7775406");
+            Guid collectionId = Guid.Parse("56a1a02d-8cf8-45df-bf37-d5f7120fcb3d");
+            ResourceIdentifier privateStoreCollectionInfoResourceId = PrivateStoreCollectionInfoResource.CreateResourceIdentifier(privateStoreId, collectionId);
+            PrivateStoreCollectionInfoResource privateStoreCollectionInfo = client.GetPrivateStoreCollectionInfoResource(privateStoreCollectionInfoResourceId);
+
+            // invoke the operation
+            await privateStoreCollectionInfo.DeleteAsync();
+
+            Console.WriteLine("Succeeded");
         }
     }
 }

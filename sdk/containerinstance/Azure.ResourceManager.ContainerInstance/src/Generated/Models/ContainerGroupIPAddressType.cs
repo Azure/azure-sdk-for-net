@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static bool operator ==(ContainerGroupIPAddressType left, ContainerGroupIPAddressType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerGroupIPAddressType"/> values are not the same. </summary>
         public static bool operator !=(ContainerGroupIPAddressType left, ContainerGroupIPAddressType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerGroupIPAddressType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerGroupIPAddressType"/>. </summary>
         public static implicit operator ContainerGroupIPAddressType(string value) => new ContainerGroupIPAddressType(value);
 
         /// <inheritdoc />

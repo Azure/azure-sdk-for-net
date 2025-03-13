@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(PartnerDestinationProvisioningState left, PartnerDestinationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PartnerDestinationProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(PartnerDestinationProvisioningState left, PartnerDestinationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PartnerDestinationProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PartnerDestinationProvisioningState"/>. </summary>
         public static implicit operator PartnerDestinationProvisioningState(string value) => new PartnerDestinationProvisioningState(value);
 
         /// <inheritdoc />

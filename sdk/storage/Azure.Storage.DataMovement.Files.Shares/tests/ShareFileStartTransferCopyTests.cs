@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 extern alias BaseShares;
+extern alias DMShare;
 
 using System;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ using System.Threading;
 using BaseShares::Azure.Storage.Files.Shares.Specialized;
 using BaseShares::Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -132,6 +134,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareClientOptions options = null,
             Stream contents = null,
             TransferPropertiesTestType propertiesType = TransferPropertiesTestType.Default,
+            NtfsFileAttributes fileAttribute = _defaultFileAttributes,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -145,14 +148,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 string permissionKey = default;
                 if (propertiesType == TransferPropertiesTestType.Preserve)
                 {
-                    PermissionInfo permissionInfo = await container.CreatePermissionAsync(new ShareFilePermission() { Permission = _defaultPermissions } );
+                    PermissionInfo permissionInfo = await container.CreatePermissionAsync(new ShareFilePermission() { Permission = _defaultPermissions });
                     permissionKey = permissionInfo.FilePermissionKey;
                 }
                 await fileClient.CreateAsync(
                     maxSize: objectLength.Value,
                     new ShareFileCreateOptions()
                     {
-                        HttpHeaders =  new ShareFileHttpHeaders()
+                        HttpHeaders = new ShareFileHttpHeaders()
                         {
                             ContentLanguage = _defaultContentLanguage,
                             ContentDisposition = _defaultContentDisposition,
@@ -161,7 +164,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         Metadata = _defaultMetadata,
                         SmbProperties = new FileSmbProperties()
                         {
-                            FileAttributes = _defaultFileAttributes,
+                            FileAttributes = fileAttribute,
                             FilePermissionKey = permissionKey,
                             FileCreatedOn = _defaultFileCreatedOn,
                             FileChangedOn = _defaultFileChangedOn,
@@ -232,45 +235,37 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 options = new ShareFileStorageResourceOptions
                 {
-                    ContentDisposition = new(_defaultContentDisposition),
-                    ContentLanguage = new(_defaultContentLanguage),
-                    CacheControl = new(_defaultCacheControl),
-                    ContentType = new(_defaultContentType),
-                    FileMetadata = new(_defaultMetadata),
-                    FileAttributes = new(_defaultFileAttributes),
-                    FileCreatedOn = new(_defaultFileCreatedOn),
-                    FileChangedOn = new(_defaultFileChangedOn),
-                    FileLastWrittenOn = new(_defaultFileLastWrittenOn)
+                    ContentDisposition = _defaultContentDisposition,
+                    ContentLanguage = _defaultContentLanguage,
+                    CacheControl = _defaultCacheControl,
+                    ContentType = _defaultContentType,
+                    FileMetadata = _defaultMetadata,
+                    FileAttributes = _defaultFileAttributes,
+                    FileCreatedOn = _defaultFileCreatedOn,
+                    FileChangedOn = _defaultFileChangedOn,
+                    FileLastWrittenOn = _defaultFileLastWrittenOn
                 };
             }
             else if (type == TransferPropertiesTestType.NoPreserve)
             {
                 options = new ShareFileStorageResourceOptions
                 {
-                    ContentDisposition = new(false),
-                    ContentLanguage = new(false),
-                    CacheControl = new(false),
-                    ContentType = new(false),
-                    FileMetadata = new(false),
-                    FileAttributes = new(false),
-                    FileCreatedOn = new(false),
-                    FileLastWrittenOn = new(false),
-                    FilePermissions = new(false)
+                    ContentDisposition = default,
+                    ContentLanguage = default,
+                    CacheControl = default,
+                    ContentType = default,
+                    FileMetadata = default,
+                    FileAttributes = default,
+                    FileCreatedOn = default,
+                    FileLastWrittenOn = default,
+                    FilePermissions = false
                 };
             }
             else if (type == TransferPropertiesTestType.Preserve)
             {
                 options = new ShareFileStorageResourceOptions
                 {
-                    ContentDisposition = new(true),
-                    ContentLanguage = new(true),
-                    CacheControl = new(true),
-                    ContentType = new(true),
-                    FileMetadata = new(true),
-                    FileAttributes = new(true),
-                    FileCreatedOn = new(true),
-                    FileLastWrittenOn = new(true),
-                    FilePermissions = new(true)
+                    FilePermissions = true
                 };
             }
             return new ShareFileStorageResource(objectClient, options);
@@ -301,7 +296,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         protected override async Task VerifyPropertiesCopyAsync(
-            DataTransfer transfer,
+            TransferOperation transfer,
             TransferPropertiesTestType transferPropertiesTestType,
             TestEventsRaised testEventsRaised,
             ShareFileClient sourceClient,
@@ -311,7 +306,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Verify completion
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
             // Verify Copy - using original source File and Copying the destination
             await testEventsRaised.AssertSingleCompletedCheck();
             using Stream sourceStream = await sourceClient.OpenReadAsync(cancellationToken: cancellationToken);
@@ -399,12 +394,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 destinationClient,
                 type: propertiesType);
 
-            DataTransferOptions options = new DataTransferOptions();
+            TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             TransferManager transferManager = new TransferManager();
 
             // Act - Start transfer and await for completion.
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 sourceResource,
                 destinationResource,
                 options);
@@ -422,6 +417,111 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 sourceClient,
                 destinationClient,
                 cancellationToken: cancellationTokenSource.Token);
+        }
+
+        [RecordedTest]
+        [Combinatorial]
+        public async Task ShareFileToShareFile_ManuallySetFileAttributes(
+             [Values(NtfsFileAttributes.ReadOnly, NtfsFileAttributes.Hidden, NtfsFileAttributes.Archive, (NtfsFileAttributes.ReadOnly | NtfsFileAttributes.Archive), (NtfsFileAttributes.ReadOnly | NtfsFileAttributes.Hidden))] NtfsFileAttributes fileAttribute,
+             [Values(0, 1024)] long fileLength)
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<ShareClient> destination = await GetDestinationDisposingContainerAsync();
+
+            // Create source
+            ShareFileClient sourceClient = await CreateFileClientWithPermissionKeyAsync(
+                container: source.Container,
+                objectLength: fileLength,
+                createResource: true);
+            StorageResourceItem sourceResource = GetSourceStorageResourceItem(sourceClient);
+
+            // Create destination
+            ShareFileClient destinationClient = await GetDestinationObjectClientAsync(
+                container: destination.Container,
+                createResource: false);
+            // Manually setting destination File Attributes
+            ShareFileStorageResourceOptions destFileAttributeOptions = new();
+            destFileAttributeOptions.FileAttributes = fileAttribute;
+            StorageResourceItem destinationResource = new ShareFileStorageResource(destinationClient, destFileAttributeOptions);
+
+            TransferOptions options = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Act - Start transfer and await for completion.
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            await testEventsRaised.AssertSingleCompletedCheck();
+            using Stream sourceStream = await sourceClient.OpenReadAsync(cancellationToken: cancellationTokenSource.Token);
+            using Stream destinationStream = await destinationClient.OpenReadAsync(cancellationToken: cancellationTokenSource.Token);
+            Assert.AreEqual(sourceStream, destinationStream);
+            // Verify destination File Attributes
+            ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync(cancellationToken: cancellationTokenSource.Token);
+            Assert.AreEqual(fileAttribute, destinationProperties.SmbProperties.FileAttributes);
+        }
+
+        [RecordedTest]
+        [Combinatorial]
+        public async Task ShareFileToShareFile_PreserveFromSourceFileAttributes(
+             [Values(NtfsFileAttributes.ReadOnly, NtfsFileAttributes.Hidden, NtfsFileAttributes.Archive, (NtfsFileAttributes.ReadOnly | NtfsFileAttributes.Archive), (NtfsFileAttributes.ReadOnly | NtfsFileAttributes.Hidden))] NtfsFileAttributes fileAttribute,
+             [Values(0, 1024)] long fileLength)
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<ShareClient> destination = await GetDestinationDisposingContainerAsync();
+
+            // Create source
+            ShareFileClient sourceClient = await CreateFileClientWithPermissionKeyAsync(
+                container: source.Container,
+                objectLength: fileLength,
+                createResource: true,
+                fileAttribute: fileAttribute);
+            // Manually setting source File Attributes
+            ShareFileStorageResourceOptions sourceFileAttributeOptions = new();
+            sourceFileAttributeOptions.FileAttributes = fileAttribute;
+            StorageResourceItem sourceResource = new ShareFileStorageResource(sourceClient, sourceFileAttributeOptions);
+
+            // Create destination
+            ShareFileClient destinationClient = await GetDestinationObjectClientAsync(
+                container: destination.Container,
+                createResource: false);
+            // No options set, so preserve from source
+            StorageResourceItem destinationResource = new ShareFileStorageResource(destinationClient);
+
+            TransferOptions options = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Act - Start transfer and await for completion.
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            await testEventsRaised.AssertSingleCompletedCheck();
+            using Stream sourceStream = await sourceClient.OpenReadAsync(cancellationToken: cancellationTokenSource.Token);
+            using Stream destinationStream = await destinationClient.OpenReadAsync(cancellationToken: cancellationTokenSource.Token);
+            Assert.AreEqual(sourceStream, destinationStream);
         }
 
         [RecordedTest]
@@ -488,12 +588,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 destinationClient,
                 type: propertiesType);
 
-            DataTransferOptions options = new DataTransferOptions();
+            TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             TransferManager transferManager = new TransferManager();
 
             // Act - Start transfer and await for completion.
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 sourceResource,
                 destinationResource,
                 options);
@@ -506,7 +606,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
             // Verify Copy - using original source File and Copying the destination
             await testEventsRaised.AssertSingleCompletedCheck();
             using Stream sourceStream = await sourceClient.OpenReadAsync();

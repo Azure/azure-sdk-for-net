@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Network.Models
 
         void IJsonModel<FlowLogInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FlowLogInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FlowLogInformation)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
             if (Optional.IsDefined(FlowAnalyticsConfiguration))
@@ -43,6 +51,11 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("storageId"u8);
             writer.WriteStringValue(StorageId);
+            if (Optional.IsDefined(EnabledFilteringCriteria))
+            {
+                writer.WritePropertyName("enabledFilteringCriteria"u8);
+                writer.WriteStringValue(EnabledFilteringCriteria);
+            }
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
             if (Optional.IsDefined(RetentionPolicy))
@@ -64,14 +77,13 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FlowLogInformation IJsonModel<FlowLogInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -98,6 +110,7 @@ namespace Azure.ResourceManager.Network.Models
             TrafficAnalyticsProperties flowAnalyticsConfiguration = default;
             ManagedServiceIdentity identity = default;
             ResourceIdentifier storageId = default;
+            string enabledFilteringCriteria = default;
             bool enabled = default;
             RetentionPolicyParameters retentionPolicy = default;
             FlowLogProperties format = default;
@@ -142,6 +155,11 @@ namespace Azure.ResourceManager.Network.Models
                             storageId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("enabledFilteringCriteria"u8))
+                        {
+                            enabledFilteringCriteria = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("enabled"u8))
                         {
                             enabled = property0.Value.GetBoolean();
@@ -179,6 +197,7 @@ namespace Azure.ResourceManager.Network.Models
                 flowAnalyticsConfiguration,
                 identity,
                 storageId,
+                enabledFilteringCriteria,
                 enabled,
                 retentionPolicy,
                 format,
@@ -206,7 +225,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFlowLogInformation(document.RootElement, options);
                     }
                 default:

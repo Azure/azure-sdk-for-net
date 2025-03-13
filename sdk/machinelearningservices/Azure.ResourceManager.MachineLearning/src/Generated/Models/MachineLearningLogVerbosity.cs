@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningLogVerbosity left, MachineLearningLogVerbosity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningLogVerbosity"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningLogVerbosity left, MachineLearningLogVerbosity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningLogVerbosity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningLogVerbosity"/>. </summary>
         public static implicit operator MachineLearningLogVerbosity(string value) => new MachineLearningLogVerbosity(value);
 
         /// <inheritdoc />

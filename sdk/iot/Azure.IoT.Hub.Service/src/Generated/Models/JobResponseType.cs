@@ -69,7 +69,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static bool operator ==(JobResponseType left, JobResponseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobResponseType"/> values are not the same. </summary>
         public static bool operator !=(JobResponseType left, JobResponseType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JobResponseType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JobResponseType"/>. </summary>
         public static implicit operator JobResponseType(string value) => new JobResponseType(value);
 
         /// <inheritdoc />

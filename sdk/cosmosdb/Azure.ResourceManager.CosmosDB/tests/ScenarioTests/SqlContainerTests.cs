@@ -39,8 +39,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public async Task GlobalTeardown()
         {
-            await _sqlDatabase.DeleteAsync(WaitUntil.Completed);
-            await _databaseAccount.DeleteAsync(WaitUntil.Completed);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await _sqlDatabase.DeleteAsync(WaitUntil.Completed);
+                await _databaseAccount.DeleteAsync(WaitUntil.Completed);
+            }
         }
 
         [SetUp]
@@ -52,12 +55,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (await SqlContainerCollection.ExistsAsync(_containerName))
+            if (Mode != RecordedTestMode.Playback)
             {
-                var id = SqlContainerCollection.Id;
-                id = CosmosDBSqlContainerResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _containerName);
-                CosmosDBSqlContainerResource container = this.ArmClient.GetCosmosDBSqlContainerResource(id);
-                await container.DeleteAsync(WaitUntil.Completed);
+                if (await SqlContainerCollection.ExistsAsync(_containerName))
+                {
+                    var id = SqlContainerCollection.Id;
+                    id = CosmosDBSqlContainerResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _containerName);
+                    CosmosDBSqlContainerResource container = this.ArmClient.GetCosmosDBSqlContainerResource(id);
+                    await container.DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 
@@ -228,7 +234,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                                     {
                                         new CosmosDBSpatialType("Point")
                                     }, null),
-                        }, null)
+                        },
+                        new List<CosmosDBVectorIndex>(),
+                        serializedAdditionalRawData: new Dictionary<string, BinaryData>())
                 })
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

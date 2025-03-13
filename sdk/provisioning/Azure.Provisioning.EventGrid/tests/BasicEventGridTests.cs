@@ -23,32 +23,31 @@ public class BasicEventGridTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "Service location."
-                    };
-                BicepParameter webhookUri = new(nameof(webhookUri), typeof(string));
+                Infrastructure infra = new();
+
+                ProvisioningParameter webhookUri = new(nameof(webhookUri), typeof(string));
+                infra.Add(webhookUri);
 
                 StorageAccount storage =
                     new(nameof(storage))
                     {
-                        Location = location,
                         Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
                         Kind = StorageKind.StorageV2,
                         AllowBlobPublicAccess = false,
                         AccessTier = StorageAccountAccessTier.Hot,
                         EnableHttpsTrafficOnly = true,
                     };
+                infra.Add(storage);
+
                 SystemTopic topic =
                     new(nameof(topic))
                     {
-                        Location = location,
                         Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
                         Source = storage.Id,
                         TopicType = "Microsoft.Storage.StorageAccounts"
                     };
+                infra.Add(topic);
+
                 SystemTopicEventSubscription subscription =
                     new(nameof(subscription))
                     {
@@ -63,57 +62,60 @@ public class BasicEventGridTests(bool async)
                             }
                         }
                     };
+                infra.Add(subscription);
+
+                return infra;
             })
         .Compare(
             """
-            @description('Service location.')
-            param location string = resourceGroup().location
-
             param webhookUri string
 
-            resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: location
-                sku: {
-                    name: 'Standard_LRS'
-                }
-                properties: {
-                    accessTier: 'Hot'
-                    allowBlobPublicAccess: false
-                    supportsHttpsTrafficOnly: true
-                }
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
+            resource storage 'Microsoft.Storage/storageAccounts@2024-01-01' = {
+              name: take('storage${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: 'Standard_LRS'
+              }
+              properties: {
+                accessTier: 'Hot'
+                allowBlobPublicAccess: false
+                supportsHttpsTrafficOnly: true
+              }
             }
 
             resource topic 'Microsoft.EventGrid/systemTopics@2022-06-15' = {
-                name: take('topic${uniqueString(resourceGroup().id)}', 24)
-                location: location
-                identity: {
-                    type: 'SystemAssigned'
-                }
-                properties: {
-                    source: storage.id
-                    topicType: 'Microsoft.Storage.StorageAccounts'
-                }
+              name: take('topic${uniqueString(resourceGroup().id)}', 24)
+              location: location
+              identity: {
+                type: 'SystemAssigned'
+              }
+              properties: {
+                source: storage.id
+                topicType: 'Microsoft.Storage.StorageAccounts'
+              }
             }
 
             resource subscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@2022-06-15' = {
-                name: take('subscription${uniqueString(resourceGroup().id)}', 24)
-                properties: {
-                    destination: {
-                        endpointType: 'WebHook'
-                        properties: {
-                            endpointUrl: webhookUri
-                        }
-                    }
-                    filter: {
-                        includedEventTypes: [
-                            'Microsoft.Storage.BlobCreated'
-                            'Microsoft.Storage.BlobDeleted'
-                        ]
-                    }
+              name: take('subscription${uniqueString(resourceGroup().id)}', 24)
+              properties: {
+                destination: {
+                  endpointType: 'WebHook'
+                  properties: {
+                    endpointUrl: webhookUri
+                  }
                 }
-                parent: topic
+                filter: {
+                  includedEventTypes: [
+                    'Microsoft.Storage.BlobCreated'
+                    'Microsoft.Storage.BlobDeleted'
+                  ]
+                }
+              }
+              parent: topic
             }
             """)
         .Lint()

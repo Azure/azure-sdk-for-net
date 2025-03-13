@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if !AZURE_OPENAI_GA
+
 using System.ClientModel.Primitives;
 
 namespace Azure.AI.OpenAI.Assistants;
@@ -24,9 +26,11 @@ internal partial class AzureAssistantClient : AssistantClient
         options ??= new();
 
         _endpoint = endpoint;
-        _apiVersion = options.Version;
+        _apiVersion = options.GetRawServiceApiValueForClient(this);
     }
 
     protected AzureAssistantClient()
     { }
 }
+
+#endif

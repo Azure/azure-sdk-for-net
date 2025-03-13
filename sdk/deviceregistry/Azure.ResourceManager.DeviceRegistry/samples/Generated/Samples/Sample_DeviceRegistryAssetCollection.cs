@@ -11,18 +11,451 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DeviceRegistry.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DeviceRegistry.Samples
 {
     public partial class Sample_DeviceRegistryAssetCollection
     {
-        // List Assets in a Resource Group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListAssetsInAResourceGroup()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAssetWithDiscoveredAssetRefs()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/List_Assets_ResourceGroup.json
-            // this example is just showing the usage of "Assets_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/Create_Asset_With_DiscoveredAssetRef.json
+            // this example is just showing the usage of "Asset_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DeviceRegistryAssetResource
+            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
+
+            // invoke the operation
+            string assetName = "my-asset";
+            DeviceRegistryAssetData data = new DeviceRegistryAssetData(new AzureLocation("West Europe"), new DeviceRegistryExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
+            {
+                Properties = new AssetProperties("myAssetEndpointProfile")
+                {
+                    IsEnabled = true,
+                    ExternalAssetId = "8ZBA6LRHU0A458969",
+                    DisplayName = "AssetDisplayName",
+                    Description = "This is a sample Asset",
+                    Manufacturer = "Contoso",
+                    ManufacturerUri = new Uri("https://www.contoso.com/manufacturerUri"),
+                    Model = "ContosoModel",
+                    ProductCode = "SA34VDG",
+                    HardwareRevision = "1.0",
+                    SoftwareRevision = "2.0",
+                    DocumentationUri = new Uri("https://www.example.com/manual"),
+                    SerialNumber = "64-103816-519918-8",
+                    DiscoveredAssetRefs = { "discoveredAsset1", "discoveredAsset2" },
+                    DefaultDatasetsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
+                    DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
+                    DefaultTopic = new DeviceRegistryTopic("/path/defaultTopic")
+                    {
+                        Retain = DeviceRegistryTopicRetainType.Keep,
+                    },
+                    Datasets = {new DeviceRegistryDataset("dataset1")
+{
+DatasetConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
+Topic = new DeviceRegistryTopic("/path/dataset1")
+{
+Retain = DeviceRegistryTopicRetainType.Keep,
+},
+DataPoints = {new DeviceRegistryDataPoint("dataPoint1", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt1")
+{
+ObservabilityMode = DataPointObservabilityMode.Counter,
+DataPointConfiguration = "{\"publishingInterval\":8,\"samplingInterval\":8,\"queueSize\":4}",
+}, new DeviceRegistryDataPoint("dataPoint2", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt2")
+{
+ObservabilityMode = DataPointObservabilityMode.None,
+DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"queueSize\":7}",
+}},
+}},
+                    Events = {new DeviceRegistryEvent("event1", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
+{
+ObservabilityMode = EventObservabilityMode.None,
+EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
+Topic = new DeviceRegistryTopic("/path/event1")
+{
+Retain = DeviceRegistryTopicRetainType.Keep,
+},
+}, new DeviceRegistryEvent("event2", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
+{
+ObservabilityMode = EventObservabilityMode.Log,
+EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSize\":4}",
+}},
+                },
+                Tags =
+{
+["site"] = "building-1"
+},
+            };
+            ArmOperation<DeviceRegistryAssetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, data);
+            DeviceRegistryAssetResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DeviceRegistryAssetData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAssetWithExternalAssetId()
+        {
+            // Generated from example definition: 2024-11-01/Create_Asset_With_ExternalAssetId.json
+            // this example is just showing the usage of "Asset_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DeviceRegistryAssetResource
+            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
+
+            // invoke the operation
+            string assetName = "my-asset";
+            DeviceRegistryAssetData data = new DeviceRegistryAssetData(new AzureLocation("West Europe"), new DeviceRegistryExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
+            {
+                Properties = new AssetProperties("myAssetEndpointProfile")
+                {
+                    IsEnabled = true,
+                    ExternalAssetId = "8ZBA6LRHU0A458969",
+                    DisplayName = "AssetDisplayName",
+                    Description = "This is a sample Asset",
+                    Manufacturer = "Contoso",
+                    ManufacturerUri = new Uri("https://www.contoso.com/manufacturerUri"),
+                    Model = "ContosoModel",
+                    ProductCode = "SA34VDG",
+                    HardwareRevision = "1.0",
+                    SoftwareRevision = "2.0",
+                    DocumentationUri = new Uri("https://www.example.com/manual"),
+                    SerialNumber = "64-103816-519918-8",
+                    DefaultDatasetsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
+                    DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
+                    DefaultTopic = new DeviceRegistryTopic("/path/defaultTopic")
+                    {
+                        Retain = DeviceRegistryTopicRetainType.Keep,
+                    },
+                    Datasets = {new DeviceRegistryDataset("dataset1")
+{
+DatasetConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
+Topic = new DeviceRegistryTopic("/path/dataset1")
+{
+Retain = DeviceRegistryTopicRetainType.Keep,
+},
+DataPoints = {new DeviceRegistryDataPoint("dataPoint1", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt1")
+{
+ObservabilityMode = DataPointObservabilityMode.Counter,
+DataPointConfiguration = "{\"publishingInterval\":8,\"samplingInterval\":8,\"queueSize\":4}",
+}, new DeviceRegistryDataPoint("dataPoint2", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt2")
+{
+ObservabilityMode = DataPointObservabilityMode.None,
+DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"queueSize\":7}",
+}},
+}},
+                    Events = {new DeviceRegistryEvent("event1", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
+{
+ObservabilityMode = EventObservabilityMode.None,
+EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
+Topic = new DeviceRegistryTopic("/path/event1")
+{
+Retain = DeviceRegistryTopicRetainType.Keep,
+},
+}, new DeviceRegistryEvent("event2", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
+{
+ObservabilityMode = EventObservabilityMode.Log,
+EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSize\":4}",
+}},
+                },
+                Tags =
+{
+["site"] = "building-1"
+},
+            };
+            ArmOperation<DeviceRegistryAssetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, data);
+            DeviceRegistryAssetResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DeviceRegistryAssetData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAssetWithoutDisplayName()
+        {
+            // Generated from example definition: 2024-11-01/Create_Asset_Without_DisplayName.json
+            // this example is just showing the usage of "Asset_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DeviceRegistryAssetResource
+            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
+
+            // invoke the operation
+            string assetName = "my-asset";
+            DeviceRegistryAssetData data = new DeviceRegistryAssetData(new AzureLocation("West Europe"), new DeviceRegistryExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
+            {
+                Properties = new AssetProperties("myAssetEndpointProfile")
+                {
+                    IsEnabled = true,
+                    ExternalAssetId = "8ZBA6LRHU0A458969",
+                    Description = "This is a sample Asset",
+                    Manufacturer = "Contoso",
+                    ManufacturerUri = new Uri("https://www.contoso.com/manufacturerUri"),
+                    Model = "ContosoModel",
+                    ProductCode = "SA34VDG",
+                    HardwareRevision = "1.0",
+                    SoftwareRevision = "2.0",
+                    DocumentationUri = new Uri("https://www.example.com/manual"),
+                    SerialNumber = "64-103816-519918-8",
+                    DefaultDatasetsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
+                    DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
+                    DefaultTopic = new DeviceRegistryTopic("/path/defaultTopic")
+                    {
+                        Retain = DeviceRegistryTopicRetainType.Keep,
+                    },
+                    Datasets = {new DeviceRegistryDataset("dataset1")
+{
+DatasetConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
+Topic = new DeviceRegistryTopic("/path/dataset1")
+{
+Retain = DeviceRegistryTopicRetainType.Keep,
+},
+DataPoints = {new DeviceRegistryDataPoint("dataPoint1", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt1")
+{
+ObservabilityMode = DataPointObservabilityMode.Counter,
+DataPointConfiguration = "{\"publishingInterval\":8,\"samplingInterval\":8,\"queueSize\":4}",
+}, new DeviceRegistryDataPoint("dataPoint2", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt2")
+{
+ObservabilityMode = DataPointObservabilityMode.None,
+DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"queueSize\":7}",
+}},
+}},
+                    Events = {new DeviceRegistryEvent("event1", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
+{
+ObservabilityMode = EventObservabilityMode.None,
+EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
+Topic = new DeviceRegistryTopic("/path/event1")
+{
+Retain = DeviceRegistryTopicRetainType.Keep,
+},
+}, new DeviceRegistryEvent("event2", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
+{
+ObservabilityMode = EventObservabilityMode.Log,
+EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSize\":4}",
+}},
+                },
+                Tags =
+{
+["site"] = "building-1"
+},
+            };
+            ArmOperation<DeviceRegistryAssetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, data);
+            DeviceRegistryAssetResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DeviceRegistryAssetData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAssetWithoutExternalAssetId()
+        {
+            // Generated from example definition: 2024-11-01/Create_Asset_Without_ExternalAssetId.json
+            // this example is just showing the usage of "Asset_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DeviceRegistryAssetResource
+            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
+
+            // invoke the operation
+            string assetName = "my-asset";
+            DeviceRegistryAssetData data = new DeviceRegistryAssetData(new AzureLocation("West Europe"), new DeviceRegistryExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
+            {
+                Properties = new AssetProperties("myAssetEndpointProfile")
+                {
+                    IsEnabled = true,
+                    DisplayName = "AssetDisplayName",
+                    Description = "This is a sample Asset",
+                    Manufacturer = "Contoso",
+                    ManufacturerUri = new Uri("https://www.contoso.com/manufacturerUri"),
+                    Model = "ContosoModel",
+                    ProductCode = "SA34VDG",
+                    HardwareRevision = "1.0",
+                    SoftwareRevision = "2.0",
+                    DocumentationUri = new Uri("https://www.example.com/manual"),
+                    SerialNumber = "64-103816-519918-8",
+                    DefaultDatasetsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
+                    DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
+                    DefaultTopic = new DeviceRegistryTopic("/path/defaultTopic")
+                    {
+                        Retain = DeviceRegistryTopicRetainType.Keep,
+                    },
+                    Datasets = {new DeviceRegistryDataset("dataset1")
+{
+DatasetConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
+Topic = new DeviceRegistryTopic("/path/dataset1")
+{
+Retain = DeviceRegistryTopicRetainType.Keep,
+},
+DataPoints = {new DeviceRegistryDataPoint("dataPoint1", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt1")
+{
+ObservabilityMode = DataPointObservabilityMode.Counter,
+DataPointConfiguration = "{\"publishingInterval\":8,\"samplingInterval\":8,\"queueSize\":4}",
+}, new DeviceRegistryDataPoint("dataPoint2", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt2")
+{
+ObservabilityMode = DataPointObservabilityMode.None,
+DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"queueSize\":7}",
+}},
+}},
+                    Events = {new DeviceRegistryEvent("event1", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
+{
+ObservabilityMode = EventObservabilityMode.None,
+EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
+Topic = new DeviceRegistryTopic("/path/event1")
+{
+Retain = DeviceRegistryTopicRetainType.Keep,
+},
+}, new DeviceRegistryEvent("event2", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
+{
+ObservabilityMode = EventObservabilityMode.Log,
+EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSize\":4}",
+}},
+                },
+                Tags =
+{
+["site"] = "building-1"
+},
+            };
+            ArmOperation<DeviceRegistryAssetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, data);
+            DeviceRegistryAssetResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DeviceRegistryAssetData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetAsset()
+        {
+            // Generated from example definition: 2024-11-01/Get_Asset.json
+            // this example is just showing the usage of "Asset_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DeviceRegistryAssetResource
+            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
+
+            // invoke the operation
+            string assetName = "my-asset";
+            DeviceRegistryAssetResource result = await collection.GetAsync(assetName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DeviceRegistryAssetData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetAssetWithSyncStatus()
+        {
+            // Generated from example definition: 2024-11-01/Get_Asset_With_SyncStatus.json
+            // this example is just showing the usage of "Asset_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DeviceRegistryAssetResource
+            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
+
+            // invoke the operation
+            string assetName = "my-asset";
+            DeviceRegistryAssetResource result = await collection.GetAsync(assetName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DeviceRegistryAssetData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListAssetsResourceGroup()
+        {
+            // Generated from example definition: 2024-11-01/List_Assets_ResourceGroup.json
+            // this example is just showing the usage of "Asset_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -49,50 +482,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get an Asset
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetAnAsset()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAsset()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Get_Asset.json
-            // this example is just showing the usage of "Assets_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this DeviceRegistryAssetResource
-            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
-
-            // invoke the operation
-            string assetName = "my-asset";
-            DeviceRegistryAssetResource result = await collection.GetAsync(assetName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DeviceRegistryAssetData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get an Asset
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetAnAsset()
-        {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Get_Asset.json
-            // this example is just showing the usage of "Assets_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/Get_Asset.json
+            // this example is just showing the usage of "Asset_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -116,89 +514,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an Asset
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetAnAsset()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAssetWithSyncStatus()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Get_Asset.json
-            // this example is just showing the usage of "Assets_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this DeviceRegistryAssetResource
-            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
-
-            // invoke the operation
-            string assetName = "my-asset";
-            NullableResponse<DeviceRegistryAssetResource> response = await collection.GetIfExistsAsync(assetName);
-            DeviceRegistryAssetResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DeviceRegistryAssetData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Get an Asset with Sync Status.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetAnAssetWithSyncStatus()
-        {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Get_Asset_With_SyncStatus.json
-            // this example is just showing the usage of "Assets_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this DeviceRegistryAssetResource
-            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
-
-            // invoke the operation
-            string assetName = "my-asset";
-            DeviceRegistryAssetResource result = await collection.GetAsync(assetName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DeviceRegistryAssetData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get an Asset with Sync Status.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetAnAssetWithSyncStatus()
-        {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Get_Asset_With_SyncStatus.json
-            // this example is just showing the usage of "Assets_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/Get_Asset_With_SyncStatus.json
+            // this example is just showing the usage of "Asset_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -222,13 +543,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an Asset with Sync Status.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetAnAssetWithSyncStatus()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAsset()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Get_Asset_With_SyncStatus.json
-            // this example is just showing the usage of "Assets_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/Get_Asset.json
+            // this example is just showing the usage of "Asset_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -252,7 +572,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -264,13 +584,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             }
         }
 
-        // Create an Asset With External Asset Id.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAnAssetWithExternalAssetId()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAssetWithSyncStatus()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Create_Asset_With_ExternalAssetId.json
-            // this example is just showing the usage of "Assets_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/Get_Asset_With_SyncStatus.json
+            // this example is just showing the usage of "Asset_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -289,235 +608,21 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
 
             // invoke the operation
             string assetName = "my-asset";
-            DeviceRegistryAssetData data = new DeviceRegistryAssetData(new AzureLocation("West Europe"), new DeviceRegistryExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
+            NullableResponse<DeviceRegistryAssetResource> response = await collection.GetIfExistsAsync(assetName);
+            DeviceRegistryAssetResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
             {
-                AssetType = "MyAssetType",
-                Enabled = true,
-                ExternalAssetId = "8ZBA6LRHU0A458969",
-                DisplayName = "AssetDisplayName",
-                Description = "This is a sample Asset",
-                AssetEndpointProfileUri = new Uri("https://www.example.com/myAssetEndpointProfile"),
-                Manufacturer = "Contoso",
-                ManufacturerUri = new Uri("https://www.contoso.com/manufacturerUri"),
-                Model = "ContosoModel",
-                ProductCode = "SA34VDG",
-                HardwareRevision = "1.0",
-                SoftwareRevision = "2.0",
-                DocumentationUri = new Uri("https://www.example.com/manual"),
-                SerialNumber = "64-103816-519918-8",
-                DefaultDataPointsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
-                DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
-                DataPoints =
-{
-new DataPoint("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt1")
-{
-CapabilityId = "dtmi:com:example:Thermostat:__temperature;1",
-ObservabilityMode = DataPointsObservabilityMode.Counter,
-DataPointConfiguration = "{\"publishingInterval\":8,\"samplingInterval\":8,\"queueSize\":4}",
-},new DataPoint("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt2")
-{
-CapabilityId = "dtmi:com:example:Thermostat:__pressure;1",
-ObservabilityMode = DataPointsObservabilityMode.None,
-DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"queueSize\":7}",
-}
-},
-                Events =
-{
-new AssetEvent("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
-{
-CapabilityId = "dtmi:com:example:Thermostat:__temperature;1",
-ObservabilityMode = EventsObservabilityMode.None,
-EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
-},new AssetEvent("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
-{
-CapabilityId = "dtmi:com:example:Thermostat:__pressure;1",
-ObservabilityMode = EventsObservabilityMode.Log,
-EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSize\":4}",
-}
-},
-                Tags =
-{
-["site"] = "building-1",
-},
-            };
-            ArmOperation<DeviceRegistryAssetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, data);
-            DeviceRegistryAssetResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DeviceRegistryAssetData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create an Asset Without Display Name.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAnAssetWithoutDisplayName()
-        {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Create_Asset_Without_DisplayName.json
-            // this example is just showing the usage of "Assets_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this DeviceRegistryAssetResource
-            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
-
-            // invoke the operation
-            string assetName = "my-asset";
-            DeviceRegistryAssetData data = new DeviceRegistryAssetData(new AzureLocation("West Europe"), new DeviceRegistryExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
             {
-                AssetType = "MyAssetType",
-                Enabled = true,
-                ExternalAssetId = "8ZBA6LRHU0A458969",
-                Description = "This is a sample Asset",
-                AssetEndpointProfileUri = new Uri("https://www.example.com/myAssetEndpointProfile"),
-                Manufacturer = "Contoso",
-                ManufacturerUri = new Uri("https://www.contoso.com/manufacturerUri"),
-                Model = "ContosoModel",
-                ProductCode = "SA34VDG",
-                HardwareRevision = "1.0",
-                SoftwareRevision = "2.0",
-                DocumentationUri = new Uri("https://www.example.com/manual"),
-                SerialNumber = "64-103816-519918-8",
-                DefaultDataPointsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
-                DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
-                DataPoints =
-{
-new DataPoint("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt1")
-{
-CapabilityId = "dtmi:com:example:Thermostat:__temperature;1",
-ObservabilityMode = DataPointsObservabilityMode.Counter,
-DataPointConfiguration = "{\"publishingInterval\":8,\"samplingInterval\":8,\"queueSize\":4}",
-},new DataPoint("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt2")
-{
-CapabilityId = "dtmi:com:example:Thermostat:__pressure;1",
-ObservabilityMode = DataPointsObservabilityMode.None,
-DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"queueSize\":7}",
-}
-},
-                Events =
-{
-new AssetEvent("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
-{
-CapabilityId = "dtmi:com:example:Thermostat:__temperature;1",
-ObservabilityMode = EventsObservabilityMode.None,
-EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
-},new AssetEvent("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
-{
-CapabilityId = "dtmi:com:example:Thermostat:__pressure;1",
-ObservabilityMode = EventsObservabilityMode.Log,
-EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSize\":4}",
-}
-},
-                Tags =
-{
-["site"] = "building-1",
-},
-            };
-            ArmOperation<DeviceRegistryAssetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, data);
-            DeviceRegistryAssetResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DeviceRegistryAssetData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create an Asset Without External Asset Id.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAnAssetWithoutExternalAssetId()
-        {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Create_Asset_Without_ExternalAssetId.json
-            // this example is just showing the usage of "Assets_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this DeviceRegistryAssetResource
-            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
-
-            // invoke the operation
-            string assetName = "my-asset";
-            DeviceRegistryAssetData data = new DeviceRegistryAssetData(new AzureLocation("West Europe"), new DeviceRegistryExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
-            {
-                AssetType = "MyAssetType",
-                Enabled = true,
-                DisplayName = "AssetDisplayName",
-                Description = "This is a sample Asset",
-                AssetEndpointProfileUri = new Uri("https://www.example.com/myAssetEndpointProfile"),
-                Manufacturer = "Contoso",
-                ManufacturerUri = new Uri("https://www.contoso.com/manufacturerUri"),
-                Model = "ContosoModel",
-                ProductCode = "SA34VDG",
-                HardwareRevision = "1.0",
-                SoftwareRevision = "2.0",
-                DocumentationUri = new Uri("https://www.example.com/manual"),
-                SerialNumber = "64-103816-519918-8",
-                DefaultDataPointsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
-                DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
-                DataPoints =
-{
-new DataPoint("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt1")
-{
-CapabilityId = "dtmi:com:example:Thermostat:__temperature;1",
-ObservabilityMode = DataPointsObservabilityMode.Counter,
-DataPointConfiguration = "{\"publishingInterval\":8,\"samplingInterval\":8,\"queueSize\":4}",
-},new DataPoint("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt2")
-{
-CapabilityId = "dtmi:com:example:Thermostat:__pressure;1",
-ObservabilityMode = DataPointsObservabilityMode.None,
-DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"queueSize\":7}",
-}
-},
-                Events =
-{
-new AssetEvent("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
-{
-CapabilityId = "dtmi:com:example:Thermostat:__temperature;1",
-ObservabilityMode = EventsObservabilityMode.None,
-EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
-},new AssetEvent("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
-{
-CapabilityId = "dtmi:com:example:Thermostat:__pressure;1",
-ObservabilityMode = EventsObservabilityMode.Log,
-EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSize\":4}",
-}
-},
-                Tags =
-{
-["site"] = "building-1",
-},
-            };
-            ArmOperation<DeviceRegistryAssetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, data);
-            DeviceRegistryAssetResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DeviceRegistryAssetData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DeviceRegistryAssetData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

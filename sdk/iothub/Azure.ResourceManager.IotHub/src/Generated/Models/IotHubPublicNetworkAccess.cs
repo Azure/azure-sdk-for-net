@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static bool operator ==(IotHubPublicNetworkAccess left, IotHubPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(IotHubPublicNetworkAccess left, IotHubPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IotHubPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IotHubPublicNetworkAccess"/>. </summary>
         public static implicit operator IotHubPublicNetworkAccess(string value) => new IotHubPublicNetworkAccess(value);
 
         /// <inheritdoc />

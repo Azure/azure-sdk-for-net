@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static bool operator ==(ResourceHealthEventLevelValue left, ResourceHealthEventLevelValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceHealthEventLevelValue"/> values are not the same. </summary>
         public static bool operator !=(ResourceHealthEventLevelValue left, ResourceHealthEventLevelValue right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResourceHealthEventLevelValue"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceHealthEventLevelValue"/>. </summary>
         public static implicit operator ResourceHealthEventLevelValue(string value) => new ResourceHealthEventLevelValue(value);
 
         /// <inheritdoc />

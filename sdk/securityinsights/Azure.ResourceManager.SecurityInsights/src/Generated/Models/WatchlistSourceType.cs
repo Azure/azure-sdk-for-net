@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(WatchlistSourceType left, WatchlistSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WatchlistSourceType"/> values are not the same. </summary>
         public static bool operator !=(WatchlistSourceType left, WatchlistSourceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WatchlistSourceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WatchlistSourceType"/>. </summary>
         public static implicit operator WatchlistSourceType(string value) => new WatchlistSourceType(value);
 
         /// <inheritdoc />

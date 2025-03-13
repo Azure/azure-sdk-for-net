@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if !AZURE_OPENAI_GA
+
 #nullable enable
 
 using System.ClientModel;
@@ -13,6 +15,7 @@ namespace Azure.AI.OpenAI.FineTuning;
 /// <summary>
 /// Extension methods for Azure fine tuning clients.
 /// </summary>
+[Experimental("AOAI001")]
 internal static class AzureFineTuningClientExtensions
 {
     /// <summary>
@@ -59,3 +62,5 @@ internal static class AzureFineTuningClientExtensions
         return azureClient;
     }
 }
+
+#endif

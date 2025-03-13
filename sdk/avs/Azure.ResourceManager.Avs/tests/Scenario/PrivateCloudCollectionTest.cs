@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Avs.Tests
         public async Task CreateOrUpdate()
         {
             var collection = await  GetPrivateCloudCollectionAsync();
-            string privateCloudName = Recording.GenerateAssetName("avs-sdk-test-");
+            string privateCloudName = Recording.GenerateAssetName("avs-dotnet-test-");
             AvsPrivateCloudData data = new AvsPrivateCloudData(DefaultLocation, new AvsSku("AV36"))
             {
                 ManagementCluster = new AvsManagementCluster()

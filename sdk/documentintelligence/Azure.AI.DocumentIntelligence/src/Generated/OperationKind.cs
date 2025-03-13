@@ -48,7 +48,7 @@ namespace Azure.AI.DocumentIntelligence
         public static bool operator ==(OperationKind left, OperationKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationKind"/> values are not the same. </summary>
         public static bool operator !=(OperationKind left, OperationKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OperationKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationKind"/>. </summary>
         public static implicit operator OperationKind(string value) => new OperationKind(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(SecurityInsightsMetadataFlag left, SecurityInsightsMetadataFlag right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsMetadataFlag"/> values are not the same. </summary>
         public static bool operator !=(SecurityInsightsMetadataFlag left, SecurityInsightsMetadataFlag right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityInsightsMetadataFlag"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsMetadataFlag"/>. </summary>
         public static implicit operator SecurityInsightsMetadataFlag(string value) => new SecurityInsightsMetadataFlag(value);
 
         /// <inheritdoc />

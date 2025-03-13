@@ -67,6 +67,19 @@ internal class MqttConnectPropertiesJsonConverter : JsonConverter<MqttConnectPro
 
     public override void Write(Utf8JsonWriter writer, MqttConnectProperties value, JsonSerializerOptions options)
     {
-        throw new NotImplementedException();
+        writer.WriteStartObject();
+        writer.WritePropertyName(MqttConnectProperties.ProtocolVersionProperty);
+        writer.WriteNumberValue((int)value.ProtocolVersion);
+
+        writer.WritePropertyName(MqttConnectProperties.UsernameProperty);
+        writer.WriteStringValue(value.Username);
+
+        writer.WritePropertyName(MqttConnectProperties.PasswordProperty);
+        writer.WriteStringValue(value.Password);
+
+        writer.WritePropertyName(MqttConnectProperties.UserPropertiesProperty);
+        JsonSerializer.Serialize(writer, value.UserProperties, options);
+
+        writer.WriteEndObject();
     }
 }

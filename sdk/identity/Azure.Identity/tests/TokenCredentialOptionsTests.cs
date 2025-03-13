@@ -4,7 +4,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -12,10 +11,6 @@ using System.Reflection;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Messaging.EventHubs;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.Diagnostics.Tracing.Extensions;
-using Microsoft.Diagnostics.Tracing.Parsers.AspNet;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -57,7 +52,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void CustomAuthorityHost()
         {
-            string envHostValue = AzureAuthorityHosts.AzureGermany.ToString();
+            string envHostValue = AzureAuthorityHosts.AzureGovernment.ToString();
 
             using (new TestEnvVar("AZURE_AUTHORITY_HOST", envHostValue))
             {
@@ -312,7 +307,7 @@ namespace Azure.Identity.Tests
             CollectionAssert.IsSubsetOf(iSupportsInterfaces, s_KnownISupportsInterfaces);
 
             // create source instance and set values for all the supported intefaces
-            var source = Activator.CreateInstance(sourceType);
+            var source = Activator.CreateInstance(sourceType, true);
 
             if (source is ISupportsAdditionallyAllowedTenants aat)
             {

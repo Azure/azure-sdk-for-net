@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static bool operator ==(AppConfigurationPrivateLinkServiceConnectionStatus left, AppConfigurationPrivateLinkServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppConfigurationPrivateLinkServiceConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(AppConfigurationPrivateLinkServiceConnectionStatus left, AppConfigurationPrivateLinkServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppConfigurationPrivateLinkServiceConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppConfigurationPrivateLinkServiceConnectionStatus"/>. </summary>
         public static implicit operator AppConfigurationPrivateLinkServiceConnectionStatus(string value) => new AppConfigurationPrivateLinkServiceConnectionStatus(value);
 
         /// <inheritdoc />

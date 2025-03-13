@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static bool operator ==(BackupVaultCmkKekIdentityType left, BackupVaultCmkKekIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupVaultCmkKekIdentityType"/> values are not the same. </summary>
         public static bool operator !=(BackupVaultCmkKekIdentityType left, BackupVaultCmkKekIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackupVaultCmkKekIdentityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupVaultCmkKekIdentityType"/>. </summary>
         public static implicit operator BackupVaultCmkKekIdentityType(string value) => new BackupVaultCmkKekIdentityType(value);
 
         /// <inheritdoc />

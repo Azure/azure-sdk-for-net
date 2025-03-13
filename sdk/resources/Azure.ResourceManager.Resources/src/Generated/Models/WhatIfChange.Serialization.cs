@@ -21,15 +21,45 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IJsonModel<WhatIfChange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WhatIfChange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WhatIfChange)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
+            if (Optional.IsDefined(DeploymentId))
+            {
+                writer.WritePropertyName("deploymentId"u8);
+                writer.WriteStringValue(DeploymentId);
+            }
+            if (Optional.IsDefined(SymbolicName))
+            {
+                writer.WritePropertyName("symbolicName"u8);
+                writer.WriteStringValue(SymbolicName);
+            }
+            if (Optional.IsDefined(Identifiers))
+            {
+                writer.WritePropertyName("identifiers"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Identifiers);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Identifiers, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
             writer.WritePropertyName("changeType"u8);
             writer.WriteStringValue(ChangeType.ToSerialString());
             if (Optional.IsDefined(UnsupportedReason))
@@ -43,7 +73,7 @@ namespace Azure.ResourceManager.Resources.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Before);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Before))
+                using (JsonDocument document = JsonDocument.Parse(Before, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -55,7 +85,7 @@ namespace Azure.ResourceManager.Resources.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(After);
 #else
-                using (JsonDocument document = JsonDocument.Parse(After))
+                using (JsonDocument document = JsonDocument.Parse(After, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -79,14 +109,13 @@ namespace Azure.ResourceManager.Resources.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WhatIfChange IJsonModel<WhatIfChange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -110,6 +139,9 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             string resourceId = default;
+            string deploymentId = default;
+            string symbolicName = default;
+            BinaryData identifiers = default;
             WhatIfChangeType changeType = default;
             string unsupportedReason = default;
             BinaryData before = default;
@@ -122,6 +154,25 @@ namespace Azure.ResourceManager.Resources.Models
                 if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("deploymentId"u8))
+                {
+                    deploymentId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("symbolicName"u8))
+                {
+                    symbolicName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("identifiers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identifiers = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("changeType"u8))
@@ -174,6 +225,9 @@ namespace Azure.ResourceManager.Resources.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new WhatIfChange(
                 resourceId,
+                deploymentId,
+                symbolicName,
+                identifiers,
                 changeType,
                 unsupportedReason,
                 before,
@@ -213,6 +267,67 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         builder.AppendLine($"'{ResourceId}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deploymentId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentId))
+                {
+                    builder.Append("  deploymentId: ");
+                    if (DeploymentId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DeploymentId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DeploymentId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SymbolicName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  symbolicName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SymbolicName))
+                {
+                    builder.Append("  symbolicName: ");
+                    if (SymbolicName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SymbolicName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SymbolicName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identifiers), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identifiers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Identifiers))
+                {
+                    builder.Append("  identifiers: ");
+                    builder.AppendLine($"'{Identifiers.ToString()}'");
                 }
             }
 
@@ -331,7 +446,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWhatIfChange(document.RootElement, options);
                     }
                 default:

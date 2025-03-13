@@ -48,7 +48,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static bool operator ==(ParagraphRole left, ParagraphRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ParagraphRole"/> values are not the same. </summary>
         public static bool operator !=(ParagraphRole left, ParagraphRole right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ParagraphRole"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ParagraphRole"/>. </summary>
         public static implicit operator ParagraphRole(string value) => new ParagraphRole(value);
 
         /// <inheritdoc />

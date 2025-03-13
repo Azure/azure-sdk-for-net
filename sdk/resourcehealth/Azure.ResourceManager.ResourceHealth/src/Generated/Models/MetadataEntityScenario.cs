@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static bool operator ==(MetadataEntityScenario left, MetadataEntityScenario right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetadataEntityScenario"/> values are not the same. </summary>
         public static bool operator !=(MetadataEntityScenario left, MetadataEntityScenario right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MetadataEntityScenario"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MetadataEntityScenario"/>. </summary>
         public static implicit operator MetadataEntityScenario(string value) => new MetadataEntityScenario(value);
 
         /// <inheritdoc />

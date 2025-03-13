@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(ManagedRuleSetActionType left, ManagedRuleSetActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedRuleSetActionType"/> values are not the same. </summary>
         public static bool operator !=(ManagedRuleSetActionType left, ManagedRuleSetActionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedRuleSetActionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedRuleSetActionType"/>. </summary>
         public static implicit operator ManagedRuleSetActionType(string value) => new ManagedRuleSetActionType(value);
 
         /// <inheritdoc />

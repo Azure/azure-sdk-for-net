@@ -17,8 +17,6 @@ using Azure.Storage.Queues.Specialized;
 using Moq.Protected;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using NUnit.Framework.Internal;
-using BenchmarkDotNet.Disassemblers;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -109,6 +107,26 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
+        [Test]
+        public void Ctor_ConnectionString_CustomUri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var blobEndpoint = new Uri("http://customdomain/" + accountName);
+            var blobSecondaryEndpoint = new Uri("http://customdomain/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+
+            var queueName = "queueName";
+
+            QueueClient queue = new QueueClient(connectionString.ToString(true), queueName);
+
+            Assert.AreEqual(queueName, queue.Name);
+            Assert.AreEqual(accountName, queue.AccountName);
+        }
+
         [RecordedTest]
         public void Ctor_Uri()
         {
@@ -134,6 +152,22 @@ namespace Azure.Storage.Queues.Test
             TestHelper.AssertExpectedException(
                 () => new QueueClient(uri, tokenCredential),
                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
+        }
+
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var queueName = "queueName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var queueEndpoint = new Uri($"https://customdomain/{queueName}");
+
+            QueueClient queueClient = new QueueClient(queueEndpoint, credentials);
+
+            Assert.AreEqual(accountName, queueClient.AccountName);
+            Assert.AreEqual(queueName, queueClient.Name);
         }
 
         [RecordedTest]
@@ -717,6 +751,19 @@ namespace Azure.Storage.Queues.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.GetAccessPolicyAsync(),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2025_07_05)]
+        public async Task GetSetAccessPolicyAsync_OAuth()
+        {
+            // Arrange
+            QueueServiceClient service = GetServiceClient_OAuth();
+            await using DisposingQueue test = await GetTestQueueAsync(service);
+
+            // Act
+            Response<IEnumerable<QueueSignedIdentifier>> response = await test.Queue.GetAccessPolicyAsync();
+            await test.Queue.SetAccessPolicyAsync(permissions: response.Value);
         }
 
         [RecordedTest]
@@ -1924,6 +1971,29 @@ namespace Azure.Storage.Queues.Test
         }
         #endregion
 
+        [Test]
+        [TestCase(null, false)]
+        [TestCase("QueueNotFound", true)]
+        [TestCase("QueueDisabled", false)]
+        [TestCase("", false)]
+        public void QueueErrorCode_EqualityOperatorOverloadTest(string errorCode, bool expected)
+        {
+            var ex = new RequestFailedException(status: 404, message: "Some error.", errorCode: errorCode, innerException: null);
+
+            bool result1 = QueueErrorCode.QueueNotFound == ex.ErrorCode;
+            bool result2 = ex.ErrorCode == QueueErrorCode.QueueNotFound;
+            Assert.AreEqual(expected, result1);
+            Assert.AreEqual(expected, result2);
+
+            bool result3 = QueueErrorCode.QueueNotFound != ex.ErrorCode;
+            bool result4 = ex.ErrorCode != QueueErrorCode.QueueNotFound;
+            Assert.AreEqual(!expected, result3);
+            Assert.AreEqual(!expected, result4);
+
+            bool result5 = QueueErrorCode.QueueNotFound.Equals(ex.ErrorCode);
+            Assert.AreEqual(expected, result5);
+        }
+
         [RecordedTest]
         public void CanMockQueueServiceClientRetrieval()
         {
@@ -1984,44 +2054,6 @@ namespace Azure.Storage.Queues.Test
             mock = new Mock<QueueClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new QueueClientOptions()).Object;
             mock = new Mock<QueueClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new QueueClientOptions()).Object;
             mock = new Mock<QueueClient>(new Uri("https://test/test"), mockTokenCredential, new QueueClientOptions()).Object;
-        }
-
-        [RecordedTest]
-        [TestCase("", null)]
-        [TestCase("u", QueueAccessPolicyPermissions.Update)]
-        [TestCase("au", QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Update)]
-        [TestCase("rap", QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Process)]
-        [TestCase("raup", QueueAccessPolicyPermissions.All)]
-        public async Task QueueClientPolicyPermissions_CheckIfSetCorrectly(string expectedPermissionsStr, QueueAccessPolicyPermissions? expectedPermissionsEnum)
-        {
-            await using DisposingQueue test = await GetTestQueueAsync();
-
-            QueueSignedIdentifier[] signedIdentifiers = new[]
-            {
-                new QueueSignedIdentifier
-                {
-                    Id = GetNewString(),
-                    AccessPolicy =
-                        new QueueAccessPolicy
-                        {
-                            StartsOn =  Recording.UtcNow.AddHours(-1),
-                            ExpiresOn =  Recording.UtcNow.AddHours(1),
-                            Permissions = expectedPermissionsStr
-                        }
-                }
-            };
-            await test.Queue.SetAccessPolicyAsync(signedIdentifiers);
-
-            Response<IEnumerable<Models.QueueSignedIdentifier>> getResult = await test.Queue.GetAccessPolicyAsync();
-            Models.QueueSignedIdentifier acl = getResult.Value.First();
-
-            string actualPermissionsStr = acl.AccessPolicy.Permissions;
-            QueueAccessPolicyPermissions? actualPermissionsEnum = acl.AccessPolicy.QueueAccessPolicyPermissions;
-
-            if (string.IsNullOrEmpty(expectedPermissionsStr)) expectedPermissionsStr = null;
-
-            Assert.AreEqual(expectedPermissionsStr, actualPermissionsStr);
-            Assert.AreEqual(expectedPermissionsEnum.ToPermissionsString(), actualPermissionsEnum.ToPermissionsString());
         }
     }
 }

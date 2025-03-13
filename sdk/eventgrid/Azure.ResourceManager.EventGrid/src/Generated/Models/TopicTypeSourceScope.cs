@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(TopicTypeSourceScope left, TopicTypeSourceScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TopicTypeSourceScope"/> values are not the same. </summary>
         public static bool operator !=(TopicTypeSourceScope left, TopicTypeSourceScope right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TopicTypeSourceScope"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TopicTypeSourceScope"/>. </summary>
         public static implicit operator TopicTypeSourceScope(string value) => new TopicTypeSourceScope(value);
 
         /// <inheritdoc />

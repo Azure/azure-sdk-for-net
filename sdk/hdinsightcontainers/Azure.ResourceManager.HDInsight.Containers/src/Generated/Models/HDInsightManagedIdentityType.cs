@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator ==(HDInsightManagedIdentityType left, HDInsightManagedIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightManagedIdentityType"/> values are not the same. </summary>
         public static bool operator !=(HDInsightManagedIdentityType left, HDInsightManagedIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HDInsightManagedIdentityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightManagedIdentityType"/>. </summary>
         public static implicit operator HDInsightManagedIdentityType(string value) => new HDInsightManagedIdentityType(value);
 
         /// <inheritdoc />

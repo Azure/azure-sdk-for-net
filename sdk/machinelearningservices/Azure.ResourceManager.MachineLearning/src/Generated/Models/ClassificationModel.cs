@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(ClassificationModel left, ClassificationModel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClassificationModel"/> values are not the same. </summary>
         public static bool operator !=(ClassificationModel left, ClassificationModel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClassificationModel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClassificationModel"/>. </summary>
         public static implicit operator ClassificationModel(string value) => new ClassificationModel(value);
 
         /// <inheritdoc />

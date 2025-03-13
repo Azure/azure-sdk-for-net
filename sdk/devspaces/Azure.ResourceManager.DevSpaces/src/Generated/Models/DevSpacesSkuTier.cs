@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
         public static bool operator ==(DevSpacesSkuTier left, DevSpacesSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevSpacesSkuTier"/> values are not the same. </summary>
         public static bool operator !=(DevSpacesSkuTier left, DevSpacesSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevSpacesSkuTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevSpacesSkuTier"/>. </summary>
         public static implicit operator DevSpacesSkuTier(string value) => new DevSpacesSkuTier(value);
 
         /// <inheritdoc />

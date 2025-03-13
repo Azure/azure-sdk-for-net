@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(ComputeFleetNetworkInterfaceAuxiliarySku left, ComputeFleetNetworkInterfaceAuxiliarySku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeFleetNetworkInterfaceAuxiliarySku"/> values are not the same. </summary>
         public static bool operator !=(ComputeFleetNetworkInterfaceAuxiliarySku left, ComputeFleetNetworkInterfaceAuxiliarySku right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeFleetNetworkInterfaceAuxiliarySku"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetNetworkInterfaceAuxiliarySku"/>. </summary>
         public static implicit operator ComputeFleetNetworkInterfaceAuxiliarySku(string value) => new ComputeFleetNetworkInterfaceAuxiliarySku(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static bool operator ==(AvailabilityGroupReplicaFailoverMode left, AvailabilityGroupReplicaFailoverMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvailabilityGroupReplicaFailoverMode"/> values are not the same. </summary>
         public static bool operator !=(AvailabilityGroupReplicaFailoverMode left, AvailabilityGroupReplicaFailoverMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AvailabilityGroupReplicaFailoverMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvailabilityGroupReplicaFailoverMode"/>. </summary>
         public static implicit operator AvailabilityGroupReplicaFailoverMode(string value) => new AvailabilityGroupReplicaFailoverMode(value);
 
         /// <inheritdoc />

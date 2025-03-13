@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(SqlPrivateEndpointProvisioningState left, SqlPrivateEndpointProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlPrivateEndpointProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(SqlPrivateEndpointProvisioningState left, SqlPrivateEndpointProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlPrivateEndpointProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlPrivateEndpointProvisioningState"/>. </summary>
         public static implicit operator SqlPrivateEndpointProvisioningState(string value) => new SqlPrivateEndpointProvisioningState(value);
 
         /// <inheritdoc />

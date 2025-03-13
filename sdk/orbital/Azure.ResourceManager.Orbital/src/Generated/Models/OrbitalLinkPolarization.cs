@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Orbital.Models
         public static bool operator ==(OrbitalLinkPolarization left, OrbitalLinkPolarization right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrbitalLinkPolarization"/> values are not the same. </summary>
         public static bool operator !=(OrbitalLinkPolarization left, OrbitalLinkPolarization right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OrbitalLinkPolarization"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OrbitalLinkPolarization"/>. </summary>
         public static implicit operator OrbitalLinkPolarization(string value) => new OrbitalLinkPolarization(value);
 
         /// <inheritdoc />

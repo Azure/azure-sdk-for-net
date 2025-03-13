@@ -23,13 +23,22 @@ namespace Azure.ResourceManager.Search
 
         void IJsonModel<SearchServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SearchServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchServiceData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(SearchSku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -39,39 +48,6 @@ namespace Azure.ResourceManager.Search
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -85,10 +61,20 @@ namespace Azure.ResourceManager.Search
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
+            if (Optional.IsDefined(Endpoint))
+            {
+                writer.WritePropertyName("endpoint"u8);
+                writer.WriteStringValue(Endpoint.AbsoluteUri);
+            }
             if (Optional.IsDefined(HostingMode))
             {
                 writer.WritePropertyName("hostingMode"u8);
                 writer.WriteStringValue(HostingMode.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(ComputeType))
+            {
+                writer.WritePropertyName("computeType"u8);
+                writer.WriteStringValue(ComputeType.Value.ToString());
             }
             if (Optional.IsDefined(PublicInternetAccess))
             {
@@ -184,21 +170,15 @@ namespace Azure.ResourceManager.Search
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && Optional.IsDefined(IsUpgradeAvailable))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("upgradeAvailable"u8);
+                writer.WriteBooleanValue(IsUpgradeAvailable.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServiceUpgradeOn))
+            {
+                writer.WritePropertyName("serviceUpgradeDate"u8);
+                writer.WriteStringValue(ServiceUpgradeOn.Value, "O");
             }
             writer.WriteEndObject();
         }
@@ -233,7 +213,9 @@ namespace Azure.ResourceManager.Search
             SystemData systemData = default;
             int? replicaCount = default;
             int? partitionCount = default;
+            Uri endpoint = default;
             SearchServiceHostingMode? hostingMode = default;
+            SearchServiceComputeType? computeType = default;
             SearchServicePublicInternetAccess? publicNetworkAccess = default;
             SearchServiceStatus? status = default;
             string statusDetails = default;
@@ -247,6 +229,8 @@ namespace Azure.ResourceManager.Search
             IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections = default;
             IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = default;
             ETag? eTag = default;
+            bool? upgradeAvailable = default;
+            DateTimeOffset? serviceUpgradeDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -339,6 +323,15 @@ namespace Azure.ResourceManager.Search
                             partitionCount = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("endpoint"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            endpoint = new Uri(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("hostingMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -346,6 +339,15 @@ namespace Azure.ResourceManager.Search
                                 continue;
                             }
                             hostingMode = property0.Value.GetString().ToSearchServiceHostingMode();
+                            continue;
+                        }
+                        if (property0.NameEquals("computeType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            computeType = new SearchServiceComputeType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -478,6 +480,24 @@ namespace Azure.ResourceManager.Search
                             eTag = new ETag(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("upgradeAvailable"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            upgradeAvailable = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("serviceUpgradeDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            serviceUpgradeDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -498,7 +518,9 @@ namespace Azure.ResourceManager.Search
                 identity,
                 replicaCount,
                 partitionCount,
+                endpoint,
                 hostingMode,
+                computeType,
                 publicNetworkAccess,
                 status,
                 statusDetails,
@@ -512,6 +534,8 @@ namespace Azure.ResourceManager.Search
                 privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>(),
                 sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>(),
                 eTag,
+                upgradeAvailable,
+                serviceUpgradeDate,
                 serializedAdditionalRawData);
         }
 
@@ -693,6 +717,21 @@ namespace Azure.ResourceManager.Search
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Endpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    endpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Endpoint))
+                {
+                    builder.Append("    endpoint: ");
+                    builder.AppendLine($"'{Endpoint.AbsoluteUri}'");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingMode), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -705,6 +744,21 @@ namespace Azure.ResourceManager.Search
                 {
                     builder.Append("    hostingMode: ");
                     builder.AppendLine($"'{HostingMode.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputeType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    computeType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ComputeType))
+                {
+                    builder.Append("    computeType: ");
+                    builder.AppendLine($"'{ComputeType.Value.ToString()}'");
                 }
             }
 
@@ -936,6 +990,38 @@ namespace Azure.ResourceManager.Search
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsUpgradeAvailable), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    upgradeAvailable: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsUpgradeAvailable))
+                {
+                    builder.Append("    upgradeAvailable: ");
+                    var boolValue = IsUpgradeAvailable.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceUpgradeOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    serviceUpgradeDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceUpgradeOn))
+                {
+                    builder.Append("    serviceUpgradeDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(ServiceUpgradeOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -964,7 +1050,7 @@ namespace Azure.ResourceManager.Search
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSearchServiceData(document.RootElement, options);
                     }
                 default:

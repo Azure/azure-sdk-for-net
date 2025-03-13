@@ -109,6 +109,12 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="format">The serialization format of the schema.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema.</returns>
+        /// <remarks>
+        /// If using a schema format that is unsupported by this client, upgrade to a
+        /// version that supports the schema format. Otherwise, the content MIME type
+        /// string will be returned as the value of the <see cref="SchemaProperties.Format"/>
+        /// for the returned Schema.
+        /// </remarks>
         public virtual Response<SchemaProperties> RegisterSchema(
             string groupName,
             string schemaName,
@@ -133,11 +139,11 @@ namespace Azure.Data.SchemaRegistry
                 Response response;
                 if (async)
                 {
-                    response = await RegisterSchemaAsync(groupName, schemaName, new BinaryData(schemaDefinition), format.ToContentType(), cancellationToken).ConfigureAwait(false);
+                    response = await RegisterSchemaAsync(groupName, schemaName, new BinaryData(schemaDefinition), format.ContentType, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RegisterSchema(groupName, schemaName, new BinaryData(schemaDefinition), format.ToContentType(), cancellationToken);
+                    response = RegisterSchema(groupName, schemaName, new BinaryData(schemaDefinition), format.ContentType, cancellationToken);
                 }
 
                 var schemaIdHeader = response.Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
@@ -165,6 +171,12 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="format">The serialization format of the schema.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema ID provided by the service.</returns>
+        /// <remarks>
+        /// If using a schema format that is unsupported by this client, upgrade to a
+        /// version that supports the schema format. Otherwise, the content MIME type
+        /// string will be returned as the value of the <see cref="SchemaProperties.Format"/>
+        /// for the returned Schema.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Response<SchemaProperties>> GetSchemaPropertiesAsync(
             string groupName,
@@ -185,6 +197,12 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="format">The serialization format of the schema.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema ID provided by the service.</returns>
+        /// <remarks>
+        /// If using a schema format that is unsupported by this client, upgrade to a
+        /// version that supports the schema format. Otherwise, the content MIME type
+        /// string will be returned as the value of the <see cref="SchemaProperties.Format"/>
+        /// for the returned Schema.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Response<SchemaProperties> GetSchemaProperties(
             string groupName,
@@ -210,11 +228,11 @@ namespace Azure.Data.SchemaRegistry
                 Response response;
                 if (async)
                 {
-                    response = await GetSchemaPropertiesByContentAsync(groupName, schemaName, new BinaryData(schemaDefinition), format.ToContentType().ToString(), cancellationToken).ConfigureAwait(false);
+                    response = await GetSchemaPropertiesByContentAsync(groupName, schemaName, new BinaryData(schemaDefinition), format.ContentType, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = GetSchemaPropertiesByContent(groupName, schemaName, new BinaryData(schemaDefinition), format.ToContentType(), cancellationToken);
+                    response = GetSchemaPropertiesByContent(groupName, schemaName, new BinaryData(schemaDefinition), format.ContentType, cancellationToken);
                 }
 
                 var schemaIdHeader = response.Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
@@ -239,6 +257,12 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaId">The schema ID of the the schema from the SchemaRegistry.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
+        /// <remarks>
+        /// If using a schema format that is unsupported by this client, upgrade to a
+        /// version that supports the schema format. Otherwise, the content MIME type
+        /// string will be returned as the value of the <see cref="SchemaProperties.Format"/>
+        /// for the returned <see cref="SchemaRegistrySchema.Properties"/>.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Response<SchemaRegistrySchema>> GetSchemaAsync(string schemaId, CancellationToken cancellationToken = default) =>
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -252,6 +276,12 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaVersion"> Version number of specific schema. </param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
+        /// <remarks>
+        /// If using a schema format that is unsupported by this client, upgrade to a
+        /// version that supports the schema format. Otherwise, the content MIME type
+        /// string will be returned as the value of the <see cref="SchemaProperties.Format"/>
+        /// for the returned <see cref="SchemaRegistrySchema.Properties"/>.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Response<SchemaRegistrySchema>> GetSchemaAsync(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default) =>
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -263,6 +293,12 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaId">The schema ID of the the schema from the SchemaRegistry.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
+        /// <remarks>
+        /// If using a schema format that is unsupported by this client, upgrade to a
+        /// version that supports the schema format. Otherwise, the content MIME type
+        /// string will be returned as the value of the <see cref="SchemaProperties.Format"/>
+        /// for the returned <see cref="SchemaRegistrySchema.Properties"/>.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Response<SchemaRegistrySchema> GetSchema(string schemaId, CancellationToken cancellationToken = default) =>
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -276,6 +312,12 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaVersion"> Version number of specific schema. </param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
+        /// <remarks>
+        /// If using a schema format that is unsupported by this client, upgrade to a
+        /// version that supports the schema format. Otherwise, the content MIME type
+        /// string will be returned as the value of the <see cref="SchemaProperties.Format"/>
+        /// for the returned <see cref="SchemaRegistrySchema.Properties"/>.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Response<SchemaRegistrySchema> GetSchema(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default) =>
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -290,11 +332,13 @@ namespace Azure.Data.SchemaRegistry
                 Response<BinaryData> response;
                 if (async)
                 {
-                    response = await GetSchemaByVersionAsync(groupName, schemaName, version, SchemaFormat.Avro.ToContentType().ToString(), cancellationToken).ConfigureAwait(false);
+                    // The generated client expects an "accept" header, which should be the Avro content type
+                    response = await GetSchemaByVersionAsync(groupName, schemaName, version, SchemaFormat.Avro.ContentType, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = GetSchemaByVersion(groupName, schemaName, version, SchemaFormat.Avro.ToContentType().ToString(), cancellationToken);
+                    // The generated client expects an "accept" header, which should be the Avro content type
+                    response = GetSchemaByVersion(groupName, schemaName, version, SchemaFormat.Avro.ContentType, cancellationToken);
                 }
 
                 var schemaIdHeader = response.GetRawResponse().Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
@@ -324,11 +368,11 @@ namespace Azure.Data.SchemaRegistry
                 Response<BinaryData> response;
                 if (async)
                 {
-                    response = await GetSchemaByIdAsync(schemaId, SchemaFormat.Avro.ToContentType().ToString(), cancellationToken).ConfigureAwait(false);
+                    response = await GetSchemaByIdAsync(schemaId, SchemaFormat.Avro.ContentType, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = GetSchemaById(schemaId, SchemaFormat.Avro.ToContentType().ToString(), cancellationToken);
+                    response = GetSchemaById(schemaId, SchemaFormat.Avro.ContentType, cancellationToken);
                 }
 
                 var schemaIdHeader = response.GetRawResponse().Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;

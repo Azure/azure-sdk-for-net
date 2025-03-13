@@ -281,5 +281,64 @@ namespace Azure.Communication.Email.Tests.Samples
             //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_With_Attachments_Async
         }
+
+        [RecordedTest]
+        [AsyncOnly]
+        public async Task SendEmailWithInlineAttachmentAsync()
+        {
+            EmailClient emailClient = CreateEmailClient();
+
+            #region Snippet:Azure_Communication_Email_Send_With_Inline_Attachments_Async
+            // Create the email content and reference any inline attachments.
+            var emailContent = new EmailContent("This is the subject")
+            {
+                PlainText = "This is the body",
+                Html = "<html><body>This is the html body<img src=\"cid:myInlineAttachmentContentId\"></body></html>"
+            };
+
+            // Create the EmailMessage
+            var emailMessage = new EmailMessage(
+                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                //@@ recipientAddress: "<recipient email address>"
+                /*@@*/ senderAddress: TestEnvironment.SenderAddress,
+                /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
+                content: emailContent);
+
+#if SNIPPET
+            var filePath = "<path to your file>";
+            var attachmentName = "<name of your attachment>";
+            var contentType = MediaTypeNames.Text.Plain;
+            var contentId = "myInlineAttachmentContentId";
+#endif
+
+#if SNIPPET
+            var content = new BinaryData(System.IO.File.ReadAllBytes(filePath));
+#else
+            string attachmentName = "InlineImage.jpg";
+            string contentType = MediaTypeNames.Image.Jpeg;
+            var content = new BinaryData("This is image file content.");
+            var contentId = "myInlineAttachmentContentId";
+#endif
+            var emailAttachment = new EmailAttachment(attachmentName, contentType, content);
+            emailAttachment.ContentId = contentId;
+
+            emailMessage.Attachments.Add(emailAttachment);
+
+            //@@ try
+            //@@ {
+                EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Completed, emailMessage);
+                Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+
+                /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+                string operationId = emailSendOperation.Id;
+                Console.WriteLine($"Email operation id = {operationId}");
+            //@@ }
+            //@@ catch ( RequestFailedException ex )
+            //@@ {
+                //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+                //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+            //@@ }
+            #endregion Snippet:Azure_Communication_Email_Send_With_Inline_Attachments_Async
+        }
     }
 }

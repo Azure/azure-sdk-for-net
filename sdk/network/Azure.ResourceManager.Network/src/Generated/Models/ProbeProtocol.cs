@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ProbeProtocol left, ProbeProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProbeProtocol"/> values are not the same. </summary>
         public static bool operator !=(ProbeProtocol left, ProbeProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProbeProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProbeProtocol"/>. </summary>
         public static implicit operator ProbeProtocol(string value) => new ProbeProtocol(value);
 
         /// <inheritdoc />

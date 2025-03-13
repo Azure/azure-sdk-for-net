@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(CustomHttpsProvisioningState left, CustomHttpsProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CustomHttpsProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(CustomHttpsProvisioningState left, CustomHttpsProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CustomHttpsProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomHttpsProvisioningState"/>. </summary>
         public static implicit operator CustomHttpsProvisioningState(string value) => new CustomHttpsProvisioningState(value);
 
         /// <inheritdoc />

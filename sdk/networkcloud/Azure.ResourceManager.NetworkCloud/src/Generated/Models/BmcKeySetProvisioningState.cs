@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(BmcKeySetProvisioningState left, BmcKeySetProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BmcKeySetProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(BmcKeySetProvisioningState left, BmcKeySetProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BmcKeySetProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BmcKeySetProvisioningState"/>. </summary>
         public static implicit operator BmcKeySetProvisioningState(string value) => new BmcKeySetProvisioningState(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(VirtualMachineVirtioInterfaceType left, VirtualMachineVirtioInterfaceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachineVirtioInterfaceType"/> values are not the same. </summary>
         public static bool operator !=(VirtualMachineVirtioInterfaceType left, VirtualMachineVirtioInterfaceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualMachineVirtioInterfaceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachineVirtioInterfaceType"/>. </summary>
         public static implicit operator VirtualMachineVirtioInterfaceType(string value) => new VirtualMachineVirtioInterfaceType(value);
 
         /// <inheritdoc />

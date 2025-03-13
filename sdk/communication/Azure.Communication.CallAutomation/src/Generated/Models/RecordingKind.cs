@@ -22,21 +22,21 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AzureCommunicationServicesValue = "azureCommunicationServices";
-        private const string TeamsValue = "teams";
-        private const string TeamsComplianceValue = "teamsCompliance";
+        private const string AzureCommunicationServicesValue = "AzureCommunicationServices";
+        private const string TeamsValue = "Teams";
+        private const string TeamsComplianceValue = "TeamsCompliance";
 
-        /// <summary> azureCommunicationServices. </summary>
+        /// <summary> Recording initiated by Azure Communication Services. </summary>
         public static RecordingKind AzureCommunicationServices { get; } = new RecordingKind(AzureCommunicationServicesValue);
-        /// <summary> teams. </summary>
+        /// <summary> Recording initiated by Teams user. </summary>
         public static RecordingKind Teams { get; } = new RecordingKind(TeamsValue);
-        /// <summary> teamsCompliance. </summary>
+        /// <summary> Recording initiated by Teams compliance policy. </summary>
         public static RecordingKind TeamsCompliance { get; } = new RecordingKind(TeamsComplianceValue);
         /// <summary> Determines if two <see cref="RecordingKind"/> values are the same. </summary>
         public static bool operator ==(RecordingKind left, RecordingKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecordingKind"/> values are not the same. </summary>
         public static bool operator !=(RecordingKind left, RecordingKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RecordingKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecordingKind"/>. </summary>
         public static implicit operator RecordingKind(string value) => new RecordingKind(value);
 
         /// <inheritdoc />

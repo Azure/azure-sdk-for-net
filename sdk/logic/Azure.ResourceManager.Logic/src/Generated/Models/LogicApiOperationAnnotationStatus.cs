@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator ==(LogicApiOperationAnnotationStatus left, LogicApiOperationAnnotationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicApiOperationAnnotationStatus"/> values are not the same. </summary>
         public static bool operator !=(LogicApiOperationAnnotationStatus left, LogicApiOperationAnnotationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogicApiOperationAnnotationStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogicApiOperationAnnotationStatus"/>. </summary>
         public static implicit operator LogicApiOperationAnnotationStatus(string value) => new LogicApiOperationAnnotationStatus(value);
 
         /// <inheritdoc />

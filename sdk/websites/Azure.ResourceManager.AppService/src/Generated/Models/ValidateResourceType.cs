@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator ==(ValidateResourceType left, ValidateResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ValidateResourceType"/> values are not the same. </summary>
         public static bool operator !=(ValidateResourceType left, ValidateResourceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ValidateResourceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ValidateResourceType"/>. </summary>
         public static implicit operator ValidateResourceType(string value) => new ValidateResourceType(value);
 
         /// <inheritdoc />

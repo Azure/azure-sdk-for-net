@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static bool operator ==(SolutionProvisioningState left, SolutionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SolutionProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(SolutionProvisioningState left, SolutionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SolutionProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SolutionProvisioningState"/>. </summary>
         public static implicit operator SolutionProvisioningState(string value) => new SolutionProvisioningState(value);
 
         /// <inheritdoc />

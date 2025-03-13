@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(HostnameType left, HostnameType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HostnameType"/> values are not the same. </summary>
         public static bool operator !=(HostnameType left, HostnameType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HostnameType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HostnameType"/>. </summary>
         public static implicit operator HostnameType(string value) => new HostnameType(value);
 
         /// <inheritdoc />

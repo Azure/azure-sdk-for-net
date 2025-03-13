@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(JitSchedulingType left, JitSchedulingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JitSchedulingType"/> values are not the same. </summary>
         public static bool operator !=(JitSchedulingType left, JitSchedulingType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JitSchedulingType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JitSchedulingType"/>. </summary>
         public static implicit operator JitSchedulingType(string value) => new JitSchedulingType(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(HypothesisStatus left, HypothesisStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HypothesisStatus"/> values are not the same. </summary>
         public static bool operator !=(HypothesisStatus left, HypothesisStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HypothesisStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HypothesisStatus"/>. </summary>
         public static implicit operator HypothesisStatus(string value) => new HypothesisStatus(value);
 
         /// <inheritdoc />

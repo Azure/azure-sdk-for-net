@@ -34,6 +34,7 @@
     "*.user",
     ".vscode/cspell.json",
     "assets.json",
+    "eng/Packages.Data.props",
     "sdk/confidentialledger/Azure.Security.CodeTransparency/tests/TestFiles/*",
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
@@ -48,11 +49,13 @@
     "sdk/modelsrepository/*/api/*.cs",
     "sdk/monitor/Azure.ResourceManager.Monitor/api/*.cs",
     "sdk/objectanchors/*/api/*.cs",
+    "sdk/openai/Azure.AI.OpenAI/tests/Assets/playback_test_config.json",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
     "sdk/videoanalyzer/*/api/*.cs",
     "sdk/newrelicobservability/*/api/*.cs",
-    "sdk/paloaltonetworks.ngfw/*/api/*.cs"
+    "sdk/paloaltonetworks.ngfw/*/api/*.cs",
+    "sdk/servicefabricmanagedclusters/*/api/*.cs"
   ],
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
@@ -139,6 +142,7 @@
     "referer",
     "renormalize",
     "retriable",
+    "Servfail",
     "setsas",
     "signalr",
     "signup",
@@ -147,6 +151,7 @@
     "southcentralus",
     "structs",
     "Sysctls",
+    "SYSLIB",
     "Uefi",
     "uints",
     "unbilled",
@@ -178,6 +183,12 @@
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": [
         "warnaserror"
+      ]
+    },
+    {
+      "filename": "**/sdk/ai/**/*.cs",
+      "words": [
+        "Ubinary"
       ]
     },
     {
@@ -237,7 +248,8 @@
         "nsxt",
         "vcenter",
         "vcsa",
-        "vmotion"
+        "vmotion",
+        "Iscsi"
       ]
     },
     {
@@ -250,6 +262,12 @@
         "Adou",
         "Drtm",
         "Hvci"
+      ]
+    },
+    {
+      "filename": "**/sdk/computefleet/**/*.cs",
+      "words": [
+        "Rdma"
       ]
     },
     {
@@ -340,21 +358,27 @@
         "grek",
         "gujr",
         "gurmukhi",
+        "hani",
         "hebr",
         "inclusivity",
         "jpan",
         "khmr",
         "knda",
         "laoo",
+        "meitei",
         "mlym",
+        "mtei",
         "mymr",
         "nigiri",
         "odia",
+        "olck",
         "orya",
         "petabit",
         "picometer",
         "qnas",
         "regon",
+        "sharada",
+        "shrd",
         "taml",
         "telu",
         "thaa",
@@ -816,6 +840,7 @@
         "Gcmaes",
         "Generatevirtualwanvpnserverconfigurationvpnprofile",
         "ikev",
+        "ipam",
         "Ipconfiguration",
         "Mbps",
         "Nics",
@@ -879,7 +904,8 @@
         "tbps",
         "scsv",
         "sohsv",
-        "tsve"
+        "tsve",
+        "Openai"
       ]
     },
     {
@@ -899,11 +925,19 @@
       ]
     },
     {
-      "filename": "**/sdk/maps/Azure.Maps.TimeZone/**/*.cs",
+      "filename": "**/sdk/maps/Azure.Maps.TimeZones/**/*.cs",
       "words": [
         "Posix",
         "posix",
         "POSIX"
+      ]
+    },
+    {
+      "filename": "**/sdk/maps/Azure.Maps.Weather/**/*.cs",
+      "words": [
+        "Actuals",
+        "Bangla",
+        "Hecto"
       ]
     },
     {
@@ -973,6 +1007,25 @@
       "filename": "**/sdk/networkfunction/**/*.cs",
       "words": [
         "ipfix"
+      ]
+    },
+    {
+      "filename": "**/sdk/openai/**/*",
+      "words": [
+        "AOAI",
+        "Arrr",
+        "Dall",
+        "Dalle",
+        "Dall-E",
+        "devcert",
+        "Filip",
+        "Filip's",
+        "granularities",
+        "haikus",
+        "msdocs",
+        "OpenAI",
+        "Pavleski",
+        "Tekakwitha"
       ]
     },
     {
@@ -1059,6 +1112,7 @@
     {
       "filename": "**/sdk/postgresql/**/*.cs",
       "words": [
+        "awsec",
         "byok",
         "vcore",
         "vcores"
@@ -1153,6 +1207,12 @@
         "capi",
         "kvaio",
         "scvmm"
+      ]
+    },
+    {
+      "filename": "**/sdk/resourcemanager/**/*.cs",
+      "words": [
+        "AZPROVISION"
       ]
     },
     {
@@ -1389,7 +1449,8 @@
         "Ename",
         "Evalue",
         "Twilio",
-        "Soql"
+        "Soql",
+        "Tswtz"
       ]
     },
     {
@@ -1565,6 +1626,27 @@
       "words": [
         "AOAI",
         "Rerank"
+      ]
+    },
+    {
+      "filename": "**/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/api/*.cs",
+      "words": [
+        "prebuilts"
+      ]
+    },
+    {
+      "filename": "**/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/api/*.cs",
+      "words": [
+        "prebuilts"
+      ]
+    },
+    {
+      "filename": "**/sdk/iotoperations/Azure.ResourceManager.IotOperations/api/*.cs",
+      "words": [
+        "sasl",
+        "Sasl",
+        "Acks",
+        "acks"
       ]
     }
   ],

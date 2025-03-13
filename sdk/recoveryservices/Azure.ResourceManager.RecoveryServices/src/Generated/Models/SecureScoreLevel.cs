@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static bool operator ==(SecureScoreLevel left, SecureScoreLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecureScoreLevel"/> values are not the same. </summary>
         public static bool operator !=(SecureScoreLevel left, SecureScoreLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecureScoreLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecureScoreLevel"/>. </summary>
         public static implicit operator SecureScoreLevel(string value) => new SecureScoreLevel(value);
 
         /// <inheritdoc />

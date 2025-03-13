@@ -20,7 +20,6 @@ modelerfour:
 use-model-reader-writer: true
 
 
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'

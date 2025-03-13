@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ConnectionMonitorType left, ConnectionMonitorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectionMonitorType"/> values are not the same. </summary>
         public static bool operator !=(ConnectionMonitorType left, ConnectionMonitorType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConnectionMonitorType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionMonitorType"/>. </summary>
         public static implicit operator ConnectionMonitorType(string value) => new ConnectionMonitorType(value);
 
         /// <inheritdoc />

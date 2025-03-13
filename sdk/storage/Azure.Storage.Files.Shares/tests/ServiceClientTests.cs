@@ -40,7 +40,38 @@ namespace Azure.Storage.Files.Shares.Tests
 
             Assert.AreEqual("", builder.ShareName);
             Assert.AreEqual("", builder.DirectoryOrFilePath);
-            //Assert.AreEqual("accountName", builder.AccountName);
+            Assert.AreEqual(accountName, builder.AccountName);
+        }
+
+        [Test]
+        public void Ctor_ConnectionString_CustomUri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var fileEndpoint = new Uri("http://customdomain/" + accountName);
+            var fileSecondaryEndpoint = new Uri("http://customdomain/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
+
+            ShareServiceClient service = new ShareServiceClient(connectionString.ToString(true));
+
+            Assert.AreEqual(accountName, service.AccountName);
+        }
+
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var shareEndpoint = new Uri($"https://customdomain/");
+
+            ShareServiceClient service = new ShareServiceClient(shareEndpoint, credentials);
+
+            Assert.AreEqual(accountName, service.AccountName);
         }
 
         [RecordedTest]
@@ -151,21 +182,36 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareServiceProperties> propertiesResponse = await service.GetPropertiesAsync();
             ShareServiceProperties properties = propertiesResponse.Value;
 
-            // Assert
-            Assert.IsFalse(properties.Protocol.Smb.Multichannel.Enabled);
+            if (properties.Protocol.Smb.Multichannel.Enabled == true)
+            {
+                // Act
+                properties.Protocol.Smb.Multichannel.Enabled = false;
+                await service.SetPropertiesAsync(properties);
+                propertiesResponse = await service.GetPropertiesAsync();
+                properties = propertiesResponse.Value;
 
-            // Act
-            properties.Protocol.Smb.Multichannel.Enabled = true;
-            await service.SetPropertiesAsync(properties);
-            propertiesResponse = await service.GetPropertiesAsync();
-            properties = propertiesResponse.Value;
+                // Assert
+                Assert.IsFalse(properties.Protocol.Smb.Multichannel.Enabled);
 
-            // Assert
-            Assert.IsTrue(properties.Protocol.Smb.Multichannel.Enabled);
+                // Cleanup
+                properties.Protocol.Smb.Multichannel.Enabled = true;
+                await service.SetPropertiesAsync(properties);
+            }
+            else
+            {
+                // Act
+                properties.Protocol.Smb.Multichannel.Enabled = true;
+                await service.SetPropertiesAsync(properties);
+                propertiesResponse = await service.GetPropertiesAsync();
+                properties = propertiesResponse.Value;
 
-            // Cleanup
-            properties.Protocol.Smb.Multichannel.Enabled = false;
-            await service.SetPropertiesAsync(properties);
+                // Assert
+                Assert.IsTrue(properties.Protocol.Smb.Multichannel.Enabled);
+
+                // Cleanup
+                properties.Protocol.Smb.Multichannel.Enabled = false;
+                await service.SetPropertiesAsync(properties);
+            }
         }
 
         [RecordedTest]
@@ -429,6 +475,33 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(shares.Count, shares.Select(c => c.Name).Distinct().Count());
             Assert.IsTrue(shares.Any(c => share.Uri == service.GetShareClient(c.Name).Uri));
             Assert.IsTrue(shares.All(c => c.Properties.Metadata == null));
+        }
+
+        [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/45675")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_01_05)]
+        public async Task ListSharesSegmentAsync_ProvisionedBilling()
+        {
+            // Arrange
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+
+            // Ensure at least one share
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            List<ShareItem> shares = new List<ShareItem>();
+            await foreach (ShareItem item in service.GetSharesAsync())
+            {
+                shares.Add(item);
+            }
+
+            ShareItem shareItem = shares.FirstOrDefault();
+
+            // Assert
+            Assert.IsNotNull(shareItem.Properties.IncludedBurstIops);
+            Assert.IsNotNull(shareItem.Properties.MaxBurstCreditsForIops);
+            Assert.IsNotNull(shareItem.Properties.NextAllowedProvisionedIopsDowngradeTime);
+            Assert.IsNotNull(shareItem.Properties.NextAllowedProvisionedBandwidthDowngradeTime);
         }
 
         [RecordedTest]
