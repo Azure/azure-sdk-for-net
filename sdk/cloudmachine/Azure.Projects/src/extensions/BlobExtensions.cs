@@ -22,16 +22,18 @@ public static class BlobExtensions
     /// <param name="project"></param>
     /// <param name="containerName"></param>
     /// <returns></returns>
-    public static  BlobContainerClient GetBlobContainerClient(this ProjectClient project, string containerName)
+    public static  BlobContainerClient GetBlobContainerClient(this ProjectClient project, string containerName = "default")
     {
+        string id = $"{typeof(BlobContainerClient).FullName}@{containerName}";
         BlobContainerClient client = project.Subclients.GetClient(() =>
-            CreateClient(project, containerName), null);
+            CreateClient(project, containerName), id);
         return client;
     }
 
     private static BlobContainerClient CreateClient(ProjectClient project, string containerName)
     {
-        ClientConnection connection = project.GetConnection(containerName);
+        string id = $"{typeof(BlobContainerClient).FullName}@{containerName}";
+        ClientConnection connection = project.GetConnection(id);
         if (connection.TryGetLocatorAsUri(out Uri uri))
         {
             return new BlobContainerClient(uri, (TokenCredential)connection.Credential);

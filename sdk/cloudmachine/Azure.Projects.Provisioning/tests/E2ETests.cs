@@ -28,13 +28,13 @@ public class E2ETests
 
     [TestCase("-bicep")]
     //[TestCase("")]
-    public void ConnectionsInAppConfig(string arg)
+    public void KeyVault(string arg)
     {
         ProjectInfrastructure infra = new("cm0a110d2f21084bb");
         infra.AddFeature(new KeyVaultFeature());
         if (infra.TryExecuteCommand([arg])) return;
 
         ProjectClient project = new();
-        SecretClient secrets = project.GetKeyVaultSecretsClient();
+        SecretClient secrets = project.GetSecretClient();
     }
 }

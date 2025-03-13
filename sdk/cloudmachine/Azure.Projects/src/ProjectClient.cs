@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.Data.AppConfiguration;
@@ -15,8 +16,8 @@ namespace Azure.Projects;
 /// </summary>
 public partial class ProjectClient : ConnectionProvider
 {
-    private readonly ConfigurationClient _config;
     private readonly TokenCredential _credential = BuildCredential(default);
+    private readonly ConnectionProvider _connections;
 
     /// <summary>
     /// The project ID.
@@ -31,9 +32,36 @@ public partial class ProjectClient : ConnectionProvider
     {
         // TODO: should it ever create?
         ProjectId = ReadOrCreateProjectId();
-
-        _config = new(new Uri($"https://{ProjectId}.azconfig.io"), _credential);
+        _connections = new AppConfigConnectionProvider(new Uri($"https://{ProjectId}.azconfig.io"), _credential);
     }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ProjectClient"/> with the specified connection provider.
+    /// </summary>
+    /// <param name="connections"></param>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public ProjectClient(ConnectionProvider connections)
+    {
+        ProjectId = ReadOrCreateProjectId();
+        _connections = connections;
+    }
+
+    /// <summary>
+    /// Retrieves the connection options for a specified client type and instance ID.
+    /// </summary>
+    /// <param name="connectionId"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ClientConnection GetConnection(string connectionId)
+        => _connections.GetConnection(connectionId);
+
+    /// <summary>
+    /// Rerurns all connections.
+    /// </summary>
+    /// <returns></returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override IEnumerable<ClientConnection> GetAllConnections() => _connections.GetAllConnections();
 
     private static TokenCredential BuildCredential(TokenCredential credential)
     {

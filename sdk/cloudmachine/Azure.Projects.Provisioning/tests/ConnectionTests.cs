@@ -1,0 +1,121 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable enable
+
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Azure.Core;
+using Azure.Data.AppConfiguration;
+using Azure.Identity;
+using Azure.Messaging.ServiceBus;
+using Azure.Projects.AppConfiguration;
+using Azure.Projects.AppService;
+using Azure.Projects.KeyVault;
+using Azure.Projects.Ofx;
+using Azure.Projects.OpenAI;
+using Azure.Projects.ServiceBus;
+using Azure.Projects.Storage;
+using Azure.Security.KeyVault.Secrets;
+using Azure.Storage.Blobs;
+using NUnit.Framework;
+
+namespace Azure.Projects.Tests;
+
+public class ConnectionTests
+{
+    private string projectId = "cm0c420d2f21084cd";
+    [Test]
+    public void MinimalProject()
+    {
+        TestConnectionStore store = new();
+        ProjectInfrastructure infrastructure = new(store, projectId);
+        infrastructure.Build();
+
+        ProjectClient project = new(store.Provider);
+        var connections = project.GetAllConnections();
+        Assert.AreEqual(0, connections.Count());
+    }
+
+    [Test]
+    public void KeyVault()
+    {
+        TestConnectionStore store = new();
+        ProjectInfrastructure infrastructure = new(store, projectId);
+        infrastructure.AddFeature(new KeyVaultFeature());
+        infrastructure.Build();
+
+        ProjectClient project = new(store.Provider);
+        var connections = project.GetAllConnections();
+        Assert.AreEqual(1, connections.Count());
+        PrintConnections(connections);
+
+        SecretClient secrets = project.GetSecretClient();
+    }
+
+    [Test]
+    public void CloudMachine()
+    {
+        TestConnectionStore store = new();
+        ProjectInfrastructure infrastructure = new(store, projectId);
+        infrastructure.AddFeature(new AppConfigurationFeature());
+        infrastructure.AddFeature(new CloudMachineFeature());
+        infrastructure.Build();
+
+        ProjectClient project = new(store.Provider);
+        var connections = project.GetAllConnections();
+        Assert.AreEqual(5, connections.Count());
+        PrintConnections(connections);
+
+        BlobContainerClient blobs = project.GetBlobContainerClient();
+        ServiceBusClient sb = project.GetServiceBusClient();
+        //ServiceBusSender sender = project.GetServiceBusSender();
+        //ServiceBusProcessor processor = project.GetServiceBusProcessor();
+        //ConfigurationClient config = project.GetConfigurationClient();
+    }
+
+    private static void PrintConnections(IEnumerable<ClientConnection> connections)
+    {
+        foreach (var connection in connections)
+        {
+            Console.WriteLine($"{connection.Id} - {connection.Locator}");
+        }
+    }
+}
+
+internal class TestConnectionStore : ConnectionStore
+{
+    private readonly TestConnectionProvider _provider = new(new AzureDeveloperCliCredential());
+    public override void EmitConnection(ProjectInfrastructure infrastructure, string connectionId, string endpoint)
+    {
+        _provider.AddConnection(connectionId, new ClientConnection(connectionId, endpoint));
+    }
+    public ConnectionProvider Provider => _provider;
+}
+internal class TestConnectionProvider : ConnectionProvider
+{
+    private readonly Dictionary<string, ClientConnection> _connections = new();
+    private readonly TokenCredential _credential;
+
+    public TestConnectionProvider(TokenCredential credential)
+        => _credential = credential;
+    public override ClientConnection GetConnection(string connectionId)
+        => _connections[connectionId];
+
+    internal void AddConnection(string connectionId, ClientConnection connection)
+    {
+        if (connection.Credential == null)
+        {
+            _connections.Add(connectionId, new ClientConnection(connectionId, connection.Locator, _credential));
+        }
+        else
+        {
+            _connections.Add(connectionId, connection);
+        }
+    }
+    public override IEnumerable<ClientConnection> GetAllConnections()
+        => _connections.Values;
+}

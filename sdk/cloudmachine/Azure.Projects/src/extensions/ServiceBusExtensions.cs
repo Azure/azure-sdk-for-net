@@ -19,8 +19,12 @@ public static class ServiceBusExtensions
     /// <param name="project"></param>
     /// <param name="namespaceName"></param>
     /// <returns></returns>
-    public static  ServiceBusClient GetServiceBusClient(this ProjectClient project, string namespaceName)
+    public static  ServiceBusClient GetServiceBusClient(this ProjectClient project, string namespaceName = default)
     {
+        if (namespaceName == null)
+        {
+            namespaceName = project.ProjectId;
+        }
         ServiceBusClient client = project.Subclients.GetClient(() => CreateClient(project, namespaceName), namespaceName);
         return client;
     }

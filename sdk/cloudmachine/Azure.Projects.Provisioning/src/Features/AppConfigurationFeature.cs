@@ -8,7 +8,7 @@ using Azure.Provisioning.AppConfiguration;
 
 namespace Azure.Projects.AppConfiguration;
 
-internal class AppConfigurationFeature : AzureProjectFeature
+public class AppConfigurationFeature : AzureProjectFeature
 {
     public AppConfigurationFeature()
     {}
@@ -27,6 +27,9 @@ internal class AppConfigurationFeature : AzureProjectFeature
             AppConfigurationBuiltInRole.GetBuiltInRoleName(AppConfigurationBuiltInRole.AppConfigurationDataOwner),
             AppConfigurationBuiltInRole.AppConfigurationDataOwner.ToString()
         );
+
+        var endpoint = $"https://{infrastructure.ProjectId}.azconfig.io";
+        EmitConnection(infrastructure, "Azure.Data.AppConfiguration.ConfigurationClient", endpoint);
     }
 }
 
@@ -55,8 +58,12 @@ public class AppConfigurationSettingFeature : AzureProjectFeature
 
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
-        AppConfigurationFeature appConfiguration = infrastructure.AppConfiguration;
-        AppConfigurationStore store = infrastructure.GetConstruct<AppConfigurationStore>(appConfiguration.Id);
+        FeatureCollection features = infrastructure.Features;
+        if (!features.TryGet(out AppConfigurationFeature? appConfiguration))
+        {
+            throw new InvalidOperationException($"The {nameof(AppConfigurationFeature)} must be added to the infrastructure before adding {nameof(AppConfigurationSettingFeature)}.");
+        }
+        AppConfigurationStore store = infrastructure.GetConstruct<AppConfigurationStore>(appConfiguration!.Id);
         if (_bicepIdentifier == null) _bicepIdentifier = store.BicepIdentifier + "_setting";
 
         string bicepIdentifier = CreateUniqueBicepIdentifier(_bicepIdentifier);

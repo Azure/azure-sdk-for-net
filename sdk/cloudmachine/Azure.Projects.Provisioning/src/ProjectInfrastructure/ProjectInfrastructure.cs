@@ -23,7 +23,7 @@ public partial class ProjectInfrastructure
     private readonly Dictionary<string, NamedProvisionableConstruct> _constrcuts = [];
     private readonly Dictionary<Provisionable, List<FeatureRole>> _requiredSystemRoles = new();
     private readonly FeatureCollection _features = new();
-    private readonly AppConfigurationFeature _appConfig = new();
+    private readonly ConnectionStore _connectionStore;
 
     /// <summary>
     /// This is the resource group name for the project resources.
@@ -32,9 +32,6 @@ public partial class ProjectInfrastructure
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public UserAssignedIdentity Identity { get; private set; }
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    internal AppConfigurationFeature AppConfiguration => _appConfig;
 
     /// <summary>
     /// The common principalId parameter.
@@ -45,9 +42,13 @@ public partial class ProjectInfrastructure
     [EditorBrowsable(EditorBrowsableState.Never)]
     public FeatureCollection Features => _features;
 
-    public ProjectInfrastructure(string? projectId = default)
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public ConnectionStore Connections => _connectionStore;
+
+    public ProjectInfrastructure(ConnectionStore connections, string? projectId = default)
     {
         ProjectId = projectId ?? ProjectClient.ReadOrCreateProjectId();
+        _connectionStore = connections;
 
         // Always add a default location parameter.
         // azd assumes there will be a location parameter for every module.
@@ -71,8 +72,15 @@ public partial class ProjectInfrastructure
         _infrastructure.Add(Identity);
         _infrastructure.Add(new ProvisioningOutput("project_identity_id", typeof(string)) { Value = Identity.Id });
 
-        AddFeature(_appConfig);
+        if (_connectionStore.TryGetFeature(out AzureProjectFeature? feature))
+        {
+            AddFeature(feature!);
+        }
     }
+
+    public ProjectInfrastructure(string? projectId = default)
+        : this(new AppConfigConnectionStore(), projectId)
+    {}
 
     public T AddFeature<T>(T feature) where T: AzureProjectFeature
     {

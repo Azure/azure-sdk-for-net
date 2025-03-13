@@ -12,7 +12,7 @@ public class CloudMachineFeature : AzureProjectFeature
 
     public CloudMachineFeature()
     {
-        _blobContainer = new BlobContainerFeature("cm", isObservable: true);
+        _blobContainer = new BlobContainerFeature("default", isObservable: true);
     }
 
     protected internal override void EmitFeatures(ProjectInfrastructure infrastructure)

@@ -31,8 +31,7 @@ public abstract partial class AzureProjectFeature
 
     protected void EmitConnection(ProjectInfrastructure infrastructure, string connectionId, string endpoint)
     {
-        AppConfigurationSettingFeature connection = new(connectionId, endpoint, "projectConnection");
-        infrastructure.AddFeature(connection);
+        infrastructure.Connections.EmitConnection(infrastructure, connectionId, endpoint);
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
