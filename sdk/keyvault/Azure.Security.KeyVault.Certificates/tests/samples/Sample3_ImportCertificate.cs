@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 #if SNIPPET
             byte[] pfx = File.ReadAllBytes("certificate.pfx");
 #else
-            byte[] pfx = Convert.FromBase64String(CertificateTestsUtils.s_pfxBase64);
+            byte[] pfx = Convert.FromBase64String(s_pfxBase64);
 #endif
             ImportCertificateOptions importOptions = new ImportCertificateOptions(name, pfx)
             {
@@ -72,7 +72,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 #if SNIPPET
             byte[] pem = File.ReadAllBytes("certificate.cer");
 #else
-            byte[] pem = Encoding.ASCII.GetBytes(CertificateTestsUtils.s_pem);
+            byte[] pem = Encoding.ASCII.GetBytes(s_pem);
 #endif
             ImportCertificateOptions importOptions = new ImportCertificateOptions(name, pem)
             {
