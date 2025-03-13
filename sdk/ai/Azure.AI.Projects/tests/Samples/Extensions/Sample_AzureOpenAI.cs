@@ -23,4 +23,22 @@ public class Sample_AzureOpenAI : SamplesBase<AIProjectsTestEnvironment>
         ChatCompletion result = chatClient.CompleteChat("List all the rainbow colors");
         Console.WriteLine(result.Content[0].Text);
     }
+
+    [Test]
+    public void ThrowsWhenNoConnection()
+    {
+        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        AIProjectClient client = new AIProjectClient(connectionString);
+
+        var ex = Assert.Throws<InvalidOperationException>(() =>
+        {
+            ChatClient chatClient = client.GetAzureOpenAIChatClient("gpt-4o-mini");
+        });
+
+        Assert.AreEqual(
+            $"No connections found for '{ConnectionType.AzureOpenAI}'. At least one connection is required. Please add a new connection in the Azure AI Foundry portal by following the instructions here: https://aka.ms/azsdk/azure-ai-projects/how-to/connections-add",
+            ex.Message);
+        Console.WriteLine(ex.Message);
+    }
 }

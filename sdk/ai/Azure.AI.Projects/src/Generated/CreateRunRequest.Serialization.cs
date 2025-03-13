@@ -35,7 +35,7 @@ namespace Azure.AI.Projects
             }
 
             writer.WritePropertyName("assistant_id"u8);
-            writer.WriteStringValue(AssistantId);
+            writer.WriteStringValue(AgentId);
             if (Optional.IsDefined(OverrideModelName))
             {
                 if (OverrideModelName != null)
