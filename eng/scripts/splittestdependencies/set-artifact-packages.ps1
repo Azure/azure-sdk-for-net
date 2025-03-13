@@ -21,7 +21,7 @@ $changedServicesArray = $packageProperties | Where-Object { $packageSet -contain
 $changedServices = $changedServicesArray -join ","
 
 if ($SetOverrideFile) {
-    $outputFile = Write-PkgInfoToDependencyGroupFile -OutputPath $OutputPath -PackageInfoFolder $PackageInfoFolder -ProjectNames $ProjectNames
+    $outputFile = Write-PkgInfoToDependencyGroupFile -OutputPath $OutputPath -PackageInfoFolder $PackageInfoFolder -ProjectNames $packageSet
     Get-ChildItem -Recurse $OutputPath | ForEach-Object { Write-Host "Dumping $($_.FullName)"; Get-Content -Raw -Path $_.FullName | Write-Host }
     # the projectlistoverride file must be provided as a relative path
     $relativeOutputPath = [System.IO.Path]::GetRelativePath($RepoRoot, "$OutputPath/$outputFile")
