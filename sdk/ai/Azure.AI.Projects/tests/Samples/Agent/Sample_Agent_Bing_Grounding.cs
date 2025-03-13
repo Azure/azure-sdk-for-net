@@ -18,6 +18,7 @@ public partial class Sample_Agent_Bing_Grounding : SamplesBase<AIProjectsTestEnv
     public async Task BingGroundingExample()
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
 
         var clientOptions = new AIProjectClientOptions();
 
@@ -37,7 +38,7 @@ public partial class Sample_Agent_Bing_Grounding : SamplesBase<AIProjectsTestEnv
         BingGroundingToolDefinition bingGroundingTool = new BingGroundingToolDefinition(connectionList);
 
         Response<Agent> agentResponse = await agentClient.CreateAgentAsync(
-           model: "gpt-4",
+           model: modelName,
            name: "my-assistant",
            instructions: "You are a helpful assistant.",
            tools: new List<ToolDefinition> { bingGroundingTool });
@@ -65,11 +66,10 @@ public partial class Sample_Agent_Bing_Grounding : SamplesBase<AIProjectsTestEnv
         while (runResponse.Value.Status == RunStatus.Queued
             || runResponse.Value.Status == RunStatus.InProgress);
 
-        if (runResponse.Value.Status == RunStatus.Failed)
-        {
-            throw new Exception($"Run failed: {runResponse.Value.LastError}");
-        }
-
+        Assert.AreEqual(
+            RunStatus.Completed,
+            runResponse.Value.Status,
+            runResponse.Value.LastError?.Message);
         Response<PageableList<ThreadMessage>> afterRunMessagesResponse
             = await agentClient.GetMessagesAsync(thread.Id);
         IReadOnlyList<ThreadMessage> messages = afterRunMessagesResponse.Value.Data;
