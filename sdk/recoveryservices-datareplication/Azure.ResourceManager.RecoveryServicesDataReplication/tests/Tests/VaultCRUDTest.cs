@@ -12,16 +12,13 @@ using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Helpers;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
-using System.Security.AccessControl;
-using System.Security.Principal;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
 {
     public class VaultCRUDTest: RecoveryServicesDataReplicationManagementTestBase
     {
         public VaultCRUDTest(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Playback)
         {
         }
 

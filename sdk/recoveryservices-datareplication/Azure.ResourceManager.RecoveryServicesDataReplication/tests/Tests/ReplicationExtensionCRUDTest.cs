@@ -11,16 +11,13 @@ using Azure.Core;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Helpers;
-using System.Reflection;
-using System.ClientModel.Primitives;
-using System.Threading;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
 {
     public class ReplicationExtensionCRUDTest : RecoveryServicesDataReplicationManagementTestBase
     {
         public ReplicationExtensionCRUDTest(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Playback)
         {
         }
 

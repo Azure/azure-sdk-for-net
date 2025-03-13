@@ -4,15 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Core;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Helpers;
-using System.Reflection;
-using System.Reflection.PortableExecutable;
 using System.Threading;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
@@ -20,12 +16,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
     public class ProtectedItemCRUDTest : RecoveryServicesDataReplicationManagementTestBase
     {
         public ProtectedItemCRUDTest(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Playback)
         {
         }
 
         [TestCase]
-        [RecordedTest]
         public async Task TestProtectedItemCRUDOperations()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
