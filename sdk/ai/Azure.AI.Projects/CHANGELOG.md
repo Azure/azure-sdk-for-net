@@ -5,6 +5,7 @@
 ### Features Added
 
 * Added `ConnectionProvider` abstraction in `AIProjectClient` to enable seamless connectivity with Azure OpenAI, Inference, and Search SDKs.
+* Added `CognitiveService` connection type.
 
 ### Breaking Changes
 
