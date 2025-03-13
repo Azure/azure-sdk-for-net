@@ -407,8 +407,8 @@ namespace Azure.Storage.DataMovement
 
                 DataMovementEventSource.Singleton.TransferQueued(transferId, sourceResource, destinationResource);
 
-                await StartConcurrencyTuner(cancellationToken).ConfigureAwait(false);
-                await StopConcurrencyTunerWhenTransfersComplete(cancellationToken).ConfigureAwait(false);
+                StartConcurrencyTuner(cancellationToken);
+                StopConcurrencyTunerWhenTransfersComplete(cancellationToken);
 
                 return transferOperation;
             }
@@ -430,19 +430,19 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        private async Task StopConcurrencyTunerWhenTransfersComplete(CancellationToken cancellationToken)
+        private void StopConcurrencyTunerWhenTransfersComplete(CancellationToken cancellationToken)
         {
             // TaskContinuationOptions.OnlyOnRanToCompletion ensures that this only executes when successful
             // TaskScheduler.FromCurrentSchronizationContext ensures that this executes on the main thread
-            await Task.WhenAll(_transfers.Values
+            Task.WhenAll(_transfers.Values
                 .Where(transfer => transfer.Status.HasCompletedSuccessfully)
                 .Select(transfer => transfer.WaitForCompletionAsync(cancellationToken)))
-                .ContinueWith((_) => _cancellationTokenSource.Cancel(), cancellationToken, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext()).ConfigureAwait(false);
+                .ContinueWith((_) => _cancellationTokenSource.Cancel(), cancellationToken, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private async Task StartConcurrencyTuner(CancellationToken cancellationToken)
+        private void StartConcurrencyTuner(CancellationToken cancellationToken)
         {
-            await _concurrencyTuner.Start(cancellationToken).ConfigureAwait(false);
+            _concurrencyTuner.Start(cancellationToken);
         }
 
         private async Task<TransferOperation> BuildAndAddTransferJobAsync(

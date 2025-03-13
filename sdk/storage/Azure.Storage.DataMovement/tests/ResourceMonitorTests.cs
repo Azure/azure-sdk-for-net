@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement.Tests
     public class ResourceMonitorTests
     {
         [Test]
-        public async void CpuUsage_ShouldBeGreaterThan0()
+        public void CpuUsage_ShouldBeGreaterThan0()
         {
             // Arrange
             var resourceMonitor = new ResourceMonitor();
@@ -23,7 +23,7 @@ namespace Azure.Storage.DataMovement.Tests
             var cancellationToken = cancellationTokenSource.Token;
 
             // Act
-            await resourceMonitor.StartMonitoring(cancellationToken);
+            resourceMonitor.StartMonitoring(cancellationToken);
             SimulateCpuLoad(3);
             cancellationTokenSource.Cancel();
 
@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async Task CpuUsage_ShouldNeverGoAbove1()
+        public void CpuUsage_ShouldNeverGoAbove1()
         {
             // Arrange
             var resourceMonitor = new ResourceMonitor();
@@ -40,7 +40,7 @@ namespace Azure.Storage.DataMovement.Tests
             var cancellationToken = cancellationTokenSource.Token;
 
             // Act
-            await resourceMonitor.StartMonitoring(cancellationToken);
+            resourceMonitor.StartMonitoring(cancellationToken);
             SimulateCpuLoad(10);
             cancellationTokenSource.Cancel();
             // Assert
@@ -53,7 +53,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async Task CpuUsage_TimeSpanUnder10MillisecondsShouldHaveZeroReadings()
+        public void CpuUsage_TimeSpanUnder10MillisecondsShouldHaveZeroReadings()
         {
             // Arrange
             var resourceMonitor = new ResourceMonitor(TimeSpan.FromMilliseconds(10));
@@ -61,7 +61,7 @@ namespace Azure.Storage.DataMovement.Tests
             var cancellationToken = cancellationTokenSource.Token;
 
             // Act
-            await resourceMonitor.StartMonitoring(cancellationToken);
+            resourceMonitor.StartMonitoring(cancellationToken);
             SimulateCpuLoad(2);
             cancellationTokenSource.Cancel();
             // Assert
@@ -85,7 +85,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async Task MemoryUsage_MemoryUsageShouldBeGreaterThan0()
+        public void MemoryUsage_MemoryUsageShouldBeGreaterThan0()
         {
             // Arrange
             var resourceMonitor = new ResourceMonitor();
@@ -93,7 +93,7 @@ namespace Azure.Storage.DataMovement.Tests
             var cancellationToken = cancellationTokenSource.Token;
 
             // Act
-            await resourceMonitor.StartMonitoring(cancellationToken);
+            resourceMonitor.StartMonitoring(cancellationToken);
             SimulateCpuLoad(1);
             cancellationTokenSource.Cancel();
 
@@ -102,7 +102,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async void MemoryUsage_ShouldNotBeNull()
+        public void MemoryUsage_ShouldNotBeNull()
         {
             // Arrange
             var resourceMonitor = new ResourceMonitor();
@@ -110,7 +110,7 @@ namespace Azure.Storage.DataMovement.Tests
             var cancellationToken = cancellationTokenSource.Token;
 
             // Act
-            await resourceMonitor.StartMonitoring(cancellationToken);
+            resourceMonitor.StartMonitoring(cancellationToken);
             SimulateCpuLoad(1);
             cancellationTokenSource.Cancel();
 
@@ -122,7 +122,7 @@ namespace Azure.Storage.DataMovement.Tests
         public void ResourceMonitorConstructor_ShouldNotAllowLessThan0ms()
         {
             // Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => new ResourceMonitor(TimeSpan.FromMilliseconds(0)));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new ResourceMonitor(TimeSpan.FromMilliseconds(-1)));
         }
 
         [Test]
@@ -157,7 +157,7 @@ namespace Azure.Storage.DataMovement.Tests
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
             watch.Start();
-            await resourceMonitor.StartMonitoring(cancellationToken);
+            resourceMonitor.StartMonitoring(cancellationToken);
 
             while (watch.Elapsed < endTime)
             {
@@ -183,7 +183,7 @@ namespace Azure.Storage.DataMovement.Tests
             resourceMonitor = new(monitorInterval);
             cancellationTokenSource = new CancellationTokenSource();
             cancellationToken = cancellationTokenSource.Token;
-            await resourceMonitor.StartMonitoring(cancellationToken);
+            resourceMonitor.StartMonitoring(cancellationToken);
 
             cpuUsageStart = 0.0F;
             cpuUsageEnd = 0.0F;
