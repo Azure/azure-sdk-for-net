@@ -35,6 +35,18 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="StandbyContainerGroupPoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StandbyContainerGroupPoolResource.CreateResourceIdentifier" /> to create a <see cref="StandbyContainerGroupPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StandbyContainerGroupPoolResource"/> object. </returns>
+        public virtual StandbyContainerGroupPoolResource GetStandbyContainerGroupPoolResource(ResourceIdentifier id)
+        {
+            StandbyContainerGroupPoolResource.ValidateResourceId(id);
+            return new StandbyContainerGroupPoolResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="StandbyVirtualMachinePoolResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StandbyVirtualMachinePoolResource.CreateResourceIdentifier" /> to create a <see cref="StandbyVirtualMachinePoolResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -47,15 +59,15 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StandbyVirtualMachineResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StandbyVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="StandbyVirtualMachineResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StandbyContainerGroupPoolRuntimeViewResource.CreateResourceIdentifier" /> to create a <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StandbyVirtualMachineResource"/> object. </returns>
-        public virtual StandbyVirtualMachineResource GetStandbyVirtualMachineResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> object. </returns>
+        public virtual StandbyContainerGroupPoolRuntimeViewResource GetStandbyContainerGroupPoolRuntimeViewResource(ResourceIdentifier id)
         {
-            StandbyVirtualMachineResource.ValidateResourceId(id);
-            return new StandbyVirtualMachineResource(Client, id);
+            StandbyContainerGroupPoolRuntimeViewResource.ValidateResourceId(id);
+            return new StandbyContainerGroupPoolRuntimeViewResource(Client, id);
         }
 
         /// <summary>
@@ -71,27 +83,15 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StandbyContainerGroupPoolResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StandbyContainerGroupPoolResource.CreateResourceIdentifier" /> to create a <see cref="StandbyContainerGroupPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="StandbyVirtualMachineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StandbyVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="StandbyVirtualMachineResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StandbyContainerGroupPoolResource"/> object. </returns>
-        public virtual StandbyContainerGroupPoolResource GetStandbyContainerGroupPoolResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StandbyVirtualMachineResource"/> object. </returns>
+        public virtual StandbyVirtualMachineResource GetStandbyVirtualMachineResource(ResourceIdentifier id)
         {
-            StandbyContainerGroupPoolResource.ValidateResourceId(id);
-            return new StandbyContainerGroupPoolResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StandbyContainerGroupPoolRuntimeViewResource.CreateResourceIdentifier" /> to create a <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> object. </returns>
-        public virtual StandbyContainerGroupPoolRuntimeViewResource GetStandbyContainerGroupPoolRuntimeViewResource(ResourceIdentifier id)
-        {
-            StandbyContainerGroupPoolRuntimeViewResource.ValidateResourceId(id);
-            return new StandbyContainerGroupPoolRuntimeViewResource(Client, id);
+            StandbyVirtualMachineResource.ValidateResourceId(id);
+            return new StandbyVirtualMachineResource(Client, id);
         }
     }
 }
