@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         WorkspaceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkspaceList.DeserializeWorkspaceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         WorkspaceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkspaceList.DeserializeWorkspaceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         WorkspaceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkspaceList.DeserializeWorkspaceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         WorkspaceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkspaceList.DeserializeWorkspaceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 201:
                     {
                         FirmwareAnalysisWorkspaceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FirmwareAnalysisWorkspaceData.DeserializeFirmwareAnalysisWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 201:
                     {
                         FirmwareAnalysisWorkspaceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FirmwareAnalysisWorkspaceData.DeserializeFirmwareAnalysisWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         FirmwareAnalysisWorkspaceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FirmwareAnalysisWorkspaceData.DeserializeFirmwareAnalysisWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         FirmwareAnalysisWorkspaceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FirmwareAnalysisWorkspaceData.DeserializeFirmwareAnalysisWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         FirmwareAnalysisWorkspaceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FirmwareAnalysisWorkspaceData.DeserializeFirmwareAnalysisWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         FirmwareAnalysisWorkspaceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FirmwareAnalysisWorkspaceData.DeserializeFirmwareAnalysisWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         FirmwareUriToken value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FirmwareUriToken.DeserializeFirmwareUriToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         FirmwareUriToken value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FirmwareUriToken.DeserializeFirmwareUriToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         WorkspaceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkspaceList.DeserializeWorkspaceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         WorkspaceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkspaceList.DeserializeWorkspaceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         WorkspaceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkspaceList.DeserializeWorkspaceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case 200:
                     {
                         WorkspaceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkspaceList.DeserializeWorkspaceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

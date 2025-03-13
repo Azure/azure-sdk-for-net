@@ -1,6 +1,6 @@
 # Release History
 
-## 1.14.0-beta.2 (Unreleased)
+## 1.14.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.14.0-beta.2 (2025-03-11)
+
+### Bugs Fixed
+- `VisualStudioCredential` will now correctly fall through to the next credential in the chain when no account is found by Visual Studio. ([#48464](https://github.com/Azure/azure-sdk-for-net/issues/48464))
+
+### Other Changes
+- Updated Microsoft.Identity.Client dependency to version 4.69.1.
+- ManagedIdentityCredential now properly supports CAE.
+- An event is now logged when the `ManagedIdentityCredential` is used directly or indirectly via a credential chain indicating which managed identity source was selected and which `ManagedIdentityId` was specified.
 - Marked `UsernamePasswordCredential` as obsolete because Resource Owner Password Credentials (ROPC) token grant flow is incompatible with multifactor authentication (MFA), which Microsoft Entra ID requires for all tenants. See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement and migration guidance.
 
 ## 1.14.0-beta.1 (2025-02-11)

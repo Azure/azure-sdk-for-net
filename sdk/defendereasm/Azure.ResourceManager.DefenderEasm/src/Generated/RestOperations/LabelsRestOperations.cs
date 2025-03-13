@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DefenderEasm
                 case 200:
                     {
                         EasmLabelListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EasmLabelListResult.DeserializeEasmLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DefenderEasm
                 case 200:
                     {
                         EasmLabelListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EasmLabelListResult.DeserializeEasmLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DefenderEasm
                 case 200:
                     {
                         EasmLabelData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EasmLabelData.DeserializeEasmLabelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DefenderEasm
                 case 200:
                     {
                         EasmLabelData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EasmLabelData.DeserializeEasmLabelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.DefenderEasm
                 case 200:
                     {
                         EasmLabelData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EasmLabelData.DeserializeEasmLabelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.DefenderEasm
                 case 200:
                     {
                         EasmLabelData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EasmLabelData.DeserializeEasmLabelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.DefenderEasm
                 case 200:
                     {
                         EasmLabelListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EasmLabelListResult.DeserializeEasmLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.DefenderEasm
                 case 200:
                     {
                         EasmLabelListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EasmLabelListResult.DeserializeEasmLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

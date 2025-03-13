@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRecoveryServicesVaultData(document.RootElement, options);
                     }
                 default:

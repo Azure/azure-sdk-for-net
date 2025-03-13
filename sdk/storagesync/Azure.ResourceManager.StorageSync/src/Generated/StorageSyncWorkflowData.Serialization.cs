@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.StorageSync
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageSyncWorkflowData(document.RootElement, options);
                     }
                 default:

@@ -79,9 +79,9 @@ steps:
 
             if (Test-Path .git/info/sparse-checkout) {
               $hasInitialized = $true
-              Write-Host "Repository $($repository.Name) has already been initialized. Skipping this step."
+              Write-Host "Repository $($repository.Name) has already been initialized in $pwd. Skipping this step."
             } else {
-              Write-Host "Repository $($repository.Name) is being initialized."
+              Write-Host "Repository $($repository.Name) is being initialized in $pwd"
 
               if ($repository.Commitish -match '^refs/pull/\d+/merge$') {
                 Retry git clone --no-checkout --filter=tree:0 -c remote.origin.fetch=''+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)'' https://github.com/$($repository.Name) .
