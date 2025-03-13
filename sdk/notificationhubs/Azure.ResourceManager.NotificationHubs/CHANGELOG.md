@@ -6,10 +6,6 @@
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
-### Bugs Fixed
-
-- Replace the required link in autorest.md from [aaa](https://github.com/Azure/azure-rest-api-specs/blob/a03dfac64acc53a8b84501a10099f95885b1b496/specification/notificationhubs/resource-manager/readme.md) to https://github.com/Azure/azure-rest-api-specs/blob/87643ba491d34656ed9d08ddce7544d033c349eb/specification/notificationhubs/resource-manager/readme.md.
-
 ## 1.2.0-beta.1 (2024-05-31)
 
 ### Features Added
