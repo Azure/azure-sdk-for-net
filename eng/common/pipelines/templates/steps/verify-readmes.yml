@@ -18,6 +18,11 @@ parameters:
   default: true
 
 steps:
+- task: UsePythonVersion@0
+  displayName: 'Use Python 3.11'
+  inputs:
+    versionSpec: '3.11'
+
 - pwsh: |
     $includeIndirect = $${{ parameters.IncludeIndirect }}
     $packageProperties = Get-ChildItem -Recurse "${{ parameters.PackagePropertiesFolder }}" *.json
