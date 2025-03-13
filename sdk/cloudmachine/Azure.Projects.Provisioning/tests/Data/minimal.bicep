@@ -37,4 +37,12 @@ resource appConfiguration_projectIdentity_AppConfigurationDataOwner 'Microsoft.A
   scope: appConfiguration
 }
 
+resource projectConnection 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'Azure.Data.AppConfiguration.ConfigurationClient'
+  properties: {
+    value: 'https://cm0c420d2f21084cd.azconfig.io'
+  }
+  parent: appConfiguration
+}
+
 output project_identity_id string = projectIdentity.id

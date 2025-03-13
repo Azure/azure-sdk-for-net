@@ -64,4 +64,12 @@ resource ai_project 'Microsoft.MachineLearningServices/workspaces@2023-08-01-pre
   }
 }
 
+resource projectConnection 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'Azure.Data.AppConfiguration.ConfigurationClient'
+  properties: {
+    value: 'https://cm0c420d2f21084cd.azconfig.io'
+  }
+  parent: appConfiguration
+}
+
 output project_identity_id string = projectIdentity.id

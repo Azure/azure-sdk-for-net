@@ -4,25 +4,33 @@
 #nullable enable
 
 using Azure.AI.OpenAI;
+using Azure.Data.AppConfiguration;
+using Azure.Messaging.ServiceBus;
 using Azure.Projects.KeyVault;
+using Azure.Projects.Ofx;
 using Azure.Projects.OpenAI;
+using Azure.Projects.Storage;
 using Azure.Security.KeyVault.Secrets;
+using Azure.Storage.Blobs;
 using NUnit.Framework;
 using OpenAI.Chat;
+using OpenAI.Embeddings;
 
 namespace Azure.Projects.Tests;
 
 public class E2ETests
 {
+    private static string projectId = "cm00000000000test";
+
     [TestCase("-bicep")]
     //[TestCase("")]
     public void OpenAI(string arg)
     {
-        ProjectInfrastructure infra = new("cm0a110d2f21084bb");
+        ProjectInfrastructure infra = new(projectId);
         infra.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
         if (infra.TryExecuteCommand([arg])) return;
 
-        ProjectClient project = new();
+        ProjectClient project = new(projectId, default);
         ChatClient chat = project.GetOpenAIChatClient();
     }
 
@@ -30,11 +38,43 @@ public class E2ETests
     //[TestCase("")]
     public void KeyVault(string arg)
     {
-        ProjectInfrastructure infra = new("cm0a110d2f21084bb");
+        ProjectInfrastructure infra = new(projectId);
         infra.AddFeature(new KeyVaultFeature());
         if (infra.TryExecuteCommand([arg])) return;
 
-        ProjectClient project = new();
+        ProjectClient project = new(projectId, default);
         SecretClient secrets = project.GetSecretClient();
+    }
+
+    [TestCase("-bicep")]
+    //[TestCase("")]
+    public void All (string arg)
+    {
+        ProjectInfrastructure infrastructure = new(projectId);
+        AddAllFeratures(infrastructure);
+
+        if (infrastructure.TryExecuteCommand([arg]))
+            return;
+
+        ProjectClient project = new(projectId, default);
+        SecretClient secrets = project.GetSecretClient();
+        BlobContainerClient defaultContainer = project.GetBlobContainerClient();
+        BlobContainerClient testContainer = project.GetBlobContainerClient("test");
+        ConfigurationClient config = project.GetConfigurationClient();
+        ChatClient chat = project.GetOpenAIChatClient();
+        EmbeddingClient embedding = project.GetOpenAIEmbeddingClient();
+        //AzureOpenAIClient openAIClient = project.GetAzureOpenAIClient();
+        ServiceBusClient sb = project.GetServiceBusClient();
+        ServiceBusSender sender = project.GetServiceBusSender("cm_servicebus_topic_private", "cm_servicebus_subscription_private");
+        //ServiceBusReceiver receiver = project.GetServiceBusReceiver("cm_servicebus_topic_private", "cm_servicebus_subscription_private");
+    }
+
+    internal void AddAllFeratures(ProjectInfrastructure infrastructure)
+    {
+        infrastructure.AddFeature(new CloudMachineFeature());
+        infrastructure.AddFeature(new KeyVaultFeature());
+        infrastructure.AddFeature(new OpenAIChatFeature("gpt-35-turbo", "0125"));
+        infrastructure.AddFeature(new OpenAIEmbeddingFeature("text-embedding-ada-002", "2"));
+        infrastructure.AddFeature(new BlobContainerFeature("test", false));
     }
 }

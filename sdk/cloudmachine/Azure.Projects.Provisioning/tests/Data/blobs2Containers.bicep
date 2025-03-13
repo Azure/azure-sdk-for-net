@@ -112,7 +112,15 @@ resource storageBlobContainer_container2 'Microsoft.Storage/storageAccounts/blob
   parent: storageBlobService
 }
 
-resource projectConnection10 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'Azure.Data.AppConfiguration.ConfigurationClient'
+  properties: {
+    value: 'https://cm0c420d2f21084cd.azconfig.io'
+  }
+  parent: appConfiguration
+}
+
+resource projectConnection2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Storage.Blobs.BlobContainerClient@container1'
   properties: {
     value: 'https://cm0c420d2f21084cd.blob.core.windows.net/container1'
@@ -120,7 +128,7 @@ resource projectConnection10 'Microsoft.AppConfiguration/configurationStores/key
   parent: appConfiguration
 }
 
-resource projectConnection11 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection3 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Storage.Blobs.BlobContainerClient@container2'
   properties: {
     value: 'https://cm0c420d2f21084cd.blob.core.windows.net/container2'

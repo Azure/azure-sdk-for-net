@@ -38,11 +38,16 @@ public partial class ProjectClient : ConnectionProvider
     /// <summary>
     /// Initializes a new instance of the <see cref="ProjectClient"/> with the specified connection provider.
     /// </summary>
+    /// <param name="projectId"></param>
     /// <param name="connections"></param>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public ProjectClient(ConnectionProvider connections)
+    public ProjectClient(string projectId, ConnectionProvider connections)
     {
-        ProjectId = ReadOrCreateProjectId();
+        if (connections == null)
+        {
+            connections = new AppConfigConnectionProvider(new Uri($"https://{projectId}.azconfig.io"), _credential);
+        }
+        ProjectId = projectId;
         _connections = connections;
     }
 

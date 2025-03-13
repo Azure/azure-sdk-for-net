@@ -11,6 +11,7 @@ namespace Azure.Projects.Core;
 public class FeatureCollection : IEnumerable<AzureProjectFeature>
 {
     private AzureProjectFeature[] _features = new AzureProjectFeature[4];
+    private Dictionary<string, int> _featureIndex = new(StringComparer.OrdinalIgnoreCase);
     private int _count;
 
     internal FeatureCollection() { }
@@ -72,4 +73,20 @@ public class FeatureCollection : IEnumerable<AzureProjectFeature>
     }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    public string CreateUniqueBicepIdentifier(string baseIdentifier)
+    {
+        lock (_featureIndex) {
+            if (_featureIndex.TryGetValue(baseIdentifier, out int index))
+            {
+                _featureIndex[baseIdentifier] = index + 1;
+                return $"{baseIdentifier}{index}";
+            }
+            else
+            {
+                _featureIndex[baseIdentifier] = 2;
+                return baseIdentifier;
+            }
+        }
+    }
 }

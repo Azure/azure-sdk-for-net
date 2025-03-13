@@ -27,7 +27,7 @@ namespace Azure.Projects.Tests;
 
 public class ConnectionTests
 {
-    private string projectId = "cm0c420d2f21084cd";
+    private string projectId = "cm00000000000test";
     [Test]
     public void MinimalProject()
     {
@@ -35,7 +35,7 @@ public class ConnectionTests
         ProjectInfrastructure infrastructure = new(store, projectId);
         infrastructure.Build();
 
-        ProjectClient project = new(store.Provider);
+        ProjectClient project = new(projectId, store.Provider);
         var connections = project.GetAllConnections();
         Assert.AreEqual(0, connections.Count());
     }
@@ -48,7 +48,7 @@ public class ConnectionTests
         infrastructure.AddFeature(new KeyVaultFeature());
         infrastructure.Build();
 
-        ProjectClient project = new(store.Provider);
+        ProjectClient project = new(projectId, store.Provider);
         var connections = project.GetAllConnections();
         Assert.AreEqual(1, connections.Count());
         PrintConnections(connections);
@@ -65,7 +65,7 @@ public class ConnectionTests
         infrastructure.AddFeature(new CloudMachineFeature());
         infrastructure.Build();
 
-        ProjectClient project = new(store.Provider);
+        ProjectClient project = new(projectId, store.Provider);
         var connections = project.GetAllConnections();
         Assert.AreEqual(5, connections.Count());
         PrintConnections(connections);

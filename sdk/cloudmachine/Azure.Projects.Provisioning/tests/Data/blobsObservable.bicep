@@ -237,7 +237,15 @@ resource cm_servicebus_subscription_private 'Microsoft.ServiceBus/namespaces/top
   parent: cm_servicebus_topic_private
 }
 
-resource projectConnection6 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'Azure.Data.AppConfiguration.ConfigurationClient'
+  properties: {
+    value: 'https://cm0c420d2f21084cd.azconfig.io'
+  }
+  parent: appConfiguration
+}
+
+resource projectConnection2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Storage.Blobs.BlobContainerClient@default'
   properties: {
     value: 'https://cm0c420d2f21084cd.blob.core.windows.net/default'
@@ -245,7 +253,7 @@ resource projectConnection6 'Microsoft.AppConfiguration/configurationStores/keyV
   parent: appConfiguration
 }
 
-resource projectConnection7 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection3 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Messaging.ServiceBus.ServiceBusClient'
   properties: {
     value: 'https://cm0c420d2f21084cd.servicebus.windows.net/'
@@ -253,7 +261,7 @@ resource projectConnection7 'Microsoft.AppConfiguration/configurationStores/keyV
   parent: appConfiguration
 }
 
-resource projectConnection8 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection4 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'cm_servicebus_topic_private'
   properties: {
     value: 'cm_servicebus_topic_private'
@@ -261,7 +269,7 @@ resource projectConnection8 'Microsoft.AppConfiguration/configurationStores/keyV
   parent: appConfiguration
 }
 
-resource projectConnection9 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection5 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'cm_servicebus_subscription_private'
   properties: {
     value: 'cm_servicebus_topic_private/cm_servicebus_subscription_private'

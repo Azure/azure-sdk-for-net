@@ -66,7 +66,7 @@ public class AppConfigurationSettingFeature : AzureProjectFeature
         AppConfigurationStore store = infrastructure.GetConstruct<AppConfigurationStore>(appConfiguration!.Id);
         if (_bicepIdentifier == null) _bicepIdentifier = store.BicepIdentifier + "_setting";
 
-        string bicepIdentifier = CreateUniqueBicepIdentifier(_bicepIdentifier);
+        string bicepIdentifier = features.CreateUniqueBicepIdentifier(_bicepIdentifier);
         AppConfigurationKeyValue kvp = new(bicepIdentifier)
         {
             Name = Key,
@@ -74,14 +74,5 @@ public class AppConfigurationSettingFeature : AzureProjectFeature
             Parent = store
         };
         infrastructure.AddConstruct(Id, kvp);
-    }
-
-    private static int _index = 0;
-    internal string CreateUniqueBicepIdentifier(string baseIdentifier)
-    {
-        int index = Interlocked.Increment(ref _index);
-        if (index == 1)
-            return baseIdentifier;
-        return $"{baseIdentifier}{index}";
     }
 }

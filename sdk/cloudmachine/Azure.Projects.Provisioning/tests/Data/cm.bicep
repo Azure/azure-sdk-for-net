@@ -102,8 +102,8 @@ resource storageBlobService 'Microsoft.Storage/storageAccounts/blobServices@2024
   parent: storageAccount
 }
 
-resource storageBlobContainer_cm 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = {
-  name: 'cm'
+resource storageBlobContainer_default 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = {
+  name: 'default'
   parent: storageBlobService
 }
 
@@ -237,15 +237,23 @@ resource cm_servicebus_subscription_private 'Microsoft.ServiceBus/namespaces/top
   parent: cm_servicebus_topic_private
 }
 
-resource projectConnection12 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
-  name: 'Azure.Storage.Blobs.BlobContainerClient@cm'
+resource projectConnection 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'Azure.Data.AppConfiguration.ConfigurationClient'
   properties: {
-    value: 'https://cm0c420d2f21084cd.blob.core.windows.net/cm'
+    value: 'https://cm0c420d2f21084cd.azconfig.io'
   }
   parent: appConfiguration
 }
 
-resource projectConnection13 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'Azure.Storage.Blobs.BlobContainerClient@default'
+  properties: {
+    value: 'https://cm0c420d2f21084cd.blob.core.windows.net/default'
+  }
+  parent: appConfiguration
+}
+
+resource projectConnection3 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Messaging.ServiceBus.ServiceBusClient'
   properties: {
     value: 'https://cm0c420d2f21084cd.servicebus.windows.net/'
@@ -253,7 +261,7 @@ resource projectConnection13 'Microsoft.AppConfiguration/configurationStores/key
   parent: appConfiguration
 }
 
-resource projectConnection14 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection4 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'cm_servicebus_topic_private'
   properties: {
     value: 'cm_servicebus_topic_private'
@@ -261,7 +269,7 @@ resource projectConnection14 'Microsoft.AppConfiguration/configurationStores/key
   parent: appConfiguration
 }
 
-resource projectConnection15 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection5 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'cm_servicebus_subscription_private'
   properties: {
     value: 'cm_servicebus_topic_private/cm_servicebus_subscription_private'

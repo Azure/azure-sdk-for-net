@@ -78,7 +78,15 @@ resource cm_servicebus_auth_rule 'Microsoft.ServiceBus/namespaces/AuthorizationR
   parent: cm_servicebus
 }
 
-resource projectConnection20 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'Azure.Data.AppConfiguration.ConfigurationClient'
+  properties: {
+    value: 'https://cm0c420d2f21084cd.azconfig.io'
+  }
+  parent: appConfiguration
+}
+
+resource projectConnection2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Messaging.ServiceBus.ServiceBusClient'
   properties: {
     value: 'https://cm0c420d2f21084cd.servicebus.windows.net/'

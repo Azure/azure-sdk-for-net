@@ -196,6 +196,14 @@ resource appServiceWebsite 'Microsoft.Web/sites@2024-04-01' = {
 }
 
 resource projectConnection 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'Azure.Data.AppConfiguration.ConfigurationClient'
+  properties: {
+    value: 'https://cm0c420d2f21084cd.azconfig.io'
+  }
+  parent: appConfiguration
+}
+
+resource projectConnection2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Security.KeyVault.Secrets.SecretClient'
   properties: {
     value: 'https://cm0c420d2f21084cd.vault.azure.net/'
@@ -203,7 +211,7 @@ resource projectConnection 'Microsoft.AppConfiguration/configurationStores/keyVa
   parent: appConfiguration
 }
 
-resource projectConnection2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection3 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.AI.OpenAI.AzureOpenAIClient'
   properties: {
     value: 'https://cm0c420d2f21084cd.openai.azure.com'
@@ -211,7 +219,7 @@ resource projectConnection2 'Microsoft.AppConfiguration/configurationStores/keyV
   parent: appConfiguration
 }
 
-resource projectConnection3 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection4 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'OpenAI.Chat.ChatClient'
   properties: {
     value: 'cm0c420d2f21084cd_chat'
@@ -219,7 +227,7 @@ resource projectConnection3 'Microsoft.AppConfiguration/configurationStores/keyV
   parent: appConfiguration
 }
 
-resource projectConnection4 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection5 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'OpenAI.Embeddings.EmbeddingClient'
   properties: {
     value: 'cm0c420d2f21084cd_embedding'

@@ -82,7 +82,15 @@ resource keyVault_projectIdentity_KeyVaultAdministrator 'Microsoft.Authorization
   scope: keyVault
 }
 
-resource projectConnection16 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'Azure.Data.AppConfiguration.ConfigurationClient'
+  properties: {
+    value: 'https://cm0c420d2f21084cd.azconfig.io'
+  }
+  parent: appConfiguration
+}
+
+resource projectConnection2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Security.KeyVault.Secrets.SecretClient'
   properties: {
     value: 'https://cm0c420d2f21084cd.vault.azure.net/'
