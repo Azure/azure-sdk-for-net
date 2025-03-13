@@ -73,14 +73,21 @@ namespace Azure.Security.CodeTransparency
                 : _client.GetOperation(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
 
             if (response.Status != (int)HttpStatusCode.OK &&
-                response.Status != (int) HttpStatusCode.Created &&
+                response.Status != (int)HttpStatusCode.Created &&
                 response.Status != (int)HttpStatusCode.Accepted)
             {
                 RequestFailedException ex = new(response);
-                return OperationState.Failure(response, new RequestFailedException($"Operation status check failed. OperationId '{Id}'", ex));
+                return OperationState.Failure(response, new RequestFailedException($"Operation status check failed. 3 OperationId '{Id}'", ex));
             }
 
             string status = string.Empty;
+
+            // The content of the response is null when the operation is still running.
+            if (response.Content == null)
+            {
+                RequestFailedException ex = new(response);
+                return OperationState.Pending(response);
+            }
 
             // Read GetOperation Cbor response
             CborReader cborReader = new(response.Content);
@@ -88,7 +95,7 @@ namespace Azure.Security.CodeTransparency
             while (cborReader.PeekState() != CborReaderState.EndMap)
             {
                 string key = cborReader.ReadTextString();
-                if (key == "Status")
+                if (string.Equals(key , "Status", StringComparison.InvariantCultureIgnoreCase))
                 {
                     status = cborReader.ReadTextString();
                     break;
@@ -97,25 +104,24 @@ namespace Azure.Security.CodeTransparency
                     cborReader.SkipValue();
             }
 
-            if (string.IsNullOrEmpty(status))
+            if (!Enum.TryParse(status, true, out OperationStatus parsedStatus))
             {
                 RequestFailedException ex = new(response);
-                return OperationState.Failure(response, new RequestFailedException($"Operation status check failed. OperationId '{Id}'", ex));
+                return OperationState.Failure(response, new RequestFailedException($"Operation status check failed. 1 OperationId '{Id}'", ex));
             }
             else
             {
-                // Replace the switch statement with the correct comparison to string values
-                switch (status)
+                switch (parsedStatus)
                 {
-                    case nameof(OperationStatus.Succeeded):
+                    case OperationStatus.Succeeded:
                         return OperationState.Success(response);
-                    case nameof(OperationStatus.Failed):
+                    case OperationStatus.Failed:
                         return OperationState.Failure(response, new RequestFailedException($"Operation failed. OperationId '{Id}'"));
-                    case nameof(OperationStatus.Running):
+                    case OperationStatus.Running:
                         return OperationState.Pending(response);
                     default:
                         RequestFailedException ex = new(response);
-                        return OperationState.Failure(response, new RequestFailedException($"Operation status check failed. OperationId '{Id}'", ex));
+                        return OperationState.Failure(response, new RequestFailedException($"Operation status check failed. Unknown Status: '{status}' OperationId '{Id}'", ex));
                 }
              }
         }

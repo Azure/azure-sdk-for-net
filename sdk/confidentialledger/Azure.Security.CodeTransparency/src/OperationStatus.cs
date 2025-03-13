@@ -6,7 +6,7 @@ namespace Azure.Security.CodeTransparency
     /// <summary>
     /// Represents the status of an operation in CTS.
     /// </summary>
-    public enum OperationStatus
+    internal enum OperationStatus
     {
         /// <summary>
         /// The operation is still running.

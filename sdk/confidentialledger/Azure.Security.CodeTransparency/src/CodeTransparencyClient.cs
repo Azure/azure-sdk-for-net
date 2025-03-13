@@ -128,20 +128,26 @@ namespace Azure.Security.CodeTransparency
                 BinaryData result = Response.FromValue(response.Content, response);
 
                 string operationId = string.Empty;
-
-                // Read cbor response to get the operationId
-                CborReader cborReader = new(response.Content);
-                cborReader.ReadStartMap();
-                while (cborReader.PeekState() != CborReaderState.EndMap)
+                try
                 {
-                    string key = cborReader.ReadTextString();
-                    if (string.Equals(key, "OperationId", StringComparison.InvariantCultureIgnoreCase))
+                    // Read cbor response to get the operationId
+                    CborReader cborReader = new(response.Content);
+                    cborReader.ReadStartMap();
+                    while (cborReader.PeekState() != CborReaderState.EndMap)
                     {
-                        operationId = cborReader.ReadTextString();
-                        break;
+                        string key = cborReader.ReadTextString();
+                        if (string.Equals(key, "OperationId", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            operationId = cborReader.ReadTextString();
+                            break;
+                        }
+                        else
+                            cborReader.SkipValue();
                     }
-                    else
-                        cborReader.SkipValue();
+                }
+                catch (Exception ex)
+                {
+                    throw new RequestFailedException("Failed to parse the Cbor response.", ex);
                 }
 
                 if (string.IsNullOrEmpty(operationId))
@@ -178,7 +184,6 @@ namespace Azure.Security.CodeTransparency
                 BinaryData result = Response.FromValue(response.Content, response);
 
                 string operationId = string.Empty;
-
                 try
                 {
                     // Read cbor response to get the operationId
@@ -198,7 +203,7 @@ namespace Azure.Security.CodeTransparency
                 }
                 catch (Exception ex)
                 {
-                    throw new RequestFailedException("Failed to parse the Cbor response.", ex);
+                    throw new RequestFailedException($"Failed to parse the Cbor response.", ex);
                 }
 
                 if (string.IsNullOrEmpty(operationId))
