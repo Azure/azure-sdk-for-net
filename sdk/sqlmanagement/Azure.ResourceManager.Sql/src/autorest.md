@@ -357,6 +357,9 @@ rename-mapping:
   BackupStorageAccessTier: SqlBackupStorageAccessTier
   Phase: DatabaseOperationPhase
   PhaseDetails: DatabaseOperationPhaseDetails
+  # Api version change from 2020-11-01-preview to 2021-11-01-preview, the model name changed and contains more properties
+  UpsertManagedServerOperationStepWithEstimatesAndDuration: UpsertManagedServerOperationStep
+  Status: UpsertManagedServerOperationStepStatus
 
 prompted-enum-values:
   - Default
@@ -571,6 +574,10 @@ directive:
       transform: >
           $.push('SecuredByPerimeter');
       reason: Align the enum choices to avoid breaking changes of one enum split into two.
+    # - from: ManagedDatabaseVulnerabilityAssessments.json
+    #   where: $.definitions.DatabaseVulnerabilityAssessment
+    #   transform: >
+    #       $['x-ms-client-name'] = 'ManagedDatabaseVulnerabilityAssessment'
 ```
 
 ### Tag: package-composite-v5-take-2021-stable
@@ -646,7 +653,7 @@ input-file:
   - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerAutomaticTuning.json
   - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerAzureADAdministrators.json
   - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerAzureADOnlyAuthentications.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerDevOpsAudit.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/ServerDevOpsAudit.json
   - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerDnsAliases.json
   - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerKeys.json
   - https://github.com/Azure/azure-rest-api-specs/blob/b770b86265d5dc3a26b16c5d30a736e6bbba04de/specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/ServerOperations.json

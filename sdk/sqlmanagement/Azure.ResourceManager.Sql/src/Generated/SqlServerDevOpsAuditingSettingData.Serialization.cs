@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("isAzureMonitorTargetEnabled"u8);
                 writer.WriteBooleanValue(IsAzureMonitorTargetEnabled.Value);
             }
+            if (Optional.IsDefined(IsManagedIdentityInUse))
+            {
+                writer.WritePropertyName("isManagedIdentityInUse"u8);
+                writer.WriteBooleanValue(IsManagedIdentityInUse.Value);
+            }
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
@@ -93,6 +98,7 @@ namespace Azure.ResourceManager.Sql
             ResourceType type = default;
             SystemData systemData = default;
             bool? isAzureMonitorTargetEnabled = default;
+            bool? isManagedIdentityInUse = default;
             BlobAuditingPolicyState? state = default;
             string storageEndpoint = default;
             string storageAccountAccessKey = default;
@@ -143,6 +149,15 @@ namespace Azure.ResourceManager.Sql
                             isAzureMonitorTargetEnabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("isManagedIdentityInUse"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isManagedIdentityInUse = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -186,6 +201,7 @@ namespace Azure.ResourceManager.Sql
                 type,
                 systemData,
                 isAzureMonitorTargetEnabled,
+                isManagedIdentityInUse,
                 state,
                 storageEndpoint,
                 storageAccountAccessKey,
@@ -271,6 +287,22 @@ namespace Azure.ResourceManager.Sql
                 {
                     builder.Append("    isAzureMonitorTargetEnabled: ");
                     var boolValue = IsAzureMonitorTargetEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsManagedIdentityInUse), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isManagedIdentityInUse: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsManagedIdentityInUse))
+                {
+                    builder.Append("    isManagedIdentityInUse: ");
+                    var boolValue = IsManagedIdentityInUse.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

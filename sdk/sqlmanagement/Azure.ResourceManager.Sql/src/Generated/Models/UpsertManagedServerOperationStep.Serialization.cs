@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class UpsertManagedServerOperationStepWithEstimatesAndDuration : IUtf8JsonSerializable, IJsonModel<UpsertManagedServerOperationStepWithEstimatesAndDuration>
+    public partial class UpsertManagedServerOperationStep : IUtf8JsonSerializable, IJsonModel<UpsertManagedServerOperationStep>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpsertManagedServerOperationStepWithEstimatesAndDuration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpsertManagedServerOperationStep>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<UpsertManagedServerOperationStepWithEstimatesAndDuration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UpsertManagedServerOperationStep>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpsertManagedServerOperationStepWithEstimatesAndDuration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UpsertManagedServerOperationStep>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpsertManagedServerOperationStepWithEstimatesAndDuration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UpsertManagedServerOperationStep)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(StepStartOn))
@@ -82,19 +82,19 @@ namespace Azure.ResourceManager.Sql.Models
             }
         }
 
-        UpsertManagedServerOperationStepWithEstimatesAndDuration IJsonModel<UpsertManagedServerOperationStepWithEstimatesAndDuration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        UpsertManagedServerOperationStep IJsonModel<UpsertManagedServerOperationStep>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpsertManagedServerOperationStepWithEstimatesAndDuration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UpsertManagedServerOperationStep>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpsertManagedServerOperationStepWithEstimatesAndDuration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UpsertManagedServerOperationStep)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUpsertManagedServerOperationStepWithEstimatesAndDuration(document.RootElement, options);
+            return DeserializeUpsertManagedServerOperationStep(document.RootElement, options);
         }
 
-        internal static UpsertManagedServerOperationStepWithEstimatesAndDuration DeserializeUpsertManagedServerOperationStepWithEstimatesAndDuration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UpsertManagedServerOperationStep DeserializeUpsertManagedServerOperationStep(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Sql.Models
             string timeElapsed = default;
             int? order = default;
             string name = default;
-            Status? status = default;
+            UpsertManagedServerOperationStepStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new UpsertManagedServerOperationStepStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UpsertManagedServerOperationStepWithEstimatesAndDuration(
+            return new UpsertManagedServerOperationStep(
                 stepStartTime,
                 stepEndTime,
                 timeElapsed,
@@ -297,9 +297,9 @@ namespace Azure.ResourceManager.Sql.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<UpsertManagedServerOperationStepWithEstimatesAndDuration>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<UpsertManagedServerOperationStep>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpsertManagedServerOperationStepWithEstimatesAndDuration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UpsertManagedServerOperationStep>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -308,26 +308,26 @@ namespace Azure.ResourceManager.Sql.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(UpsertManagedServerOperationStepWithEstimatesAndDuration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpsertManagedServerOperationStep)} does not support writing '{options.Format}' format.");
             }
         }
 
-        UpsertManagedServerOperationStepWithEstimatesAndDuration IPersistableModel<UpsertManagedServerOperationStepWithEstimatesAndDuration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        UpsertManagedServerOperationStep IPersistableModel<UpsertManagedServerOperationStep>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpsertManagedServerOperationStepWithEstimatesAndDuration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UpsertManagedServerOperationStep>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUpsertManagedServerOperationStepWithEstimatesAndDuration(document.RootElement, options);
+                        return DeserializeUpsertManagedServerOperationStep(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpsertManagedServerOperationStepWithEstimatesAndDuration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpsertManagedServerOperationStep)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<UpsertManagedServerOperationStepWithEstimatesAndDuration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UpsertManagedServerOperationStep>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

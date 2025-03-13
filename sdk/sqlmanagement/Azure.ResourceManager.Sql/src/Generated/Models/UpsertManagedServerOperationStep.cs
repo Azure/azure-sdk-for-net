@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The UpsertManagedServerOperationStepWithEstimatesAndDuration. </summary>
-    public partial class UpsertManagedServerOperationStepWithEstimatesAndDuration
+    /// <summary> The UpsertManagedServerOperationStep. </summary>
+    public partial class UpsertManagedServerOperationStep
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UpsertManagedServerOperationStepWithEstimatesAndDuration"/>. </summary>
-        internal UpsertManagedServerOperationStepWithEstimatesAndDuration()
+        /// <summary> Initializes a new instance of <see cref="UpsertManagedServerOperationStep"/>. </summary>
+        internal UpsertManagedServerOperationStep()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpsertManagedServerOperationStepWithEstimatesAndDuration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpsertManagedServerOperationStep"/>. </summary>
         /// <param name="stepStartOn"></param>
         /// <param name="stepEndOn"></param>
         /// <param name="timeElapsed"></param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"></param>
         /// <param name="status"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpsertManagedServerOperationStepWithEstimatesAndDuration(DateTimeOffset? stepStartOn, DateTimeOffset? stepEndOn, string timeElapsed, int? order, string name, Status? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UpsertManagedServerOperationStep(DateTimeOffset? stepStartOn, DateTimeOffset? stepEndOn, string timeElapsed, int? order, string name, UpsertManagedServerOperationStepStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StepStartOn = stepStartOn;
             StepEndOn = stepEndOn;
@@ -86,6 +86,6 @@ namespace Azure.ResourceManager.Sql.Models
         public string Name { get; }
         /// <summary> Gets the status. </summary>
         [WirePath("status")]
-        public Status? Status { get; }
+        public UpsertManagedServerOperationStepStatus? Status { get; }
     }
 }

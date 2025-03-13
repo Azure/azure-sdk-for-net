@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServerSDevOpsAuditSettings()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/ServerDevOpsAuditGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/examples/ServerDevOpsAuditGet.json
             // this example is just showing the usage of "ServerDevOpsAuditSettings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Samples
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "devAuditTestRG";
             string serverName = "devOpsAuditTestSvr";
-            string devOpsAuditingSettingsName = "default";
+            string devOpsAuditingSettingsName = "Default";
             ResourceIdentifier sqlServerDevOpsAuditingSettingResourceId = SqlServerDevOpsAuditingSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, devOpsAuditingSettingsName);
             SqlServerDevOpsAuditingSettingResource sqlServerDevOpsAuditingSetting = client.GetSqlServerDevOpsAuditingSettingResource(sqlServerDevOpsAuditingSettingResourceId);
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAServerSDevOpsAuditSettingsWithAllParams()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/ServerDevOpsAuditCreateMax.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/examples/ServerDevOpsAuditCreateMax.json
             // this example is just showing the usage of "ServerDevOpsAuditSettings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Samples
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "devAuditTestRG";
             string serverName = "devOpsAuditTestSvr";
-            string devOpsAuditingSettingsName = "default";
+            string devOpsAuditingSettingsName = "Default";
             ResourceIdentifier sqlServerDevOpsAuditingSettingResourceId = SqlServerDevOpsAuditingSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, devOpsAuditingSettingsName);
             SqlServerDevOpsAuditingSettingResource sqlServerDevOpsAuditingSetting = client.GetSqlServerDevOpsAuditingSettingResource(sqlServerDevOpsAuditingSettingResourceId);
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Samples
                 IsAzureMonitorTargetEnabled = true,
                 State = BlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
-                StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
+                StorageAccountAccessKey = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
                 StorageAccountSubscriptionId = Guid.Parse("00000000-1234-0000-5678-000000000000"),
             };
             ArmOperation<SqlServerDevOpsAuditingSettingResource> lro = await sqlServerDevOpsAuditingSetting.UpdateAsync(WaitUntil.Completed, data);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAServerSDevOpsAuditSettingsWithMinimalInput()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2021-11-01/examples/ServerDevOpsAuditCreateMin.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/examples/ServerDevOpsAuditCreateMin.json
             // this example is just showing the usage of "ServerDevOpsAuditSettings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql.Samples
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "devAuditTestRG";
             string serverName = "devOpsAuditTestSvr";
-            string devOpsAuditingSettingsName = "default";
+            string devOpsAuditingSettingsName = "Default";
             ResourceIdentifier sqlServerDevOpsAuditingSettingResourceId = SqlServerDevOpsAuditingSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, devOpsAuditingSettingsName);
             SqlServerDevOpsAuditingSettingResource sqlServerDevOpsAuditingSetting = client.GetSqlServerDevOpsAuditingSettingResource(sqlServerDevOpsAuditingSettingResourceId);
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Sql.Samples
             {
                 State = BlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
-                StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
+                StorageAccountAccessKey = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
             };
             ArmOperation<SqlServerDevOpsAuditingSettingResource> lro = await sqlServerDevOpsAuditingSetting.UpdateAsync(WaitUntil.Completed, data);
             SqlServerDevOpsAuditingSettingResource result = lro.Value;

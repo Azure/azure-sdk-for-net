@@ -2080,24 +2080,24 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="currentStep"> The number of current operation steps. </param>
         /// <param name="stepsList"> The operation steps list. </param>
         /// <returns> A new <see cref="Models.ManagedInstanceOperationSteps"/> instance for mocking. </returns>
-        public static ManagedInstanceOperationSteps ManagedInstanceOperationSteps(string totalSteps = null, int? currentStep = null, IEnumerable<UpsertManagedServerOperationStepWithEstimatesAndDuration> stepsList = null)
+        public static ManagedInstanceOperationSteps ManagedInstanceOperationSteps(string totalSteps = null, int? currentStep = null, IEnumerable<UpsertManagedServerOperationStep> stepsList = null)
         {
-            stepsList ??= new List<UpsertManagedServerOperationStepWithEstimatesAndDuration>();
+            stepsList ??= new List<UpsertManagedServerOperationStep>();
 
             return new ManagedInstanceOperationSteps(totalSteps, currentStep, stepsList?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.UpsertManagedServerOperationStepWithEstimatesAndDuration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UpsertManagedServerOperationStep"/>. </summary>
         /// <param name="stepStartOn"></param>
         /// <param name="stepEndOn"></param>
         /// <param name="timeElapsed"></param>
         /// <param name="order"></param>
         /// <param name="name"></param>
         /// <param name="status"></param>
-        /// <returns> A new <see cref="Models.UpsertManagedServerOperationStepWithEstimatesAndDuration"/> instance for mocking. </returns>
-        public static UpsertManagedServerOperationStepWithEstimatesAndDuration UpsertManagedServerOperationStepWithEstimatesAndDuration(DateTimeOffset? stepStartOn = null, DateTimeOffset? stepEndOn = null, string timeElapsed = null, int? order = null, string name = null, Status? status = null)
+        /// <returns> A new <see cref="Models.UpsertManagedServerOperationStep"/> instance for mocking. </returns>
+        public static UpsertManagedServerOperationStep UpsertManagedServerOperationStep(DateTimeOffset? stepStartOn = null, DateTimeOffset? stepEndOn = null, string timeElapsed = null, int? order = null, string name = null, UpsertManagedServerOperationStepStatus? status = null)
         {
-            return new UpsertManagedServerOperationStepWithEstimatesAndDuration(
+            return new UpsertManagedServerOperationStep(
                 stepStartOn,
                 stepEndOn,
                 timeElapsed,
@@ -2480,6 +2480,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
         ///
         /// </param>
+        /// <param name="isManagedIdentityInUse"> Specifies whether Managed Identity is used to access blob storage. </param>
         /// <param name="state"> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
         /// <param name="storageAccountAccessKey">
@@ -2492,7 +2493,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <returns> A new <see cref="Sql.SqlServerDevOpsAuditingSettingData"/> instance for mocking. </returns>
-        public static SqlServerDevOpsAuditingSettingData SqlServerDevOpsAuditingSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isAzureMonitorTargetEnabled = null, BlobAuditingPolicyState? state = null, string storageEndpoint = null, string storageAccountAccessKey = null, Guid? storageAccountSubscriptionId = null)
+        public static SqlServerDevOpsAuditingSettingData SqlServerDevOpsAuditingSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isAzureMonitorTargetEnabled = null, bool? isManagedIdentityInUse = null, BlobAuditingPolicyState? state = null, string storageEndpoint = null, string storageAccountAccessKey = null, Guid? storageAccountSubscriptionId = null)
         {
             return new SqlServerDevOpsAuditingSettingData(
                 id,
@@ -2500,6 +2501,7 @@ namespace Azure.ResourceManager.Sql.Models
                 resourceType,
                 systemData,
                 isAzureMonitorTargetEnabled,
+                isManagedIdentityInUse,
                 state,
                 storageEndpoint,
                 storageAccountAccessKey,
