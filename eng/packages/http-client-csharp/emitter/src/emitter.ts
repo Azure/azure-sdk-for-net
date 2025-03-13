@@ -9,8 +9,7 @@ import {
   CodeModel,
   CSharpEmitterOptions,
   InputModelType,
-  setSDKContextOptions,
-  setUpdateCodeModelCallback
+  setSDKContextOptions
 } from "@typespec/http-client-csharp";
 import { azureSDKContextOptions } from "./sdk-context-options.js";
 import { calculateResourceTypeFromPath } from "./resource-type.js";
@@ -25,8 +24,8 @@ const resourceMetadata = "Azure.ClientGenerator.Core.@resourceSchema";
 export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
   context.options["plugin-name"] ??= "AzureClientPlugin";
   context.options["emitter-extension-path"] = import.meta.url;
+  context.options["update-code-model"] = updateCodeModel;
   setSDKContextOptions(azureSDKContextOptions);
-  setUpdateCodeModelCallback(updateCodeModel);
   await $onMTGEmit(context);
 }
 

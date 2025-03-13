@@ -20,8 +20,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -45,16 +43,12 @@ namespace Azure.Generator.Providers
 
         public ResourceClientProvider(InputClient inputClient)
         {
-            var resourceMetadata = inputClient.Decorators.FirstOrDefault(d => d.Name.Equals(KnownDecorators.ResourceMetadata));
-            if (resourceMetadata is null)
-            {
-                throw new InvalidOperationException($"The client {inputClient.Name} does not have the {KnownDecorators.ResourceMetadata} decorator.");
-            }
-
-            var crossLanguageDefinitionId = JsonDocument.Parse(resourceMetadata.Arguments?[KnownDecorators.ResourceModel]).RootElement.ToString();
-            _isSingleton = resourceMetadata.Arguments?.TryGetValue("isSingleton", out var isSingleton) == true ? isSingleton.ToString() == "true" : false;
-            var resourceType = JsonDocument.Parse(resourceMetadata.Arguments?[KnownDecorators.ResourceType]).RootElement.ToString();
-            _resourcetypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType)); var resourceModel = AzureClientPlugin.Instance.InputLibrary.GetModelByCrossLanguageDefinitionId(crossLanguageDefinitionId)!;
+            var resourceMetadata = inputClient.Decorators.Single(d => d.Name.Equals(KnownDecorators.ResourceMetadata));
+            var codeModelId = resourceMetadata.Arguments?[KnownDecorators.ResourceModel].ToObjectFromJson<string>()!;
+            _isSingleton = _isSingleton = resourceMetadata.Arguments?.TryGetValue("isSingleton", out var isSingleton) == true ? isSingleton.ToObjectFromJson<string>() == "true" : false;
+            var resourceType = resourceMetadata.Arguments?[KnownDecorators.ResourceType].ToObjectFromJson<string>()!;
+            _resourcetypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
+            var resourceModel = AzureClientPlugin.Instance.InputLibrary.GetModelByCrossLanguageDefinitionId(codeModelId)!;
             SpecName = resourceModel.Name;
 
             // We should be able to assume that all operations in the resource client are for the same resource
