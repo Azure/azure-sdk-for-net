@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Helpers
 {
     public class RecoveryServicesDataReplicationManagementTestUtilities
     {
+        public const string DefaultSubscriptionId = "de3c4d5e-af08-451a-a873-438d86ab6f4b";
         public const string DefaultResourceGroupName = "aszmige2etestscratchKPIvmw011cb3";
         public const string DefaultVaultName = "aszmigtest1d6ebbareplicationvault";
         public const string DefaultSourceApplianceId = "/subscriptions/de3c4d5e-af08-451a-a873-438d86ab6f4b/resourceGroups/aszmige2etestscratchKPIvmw011cb3/providers/Microsoft.DataReplication/replicationFabrics/VMware-1d6ebba3306replicationfabric";
