@@ -109,8 +109,6 @@ namespace Azure.Search.Documents.Tests.Samples
             return searchClient;
         }
 
-        [Test]
-        [LiveOnly]
         public async Task SimpleIndexing()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -156,8 +154,6 @@ namespace Azure.Search.Documents.Tests.Samples
             }
         }
 
-        [Test]
-        [LiveOnly]
         public async Task BufferedSender()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);

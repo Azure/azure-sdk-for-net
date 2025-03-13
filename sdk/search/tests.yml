@@ -9,3 +9,6 @@ extends:
     MaxParallel: 2
     EnvVars:
       AZURE_SEARCH_TEST_MODE: Live
+    CloudConfig:
+      Public:
+        Location: 'westcentralus'

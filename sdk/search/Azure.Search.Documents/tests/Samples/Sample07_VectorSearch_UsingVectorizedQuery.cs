@@ -17,7 +17,6 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         {
         }
 
-        [Test]
         public async Task SingleVectorSearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -66,7 +65,6 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
         }
 
-        [Test]
         public async Task SingleVectorSearchWithFilter()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -116,7 +114,6 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
         }
 
-        [Test]
         public async Task SimpleHybridSearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -166,7 +163,6 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
         }
 
-        [Test]
         public async Task MultiVectorQuerySearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -222,7 +218,6 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
         }
 
-        [Test]
         public async Task MultiFieldVectorQuerySearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);

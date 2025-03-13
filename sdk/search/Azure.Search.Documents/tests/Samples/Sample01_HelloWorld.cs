@@ -26,8 +26,6 @@ namespace Azure.Search.Documents.Tests.Samples
         {
         }
 
-        [Test]
-        [SyncOnly]
         public async Task CreateClient()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
@@ -54,8 +52,6 @@ namespace Azure.Search.Documents.Tests.Samples
             Assert.GreaterOrEqual(stats.Value.Counters.IndexCounter.Usage, 1);
         }
 
-        [Test]
-        [AsyncOnly]
         public async Task CreateClientAsync()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
@@ -82,8 +78,6 @@ namespace Azure.Search.Documents.Tests.Samples
             Assert.GreaterOrEqual(stats.Value.Counters.IndexCounter.Usage, 1);
         }
 
-        [Test]
-        [SyncOnly]
         public async Task HandleErrors()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
@@ -112,8 +106,6 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_HandleErrors
         }
 
-        [Test]
-        [AsyncOnly]
         public async Task HandleErrorsAsync()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
@@ -142,7 +134,6 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_HandleErrorsAsync
         }
 
-        [Test]
         public async Task GetStatisticsAsync()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
@@ -165,9 +156,6 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_GetStatisticsAsync
         }
 
-        [Test]
-        [AsyncOnly]
-        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/48588")]
         public async Task CreateIndexerAsync()
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAsync(this, populate: true, true);
@@ -443,7 +431,6 @@ namespace Azure.Search.Documents.Tests.Samples
             }
         }
 
-        [Test]
         public async Task GetCountAsync()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
@@ -468,7 +455,6 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_GetCountAsync
         }
 
-        [Test]
         public async Task QuerySession()
         {
             const int size = 150;

@@ -22,8 +22,6 @@ namespace Azure.Search.Documents.Tests.Samples
         {
         }
 
-        [Test]
-        [SyncOnly]
         public async Task CreateIndex()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);

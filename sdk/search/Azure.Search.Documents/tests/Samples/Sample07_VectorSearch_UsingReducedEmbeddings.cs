@@ -21,8 +21,6 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         {
         }
 
-        [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task VectorSearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);

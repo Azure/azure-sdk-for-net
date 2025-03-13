@@ -18,7 +18,6 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         {
         }
 
-        [Test]
         public async Task CreateVectorIndexUsingFieldBuilder()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);

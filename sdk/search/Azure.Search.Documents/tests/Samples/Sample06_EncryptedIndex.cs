@@ -25,8 +25,6 @@ namespace Azure.Search.Documents.Tests.Samples
             TestDiagnostics = false;
         }
 
-        [Test]
-        [SyncOnly]
         public async Task CreateDoubleEncryptedIndex()
         {
             string keyVaultUrl = TestEnvironment.KeyVaultUrl;

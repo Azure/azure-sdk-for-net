@@ -24,7 +24,6 @@ namespace Azure.Search.Documents.Tests
             SanitizersToRemove.Add("AZSDK3431"); // $..token
         }
 
-        [Test]
         public void Constructor()
         {
             var serviceName = "my-svc-name";
@@ -40,7 +39,6 @@ namespace Azure.Search.Documents.Tests
             Assert.Throws<ArgumentException>(() => new SearchIndexClient(new Uri("http://bing.com"), credential: null));
         }
 
-        [Test]
         public void GetSearchClient()
         {
             var serviceName = "my-svc-name";
@@ -64,7 +62,6 @@ namespace Azure.Search.Documents.Tests
             public override void OnSendingRequest(HttpMessage message) => RequestCount++;
         }
 
-        [Test]
         public async Task IndexSharesPipeline()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -82,7 +79,6 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(1, custom.RequestCount);
         }
 
-        [Test]
         public void DiagnosticsAreUnique()
         {
             // Make sure we're not repeating Header/Query names already defined
@@ -108,8 +104,6 @@ namespace Azure.Search.Documents.Tests
             }
         }
 
-        [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_03_01_Preview)]
         public async Task GetServiceStatistics()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -131,8 +125,6 @@ namespace Azure.Search.Documents.Tests
             Assert.NotZero(response.Value.Counters.IndexCounter.Usage);
         }
 
-        [Test]
-        [SyncOnly]
         public void CreateIndexParameterValidation()
         {
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
@@ -145,8 +137,6 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("index", ex.ParamName);
         }
 
-        [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_03_01_Preview)]
         public async Task CreateIndex()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -166,8 +156,6 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(expectedIndex.ScoringProfiles[0].Name, actualIndex.ScoringProfiles[0].Name);
         }
 
-        [Test]
-        [SyncOnly]
         public void UpdateIndexParameterValidation()
         {
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
@@ -180,8 +168,6 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("index", ex.ParamName);
         }
 
-        [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_03_01_Preview)]
         public async Task UpdateIndex()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -234,8 +220,6 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(createdIndex.Analyzers[0].Name, updatedIndex.Analyzers[0].Name);
         }
 
-        [Test]
-        [SyncOnly]
         public void GetIndexParameterValidation()
         {
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
@@ -248,7 +232,6 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("indexName", ex.ParamName);
         }
 
-        [Test]
         public async Task GetIndex()
         {
             await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
@@ -261,7 +244,6 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(15, index.Fields.Count);
         }
 
-        [Test]
         public async Task GetIndexes()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -277,8 +259,6 @@ namespace Azure.Search.Documents.Tests
             Assert.IsTrue(found, "Shared index not found");
         }
 
-        [Test]
-        [AsyncOnly]
         public async Task GetIndexesNextPageThrows()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -293,7 +273,6 @@ namespace Azure.Search.Documents.Tests
             Assert.ThrowsAsync<NotSupportedException>(async () => await e.MoveNextAsync());
         }
 
-        [Test]
         public async Task GetIndexNames()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -309,8 +288,6 @@ namespace Azure.Search.Documents.Tests
             Assert.IsTrue(found, "Shared index name not found");
         }
 
-        [Test]
-        [SyncOnly]
         public void DeleteIndexParameterValidation()
         {
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
@@ -329,8 +306,6 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("index", ex.ParamName);
         }
 
-        [Test]
-        [SyncOnly]
         public void CreateSynonymMapParameterValidation()
         {
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
@@ -343,8 +318,6 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("synonymMap", ex.ParamName);
         }
 
-        [Test]
-        [SyncOnly]
         public void UpdateSynonymMapParameterValidation()
         {
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
@@ -357,8 +330,6 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("synonymMap", ex.ParamName);
         }
 
-        [Test]
-        [SyncOnly]
         public void GetSynonymMapParameterValidation()
         {
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
@@ -371,8 +342,6 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("synonymMapName", ex.ParamName);
         }
 
-        [Test]
-        [SyncOnly]
         public void DeleteSynonymMapParameterValidation()
         {
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
@@ -391,7 +360,6 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("synonymMap", ex.ParamName);
         }
 
-        [Test]
         public async Task CrudSynonymMaps()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -437,7 +405,6 @@ namespace Azure.Search.Documents.Tests
             await client.DeleteSynonymMapAsync(updatedMap, onlyIfUnchanged: true);
         }
 
-        [Test]
         public async Task AnalyzeText()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -452,8 +419,6 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(new[] { "The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog." }, tokens.Select(t => t.Token));
         }
 
-        [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_03_01_Preview)]
         public async Task AnalyzeTextWithNormalizer()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -477,7 +442,6 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("Item 1 in my (10) point rant is that 750F is uncomfortably warm.", tokens[0].Token);
         }
 
-        [Test]
         public async Task SetScoringProfile()
         {
             // Testing: https://github.com/Azure/azure-sdk-for-net/issues/16570
