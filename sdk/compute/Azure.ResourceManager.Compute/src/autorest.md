@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/bf420af156ea90b4226e96582bdb4c9647491ae6/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/82477a058b5e5997f0bdb01879c9a8e56d936f1a/specification/compute/resource-manager/readme.md
 #tag: package-2024-11-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -425,6 +425,99 @@ directive:
       $.additionalProperties = true;
   # Enable AnyZone Capability, this is a temporary change, will be removed after service team update the spec
   - from: virtualMachine.json
+    where: $.definitions
+    transform: >
+      $.Placement = {
+              "properties": {
+                "zonePlacementPolicy": {
+                  "type": "string",
+                  "description": "Specifies policy for auto zone placement."
+                },
+                "includeZones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "List of zones to include for auto zone placement."
+                },
+                "excludeZones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "List of zones to exclude for auto zone placement."
+                }
+              },
+              "description": "The virtual machine automatic zone placement feature."
+            };
+      $.VirtualMachine.properties.placement = {
+              "$ref": "#/definitions/Placement",
+              "description": "The virtual machine automatic zone placement feature."
+            };
+
+  # in new swagger:
+  - from: ComputeRP.json
+    where: $.definitions
+    transform: >
+      $.VirtualMachineInstallPatchesParameters.properties.maximumDuration["format"] = "duration";
+  - from: ComputeRP.json
+    where: $.definitions
+    transform: >
+      $.VirtualMachineImageProperties.properties.dataDiskImages.description = "The list of data disk images information.";
+# resolve the duplicate schema issue
+  - from: DiskRP.json
+    where: $.definitions
+    transform: >
+      $.GrantAccessData.properties.access.description = "The Access Level, accepted values include None, Read, Write.";
+  - from: DiskRP.json
+    where: $.definitions
+    transform: >
+      $.Disk.properties.managedByExtended.items["x-ms-format"] = "arm-id";
+  - from: cloudService.json
+    where: $.definitions
+    transform: >
+      $.CloudService.properties.properties["x-ms-client-flatten"] = true;
+      $.OSFamily.properties.properties["x-ms-client-flatten"] = true;
+      $.OSVersion.properties.properties["x-ms-client-flatten"] = true;
+      $.Extension.properties.properties["x-ms-client-flatten"] = true;
+      $.CloudServiceRole.properties.properties["x-ms-client-flatten"] = true;
+      $.RoleInstance.properties.properties["x-ms-client-flatten"] = true;
+      $.LoadBalancerConfiguration.properties.properties["x-ms-client-flatten"] = true;
+      $.LoadBalancerFrontendIpConfiguration.properties.properties["x-ms-client-flatten"] = true;
+  # this makes the name in VirtualMachineScaleSetExtension to be readonly so that our inheritance chooser could properly make it inherit from Azure.ResourceManager.ResourceData. We have some customized code to add the setter for name back (as in constructor)
+  - from: ComputeRP.json
+    where: $.definitions.VirtualMachineScaleSetExtension.properties.name
+    transform: $["readOnly"] = true;
+  # add a json converter to this model
+  - from: swagger-document
+    where: $.definitions.KeyVaultSecretReference
+    transform: $["x-csharp-usage"] = "converter";
+  # TODO -- to be removed. This is a temporary workaround because the rename-mapping configuration is not working properly on arrays.
+  - from: ComputeRP.json
+    where: $.definitions.RestorePointSourceVMStorageProfile.properties.dataDisks
+    transform: $["x-ms-client-name"] = "DataDiskList";
+  # Add a dummy property because generator tries to flatten automaticallyApprove in both UserInitiatedRedeploy and UserInitiatedReboot
+  - from: ComputeRP.json
+    where: $.definitions.UserInitiatedRedeploy.properties
+    transform: >
+      $.dummyProperty = {
+        "type": "string",
+        "description": "This is a dummy property to prevent flattening."
+      };
+  # add additionalproperties to a few models to support private properties supported by the service
+  - from: ComputeRP.json
+    where: $.definitions
+    transform: >
+      $.VirtualMachineScaleSetProperties.additionalProperties = true;
+      $.VirtualMachineScaleSet.properties.properties["x-ms-client-flatten"] = false;
+      $.VirtualMachineScaleSetUpdate.properties.properties["x-ms-client-flatten"] = false;
+      $.UpgradePolicy.additionalProperties = true;
+  - from: ComputeRP.json
+    where: $.definitions.VMSizeProperties
+    transform: >
+      $.additionalProperties = true;
+  # Enable AnyZone Capability, this is a temporary change, will be removed after service team update the spec
+  - from: ComputeRP.json
     where: $.definitions
     transform: >
       $.Placement = {
