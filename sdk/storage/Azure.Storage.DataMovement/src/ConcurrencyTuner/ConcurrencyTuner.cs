@@ -113,10 +113,10 @@ namespace Azure.Storage.DataMovement
             throw new NotImplementedException();
         }
 
-        internal async Task Start(CancellationToken cancellationToken)
+        internal void Start(CancellationToken cancellationToken)
         {
             _cancellationToken = cancellationToken;
-            await _resourceMonitor.StartMonitoring(cancellationToken).ConfigureAwait(false);
+            _resourceMonitor.StartMonitoring(cancellationToken);
             ;
         }
 

@@ -170,7 +170,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal async Task StartMonitoring(CancellationToken cancellationToken)
+        internal void StartMonitoring(CancellationToken cancellationToken)
         {
             if (IsRunning)
                 return;
@@ -179,7 +179,7 @@ namespace Azure.Storage.DataMovement
             // _cancellationToken is set for the MonitorResourceUsage loop
             // cancellationToken is used to cancel the callback
             _cancellationToken = cancellationToken;
-            await Task.Run(() => MonitorResourceUsage(), cancellationToken).ConfigureAwait(false);
+            Task.Run(() => MonitorResourceUsage(), cancellationToken);
         }
 
         // Removing the stopMonitoring method. This will be handled by the TransferManager
