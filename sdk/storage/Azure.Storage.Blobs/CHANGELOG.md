@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- Changed BlobServiceClient.AccountName to be virtual so that it can be overridden and mocked.
 
 ## 12.24.0 (2025-03-11)
 
