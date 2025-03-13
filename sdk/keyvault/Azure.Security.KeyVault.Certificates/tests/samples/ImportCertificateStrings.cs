@@ -5,6 +5,8 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 {
     public partial class ImportCertificate
     {
+    #region Certificates
+#if !SNIPPET
         // Taken from CertificateClientLiveTestsConstants
 
         // Expires: 2031-11-01T14:38:51.0000000-07:00
@@ -99,5 +101,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         "BnljRV1nJkvS97ii6pPyN7OsYh9hKTZssTCww+dn2MmoX6MLuKmiMI5IySGjX3eJIwgIdMz0QBSn" +
         "Mz1ImTA7MB8wBwYFKw4DAhoEFBbxTH9CtToNlZioPLjOqq4ZouUvBBS0OyDZsrW10BEafOwev3sT" +
         "eSILBgICB9A=";
+#endif
+        #endregion
     }
 }
