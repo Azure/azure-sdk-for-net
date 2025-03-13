@@ -17,6 +17,7 @@ namespace Azure.AI.Projects
             ConnectionType.AzureAIServices => "AIServices",
             ConnectionType.AzureAISearch => "CognitiveSearch",
             ConnectionType.ApiKey => "ApiKey",
+            ConnectionType.CognitiveService => "CognitiveService",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConnectionType value.")
         };
 
@@ -28,6 +29,7 @@ namespace Azure.AI.Projects
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "AIServices")) return ConnectionType.AzureAIServices;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "CognitiveSearch")) return ConnectionType.AzureAISearch;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "ApiKey")) return ConnectionType.ApiKey;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CognitiveService")) return ConnectionType.CognitiveService;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConnectionType value.");
         }
     }

@@ -761,6 +761,7 @@ namespace Azure.AI.Projects
         AzureAIServices = 3,
         AzureAISearch = 4,
         ApiKey = 5,
+        CognitiveService = 6,
     }
     public partial class CredentialsApiKeyAuth : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.CredentialsApiKeyAuth>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CredentialsApiKeyAuth>
     {

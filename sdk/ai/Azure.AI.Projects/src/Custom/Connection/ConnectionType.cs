@@ -17,6 +17,8 @@ namespace Azure.AI.Projects
         /// <summary> Azure AI Search. </summary>
         AzureAISearch,
         /// <summary> Bing Grounding. </summary>
-        ApiKey
+        ApiKey,
+        /// <summary> Translator </summary>
+        CognitiveService
     }
 }
