@@ -41,6 +41,6 @@ if ($snippetEnabledProjects) {
     $DiagnosticArguments
 }
 else {
-    Write-Host "There are no projects with BuildSnippets set to true. Evaluated projects: "
+    Write-Host "There are no projects with BuildSnippets set to true. Evaluated projects: $ProjectNames"
 }
 
