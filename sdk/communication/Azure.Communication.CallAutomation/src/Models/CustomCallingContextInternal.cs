@@ -10,7 +10,7 @@ namespace Azure.Communication.CallAutomation
     [CodeGenModel("CustomCallingContext", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     internal partial class CustomCallingContextInternal
     {
-        public CustomCallingContextInternal(IDictionary<string, string> sipHeaders, IDictionary<string, string> voipHeaders)
+        public CustomCallingContextInternal(IDictionary<string, string> voipHeaders, IDictionary<string, string> sipHeaders)
         {
             SipHeaders = sipHeaders;
             VoipHeaders = voipHeaders;
