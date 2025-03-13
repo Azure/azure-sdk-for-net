@@ -49,8 +49,8 @@ if (-not $LaunchOnly) {
             exit $LASTEXITCODE
         }
 
-        Write-Host "Building MgmtTypeSpec" -ForegroundColor Cyan
-        Invoke "dotnet build $packageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/MgmtTypeSpec.csproj"
+        # Write-Host "Building MgmtTypeSpec" -ForegroundColor Cyan
+        # Invoke "dotnet build $packageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/MgmtTypeSpec.csproj"
 
         # exit if the generation failed
         if ($LASTEXITCODE -ne 0) {
