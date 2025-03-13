@@ -93,11 +93,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("commandTimeout"u8);
                 JsonSerializer.Serialize(writer, CommandTimeout);
             }
-            if (Optional.IsDefined(PasswordV2))
-            {
-                writer.WritePropertyName("password"u8);
-                JsonSerializer.Serialize(writer, PasswordV2);
-            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -150,7 +145,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<int> sslMode = default;
             DataFactoryElement<int> connectionTimeout = default;
             DataFactoryElement<int> commandTimeout = default;
-            DataFactorySecret password0 = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -318,15 +312,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                             commandTimeout = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("password"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            password0 = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -351,8 +336,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 database,
                 sslMode,
                 connectionTimeout,
-                commandTimeout,
-                password0);
+                commandTimeout);
         }
 
         BinaryData IPersistableModel<GreenplumLinkedService>.Write(ModelReaderWriterOptions options)
