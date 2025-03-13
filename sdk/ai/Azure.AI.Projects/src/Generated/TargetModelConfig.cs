@@ -11,11 +11,11 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary>
-    /// An abstract representation of an annotation to text thread message content.
-    /// Please note <see cref="MessageTextAnnotation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MessageTextFileCitationAnnotation"/>, <see cref="MessageTextFilePathAnnotation"/> and <see cref="MessageTextUrlCitationAnnotation"/>.
+    /// Abstract class for model configuration.
+    /// Please note <see cref="TargetModelConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AOAIModelConfig"/> and <see cref="MAASModelConfig"/>.
     /// </summary>
-    public abstract partial class MessageTextAnnotation
+    public abstract partial class TargetModelConfig
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,35 +49,21 @@ namespace Azure.AI.Projects
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MessageTextAnnotation"/>. </summary>
-        /// <param name="text"> The textual content associated with this text annotation item. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        protected MessageTextAnnotation(string text)
+        /// <summary> Initializes a new instance of <see cref="TargetModelConfig"/>. </summary>
+        protected TargetModelConfig()
         {
-            Argument.AssertNotNull(text, nameof(text));
-
-            Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageTextAnnotation"/>. </summary>
-        /// <param name="type"> The object type. </param>
-        /// <param name="text"> The textual content associated with this text annotation item. </param>
+        /// <summary> Initializes a new instance of <see cref="TargetModelConfig"/>. </summary>
+        /// <param name="type"> Type of the model configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MessageTextAnnotation(string type, string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TargetModelConfig(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
-            Text = text;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageTextAnnotation"/> for deserialization. </summary>
-        internal MessageTextAnnotation()
-        {
-        }
-
-        /// <summary> The object type. </summary>
+        /// <summary> Type of the model configuration. </summary>
         internal string Type { get; set; }
-        /// <summary> The textual content associated with this text annotation item. </summary>
-        public string Text { get; }
     }
 }
