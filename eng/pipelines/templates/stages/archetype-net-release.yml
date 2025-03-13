@@ -168,6 +168,11 @@ stages:
                           - Name: $(Build.Repository.Name)
                             Commitish: $(Build.SourceVersion)
                             WorkingDirectory: $(sdk-repo-path)
+
+                    - pwsh: |
+                        Get-ChildItem env: | Format-Table
+                      displayName: Show environment variables
+
                     # download "packages" artifact to $(Pipeline.Workspace)/packages
                     - download: current
                       displayName: Download ${{parameters.ArtifactName}}
