@@ -43,11 +43,6 @@ steps:
     parameters:
       ServiceDirectories: "$(ChangedServices)"
 
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.12'
-    displayName: 'Use Python 3.12'
-
   - template: /eng/common/pipelines/templates/steps/verify-readmes.yml
     parameters:
       PackagePropertiesFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
