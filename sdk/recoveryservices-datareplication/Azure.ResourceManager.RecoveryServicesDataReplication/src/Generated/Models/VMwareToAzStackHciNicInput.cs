@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> VMwareToAzStackHCI NIC properties. </summary>
-    public partial class VMwareToAzStackHciNicInput
+    public partial class VMwareToAzStackHCINicInput
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,36 +45,32 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciNicInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHCINicInput"/>. </summary>
         /// <param name="nicId"> Gets or sets the NIC Id. </param>
         /// <param name="label"> Gets or sets the NIC label. </param>
-        /// <param name="targetNetworkId"> Gets or sets the target network Id within AzStackHCI Cluster. </param>
-        /// <param name="testNetworkId"> Gets or sets the target test network Id within AzStackHCI Cluster. </param>
         /// <param name="selectionTypeForFailover"> Gets or sets the selection type of the NIC. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nicId"/>, <paramref name="label"/>, <paramref name="targetNetworkId"/> or <paramref name="testNetworkId"/> is null. </exception>
-        public VMwareToAzStackHciNicInput(string nicId, string label, string targetNetworkId, string testNetworkId, VmNicSelection selectionTypeForFailover)
+        /// <exception cref="ArgumentNullException"> <paramref name="nicId"/> or <paramref name="label"/> is null. </exception>
+        public VMwareToAzStackHCINicInput(string nicId, string label, VmNicSelection selectionTypeForFailover)
         {
             Argument.AssertNotNull(nicId, nameof(nicId));
             Argument.AssertNotNull(label, nameof(label));
-            Argument.AssertNotNull(targetNetworkId, nameof(targetNetworkId));
-            Argument.AssertNotNull(testNetworkId, nameof(testNetworkId));
 
             NicId = nicId;
             Label = label;
-            TargetNetworkId = targetNetworkId;
-            TestNetworkId = testNetworkId;
             SelectionTypeForFailover = selectionTypeForFailover;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciNicInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHCINicInput"/>. </summary>
         /// <param name="nicId"> Gets or sets the NIC Id. </param>
         /// <param name="label"> Gets or sets the NIC label. </param>
         /// <param name="networkName"> Gets or sets the network name. </param>
         /// <param name="targetNetworkId"> Gets or sets the target network Id within AzStackHCI Cluster. </param>
         /// <param name="testNetworkId"> Gets or sets the target test network Id within AzStackHCI Cluster. </param>
         /// <param name="selectionTypeForFailover"> Gets or sets the selection type of the NIC. </param>
+        /// <param name="isStaticIPMigrationEnabled"> Gets or sets a value indicating whether static ip migration is enabled. </param>
+        /// <param name="isMacMigrationEnabled"> Gets or sets a value indicating whether mac address migration is enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VMwareToAzStackHciNicInput(string nicId, string label, string networkName, string targetNetworkId, string testNetworkId, VmNicSelection selectionTypeForFailover, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VMwareToAzStackHCINicInput(string nicId, string label, string networkName, string targetNetworkId, string testNetworkId, VmNicSelection selectionTypeForFailover, bool? isStaticIPMigrationEnabled, bool? isMacMigrationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NicId = nicId;
             Label = label;
@@ -82,11 +78,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             TargetNetworkId = targetNetworkId;
             TestNetworkId = testNetworkId;
             SelectionTypeForFailover = selectionTypeForFailover;
+            IsStaticIPMigrationEnabled = isStaticIPMigrationEnabled;
+            IsMacMigrationEnabled = isMacMigrationEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciNicInput"/> for deserialization. </summary>
-        internal VMwareToAzStackHciNicInput()
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHCINicInput"/> for deserialization. </summary>
+        internal VMwareToAzStackHCINicInput()
         {
         }
 
@@ -102,5 +100,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public string TestNetworkId { get; set; }
         /// <summary> Gets or sets the selection type of the NIC. </summary>
         public VmNicSelection SelectionTypeForFailover { get; set; }
+        /// <summary> Gets or sets a value indicating whether static ip migration is enabled. </summary>
+        public bool? IsStaticIPMigrationEnabled { get; set; }
+        /// <summary> Gets or sets a value indicating whether mac address migration is enabled. </summary>
+        public bool? IsMacMigrationEnabled { get; set; }
     }
 }

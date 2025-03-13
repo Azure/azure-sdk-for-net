@@ -11,28 +11,28 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> HyperV to AzStackHCI planned failover model custom properties. </summary>
-    public partial class HyperVToAzStackHciPlannedFailoverModelCustomProperties : PlannedFailoverModelCustomProperties
+    public partial class HyperVToAzStackHCIPlannedFailoverModelCustomProperties : PlannedFailoverModelCustomProperties
     {
-        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciPlannedFailoverModelCustomProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHCIPlannedFailoverModelCustomProperties"/>. </summary>
         /// <param name="shutdownSourceVm"> Gets or sets a value indicating whether VM needs to be shut down. </param>
-        public HyperVToAzStackHciPlannedFailoverModelCustomProperties(bool shutdownSourceVm)
+        public HyperVToAzStackHCIPlannedFailoverModelCustomProperties(bool shutdownSourceVm)
         {
             ShutdownSourceVm = shutdownSourceVm;
             InstanceType = "HyperVToAzStackHCI";
         }
 
-        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciPlannedFailoverModelCustomProperties"/>. </summary>
-        /// <param name="instanceType"> Gets or sets the instance type. </param>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHCIPlannedFailoverModelCustomProperties"/>. </summary>
+        /// <param name="instanceType"> Discriminator property for PlannedFailoverModelCustomProperties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="shutdownSourceVm"> Gets or sets a value indicating whether VM needs to be shut down. </param>
-        internal HyperVToAzStackHciPlannedFailoverModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool shutdownSourceVm) : base(instanceType, serializedAdditionalRawData)
+        internal HyperVToAzStackHCIPlannedFailoverModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool shutdownSourceVm) : base(instanceType, serializedAdditionalRawData)
         {
             ShutdownSourceVm = shutdownSourceVm;
             InstanceType = instanceType ?? "HyperVToAzStackHCI";
         }
 
-        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciPlannedFailoverModelCustomProperties"/> for deserialization. </summary>
-        internal HyperVToAzStackHciPlannedFailoverModelCustomProperties()
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHCIPlannedFailoverModelCustomProperties"/> for deserialization. </summary>
+        internal HyperVToAzStackHCIPlannedFailoverModelCustomProperties()
         {
         }
 

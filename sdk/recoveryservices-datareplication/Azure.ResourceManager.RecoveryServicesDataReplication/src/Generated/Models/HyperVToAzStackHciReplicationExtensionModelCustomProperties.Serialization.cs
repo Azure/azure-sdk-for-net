@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class HyperVToAzStackHciReplicationExtensionModelCustomProperties : IUtf8JsonSerializable, IJsonModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>
+    public partial class HyperVToAzStackHCIReplicationExtensionModelCustomProperties : IUtf8JsonSerializable, IJsonModel<HyperVToAzStackHCIReplicationExtensionModelCustomProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVToAzStackHCIReplicationExtensionModelCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HyperVToAzStackHCIReplicationExtensionModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHCIReplicationExtensionModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVToAzStackHciReplicationExtensionModelCustomProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVToAzStackHCIReplicationExtensionModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (options.Format != "W" && Optional.IsDefined(AsrServiceUri))
             {
                 writer.WritePropertyName("asrServiceUri"u8);
-                writer.WriteStringValue(AsrServiceUri.AbsoluteUri);
+                writer.WriteStringValue(AsrServiceUri);
             }
             if (options.Format != "W" && Optional.IsDefined(RcmServiceUri))
             {
                 writer.WritePropertyName("rcmServiceUri"u8);
-                writer.WriteStringValue(RcmServiceUri.AbsoluteUri);
+                writer.WriteStringValue(RcmServiceUri);
             }
             if (options.Format != "W" && Optional.IsDefined(GatewayServiceUri))
             {
                 writer.WritePropertyName("gatewayServiceUri"u8);
-                writer.WriteStringValue(GatewayServiceUri.AbsoluteUri);
+                writer.WriteStringValue(GatewayServiceUri);
             }
             if (options.Format != "W" && Optional.IsDefined(SourceGatewayServiceId))
             {
@@ -111,19 +111,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        HyperVToAzStackHciReplicationExtensionModelCustomProperties IJsonModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HyperVToAzStackHCIReplicationExtensionModelCustomProperties IJsonModel<HyperVToAzStackHCIReplicationExtensionModelCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHCIReplicationExtensionModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVToAzStackHciReplicationExtensionModelCustomProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVToAzStackHCIReplicationExtensionModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHyperVToAzStackHciReplicationExtensionModelCustomProperties(document.RootElement, options);
+            return DeserializeHyperVToAzStackHCIReplicationExtensionModelCustomProperties(document.RootElement, options);
         }
 
-        internal static HyperVToAzStackHciReplicationExtensionModelCustomProperties DeserializeHyperVToAzStackHciReplicationExtensionModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HyperVToAzStackHCIReplicationExtensionModelCustomProperties DeserializeHyperVToAzStackHCIReplicationExtensionModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -131,15 +131,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            ResourceIdentifier hyperVFabricArmId = default;
-            ResourceIdentifier hyperVSiteId = default;
-            ResourceIdentifier azStackHciFabricArmId = default;
-            ResourceIdentifier azStackHciSiteId = default;
+            string hyperVFabricArmId = default;
+            string hyperVSiteId = default;
+            string azStackHciFabricArmId = default;
+            string azStackHciSiteId = default;
             string storageAccountId = default;
             string storageAccountSasSecretName = default;
-            Uri asrServiceUri = default;
-            Uri rcmServiceUri = default;
-            Uri gatewayServiceUri = default;
+            string asrServiceUri = default;
+            string rcmServiceUri = default;
+            string gatewayServiceUri = default;
             string sourceGatewayServiceId = default;
             string targetGatewayServiceId = default;
             string sourceStorageContainerName = default;
@@ -154,30 +154,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 if (property.NameEquals("hyperVFabricArmId"u8))
                 {
-                    hyperVFabricArmId = new ResourceIdentifier(property.Value.GetString());
+                    hyperVFabricArmId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("hyperVSiteId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    hyperVSiteId = new ResourceIdentifier(property.Value.GetString());
+                    hyperVSiteId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("azStackHciFabricArmId"u8))
                 {
-                    azStackHciFabricArmId = new ResourceIdentifier(property.Value.GetString());
+                    azStackHciFabricArmId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("azStackHciSiteId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    azStackHciSiteId = new ResourceIdentifier(property.Value.GetString());
+                    azStackHciSiteId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("storageAccountId"u8))
@@ -192,29 +184,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("asrServiceUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    asrServiceUri = new Uri(property.Value.GetString());
+                    asrServiceUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("rcmServiceUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rcmServiceUri = new Uri(property.Value.GetString());
+                    rcmServiceUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("gatewayServiceUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    gatewayServiceUri = new Uri(property.Value.GetString());
+                    gatewayServiceUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sourceGatewayServiceId"u8))
@@ -263,7 +243,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HyperVToAzStackHciReplicationExtensionModelCustomProperties(
+            return new HyperVToAzStackHCIReplicationExtensionModelCustomProperties(
                 instanceType,
                 serializedAdditionalRawData,
                 hyperVFabricArmId,
@@ -284,35 +264,35 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 resourceGroup);
         }
 
-        BinaryData IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HyperVToAzStackHCIReplicationExtensionModelCustomProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHCIReplicationExtensionModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciReplicationExtensionModelCustomProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHCIReplicationExtensionModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HyperVToAzStackHciReplicationExtensionModelCustomProperties IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HyperVToAzStackHCIReplicationExtensionModelCustomProperties IPersistableModel<HyperVToAzStackHCIReplicationExtensionModelCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHCIReplicationExtensionModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeHyperVToAzStackHciReplicationExtensionModelCustomProperties(document.RootElement, options);
+                        return DeserializeHyperVToAzStackHCIReplicationExtensionModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciReplicationExtensionModelCustomProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHCIReplicationExtensionModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HyperVToAzStackHCIReplicationExtensionModelCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

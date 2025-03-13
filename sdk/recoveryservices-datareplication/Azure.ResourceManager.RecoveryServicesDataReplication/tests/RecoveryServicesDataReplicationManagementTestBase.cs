@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests
         [SetUp]
         public async Task CreateCommonClient()
         {
-            Client = GetArmClient();
+            Client = GetArmClient(subscriptionId: "de3c4d5e-af08-451a-a873-438d86ab6f4b");
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 

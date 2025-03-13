@@ -10,28 +10,24 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary>
-    /// HyperV to  AzStackHCI event model custom properties. This class provides provider specific
-    /// details for events of type DataContract.HealthEvents.HealthEventType.ProtectedItemHealth and
-    /// DataContract.HealthEvents.HealthEventType.AgentHealth.
-    /// </summary>
-    public partial class HyperVToAzStackHciEventModelCustomProperties : EventModelCustomProperties
+    /// <summary> HyperV to  AzStackHCI event model custom properties. This class provides provider specific details for events of type DataContract.HealthEvents.HealthEventType.ProtectedItemHealth and DataContract.HealthEvents.HealthEventType.AgentHealth. </summary>
+    public partial class HyperVToAzStackHCIEventModelCustomProperties : EventModelCustomProperties
     {
-        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciEventModelCustomProperties"/>. </summary>
-        internal HyperVToAzStackHciEventModelCustomProperties()
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHCIEventModelCustomProperties"/>. </summary>
+        internal HyperVToAzStackHCIEventModelCustomProperties()
         {
             InstanceType = "HyperVToAzStackHCI";
         }
 
-        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciEventModelCustomProperties"/>. </summary>
-        /// <param name="instanceType"> Gets or sets the instance type. </param>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHCIEventModelCustomProperties"/>. </summary>
+        /// <param name="instanceType"> Discriminator property for EventModelCustomProperties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="eventSourceFriendlyName"> Gets or sets the friendly name of the source which has raised this health event. </param>
         /// <param name="protectedItemFriendlyName"> Gets or sets the protected item friendly name. </param>
         /// <param name="sourceApplianceName"> Gets or sets the source appliance name. </param>
         /// <param name="targetApplianceName"> Gets or sets the source target name. </param>
         /// <param name="serverType"> Gets or sets the server type. </param>
-        internal HyperVToAzStackHciEventModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string eventSourceFriendlyName, string protectedItemFriendlyName, string sourceApplianceName, string targetApplianceName, string serverType) : base(instanceType, serializedAdditionalRawData)
+        internal HyperVToAzStackHCIEventModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string eventSourceFriendlyName, string protectedItemFriendlyName, string sourceApplianceName, string targetApplianceName, string serverType) : base(instanceType, serializedAdditionalRawData)
         {
             EventSourceFriendlyName = eventSourceFriendlyName;
             ProtectedItemFriendlyName = protectedItemFriendlyName;

@@ -1075,6 +1075,12 @@
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
 
+# PRLabel: %Recovery Services - Data Replication
+/sdk/recoveryservices-datareplication/Azure.ResourceManager.*/     @helen-afework
+
+# ServiceLabel: %Recovery Services - Data Replication %Mgmt
+# ServiceOwners:                                                   @helen-afework
+
 # PRLabel: %Self Help
 /sdk/selfhelp/Azure.ResourceManager.*/                             @archerzz @ArcturusZhang @ArthurMa1978
 

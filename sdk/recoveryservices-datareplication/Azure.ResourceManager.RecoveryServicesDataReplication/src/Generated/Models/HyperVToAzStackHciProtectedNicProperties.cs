@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> HyperVToAzStackHCI NIC properties. </summary>
-    public partial class HyperVToAzStackHciProtectedNicProperties
+    public partial class HyperVToAzStackHCIProtectedNicProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciProtectedNicProperties"/>. </summary>
-        internal HyperVToAzStackHciProtectedNicProperties()
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHCIProtectedNicProperties"/>. </summary>
+        internal HyperVToAzStackHCIProtectedNicProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciProtectedNicProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHCIProtectedNicProperties"/>. </summary>
         /// <param name="nicId"> Gets or sets the NIC Id. </param>
         /// <param name="macAddress"> Gets or sets the NIC mac address. </param>
         /// <param name="networkName"> Gets or sets the network name. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="testNetworkId"> Gets or sets the target test network Id within AzStackHCI Cluster. </param>
         /// <param name="selectionTypeForFailover"> Gets or sets the selection type of the NIC. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HyperVToAzStackHciProtectedNicProperties(string nicId, string macAddress, string networkName, string targetNetworkId, string testNetworkId, VmNicSelection? selectionTypeForFailover, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HyperVToAzStackHCIProtectedNicProperties(string nicId, string macAddress, string networkName, string targetNetworkId, string testNetworkId, VmNicSelection? selectionTypeForFailover, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NicId = nicId;
             MacAddress = macAddress;

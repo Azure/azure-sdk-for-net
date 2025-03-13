@@ -11,16 +11,13 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> VMware To AzStackHCI Policy model custom properties. </summary>
-    public partial class VMwareToAzStackHciPolicyModelCustomProperties : PolicyModelCustomProperties
+    public partial class VMwareToAzStackHCIPolicyModelCustomProperties : PolicyModelCustomProperties
     {
-        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/>. </summary>
-        /// <param name="recoveryPointHistoryInMinutes">
-        /// Gets or sets the duration in minutes until which the recovery points need to be
-        /// stored.
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHCIPolicyModelCustomProperties"/>. </summary>
+        /// <param name="recoveryPointHistoryInMinutes"> Gets or sets the duration in minutes until which the recovery points need to be stored. </param>
         /// <param name="crashConsistentFrequencyInMinutes"> Gets or sets the crash consistent snapshot frequency (in minutes). </param>
         /// <param name="appConsistentFrequencyInMinutes"> Gets or sets the app consistent snapshot frequency (in minutes). </param>
-        public VMwareToAzStackHciPolicyModelCustomProperties(int recoveryPointHistoryInMinutes, int crashConsistentFrequencyInMinutes, int appConsistentFrequencyInMinutes)
+        public VMwareToAzStackHCIPolicyModelCustomProperties(int recoveryPointHistoryInMinutes, int crashConsistentFrequencyInMinutes, int appConsistentFrequencyInMinutes)
         {
             RecoveryPointHistoryInMinutes = recoveryPointHistoryInMinutes;
             CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutes;
@@ -28,16 +25,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             InstanceType = "VMwareToAzStackHCI";
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/>. </summary>
-        /// <param name="instanceType"> Gets or sets the instance type. </param>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHCIPolicyModelCustomProperties"/>. </summary>
+        /// <param name="instanceType"> Discriminator property for PolicyModelCustomProperties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="recoveryPointHistoryInMinutes">
-        /// Gets or sets the duration in minutes until which the recovery points need to be
-        /// stored.
-        /// </param>
+        /// <param name="recoveryPointHistoryInMinutes"> Gets or sets the duration in minutes until which the recovery points need to be stored. </param>
         /// <param name="crashConsistentFrequencyInMinutes"> Gets or sets the crash consistent snapshot frequency (in minutes). </param>
         /// <param name="appConsistentFrequencyInMinutes"> Gets or sets the app consistent snapshot frequency (in minutes). </param>
-        internal VMwareToAzStackHciPolicyModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, int recoveryPointHistoryInMinutes, int crashConsistentFrequencyInMinutes, int appConsistentFrequencyInMinutes) : base(instanceType, serializedAdditionalRawData)
+        internal VMwareToAzStackHCIPolicyModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, int recoveryPointHistoryInMinutes, int crashConsistentFrequencyInMinutes, int appConsistentFrequencyInMinutes) : base(instanceType, serializedAdditionalRawData)
         {
             RecoveryPointHistoryInMinutes = recoveryPointHistoryInMinutes;
             CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutes;
@@ -45,15 +39,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             InstanceType = instanceType ?? "VMwareToAzStackHCI";
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/> for deserialization. </summary>
-        internal VMwareToAzStackHciPolicyModelCustomProperties()
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHCIPolicyModelCustomProperties"/> for deserialization. </summary>
+        internal VMwareToAzStackHCIPolicyModelCustomProperties()
         {
         }
 
-        /// <summary>
-        /// Gets or sets the duration in minutes until which the recovery points need to be
-        /// stored.
-        /// </summary>
+        /// <summary> Gets or sets the duration in minutes until which the recovery points need to be stored. </summary>
         public int RecoveryPointHistoryInMinutes { get; set; }
         /// <summary> Gets or sets the crash consistent snapshot frequency (in minutes). </summary>
         public int CrashConsistentFrequencyInMinutes { get; set; }

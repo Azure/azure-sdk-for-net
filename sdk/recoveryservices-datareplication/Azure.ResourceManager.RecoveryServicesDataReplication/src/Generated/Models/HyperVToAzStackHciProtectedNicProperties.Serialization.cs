@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class HyperVToAzStackHciProtectedNicProperties : IUtf8JsonSerializable, IJsonModel<HyperVToAzStackHciProtectedNicProperties>
+    public partial class HyperVToAzStackHCIProtectedNicProperties : IUtf8JsonSerializable, IJsonModel<HyperVToAzStackHCIProtectedNicProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVToAzStackHciProtectedNicProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVToAzStackHCIProtectedNicProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HyperVToAzStackHciProtectedNicProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HyperVToAzStackHCIProtectedNicProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHCIProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedNicProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVToAzStackHCIProtectedNicProperties)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(NicId))
@@ -81,19 +81,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        HyperVToAzStackHciProtectedNicProperties IJsonModel<HyperVToAzStackHciProtectedNicProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HyperVToAzStackHCIProtectedNicProperties IJsonModel<HyperVToAzStackHCIProtectedNicProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHCIProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedNicProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVToAzStackHCIProtectedNicProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHyperVToAzStackHciProtectedNicProperties(document.RootElement, options);
+            return DeserializeHyperVToAzStackHCIProtectedNicProperties(document.RootElement, options);
         }
 
-        internal static HyperVToAzStackHciProtectedNicProperties DeserializeHyperVToAzStackHciProtectedNicProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HyperVToAzStackHCIProtectedNicProperties DeserializeHyperVToAzStackHCIProtectedNicProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HyperVToAzStackHciProtectedNicProperties(
+            return new HyperVToAzStackHCIProtectedNicProperties(
                 nicId,
                 macAddress,
                 networkName,
@@ -161,35 +161,35 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<HyperVToAzStackHciProtectedNicProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HyperVToAzStackHCIProtectedNicProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHCIProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedNicProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHCIProtectedNicProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HyperVToAzStackHciProtectedNicProperties IPersistableModel<HyperVToAzStackHciProtectedNicProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HyperVToAzStackHCIProtectedNicProperties IPersistableModel<HyperVToAzStackHCIProtectedNicProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHCIProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeHyperVToAzStackHciProtectedNicProperties(document.RootElement, options);
+                        return DeserializeHyperVToAzStackHCIProtectedNicProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedNicProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHCIProtectedNicProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HyperVToAzStackHciProtectedNicProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HyperVToAzStackHCIProtectedNicProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

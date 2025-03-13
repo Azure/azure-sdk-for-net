@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class VMwareToAzStackHciProtectedNicProperties : IUtf8JsonSerializable, IJsonModel<VMwareToAzStackHciProtectedNicProperties>
+    public partial class VMwareToAzStackHCIProtectedNicProperties : IUtf8JsonSerializable, IJsonModel<VMwareToAzStackHCIProtectedNicProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareToAzStackHciProtectedNicProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareToAzStackHCIProtectedNicProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VMwareToAzStackHciProtectedNicProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VMwareToAzStackHCIProtectedNicProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHCIProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedNicProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareToAzStackHCIProtectedNicProperties)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(NicId))
@@ -91,19 +91,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        VMwareToAzStackHciProtectedNicProperties IJsonModel<VMwareToAzStackHciProtectedNicProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VMwareToAzStackHCIProtectedNicProperties IJsonModel<VMwareToAzStackHCIProtectedNicProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHCIProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedNicProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareToAzStackHCIProtectedNicProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVMwareToAzStackHciProtectedNicProperties(document.RootElement, options);
+            return DeserializeVMwareToAzStackHCIProtectedNicProperties(document.RootElement, options);
         }
 
-        internal static VMwareToAzStackHciProtectedNicProperties DeserializeVMwareToAzStackHciProtectedNicProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static VMwareToAzStackHCIProtectedNicProperties DeserializeVMwareToAzStackHCIProtectedNicProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VMwareToAzStackHciProtectedNicProperties(
+            return new VMwareToAzStackHCIProtectedNicProperties(
                 nicId,
                 macAddress,
                 label,
@@ -189,35 +189,35 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<VMwareToAzStackHciProtectedNicProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<VMwareToAzStackHCIProtectedNicProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHCIProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedNicProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHCIProtectedNicProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VMwareToAzStackHciProtectedNicProperties IPersistableModel<VMwareToAzStackHciProtectedNicProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        VMwareToAzStackHCIProtectedNicProperties IPersistableModel<VMwareToAzStackHCIProtectedNicProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHCIProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeVMwareToAzStackHciProtectedNicProperties(document.RootElement, options);
+                        return DeserializeVMwareToAzStackHCIProtectedNicProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedNicProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHCIProtectedNicProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VMwareToAzStackHciProtectedNicProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VMwareToAzStackHCIProtectedNicProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("vmwareSiteId"u8);
-            writer.WriteStringValue(VMwareSiteId);
+            writer.WriteStringValue(VmwareSiteId);
             writer.WritePropertyName("migrationSolutionId"u8);
             writer.WriteStringValue(MigrationSolutionId);
         }
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            ResourceIdentifier vmwareSiteId = default;
-            ResourceIdentifier migrationSolutionId = default;
+            string vmwareSiteId = default;
+            string migrationSolutionId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 if (property.NameEquals("vmwareSiteId"u8))
                 {
-                    vmwareSiteId = new ResourceIdentifier(property.Value.GetString());
+                    vmwareSiteId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("migrationSolutionId"u8))
                 {
-                    migrationSolutionId = new ResourceIdentifier(property.Value.GetString());
+                    migrationSolutionId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

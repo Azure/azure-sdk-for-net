@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class AzStackHciClusterProperties : IUtf8JsonSerializable, IJsonModel<AzStackHciClusterProperties>
+    public partial class AzStackHCIClusterProperties : IUtf8JsonSerializable, IJsonModel<AzStackHCIClusterProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzStackHciClusterProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzStackHCIClusterProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AzStackHciClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzStackHCIClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzStackHciClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzStackHCIClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzStackHciClusterProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzStackHCIClusterProperties)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("clusterName"u8);
@@ -64,19 +64,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        AzStackHciClusterProperties IJsonModel<AzStackHciClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AzStackHCIClusterProperties IJsonModel<AzStackHCIClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzStackHciClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzStackHCIClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzStackHciClusterProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzStackHCIClusterProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzStackHciClusterProperties(document.RootElement, options);
+            return DeserializeAzStackHCIClusterProperties(document.RootElement, options);
         }
 
-        internal static AzStackHciClusterProperties DeserializeAzStackHciClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AzStackHCIClusterProperties DeserializeAzStackHCIClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -123,38 +123,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AzStackHciClusterProperties(clusterName, resourceName, storageAccountName, storageContainers, serializedAdditionalRawData);
+            return new AzStackHCIClusterProperties(clusterName, resourceName, storageAccountName, storageContainers, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AzStackHciClusterProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AzStackHCIClusterProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzStackHciClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzStackHCIClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzStackHciClusterProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzStackHCIClusterProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AzStackHciClusterProperties IPersistableModel<AzStackHciClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AzStackHCIClusterProperties IPersistableModel<AzStackHCIClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzStackHciClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzStackHCIClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAzStackHciClusterProperties(document.RootElement, options);
+                        return DeserializeAzStackHCIClusterProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzStackHciClusterProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzStackHCIClusterProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AzStackHciClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzStackHCIClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
