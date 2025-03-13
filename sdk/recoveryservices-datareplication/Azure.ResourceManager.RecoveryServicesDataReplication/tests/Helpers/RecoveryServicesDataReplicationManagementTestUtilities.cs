@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Helpers
         public const string DefaultReplicationExtensionName = "VMware-1d6ebba3306replicationfabric-asz-1d6ebba08a0replicationfabric-MigReplicationExtn";
         public const string DefaultPolicyName = "aszmigtest1d6ebbareplicationvaultVMwareToAzStackHCIpolicy";
         public const string DefaultProtectedItemTargetResourceGroupId = "/subscriptions/de3c4d5e-af08-451a-a873-438d86ab6f4b/resourceGroups/aszmige2etestscratchKPIvmw011cb3-target";
+        public const string InheritanceCheckExceptionDeploymentPreflightResource = "DeploymentPreflightResource";
 
         // Defaults for protected item
         public const string DefaultProtectedItemName = "100-69-177-104-31be0ff4-c932-4cb3-8efc-efa411d23480_50238fae-8286-3153-78db-9613d575e73f";

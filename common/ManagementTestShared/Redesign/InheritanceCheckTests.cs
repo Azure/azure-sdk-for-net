@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -45,6 +46,8 @@ namespace Azure.ResourceManager.TestFramework
 
             // Verify all class end with `Resource` & `Collection`
             HashSet<string> exceptionList = ExceptionList == null ? new HashSet<string>() : new HashSet<string>(ExceptionList);
+            exceptionList.Add(
+                RecoveryServicesDataReplicationManagementTestUtilities.InheritanceCheckExceptionDeploymentPreflightResource);
             List<string> errorList = new();
 
             foreach (var type in sdkAssembly.GetTypes())
