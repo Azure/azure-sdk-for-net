@@ -37,11 +37,9 @@ public static class AzureProjectsExtensions
     /// <param name="builder"></param>
     public static CloudMachineClient AddCloudMachineClient(this WebApplicationBuilder builder)
     {
-        ProjectClient project = new ProjectClient();
-        builder.Services.AddSingleton(project);
-        CloudMachineClient clioent = project.GetCloudMachineClient();
-        builder.Services.AddSingleton(clioent);
-        return clioent;
+        CloudMachineClient client = new();
+        builder.Services.AddSingleton(client);
+        return client;
     }
 
     /// <summary>

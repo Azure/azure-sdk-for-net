@@ -3,9 +3,8 @@
 
 #nullable enable
 
-using System;
 using Azure.Core.TestFramework;
-
+using Azure.Projects.Ofx;
 using NUnit.Framework;
 
 namespace Azure.Projects.Tests;
@@ -13,11 +12,18 @@ namespace Azure.Projects.Tests;
 public partial class ProjectClientTests : SamplesBase<AzureProjectsTestEnvironment>
 {
     [Test]
-    public void OfxProject()
+    public void EmptyProject()
     {
-        Assert.IsTrue(false);
         ProjectInfrastructure infrastructure = new();
+        ProjectClient project = new();
+    }
 
-        ProjectClient client = new();
+    [Test]
+    public void CloudMachineProject()
+    {
+        ProjectInfrastructure infrastructure = new();
+        infrastructure.AddFeature(new CloudMachineFeature());
+
+        CloudMachineClient project = new();
     }
 }

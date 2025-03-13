@@ -4,3 +4,4 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "<Pending>", Scope = "member", Target = "~M:Azure.Projects.CloudMachineClient.#ctor(Azure.Projects.ProjectClient)")]
+[assembly: SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "<Pending>", Scope = "member", Target = "~M:Azure.Projects.CloudMachineClient.#ctor")]
