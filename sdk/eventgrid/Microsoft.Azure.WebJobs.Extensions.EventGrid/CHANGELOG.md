@@ -1,14 +1,10 @@
 # Release History
 
-## 3.5.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 3.4.4 (2025-03-14)
 
 ### Other Changes
+
+- Updating .NET runtime dependencies to the 6.x line, the Azure extensions to 1.8.0, and the latest dependencies for the Functions host.
 
 ## 3.4.3 (2024-11-19)
 
