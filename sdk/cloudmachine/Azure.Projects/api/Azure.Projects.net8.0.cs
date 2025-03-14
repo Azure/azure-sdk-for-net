@@ -40,7 +40,7 @@ namespace Azure.Projects
     }
     public static partial class AppConfigurationExtensions
     {
-        public static Azure.Data.AppConfiguration.ConfigurationClient GetConfigurationClient(this Azure.Projects.ProjectClient project, string containerName = "default") { throw null; }
+        public static Azure.Data.AppConfiguration.ConfigurationClient GetConfigurationClient(this Azure.Projects.ProjectClient project) { throw null; }
     }
     public static partial class AzureAIProjectsExtensions
     {

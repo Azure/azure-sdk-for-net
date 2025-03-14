@@ -68,6 +68,7 @@ namespace Azure.Projects.AppConfiguration
         public string Key { get { throw null; } }
         public string Value { get { throw null; } }
         protected internal override void EmitConstructs(Azure.Projects.ProjectInfrastructure infrastructure) { }
+        protected internal override void EmitFeatures(Azure.Projects.ProjectInfrastructure infrastructure) { }
     }
 }
 namespace Azure.Projects.AppService
