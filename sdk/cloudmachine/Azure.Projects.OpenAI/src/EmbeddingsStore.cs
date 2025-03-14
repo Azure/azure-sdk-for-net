@@ -10,7 +10,7 @@ namespace Azure.Projects.OpenAI;
 /// <summary>
 /// The vectorbase for storing embeddings.
 /// </summary>
-public class EmbeddingsVectorbase
+public class EmbeddingsStore
 {
     private readonly EmbeddingClient _client;
     private readonly VectorbaseStore _store;
@@ -18,12 +18,12 @@ public class EmbeddingsVectorbase
     private readonly int _chuckSize;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="EmbeddingsVectorbase"/> class.
+    /// Initializes a new instance of the <see cref="EmbeddingsStore"/> class.
     /// </summary>
     /// <param name="client"></param>
     /// <param name="store"></param>
     /// <param name="factChunkSize"></param>
-    public EmbeddingsVectorbase(EmbeddingClient client, VectorbaseStore? store = default, int factChunkSize = 1000)
+    public EmbeddingsStore(EmbeddingClient client, VectorbaseStore? store = default, int factChunkSize = 1000)
     {
         _client = client;
         _store = store ?? new MemoryVectorbaseStore();

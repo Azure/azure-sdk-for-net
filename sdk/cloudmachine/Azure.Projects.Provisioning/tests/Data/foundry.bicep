@@ -37,63 +37,37 @@ resource appConfiguration_projectIdentity_AppConfigurationDataOwner 'Microsoft.A
   scope: appConfiguration
 }
 
-resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
-  name: 'cm0c420d2f21084cd'
+resource ai_hub 'Microsoft.MachineLearningServices/workspaces@2023-08-01-preview' = {
+  name: 'cm0c420d2f21084cd_hub'
   location: location
+  kind: 'hub'
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
-    tenantId: subscription().tenantId
-    sku: {
-      family: 'A'
-      name: 'standard'
-    }
-    accessPolicies: [
-      {
-        tenantId: projectIdentity.properties.tenantId
-        objectId: principalId
-        permissions: {
-          secrets: [
-            'get'
-            'set'
-          ]
-        }
-      }
-    ]
-    enabledForDeployment: true
+    friendlyName: 'cm0c420d2f21084cd_hub'
+    publicNetworkAccess: 'Enabled'
   }
 }
 
-resource keyVault_admin_KeyVaultAdministrator 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid('keyVault', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483'))
-  properties: {
-    principalId: principalId
-    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483')
-    principalType: 'User'
+resource ai_project 'Microsoft.MachineLearningServices/workspaces@2023-08-01-preview' = {
+  name: 'cm0c420d2f21084cd_project'
+  location: location
+  kind: 'Project'
+  identity: {
+    type: 'SystemAssigned'
   }
-  scope: keyVault
-}
-
-resource keyVault_projectIdentity_KeyVaultAdministrator 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid('keyVault', projectIdentity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483'))
   properties: {
-    principalId: projectIdentity.properties.principalId
-    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483')
-    principalType: 'ServicePrincipal'
+    friendlyName: 'cm0c420d2f21084cd_project'
+    hubResourceId: ai_hub.id
+    publicNetworkAccess: 'Enabled'
   }
-  scope: keyVault
 }
 
 resource projectConnection 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Data.AppConfiguration.ConfigurationClient'
   properties: {
     value: 'https://cm0c420d2f21084cd.azconfig.io'
-  }
-  parent: appConfiguration
-}
-
-resource projectConnection2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
-  name: 'Azure.Security.KeyVault.Secrets.SecretClient'
-  properties: {
-    value: 'https://cm0c420d2f21084cd.vault.azure.net/'
   }
   parent: appConfiguration
 }

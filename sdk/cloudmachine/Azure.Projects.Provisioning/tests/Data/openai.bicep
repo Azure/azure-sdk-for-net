@@ -4,12 +4,12 @@ param location string = resourceGroup().location
 @description('The objectId of the current user principal.')
 param principalId string
 
-resource project_identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+resource projectIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: 'cm0c420d2f21084cd'
   location: location
 }
 
-resource cm_app_config 'Microsoft.AppConfiguration/configurationStores@2024-05-01' = {
+resource appConfiguration 'Microsoft.AppConfiguration/configurationStores@2024-05-01' = {
   name: 'cm0c420d2f21084cd'
   location: location
   sku: {
@@ -17,24 +17,24 @@ resource cm_app_config 'Microsoft.AppConfiguration/configurationStores@2024-05-0
   }
 }
 
-resource cm_app_config_1_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid('cm_app_config', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b'))
+resource appConfiguration_admin_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('appConfiguration', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b'))
   properties: {
     principalId: principalId
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b')
     principalType: 'User'
   }
-  scope: cm_app_config
+  scope: appConfiguration
 }
 
-resource cm_app_config_project_identity_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid('cm_app_config', project_identity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b'))
+resource appConfiguration_projectIdentity_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('appConfiguration', projectIdentity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b'))
   properties: {
-    principalId: project_identity.properties.principalId
+    principalId: projectIdentity.properties.principalId
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b')
     principalType: 'ServicePrincipal'
   }
-  scope: cm_app_config
+  scope: appConfiguration
 }
 
 resource openai 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
@@ -50,7 +50,7 @@ resource openai 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
   }
 }
 
-resource openai_1_CognitiveServicesOpenAIContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource openai_admin_CognitiveServicesOpenAIContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid('openai', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'a001fd3d-188f-4b5d-821b-7da978bf7442'))
   properties: {
     principalId: principalId
@@ -60,17 +60,17 @@ resource openai_1_CognitiveServicesOpenAIContributor 'Microsoft.Authorization/ro
   scope: openai
 }
 
-resource openai_project_identity_CognitiveServicesOpenAIContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid('openai', project_identity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'a001fd3d-188f-4b5d-821b-7da978bf7442'))
+resource openai_projectIdentity_CognitiveServicesOpenAIContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('openai', projectIdentity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'a001fd3d-188f-4b5d-821b-7da978bf7442'))
   properties: {
-    principalId: project_identity.properties.principalId
+    principalId: projectIdentity.properties.principalId
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'a001fd3d-188f-4b5d-821b-7da978bf7442')
     principalType: 'ServicePrincipal'
   }
   scope: openai
 }
 
-resource openai_cm0c420d2f21084cd_chat 'Microsoft.CognitiveServices/accounts/deployments@2024-06-01-preview' = {
+resource openai_chat 'Microsoft.CognitiveServices/accounts/deployments@2024-06-01-preview' = {
   name: 'cm0c420d2f21084cd_chat'
   properties: {
     model: {
@@ -88,7 +88,7 @@ resource openai_cm0c420d2f21084cd_chat 'Microsoft.CognitiveServices/accounts/dep
   parent: openai
 }
 
-resource openai_cm0c420d2f21084cd_embedding 'Microsoft.CognitiveServices/accounts/deployments@2024-06-01-preview' = {
+resource openai_embedding 'Microsoft.CognitiveServices/accounts/deployments@2024-06-01-preview' = {
   name: 'cm0c420d2f21084cd_embedding'
   properties: {
     model: {
@@ -105,32 +105,40 @@ resource openai_cm0c420d2f21084cd_embedding 'Microsoft.CognitiveServices/account
   }
   parent: openai
   dependsOn: [
-    openai_cm0c420d2f21084cd_chat
+    openai_chat
   ]
 }
 
-resource cm_connection_1 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+  name: 'Azure.Data.AppConfiguration.ConfigurationClient'
+  properties: {
+    value: 'https://cm0c420d2f21084cd.azconfig.io'
+  }
+  parent: appConfiguration
+}
+
+resource projectConnection2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.AI.OpenAI.AzureOpenAIClient'
   properties: {
     value: 'https://cm0c420d2f21084cd.openai.azure.com'
   }
-  parent: cm_app_config
+  parent: appConfiguration
 }
 
-resource cm_connection_2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection3 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'OpenAI.Chat.ChatClient'
   properties: {
     value: 'cm0c420d2f21084cd_chat'
   }
-  parent: cm_app_config
+  parent: appConfiguration
 }
 
-resource cm_connection_3 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource projectConnection4 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'OpenAI.Embeddings.EmbeddingClient'
   properties: {
     value: 'cm0c420d2f21084cd_embedding'
   }
-  parent: cm_app_config
+  parent: appConfiguration
 }
 
-output project_identity_id string = project_identity.id
+output project_identity_id string = projectIdentity.id
