@@ -1,12 +1,10 @@
 # Release History
 
-## 1.11.0-beta.1 (Unreleased)
+## 1.11.0 (2025-03-15)
 
 ### Features Added
 
 - Added support for [AzurePipelinesCredential](https://learn.microsoft.com/dotnet/api/azure.identity.azurepipelinescredential?view=azure-dotnet) in the client factory by specifying configuration item `credential` as "azurepipelinescredential" and providing each credential parameter as a named configuration item.
-
-### Breaking Changes
 
 ### Bugs Fixed
 

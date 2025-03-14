@@ -1,16 +1,14 @@
 # Release History
 
-## 6.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 6.4.0-beta.1 (2025-03-14)
 
 ### Bugs Fixed
 
 - Fixed a misspelling of "PartitionId" in the trigger input data passed to the function executor.  This caused function logs and metrics reported by AppInsights and the portal to reflect the wrong label.  To ensure that applications that rely on the misspelling are not impacted, a new member with the correct spelling was added.
 
 ### Other Changes
+
+- Updating .NET runtime dependencies to the 6.x line, the Azure extensions to 1.8.0, and the latest dependencies for the Functions host.
 
 ## 6.3.5 (2024-08-01)
 
