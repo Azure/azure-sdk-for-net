@@ -18,16 +18,15 @@ public static class AppConfigurationExtensions
     /// Creates a <see cref="BlobContainerClient"/> for the project.
     /// </summary>
     /// <param name="project"></param>
-    /// <param name="containerName"></param>
     /// <returns></returns>
-    public static  ConfigurationClient GetConfigurationClient(this ProjectClient project, string containerName = "default")
+    public static  ConfigurationClient GetConfigurationClient(this ProjectClient project)
     {
         ConfigurationClient client = project.Subclients.GetClient(() =>
-            CreateClient(project, containerName), default);
+            CreateClient(project), default);
         return client;
     }
 
-    private static ConfigurationClient CreateClient(ProjectClient project, string containerName)
+    private static ConfigurationClient CreateClient(ProjectClient project)
     {
         ClientConnection connection = project.GetConnection(typeof(ConfigurationClient).FullName);
         if (connection.TryGetLocatorAsUri(out Uri uri))

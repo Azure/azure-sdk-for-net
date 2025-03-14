@@ -101,7 +101,7 @@ public partial class ProjectInfrastructure
         {
             return (T)construct;
         }
-        throw new InvalidOperationException($"Construct of type {typeof(T).Name} not found.");
+        throw new InvalidOperationException($"Construct of type {typeof(T).FullName} not found.");
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
