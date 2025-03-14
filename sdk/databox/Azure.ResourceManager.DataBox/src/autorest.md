@@ -8,7 +8,8 @@ azure-arm: true
 csharp: true
 library-name: DataBox
 namespace: Azure.ResourceManager.DataBox
-require: https://github.com/Azure/azure-rest-api-specs/blob/7e97fa437e39660b3d4397790c19642576978224/specification/databox/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/535377f6ef91e9d847bbee77d55871eb8b37b7b2/specification/databox/resource-manager/readme.md
+#tag: package-2025-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -21,6 +22,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -145,6 +149,9 @@ rename-mapping:
   LastMitigationActionOnJob.actionDateTimeInUtc: ActionPerformedOn
   TransportAvailabilityRequest: TransportAvailabilityContent
   DeviceCapabilityRequest: DeviceCapabilityContent
+  JobResource.properties.allDevicesLost: AreAllDevicesLost
+  ModelName: DeviceModelName
+  DataboxJobSecrets: DataBoxJobSecrets
 
 override-operation-name:
   Service_ListAvailableSkusByResourceGroup: GetAvailableSkus

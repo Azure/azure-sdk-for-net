@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataBox.Models
             AzureLocation storageLocation = default;
             DataBoxSkuName skuName = default;
             string country = default;
-            ModelName? model = default;
+            DeviceModelName? model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    model = property.Value.GetString().ToModelName();
+                    model = property.Value.GetString().ToDeviceModelName();
                     continue;
                 }
                 if (options.Format != "W")

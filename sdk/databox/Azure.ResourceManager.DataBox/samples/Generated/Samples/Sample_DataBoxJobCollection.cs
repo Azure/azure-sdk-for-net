@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBox.Samples
             string jobName = "TestJobName1";
             DataBoxJobData data = new DataBoxJobData(new AzureLocation("westus"), DataBoxJobTransferType.ImportToAzure, new DataBoxSku(DataBoxSkuName.DataBox)
             {
-                Model = ModelName.DataBox,
+                Model = DeviceModelName.DataBox,
             })
             {
                 Details = new DataBoxJobDetails(new DataBoxContactDetails("XXXX XXXX", "0000000000", new string[] { "xxxx@xxxx.xxx" })
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBox.Samples
             string jobName = "TestJobName1";
             DataBoxJobData data = new DataBoxJobData(new AzureLocation("westus"), DataBoxJobTransferType.ImportToAzure, new DataBoxSku(DataBoxSkuName.DataBox)
             {
-                Model = ModelName.DataBox,
+                Model = DeviceModelName.DataBox,
             })
             {
                 Details = new DataBoxJobDetails(new DataBoxContactDetails("XXXX XXXX", "0000000000", new string[] { "xxxx@xxxx.xxx" })
@@ -160,7 +160,7 @@ SharePassword = "<sharePassword>",
             string jobName = "TestJobName1";
             DataBoxJobData data = new DataBoxJobData(new AzureLocation("westus"), DataBoxJobTransferType.ImportToAzure, new DataBoxSku(DataBoxSkuName.DataBox)
             {
-                Model = ModelName.DataBox,
+                Model = DeviceModelName.DataBox,
             })
             {
                 Details = new DataBoxJobDetails(new DataBoxContactDetails("XXXX XXXX", "0000000000", new string[] { "xxxx@xxxx.xxx" })
@@ -223,7 +223,7 @@ SharePassword = "<sharePassword>",
             string jobName = "TestJobName1";
             DataBoxJobData data = new DataBoxJobData(new AzureLocation("westus"), DataBoxJobTransferType.ExportFromAzure, new DataBoxSku(DataBoxSkuName.DataBox)
             {
-                Model = ModelName.DataBox,
+                Model = DeviceModelName.DataBox,
             })
             {
                 Details = new DataBoxJobDetails(new DataBoxContactDetails("XXXX XXXX", "0000000000", new string[] { "xxxx@xxxx.xxx" })
@@ -286,7 +286,7 @@ TransferAllFiles = true,
             string jobName = "TestJobName1";
             DataBoxJobData data = new DataBoxJobData(new AzureLocation("westus"), DataBoxJobTransferType.ImportToAzure, new DataBoxSku(DataBoxSkuName.DataBox)
             {
-                Model = ModelName.DataBox,
+                Model = DeviceModelName.DataBox,
             })
             {
                 Details = new DataBoxJobDetails(new DataBoxContactDetails("XXXX XXXX", "0000000000", new string[] { "xxxx@xxxx.xxx" })

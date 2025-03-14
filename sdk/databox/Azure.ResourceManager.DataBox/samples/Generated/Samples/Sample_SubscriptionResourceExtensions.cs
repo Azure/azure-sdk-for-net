@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataBox.Samples
                 AddressType = DataBoxShippingAddressType.Commercial,
             }, DataBoxSkuName.DataBox)
             {
-                Model = ModelName.DataBox,
+                Model = DeviceModelName.DataBox,
             };
             AddressValidationOutput result = await subscriptionResource.ValidateAddressAsync(location, content);
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBox.Samples
 new DataTransferDetailsValidationContent(DataBoxSkuName.DataBox, DataBoxJobTransferType.ImportToAzure)
 {
 DataImportDetails = {new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourcegroups/YourResourceGroupName/providers/Microsoft.Storage/storageAccounts/YourStorageAccountName")))},
-Model = ModelName.DataBox,
+Model = DeviceModelName.DataBox,
 },
 new DataBoxValidateAddressContent(new DataBoxShippingAddress("XXXX XXXX", "XX")
 {
@@ -123,16 +123,16 @@ AddressType = DataBoxShippingAddressType.Commercial,
 }, DataBoxSkuName.DataBox)
 {
 TransportPreferences = new TransportPreferences(TransportShipmentType.MicrosoftManaged),
-Model = ModelName.DataBox,
+Model = DeviceModelName.DataBox,
 },
 new SubscriptionIsAllowedToCreateJobValidationContent(),
 new SkuAvailabilityValidationContent(DataBoxSkuName.DataBox, DataBoxJobTransferType.ImportToAzure, "XX", new AzureLocation("westus"))
 {
-Model = ModelName.DataBox,
+Model = DeviceModelName.DataBox,
 },
 new CreateOrderLimitForSubscriptionValidationContent(DataBoxSkuName.DataBox)
 {
-Model = ModelName.DataBox,
+Model = DeviceModelName.DataBox,
 },
 new PreferencesValidationContent(DataBoxSkuName.DataBox)
 {
@@ -140,7 +140,7 @@ Preference = new DataBoxOrderPreferences
 {
 TransportPreferences = new TransportPreferences(TransportShipmentType.MicrosoftManaged),
 },
-Model = ModelName.DataBox,
+Model = DeviceModelName.DataBox,
 }
             });
             DataBoxValidationResult result = await subscriptionResource.ValidateInputsAsync(location, content);
@@ -172,12 +172,12 @@ Model = ModelName.DataBox,
             {
                 ScheduleAvailabilityRequest = new DataBoxScheduleAvailabilityContent(new AzureLocation("westus"))
                 {
-                    Model = ModelName.DataBox,
+                    Model = DeviceModelName.DataBox,
                 },
                 DeviceCapabilityRequest = new DeviceCapabilityContent
                 {
                     SkuName = DataBoxSkuName.DataBoxDisk,
-                    Model = ModelName.DataBoxDisk,
+                    Model = DeviceModelName.DataBoxDisk,
                 },
             };
             RegionConfigurationResult result = await subscriptionResource.GetRegionConfigurationAsync(location, content);

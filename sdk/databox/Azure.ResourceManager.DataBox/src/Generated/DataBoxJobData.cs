@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="deliveryType"> Delivery type of Job. </param>
         /// <param name="deliveryInfo"> Delivery Info of Job. </param>
         /// <param name="isCancellableWithoutFee"> Flag to indicate cancellation of scheduled job. </param>
-        /// <param name="allDevicesLost"> Flag to indicate if all devices associated with the job are lost. </param>
+        /// <param name="areAllDevicesLost"> Flag to indicate if all devices associated with the job are lost. </param>
         /// <param name="sku"> The sku type. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate, bool? isPrepareToShipEnabled, DataBoxStageName? status, DataBoxStageName? delayedStage, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, JobDeliveryInfo deliveryInfo, bool? isCancellableWithoutFee, bool? allDevicesLost, DataBoxSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate, bool? isPrepareToShipEnabled, DataBoxStageName? status, DataBoxStageName? delayedStage, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, JobDeliveryInfo deliveryInfo, bool? isCancellableWithoutFee, bool? areAllDevicesLost, DataBoxSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             TransferType = transferType;
             IsCancellable = isCancellable;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataBox
             DeliveryType = deliveryType;
             DeliveryInfo = deliveryInfo;
             IsCancellableWithoutFee = isCancellableWithoutFee;
-            AllDevicesLost = allDevicesLost;
+            AreAllDevicesLost = areAllDevicesLost;
             Sku = sku;
             Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataBox
         /// <summary> Flag to indicate cancellation of scheduled job. </summary>
         public bool? IsCancellableWithoutFee { get; }
         /// <summary> Flag to indicate if all devices associated with the job are lost. </summary>
-        public bool? AllDevicesLost { get; }
+        public bool? AreAllDevicesLost { get; }
         /// <summary> The sku type. </summary>
         public DataBoxSku Sku { get; set; }
         /// <summary> Msi identity of the resource. </summary>

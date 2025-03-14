@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </summary>
-    public enum ModelName
+    public enum DeviceModelName
     {
         /// <summary> Data Box. </summary>
         DataBox,

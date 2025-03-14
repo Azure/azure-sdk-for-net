@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DataBoxShippingAddress shippingAddress = default;
             DataBoxSkuName deviceType = default;
             TransportPreferences transportPreferences = default;
-            ModelName? model = default;
+            DeviceModelName? model = default;
             DataBoxValidationInputDiscriminator validationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    model = property.Value.GetString().ToModelName();
+                    model = property.Value.GetString().ToDeviceModelName();
                     continue;
                 }
                 if (property.NameEquals("validationType"u8))

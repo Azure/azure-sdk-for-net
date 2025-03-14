@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -82,18 +81,5 @@ namespace Azure.ResourceManager.DataBox.Models
         public DataCenterAddressContent DataCenterAddressRequest { get; set; }
         /// <summary> Request body to get the device capabilities for a given sku. </summary>
         public DeviceCapabilityContent DeviceCapabilityRequest { get; set; }
-
-        /// <summary> Type of the device. Unused property. Kepping it for backward compatibility</summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public DataBoxSkuName? TransportAvailabilityRequestSkuName
-        {
-            get => TransportAvailabilityRequest is null ? default : TransportAvailabilityRequest.SkuName;
-            set
-            {
-                if (TransportAvailabilityRequest is null)
-                    TransportAvailabilityRequest = new TransportAvailabilityContent();
-                TransportAvailabilityRequest.SkuName = value;
-            }
-        }
     }
 }

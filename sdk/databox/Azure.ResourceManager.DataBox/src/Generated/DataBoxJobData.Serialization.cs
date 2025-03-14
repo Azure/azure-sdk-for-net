@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.DataBox
                 writer.WritePropertyName("isCancellableWithoutFee"u8);
                 writer.WriteBooleanValue(IsCancellableWithoutFee.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AllDevicesLost))
+            if (options.Format != "W" && Optional.IsDefined(AreAllDevicesLost))
             {
                 writer.WritePropertyName("allDevicesLost"u8);
-                writer.WriteBooleanValue(AllDevicesLost.Value);
+                writer.WriteBooleanValue(AreAllDevicesLost.Value);
             }
             writer.WriteEndObject();
         }

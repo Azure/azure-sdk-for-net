@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="deliveryType"> Delivery type of Job. </param>
         /// <param name="deliveryInfoScheduledOn"> Delivery Info of Job. </param>
         /// <param name="isCancellableWithoutFee"> Flag to indicate cancellation of scheduled job. </param>
-        /// <param name="allDevicesLost"> Flag to indicate if all devices associated with the job are lost. </param>
+        /// <param name="areAllDevicesLost"> Flag to indicate if all devices associated with the job are lost. </param>
         /// <param name="sku"> The sku type. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
         /// <returns> A new <see cref="DataBox.DataBoxJobData"/> instance for mocking. </returns>
-        public static DataBoxJobData DataBoxJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DataBoxJobTransferType transferType = default, bool? isCancellable = null, bool? isDeletable = null, bool? isShippingAddressEditable = null, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate = null, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate = null, bool? isPrepareToShipEnabled = null, DataBoxStageName? status = null, DataBoxStageName? delayedStage = null, DateTimeOffset? startOn = null, ResponseError error = null, DataBoxBasicJobDetails details = null, string cancellationReason = null, JobDeliveryType? deliveryType = null, DateTimeOffset? deliveryInfoScheduledOn = null, bool? isCancellableWithoutFee = null, bool? allDevicesLost = null, DataBoxSku sku = null, ManagedServiceIdentity identity = null)
+        public static DataBoxJobData DataBoxJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DataBoxJobTransferType transferType = default, bool? isCancellable = null, bool? isDeletable = null, bool? isShippingAddressEditable = null, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate = null, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate = null, bool? isPrepareToShipEnabled = null, DataBoxStageName? status = null, DataBoxStageName? delayedStage = null, DateTimeOffset? startOn = null, ResponseError error = null, DataBoxBasicJobDetails details = null, string cancellationReason = null, JobDeliveryType? deliveryType = null, DateTimeOffset? deliveryInfoScheduledOn = null, bool? isCancellableWithoutFee = null, bool? areAllDevicesLost = null, DataBoxSku sku = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 deliveryType,
                 deliveryInfoScheduledOn != null ? new JobDeliveryInfo(deliveryInfoScheduledOn, serializedAdditionalRawData: null) : null,
                 isCancellableWithoutFee,
-                allDevicesLost,
+                areAllDevicesLost,
                 sku,
                 identity,
                 serializedAdditionalRawData: null);
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <returns> A new <see cref="Models.DataBoxValidateAddressContent"/> instance for mocking. </returns>
-        public static DataBoxValidateAddressContent DataBoxValidateAddressContent(DataBoxShippingAddress shippingAddress = null, DataBoxSkuName deviceType = default, TransportPreferences transportPreferences = null, ModelName? model = null)
+        public static DataBoxValidateAddressContent DataBoxValidateAddressContent(DataBoxShippingAddress shippingAddress = null, DataBoxSkuName deviceType = default, TransportPreferences transportPreferences = null, DeviceModelName? model = null)
         {
             return new DataBoxValidateAddressContent(
                 DataBoxValidationInputDiscriminator.ValidateAddress,
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="jobSecrets">
         /// Secrets related to this job.
         /// Please note <see cref="Models.JobSecrets"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.DataboxJobSecrets"/>, <see cref="Models.CustomerDiskJobSecrets"/>, <see cref="Models.DataBoxDiskJobSecrets"/> and <see cref="Models.DataBoxHeavyJobSecrets"/>.
+        /// The available derived classes include <see cref="Models.DataBoxJobSecrets"/>, <see cref="Models.CustomerDiskJobSecrets"/>, <see cref="Models.DataBoxDiskJobSecrets"/> and <see cref="Models.DataBoxHeavyJobSecrets"/>.
         /// </param>
         /// <returns> A new <see cref="Models.UnencryptedCredentials"/> instance for mocking. </returns>
         public static UnencryptedCredentials UnencryptedCredentials(string jobName = null, JobSecrets jobSecrets = null)
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="country"> Country in which storage location should be supported. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <returns> A new <see cref="Models.ScheduleAvailabilityContent"/> instance for mocking. </returns>
-        public static ScheduleAvailabilityContent ScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null, ModelName? model = null)
+        public static ScheduleAvailabilityContent ScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null, DeviceModelName? model = null)
         {
             return new UnknownScheduleAvailabilityRequest(storageLocation, default, country, model, serializedAdditionalRawData: null);
         }
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="skuName"> Sku Name for which the data center address requested. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <returns> A new <see cref="Models.DataCenterAddressContent"/> instance for mocking. </returns>
-        public static DataCenterAddressContent DataCenterAddressContent(AzureLocation storageLocation = default, DataBoxSkuName skuName = default, ModelName? model = null)
+        public static DataCenterAddressContent DataCenterAddressContent(AzureLocation storageLocation = default, DataBoxSkuName skuName = default, DeviceModelName? model = null)
         {
             return new DataCenterAddressContent(storageLocation, skuName, model, serializedAdditionalRawData: null);
         }
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <returns> A new <see cref="Models.CreateOrderLimitForSubscriptionValidationContent"/> instance for mocking. </returns>
-        public static CreateOrderLimitForSubscriptionValidationContent CreateOrderLimitForSubscriptionValidationContent(DataBoxSkuName deviceType = default, ModelName? model = null)
+        public static CreateOrderLimitForSubscriptionValidationContent CreateOrderLimitForSubscriptionValidationContent(DataBoxSkuName deviceType = default, DeviceModelName? model = null)
         {
             return new CreateOrderLimitForSubscriptionValidationContent(DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit, serializedAdditionalRawData: null, deviceType, model);
         }
@@ -1260,16 +1260,16 @@ namespace Azure.ResourceManager.DataBox.Models
                 devicePassword);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataboxJobSecrets"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxJobSecrets"/>. </summary>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="podSecrets"> Contains the list of secret objects for a job. </param>
-        /// <returns> A new <see cref="Models.DataboxJobSecrets"/> instance for mocking. </returns>
-        public static DataboxJobSecrets DataboxJobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, ResponseError error = null, IEnumerable<DataBoxSecret> podSecrets = null)
+        /// <returns> A new <see cref="Models.DataBoxJobSecrets"/> instance for mocking. </returns>
+        public static DataBoxJobSecrets DataBoxJobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, ResponseError error = null, IEnumerable<DataBoxSecret> podSecrets = null)
         {
             podSecrets ??= new List<DataBoxSecret>();
 
-            return new DataboxJobSecrets(DataBoxOrderType.DataBox, dataCenterAccessSecurityCode, error, serializedAdditionalRawData: null, podSecrets?.ToList());
+            return new DataBoxJobSecrets(DataBoxOrderType.DataBox, dataCenterAccessSecurityCode, error, serializedAdditionalRawData: null, podSecrets?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxSecret"/>. </summary>
@@ -1298,7 +1298,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="country"> Country in which storage location should be supported. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <returns> A new <see cref="Models.DataBoxScheduleAvailabilityContent"/> instance for mocking. </returns>
-        public static DataBoxScheduleAvailabilityContent DataBoxScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null, ModelName? model = null)
+        public static DataBoxScheduleAvailabilityContent DataBoxScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null, DeviceModelName? model = null)
         {
             return new DataBoxScheduleAvailabilityContent(storageLocation, DataBoxSkuName.DataBox, country, model, serializedAdditionalRawData: null);
         }
@@ -1310,7 +1310,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="transferType"> Type of the transfer. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <returns> A new <see cref="Models.DataTransferDetailsValidationContent"/> instance for mocking. </returns>
-        public static DataTransferDetailsValidationContent DataTransferDetailsValidationContent(IEnumerable<DataExportDetails> dataExportDetails = null, IEnumerable<DataImportDetails> dataImportDetails = null, DataBoxSkuName deviceType = default, DataBoxJobTransferType transferType = default, ModelName? model = null)
+        public static DataTransferDetailsValidationContent DataTransferDetailsValidationContent(IEnumerable<DataExportDetails> dataExportDetails = null, IEnumerable<DataImportDetails> dataImportDetails = null, DataBoxSkuName deviceType = default, DataBoxJobTransferType transferType = default, DeviceModelName? model = null)
         {
             dataExportDetails ??= new List<DataExportDetails>();
             dataImportDetails ??= new List<DataImportDetails>();
@@ -1340,7 +1340,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
         /// <returns> A new <see cref="Models.DiskScheduleAvailabilityContent"/> instance for mocking. </returns>
-        public static DiskScheduleAvailabilityContent DiskScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null, ModelName? model = null, int expectedDataSizeInTerabytes = default)
+        public static DiskScheduleAvailabilityContent DiskScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null, DeviceModelName? model = null, int expectedDataSizeInTerabytes = default)
         {
             return new DiskScheduleAvailabilityContent(
                 storageLocation,
@@ -1356,7 +1356,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="country"> Country in which storage location should be supported. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <returns> A new <see cref="Models.HeavyScheduleAvailabilityContent"/> instance for mocking. </returns>
-        public static HeavyScheduleAvailabilityContent HeavyScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null, ModelName? model = null)
+        public static HeavyScheduleAvailabilityContent HeavyScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null, DeviceModelName? model = null)
         {
             return new HeavyScheduleAvailabilityContent(storageLocation, DataBoxSkuName.DataBoxHeavy, country, model, serializedAdditionalRawData: null);
         }
@@ -1366,7 +1366,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <returns> A new <see cref="Models.PreferencesValidationContent"/> instance for mocking. </returns>
-        public static PreferencesValidationContent PreferencesValidationContent(DataBoxOrderPreferences preference = null, DataBoxSkuName deviceType = default, ModelName? model = null)
+        public static PreferencesValidationContent PreferencesValidationContent(DataBoxOrderPreferences preference = null, DataBoxSkuName deviceType = default, DeviceModelName? model = null)
         {
             return new PreferencesValidationContent(DataBoxValidationInputDiscriminator.ValidatePreferences, serializedAdditionalRawData: null, preference, deviceType, model);
         }
@@ -1387,7 +1387,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="location"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <returns> A new <see cref="Models.SkuAvailabilityValidationContent"/> instance for mocking. </returns>
-        public static SkuAvailabilityValidationContent SkuAvailabilityValidationContent(DataBoxSkuName deviceType = default, DataBoxJobTransferType transferType = default, string country = null, AzureLocation location = default, ModelName? model = null)
+        public static SkuAvailabilityValidationContent SkuAvailabilityValidationContent(DataBoxSkuName deviceType = default, DataBoxJobTransferType transferType = default, string country = null, AzureLocation location = default, DeviceModelName? model = null)
         {
             return new SkuAvailabilityValidationContent(
                 DataBoxValidationInputDiscriminator.ValidateSkuAvailability,
@@ -1449,7 +1449,7 @@ namespace Azure.ResourceManager.DataBox.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataBoxJobData DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate, bool? isPrepareToShipEnabled, DataBoxStageName? status, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, DateTimeOffset? deliveryInfoScheduledOn, bool? isCancellableWithoutFee, DataBoxSku sku, ManagedServiceIdentity identity)
         {
-            return DataBoxJobData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, transferType: transferType, isCancellable: isCancellable, isDeletable: isDeletable, isShippingAddressEditable: isShippingAddressEditable, reverseShippingDetailsUpdate: reverseShippingDetailsUpdate, reverseTransportPreferenceUpdate: reverseTransportPreferenceUpdate, isPrepareToShipEnabled: isPrepareToShipEnabled, status: status, delayedStage: default, startOn: startOn, error: error, details: details, cancellationReason: cancellationReason, deliveryType: deliveryType, deliveryInfoScheduledOn: deliveryInfoScheduledOn, isCancellableWithoutFee: isCancellableWithoutFee, allDevicesLost: default, sku: sku, identity: identity);
+            return DataBoxJobData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, transferType: transferType, isCancellable: isCancellable, isDeletable: isDeletable, isShippingAddressEditable: isShippingAddressEditable, reverseShippingDetailsUpdate: reverseShippingDetailsUpdate, reverseTransportPreferenceUpdate: reverseTransportPreferenceUpdate, isPrepareToShipEnabled: isPrepareToShipEnabled, status: status, delayedStage: default, startOn: startOn, error: error, details: details, cancellationReason: cancellationReason, deliveryType: deliveryType, deliveryInfoScheduledOn: deliveryInfoScheduledOn, isCancellableWithoutFee: isCancellableWithoutFee, areAllDevicesLost: default, sku: sku, identity: identity);
         }
 
         /// <summary> Initializes a new instance of DataBoxJobStage. </summary>

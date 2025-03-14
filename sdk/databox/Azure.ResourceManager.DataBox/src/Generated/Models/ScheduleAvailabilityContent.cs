@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="country"> Country in which storage location should be supported. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduleAvailabilityContent(AzureLocation storageLocation, DataBoxSkuName skuName, string country, ModelName? model, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScheduleAvailabilityContent(AzureLocation storageLocation, DataBoxSkuName skuName, string country, DeviceModelName? model, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageLocation = storageLocation;
             SkuName = skuName;
@@ -84,6 +84,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Country in which storage location should be supported. </summary>
         public string Country { get; set; }
         /// <summary> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </summary>
-        public ModelName? Model { get; set; }
+        public DeviceModelName? Model { get; set; }
     }
 }

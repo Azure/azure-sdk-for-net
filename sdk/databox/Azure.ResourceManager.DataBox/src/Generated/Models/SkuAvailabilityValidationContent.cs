@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>
         /// <param name="location"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
-        internal SkuAvailabilityValidationContent(DataBoxValidationInputDiscriminator validationType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxSkuName deviceType, DataBoxJobTransferType transferType, string country, AzureLocation location, ModelName? model) : base(validationType, serializedAdditionalRawData)
+        internal SkuAvailabilityValidationContent(DataBoxValidationInputDiscriminator validationType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxSkuName deviceType, DataBoxJobTransferType transferType, string country, AzureLocation location, DeviceModelName? model) : base(validationType, serializedAdditionalRawData)
         {
             DeviceType = deviceType;
             TransferType = transferType;
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </summary>
         public AzureLocation Location { get; }
         /// <summary> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </summary>
-        public ModelName? Model { get; set; }
+        public DeviceModelName? Model { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="deviceType"> Device type. </param>
         /// <param name="transferType"> Type of the transfer. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
-        internal DataTransferDetailsValidationContent(DataBoxValidationInputDiscriminator validationType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<DataExportDetails> dataExportDetails, IList<DataImportDetails> dataImportDetails, DataBoxSkuName deviceType, DataBoxJobTransferType transferType, ModelName? model) : base(validationType, serializedAdditionalRawData)
+        internal DataTransferDetailsValidationContent(DataBoxValidationInputDiscriminator validationType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<DataExportDetails> dataExportDetails, IList<DataImportDetails> dataImportDetails, DataBoxSkuName deviceType, DataBoxJobTransferType transferType, DeviceModelName? model) : base(validationType, serializedAdditionalRawData)
         {
             DataExportDetails = dataExportDetails;
             DataImportDetails = dataImportDetails;
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Type of the transfer. </summary>
         public DataBoxJobTransferType TransferType { get; }
         /// <summary> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </summary>
-        public ModelName? Model { get; set; }
+        public DeviceModelName? Model { get; set; }
     }
 }

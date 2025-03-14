@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
-        internal DataBoxValidateAddressContent(DataBoxValidationInputDiscriminator validationType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxShippingAddress shippingAddress, DataBoxSkuName deviceType, TransportPreferences transportPreferences, ModelName? model) : base(validationType, serializedAdditionalRawData)
+        internal DataBoxValidateAddressContent(DataBoxValidationInputDiscriminator validationType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxShippingAddress shippingAddress, DataBoxSkuName deviceType, TransportPreferences transportPreferences, DeviceModelName? model) : base(validationType, serializedAdditionalRawData)
         {
             ShippingAddress = shippingAddress;
             DeviceType = deviceType;
@@ -54,6 +54,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Preferences related to the shipment logistics of the sku. </summary>
         public TransportPreferences TransportPreferences { get; set; }
         /// <summary> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </summary>
-        public ModelName? Model { get; set; }
+        public DeviceModelName? Model { get; set; }
     }
 }
