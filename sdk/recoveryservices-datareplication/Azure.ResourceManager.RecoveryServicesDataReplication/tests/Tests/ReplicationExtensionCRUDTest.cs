@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             ResourceGroupResource rg = await subscription.GetResourceGroupAsync(
                 RecoveryServicesDataReplicationManagementTestUtilities.DefaultResourceGroupName);
 
-            VaultModelResource vault = await rg.GetVaultModels().GetAsync(
+            DataReplicationVaultResource vault = await rg.GetDataReplicationVaults().GetAsync(
                 RecoveryServicesDataReplicationManagementTestUtilities.DefaultVaultName);
 
-            var replicationExtdata = new ReplicationExtensionModelData
+            var replicationExtdata = new DataReplicationExtensionData
             {
-                Properties = new Models.ReplicationExtensionModelProperties
+                Properties = new Models.DataReplicationExtensionProperties
                 {
                     CustomProperties = new Models.VMwareToAzStackHCIReplicationExtensionModelCustomProperties
                     {
-                        VmwareFabricArmId = RecoveryServicesDataReplicationManagementTestUtilities.DefaultSourceApplianceId,
-                        AzStackHciFabricArmId = RecoveryServicesDataReplicationManagementTestUtilities.DefaultTargetApplianceId,
+                        VmwareFabricArmId = new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultSourceApplianceId),
+                        AzStackHciFabricArmId = new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultTargetApplianceId),
                         StorageAccountId = RecoveryServicesDataReplicationManagementTestUtilities.DefaultStorageAccountId,
                         StorageAccountSasSecretName = string.Empty,
                         InstanceType = "VMwareToAzStackHCI"
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             };
 
             // Create
-            var createReplicationExtOperation = await vault.GetReplicationExtensionModels().CreateOrUpdateAsync(
+            var createReplicationExtOperation = await vault.GetDataReplicationExtensions().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 RecoveryServicesDataReplicationManagementTestUtilities.DefaultReplicationExtensionName,
                 replicationExtdata);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             Assert.IsTrue(createReplicationExtOperation.HasValue);
 
             // Get
-            var getReplicationExtOperation = await vault.GetReplicationExtensionModels().GetAsync(
+            var getReplicationExtOperation = await vault.GetDataReplicationExtensions().GetAsync(
                 RecoveryServicesDataReplicationManagementTestUtilities.DefaultReplicationExtensionName);
             var relicationExtModelResource = getReplicationExtOperation.Value;
 

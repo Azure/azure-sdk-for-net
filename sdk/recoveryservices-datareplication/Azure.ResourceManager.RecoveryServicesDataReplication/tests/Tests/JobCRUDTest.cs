@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             ResourceGroupResource rg = await subscription.GetResourceGroupAsync(
                 RecoveryServicesDataReplicationManagementTestUtilities.DefaultResourceGroupName);
 
-            VaultModelResource vault = await rg.GetVaultModels().GetAsync(
+            DataReplicationVaultResource vault = await rg.GetDataReplicationVaults().GetAsync(
                 RecoveryServicesDataReplicationManagementTestUtilities.DefaultVaultName);
 
-            var getJobOperation = await vault.GetJobModels().GetAsync(
+            var getJobOperation = await vault.GetDataReplicationJobs().GetAsync(
                 RecoveryServicesDataReplicationManagementTestUtilities.DefaultJobName);
 
             var jobModelResource = getJobOperation.Value;

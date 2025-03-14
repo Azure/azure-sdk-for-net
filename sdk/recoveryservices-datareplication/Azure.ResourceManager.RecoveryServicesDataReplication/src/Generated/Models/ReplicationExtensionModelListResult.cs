@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Initializes a new instance of <see cref="ReplicationExtensionModelListResult"/>. </summary>
         /// <param name="value"> The ReplicationExtensionModel items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ReplicationExtensionModelListResult(IEnumerable<ReplicationExtensionModelData> value)
+        internal ReplicationExtensionModelListResult(IEnumerable<DataReplicationExtensionData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="value"> The ReplicationExtensionModel items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicationExtensionModelListResult(IReadOnlyList<ReplicationExtensionModelData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReplicationExtensionModelListResult(IReadOnlyList<DataReplicationExtensionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> The ReplicationExtensionModel items on this page. </summary>
-        public IReadOnlyList<ReplicationExtensionModelData> Value { get; }
+        public IReadOnlyList<DataReplicationExtensionData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

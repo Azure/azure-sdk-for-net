@@ -10,6 +10,7 @@ using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Helpers;
 using System.Threading;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             ResourceGroupResource rg = await subscription.GetResourceGroupAsync(
                 RecoveryServicesDataReplicationManagementTestUtilities.DefaultResourceGroupName);
 
-            VaultModelResource vault = await rg.GetVaultModels().GetAsync(
+            DataReplicationVaultResource vault = await rg.GetDataReplicationVaults().GetAsync(
                 RecoveryServicesDataReplicationManagementTestUtilities.DefaultVaultName);
 
             var disk = new Models.VMwareToAzStackHCIDiskInput
@@ -49,15 +50,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
 
             var customeProperties = new Models.VMwareToAzStackHCIProtectedItemModelCustomProperties
                (
-                   targetHciClusterId: RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetHciClusterId,
-                   targetArcClusterCustomLocationId: RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetArcClusterCustomLocationId,
-                   storageContainerId: RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemStorageContainerId,
-                   targetResourceGroupId: RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetResourceGroupId,
+                   targetHciClusterId: new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetHciClusterId),
+                   targetArcClusterCustomLocationId: new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetArcClusterCustomLocationId),
+                   storageContainerId: new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemStorageContainerId),
+                   targetResourceGroupId: new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetResourceGroupId),
                    customLocationRegion: RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemCustomLocationRegion,
                    disksToInclude: new List<Models.VMwareToAzStackHCIDiskInput> { disk },
                    nicsToInclude: new List<Models.VMwareToAzStackHCINicInput> { nic },
                    hyperVGeneration: RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemHyperVGeneration,
-                   fabricDiscoveryMachineId: RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemFabricDiscoveryMachineId,
+                   fabricDiscoveryMachineId: new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemFabricDiscoveryMachineId),
                    runAsAccountId: RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemRunAsAccountId,
                    sourceFabricAgentName: RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemSourceFabricAgentName,
                    targetFabricAgentName: RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetFabricAgentName
@@ -75,9 +76,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                 TargetMemoryBufferPercentage = 20
             };
 
-            var protectedItemData = new ProtectedItemModelData
+            var protectedItemData = new DataReplicationProtectedItemData
             {
-                Properties = new Models.ProtectedItemModelProperties
+                Properties = new Models.DataReplicationProtectedItemProperties
                 {
                     PolicyName = RecoveryServicesDataReplicationManagementTestUtilities.DefaultPolicyName,
                     ReplicationExtensionName = RecoveryServicesDataReplicationManagementTestUtilities.DefaultReplicationExtensionName,
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             };
 
             // Create
-            var createProtectedItemOperation = await vault.GetProtectedItemModels().CreateOrUpdateAsync(
+            var createProtectedItemOperation = await vault.GetDataReplicationProtectedItems().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemName,
                 protectedItemData);
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             Assert.IsTrue(createProtectedItemOperation.HasValue);
 
             // Get
-            var getProtectedItemOperation = await vault.GetProtectedItemModels().GetAsync(
+            var getProtectedItemOperation = await vault.GetDataReplicationProtectedItems().GetAsync(
                 RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemName);
             var protecteItemModelResource = getProtectedItemOperation.Value;
             Assert.IsNotNull(protecteItemModelResource);
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                 // sleep for 15 seconds
                 Thread.Sleep(RecoveryServicesDataReplicationManagementTestUtilities.ThreadSleepTime);
 
-                getProtectedItemOperation = await vault.GetProtectedItemModels().GetAsync(
+                getProtectedItemOperation = await vault.GetDataReplicationProtectedItems().GetAsync(
                          RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemName);
                 protecteItemModelResource = getProtectedItemOperation.Value;
                 canDelete = protecteItemModelResource.Data.Properties.AllowedJobs.Contains("DisableProtection");

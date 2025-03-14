@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Initializes a new instance of <see cref="VaultModelListResult"/>. </summary>
         /// <param name="value"> The VaultModel items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal VaultModelListResult(IEnumerable<VaultModelData> value)
+        internal VaultModelListResult(IEnumerable<DataReplicationVaultData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="value"> The VaultModel items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VaultModelListResult(IReadOnlyList<VaultModelData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VaultModelListResult(IReadOnlyList<DataReplicationVaultData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> The VaultModel items on this page. </summary>
-        public IReadOnlyList<VaultModelData> Value { get; }
+        public IReadOnlyList<DataReplicationVaultData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

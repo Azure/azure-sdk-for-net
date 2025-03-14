@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="biosId"> Gets or sets the BIOS Id of the fabric agent machine. </param>
         /// <param name="marsAuthenticationIdentity"> Identity model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="biosId"/> or <paramref name="marsAuthenticationIdentity"/> is null. </exception>
-        public VMwareFabricAgentModelCustomProperties(string biosId, IdentityModel marsAuthenticationIdentity)
+        public VMwareFabricAgentModelCustomProperties(string biosId, DataReplicationIdentity marsAuthenticationIdentity)
         {
             Argument.AssertNotNull(biosId, nameof(biosId));
             Argument.AssertNotNull(marsAuthenticationIdentity, nameof(marsAuthenticationIdentity));
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="biosId"> Gets or sets the BIOS Id of the fabric agent machine. </param>
         /// <param name="marsAuthenticationIdentity"> Identity model. </param>
-        internal VMwareFabricAgentModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string biosId, IdentityModel marsAuthenticationIdentity) : base(instanceType, serializedAdditionalRawData)
+        internal VMwareFabricAgentModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string biosId, DataReplicationIdentity marsAuthenticationIdentity) : base(instanceType, serializedAdditionalRawData)
         {
             BiosId = biosId;
             MarsAuthenticationIdentity = marsAuthenticationIdentity;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Gets or sets the BIOS Id of the fabric agent machine. </summary>
         public string BiosId { get; set; }
         /// <summary> Identity model. </summary>
-        public IdentityModel MarsAuthenticationIdentity { get; set; }
+        public DataReplicationIdentity MarsAuthenticationIdentity { get; set; }
     }
 }

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecoveryPointModelData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, string recoveryPointName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataReplicationRecoveryPointData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, string recoveryPointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        RecoveryPointModelData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecoveryPointModelData.DeserializeRecoveryPointModelData(document.RootElement);
+                        DataReplicationRecoveryPointData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DataReplicationRecoveryPointData.DeserializeDataReplicationRecoveryPointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RecoveryPointModelData)null, message.Response);
+                    return Response.FromValue((DataReplicationRecoveryPointData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecoveryPointModelData> Get(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, string recoveryPointName, CancellationToken cancellationToken = default)
+        public Response<DataReplicationRecoveryPointData> Get(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, string recoveryPointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -136,13 +136,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        RecoveryPointModelData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecoveryPointModelData.DeserializeRecoveryPointModelData(document.RootElement);
+                        DataReplicationRecoveryPointData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DataReplicationRecoveryPointData.DeserializeDataReplicationRecoveryPointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RecoveryPointModelData)null, message.Response);
+                    return Response.FromValue((DataReplicationRecoveryPointData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         RecoveryPointModelListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RecoveryPointModelListResult.DeserializeRecoveryPointModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         RecoveryPointModelListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RecoveryPointModelListResult.DeserializeRecoveryPointModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         RecoveryPointModelListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RecoveryPointModelListResult.DeserializeRecoveryPointModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         RecoveryPointModelListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RecoveryPointModelListResult.DeserializeRecoveryPointModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

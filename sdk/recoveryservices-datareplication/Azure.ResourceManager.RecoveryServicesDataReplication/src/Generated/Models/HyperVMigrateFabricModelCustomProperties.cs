@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="hyperVSiteId"> Gets or sets the ARM Id of the HyperV site. </param>
         /// <param name="migrationSolutionId"> Gets or sets the migration solution ARM Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hyperVSiteId"/> or <paramref name="migrationSolutionId"/> is null. </exception>
-        public HyperVMigrateFabricModelCustomProperties(string hyperVSiteId, string migrationSolutionId)
+        public HyperVMigrateFabricModelCustomProperties(ResourceIdentifier hyperVSiteId, ResourceIdentifier migrationSolutionId)
         {
             Argument.AssertNotNull(hyperVSiteId, nameof(hyperVSiteId));
             Argument.AssertNotNull(migrationSolutionId, nameof(migrationSolutionId));
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="fabricContainerId"> Gets or sets the fabric container Id. </param>
         /// <param name="migrationSolutionId"> Gets or sets the migration solution ARM Id. </param>
         /// <param name="migrationHubUri"> Gets or sets the migration hub Uri. </param>
-        internal HyperVMigrateFabricModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string hyperVSiteId, string fabricResourceId, string fabricContainerId, string migrationSolutionId, string migrationHubUri) : base(instanceType, serializedAdditionalRawData)
+        internal HyperVMigrateFabricModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier hyperVSiteId, ResourceIdentifier fabricResourceId, string fabricContainerId, ResourceIdentifier migrationSolutionId, Uri migrationHubUri) : base(instanceType, serializedAdditionalRawData)
         {
             HyperVSiteId = hyperVSiteId;
             FabricResourceId = fabricResourceId;
@@ -51,14 +52,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Gets or sets the ARM Id of the HyperV site. </summary>
-        public string HyperVSiteId { get; set; }
+        public ResourceIdentifier HyperVSiteId { get; set; }
         /// <summary> Gets or sets the fabric resource Id. </summary>
-        public string FabricResourceId { get; }
+        public ResourceIdentifier FabricResourceId { get; }
         /// <summary> Gets or sets the fabric container Id. </summary>
         public string FabricContainerId { get; }
         /// <summary> Gets or sets the migration solution ARM Id. </summary>
-        public string MigrationSolutionId { get; set; }
+        public ResourceIdentifier MigrationSolutionId { get; set; }
         /// <summary> Gets or sets the migration hub Uri. </summary>
-        public string MigrationHubUri { get; }
+        public Uri MigrationHubUri { get; }
     }
 }

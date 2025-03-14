@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetVaultModels_ListsTheVaultsBySubscription()
+        public async Task GetDataReplicationVaults_ListsTheVaultsBySubscription()
         {
             // Generated from example definition: 2024-09-01/Vault_ListBySubscription.json
             // this example is just showing the usage of "VaultModel_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (VaultModelResource item in subscriptionResource.GetVaultModelsAsync())
+            await foreach (DataReplicationVaultResource item in subscriptionResource.GetDataReplicationVaultsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                VaultModelData resourceData = item.Data;
+                DataReplicationVaultData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetFabricModels_ListsTheFabricsBySubscription()
+        public async Task GetDataReplicationFabrics_ListsTheFabricsBySubscription()
         {
             // Generated from example definition: 2024-09-01/Fabric_ListBySubscription.json
             // this example is just showing the usage of "FabricModel_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FabricModelResource item in subscriptionResource.GetFabricModelsAsync())
+            await foreach (DataReplicationFabricResource item in subscriptionResource.GetDataReplicationFabricsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                FabricModelData resourceData = item.Data;
+                DataReplicationFabricData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("trfqtbtmusswpibw");
-            CheckNameAvailabilityModel body = new CheckNameAvailabilityModel
+            DataReplicationNameAvailabilityContent content = new DataReplicationNameAvailabilityContent
             {
                 Name = "updkdcixs",
                 Type = "gngmcancdauwhdixjjvqnfkvqc",
             };
-            CheckNameAvailabilityResponseModel result = await subscriptionResource.PostCheckNameAvailabilityAsync(location, body: body);
+            DataReplicationNameAvailabilityResult result = await subscriptionResource.PostCheckNameAvailabilityAsync(location, content: content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

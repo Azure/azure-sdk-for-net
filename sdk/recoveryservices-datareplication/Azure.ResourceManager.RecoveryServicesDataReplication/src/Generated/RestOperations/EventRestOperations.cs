@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="eventName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EventModelData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string eventName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataReplicationEventData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string eventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        EventModelData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventModelData.DeserializeEventModelData(document.RootElement);
+                        DataReplicationEventData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DataReplicationEventData.DeserializeDataReplicationEventData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EventModelData)null, message.Response);
+                    return Response.FromValue((DataReplicationEventData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="eventName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EventModelData> Get(string subscriptionId, string resourceGroupName, string vaultName, string eventName, CancellationToken cancellationToken = default)
+        public Response<DataReplicationEventData> Get(string subscriptionId, string resourceGroupName, string vaultName, string eventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,13 +128,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        EventModelData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventModelData.DeserializeEventModelData(document.RootElement);
+                        DataReplicationEventData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DataReplicationEventData.DeserializeDataReplicationEventData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EventModelData)null, message.Response);
+                    return Response.FromValue((DataReplicationEventData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         EventModelListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventModelListResult.DeserializeEventModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         EventModelListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventModelListResult.DeserializeEventModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         EventModelListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventModelListResult.DeserializeEventModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         EventModelListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventModelListResult.DeserializeEventModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

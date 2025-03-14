@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            string vmwareSiteId = default;
-            string migrationSolutionId = default;
+            ResourceIdentifier vmwareSiteId = default;
+            ResourceIdentifier migrationSolutionId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 if (property.NameEquals("vmwareSiteId"u8))
                 {
-                    vmwareSiteId = property.Value.GetString();
+                    vmwareSiteId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("migrationSolutionId"u8))
                 {
-                    migrationSolutionId = property.Value.GetString();
+                    migrationSolutionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

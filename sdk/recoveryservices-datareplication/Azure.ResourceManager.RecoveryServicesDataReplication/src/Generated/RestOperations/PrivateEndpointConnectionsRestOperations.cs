@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecoveryServicesDataReplicationPrivateEndpointConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataReplicationPrivateEndpointConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        RecoveryServicesDataReplicationPrivateEndpointConnectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecoveryServicesDataReplicationPrivateEndpointConnectionData.DeserializeRecoveryServicesDataReplicationPrivateEndpointConnectionData(document.RootElement);
+                        DataReplicationPrivateEndpointConnectionData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DataReplicationPrivateEndpointConnectionData.DeserializeDataReplicationPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RecoveryServicesDataReplicationPrivateEndpointConnectionData)null, message.Response);
+                    return Response.FromValue((DataReplicationPrivateEndpointConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecoveryServicesDataReplicationPrivateEndpointConnectionData> Get(string subscriptionId, string resourceGroupName, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public Response<DataReplicationPrivateEndpointConnectionData> Get(string subscriptionId, string resourceGroupName, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,19 +128,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        RecoveryServicesDataReplicationPrivateEndpointConnectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecoveryServicesDataReplicationPrivateEndpointConnectionData.DeserializeRecoveryServicesDataReplicationPrivateEndpointConnectionData(document.RootElement);
+                        DataReplicationPrivateEndpointConnectionData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DataReplicationPrivateEndpointConnectionData.DeserializeDataReplicationPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RecoveryServicesDataReplicationPrivateEndpointConnectionData)null, message.Response);
+                    return Response.FromValue((DataReplicationPrivateEndpointConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string privateEndpointConnectionName, RecoveryServicesDataReplicationPrivateEndpointConnectionData data)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string privateEndpointConnectionName, DataReplicationPrivateEndpointConnectionData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string privateEndpointConnectionName, RecoveryServicesDataReplicationPrivateEndpointConnectionData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string privateEndpointConnectionName, DataReplicationPrivateEndpointConnectionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecoveryServicesDataReplicationPrivateEndpointConnectionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string privateEndpointConnectionName, RecoveryServicesDataReplicationPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public async Task<Response<DataReplicationPrivateEndpointConnectionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string privateEndpointConnectionName, DataReplicationPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -206,9 +206,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                 case 201:
                     {
-                        RecoveryServicesDataReplicationPrivateEndpointConnectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecoveryServicesDataReplicationPrivateEndpointConnectionData.DeserializeRecoveryServicesDataReplicationPrivateEndpointConnectionData(document.RootElement);
+                        DataReplicationPrivateEndpointConnectionData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DataReplicationPrivateEndpointConnectionData.DeserializeDataReplicationPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecoveryServicesDataReplicationPrivateEndpointConnectionData> Update(string subscriptionId, string resourceGroupName, string vaultName, string privateEndpointConnectionName, RecoveryServicesDataReplicationPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public Response<DataReplicationPrivateEndpointConnectionData> Update(string subscriptionId, string resourceGroupName, string vaultName, string privateEndpointConnectionName, DataReplicationPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -240,9 +240,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                 case 201:
                     {
-                        RecoveryServicesDataReplicationPrivateEndpointConnectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecoveryServicesDataReplicationPrivateEndpointConnectionData.DeserializeRecoveryServicesDataReplicationPrivateEndpointConnectionData(document.RootElement);
+                        DataReplicationPrivateEndpointConnectionData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DataReplicationPrivateEndpointConnectionData.DeserializeDataReplicationPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         RecoveryServicesDataReplicationPrivateEndpointConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RecoveryServicesDataReplicationPrivateEndpointConnectionListResult.DeserializeRecoveryServicesDataReplicationPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         RecoveryServicesDataReplicationPrivateEndpointConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RecoveryServicesDataReplicationPrivateEndpointConnectionListResult.DeserializeRecoveryServicesDataReplicationPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         RecoveryServicesDataReplicationPrivateEndpointConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RecoveryServicesDataReplicationPrivateEndpointConnectionListResult.DeserializeRecoveryServicesDataReplicationPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         RecoveryServicesDataReplicationPrivateEndpointConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RecoveryServicesDataReplicationPrivateEndpointConnectionListResult.DeserializeRecoveryServicesDataReplicationPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

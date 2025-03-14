@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            DataReplicationProvisioningState? provisioningState = default;
             WritableSubResource privateEndpoint = default;
             RecoveryServicesDataReplicationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new DataReplicationProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("privateEndpoint"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePrivateEndpointConnectionResponseProperties(document.RootElement, options);
                     }
                 default:

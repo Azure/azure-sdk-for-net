@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             ResourceGroupResource rg = await subscription.GetResourceGroupAsync(
                 RecoveryServicesDataReplicationManagementTestUtilities.DefaultResourceGroupName);
 
-            VaultModelResource vault = await rg.GetVaultModels().GetAsync(
+            DataReplicationVaultResource vault = await rg.GetDataReplicationVaults().GetAsync(
                 RecoveryServicesDataReplicationManagementTestUtilities.DefaultVaultName);
 
             var policyName = $"policy{IsAsync.ToString()}123";
-            var policyModelData = new PolicyModelData
+            var policyModelData = new DataReplicationPolicyData
             {
-                Properties = new Models.PolicyModelProperties
+                Properties = new Models.DataReplicationPolicyProperties
                 {
                     CustomProperties = new Models.VMwareToAzStackHCIPolicyModelCustomProperties
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             };
 
             // Create
-            var createPolicyOperation = await vault.GetPolicyModels().CreateOrUpdateAsync(
+            var createPolicyOperation = await vault.GetDataReplicationPolicies().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 policyName,
                 policyModelData);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             Assert.IsTrue(createPolicyOperation.HasValue);
 
             // Get
-            var getPolicyOperation = await vault.GetPolicyModels().GetAsync(policyName);
+            var getPolicyOperation = await vault.GetDataReplicationPolicies().GetAsync(policyName);
             var policyModelResource = getPolicyOperation.Value;
 
             Assert.IsNotNull(policyModelResource);

@@ -35,159 +35,159 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EmailConfigurationModelResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EmailConfigurationModelResource.CreateResourceIdentifier" /> to create an <see cref="EmailConfigurationModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataReplicationEmailConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationEmailConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationEmailConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EmailConfigurationModelResource"/> object. </returns>
-        public virtual EmailConfigurationModelResource GetEmailConfigurationModelResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationEmailConfigurationResource"/> object. </returns>
+        public virtual DataReplicationEmailConfigurationResource GetDataReplicationEmailConfigurationResource(ResourceIdentifier id)
         {
-            EmailConfigurationModelResource.ValidateResourceId(id);
-            return new EmailConfigurationModelResource(Client, id);
+            DataReplicationEmailConfigurationResource.ValidateResourceId(id);
+            return new DataReplicationEmailConfigurationResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VaultModelResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VaultModelResource.CreateResourceIdentifier" /> to create a <see cref="VaultModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataReplicationVaultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationVaultResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationVaultResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VaultModelResource"/> object. </returns>
-        public virtual VaultModelResource GetVaultModelResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationVaultResource"/> object. </returns>
+        public virtual DataReplicationVaultResource GetDataReplicationVaultResource(ResourceIdentifier id)
         {
-            VaultModelResource.ValidateResourceId(id);
-            return new VaultModelResource(Client, id);
+            DataReplicationVaultResource.ValidateResourceId(id);
+            return new DataReplicationVaultResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EventModelResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventModelResource.CreateResourceIdentifier" /> to create an <see cref="EventModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataReplicationEventResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationEventResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationEventResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventModelResource"/> object. </returns>
-        public virtual EventModelResource GetEventModelResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationEventResource"/> object. </returns>
+        public virtual DataReplicationEventResource GetDataReplicationEventResource(ResourceIdentifier id)
         {
-            EventModelResource.ValidateResourceId(id);
-            return new EventModelResource(Client, id);
+            DataReplicationEventResource.ValidateResourceId(id);
+            return new DataReplicationEventResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FabricModelResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FabricModelResource.CreateResourceIdentifier" /> to create a <see cref="FabricModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataReplicationFabricResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationFabricResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationFabricResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FabricModelResource"/> object. </returns>
-        public virtual FabricModelResource GetFabricModelResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationFabricResource"/> object. </returns>
+        public virtual DataReplicationFabricResource GetDataReplicationFabricResource(ResourceIdentifier id)
         {
-            FabricModelResource.ValidateResourceId(id);
-            return new FabricModelResource(Client, id);
+            DataReplicationFabricResource.ValidateResourceId(id);
+            return new DataReplicationFabricResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FabricAgentModelResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FabricAgentModelResource.CreateResourceIdentifier" /> to create a <see cref="FabricAgentModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataReplicationFabricAgentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationFabricAgentResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationFabricAgentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FabricAgentModelResource"/> object. </returns>
-        public virtual FabricAgentModelResource GetFabricAgentModelResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationFabricAgentResource"/> object. </returns>
+        public virtual DataReplicationFabricAgentResource GetDataReplicationFabricAgentResource(ResourceIdentifier id)
         {
-            FabricAgentModelResource.ValidateResourceId(id);
-            return new FabricAgentModelResource(Client, id);
+            DataReplicationFabricAgentResource.ValidateResourceId(id);
+            return new DataReplicationFabricAgentResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="JobModelResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobModelResource.CreateResourceIdentifier" /> to create a <see cref="JobModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataReplicationJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationJobResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationJobResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobModelResource"/> object. </returns>
-        public virtual JobModelResource GetJobModelResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationJobResource"/> object. </returns>
+        public virtual DataReplicationJobResource GetDataReplicationJobResource(ResourceIdentifier id)
         {
-            JobModelResource.ValidateResourceId(id);
-            return new JobModelResource(Client, id);
+            DataReplicationJobResource.ValidateResourceId(id);
+            return new DataReplicationJobResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PolicyModelResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PolicyModelResource.CreateResourceIdentifier" /> to create a <see cref="PolicyModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataReplicationPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyModelResource"/> object. </returns>
-        public virtual PolicyModelResource GetPolicyModelResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationPolicyResource"/> object. </returns>
+        public virtual DataReplicationPolicyResource GetDataReplicationPolicyResource(ResourceIdentifier id)
         {
-            PolicyModelResource.ValidateResourceId(id);
-            return new PolicyModelResource(Client, id);
+            DataReplicationPolicyResource.ValidateResourceId(id);
+            return new DataReplicationPolicyResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RecoveryServicesDataReplicationPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecoveryServicesDataReplicationPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryServicesDataReplicationPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataReplicationPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoveryServicesDataReplicationPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual RecoveryServicesDataReplicationPrivateEndpointConnectionResource GetRecoveryServicesDataReplicationPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual DataReplicationPrivateEndpointConnectionResource GetDataReplicationPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            RecoveryServicesDataReplicationPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new RecoveryServicesDataReplicationPrivateEndpointConnectionResource(Client, id);
+            DataReplicationPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new DataReplicationPrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointConnectionProxyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateEndpointConnectionProxyResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionProxyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataReplicationPrivateEndpointConnectionProxyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationPrivateEndpointConnectionProxyResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationPrivateEndpointConnectionProxyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionProxyResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionProxyResource GetPrivateEndpointConnectionProxyResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationPrivateEndpointConnectionProxyResource"/> object. </returns>
+        public virtual DataReplicationPrivateEndpointConnectionProxyResource GetDataReplicationPrivateEndpointConnectionProxyResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionProxyResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionProxyResource(Client, id);
+            DataReplicationPrivateEndpointConnectionProxyResource.ValidateResourceId(id);
+            return new DataReplicationPrivateEndpointConnectionProxyResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RecoveryServicesDataReplicationPrivateLinkResourceDataResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecoveryServicesDataReplicationPrivateLinkResourceDataResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryServicesDataReplicationPrivateLinkResourceDataResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataReplicationPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoveryServicesDataReplicationPrivateLinkResourceDataResource"/> object. </returns>
-        public virtual RecoveryServicesDataReplicationPrivateLinkResourceDataResource GetRecoveryServicesDataReplicationPrivateLinkResourceDataResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationPrivateLinkResource"/> object. </returns>
+        public virtual DataReplicationPrivateLinkResource GetDataReplicationPrivateLinkResource(ResourceIdentifier id)
         {
-            RecoveryServicesDataReplicationPrivateLinkResourceDataResource.ValidateResourceId(id);
-            return new RecoveryServicesDataReplicationPrivateLinkResourceDataResource(Client, id);
+            DataReplicationPrivateLinkResource.ValidateResourceId(id);
+            return new DataReplicationPrivateLinkResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProtectedItemModelResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProtectedItemModelResource.CreateResourceIdentifier" /> to create a <see cref="ProtectedItemModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataReplicationProtectedItemResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationProtectedItemResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationProtectedItemResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProtectedItemModelResource"/> object. </returns>
-        public virtual ProtectedItemModelResource GetProtectedItemModelResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationProtectedItemResource"/> object. </returns>
+        public virtual DataReplicationProtectedItemResource GetDataReplicationProtectedItemResource(ResourceIdentifier id)
         {
-            ProtectedItemModelResource.ValidateResourceId(id);
-            return new ProtectedItemModelResource(Client, id);
+            DataReplicationProtectedItemResource.ValidateResourceId(id);
+            return new DataReplicationProtectedItemResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RecoveryPointModelResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecoveryPointModelResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryPointModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataReplicationRecoveryPointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationRecoveryPointResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationRecoveryPointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoveryPointModelResource"/> object. </returns>
-        public virtual RecoveryPointModelResource GetRecoveryPointModelResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationRecoveryPointResource"/> object. </returns>
+        public virtual DataReplicationRecoveryPointResource GetDataReplicationRecoveryPointResource(ResourceIdentifier id)
         {
-            RecoveryPointModelResource.ValidateResourceId(id);
-            return new RecoveryPointModelResource(Client, id);
+            DataReplicationRecoveryPointResource.ValidateResourceId(id);
+            return new DataReplicationRecoveryPointResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ReplicationExtensionModelResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReplicationExtensionModelResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationExtensionModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataReplicationExtensionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationExtensionResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationExtensionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReplicationExtensionModelResource"/> object. </returns>
-        public virtual ReplicationExtensionModelResource GetReplicationExtensionModelResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationExtensionResource"/> object. </returns>
+        public virtual DataReplicationExtensionResource GetDataReplicationExtensionResource(ResourceIdentifier id)
         {
-            ReplicationExtensionModelResource.ValidateResourceId(id);
-            return new ReplicationExtensionModelResource(Client, id);
+            DataReplicationExtensionResource.ValidateResourceId(id);
+            return new DataReplicationExtensionResource(Client, id);
         }
     }
 }

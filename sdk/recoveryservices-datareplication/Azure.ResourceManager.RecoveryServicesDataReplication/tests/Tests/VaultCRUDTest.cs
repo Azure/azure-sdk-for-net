@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             ResourceGroupResource rg = await subscription.GetResourceGroupAsync(
                 RecoveryServicesDataReplicationManagementTestUtilities.DefaultResourceGroupName);
 
-            VaultModelResource resource = await rg.GetVaultModels().GetAsync(
+            DataReplicationVaultResource resource = await rg.GetDataReplicationVaults().GetAsync(
                 RecoveryServicesDataReplicationManagementTestUtilities.DefaultVaultName);
             Assert.NotNull(resource);
         }
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                 RecoveryServicesDataReplicationManagementTestUtilities.DefaultResourceGroupName);
 
             // Create
-            VaultModelData vaultData = new VaultModelData(new AzureLocation("centraluseuap"))
+            DataReplicationVaultData vaultData = new DataReplicationVaultData(new AzureLocation("centraluseuap"))
             {
-                Properties = new Models.VaultModelProperties
+                Properties = new Models.DataReplicationVaultProperties
                 {
-                    VaultType = Models.ReplicationVaultType.Migrate,
+                    VaultType = Models.DataReplicationVaultType.Migrate,
                 },
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
                 Tags =
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
 
             var vaultName = $"vault{IsAsync.ToString()}123";
 
-            var vaultCreateOperation = await rg.GetVaultModels().CreateOrUpdateAsync(
+            var vaultCreateOperation = await rg.GetDataReplicationVaults().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 vaultName,
                 vaultData);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             Assert.IsTrue(vaultCreateOperation.HasValue);
 
             // Get
-            VaultModelResource resource = await rg.GetVaultModels().GetAsync(
+            DataReplicationVaultResource resource = await rg.GetDataReplicationVaults().GetAsync(
                  vaultName);
             Assert.NotNull(resource);
 

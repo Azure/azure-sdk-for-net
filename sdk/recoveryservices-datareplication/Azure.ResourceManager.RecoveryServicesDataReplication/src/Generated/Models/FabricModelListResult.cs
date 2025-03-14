@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Initializes a new instance of <see cref="FabricModelListResult"/>. </summary>
         /// <param name="value"> The FabricModel items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal FabricModelListResult(IEnumerable<FabricModelData> value)
+        internal FabricModelListResult(IEnumerable<DataReplicationFabricData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="value"> The FabricModel items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FabricModelListResult(IReadOnlyList<FabricModelData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FabricModelListResult(IReadOnlyList<DataReplicationFabricData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> The FabricModel items on this page. </summary>
-        public IReadOnlyList<FabricModelData> Value { get; }
+        public IReadOnlyList<DataReplicationFabricData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

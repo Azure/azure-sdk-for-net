@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Initializes a new instance of <see cref="PolicyModelListResult"/>. </summary>
         /// <param name="value"> The PolicyModel items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PolicyModelListResult(IEnumerable<PolicyModelData> value)
+        internal PolicyModelListResult(IEnumerable<DataReplicationPolicyData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="value"> The PolicyModel items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyModelListResult(IReadOnlyList<PolicyModelData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PolicyModelListResult(IReadOnlyList<DataReplicationPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> The PolicyModel items on this page. </summary>
-        public IReadOnlyList<PolicyModelData> Value { get; }
+        public IReadOnlyList<DataReplicationPolicyData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

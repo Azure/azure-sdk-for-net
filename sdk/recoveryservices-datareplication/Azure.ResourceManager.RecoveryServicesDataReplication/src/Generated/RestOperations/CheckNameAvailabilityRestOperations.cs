@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreatePostRequestUri(string subscriptionId, AzureLocation location, CheckNameAvailabilityModel body)
+        internal RequestUriBuilder CreatePostRequestUri(string subscriptionId, AzureLocation location, DataReplicationNameAvailabilityContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             return uri;
         }
 
-        internal HttpMessage CreatePostRequest(string subscriptionId, AzureLocation location, CheckNameAvailabilityModel body)
+        internal HttpMessage CreatePostRequest(string subscriptionId, AzureLocation location, DataReplicationNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (body != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body, ModelSerializationExtensions.WireOptions);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -78,23 +78,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Checks the resource name availability. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="body"> Resource details. </param>
+        /// <param name="content"> Resource details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameAvailabilityResponseModel>> PostAsync(string subscriptionId, AzureLocation location, CheckNameAvailabilityModel body = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataReplicationNameAvailabilityResult>> PostAsync(string subscriptionId, AzureLocation location, DataReplicationNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreatePostRequest(subscriptionId, location, body);
+            using var message = CreatePostRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResponseModel value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityResponseModel.DeserializeCheckNameAvailabilityResponseModel(document.RootElement);
+                        DataReplicationNameAvailabilityResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DataReplicationNameAvailabilityResult.DeserializeDataReplicationNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -105,23 +105,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Checks the resource name availability. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="body"> Resource details. </param>
+        /// <param name="content"> Resource details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameAvailabilityResponseModel> Post(string subscriptionId, AzureLocation location, CheckNameAvailabilityModel body = null, CancellationToken cancellationToken = default)
+        public Response<DataReplicationNameAvailabilityResult> Post(string subscriptionId, AzureLocation location, DataReplicationNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreatePostRequest(subscriptionId, location, body);
+            using var message = CreatePostRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResponseModel value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameAvailabilityResponseModel.DeserializeCheckNameAvailabilityResponseModel(document.RootElement);
+                        DataReplicationNameAvailabilityResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DataReplicationNameAvailabilityResult.DeserializeDataReplicationNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

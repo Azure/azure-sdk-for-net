@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             string biosId = default;
-            IdentityModel marsAuthenticationIdentity = default;
+            DataReplicationIdentity marsAuthenticationIdentity = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("marsAuthenticationIdentity"u8))
                 {
-                    marsAuthenticationIdentity = IdentityModel.DeserializeIdentityModel(property.Value, options);
+                    marsAuthenticationIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVMwareFabricAgentModelCustomProperties(document.RootElement, options);
                     }
                 default:

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecoveryServicesDataReplicationPrivateLinkResourceDataData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataReplicationPrivateLinkResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        RecoveryServicesDataReplicationPrivateLinkResourceDataData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecoveryServicesDataReplicationPrivateLinkResourceDataData.DeserializeRecoveryServicesDataReplicationPrivateLinkResourceDataData(document.RootElement);
+                        DataReplicationPrivateLinkResourceData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DataReplicationPrivateLinkResourceData.DeserializeDataReplicationPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RecoveryServicesDataReplicationPrivateLinkResourceDataData)null, message.Response);
+                    return Response.FromValue((DataReplicationPrivateLinkResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecoveryServicesDataReplicationPrivateLinkResourceDataData> Get(string subscriptionId, string resourceGroupName, string vaultName, string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public Response<DataReplicationPrivateLinkResourceData> Get(string subscriptionId, string resourceGroupName, string vaultName, string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,13 +128,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        RecoveryServicesDataReplicationPrivateLinkResourceDataData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecoveryServicesDataReplicationPrivateLinkResourceDataData.DeserializeRecoveryServicesDataReplicationPrivateLinkResourceDataData(document.RootElement);
+                        DataReplicationPrivateLinkResourceData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DataReplicationPrivateLinkResourceData.DeserializeDataReplicationPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RecoveryServicesDataReplicationPrivateLinkResourceDataData)null, message.Response);
+                    return Response.FromValue((DataReplicationPrivateLinkResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         RecoveryServicesDataReplicationPrivateLinkResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RecoveryServicesDataReplicationPrivateLinkResourceListResult.DeserializeRecoveryServicesDataReplicationPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         RecoveryServicesDataReplicationPrivateLinkResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RecoveryServicesDataReplicationPrivateLinkResourceListResult.DeserializeRecoveryServicesDataReplicationPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         RecoveryServicesDataReplicationPrivateLinkResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RecoveryServicesDataReplicationPrivateLinkResourceListResult.DeserializeRecoveryServicesDataReplicationPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case 200:
                     {
                         RecoveryServicesDataReplicationPrivateLinkResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RecoveryServicesDataReplicationPrivateLinkResourceListResult.DeserializeRecoveryServicesDataReplicationPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

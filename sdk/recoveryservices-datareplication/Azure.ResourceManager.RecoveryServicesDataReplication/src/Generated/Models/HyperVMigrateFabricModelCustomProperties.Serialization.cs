@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (options.Format != "W" && Optional.IsDefined(MigrationHubUri))
             {
                 writer.WritePropertyName("migrationHubUri"u8);
-                writer.WriteStringValue(MigrationHubUri);
+                writer.WriteStringValue(MigrationHubUri.AbsoluteUri);
             }
         }
 
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            string hyperVSiteId = default;
-            string fabricResourceId = default;
+            ResourceIdentifier hyperVSiteId = default;
+            ResourceIdentifier fabricResourceId = default;
             string fabricContainerId = default;
-            string migrationSolutionId = default;
-            string migrationHubUri = default;
+            ResourceIdentifier migrationSolutionId = default;
+            Uri migrationHubUri = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -88,12 +88,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 if (property.NameEquals("hyperVSiteId"u8))
                 {
-                    hyperVSiteId = property.Value.GetString();
+                    hyperVSiteId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fabricResourceId"u8))
                 {
-                    fabricResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fabricResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fabricContainerId"u8))
@@ -103,12 +107,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("migrationSolutionId"u8))
                 {
-                    migrationSolutionId = property.Value.GetString();
+                    migrationSolutionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("migrationHubUri"u8))
                 {
-                    migrationHubUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    migrationHubUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

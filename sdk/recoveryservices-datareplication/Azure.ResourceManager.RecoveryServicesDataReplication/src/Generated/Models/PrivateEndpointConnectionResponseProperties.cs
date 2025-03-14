@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="privateEndpoint"> Represent private Endpoint network resource that is linked to the Private Endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> Represents Private link service connection state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionResponseProperties(ProvisioningState? provisioningState, WritableSubResource privateEndpoint, RecoveryServicesDataReplicationPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateEndpointConnectionResponseProperties(DataReplicationProvisioningState? provisioningState, WritableSubResource privateEndpoint, RecoveryServicesDataReplicationPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Gets or sets provisioning state of the private endpoint connection. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DataReplicationProvisioningState? ProvisioningState { get; }
         /// <summary> Represent private Endpoint network resource that is linked to the Private Endpoint connection. </summary>
         internal WritableSubResource PrivateEndpoint { get; set; }
         /// <summary> Gets or sets Id. </summary>
