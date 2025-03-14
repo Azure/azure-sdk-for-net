@@ -8,7 +8,7 @@ using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
-namespace deviceonboarding.Tests
+namespace Azure.ResourceManager.DeviceOnboarding.Tests
 {
     public class DeviceOnboardingManagementTestBase : ManagementRecordedTestBase<DeviceOnboardingManagementTestEnvironment>
     {

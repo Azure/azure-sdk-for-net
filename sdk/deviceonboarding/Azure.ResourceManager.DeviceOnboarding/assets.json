@@ -1,6 +1,6 @@
 {
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
-  "TagPrefix": "net/deviceonboarding/deviceonboarding",
+  "TagPrefix": "net/deviceonboarding/Azure.ResourceManager.DeviceOnboarding",
   "Tag": ""
 }

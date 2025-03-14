@@ -5,6 +5,6 @@
     <PackageReference Include="NUnit3TestAdapter"  />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\deviceonboarding.csproj" />
+    <ProjectReference Include="..\src\Azure.ResourceManager.DeviceOnboarding.csproj" />
   </ItemGroup>
 </Project>
