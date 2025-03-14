@@ -1,5 +1,15 @@
 # Release History
 
+## 5.17.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 5.16.5 (2025-03-14)
 
 Updated GetProcessorCount to not override the processor count for flex consumption. (#45970)
