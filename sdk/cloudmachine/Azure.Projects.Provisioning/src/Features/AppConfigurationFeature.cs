@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
 using Azure.Projects.Core;
 using Azure.Provisioning.AppConfiguration;
 
@@ -56,19 +55,22 @@ public class AppConfigurationSettingFeature : AzureProjectFeature
     public string Key { get; }
     public string Value { get; }
 
-    protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
+    protected internal override void EmitFeatures(ProjectInfrastructure infrastructure)
     {
         FeatureCollection features = infrastructure.Features;
-
-        // TODO: can we add this automatically?
         if (!features.TryGet(out AppConfigurationFeature? appConfiguration))
         {
-            throw new InvalidOperationException($"The {nameof(AppConfigurationFeature)} must be added to the infrastructure before adding {nameof(AppConfigurationSettingFeature)}.");
+            features.Append(new AppConfigurationFeature());
         }
-        AppConfigurationStore store = infrastructure.GetConstruct<AppConfigurationStore>(appConfiguration!.Id);
+        features.Append(this);
+    }
+
+    protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
+    {
+        AppConfigurationStore store = infrastructure.GetConstruct<AppConfigurationStore>(typeof(AppConfigurationFeature).FullName!);
         if (_bicepIdentifier == null) _bicepIdentifier = store.BicepIdentifier + "_setting";
 
-        string bicepIdentifier = features.CreateUniqueBicepIdentifier(_bicepIdentifier);
+        string bicepIdentifier = infrastructure.Features.CreateUniqueBicepIdentifier(_bicepIdentifier);
         AppConfigurationKeyValue kvp = new(bicepIdentifier)
         {
             Name = Key,

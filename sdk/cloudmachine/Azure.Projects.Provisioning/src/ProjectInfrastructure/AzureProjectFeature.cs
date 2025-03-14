@@ -18,7 +18,7 @@ public abstract partial class AzureProjectFeature
 
     protected AzureProjectFeature()
     {
-        Id = this.GetType().Name;
+        Id = this.GetType().FullName!;
     }
 
     public string Id { get; }
