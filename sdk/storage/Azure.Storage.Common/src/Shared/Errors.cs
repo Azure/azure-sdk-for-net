@@ -72,11 +72,30 @@ namespace Azure.Storage
         public static ArgumentException CannotInitializeWriteStreamWithData()
             => new ArgumentException("Initialized buffer for StorageWriteStream must be empty.");
 
+        public static InvalidDataException InvalidStructuredMessage(string optionalMessage = default)
+            => new InvalidDataException(("Invalid structured message data. " + optionalMessage ?? "").Trim());
+
         internal static void VerifyStreamPosition(Stream stream, string streamName)
         {
             if (stream != null && stream.CanSeek && stream.Length > 0 && stream.Position >= stream.Length)
             {
                 throw new ArgumentException($"{streamName}.{nameof(stream.Position)} must be less than {streamName}.{nameof(stream.Length)}. Please set {streamName}.{nameof(stream.Position)} to the start of the data to upload.");
+            }
+        }
+
+        internal static void AssertBufferMinimumSize(ReadOnlySpan<byte> buffer, int minSize, string paramName)
+        {
+            if (buffer.Length < minSize)
+            {
+                throw new ArgumentException($"Expected buffer Length of at least {minSize} bytes. Got {buffer.Length}.", paramName);
+            }
+        }
+
+        internal static void AssertBufferExactSize(ReadOnlySpan<byte> buffer, int size, string paramName)
+        {
+            if (buffer.Length != size)
+            {
+                throw new ArgumentException($"Expected buffer Length of exactly {size} bytes. Got {buffer.Length}.", paramName);
             }
         }
 
