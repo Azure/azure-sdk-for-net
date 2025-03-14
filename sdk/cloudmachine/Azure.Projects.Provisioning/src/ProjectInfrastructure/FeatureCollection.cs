@@ -29,7 +29,7 @@ public class FeatureCollection : IEnumerable<AzureProjectFeature>
 
     public bool TryGet<T>(out T? feature) where T : AzureProjectFeature
     {
-        string name = typeof(T).Name;
+        string name = typeof(T).FullName!;
         return TryGet(name, out feature);
     }
 

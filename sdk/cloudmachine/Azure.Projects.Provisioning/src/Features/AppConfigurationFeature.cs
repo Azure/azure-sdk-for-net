@@ -46,7 +46,7 @@ public class AppConfigurationSettingFeature : AzureProjectFeature
     }
 
     internal AppConfigurationSettingFeature(string key, string value, string bicepIdentifier)
-    : base($"{typeof(AppConfigurationSettingFeature).Name}_{key}")
+    : base($"{typeof(AppConfigurationSettingFeature).FullName}_{key}")
     {
         Key = key;
         Value = value;

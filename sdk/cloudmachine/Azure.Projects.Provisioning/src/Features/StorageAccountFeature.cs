@@ -100,7 +100,7 @@ public class BlobContainerFeature : AzureProjectFeature
     public BlobServiceFeature? Service { get; set; }
 
     public BlobContainerFeature(string containerName, bool isObservable = true)
-        : base($"{typeof(BlobContainerFeature).Name}_{containerName}")
+        : base($"{typeof(BlobContainerFeature).FullName}_{containerName}")
     {
         ContainerName = containerName;
         _isObservable = isObservable;
