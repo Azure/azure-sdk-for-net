@@ -27,6 +27,7 @@ Use the AI Projects client library to:
     - [File search](#file-search)
     - [Enterprise File Search](#create-agent-with-enterprise-file-search)
     - [Code interpreter attachment](#create-message-with-code-interpreter-attachment)
+    - [Azure AI Search](#create-agent-with-azure-ai-search)
     - [Function call](#function-call)
     - [Azure function call](#azure-function-call)
     - [Azure Function Call](#create-agent-with-azure-function-call)
@@ -312,6 +313,91 @@ var attachment = new MessageAttachment(
     ds: ds,
     tools: tools
 );
+```
+
+#### Create Agent with Azure AI Search
+
+Azure AI Search is an enterprise search system for high-performance applications.
+It integrates with Azure OpenAI Service and Azure Machine Learning, offering advanced
+search technologies like vector search and full-text search. Ideal for knowledge base
+insights, information discovery, and automation. Creating an Agent with Azure AI
+Search requires an existing Azure AI Search Index. For more information and setup
+guides, see [Azure AI Search Tool Guide](https://learn.microsoft.com/azure/ai-services/agents/how-to/tools/azure-ai-search?tabs=azurecli%2Cpython&pivots=overview-azure-ai-search).
+
+```C# Snippet:CreateAgentWithAzureAISearchTool
+ListConnectionsResponse connections = await projectClient.GetConnectionsClient().GetConnectionsAsync(ConnectionType.AzureAISearch).ConfigureAwait(false);
+
+if (connections?.Value == null || connections.Value.Count == 0)
+{
+    throw new InvalidOperationException("No connections found for the Azure AI Search.");
+}
+
+ConnectionResponse connection = connections.Value[0];
+
+ToolResources searchResource = new ToolResources
+{
+    AzureAISearch = new AzureAISearchResource
+    {
+        IndexList = { new IndexResource(connection.Id, "sample_index") }
+    }
+};
+
+AgentsClient agentClient = projectClient.GetAgentsClient();
+
+Response<Agent> agentResponse = await agentClient.CreateAgentAsync(
+   model: modelName,
+   name: "my-assistant",
+   instructions: "You are a helpful assistant.",
+   tools: new List<ToolDefinition> { new AzureAISearchToolDefinition() },
+   toolResources: searchResource);
+Agent agent = agentResponse.Value;
+```
+
+If the agent have found the relevant information in the index, the reference
+and annotation will be provided in the message response. In the example above, we replace
+the reference placeholder by the actual reference and url. Please note, that to
+get sensible result, the index needs to have fields "title" and "url".
+
+```C# Snippet:PopulateReferencesAgentWithAzureAISearchTool
+Response<PageableList<ThreadMessage>> afterRunMessagesResponse
+    = await agentClient.GetMessagesAsync(thread.Id);
+IReadOnlyList<ThreadMessage> messages = afterRunMessagesResponse.Value.Data;
+
+// Note: messages iterate from newest to oldest, with the messages[0] being the most recent
+foreach (ThreadMessage threadMessage in messages)
+{
+    Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
+    foreach (MessageContent contentItem in threadMessage.ContentItems)
+    {
+        if (contentItem is MessageTextContent textItem)
+        {
+            // We need to annotate only Agent messages.
+            if (threadMessage.Role == MessageRole.Agent && textItem.Annotations.Count > 0)
+            {
+                string annotatedText = textItem.Text;
+                foreach (MessageTextAnnotation annotation in textItem.Annotations)
+                {
+                    if (annotation is MessageTextUrlCitationAnnotation urlAnnotation)
+                    {
+                        annotatedText = annotatedText.Replace(
+                            urlAnnotation.Text,
+                            $" [see {urlAnnotation.UrlCitation.Title}] ({urlAnnotation.UrlCitation.Url})");
+                    }
+                }
+                Console.Write(annotatedText);
+            }
+            else
+            {
+                Console.Write(textItem.Text);
+            }
+        }
+        else if (contentItem is MessageImageFileContent imageFileItem)
+        {
+            Console.Write($"<image from ID: {imageFileItem.FileId}");
+        }
+        Console.WriteLine();
+    }
+}
 ```
 
 #### Function call
