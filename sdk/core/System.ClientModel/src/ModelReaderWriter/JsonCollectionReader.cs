@@ -9,11 +9,16 @@ namespace System.ClientModel.Primitives;
 
 internal class JsonCollectionReader : CollectionReader
 {
-    internal override object Read(ModelReaderWriterTypeBuilder.CollectionWrapper builder, BinaryData data, ModelReaderWriterContext context, ModelReaderWriterOptions options)
+    internal override object Read(
+        ModelReaderWriterTypeBuilder.CollectionWrapper collectionWrapper,
+        BinaryData data,
+        ModelReaderWriterTypeBuilder builder,
+        ModelReaderWriterContext context,
+        ModelReaderWriterOptions options)
     {
         Utf8JsonReader reader = new(data);
         reader.Read();
-        if (builder.Builder is IDictionary)
+        if (collectionWrapper.Builder is IDictionary)
         {
             if (reader.TokenType != JsonTokenType.StartObject)
             {
@@ -24,39 +29,40 @@ internal class JsonCollectionReader : CollectionReader
         {
             throw new FormatException("Expected start of array.");
         }
-        ReadJsonCollection(ref reader, builder, options, context);
-        return builder.ToCollection();
+        ReadJsonCollection(ref reader, collectionWrapper, builder, options, context);
+        return collectionWrapper.ToCollection();
     }
 
     private static void ReadJsonCollection(
         ref Utf8JsonReader reader,
-        ModelReaderWriterTypeBuilder.CollectionWrapper collectionBuilder,
+        ModelReaderWriterTypeBuilder.CollectionWrapper collectionWrapper,
+        ModelReaderWriterTypeBuilder builder,
         ModelReaderWriterOptions options,
         ModelReaderWriterContext context)
     {
-        object collection = collectionBuilder.Builder;
-        int argNumber = collection is IDictionary ? 1 : 0;
-        Type elementType = collection.GetType().GetGenericArguments()[argNumber];
+        object collection = collectionWrapper.Builder;
+
+        Debug.Assert(builder.GetItemType() is not null);
 
         bool isInnerCollection = false;
         bool isElementDictionary = false;
         IJsonModel<object>? jsonModel = null;
         string? propertyName = null;
 
-        var elementInfo = context.GetModelBuilder(elementType);
-        var element = elementInfo.CreateObject();
-        if (element is ModelReaderWriterTypeBuilder.CollectionWrapper elementBuilder)
+        var itemBuilder = context.GetModelBuilder(builder.GetItemType()!);
+        var itemInstance = itemBuilder.CreateObject();
+        if (itemInstance is ModelReaderWriterTypeBuilder.CollectionWrapper itemCollectionWrapper)
         {
             isInnerCollection = true;
-            isElementDictionary = elementBuilder.Builder is IDictionary;
+            isElementDictionary = itemCollectionWrapper.Builder is IDictionary;
         }
-        else if (element is IJsonModel<object> iJsonModel)
+        else if (itemInstance is IJsonModel<object> iJsonModel)
         {
             jsonModel = iJsonModel;
         }
         else
         {
-            throw new InvalidOperationException($"Element type {elementType.Name} must implement IJsonModel");
+            throw new InvalidOperationException($"Item type '{builder.GetItemType()?.Name}' must implement IJsonModel");
         }
 
         while (reader.Read())
@@ -68,10 +74,10 @@ internal class JsonCollectionReader : CollectionReader
                     {
                         if (isElementDictionary)
                         {
-                            var dictionaryBuilder = elementInfo.CreateObject() as ModelReaderWriterTypeBuilder.CollectionWrapper;
-                            Debug.Assert(dictionaryBuilder != null);
-                            ReadJsonCollection(ref reader, dictionaryBuilder!, options, context);
-                            collectionBuilder.AddItem(dictionaryBuilder!.ToCollection(), propertyName);
+                            var dictionaryWrapper = itemBuilder.CreateObject() as ModelReaderWriterTypeBuilder.CollectionWrapper;
+                            Debug.Assert(dictionaryWrapper != null);
+                            ReadJsonCollection(ref reader, dictionaryWrapper!, itemBuilder, options, context);
+                            collectionWrapper.AddItem(dictionaryWrapper!.ToCollection(), propertyName);
                         }
                         else
                         {
@@ -81,7 +87,7 @@ internal class JsonCollectionReader : CollectionReader
                     else
                     {
                         Debug.Assert(jsonModel != null);
-                        collectionBuilder.AddItem(jsonModel!.Create(ref reader, options), propertyName);
+                        collectionWrapper.AddItem(jsonModel!.Create(ref reader, options), propertyName);
                     }
                     break;
                 case JsonTokenType.StartArray:
@@ -90,10 +96,10 @@ internal class JsonCollectionReader : CollectionReader
                         throw new FormatException("Unexpected JsonTokenType.StartArray found.");
                     }
 
-                    var listBuilder = elementInfo.CreateObject() as ModelReaderWriterTypeBuilder.CollectionWrapper;
-                    Debug.Assert(listBuilder != null);
-                    ReadJsonCollection(ref reader, listBuilder!, options, context);
-                    collectionBuilder.AddItem(listBuilder!.ToCollection(), propertyName);
+                    var listWrapper = itemBuilder.CreateObject() as ModelReaderWriterTypeBuilder.CollectionWrapper;
+                    Debug.Assert(listWrapper != null);
+                    ReadJsonCollection(ref reader, listWrapper!, itemBuilder, options, context);
+                    collectionWrapper.AddItem(listWrapper!.ToCollection(), propertyName);
                     break;
                 case JsonTokenType.EndArray:
                     return;
@@ -103,7 +109,7 @@ internal class JsonCollectionReader : CollectionReader
                 case JsonTokenType.EndObject:
                     return;
                 case JsonTokenType.Null:
-                    collectionBuilder.AddItem(null, propertyName);
+                    collectionWrapper.AddItem(null, propertyName);
                     break;
                 default:
                     throw new FormatException($"Unexpected token {reader.TokenType}.");

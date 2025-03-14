@@ -265,11 +265,12 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(returnType));
         }
 
-        var returnObj = context.GetModelBuilder(returnType).CreateObject();
-        if (returnObj is ModelReaderWriterTypeBuilder.CollectionWrapper builder)
+        var builder = context.GetModelBuilder(returnType);
+        var returnObj = builder.CreateObject();
+        if (returnObj is ModelReaderWriterTypeBuilder.CollectionWrapper collectionWrapper)
         {
-            var collectionReader = CollectionReader.GetCollectionReader(builder, options);
-            return collectionReader.Read(builder, data, context, options);
+            var collectionReader = CollectionReader.GetCollectionReader(collectionWrapper, options);
+            return collectionReader.Read(collectionWrapper, data, builder, context, options);
         }
         else if (returnObj is IPersistableModel<object> persistableModel)
         {

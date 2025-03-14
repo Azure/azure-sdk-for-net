@@ -33,5 +33,10 @@ internal abstract class CollectionReader
         }
     }
 
-    internal abstract object Read(ModelReaderWriterTypeBuilder.CollectionWrapper builder, BinaryData data, ModelReaderWriterContext context, ModelReaderWriterOptions options);
+    internal abstract object Read(
+        ModelReaderWriterTypeBuilder.CollectionWrapper collectionWrapper,
+        BinaryData data,
+        ModelReaderWriterTypeBuilder builder,
+        ModelReaderWriterContext context,
+        ModelReaderWriterOptions options);
 }

@@ -29,6 +29,8 @@ public abstract partial class ModelReaderWriterTypeBuilder
 
     internal ModelReaderWriterContext? Context { get; set; }
 
+    internal Type? GetItemType() => ItemType;
+
     /// <summary>
     /// Gets a value indicating whether the object is a collection.
     /// </summary>
