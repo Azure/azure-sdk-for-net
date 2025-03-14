@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,9 @@ public class MapsClient
     private readonly ApiKeyCredential _credential;
     private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
+    private readonly bool _enableDistributedTracing;
+
+    internal static ActivitySource ActivitySource { get; } = new(typeof(MapsClient).FullName!, "1.0.0");
 
     public MapsClient(Uri endpoint, ApiKeyCredential credential, MapsClientOptions? options = default)
     {
@@ -29,6 +33,7 @@ public class MapsClient
         _endpoint = endpoint;
         _credential = credential;
         _apiVersion = options.Version;
+        _enableDistributedTracing = options.EnableDistributedTracing ?? false;
 
         var authenticationPolicy = ApiKeyAuthenticationPolicy.CreateHeaderApiKeyPolicy(credential, "subscription-key");
         _pipeline = ClientPipeline.Create(options,
@@ -41,12 +46,22 @@ public class MapsClient
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
-        ClientResult result = await GetCountryCodeAsync(ipAddress.ToString()).ConfigureAwait(false);
+        using Activity? activity = ActivitySource.StartClientActivity(_enableDistributedTracing, "MapsClient.GetCountryCodeAsync");
 
-        PipelineResponse response = result.GetRawResponse();
-        IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
+        try
+        {
+            ClientResult result = await GetCountryCodeAsync(ipAddress.ToString()).ConfigureAwait(false);
 
-        return ClientResult.FromValue(value, response);
+            PipelineResponse response = result.GetRawResponse();
+            IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
+
+            return ClientResult.FromValue(value, response);
+        }
+        catch (Exception ex)
+        {
+            activity?.MarkFailed(ex);
+            throw;
+        }
     }
 
     public virtual async Task<ClientResult> GetCountryCodeAsync(string ipAddress, RequestOptions? options = null)
@@ -55,30 +70,51 @@ public class MapsClient
 
         options ??= new RequestOptions();
 
-        using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
+        using Activity? activity = ActivitySource.StartClientActivity(_enableDistributedTracing, "MapsClient.GetCountryCodeAsync");
 
-        _pipeline.Send(message);
-
-        PipelineResponse response = message.Response!;
-
-        if (response.IsError && options.ErrorOptions == ClientErrorBehaviors.Default)
+        try
         {
-            throw await ClientResultException.CreateAsync(response).ConfigureAwait(false);
-        }
+            using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
 
-        return ClientResult.FromResponse(response);
+            _pipeline.Send(message);
+
+            PipelineResponse response = message.Response!;
+
+            if (response.IsError && options.ErrorOptions == ClientErrorBehaviors.Default)
+            {
+                throw await ClientResultException.CreateAsync(response).ConfigureAwait(false);
+            }
+
+            return ClientResult.FromResponse(response);
+        }
+        catch (Exception ex)
+        {
+            activity?.MarkFailed(ex);
+            throw;
+        }
     }
 
     public virtual ClientResult<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress)
     {
-        if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
+        if (ipAddress is null)
+            throw new ArgumentNullException(nameof(ipAddress));
 
-        ClientResult result = GetCountryCode(ipAddress.ToString());
+        using Activity? activity = ActivitySource.StartClientActivity(_enableDistributedTracing, "MapsClient.GetCountryCode");
 
-        PipelineResponse response = result.GetRawResponse();
-        IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
+        try
+        {
+            ClientResult result = GetCountryCode(ipAddress.ToString());
 
-        return ClientResult.FromValue(value, response);
+            PipelineResponse response = result.GetRawResponse();
+            IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
+
+            return ClientResult.FromValue(value, response);
+        }
+        catch (Exception ex)
+        {
+            activity?.MarkFailed(ex);
+            throw;
+        }
     }
 
     public virtual ClientResult GetCountryCode(string ipAddress, RequestOptions? options = null)
@@ -87,18 +123,28 @@ public class MapsClient
 
         options ??= new RequestOptions();
 
-        using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
+        using Activity? activity = ActivitySource.StartClientActivity(_enableDistributedTracing, "MapsClient.GetCountryCode");
 
-        _pipeline.Send(message);
-
-        PipelineResponse response = message.Response!;
-
-        if (response.IsError && options.ErrorOptions == ClientErrorBehaviors.Default)
+        try
         {
-            throw new ClientResultException(response);
-        }
+            using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
 
-        return ClientResult.FromResponse(response);
+            _pipeline.Send(message);
+
+            PipelineResponse response = message.Response!;
+
+            if (response.IsError && options.ErrorOptions == ClientErrorBehaviors.Default)
+            {
+                throw new ClientResultException(response);
+            }
+
+            return ClientResult.FromResponse(response);
+        }
+        catch (Exception ex)
+        {
+            activity?.MarkFailed(ex);
+            throw;
+        }
     }
 
     private PipelineMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
