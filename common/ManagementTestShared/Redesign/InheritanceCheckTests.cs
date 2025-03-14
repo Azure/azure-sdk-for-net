@@ -46,8 +46,6 @@ namespace Azure.ResourceManager.TestFramework
 
             // Verify all class end with `Resource` & `Collection`
             HashSet<string> exceptionList = ExceptionList == null ? new HashSet<string>() : new HashSet<string>(ExceptionList);
-            exceptionList.Add(
-                RecoveryServicesDataReplicationManagementTestUtilities.InheritanceCheckExceptionDeploymentPreflightResource);
             List<string> errorList = new();
 
             foreach (var type in sdkAssembly.GetTypes())
