@@ -2,24 +2,23 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Primitives;
 
 internal class ReflectionContext : ModelReaderWriterContext
 {
-    private Dictionary<Type, ModelBuilder>? _modelInfos;
-    private Dictionary<Type, ModelBuilder> ModelInfos => _modelInfos ??= [];
+    private Dictionary<Type, ModelReaderWriterTypeBuilder>? _typeBuilders;
+    private Dictionary<Type, ModelReaderWriterTypeBuilder> TypeBuilders => _typeBuilders ??= [];
 
-    public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modelInfo)
+    protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
     {
-        if (ModelInfos.TryGetValue(type, out modelInfo))
+        if (TypeBuilders.TryGetValue(type, out builder))
         {
             return true;
         }
 
-        modelInfo = new ReflectionModelInfo(type);
-        ModelInfos[type] = modelInfo;
+        builder = new ReflectionModelBuilder(type);
+        TypeBuilders[type] = builder;
 
         return true;
     }

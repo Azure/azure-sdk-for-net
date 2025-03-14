@@ -28,7 +28,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
             private ImmutableArray_AvailabilitySetData_Builder? _immutableArray_AvailabilitySetData_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
             {
                 builder = type switch
                 {
@@ -38,27 +38,28 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return builder is not null;
             }
 
-            private ModelBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
                     return builder;
                 return null;
             }
 
-            private class ImmutableArray_AvailabilitySetData_Builder : ModelBuilder
+            private class ImmutableArray_AvailabilitySetData_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(ImmutableArray<AvailabilitySetData>.Builder);
+
+                protected override Type? ItemType => typeof(AvailabilitySetData);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => ImmutableArray<AvailabilitySetData>.Empty.ToBuilder();
 
                 protected override void AddItem(object collection, object item)
-                    => AssertCollection<ImmutableArray<AvailabilitySetData>.Builder>(collection).Add(AssertItem<AvailabilitySetData>(item));
-
-                protected override object CreateElementInstance()
-                    => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                    => ((ImmutableArray<AvailabilitySetData>.Builder)collection).Add((AvailabilitySetData)item);
 
                 protected override object ToCollection(object builder)
-                    => AssertCollection<ImmutableArray<AvailabilitySetData>.Builder>(builder).ToImmutable();
+                    => ((ImmutableArray<AvailabilitySetData>.Builder)builder).ToImmutable();
             }
         }
     }

@@ -57,7 +57,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             private List_PersistableModel_NullElement_Builder? _list_PersistableModel_NullElement_Builder;
             private PersistableModel_NullElement_Builder? _persistableModel_NullElement_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
             {
                 builder = type switch
                 {
@@ -71,40 +71,50 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 return builder is not null;
             }
 
-            private class PersistableModel_NullElement_Builder : ModelBuilder
+            private class PersistableModel_NullElement_Builder : ModelReaderWriterTypeBuilder
             {
-                protected override object CreateInstance() => new PersistableModel_NullElement();
+                protected override Type BuilderType => typeof(PersistableModel_NullElement);
+
+                protected override object CreateInstance() => null!;
             }
 
-            private class List_PersistableModel_NullElement_Builder : ModelBuilder
+            private class List_PersistableModel_NullElement_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(List<PersistableModel_NullElement>);
+
+                protected override Type? ItemType => typeof(PersistableModel_NullElement);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new List<PersistableModel_NullElement>();
 
                 protected override void AddItem(object collection, object item) => throw new NotImplementedException();
-
-                protected override object CreateElementInstance() => null!;
             }
 
-            private class PersistableModel_NonPersistableElement_Builder : ModelBuilder
+            private class PersistableModel_NonPersistableElement_Builder : ModelReaderWriterTypeBuilder
             {
-                protected override object CreateInstance() => new PersistableModel_NonPersistableElement();
+                protected override Type BuilderType => typeof(PersistableModel_NonPersistableElement);
+
+                protected override object CreateInstance() => new DoesNotImplementInterface();
             }
 
-            private class List_PersistableModel_NonPersistableElement_Builder : ModelBuilder
+            private class List_PersistableModel_NonPersistableElement_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(List<PersistableModel_NonPersistableElement>);
+
+                protected override Type? ItemType => typeof(PersistableModel_NonPersistableElement);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new List<PersistableModel_NonPersistableElement>();
 
                 protected override void AddItem(object collection, object item) => throw new NotImplementedException();
-
-                protected override object CreateElementInstance() => new DoesNotImplementInterface();
             }
 
-            private class DoesNotImplementInterface_Builder : ModelBuilder
+            private class DoesNotImplementInterface_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(DoesNotImplementInterface);
+
                 protected override object CreateInstance() => new DoesNotImplementInterface();
             }
         }

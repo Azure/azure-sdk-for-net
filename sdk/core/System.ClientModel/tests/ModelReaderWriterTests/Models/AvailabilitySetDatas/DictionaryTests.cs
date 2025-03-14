@@ -27,7 +27,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
             private Dictionary_AvailabilitySetData_Builder? _dictionary_AvailabilitySetData_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
             {
                 builder = type switch
                 {
@@ -37,24 +37,25 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return builder is not null;
             }
 
-            private ModelBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
                     return builder;
                 return null;
             }
 
-            private class Dictionary_AvailabilitySetData_Builder : ModelBuilder
+            private class Dictionary_AvailabilitySetData_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(Dictionary<string, AvailabilitySetData>);
+
+                protected override Type? ItemType => typeof(AvailabilitySetData);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new Dictionary<string, AvailabilitySetData>();
 
                 protected override void AddKeyValuePair(object collection, string key, object item)
-                    => AssertCollection<Dictionary<string, AvailabilitySetData>>(collection).Add(key, AssertItem<AvailabilitySetData>(item));
-
-                protected override object CreateElementInstance()
-                    => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                    => ((Dictionary<string, AvailabilitySetData>)collection).Add(key, (AvailabilitySetData)item);
             }
         }
     }

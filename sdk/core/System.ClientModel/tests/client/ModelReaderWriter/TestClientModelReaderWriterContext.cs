@@ -20,7 +20,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         private UnknownBaseModel_Builder? _unknownBaseModel_Builder;
         private ModelY_Builder? _modelY_Builder;
 
-        public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
+        protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
         {
             builder = type switch
             {
@@ -37,43 +37,59 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             return builder is not null;
         }
 
-        private class ModelY_Builder : ModelBuilder
+        private class ModelY_Builder : ModelReaderWriterTypeBuilder
         {
+            protected override Type BuilderType => typeof(ModelY);
+
             protected override object CreateInstance() => new ModelY();
         }
 
-        private class UnknownBaseModel_Builder : ModelBuilder
+        private class UnknownBaseModel_Builder : ModelReaderWriterTypeBuilder
         {
+            protected override Type BuilderType => typeof(UnknownBaseModel);
+
             protected override object CreateInstance() => new UnknownBaseModel();
         }
 
-        private class ResourceProviderData_Builder : ModelBuilder
+        private class ResourceProviderData_Builder : ModelReaderWriterTypeBuilder
         {
+            protected override Type BuilderType => typeof(ResourceProviderData);
+
             protected override object CreateInstance() => new ResourceProviderData();
         }
 
-        private class ModelX_Builder : ModelBuilder
+        private class ModelX_Builder : ModelReaderWriterTypeBuilder
         {
+            protected override Type BuilderType => typeof(ModelX);
+
             protected override object CreateInstance() => new ModelX();
         }
 
-        private class ModelWithPersistableOnly_Builder : ModelBuilder
+        private class ModelWithPersistableOnly_Builder : ModelReaderWriterTypeBuilder
         {
+            protected override Type BuilderType => typeof(ModelWithPersistableOnly);
+
             protected override object CreateInstance() => new ModelWithPersistableOnly();
         }
 
-        private class ModelAsStruct_Builder : ModelBuilder
+        private class ModelAsStruct_Builder : ModelReaderWriterTypeBuilder
         {
+            protected override Type BuilderType => typeof(ModelAsStruct);
+
             protected override object CreateInstance() => new ModelAsStruct();
         }
 
-        private class BaseModel_Builder : ModelBuilder
+        private class BaseModel_Builder : ModelReaderWriterTypeBuilder
         {
+            protected override Type BuilderType => typeof(BaseModel);
+
             protected override object CreateInstance() => new UnknownBaseModel();
         }
 
-        private class AvailabilitySetData_Builder : ModelBuilder
+        private class AvailabilitySetData_Builder : ModelReaderWriterTypeBuilder
         {
+            protected override Type BuilderType => typeof(AvailabilitySetData);
+
             protected override object CreateInstance() => new AvailabilitySetData();
         }
     }

@@ -50,7 +50,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
             private Stack_Stack_AvailabilitySetData_Builder? _stack_Stack_AvailabilitySetData_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
             {
                 builder = type switch
                 {
@@ -60,26 +60,27 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return builder is not null;
             }
 
-            private ModelBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
                     return builder;
                 if (s_availabilitySetData_StackTests_LocalContext.Value.TryGetModelBuilder(type, out builder))
                     return builder;
                 return null;
             }
 
-            private class Stack_Stack_AvailabilitySetData_Builder : ModelBuilder
+            private class Stack_Stack_AvailabilitySetData_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(Stack<Stack<AvailabilitySetData>>);
+
+                protected override Type? ItemType => typeof(Stack<AvailabilitySetData>);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new Stack<Stack<AvailabilitySetData>>();
 
                 protected override void AddItem(object collection, object item)
-                    => AssertCollection<Stack<Stack<AvailabilitySetData>>>(collection).Push(AssertItem<Stack<AvailabilitySetData>>(item));
-
-                protected override object CreateElementInstance()
-                    => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                    => ((Stack<Stack<AvailabilitySetData>>)collection).Push((Stack<AvailabilitySetData>)item);
             }
         }
     }

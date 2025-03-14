@@ -33,7 +33,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
             private LinkedList_LinkedList_AvailabilitySetData_Builder? _linkedList_LinkedList_AvailabilitySetData_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
             {
                 builder = type switch
                 {
@@ -43,26 +43,27 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return builder is not null;
             }
 
-            private ModelBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
                     return builder;
                 if (s_availabilitySetData_LinkedListTests_LocalContext.Value.TryGetModelBuilder(type, out builder))
                     return builder;
                 return null;
             }
 
-            private class LinkedList_LinkedList_AvailabilitySetData_Builder : ModelBuilder
+            private class LinkedList_LinkedList_AvailabilitySetData_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(LinkedList<LinkedList<AvailabilitySetData>>);
+
+                protected override Type? ItemType => typeof(LinkedList<AvailabilitySetData>);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new LinkedList<LinkedList<AvailabilitySetData>>();
 
                 protected override void AddItem(object collection, object item)
-                    => AssertCollection<LinkedList<LinkedList<AvailabilitySetData>>>(collection).AddLast(AssertItem<LinkedList<AvailabilitySetData>>(item));
-
-                protected override object CreateElementInstance()
-                    => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                    => ((LinkedList<LinkedList<AvailabilitySetData>>)collection).AddLast((LinkedList<AvailabilitySetData>)item);
             }
         }
     }

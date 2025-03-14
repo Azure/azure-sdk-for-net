@@ -6,11 +6,13 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Primitives;
 
-internal class ReflectionModelInfo : ModelBuilder
+internal class ReflectionModelBuilder : ModelReaderWriterTypeBuilder
 {
     private Type _type;
 
-    public ReflectionModelInfo(Type type)
+    protected override Type BuilderType => _type;
+
+    public ReflectionModelBuilder(Type type)
     {
         _type = type;
     }

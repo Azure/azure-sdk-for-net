@@ -40,7 +40,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
             private ImmutableStack_AvailabilitySetData_Builder? _immutableStack_AvailabilitySetData_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
             {
                 builder = type switch
                 {
@@ -50,27 +50,28 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return builder is not null;
             }
 
-            private ModelBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
                     return builder;
                 return null;
             }
 
-            private class ImmutableStack_AvailabilitySetData_Builder : ModelBuilder
+            private class ImmutableStack_AvailabilitySetData_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(List<AvailabilitySetData>);
+
+                protected override Type? ItemType => typeof(AvailabilitySetData);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new List<AvailabilitySetData>();
 
                 protected override void AddItem(object collection, object item)
-                    => AssertCollection<List<AvailabilitySetData>>(collection).Add(AssertItem<AvailabilitySetData>(item));
-
-                protected override object CreateElementInstance()
-                    => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                    => ((List<AvailabilitySetData>)collection).Add((AvailabilitySetData)item);
 
                 protected override object ToCollection(object builder)
-                    => ImmutableStack.CreateRange(AssertCollection<List<AvailabilitySetData>>(builder));
+                    => ImmutableStack.CreateRange((List<AvailabilitySetData>)builder);
             }
         }
     }

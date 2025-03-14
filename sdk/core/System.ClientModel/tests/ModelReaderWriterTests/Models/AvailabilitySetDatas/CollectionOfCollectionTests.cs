@@ -34,7 +34,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
             private Collection_Collection_AvailabilitySetData_Builder? _collection_Collection_AvailabilitySetData_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
             {
                 builder = type switch
                 {
@@ -44,9 +44,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return builder is not null;
             }
 
-            private ModelBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
                     return builder;
 
                 if (s_availabilitySetData_CollectionTests_LocalContext.Value.TryGetModelBuilder(type, out builder))
@@ -55,17 +55,18 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return null;
             }
 
-            private class Collection_Collection_AvailabilitySetData_Builder : ModelBuilder
+            private class Collection_Collection_AvailabilitySetData_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(Collection<Collection<AvailabilitySetData>>);
+
+                protected override Type? ItemType => typeof(Collection<AvailabilitySetData>);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new Collection<Collection<AvailabilitySetData>>();
 
                 protected override void AddItem(object collection, object item)
-                    => AssertCollection<Collection<Collection<AvailabilitySetData>>>(collection).Add(AssertItem<Collection<AvailabilitySetData>>(item));
-
-                protected override object CreateElementInstance()
-                    => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                    => ((Collection<Collection<AvailabilitySetData>>)collection).Add((Collection<AvailabilitySetData>)item);
             }
         }
     }

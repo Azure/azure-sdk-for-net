@@ -223,20 +223,6 @@ namespace System.ClientModel.Primitives
         public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
-    public abstract partial class ModelBuilder
-    {
-        protected ModelBuilder() { }
-        protected virtual bool IsCollection { get { throw null; } }
-        protected virtual void AddItem(object collection, object item) { }
-        protected virtual void AddKeyValuePair(object collection, string key, object item) { }
-        protected static T AssertCollection<T>(object collection) { throw null; }
-        protected static T AssertItem<T>(object item) { throw null; }
-        protected static string AssertKey(string? key) { throw null; }
-        protected virtual object CreateElementInstance() { throw null; }
-        protected abstract object CreateInstance();
-        protected internal virtual System.Collections.IEnumerable? GetItems(object obj) { throw null; }
-        protected virtual object ToCollection(object builder) { throw null; }
-    }
     public static partial class ModelReaderWriter
     {
         public static object? Read(System.BinaryData data, [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.NonPublicConstructors | System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors)] System.Type returnType, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
@@ -251,8 +237,9 @@ namespace System.ClientModel.Primitives
     public abstract partial class ModelReaderWriterContext
     {
         protected ModelReaderWriterContext() { }
-        public System.ClientModel.Primitives.ModelBuilder GetModelBuilder(System.Type type) { throw null; }
-        public virtual bool TryGetModelBuilder(System.Type type, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.Primitives.ModelBuilder? builder) { throw null; }
+        public System.ClientModel.Primitives.ModelReaderWriterTypeBuilder GetModelBuilder(System.Type type) { throw null; }
+        public bool TryGetModelBuilder(System.Type type, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder? builder) { throw null; }
+        protected virtual bool TryGetModelBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder? builder) { throw null; }
     }
     public partial class ModelReaderWriterOptions
     {
@@ -260,6 +247,19 @@ namespace System.ClientModel.Primitives
         public string Format { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
+    }
+    public abstract partial class ModelReaderWriterTypeBuilder
+    {
+        protected ModelReaderWriterTypeBuilder() { }
+        protected abstract System.Type BuilderType { get; }
+        protected virtual bool IsCollection { get { throw null; } }
+        protected virtual System.Type? ItemType { get { throw null; } }
+        protected virtual void AddItem(object collection, object item) { }
+        protected virtual void AddKeyValuePair(object collection, string key, object item) { }
+        protected abstract object CreateInstance();
+        public object CreateObject() { throw null; }
+        protected internal virtual System.Collections.IEnumerable? GetItems(object obj) { throw null; }
+        protected virtual object ToCollection(object builder) { throw null; }
     }
     public abstract partial class OperationResult
     {

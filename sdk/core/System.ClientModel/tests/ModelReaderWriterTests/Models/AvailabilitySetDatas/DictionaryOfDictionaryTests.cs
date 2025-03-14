@@ -4,6 +4,7 @@
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
@@ -29,7 +30,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
             private Dictionary_String_Dictionary_String_AvailabilitySetData_Builder? _dictionary_String_Dictionary_String_AvailabilitySetData_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
             {
                 builder = type switch
                 {
@@ -39,26 +40,27 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return builder is not null;
             }
 
-            private ModelBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
                     return builder;
                 if (s_availabilitySetData_DictionaryTests_LocalContext.Value.TryGetModelBuilder(type, out builder))
                     return builder;
                 return null;
             }
 
-            private class Dictionary_String_Dictionary_String_AvailabilitySetData_Builder : ModelBuilder
+            private class Dictionary_String_Dictionary_String_AvailabilitySetData_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(Dictionary<string, Dictionary<string, AvailabilitySetData>>);
+
+                protected override Type? ItemType => typeof(Dictionary<string, AvailabilitySetData>);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new Dictionary<string, Dictionary<string, AvailabilitySetData>>();
 
                 protected override void AddKeyValuePair(object collection, string key, object item)
-                    => AssertCollection<Dictionary<string, Dictionary<string, AvailabilitySetData>>>(collection).Add(key, AssertItem<Dictionary<string, AvailabilitySetData>>(item));
-
-                protected override object CreateElementInstance()
-                    => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                    => ((Dictionary<string, Dictionary<string, AvailabilitySetData>>)collection).Add(key, (Dictionary<string, AvailabilitySetData>)item);
             }
         }
     }

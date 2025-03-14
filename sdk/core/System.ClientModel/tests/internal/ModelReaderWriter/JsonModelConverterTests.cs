@@ -164,18 +164,20 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             private PersistableModelInfo? _persistableModelInfo;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? modelInfo)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
             {
-                modelInfo = type switch
+                builder = type switch
                 {
                     Type t when t == typeof(PersistableModel) => _persistableModelInfo ??= new(),
                     _ => null
                 };
-                return modelInfo is not null;
+                return builder is not null;
             }
 
-            private class PersistableModelInfo : ModelBuilder
+            private class PersistableModelInfo : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(DoesNotImplementPersistableModel);
+
                 protected override object CreateInstance() => new DoesNotImplementPersistableModel();
             }
         }

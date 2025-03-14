@@ -679,7 +679,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             private ReadReturnsNull_Builder? _readReturnsNull_Builder;
             private Dictionary_String_AvailabilitySetData_Builder? _dictionary_String_AvailabilitySetData_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
             {
                 builder = type switch
                 {
@@ -702,9 +702,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 return builder is not null;
             }
 
-            private ModelBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
             {
-                if (_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? builder))
+                if (_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
                 {
                     return builder;
                 }
@@ -715,138 +715,165 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 return null;
             }
 
-            private class Dictionary_String_AvailabilitySetData_Builder : ModelBuilder
+            private class Dictionary_String_AvailabilitySetData_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(Dictionary<string, AvailabilitySetData>);
+
+                protected override Type? ItemType => typeof(AvailabilitySetData);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new Dictionary<string, AvailabilitySetData>();
 
                 protected override void AddKeyValuePair(object collection, string key, object item)
-                    => AssertCollection<Dictionary<string, AvailabilitySetData>>(collection).Add(key, AssertItem<AvailabilitySetData>(item));
-
-                protected override object CreateElementInstance()
-                    => _libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                    => ((Dictionary<string, AvailabilitySetData>)collection).Add(key, (AvailabilitySetData)item);
             }
 
-            private class ReadReturnsNull_Builder : ModelBuilder
+            private class ReadReturnsNull_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(ReadReturnsNull);
+
                 protected override object CreateInstance() => new ReadReturnsNull();
             }
 
-            private class List_List_NonJWire_Builder : ModelBuilder
+            private class List_List_NonJWire_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(List<List<NonJWire>>);
+
+                protected override Type? ItemType => typeof(List<NonJWire>);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new List<List<NonJWire>>();
 
                 protected override void AddItem(object collection, object item)
-                    => AssertCollection<List<List<NonJWire>>>(collection).Add(AssertItem<List<NonJWire>>(item));
-
-                protected override object CreateElementInstance() => new NonJWire();
+                    => ((List<List<NonJWire>>)collection).Add((List<NonJWire>)item);
             }
 
-            private class List_NonJWire_Builder : ModelBuilder
+            private class List_NonJWire_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(List<NonJWire>);
+
+                protected override Type? ItemType => typeof(NonJWire);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new List<NonJWire>();
 
                 protected override void AddItem(object collection, object item)
-                    => AssertCollection<List<NonJWire>>(collection).Add(AssertItem<NonJWire>(item));
-
-                protected override object CreateElementInstance() => new NonJWire();
+                    => ((List<NonJWire>)collection).Add((NonJWire)item);
             }
 
-            private class List_List_PersistableModel_Builder : ModelBuilder
+            private class List_List_PersistableModel_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(List<List<PersistableModel>>);
+
+                protected override Type? ItemType => typeof(List<PersistableModel>);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new List<List<PersistableModel>>();
 
                 protected override void AddItem(object collection, object item)
-                    => AssertCollection<List<List<PersistableModel>>>(collection).Add(AssertItem<List<PersistableModel>>(item));
-
-                protected override object CreateElementInstance() => new PersistableModel();
+                    => ((List<List<PersistableModel>>)collection).Add((List<PersistableModel>)item);
             }
 
-            private class List_PersistableModel_Builder : ModelBuilder
+            private class List_PersistableModel_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(List<PersistableModel>);
+
+                protected override Type? ItemType => typeof(PersistableModel);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new List<PersistableModel>();
 
                 protected override void AddItem(object collection, object item)
-                    => AssertCollection<List<PersistableModel>>(collection).Add(AssertItem<PersistableModel>(item));
-
-                protected override object CreateElementInstance() => new PersistableModel();
+                    => ((List<PersistableModel>)collection).Add((PersistableModel)item);
             }
 
-            private class PersistableModel_Builder : ModelBuilder
+            private class PersistableModel_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(PersistableModel);
+
                 protected override object CreateInstance() => new PersistableModel();
             }
 
-            private class NonJWire_Builder : ModelBuilder
+            private class NonJWire_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(NonJWire);
+
                 protected override object CreateInstance() => new NonJWire();
             }
 
-            private class DoesNotImplementInterface_Builder : ModelBuilder
+            private class DoesNotImplementInterface_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(DoesNotImplementInterface);
+
                 protected override object CreateInstance() => new DoesNotImplementInterface();
             }
 
-            private class SubType_Builder : ModelBuilder
+            private class SubType_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(SubType);
+
                 protected override object CreateInstance() => new SubType();
             }
 
-            private class List_Dictionary_String_SubType_Builder : ModelBuilder
+            private class List_Dictionary_String_SubType_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(List<Dictionary<string, SubType>>);
+
+                protected override Type? ItemType => typeof(Dictionary<string, SubType>);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new List<Dictionary<string, SubType>>();
 
                 protected override void AddItem(object collection, object item)
-                    => AssertCollection<List<Dictionary<string, SubType>>>(collection).Add(AssertItem<Dictionary<string, SubType>>(item));
-
-                protected override object CreateElementInstance() => new SubType();
+                    => ((List<Dictionary<string, SubType>>)collection).Add((Dictionary<string, SubType>)item);
             }
 
-            private class List_SubType_Builder : ModelBuilder
+            private class List_SubType_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(List<SubType>);
+
+                protected override Type? ItemType => typeof(SubType);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new List<SubType>();
 
                 protected override void AddItem(object collection, object item)
-                    => AssertCollection<List<SubType>>(collection).Add(AssertItem<SubType>(item));
-
-                protected override object CreateElementInstance() => new SubType();
+                    => ((List<SubType>)collection).Add((SubType)item);
             }
 
-            private class List_List_SubType_Builder : ModelBuilder
+            private class List_List_SubType_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(List<List<SubType>>);
+
+                protected override Type? ItemType => typeof(List<SubType>);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new List<List<SubType>>();
 
                 protected override void AddItem(object collection, object item)
-                    => AssertCollection<List<List<SubType>>>(collection).Add(AssertItem<List<SubType>>(item));
-
-                protected override object CreateElementInstance() => new SubType();
+                    => ((List<List<SubType>>)collection).Add((List<SubType>)item);
             }
 
-            private class Dictionary_String_SubType_Builder : ModelBuilder
+            private class Dictionary_String_SubType_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(Dictionary<string, SubType>);
+
+                protected override Type? ItemType => typeof(SubType);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new Dictionary<string, SubType>();
 
                 protected override void AddKeyValuePair(object collection, string key, object item)
-                    => AssertCollection<Dictionary<string, SubType>>(collection).Add(key, AssertItem<SubType>(item));
-
-                protected override object CreateElementInstance() => new SubType();
+                    => ((Dictionary<string, SubType>)collection).Add(key, (SubType)item);
             }
         }
     }

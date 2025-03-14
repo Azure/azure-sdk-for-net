@@ -33,7 +33,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
             private HashSet_HashSet_AvailabilitySetData_Builder? _hashSet_HashSet_AvailabilitySetData_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
             {
                 builder = type switch
                 {
@@ -43,26 +43,27 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return builder is not null;
             }
 
-            private ModelBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
                     return builder;
                 if (s_availabilitySetData_HashSetTests_LocalContext.Value.TryGetModelBuilder(type, out builder))
                     return builder;
                 return null;
             }
 
-            private class HashSet_HashSet_AvailabilitySetData_Builder : ModelBuilder
+            private class HashSet_HashSet_AvailabilitySetData_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(HashSet<HashSet<AvailabilitySetData>>);
+
+                protected override Type? ItemType => typeof(HashSet<AvailabilitySetData>);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new HashSet<HashSet<AvailabilitySetData>>();
 
                 protected override void AddItem(object collection, object item)
-                    => AssertCollection<HashSet<HashSet<AvailabilitySetData>>>(collection).Add(AssertItem<HashSet<AvailabilitySetData>>(item));
-
-                protected override object CreateElementInstance()
-                    => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                    => ((HashSet<HashSet<AvailabilitySetData>>)collection).Add((HashSet<AvailabilitySetData>)item);
             }
         }
     }

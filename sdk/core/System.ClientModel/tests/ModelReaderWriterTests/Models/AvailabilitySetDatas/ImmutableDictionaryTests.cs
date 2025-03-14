@@ -28,7 +28,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
             private ImmutableDictionary_AvailabilitySetData_Builder? _immutable_dictionary_AvailabilitySetData_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
             {
                 builder = type switch
                 {
@@ -38,27 +38,28 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return builder is not null;
             }
 
-            private ModelBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
                     return builder;
                 return null;
             }
 
-            private class ImmutableDictionary_AvailabilitySetData_Builder : ModelBuilder
+            private class ImmutableDictionary_AvailabilitySetData_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(ImmutableDictionary<string, AvailabilitySetData>.Builder);
+
+                protected override Type? ItemType => typeof(AvailabilitySetData);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => ImmutableDictionary<string, AvailabilitySetData>.Empty.ToBuilder();
 
                 protected override void AddKeyValuePair(object collection, string key, object item)
-                    => AssertCollection<ImmutableDictionary<string, AvailabilitySetData>.Builder>(collection).Add(key, AssertItem<AvailabilitySetData>(item));
-
-                protected override object CreateElementInstance()
-                    => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                    => ((ImmutableDictionary<string, AvailabilitySetData>.Builder)collection).Add(key, (AvailabilitySetData)item);
 
                 protected override object ToCollection(object builder)
-                    => AssertCollection<ImmutableDictionary<string, AvailabilitySetData>.Builder>(builder).ToImmutable();
+                    => ((ImmutableDictionary<string, AvailabilitySetData>.Builder)builder).ToImmutable();
             }
         }
     }

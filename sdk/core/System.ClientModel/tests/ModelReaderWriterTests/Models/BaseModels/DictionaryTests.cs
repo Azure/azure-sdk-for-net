@@ -45,7 +45,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
             private Dictionary_BaseModel_Builder? _Dictionary_BaseModel_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
             {
                 builder = type switch
                 {
@@ -55,24 +55,25 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
                 return builder is not null;
             }
 
-            private ModelBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
                     return builder;
                 return null;
             }
 
-            private class Dictionary_BaseModel_Builder : ModelBuilder
+            private class Dictionary_BaseModel_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(Dictionary<string, BaseModel>);
+
+                protected override Type? ItemType => typeof(BaseModel);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new Dictionary<string, BaseModel>();
 
                 protected override void AddKeyValuePair(object collection, string key, object item)
-                    => AssertCollection<Dictionary<string, BaseModel>>(collection).Add(key, AssertItem<BaseModel>(item));
-
-                protected override object CreateElementInstance()
-                    => s_libraryContext.Value.GetModelBuilder(typeof(BaseModel)).CreateObject();
+                    => ((Dictionary<string, BaseModel>)collection).Add(key, (BaseModel)item);
             }
         }
     }

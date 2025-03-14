@@ -58,7 +58,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
             private SortedSet_AvailabilitySetData_Builder? _sortedSet_AvailabilitySetData_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
             {
                 builder = type switch
                 {
@@ -68,24 +68,25 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return builder is not null;
             }
 
-            private ModelBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
                     return builder;
                 return null;
             }
 
-            private class SortedSet_AvailabilitySetData_Builder : ModelBuilder
+            private class SortedSet_AvailabilitySetData_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(SortedSet<AvailabilitySetData>);
+
+                protected override Type? ItemType => typeof(AvailabilitySetData);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new SortedSet<AvailabilitySetData>(new AvailabilitySetDataComparer());
 
                 protected override void AddItem(object collection, object item)
-                    => AssertCollection<SortedSet<AvailabilitySetData>>(collection).Add(AssertItem<AvailabilitySetData>(item));
-
-                protected override object CreateElementInstance()
-                    => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                    => ((SortedSet<AvailabilitySetData>)collection).Add((AvailabilitySetData)item);
             }
         }
     }

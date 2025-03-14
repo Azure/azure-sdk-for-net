@@ -33,7 +33,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
             private Queue_Queue_AvailabilitySetData_Builder? _queue_Queue_AvailabilitySetData_Builder;
 
-            public override bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
             {
                 builder = type switch
                 {
@@ -43,26 +43,27 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return builder is not null;
             }
 
-            private ModelBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
                     return builder;
                 if (s_availabilitySetData_QueueTests_LocalContext.Value.TryGetModelBuilder(type, out builder))
                     return builder;
                 return null;
             }
 
-            private class Queue_Queue_AvailabilitySetData_Builder : ModelBuilder
+            private class Queue_Queue_AvailabilitySetData_Builder : ModelReaderWriterTypeBuilder
             {
+                protected override Type BuilderType => typeof(Queue<Queue<AvailabilitySetData>>);
+
+                protected override Type? ItemType => typeof(Queue<AvailabilitySetData>);
+
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new Queue<Queue<AvailabilitySetData>>();
 
                 protected override void AddItem(object collection, object item)
-                    => AssertCollection<Queue<Queue<AvailabilitySetData>>>(collection).Enqueue(AssertItem<Queue<AvailabilitySetData>>(item));
-
-                protected override object CreateElementInstance()
-                    => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                    => ((Queue<Queue<AvailabilitySetData>>)collection).Enqueue((Queue<AvailabilitySetData>)item);
             }
         }
     }
