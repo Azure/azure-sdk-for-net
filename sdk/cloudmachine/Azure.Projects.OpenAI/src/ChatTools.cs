@@ -8,6 +8,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using OpenAI.Chat;
 
 namespace Azure.Projects.OpenAI;
@@ -18,7 +19,11 @@ public class ChatTools
     private static readonly BinaryData s_noparams = BinaryData.FromString("""{ "type" : "object", "properties" : {} }""");
 
     private readonly Dictionary<string, MethodInfo> _methods = [];
+    private readonly Dictionary<string, Func<string, BinaryData, Task<BinaryData>>> _mcpMethods = [];
     private readonly List<ChatTool> _definitions = [];
+
+    private List<McpClient> _mcpClients = [];
+    private Dictionary<string, McpClient> _mcpClientsByEndpoint = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatTools"/> class.
@@ -28,6 +33,20 @@ public class ChatTools
     {
         foreach (Type functionHolder in tools)
             Add(functionHolder);
+    }
+
+    /// <summary>
+    /// Adds a new MCP Server connection to be used for function calls.
+    /// </summary>
+    /// <param name="serverEndpoint">The Uri of the MCP Server.</param>
+    public async Task AddMcpServerAsync(string serverEndpoint)
+    {
+        var client = new McpClient(serverEndpoint);
+        _mcpClientsByEndpoint[serverEndpoint] = client;
+        await client.StartAsync().ConfigureAwait(false);
+        BinaryData tools = await client.ListToolsAsync().ConfigureAwait(false);
+        Add(tools, client);
+        _mcpClients.Add(client);
     }
 
     /// <summary>
@@ -53,16 +72,24 @@ public class ChatTools
     /// Adds tool definitions from a JSON array in BinaryData format.
     /// </summary>
     /// <param name="toolDefinitions">BinaryData containing a JSON array of tool definitions</param>
+    /// <param name="client">The McpClient.</param>
     /// <exception cref="ArgumentNullException">Thrown when toolDefinitions is null</exception>
     /// <exception cref="JsonException">Thrown when JSON parsing fails</exception>
-    public void Add(BinaryData toolDefinitions)
+    internal void Add(BinaryData toolDefinitions, McpClient client)
     {
         using var document = JsonDocument.Parse(toolDefinitions);
-        var tools = document.RootElement.EnumerateArray();
+        if (!document.RootElement.TryGetProperty("tools", out JsonElement toolsElement))
+        {
+            throw new JsonException("The JSON document must contain a 'tools' array.");
+        }
+
+        var tools = toolsElement.EnumerateArray();
+        // the replacement is to deal with OpenAI's tool name regex validation.
+        var serverKey = client.ServerEndpoint.Replace('/', '_').Replace(':', '_');
 
         foreach (var tool in tools)
         {
-            var name = tool.GetProperty("name").GetString()!;
+            var name = $"{serverKey}__.__{tool.GetProperty("name").GetString()!}";
             var description = tool.GetProperty("description").GetString()!;
             var inputSchema = tool.GetProperty("inputSchema").GetRawText();
 
@@ -73,10 +100,7 @@ public class ChatTools
 
             _definitions.Add(chatTool);
 
-            // Create a generic method that forwards the call to the Call method
-            MethodInfo genericMethod = GetType()
-                .GetMethod(nameof(Call), [typeof(string), typeof(object[])])!;
-            _methods[name] = genericMethod;
+            _mcpMethods[name] = client.CallToolAsync;
         }
     }
 
@@ -159,6 +183,20 @@ public class ChatTools
         return result;
     }
 
+    private async Task<string> CallMcp(ChatToolCall call)
+    {
+        if (_mcpMethods.TryGetValue(call.FunctionName, out Func<string, BinaryData, Task<BinaryData>>? method))
+        {
+            var actualFunctionName = call.FunctionName.Split("__.__", 2)[1];
+            var result = await method(actualFunctionName, call.FunctionArguments).ConfigureAwait(false);
+            return result.ToString();
+        }
+        else
+        {
+            throw new NotImplementedException($"MCP tool {call.FunctionName} not found.");
+        }
+    }
+
     /// <summary>
     /// Calls all the specified <see cref="ChatToolCall"/>s.
     /// </summary>
@@ -179,24 +217,32 @@ public class ChatTools
     /// Calls all the specified <see cref="ChatToolCall"/>s.
     /// </summary>
     /// <param name="toolCalls"></param>
-    /// <param name="failed"></param>
     /// <returns></returns>
-    public IEnumerable<ToolChatMessage> CallAll(IEnumerable<ChatToolCall> toolCalls, out List<string>? failed)
+    public async Task<ToolCallResult> CallAllWithErrors(IEnumerable<ChatToolCall> toolCalls)
     {
-        failed = null;
+        List<string>? failed = null;
+        bool isMcpTool = false;
         var messages = new List<ToolChatMessage>();
         foreach (ChatToolCall toolCall in toolCalls)
         {
             if (!_methods.ContainsKey(toolCall.FunctionName))
             {
-                if (failed == null) failed = new List<string>();
-                failed.Add(toolCall.FunctionName);
-                continue;
+                if (_mcpMethods.ContainsKey(toolCall.FunctionName))
+                {
+                    isMcpTool = true;
+                }
+                else
+                {
+                    failed ??= new List<string>();
+                    failed.Add(toolCall.FunctionName);
+                    continue;
+                }
             }
-            var result = Call(toolCall);
+
+            var result = isMcpTool ? await CallMcp(toolCall).ConfigureAwait(false) : Call(toolCall);
             messages.Add(new ToolChatMessage(toolCall.Id, result));
         }
-        return messages;
+        return new(messages, failed);
     }
 
     /// <summary>
