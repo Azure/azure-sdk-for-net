@@ -58,12 +58,14 @@ namespace Azure.ResourceManager.DataBox.Models
         /// </param>
         /// <param name="transportAvailabilityRequest"> Request body to get the transport availability for given sku. </param>
         /// <param name="dataCenterAddressRequest"> Request body to get the datacenter address for given sku. </param>
+        /// <param name="deviceCapabilityRequest"> Request body to get the device capabilities for a given sku. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RegionConfigurationContent(ScheduleAvailabilityContent scheduleAvailabilityRequest, TransportAvailabilityRequest transportAvailabilityRequest, DataCenterAddressContent dataCenterAddressRequest, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RegionConfigurationContent(ScheduleAvailabilityContent scheduleAvailabilityRequest, TransportAvailabilityContent transportAvailabilityRequest, DataCenterAddressContent dataCenterAddressRequest, DeviceCapabilityContent deviceCapabilityRequest, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ScheduleAvailabilityRequest = scheduleAvailabilityRequest;
             TransportAvailabilityRequest = transportAvailabilityRequest;
             DataCenterAddressRequest = dataCenterAddressRequest;
+            DeviceCapabilityRequest = deviceCapabilityRequest;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -74,20 +76,10 @@ namespace Azure.ResourceManager.DataBox.Models
         /// </summary>
         public ScheduleAvailabilityContent ScheduleAvailabilityRequest { get; set; }
         /// <summary> Request body to get the transport availability for given sku. </summary>
-        internal TransportAvailabilityRequest TransportAvailabilityRequest { get; set; }
-        /// <summary> Type of the device. </summary>
-        public DataBoxSkuName? TransportAvailabilityRequestSkuName
-        {
-            get => TransportAvailabilityRequest is null ? default : TransportAvailabilityRequest.SkuName;
-            set
-            {
-                if (TransportAvailabilityRequest is null)
-                    TransportAvailabilityRequest = new TransportAvailabilityRequest();
-                TransportAvailabilityRequest.SkuName = value;
-            }
-        }
-
+        public TransportAvailabilityContent TransportAvailabilityRequest { get; set; }
         /// <summary> Request body to get the datacenter address for given sku. </summary>
         public DataCenterAddressContent DataCenterAddressRequest { get; set; }
+        /// <summary> Request body to get the device capabilities for a given sku. </summary>
+        public DeviceCapabilityContent DeviceCapabilityRequest { get; set; }
     }
 }

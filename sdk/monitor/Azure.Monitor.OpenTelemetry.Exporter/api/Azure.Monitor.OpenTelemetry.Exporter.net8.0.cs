@@ -14,6 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public string ConnectionString { get { throw null; } set { } }
         public Azure.Core.TokenCredential Credential { get { throw null; } set { } }
         public bool DisableOfflineStorage { get { throw null; } set { } }
+        public bool EnableLiveMetrics { get { throw null; } set { } }
         public float SamplingRatio { get { throw null; } set { } }
         public string StorageDirectory { get { throw null; } set { } }
         public Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions.ServiceVersion Version { get { throw null; } set { } }
@@ -27,5 +28,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public AzureMonitorLogExporter(Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions options) { }
         protected override void Dispose(bool disposing) { }
         public override OpenTelemetry.ExportResult Export(in OpenTelemetry.Batch<OpenTelemetry.Logs.LogRecord> batch) { throw null; }
+    }
+    public static partial class OpenTelemetryBuilderExtensions
+    {
+        public static OpenTelemetry.IOpenTelemetryBuilder UseAzureMonitorExporter(this OpenTelemetry.IOpenTelemetryBuilder builder) { throw null; }
+        public static OpenTelemetry.IOpenTelemetryBuilder UseAzureMonitorExporter(this OpenTelemetry.IOpenTelemetryBuilder builder, System.Action<Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions> configureAzureMonitor) { throw null; }
     }
 }
