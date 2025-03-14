@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             {
                 return null;
             }
-            IReadOnlyList<SharedPrivateLinkResourceData> value = default;
+            IReadOnlyList<DatabaseWatcherSharedPrivateLinkResourceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<SharedPrivateLinkResourceData> array = new List<SharedPrivateLinkResourceData>();
+                    List<DatabaseWatcherSharedPrivateLinkResourceData> array = new List<DatabaseWatcherSharedPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharedPrivateLinkResourceData.DeserializeSharedPrivateLinkResourceData(item, options));
+                        array.Add(DatabaseWatcherSharedPrivateLinkResourceData.DeserializeDatabaseWatcherSharedPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

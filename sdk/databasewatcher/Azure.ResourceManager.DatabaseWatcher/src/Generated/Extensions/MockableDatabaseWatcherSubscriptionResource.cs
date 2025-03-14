@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableDatabaseWatcherSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _watcherClientDiagnostics;
-        private WatchersRestOperations _watcherRestClient;
+        private ClientDiagnostics _databaseWatcherWatchersClientDiagnostics;
+        private WatchersRestOperations _databaseWatcherWatchersRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableDatabaseWatcherSubscriptionResource"/> class for mocking. </summary>
         protected MockableDatabaseWatcherSubscriptionResource()
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         {
         }
 
-        private ClientDiagnostics WatcherClientDiagnostics => _watcherClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", WatcherResource.ResourceType.Namespace, Diagnostics);
-        private WatchersRestOperations WatcherRestClient => _watcherRestClient ??= new WatchersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WatcherResource.ResourceType));
+        private ClientDiagnostics DatabaseWatcherWatchersClientDiagnostics => _databaseWatcherWatchersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", DatabaseWatcherResource.ResourceType.Namespace, Diagnostics);
+        private WatchersRestOperations DatabaseWatcherWatchersRestClient => _databaseWatcherWatchersRestClient ??= new WatchersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DatabaseWatcherResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="WatcherResource"/></description>
+        /// <description><see cref="DatabaseWatcherResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WatcherResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WatcherResource> GetWatchersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DatabaseWatcherResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatabaseWatcherResource> GetDatabaseWatchersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => WatcherRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WatcherRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WatcherResource(Client, WatcherData.DeserializeWatcherData(e)), WatcherClientDiagnostics, Pipeline, "MockableDatabaseWatcherSubscriptionResource.GetWatchers", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DatabaseWatcherWatchersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DatabaseWatcherWatchersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatabaseWatcherResource(Client, DatabaseWatcherData.DeserializeDatabaseWatcherData(e)), DatabaseWatcherWatchersClientDiagnostics, Pipeline, "MockableDatabaseWatcherSubscriptionResource.GetDatabaseWatchers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="WatcherResource"/></description>
+        /// <description><see cref="DatabaseWatcherResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WatcherResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WatcherResource> GetWatchers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabaseWatcherResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatabaseWatcherResource> GetDatabaseWatchers(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => WatcherRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WatcherRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WatcherResource(Client, WatcherData.DeserializeWatcherData(e)), WatcherClientDiagnostics, Pipeline, "MockableDatabaseWatcherSubscriptionResource.GetWatchers", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DatabaseWatcherWatchersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DatabaseWatcherWatchersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatabaseWatcherResource(Client, DatabaseWatcherData.DeserializeDatabaseWatcherData(e)), DatabaseWatcherWatchersClientDiagnostics, Pipeline, "MockableDatabaseWatcherSubscriptionResource.GetDatabaseWatchers", "value", "nextLink", cancellationToken);
         }
     }
 }

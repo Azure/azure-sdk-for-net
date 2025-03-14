@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <summary> Initializes a new instance of <see cref="SharedPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> The SharedPrivateLinkResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SharedPrivateLinkResourceListResult(IEnumerable<SharedPrivateLinkResourceData> value)
+        internal SharedPrivateLinkResourceListResult(IEnumerable<DatabaseWatcherSharedPrivateLinkResourceData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="value"> The SharedPrivateLinkResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SharedPrivateLinkResourceListResult(IReadOnlyList<SharedPrivateLinkResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SharedPrivateLinkResourceListResult(IReadOnlyList<DatabaseWatcherSharedPrivateLinkResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         }
 
         /// <summary> The SharedPrivateLinkResource items on this page. </summary>
-        public IReadOnlyList<SharedPrivateLinkResourceData> Value { get; }
+        public IReadOnlyList<DatabaseWatcherSharedPrivateLinkResourceData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

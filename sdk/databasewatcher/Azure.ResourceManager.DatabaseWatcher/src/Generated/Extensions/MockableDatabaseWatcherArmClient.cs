@@ -35,63 +35,63 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WatcherResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WatcherResource.CreateResourceIdentifier" /> to create a <see cref="WatcherResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DatabaseWatcherResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseWatcherResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseWatcherResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WatcherResource"/> object. </returns>
-        public virtual WatcherResource GetWatcherResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseWatcherResource"/> object. </returns>
+        public virtual DatabaseWatcherResource GetDatabaseWatcherResource(ResourceIdentifier id)
         {
-            WatcherResource.ValidateResourceId(id);
-            return new WatcherResource(Client, id);
+            DatabaseWatcherResource.ValidateResourceId(id);
+            return new DatabaseWatcherResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AlertRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AlertRuleResource.CreateResourceIdentifier" /> to create an <see cref="AlertRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DatabaseWatcherAlertRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseWatcherAlertRuleResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseWatcherAlertRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AlertRuleResource"/> object. </returns>
-        public virtual AlertRuleResource GetAlertRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseWatcherAlertRuleResource"/> object. </returns>
+        public virtual DatabaseWatcherAlertRuleResource GetDatabaseWatcherAlertRuleResource(ResourceIdentifier id)
         {
-            AlertRuleResource.ValidateResourceId(id);
-            return new AlertRuleResource(Client, id);
+            DatabaseWatcherAlertRuleResource.ValidateResourceId(id);
+            return new DatabaseWatcherAlertRuleResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HealthValidationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthValidationResource.CreateResourceIdentifier" /> to create a <see cref="HealthValidationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DatabaseWatcherHealthValidationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseWatcherHealthValidationResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseWatcherHealthValidationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthValidationResource"/> object. </returns>
-        public virtual HealthValidationResource GetHealthValidationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseWatcherHealthValidationResource"/> object. </returns>
+        public virtual DatabaseWatcherHealthValidationResource GetDatabaseWatcherHealthValidationResource(ResourceIdentifier id)
         {
-            HealthValidationResource.ValidateResourceId(id);
-            return new HealthValidationResource(Client, id);
+            DatabaseWatcherHealthValidationResource.ValidateResourceId(id);
+            return new DatabaseWatcherHealthValidationResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TargetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TargetResource.CreateResourceIdentifier" /> to create a <see cref="TargetResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DatabaseWatcherTargetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseWatcherTargetResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseWatcherTargetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TargetResource"/> object. </returns>
-        public virtual TargetResource GetTargetResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseWatcherTargetResource"/> object. </returns>
+        public virtual DatabaseWatcherTargetResource GetDatabaseWatcherTargetResource(ResourceIdentifier id)
         {
-            TargetResource.ValidateResourceId(id);
-            return new TargetResource(Client, id);
+            DatabaseWatcherTargetResource.ValidateResourceId(id);
+            return new DatabaseWatcherTargetResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SharedPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DatabaseWatcherSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseWatcherSharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseWatcherSharedPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SharedPrivateLinkResource"/> object. </returns>
-        public virtual SharedPrivateLinkResource GetSharedPrivateLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseWatcherSharedPrivateLinkResource"/> object. </returns>
+        public virtual DatabaseWatcherSharedPrivateLinkResource GetDatabaseWatcherSharedPrivateLinkResource(ResourceIdentifier id)
         {
-            SharedPrivateLinkResource.ValidateResourceId(id);
-            return new SharedPrivateLinkResource(Client, id);
+            DatabaseWatcherSharedPrivateLinkResource.ValidateResourceId(id);
+            return new DatabaseWatcherSharedPrivateLinkResource(Client, id);
         }
     }
 }

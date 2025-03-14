@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/> or <paramref name="alertRuleResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/> or <paramref name="alertRuleResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AlertRuleResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string watcherName, string alertRuleResourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseWatcherAlertRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string watcherName, string alertRuleResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 case 200:
                     {
-                        AlertRuleResourceData value = default;
+                        DatabaseWatcherAlertRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AlertRuleResourceData.DeserializeAlertRuleResourceData(document.RootElement);
+                        value = DatabaseWatcherAlertRuleData.DeserializeDatabaseWatcherAlertRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AlertRuleResourceData)null, message.Response);
+                    return Response.FromValue((DatabaseWatcherAlertRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/> or <paramref name="alertRuleResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/> or <paramref name="alertRuleResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AlertRuleResourceData> Get(string subscriptionId, string resourceGroupName, string watcherName, string alertRuleResourceName, CancellationToken cancellationToken = default)
+        public Response<DatabaseWatcherAlertRuleData> Get(string subscriptionId, string resourceGroupName, string watcherName, string alertRuleResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,19 +128,19 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 case 200:
                     {
-                        AlertRuleResourceData value = default;
+                        DatabaseWatcherAlertRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AlertRuleResourceData.DeserializeAlertRuleResourceData(document.RootElement);
+                        value = DatabaseWatcherAlertRuleData.DeserializeDatabaseWatcherAlertRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AlertRuleResourceData)null, message.Response);
+                    return Response.FromValue((DatabaseWatcherAlertRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string watcherName, string alertRuleResourceName, AlertRuleResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string watcherName, string alertRuleResourceName, DatabaseWatcherAlertRuleData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string watcherName, string alertRuleResourceName, AlertRuleResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string watcherName, string alertRuleResourceName, DatabaseWatcherAlertRuleData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/>, <paramref name="alertRuleResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/> or <paramref name="alertRuleResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AlertRuleResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string watcherName, string alertRuleResourceName, AlertRuleResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseWatcherAlertRuleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string watcherName, string alertRuleResourceName, DatabaseWatcherAlertRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -206,9 +206,9 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 case 200:
                 case 201:
                     {
-                        AlertRuleResourceData value = default;
+                        DatabaseWatcherAlertRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AlertRuleResourceData.DeserializeAlertRuleResourceData(document.RootElement);
+                        value = DatabaseWatcherAlertRuleData.DeserializeDatabaseWatcherAlertRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/>, <paramref name="alertRuleResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/> or <paramref name="alertRuleResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AlertRuleResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string watcherName, string alertRuleResourceName, AlertRuleResourceData data, CancellationToken cancellationToken = default)
+        public Response<DatabaseWatcherAlertRuleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string watcherName, string alertRuleResourceName, DatabaseWatcherAlertRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -240,9 +240,9 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 case 200:
                 case 201:
                     {
-                        AlertRuleResourceData value = default;
+                        DatabaseWatcherAlertRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AlertRuleResourceData.DeserializeAlertRuleResourceData(document.RootElement);
+                        value = DatabaseWatcherAlertRuleData.DeserializeDatabaseWatcherAlertRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

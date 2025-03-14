@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <summary> Initializes a new instance of <see cref="TargetListResult"/>. </summary>
         /// <param name="value"> The Target items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal TargetListResult(IEnumerable<TargetData> value)
+        internal TargetListResult(IEnumerable<DatabaseWatcherTargetData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="value"> The Target items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TargetListResult(IReadOnlyList<TargetData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TargetListResult(IReadOnlyList<DatabaseWatcherTargetData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         }
 
         /// <summary> The Target items on this page. </summary>
-        public IReadOnlyList<TargetData> Value { get; }
+        public IReadOnlyList<DatabaseWatcherTargetData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

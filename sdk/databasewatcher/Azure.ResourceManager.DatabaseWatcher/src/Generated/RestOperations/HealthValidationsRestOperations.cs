@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/> or <paramref name="healthValidationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/> or <paramref name="healthValidationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HealthValidationData>> GetAsync(string subscriptionId, string resourceGroupName, string watcherName, string healthValidationName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseWatcherHealthValidationData>> GetAsync(string subscriptionId, string resourceGroupName, string watcherName, string healthValidationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 case 200:
                     {
-                        HealthValidationData value = default;
+                        DatabaseWatcherHealthValidationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = HealthValidationData.DeserializeHealthValidationData(document.RootElement);
+                        value = DatabaseWatcherHealthValidationData.DeserializeDatabaseWatcherHealthValidationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((HealthValidationData)null, message.Response);
+                    return Response.FromValue((DatabaseWatcherHealthValidationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/> or <paramref name="healthValidationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/> or <paramref name="healthValidationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HealthValidationData> Get(string subscriptionId, string resourceGroupName, string watcherName, string healthValidationName, CancellationToken cancellationToken = default)
+        public Response<DatabaseWatcherHealthValidationData> Get(string subscriptionId, string resourceGroupName, string watcherName, string healthValidationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,13 +128,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 case 200:
                     {
-                        HealthValidationData value = default;
+                        DatabaseWatcherHealthValidationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = HealthValidationData.DeserializeHealthValidationData(document.RootElement);
+                        value = DatabaseWatcherHealthValidationData.DeserializeDatabaseWatcherHealthValidationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((HealthValidationData)null, message.Response);
+                    return Response.FromValue((DatabaseWatcherHealthValidationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             {
                 return null;
             }
-            IReadOnlyList<WatcherData> value = default;
+            IReadOnlyList<DatabaseWatcherData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<WatcherData> array = new List<WatcherData>();
+                    List<DatabaseWatcherData> array = new List<DatabaseWatcherData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WatcherData.DeserializeWatcherData(item, options));
+                        array.Add(DatabaseWatcherData.DeserializeDatabaseWatcherData(item, options));
                     }
                     value = array;
                     continue;

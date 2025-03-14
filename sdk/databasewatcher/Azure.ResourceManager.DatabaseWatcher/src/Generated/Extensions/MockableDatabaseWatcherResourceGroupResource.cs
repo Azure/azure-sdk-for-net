@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of WatcherResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of WatcherResources and their operations over a WatcherResource. </returns>
-        public virtual WatcherCollection GetWatchers()
+        /// <summary> Gets a collection of DatabaseWatcherResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DatabaseWatcherResources and their operations over a DatabaseWatcherResource. </returns>
+        public virtual DatabaseWatcherCollection GetDatabaseWatchers()
         {
-            return GetCachedClient(client => new WatcherCollection(client, Id));
+            return GetCachedClient(client => new DatabaseWatcherCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="WatcherResource"/></description>
+        /// <description><see cref="DatabaseWatcherResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WatcherResource>> GetWatcherAsync(string watcherName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseWatcherResource>> GetDatabaseWatcherAsync(string watcherName, CancellationToken cancellationToken = default)
         {
-            return await GetWatchers().GetAsync(watcherName, cancellationToken).ConfigureAwait(false);
+            return await GetDatabaseWatchers().GetAsync(watcherName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="WatcherResource"/></description>
+        /// <description><see cref="DatabaseWatcherResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WatcherResource> GetWatcher(string watcherName, CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseWatcherResource> GetDatabaseWatcher(string watcherName, CancellationToken cancellationToken = default)
         {
-            return GetWatchers().Get(watcherName, cancellationToken);
+            return GetDatabaseWatchers().Get(watcherName, cancellationToken);
         }
     }
 }

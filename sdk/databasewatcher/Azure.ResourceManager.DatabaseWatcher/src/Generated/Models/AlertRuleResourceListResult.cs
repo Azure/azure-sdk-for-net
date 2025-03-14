@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <summary> Initializes a new instance of <see cref="AlertRuleResourceListResult"/>. </summary>
         /// <param name="value"> The AlertRuleResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AlertRuleResourceListResult(IEnumerable<AlertRuleResourceData> value)
+        internal AlertRuleResourceListResult(IEnumerable<DatabaseWatcherAlertRuleData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="value"> The AlertRuleResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AlertRuleResourceListResult(IReadOnlyList<AlertRuleResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AlertRuleResourceListResult(IReadOnlyList<DatabaseWatcherAlertRuleData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         }
 
         /// <summary> The AlertRuleResource items on this page. </summary>
-        public IReadOnlyList<AlertRuleResourceData> Value { get; }
+        public IReadOnlyList<DatabaseWatcherAlertRuleData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/> or <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/> or <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SharedPrivateLinkResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string watcherName, string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseWatcherSharedPrivateLinkResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string watcherName, string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 case 200:
                     {
-                        SharedPrivateLinkResourceData value = default;
+                        DatabaseWatcherSharedPrivateLinkResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SharedPrivateLinkResourceData.DeserializeSharedPrivateLinkResourceData(document.RootElement);
+                        value = DatabaseWatcherSharedPrivateLinkResourceData.DeserializeDatabaseWatcherSharedPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SharedPrivateLinkResourceData)null, message.Response);
+                    return Response.FromValue((DatabaseWatcherSharedPrivateLinkResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/> or <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/> or <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SharedPrivateLinkResourceData> Get(string subscriptionId, string resourceGroupName, string watcherName, string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
+        public Response<DatabaseWatcherSharedPrivateLinkResourceData> Get(string subscriptionId, string resourceGroupName, string watcherName, string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,19 +128,19 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 case 200:
                     {
-                        SharedPrivateLinkResourceData value = default;
+                        DatabaseWatcherSharedPrivateLinkResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SharedPrivateLinkResourceData.DeserializeSharedPrivateLinkResourceData(document.RootElement);
+                        value = DatabaseWatcherSharedPrivateLinkResourceData.DeserializeDatabaseWatcherSharedPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SharedPrivateLinkResourceData)null, message.Response);
+                    return Response.FromValue((DatabaseWatcherSharedPrivateLinkResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string watcherName, string sharedPrivateLinkResourceName, SharedPrivateLinkResourceData data)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string watcherName, string sharedPrivateLinkResourceName, DatabaseWatcherSharedPrivateLinkResourceData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string watcherName, string sharedPrivateLinkResourceName, SharedPrivateLinkResourceData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string watcherName, string sharedPrivateLinkResourceName, DatabaseWatcherSharedPrivateLinkResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/>, <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/> or <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string watcherName, string sharedPrivateLinkResourceName, SharedPrivateLinkResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string watcherName, string sharedPrivateLinkResourceName, DatabaseWatcherSharedPrivateLinkResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/>, <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="watcherName"/> or <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string watcherName, string sharedPrivateLinkResourceName, SharedPrivateLinkResourceData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string watcherName, string sharedPrivateLinkResourceName, DatabaseWatcherSharedPrivateLinkResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
