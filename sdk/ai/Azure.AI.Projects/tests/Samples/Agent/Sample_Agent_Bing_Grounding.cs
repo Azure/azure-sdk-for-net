@@ -82,7 +82,17 @@ public partial class Sample_Agent_Bing_Grounding : SamplesBase<AIProjectsTestEnv
             {
                 if (contentItem is MessageTextContent textItem)
                 {
-                    Console.Write(textItem.Text);
+                    Console.Write($"Agent response: {textItem.Text}");
+                    if (textItem.Annotations != null)
+                    {
+                        foreach (MessageTextAnnotation annotation in textItem.Annotations)
+                        {
+                            if (annotation is MessageTextUrlCitationAnnotation urlAnnotation)
+                            {
+                                Console.Write($"URL Citation: [{urlAnnotation.UrlCitation.Title}]({urlAnnotation.UrlCitation.Url})");
+                            }
+                        }
+                    }
                 }
                 else if (contentItem is MessageImageFileContent imageFileItem)
                 {

@@ -180,7 +180,7 @@ function GeneratePRMatrixForBatch {
           }
 
           if ($batchSuffixNecessary) {
-            $outputItem["name"] = $outputItem["name"] + "$batchNamePrefix$batchCounter"
+            $outputItem["name"] = $outputItem["name"] + "_$batchNamePrefix$batchCounter"
           }
 
           $OverallResult += $outputItem
@@ -205,7 +205,7 @@ function GeneratePRMatrixForBatch {
         }
 
         if ($batchSuffixNecessary) {
-          $outputItem["name"] = $outputItem["name"]  + "_$batchNamePrefix$batchCounter"
+          $outputItem["name"] = $outputItem["name"] + "_$batchNamePrefix$batchCounter"
         }
         # now we need to take an item from the front of the matrix results, clone it, and add it to the back of the matrix results
         # we will add the cloned version to OverallResult
