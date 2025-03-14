@@ -21,8 +21,6 @@ namespace Azure.Security.CodeTransparency
     [CodeGenSuppress("CreateEntryAsync", typeof(BinaryData),typeof(CancellationToken))]
     public partial class CodeTransparencyClient
     {
-        private readonly string _serviceName;
-
         /// <summary>
         /// Initializes a new instance of CodeTransparencyClient. The client will download its own
         /// TLS CA cert to perform server cert authentication.
@@ -36,9 +34,9 @@ namespace Azure.Security.CodeTransparency
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new CodeTransparencyClientOptions();
-            _serviceName = endpoint.Host.Split('.')[0];
+            string name = endpoint.Host.Split('.')[0];
             CodeTransparencyCertificateClient certificateClient = options.CreateCertificateClient();
-            HttpPipelineTransportOptions transportOptions = CreateTlsCertAndTrustVerifier(_serviceName, certificateClient);
+            HttpPipelineTransportOptions transportOptions = CreateTlsCertAndTrustVerifier(name, certificateClient);
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
@@ -305,7 +303,7 @@ namespace Azure.Security.CodeTransparency
             cborReader.ReadEndMap();
 
             // Validate issuer and CTS instance are matching
-            if (!issuer.Equals(_serviceName, StringComparison.OrdinalIgnoreCase))
+            if (!issuer.Equals(_endpoint.Host, StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new InvalidOperationException("Issuer and CTS instance name are not matching.");
             }

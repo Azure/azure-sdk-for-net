@@ -363,7 +363,7 @@ namespace Azure.Security.CodeTransparency.Tests
                 "\"kid\":\"1dd54f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
                 "\"kty\":\"EC\"," +
                 "\"x\": \"WAHDpC-ECgc7LvCxlaOPsY-xVYF9iStcEPU3XGF8dlhtb6dMHZSYVPMs2gliK-gc\"," +
-                "\"y\": \"EaDFUcuR-aQrWctpV4Kp_x16w3ZcG8957U3sLTRdeihO0vjfHBtW11xaIfAU0qAX\"" +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
                 "}]}");
 
             var mockTransport = new MockTransport(content);
@@ -390,10 +390,10 @@ namespace Azure.Security.CodeTransparency.Tests
             var content = new MockResponse(200);
             content.SetContent("{\"keys\":" +
                 "[{\"crv\": \"P-384\"," +
-                "\"kid\":\"1dd54f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
+                "\"kid\":\"fb29ce6d6b37e7a0b03a5fc94205490e1c37de1f41f68b92e3620021e9981d01\"," +
                 "\"kty\":\"EC\"," +
-                "\"x\": \"WAHDpC-ECgc7LvCxlaOPsY-xVYF9iStcEPU3XGF8dlhtb6dMHZSYVPMs2gliK-gc\"," +
-                "\"y\": \"EaDFUcuR-aQrWctpV4Kp_x16w3ZcG8957U3sLTRdeihO0vjfHBtW11xaIfAU0qAX\"" +
+                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
                 "}]}");
 
             var mockTransport = new MockTransport(content);
@@ -420,10 +420,10 @@ namespace Azure.Security.CodeTransparency.Tests
             var content = new MockResponse(200);
             content.SetContent("{\"keys\":" +
                 "[{\"crv\": \"P-512\"," +
-                "\"kid\":\"1dd54f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
+                "\"kid\":\"fb29ce6d6b37e7a0b03a5fc94205490e1c37de1f41f68b92e3620021e9981d01\"," +
                 "\"kty\":\"EC\"," +
-                "\"x\": \"WAHDpC-ECgc7LvCxlaOPsY-xVYF9iStcEPU3XGF8dlhtb6dMHZSYVPMs2gliK-gc\"," +
-                "\"y\": \"EaDFUcuR-aQrWctpV4Kp_x16w3ZcG8957U3sLTRdeihO0vjfHBtW11xaIfAU0qAX\"" +
+                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
                 "}]}");
 
             var mockTransport = new MockTransport(content);
@@ -453,8 +453,8 @@ namespace Azure.Security.CodeTransparency.Tests
                 "[{\"crv\": \"P-384\"," +
                 "\"kid\":\"99954f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
                 "\"kty\":\"EC\"," +
-                "\"x\": \"WAHDpC-ECgc7LvCxlaOPsY-xVYF9iStcEPU3XGF8dlhtb6dMHZSYVPMs2gliK-gc\"," +
-                "\"y\": \"EaDFUcuR-aQrWctpV4Kp_x16w3ZcG8957U3sLTRdeihO0vjfHBtW11xaIfAU0qAX\"" +
+                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
                 "}]}");
 
             var mockTransport = new MockTransport(content);

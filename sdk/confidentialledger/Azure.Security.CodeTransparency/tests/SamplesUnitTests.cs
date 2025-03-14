@@ -115,11 +115,28 @@ namespace Azure.Security.CodeTransparency.Tests
                     cborReader.SkipValue();
             }
 
-            Console.WriteLine($"The entry id to use to get the entry and receipt is {{{entryId}}}");
+            Console.WriteLine($"The entry id to use to get the receipt and Transparent Statement is {{{entryId}}}");
 
-            Response<BinaryData> signatureWithReceiptResponse = await client.GetEntryAsync(entryId);
+            #region Snippet:CodeTransparencySample2_GetEntryStatement
+            Response<BinaryData> signatureWithReceiptResponse = await client.GetEntryStatementAsync(entryId);
+            #endregion
+
+            #region Snippet:CodeTransparencySample2_GetRawReceipt
+            Response<BinaryData> receipt = await client.GetEntryAsync(entryId);
+            #endregion
+
             BinaryData signatureWithReceipt = signatureWithReceiptResponse.Value;
             byte[] signatureWithReceiptBytes = signatureWithReceipt.ToArray();
+            #endregion
+
+            #region Snippet:CodeTransparencySample2_VerifyReceiptAndInputSignedStatement
+#if Snippet
+            // Create a JsonWebKey
+            JsonWebKey jsonWebKey = new JsonWebKey(<.....>);
+            byte[] inputSignedStatement = readFileBytes("<input_signed_claims");
+
+            CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, signatureWithReceiptBytes, inputSignedStatement);
+#endif
             #endregion
 
             Assert.IsTrue(operation.HasCompleted);
@@ -138,7 +155,7 @@ namespace Azure.Security.CodeTransparency.Tests
                 "\"kid\":\"1dd54f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
                 "\"kty\":\"EC\"," +
                 "\"x\": \"WAHDpC-ECgc7LvCxlaOPsY-xVYF9iStcEPU3XGF8dlhtb6dMHZSYVPMs2gliK-gc\"," +
-                "\"y\": \"EaDFUcuR-aQrWctpV4Kp_x16w3ZcG8957U3sLTRdeihO0vjfHBtW11xaIfAU0qAX\"" +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
                 "}]}");
 
             var mockTransport = new MockTransport(content);
