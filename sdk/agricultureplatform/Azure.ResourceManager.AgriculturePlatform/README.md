@@ -1,6 +1,6 @@
 # Microsoft Azure AgriculturePlatform management client library for .NET
 
-**[Describe the service briefly first.]**
+Agriculture data solutions is a comprehensive accelerator designed to ingest and transform fragmented and siloed agricultural data into actionable insights across diverse sectors including agriculture, retail, consumer packaged goods, agriculture-focused finance and insurance, supply chain management, environmental, social, and governance reporting, as well as precision and sustainable farming practices.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
