@@ -87,7 +87,7 @@ AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredent
 With an authenticated client, an agent can be created:
 ```C# Snippet:OverviewCreateAgent
 Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: "gpt-4-1106-preview",
+    model: "gpt-4",
     name: "Math Tutor",
     instructions: "You are a personal math tutor. Write and run code to answer math questions.",
     tools: new List<ToolDefinition> { new CodeInterpreterToolDefinition() });
@@ -201,7 +201,7 @@ fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
 // Create an agent with toolResources and process assistant run
 Response<Agent> agentResponse = await client.CreateAgentAsync(
-        model: "gpt-4-1106-preview",
+        model: "gpt-4",
         name: "SDK Test Agent - Retrieval",
         instructions: "You are a helpful agent that can help fetch data from files you know about.",
         tools: new List<ToolDefinition> { new FileSearchToolDefinition() },
