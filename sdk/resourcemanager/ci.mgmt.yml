@@ -68,6 +68,7 @@ trigger:
     - sdk/defendereasm/Azure.ResourceManager.DefenderEasm
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/devcenter/Azure.ResourceManager.DevCenter
+    - sdk/deviceonboarding/Azure.ResourceManager.DeviceOnboarding
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
     - sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry
     - sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate
@@ -274,6 +275,7 @@ pr:
     - sdk/defendereasm/Azure.ResourceManager.DefenderEasm
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/devcenter/Azure.ResourceManager.DevCenter
+    - sdk/deviceonboarding/Azure.ResourceManager.DeviceOnboarding
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
     - sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry
     - sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate
