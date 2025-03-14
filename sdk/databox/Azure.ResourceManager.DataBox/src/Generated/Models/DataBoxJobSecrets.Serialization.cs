@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataboxJobSecrets : IUtf8JsonSerializable, IJsonModel<DataboxJobSecrets>
+    public partial class DataBoxJobSecrets : IUtf8JsonSerializable, IJsonModel<DataBoxJobSecrets>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataboxJobSecrets>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxJobSecrets>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DataboxJobSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataBoxJobSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataboxJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataboxJobSecrets)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxJobSecrets)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataboxJobSecrets IJsonModel<DataboxJobSecrets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataBoxJobSecrets IJsonModel<DataBoxJobSecrets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataboxJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataboxJobSecrets)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxJobSecrets)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataboxJobSecrets(document.RootElement, options);
+            return DeserializeDataBoxJobSecrets(document.RootElement, options);
         }
 
-        internal static DataboxJobSecrets DeserializeDataboxJobSecrets(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DataBoxJobSecrets DeserializeDataBoxJobSecrets(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -118,38 +118,38 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataboxJobSecrets(jobSecretsType, dcAccessSecurityCode, error, serializedAdditionalRawData, podSecrets ?? new ChangeTrackingList<DataBoxSecret>());
+            return new DataBoxJobSecrets(jobSecretsType, dcAccessSecurityCode, error, serializedAdditionalRawData, podSecrets ?? new ChangeTrackingList<DataBoxSecret>());
         }
 
-        BinaryData IPersistableModel<DataboxJobSecrets>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DataBoxJobSecrets>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataboxJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataboxJobSecrets)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxJobSecrets)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DataboxJobSecrets IPersistableModel<DataboxJobSecrets>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DataBoxJobSecrets IPersistableModel<DataBoxJobSecrets>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataboxJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataboxJobSecrets(document.RootElement, options);
+                        return DeserializeDataBoxJobSecrets(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataboxJobSecrets)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxJobSecrets)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DataboxJobSecrets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataBoxJobSecrets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
