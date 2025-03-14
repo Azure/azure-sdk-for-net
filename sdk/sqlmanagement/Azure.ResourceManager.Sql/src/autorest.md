@@ -28,8 +28,8 @@ head-as-boolean: false
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-mgmt-debug: 
- show-serialized-names: true
+# mgmt-debug: 
+#  show-serialized-names: true
 
 # this is temporary, to be removed when we find the owner of this feature
 operation-groups-to-omit:
@@ -578,6 +578,21 @@ directive:
       where: $.definitions.NetworkIsolationSettings
       transform: >
           $['x-ms-client-name'] = 'DatabaseExtensionNetworkIsolationSettings'
+    - from: ManagedDatabaseVulnerabilityAssessments.json
+      where: $.definitions.DatabaseVulnerabilityAssessmentProperties.properties
+      transform: >
+          $.storageContainerSasKey['x-ms-secret'] = true;
+          $.storageAccountAccessKey['x-ms-secret'] = true;
+    - from: DatabaseSecurityAlertPolicies.json
+      where: $.paths
+      transform: >
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].get.parameters[3]['enum'] = ['Default'];
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].put.parameters[3]['enum'] = ['Default'];
+    - from: ManagedDatabaseSecurityAlertPolicies.json
+      where: $.paths
+      transform: >
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].get.parameters[3]['enum'] = ['Default'];
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].put.parameters[3]['enum'] = ['Default'];
 ```
 
 ### Tag: package-composite-v5-take-2021-stable

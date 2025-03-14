@@ -251,6 +251,18 @@ namespace Azure.ResourceManager.Sql.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ManagedDatabaseVulnerabilityAssessmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedDatabaseVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseVulnerabilityAssessmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedDatabaseVulnerabilityAssessmentResource"/> object. </returns>
+        public virtual ManagedDatabaseVulnerabilityAssessmentResource GetManagedDatabaseVulnerabilityAssessmentResource(ResourceIdentifier id)
+        {
+            ManagedDatabaseVulnerabilityAssessmentResource.ValidateResourceId(id);
+            return new ManagedDatabaseVulnerabilityAssessmentResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="SqlDatabaseVulnerabilityAssessmentScanResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SqlDatabaseVulnerabilityAssessmentScanResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseVulnerabilityAssessmentScanResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -512,18 +524,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         {
             ManagedTransparentDataEncryptionResource.ValidateResourceId(id);
             return new ManagedTransparentDataEncryptionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedDatabaseVulnerabilityAssessmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedDatabaseVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseVulnerabilityAssessmentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedDatabaseVulnerabilityAssessmentResource"/> object. </returns>
-        public virtual ManagedDatabaseVulnerabilityAssessmentResource GetManagedDatabaseVulnerabilityAssessmentResource(ResourceIdentifier id)
-        {
-            ManagedDatabaseVulnerabilityAssessmentResource.ValidateResourceId(id);
-            return new ManagedDatabaseVulnerabilityAssessmentResource(Client, id);
         }
 
         /// <summary>
