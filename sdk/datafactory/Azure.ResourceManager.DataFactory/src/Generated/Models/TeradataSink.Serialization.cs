@@ -14,11 +14,11 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DynamicsSink : IUtf8JsonSerializable, IJsonModel<DynamicsSink>
+    public partial class TeradataSink : IUtf8JsonSerializable, IJsonModel<TeradataSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynamicsSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TeradataSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DynamicsSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TeradataSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,34 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DynamicsSink>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TeradataSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynamicsSink)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TeradataSink)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("writeBehavior"u8);
-            writer.WriteStringValue(WriteBehavior.ToString());
-            if (Optional.IsDefined(IgnoreNullValues))
+            if (Optional.IsDefined(ImportSettings))
             {
-                writer.WritePropertyName("ignoreNullValues"u8);
-                JsonSerializer.Serialize(writer, IgnoreNullValues);
-            }
-            if (Optional.IsDefined(AlternateKeyName))
-            {
-                writer.WritePropertyName("alternateKeyName"u8);
-                JsonSerializer.Serialize(writer, AlternateKeyName);
-            }
-            if (Optional.IsDefined(BypassBusinessLogicExecution))
-            {
-                writer.WritePropertyName("bypassBusinessLogicExecution"u8);
-                JsonSerializer.Serialize(writer, BypassBusinessLogicExecution);
-            }
-            if (Optional.IsDefined(BypassPowerAutomateFlows))
-            {
-                writer.WritePropertyName("bypassPowerAutomateFlows"u8);
-                JsonSerializer.Serialize(writer, BypassPowerAutomateFlows);
+                writer.WritePropertyName("importSettings"u8);
+                writer.WriteObjectValue(ImportSettings, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -72,19 +55,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        DynamicsSink IJsonModel<DynamicsSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TeradataSink IJsonModel<TeradataSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DynamicsSink>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TeradataSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynamicsSink)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TeradataSink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDynamicsSink(document.RootElement, options);
+            return DeserializeTeradataSink(document.RootElement, options);
         }
 
-        internal static DynamicsSink DeserializeDynamicsSink(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TeradataSink DeserializeTeradataSink(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -92,11 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DynamicsSinkWriteBehavior writeBehavior = default;
-            DataFactoryElement<bool> ignoreNullValues = default;
-            DataFactoryElement<string> alternateKeyName = default;
-            DataFactoryElement<string> bypassBusinessLogicExecution = default;
-            DataFactoryElement<bool> bypassPowerAutomateFlows = default;
+            TeradataImportCommand importSettings = default;
             string type = default;
             DataFactoryElement<int> writeBatchSize = default;
             DataFactoryElement<string> writeBatchTimeout = default;
@@ -108,45 +87,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("writeBehavior"u8))
-                {
-                    writeBehavior = new DynamicsSinkWriteBehavior(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("ignoreNullValues"u8))
+                if (property.NameEquals("importSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ignoreNullValues = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("alternateKeyName"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    alternateKeyName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("bypassBusinessLogicExecution"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    bypassBusinessLogicExecution = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("bypassPowerAutomateFlows"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    bypassPowerAutomateFlows = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    importSettings = TeradataImportCommand.DeserializeTeradataImportCommand(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -211,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DynamicsSink(
+            return new TeradataSink(
                 type,
                 writeBatchSize,
                 writeBatchTimeout,
@@ -220,42 +167,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 maxConcurrentConnections,
                 disableMetricsCollection,
                 additionalProperties,
-                writeBehavior,
-                ignoreNullValues,
-                alternateKeyName,
-                bypassBusinessLogicExecution,
-                bypassPowerAutomateFlows);
+                importSettings);
         }
 
-        BinaryData IPersistableModel<DynamicsSink>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TeradataSink>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DynamicsSink>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TeradataSink>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DynamicsSink)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TeradataSink)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DynamicsSink IPersistableModel<DynamicsSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TeradataSink IPersistableModel<TeradataSink>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DynamicsSink>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TeradataSink>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDynamicsSink(document.RootElement, options);
+                        return DeserializeTeradataSink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynamicsSink)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TeradataSink)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DynamicsSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TeradataSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
