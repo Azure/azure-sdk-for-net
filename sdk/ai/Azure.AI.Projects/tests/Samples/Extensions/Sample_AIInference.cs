@@ -57,4 +57,22 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
             Console.WriteLine($"Index: {item.Index}, Embedding: <{string.Join(", ", embedding)}>");
         }
     }
+
+    [Test]
+    public void ThrowsWhenNoConnection()
+    {
+        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        AIProjectClient client = new AIProjectClient(connectionString);
+
+        var ex = Assert.Throws<InvalidOperationException>(() =>
+        {
+            ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
+        });
+
+        Assert.AreEqual(
+            $"No connections found for '{ConnectionType.Serverless}'. At least one connection is required. Please add a new connection in the Azure AI Foundry portal by following the instructions here: https://aka.ms/azsdk/azure-ai-projects/how-to/connections-add",
+            ex.Message);
+        Console.WriteLine(ex.Message);
+    }
 }
