@@ -302,6 +302,54 @@ namespace Azure.Search.Documents.Indexes
                 throw;
             }
         }
+
+        /// <summary>
+        /// Retrieves a summary of statistics for all indexes in the search service.
+        /// </summary>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response{T}"/> from the server containing <see cref="ListIndexStatsSummary"/>.</returns>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        public virtual Response<ListIndexStatsSummary> GetIndexStatsSummary(
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexStatsSummary)}");
+            scope.Start();
+            try
+            {
+                return ServiceClient.GetIndexStatsSummary(
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a summary of statistics for all indexes in the search service.
+        /// </summary>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response{T}"/> from the server containing <see cref="ListIndexStatsSummary"/>.</returns>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        public virtual async Task<Response<ListIndexStatsSummary>> GetIndexStatsSummaryAsync(
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexStatsSummary)}");
+            scope.Start();
+            try
+            {
+                return await ServiceClient.GetIndexStatsSummaryAsync(
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         #endregion
 
         #region Index operations
