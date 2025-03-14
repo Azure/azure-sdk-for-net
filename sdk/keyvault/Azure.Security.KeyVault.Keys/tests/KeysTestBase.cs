@@ -18,7 +18,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         KeyClientOptions.ServiceVersion.V7_3,
         KeyClientOptions.ServiceVersion.V7_2,
         KeyClientOptions.ServiceVersion.V7_1,
-        KeyClientOptions.ServiceVersion.V7_0)]
+        KeyClientOptions.ServiceVersion.V7_0,
+        KeyClientOptions.ServiceVersion.V7_6_Preview_2)]
     [IgnoreServiceError(
         409,
         "Conflict",
