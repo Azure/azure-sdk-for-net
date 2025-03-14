@@ -5,6 +5,7 @@
 ### Features Added
 
 * Added `ConnectionProvider` abstraction in `AIProjectClient` to enable seamless connectivity with Azure OpenAI, Inference, and Search SDKs.
+* Added `CognitiveService` connection type.
 * Added support for URL citations with the `MessageTextUrlCitationAnnotation` class. `MessageTextContent` objects now can possibly have `Annotations` populated in order to provide information on URL citations.
 
 ### Breaking Changes
