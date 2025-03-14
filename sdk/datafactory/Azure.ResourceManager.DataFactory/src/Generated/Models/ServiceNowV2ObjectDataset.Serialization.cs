@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             DatasetFolder folder = default;
             DataFactoryElement<string> tableName = default;
-            ValueType? valueType = default;
+            DatasetSourceValueType? valueType = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            valueType = new ValueType(property0.Value.GetString());
+                            valueType = new DatasetSourceValueType(property0.Value.GetString());
                             continue;
                         }
                     }

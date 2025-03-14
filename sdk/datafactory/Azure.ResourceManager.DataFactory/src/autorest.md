@@ -125,6 +125,7 @@ rename-mapping:
   DatasetSchemaDataElement.name: SchemaColumnName
   DatasetSchemaDataElement.type: SchemaColumnType
   DatasetCompression.type: DatasetCompressionType
+  ValueType: DatasetSourceValueType
   DayOfWeek: DataFactoryDayOfWeek
   DaysOfWeek: DataFactoryDayOfWeek
   DelimitedTextDataset.typeProperties.location: DataLocation
@@ -335,9 +336,4 @@ directive:
     where: $.definitions
     transform: >
       delete $.FactoryIdentity.properties.userAssignedIdentities;
-  # This change is used to prevent name conflicts within the model, where the previous `pwd` property has been renamed to `Password`.
-  - from: LinkedService.json
-    where: $.definitions
-    transform: >
-      $.GreenplumLinkedServiceTypeProperties.properties.password['x-ms-client-name'] = 'PasswordV2';
 ```

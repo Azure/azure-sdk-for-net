@@ -4820,6 +4820,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.DatasetSchemaDataElement>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.DatasetSchemaDataElement>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DatasetSourceValueType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DatasetSourceValueType(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType Actual { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType Display { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType left, Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType left, Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public abstract partial class DatasetStorageFormat : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat>
     {
         protected DatasetStorageFormat() { }
@@ -10957,7 +10975,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public ServiceNowV2ObjectDataset(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName) : base (default(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference)) { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> TableName { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.ValueType? ValueType { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType? ValueType { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.ServiceNowV2ObjectDataset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.ServiceNowV2ObjectDataset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.ServiceNowV2ObjectDataset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -12593,24 +12611,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         Azure.ResourceManager.DataFactory.Models.ValidationActivity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.ValidationActivity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.ValidationActivity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.ValidationActivity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ValueType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.ValueType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ValueType(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.ValueType Actual { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.ValueType Display { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataFactory.Models.ValueType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.ValueType left, Azure.ResourceManager.DataFactory.Models.ValueType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataFactory.Models.ValueType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.ValueType left, Azure.ResourceManager.DataFactory.Models.ValueType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class VerticaLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.VerticaLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.VerticaLinkedService>
     {
