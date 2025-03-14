@@ -1,0 +1,129 @@
+{
+    "identity": {
+        "type": "UserAssigned",
+        "userAssignedIdentities": { "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/E2E-RBAC-MSI": {} }
+    },
+    "type": "microsoft.workloads/sapvirtualinstances",
+    "tags": { "Testing": "Install" },
+    "location": "eastus2euap",
+    "properties": {
+        "environment": "NonProd",
+        "sapProduct": "S4HANA",
+        "configuration": {
+            "configurationType": "DeploymentWithOSConfig",
+            "appLocation": "eastus",
+            "infrastructureConfiguration": {
+                "deploymentType": "ThreeTier",
+                "highAvailabilityConfig": { "highAvailabilityType": "AvailabilityZone" },
+                "appResourceGroup": "sdk-testing-vis",
+                "storageConfiguration": { "transportFileShareConfiguration": { "configurationType": "CreateAndMount" } },
+                "centralServer": {
+                    "subnetId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
+                    "virtualMachineConfiguration": {
+                        "vmSize": "Standard_E4ds_v4",
+                        "imageReference": {
+                            "sku": "84sapha-gen2",
+                            "publisher": "RedHat",
+                            "version": "latest",
+                            "offer": "RHEL-SAP-HA"
+                        },
+                        "osProfile": {
+                            "adminUsername": "username",
+                            "adminPassword": "password",
+                            "osConfiguration": {
+                                "osType": "Linux",
+                                "disablePasswordAuthentication": true,
+                                "sshKeyPair": {
+                                    "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDPasKQ7pRBFzDsyM3y8UiH+ZvhDeGzqUsuTPktiz/YJeufmgjWnKqYTuZX/tLhSAtX/imG9dBDCLEe5bxLtOn1m2i1vRCfsh2NxNqVxSl2GRXTnsC9Ehw5PHqXQhxSHNItDD1K6vKlydVw7DhmJgkl+1Og7WPdxeO/D6YQr1ogmaQHoK2A0AJyH9HXGbNtIiFUuPers8sKhzYztPSZCO9EZvYTB7quNSa7usgv6CByiJ2MOre/RuLaE7B7lRKhysjeIn1M+fQ3xKxW9cXsJhAHTgbqO2peydz5TLpP0S9XuIna0O5pQEXFgUnfdX/W6NT94Vl/Cqs8obSfQntZ/QmGvr1Qb27ZBSQ24eIsYDfr1mI423TuXwUr+1AEvaSCapgRBnDaV3nBzk9qp1kIIGWRGpaz6qb3ahYpDGP+A8lABy19rBk+/Kmfb9N8qkUK7kdNytHeusKoR0kzhW8xpctCnd/13oN3gXbps0Tx8O2E5w7n+BIDNodxEGxzdYD1hh0= generated-by-azure",
+                                    "privateKey": "Sanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized"
+                                }
+                            }
+                        }
+                    },
+                    "instanceCount": 2
+                },
+                "applicationServer": {
+                    "subnetId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
+                    "virtualMachineConfiguration": {
+                        "vmSize": "Standard_E4ds_v4",
+                        "imageReference": {
+                            "sku": "84sapha-gen2",
+                            "publisher": "RedHat",
+                            "version": "latest",
+                            "offer": "RHEL-SAP-HA"
+                        },
+                        "osProfile": {
+                            "adminUsername": "username",
+                            "adminPassword": "password",
+                            "osConfiguration": {
+                                "osType": "Linux",
+                                "disablePasswordAuthentication": true,
+                                "sshKeyPair": {
+                                    "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDPasKQ7pRBFzDsyM3y8UiH+ZvhDeGzqUsuTPktiz/YJeufmgjWnKqYTuZX/tLhSAtX/imG9dBDCLEe5bxLtOn1m2i1vRCfsh2NxNqVxSl2GRXTnsC9Ehw5PHqXQhxSHNItDD1K6vKlydVw7DhmJgkl+1Og7WPdxeO/D6YQr1ogmaQHoK2A0AJyH9HXGbNtIiFUuPers8sKhzYztPSZCO9EZvYTB7quNSa7usgv6CByiJ2MOre/RuLaE7B7lRKhysjeIn1M+fQ3xKxW9cXsJhAHTgbqO2peydz5TLpP0S9XuIna0O5pQEXFgUnfdX/W6NT94Vl/Cqs8obSfQntZ/QmGvr1Qb27ZBSQ24eIsYDfr1mI423TuXwUr+1AEvaSCapgRBnDaV3nBzk9qp1kIIGWRGpaz6qb3ahYpDGP+A8lABy19rBk+/Kmfb9N8qkUK7kdNytHeusKoR0kzhW8xpctCnd/13oN3gXbps0Tx8O2E5w7n+BIDNodxEGxzdYD1hh0= generated-by-azure",
+                                    "privateKey": "Sanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized"
+                                }
+                            }
+                        }
+                    },
+                    "instanceCount": 2
+                },
+                "databaseServer": {
+                    "databaseType": "HANA",
+                    "subnetId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet-db",
+                    "virtualMachineConfiguration": {
+                        "vmSize": "Standard_E32ds_v4",
+                        "imageReference": {
+                            "sku": "84sapha-gen2",
+                            "publisher": "RedHat",
+                            "version": "latest",
+                            "offer": "RHEL-SAP-HA"
+                        },
+                        "osProfile": {
+                            "adminUsername": "username",
+                            "adminPassword": "password",
+                            "osConfiguration": {
+                                "osType": "Linux",
+                                "disablePasswordAuthentication": true,
+                                "sshKeyPair": {
+                                    "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDPasKQ7pRBFzDsyM3y8UiH+ZvhDeGzqUsuTPktiz/YJeufmgjWnKqYTuZX/tLhSAtX/imG9dBDCLEe5bxLtOn1m2i1vRCfsh2NxNqVxSl2GRXTnsC9Ehw5PHqXQhxSHNItDD1K6vKlydVw7DhmJgkl+1Og7WPdxeO/D6YQr1ogmaQHoK2A0AJyH9HXGbNtIiFUuPers8sKhzYztPSZCO9EZvYTB7quNSa7usgv6CByiJ2MOre/RuLaE7B7lRKhysjeIn1M+fQ3xKxW9cXsJhAHTgbqO2peydz5TLpP0S9XuIna0O5pQEXFgUnfdX/W6NT94Vl/Cqs8obSfQntZ/QmGvr1Qb27ZBSQ24eIsYDfr1mI423TuXwUr+1AEvaSCapgRBnDaV3nBzk9qp1kIIGWRGpaz6qb3ahYpDGP+A8lABy19rBk+/Kmfb9N8qkUK7kdNytHeusKoR0kzhW8xpctCnd/13oN3gXbps0Tx8O2E5w7n+BIDNodxEGxzdYD1hh0= generated-by-azure",
+                                    "privateKey": "Sanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized"
+                                }
+                            }
+                        }
+                    },
+                    "dbDiskConfiguration": {
+                        "diskVolumeConfigurations": {
+                            "hana/data": {
+                                "sku": { "name": "Premium_LRS" },
+                                "sizeGB": 128,
+                                "count": 4
+                            },
+                            "hana/log": {
+                                "sku": { "name": "Premium_LRS" },
+                                "sizeGB": 128,
+                                "count": 3
+                            },
+                            "hana/shared": {
+                                "sku": { "name": "Premium_LRS" },
+                                "sizeGB": 256,
+                                "count": 1
+                            },
+                            "usr/sap": {
+                                "sku": { "name": "Premium_LRS" },
+                                "sizeGB": 128,
+                                "count": 1
+                            },
+                            "os": {
+                                "sku": { "name": "Premium_LRS" },
+                                "sizeGB": 64,
+                                "count": 1
+                            }
+                        }
+                    },
+                    "instanceCount": 2
+                }
+            },
+            "osSapConfiguration": { "sapFqdn": "sap.bpaas.com" }
+        }
+    }
+}
