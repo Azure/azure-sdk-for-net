@@ -722,7 +722,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 protected override object CreateInstance() => new Dictionary<string, AvailabilitySetData>();
 
                 protected override void AddKeyValuePair(object collection, string key, object item)
-                    => AssertCollection<Dictionary<string, AvailabilitySetData>>(collection).Add(AssertKey(key), AssertItem<AvailabilitySetData>(item));
+                    => AssertCollection<Dictionary<string, AvailabilitySetData>>(collection).Add(key, AssertItem<AvailabilitySetData>(item));
 
                 protected override object CreateElementInstance()
                     => _libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
@@ -844,7 +844,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 protected override object CreateInstance() => new Dictionary<string, SubType>();
 
                 protected override void AddKeyValuePair(object collection, string key, object item)
-                    => AssertCollection<Dictionary<string, SubType>>(collection).Add(AssertKey(key), AssertItem<SubType>(item));
+                    => AssertCollection<Dictionary<string, SubType>>(collection).Add(key, AssertItem<SubType>(item));
 
                 protected override object CreateElementInstance() => new SubType();
             }

@@ -52,7 +52,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override object CreateInstance() => ImmutableSortedDictionary<string, AvailabilitySetData>.Empty.ToBuilder();
 
                 protected override void AddKeyValuePair(object collection, string key, object item)
-                    => AssertCollection<ImmutableSortedDictionary<string, AvailabilitySetData>.Builder>(collection).Add(AssertKey(key), AssertItem<AvailabilitySetData>(item));
+                    => AssertCollection<ImmutableSortedDictionary<string, AvailabilitySetData>.Builder>(collection).Add(key, AssertItem<AvailabilitySetData>(item));
 
                 protected override object CreateElementInstance()
                     => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();

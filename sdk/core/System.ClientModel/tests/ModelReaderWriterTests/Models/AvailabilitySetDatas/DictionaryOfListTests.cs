@@ -55,7 +55,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override object CreateInstance() => new Dictionary<string, List<AvailabilitySetData>>();
 
                 protected override void AddKeyValuePair(object collection, string key, object item)
-                    => AssertCollection<Dictionary<string, List<AvailabilitySetData>>>(collection).Add(AssertKey(key), AssertItem<List<AvailabilitySetData>>(item));
+                    => AssertCollection<Dictionary<string, List<AvailabilitySetData>>>(collection).Add(key, AssertItem<List<AvailabilitySetData>>(item));
 
                 protected override object CreateElementInstance()
                     => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();

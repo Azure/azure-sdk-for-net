@@ -69,7 +69,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
                 protected override object CreateInstance() => new Dictionary<string, BaseModel>();
 
                 protected override void AddKeyValuePair(object collection, string key, object item)
-                    => AssertCollection<Dictionary<string, BaseModel>>(collection).Add(AssertKey(key), AssertItem<BaseModel>(item));
+                    => AssertCollection<Dictionary<string, BaseModel>>(collection).Add(key, AssertItem<BaseModel>(item));
 
                 protected override object CreateElementInstance()
                     => s_libraryContext.Value.GetModelBuilder(typeof(BaseModel)).CreateObject();

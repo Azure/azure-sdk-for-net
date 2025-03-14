@@ -266,7 +266,7 @@ public static class ModelReaderWriter
         }
 
         var returnObj = context.GetModelBuilder(returnType).CreateObject();
-        if (returnObj is CollectionWrapper builder)
+        if (returnObj is ModelBuilder.CollectionWrapper builder)
         {
             var collectionReader = CollectionReader.GetCollectionReader(builder, options);
             return collectionReader.Read(builder, data, context, options);

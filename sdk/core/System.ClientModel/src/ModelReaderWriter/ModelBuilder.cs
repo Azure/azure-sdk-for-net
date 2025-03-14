@@ -9,18 +9,13 @@ namespace System.ClientModel.Primitives;
 /// <summary>
 /// Provides an interface to create objects without needing reflection.
 /// </summary>
-public abstract class ModelBuilder
+public abstract partial class ModelBuilder
 {
     internal object CreateObject()
     {
         if (IsCollection)
         {
-            return new CollectionWrapper(
-                CreateInstance,
-                ToCollection,
-                AddKeyValuePair,
-                AddItem,
-                CreateElementInstance);
+            return new CollectionWrapper(this);
         }
         else
         {
@@ -93,20 +88,6 @@ public abstract class ModelBuilder
             throw new ArgumentException($"item must be type {typeof(T).Name}", nameof(item));
         }
         return t;
-    }
-
-    /// <summary>
-    /// Asserts the key is not null.
-    /// </summary>
-    /// <param name="key">The key to check.</param>
-    /// <exception cref="ArgumentNullException">When key is null.</exception>
-    protected static string AssertKey(string? key)
-    {
-        if (key is null)
-        {
-            throw new ArgumentNullException(nameof(key));
-        }
-        return key;
     }
 
     /// <summary>

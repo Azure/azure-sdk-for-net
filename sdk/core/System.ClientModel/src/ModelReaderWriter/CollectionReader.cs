@@ -5,7 +5,7 @@ namespace System.ClientModel.Primitives;
 
 internal abstract class CollectionReader
 {
-    internal static CollectionReader GetCollectionReader(CollectionWrapper builder, ModelReaderWriterOptions options)
+    internal static CollectionReader GetCollectionReader(ModelBuilder.CollectionWrapper builder, ModelReaderWriterOptions options)
     {
         //For info on the different formats see the comments in ModelReaderWriterOptions.cs
         if (options.Format != "J" && options.Format != "W")
@@ -33,5 +33,5 @@ internal abstract class CollectionReader
         }
     }
 
-    internal abstract object Read(CollectionWrapper builder, BinaryData data, ModelReaderWriterContext context, ModelReaderWriterOptions options);
+    internal abstract object Read(ModelBuilder.CollectionWrapper builder, BinaryData data, ModelReaderWriterContext context, ModelReaderWriterOptions options);
 }

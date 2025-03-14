@@ -3,45 +3,34 @@
 
 namespace System.ClientModel.Primitives;
 
-internal class CollectionWrapper
+public abstract partial class ModelBuilder
 {
-    private readonly Func<object> _createBuilder;
-    private readonly Func<object, object> _toCollection;
-    private readonly Action<object, string, object> _addKeyValuePair;
-    private readonly Action<object, object> _addItem;
-    private readonly Func<object> _createElement;
-
-    private object? _builder;
-
-    public CollectionWrapper(
-        Func<object> createBuilder,
-        Func<object, object> toCollection,
-        Action<object, string, object> addKeyValuePair,
-        Action<object, object> addItem,
-        Func<object> createElement)
+    internal class CollectionWrapper
     {
-        _createBuilder = createBuilder;
-        _toCollection = toCollection;
-        _addKeyValuePair = addKeyValuePair;
-        _addItem = addItem;
-        _createElement = createElement;
-    }
+        private object? _instance;
+        private ModelBuilder _builder;
 
-    public object Builder => _builder ??= _createBuilder();
-
-    public object ToCollection() => _toCollection(Builder);
-
-    public void AddItem(object item, string? key)
-    {
-        if (key is not null)
+        public CollectionWrapper(ModelBuilder builder)
         {
-            _addKeyValuePair(Builder, key, item);
+            _builder = builder;
         }
-        else
-        {
-            _addItem(Builder, item);
-        }
-    }
 
-    public object CreateElement() => _createElement();
+        public object Builder => _instance ??= _builder.CreateObject();
+
+        public object ToCollection() => _builder.ToCollection(Builder);
+
+        public void AddItem(object item, string? key)
+        {
+            if (key is not null)
+            {
+                _builder.AddKeyValuePair(Builder, key, item);
+            }
+            else
+            {
+                _builder.AddItem(Builder, item);
+            }
+        }
+
+        public object CreateElement() => _builder.CreateElementInstance();
+    }
 }

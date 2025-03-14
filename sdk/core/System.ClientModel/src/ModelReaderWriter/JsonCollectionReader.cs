@@ -9,7 +9,7 @@ namespace System.ClientModel.Primitives;
 
 internal class JsonCollectionReader : CollectionReader
 {
-    internal override object Read(CollectionWrapper builder, BinaryData data, ModelReaderWriterContext context, ModelReaderWriterOptions options)
+    internal override object Read(ModelBuilder.CollectionWrapper builder, BinaryData data, ModelReaderWriterContext context, ModelReaderWriterOptions options)
     {
         Utf8JsonReader reader = new(data);
         reader.Read();
@@ -30,7 +30,7 @@ internal class JsonCollectionReader : CollectionReader
 
     private static void ReadJsonCollection(
         ref Utf8JsonReader reader,
-        CollectionWrapper collectionBuilder,
+        ModelBuilder.CollectionWrapper collectionBuilder,
         ModelReaderWriterOptions options,
         ModelReaderWriterContext context)
     {
@@ -45,7 +45,7 @@ internal class JsonCollectionReader : CollectionReader
 
         var elementInfo = context.GetModelBuilder(elementType);
         var element = elementInfo.CreateObject();
-        if (element is CollectionWrapper elementBuilder)
+        if (element is ModelBuilder.CollectionWrapper elementBuilder)
         {
             isInnerCollection = true;
             isElementDictionary = elementBuilder.Builder is IDictionary;
@@ -68,7 +68,7 @@ internal class JsonCollectionReader : CollectionReader
                     {
                         if (isElementDictionary)
                         {
-                            var dictionaryBuilder = elementInfo.CreateObject() as CollectionWrapper;
+                            var dictionaryBuilder = elementInfo.CreateObject() as ModelBuilder.CollectionWrapper;
                             Debug.Assert(dictionaryBuilder != null);
                             ReadJsonCollection(ref reader, dictionaryBuilder!, options, context);
                             collectionBuilder.AddItem(dictionaryBuilder!.ToCollection(), propertyName);
@@ -90,7 +90,7 @@ internal class JsonCollectionReader : CollectionReader
                         throw new FormatException("Unexpected StartArray found.");
                     }
 
-                    var listBuilder = elementInfo.CreateObject() as CollectionWrapper;
+                    var listBuilder = elementInfo.CreateObject() as ModelBuilder.CollectionWrapper;
                     Debug.Assert(listBuilder != null);
                     ReadJsonCollection(ref reader, listBuilder!, options, context);
                     collectionBuilder.AddItem(listBuilder!.ToCollection(), propertyName);
