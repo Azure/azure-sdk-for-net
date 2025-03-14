@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
