@@ -17,6 +17,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: fabric
+    ArtifactName: packages
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Fabric
