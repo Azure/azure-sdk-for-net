@@ -834,6 +834,9 @@
 # PRLabel: %Service Bus %Functions
 /sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/     @JoshLove-msft @jsquire
 
+# ServiceLabel: %Secret Store Extension
+# ServiceOwners:                                                   @cjoprey @locomotiveviaduct
+
 # ServiceLabel: %Service Bus
 # AzureSdkOwners:                                                  @JoshLove-msft
 # ServiceOwners:                                                   @shankarsama @EldertGrootenboer
