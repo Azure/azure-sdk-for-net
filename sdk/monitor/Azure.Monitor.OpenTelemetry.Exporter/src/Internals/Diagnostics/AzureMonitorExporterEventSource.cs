@@ -443,5 +443,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(43, Message = "Error while adding activity tags as custom property: {0}", Level = EventLevel.Warning)]
         public void ErrorAddingActivityTagsAsCustomProperties(string errorMessage) => WriteEvent(43, errorMessage);
+
+        [NonEvent]
+        public void ConfigureFailed(System.Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ConfigureFailed(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(44, Message = "Failed to configure AzureMonitorExporterOptions using the connection string from environment variables due to an exception: {0}", Level = EventLevel.Error)]
+        public void ConfigureFailed(string exceptionMessage) => WriteEvent(44, exceptionMessage);
     }
 }
