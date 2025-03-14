@@ -83,7 +83,7 @@ public class TransferManagerTests
             jobsProcessor.Object,
             partsProcessor.Object,
             chunksProcessor.Object,
-            default, default, default))
+            default, default, default, default))
         {
             jobsProcessor.VerifyTransferManagerCtorInvocations();
             partsProcessor.VerifyTransferManagerCtorInvocations();
@@ -137,6 +137,7 @@ public class TransferManagerTests
             chunksProcessor,
             jobBuilder,
             checkpointer,
+            default,
             default);
 
         List<TransferOperation> transfers = new();
@@ -260,6 +261,8 @@ public class TransferManagerTests
             chunksProcessor,
             jobBuilder,
             checkpointer,
+            default,
+            default,
             default);
 
         List<(TransferOperation Transfer, int ExpectedPartCount, Mock<StorageResourceContainer> Source, Mock<StorageResourceContainer> Destination)> transfers = new();
@@ -397,6 +400,7 @@ public class TransferManagerTests
             chunksProcessor,
             jobBuilder.Object,
             checkpointer.Object,
+            default,
             default);
 
         TransferOperation transfer = null;
@@ -445,6 +449,7 @@ public class TransferManagerTests
             chunksProcessor,
             jobBuilder,
             checkpointer.Object,
+            default,
             default);
 
         // need to listen to events to get exception that takes place in processing
@@ -508,6 +513,7 @@ public class TransferManagerTests
             chunksProcessor,
             jobBuilder,
             checkpointer.Object,
+            default,
             default);
 
         // need to listen to events to get exception that takes place in processing
@@ -560,6 +566,7 @@ public class TransferManagerTests
             chunksProcessor,
             jobBuilder,
             checkpointer.Object,
+            default,
             default);
 
         // Add jobs on separate Tasks
@@ -586,6 +593,8 @@ public class TransferManagerTests
             chunksProcessor,
             jobBuilder,
             checkpointer,
+            default,
+            default,
             default);
 
         int numFiles = 3;
