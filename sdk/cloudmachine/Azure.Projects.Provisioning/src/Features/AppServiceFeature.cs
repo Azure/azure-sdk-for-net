@@ -18,18 +18,18 @@ public class AppServiceFeature : AzureProjectFeature
         Sku = new AppServiceSkuDescription { Tier = "Free", Name = "F1" };
     }
 
-    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
+    protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         //Add a App Service to the infrastructure.
-        AppServicePlan hostingPlan = new("cm_hosting_plan")
+        AppServicePlan hostingPlan = new("appServicePlan")
         {
             Name = infrastructure.ProjectId,
             Sku = Sku,
             Kind = "app"
         };
-        infrastructure.AddConstruct(hostingPlan);
+        infrastructure.AddConstruct(Id + "_plan", hostingPlan);
 
-        WebSite appService = new("cm_website")
+        WebSite appService = new("appServiceWebsite")
         {
             Name = infrastructure.ProjectId,
             Kind = "app",
@@ -59,8 +59,6 @@ public class AppServiceFeature : AzureProjectFeature
                 ]
             }
         };
-        infrastructure.AddConstruct(appService);
-
-        return appService;
+        infrastructure.AddConstruct(Id, appService);
     }
 }

@@ -4,25 +4,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.ComponentModel;
+using Azure.Core;
 using Azure.Data.AppConfiguration;
 
 namespace Azure.Projects;
 
-/// <summary>
-/// The project client.
-/// </summary>
-public partial class ProjectClient : ConnectionProvider
+internal class AppConfigConnectionProvider : ConnectionProvider
 {
+    private readonly ConfigurationClient _config;
     private readonly ConnectionCollection _connectionCache = new();
+    private readonly TokenCredential _credential;
 
-    /// <summary>
-    /// Retrieves the connection options for a specified client type and instance ID.
-    /// </summary>
-    /// <param name="connectionId"></param>
-    /// <returns></returns>
-    /// <exception cref="Exception"></exception>
-    [EditorBrowsable(EditorBrowsableState.Never)]
+    public AppConfigConnectionProvider(Uri endpoint, TokenCredential credential)
+    {
+        _credential = credential;
+        _config = new(endpoint, _credential);
+    }
+
     public override ClientConnection GetConnection(string connectionId)
     {
         if (_connectionCache.Contains(connectionId))
@@ -42,10 +40,8 @@ public partial class ProjectClient : ConnectionProvider
         throw new Exception("Connection not found");
     }
 
-    /// <summary>
-    /// Rerurns all connections.
-    /// </summary>
-    /// <returns></returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override IEnumerable<ClientConnection> GetAllConnections() => _connectionCache;
+    public override IEnumerable<ClientConnection> GetAllConnections()
+    {
+        throw new NotImplementedException();
+    }
 }

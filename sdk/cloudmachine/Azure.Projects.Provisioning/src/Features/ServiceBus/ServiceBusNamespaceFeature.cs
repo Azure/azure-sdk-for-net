@@ -1,30 +1,38 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using Azure.Projects.Core;
-using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ServiceBus;
 
 namespace Azure.Projects.ServiceBus;
 
-public class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = ServiceBusSkuName.Standard, ServiceBusSkuTier tier = ServiceBusSkuTier.Standard) : AzureProjectFeature
+public class ServiceBusNamespaceFeature : AzureProjectFeature
 {
-    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
+    public ServiceBusNamespaceFeature(string namespaceName)
+    {
+        Name = namespaceName;
+        Sku = ServiceBusSkuName.Standard;
+        Tier = ServiceBusSkuTier.Standard;
+    }
+
+    public string Name { get; }
+    public ServiceBusSkuName Sku { get; }
+    public ServiceBusSkuTier Tier { get; }
+
+    protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         var sb = new ServiceBusNamespace("cm_servicebus")
         {
             Sku = new ServiceBusSku
             {
-                Name = sku,
-                Tier = tier
+                Name = Sku,
+                Tier = Tier
             },
-            Name = name,
+            Name = Name,
         };
-        infrastructure.AddConstruct(sb);
+        infrastructure.AddConstruct(Id, sb);
 
-        infrastructure.AddConstruct(
+        infrastructure.AddConstruct(Id + "_rule",
             new ServiceBusNamespaceAuthorizationRule("cm_servicebus_auth_rule", "2021-11-01")
             {
                 Parent = sb,
@@ -42,7 +50,5 @@ public class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = Ser
             "Azure.Messaging.ServiceBus.ServiceBusClient",
             $"https://{infrastructure.ProjectId}.servicebus.windows.net/"
         );
-
-        return sb;
     }
 }
