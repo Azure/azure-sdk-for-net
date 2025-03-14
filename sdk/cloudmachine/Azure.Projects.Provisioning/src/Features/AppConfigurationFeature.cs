@@ -38,7 +38,7 @@ public class AppConfigurationSettingFeature : AzureProjectFeature
     private string? _bicepIdentifier;
 
     public AppConfigurationSettingFeature(string key, string value)
-        : base($"{typeof(AppConfigurationSettingFeature).Name}_{key}")
+        : base($"{typeof(AppConfigurationSettingFeature).FullName}_{key}")
     {
         Key = key;
         Value = value;
@@ -59,6 +59,8 @@ public class AppConfigurationSettingFeature : AzureProjectFeature
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         FeatureCollection features = infrastructure.Features;
+
+        // TODO: can we add this automatically?
         if (!features.TryGet(out AppConfigurationFeature? appConfiguration))
         {
             throw new InvalidOperationException($"The {nameof(AppConfigurationFeature)} must be added to the infrastructure before adding {nameof(AppConfigurationSettingFeature)}.");

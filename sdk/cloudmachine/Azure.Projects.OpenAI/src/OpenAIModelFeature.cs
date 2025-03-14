@@ -20,7 +20,7 @@ public class OpenAIModelFeature : AzureProjectFeature
     /// <param name="modelVersion"></param>
     /// <param name="kind"></param>
     public OpenAIModelFeature(string model, string modelVersion, AIModelKind kind = AIModelKind.Chat)
-        : base($"{typeof(OpenAIModelFeature).Name}_{model}")
+        : base($"{typeof(OpenAIModelFeature).FullName}_{model}")
     {
         Kind = kind;
         Model = model;
