@@ -24,8 +24,8 @@ The receipt on its own contains only the inclusion proof and the signature. You 
 
 The easiest way is to download the receipt and the signature together which was stored after the submission. The receipt will be added to the unprotected header of the signature.
 
-```C# Snippet:CodeTransparencySample2_GetEntryWithEmbeddedReceipt
-Response<BinaryData> signatureWithReceipt = await client.GetEntryAsync("2.34", true);
+```C# Snippet:CodeTransparencySample2_GetEntryStatement
+Response<BinaryData> signatureWithReceipt = await client.GetEntryStatementAsync("2.34");
 ```
 
 ### Raw receipt
@@ -33,7 +33,7 @@ Response<BinaryData> signatureWithReceipt = await client.GetEntryAsync("2.34", t
 If you have the signature as a separate file already then you can download the raw receipt file.
 
 ```C# Snippet:CodeTransparencySample2_GetRawReceipt
-Response<BinaryData> receipt = await client.GetEntryReceiptAsync("2.34");
+Response<BinaryData> receipt = await client.GetEntryAsync("2.34");
 ```
 
 ## Verify
@@ -46,14 +46,9 @@ The following examples will use a default public key resolver to get the keys fo
 
 When receipt is embedded in the signature then passing just the signature is enough.
 
-```C# Snippet:CodeTransparencySample2_VerifyEntryWithEmbeddedReceipt
-CcfReceiptVerifier.RunVerification(signatureWithReceipt.Value.ToArray());
-```
-
-### Raw receipt
-
-If the receipt is a separate file then it needs to be passed as a second argument next to the signature.
-
-```C# Snippet:CodeTransparencySample2_VerifyEntryAndReceipt
-CcfReceiptVerifier.RunVerification(receipt.Value.ToArray(), signatureBytes);
+```C# Snippet:CodeTransparencySample2_VerifyReceiptAndInputSignedStatement
+// Create a JsonWebKey
+JsonWebKey jsonWebKey = new JsonWebKey(<.....>);
+byte[] inputSignedStatement = readFileBytes("<input_signed_claims");
+CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, signatureWithReceiptBytes, inputSignedStatement);
 ```
