@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricApplicationTypeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceFabricApplicationTypeData.DeserializeServiceFabricApplicationTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricApplicationTypeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceFabricApplicationTypeData.DeserializeServiceFabricApplicationTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricApplicationTypeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceFabricApplicationTypeData.DeserializeServiceFabricApplicationTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricApplicationTypeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceFabricApplicationTypeData.DeserializeServiceFabricApplicationTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricApplicationTypeList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceFabricApplicationTypeList.DeserializeServiceFabricApplicationTypeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricApplicationTypeList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceFabricApplicationTypeList.DeserializeServiceFabricApplicationTypeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricApplicationTypeList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceFabricApplicationTypeList.DeserializeServiceFabricApplicationTypeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case 200:
                     {
                         ServiceFabricApplicationTypeList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceFabricApplicationTypeList.DeserializeServiceFabricApplicationTypeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

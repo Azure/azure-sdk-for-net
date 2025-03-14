@@ -1,5 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "BasicTypeSpec",
-  "library-name": "BasicTypeSpec"
+  "package-name": "BasicTypeSpec"
 }

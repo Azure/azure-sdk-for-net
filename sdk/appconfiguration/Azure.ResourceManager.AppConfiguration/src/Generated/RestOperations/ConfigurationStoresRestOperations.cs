@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         AppConfigurationStoreListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppConfigurationStoreListResult.DeserializeAppConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         AppConfigurationStoreListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppConfigurationStoreListResult.DeserializeAppConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         AppConfigurationStoreListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppConfigurationStoreListResult.DeserializeAppConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         AppConfigurationStoreListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppConfigurationStoreListResult.DeserializeAppConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         AppConfigurationStoreData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppConfigurationStoreData.DeserializeAppConfigurationStoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         AppConfigurationStoreData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppConfigurationStoreData.DeserializeAppConfigurationStoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         AppConfigurationStoreApiKeyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppConfigurationStoreApiKeyListResult.DeserializeAppConfigurationStoreApiKeyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         AppConfigurationStoreApiKeyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppConfigurationStoreApiKeyListResult.DeserializeAppConfigurationStoreApiKeyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         AppConfigurationStoreApiKey value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         AppConfigurationStoreApiKey value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         DeletedConfigurationStoreListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeletedConfigurationStoreListResult.DeserializeDeletedConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         DeletedConfigurationStoreListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeletedConfigurationStoreListResult.DeserializeDeletedConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         DeletedAppConfigurationStoreData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeletedAppConfigurationStoreData.DeserializeDeletedAppConfigurationStoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         DeletedAppConfigurationStoreData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeletedAppConfigurationStoreData.DeserializeDeletedAppConfigurationStoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1091,7 +1091,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         AppConfigurationStoreListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppConfigurationStoreListResult.DeserializeAppConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1119,7 +1119,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         AppConfigurationStoreListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppConfigurationStoreListResult.DeserializeAppConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1171,7 +1171,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         AppConfigurationStoreListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppConfigurationStoreListResult.DeserializeAppConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1201,7 +1201,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         AppConfigurationStoreListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppConfigurationStoreListResult.DeserializeAppConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1255,7 +1255,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         AppConfigurationStoreApiKeyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppConfigurationStoreApiKeyListResult.DeserializeAppConfigurationStoreApiKeyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1287,7 +1287,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         AppConfigurationStoreApiKeyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppConfigurationStoreApiKeyListResult.DeserializeAppConfigurationStoreApiKeyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1336,7 +1336,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         DeletedConfigurationStoreListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeletedConfigurationStoreListResult.DeserializeDeletedConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1363,7 +1363,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case 200:
                     {
                         DeletedConfigurationStoreListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeletedConfigurationStoreListResult.DeserializeDeletedConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

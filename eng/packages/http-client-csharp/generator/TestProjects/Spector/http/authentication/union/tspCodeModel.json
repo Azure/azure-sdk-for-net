@@ -8,6 +8,7 @@
   {
    "$id": "2",
    "Name": "UnionClient",
+   "Namespace": "Authentication.Union",
    "Doc": "Illustrates clients generated with ApiKey and OAuth2 authentication.",
    "Operations": [
     {
@@ -23,13 +24,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/authentication/union/validkey",
      "BufferResponse": true,
@@ -51,13 +50,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/authentication/union/validtoken",
      "BufferResponse": true,
@@ -103,7 +100,8 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Authentication.Union"
   }
  ],
  "Auth": {

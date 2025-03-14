@@ -1,5 +1,27 @@
 # Release History
 
+## 12.24.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.23.0 (2025-03-11)
+
+### Bugs Fixed
+- Fixed bug where in rare cases, a `NullReferenceException` could be thrown when parsing an error response from the service.
+- Fixed bug to ensure that the accumulated disposables within the internal `StorageWriteStream` are disposed properly in the event that an exception is thrown during the disposal process. (#47781)
+- Fixed bug to Redact SAS credentials from Error.SasCredentialRequiresUriWithoutSas message.
+- Fixed bug where LazyLoadingReadOnlyStream overprovisions the default buffer memory for OpenRead
+- Fixed bug where a client created with a connection string with an account name specified (e.g. "AccountName=..;"), the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
+
+### Other Changes
+- Implemented IAsyncDisposable in StorageWriteStream
+
 ## 12.23.0-beta.1 (2025-02-11)
 
 ### Features Added

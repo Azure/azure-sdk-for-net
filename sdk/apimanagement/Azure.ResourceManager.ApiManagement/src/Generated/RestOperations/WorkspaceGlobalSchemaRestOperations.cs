@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         GlobalSchemaListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GlobalSchemaListResult.DeserializeGlobalSchemaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         GlobalSchemaListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GlobalSchemaListResult.DeserializeGlobalSchemaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         ApiManagementGlobalSchemaData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         ApiManagementGlobalSchemaData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         GlobalSchemaListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GlobalSchemaListResult.DeserializeGlobalSchemaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         GlobalSchemaListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GlobalSchemaListResult.DeserializeGlobalSchemaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

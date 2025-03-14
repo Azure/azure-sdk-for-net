@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationJobScheduleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationJobScheduleData.DeserializeAutomationJobScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationJobScheduleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationJobScheduleData.DeserializeAutomationJobScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Automation
                 case 201:
                     {
                         AutomationJobScheduleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationJobScheduleData.DeserializeAutomationJobScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Automation
                 case 201:
                     {
                         AutomationJobScheduleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationJobScheduleData.DeserializeAutomationJobScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationJobScheduleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationJobScheduleListResult.DeserializeAutomationJobScheduleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationJobScheduleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationJobScheduleListResult.DeserializeAutomationJobScheduleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationJobScheduleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationJobScheduleListResult.DeserializeAutomationJobScheduleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationJobScheduleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationJobScheduleListResult.DeserializeAutomationJobScheduleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

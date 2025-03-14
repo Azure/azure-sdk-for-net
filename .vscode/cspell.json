@@ -152,6 +152,7 @@
     "structs",
     "Sysctls",
     "SYSLIB",
+    "Tswtz",
     "Uefi",
     "uints",
     "unbilled",
@@ -1449,7 +1450,8 @@
         "Ename",
         "Evalue",
         "Twilio",
-        "Soql"
+        "Soql",
+        "Tswtz"
       ]
     },
     {

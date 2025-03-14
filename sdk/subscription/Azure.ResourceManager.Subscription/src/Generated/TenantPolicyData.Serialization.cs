@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Subscription
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTenantPolicyData(document.RootElement, options);
                     }
                 default:

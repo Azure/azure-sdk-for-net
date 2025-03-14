@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Text.Authoring;
-using Azure.AI.Language.Text.Authoring.Models;
 using Azure.AI.Language.Text.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -21,21 +20,23 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample11_TextAuthoring_SwapDeploymentsAsync
             string projectName = "LoanAgreements";
-            var swapDetails = new SwapDeploymentsDetails
+            string firstDeploymentName = "DeploymentA";
+            string secondDeploymentName = "DeploymentB";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
+
+            var swapDetails = new TextAuthoringSwapDeploymentsDetails
             (
-                firstDeploymentName: "DeploymentA",
-                secondDeploymentName: "DeploymentB"
+                firstDeploymentName: firstDeploymentName,
+                secondDeploymentName: secondDeploymentName
                 );
 
-            Operation operation = await authoringClient.SwapDeploymentsAsync(
+            Operation operation = await projectClient.SwapDeploymentsAsync(
                 waitUntil: WaitUntil.Completed,
-                projectName: projectName,
-                body: swapDetails
+                details: swapDetails
             );
 
             Console.WriteLine($"Swap operation completed with status: {operation.GetRawResponse().Status}");

@@ -8,11 +8,15 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 7.18.4 (2025-02-11)
+
+### Bugs Fixed
+
 - Fixed an issue with the `AmqpReceiver` class where a drain failure during a `ReceiveMessagesAsync` operation would cause message ordering to be violated. ([#47822](https://github.com/Azure/azure-sdk-for-net/issues/47822))
 
 - Fixed an issue where an error response from the Service Bus administration service without a body was incorrectly parsed, resulting in a null argument exception obscuring the actual failure response. ([#47517](https://github.com/Azure/azure-sdk-for-net/issues/47517))
-
-### Other Changes
 
 ## 7.18.3 (2025-01-17)
 

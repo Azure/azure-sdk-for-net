@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0 (2025-02-12)
+## 1.3.0 (2025-03-27)
 
 ### Features Added
 
@@ -12,6 +12,10 @@
     - Added WorkspaceLinks Operations
     - Added Workspace Api diagnostics Operations
     - Added OperationStatus Operations which follow the Azure-AsyncOperation flow
+
+## 1.3.0-beta.2 (2025-03-11)
+
+### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 

@@ -4,7 +4,7 @@
 using Azure.Generator.Providers;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
-using Microsoft.Generator.CSharp.Primitives;
+using Microsoft.TypeSpec.Generator.Primitives;
 using NUnit.Framework;
 
 namespace Azure.Generator.Tests.Providers

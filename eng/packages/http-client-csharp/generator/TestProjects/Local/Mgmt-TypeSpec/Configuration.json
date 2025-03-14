@@ -1,5 +1,4 @@
 {
   "output-folder": ".",
-  "namespace": "MgmtTypeSpec",
-  "library-name": "MgmtTypeSpec"
+  "package-name": "MgmtTypeSpec"
 }

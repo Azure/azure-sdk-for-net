@@ -3,14 +3,14 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Microsoft.Generator.CSharp.ClientModel.Providers;
-using Microsoft.Generator.CSharp.Expressions;
-using Microsoft.Generator.CSharp.Primitives;
-using Microsoft.Generator.CSharp.Providers;
-using Microsoft.Generator.CSharp.Snippets;
-using Microsoft.Generator.CSharp.Statements;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
 using System.Threading;
-using static Microsoft.Generator.CSharp.Snippets.Snippet;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers.Abstraction
 {

@@ -2,34 +2,33 @@
 
 This sample demonstrates how to load a snapshot for a trained model using the `Azure.AI.Language.Conversations.Authoring` SDK.
 
-## Create an `AuthoringClient`
+## Create a `ConversationAnalysisAuthoringClient`
 
-To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
+To create a `ConversationAnalysisAuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing a `ConversationAnalysisAuthoringClientOptions` instance.
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 ## Load a Snapshot
 
-To load a snapshot for a specific trained model, call LoadSnapshot on the AnalyzeConversationAuthoring client.
+To load a snapshot for a specific trained model, call LoadSnapshot on the `ConversationAuthoringTrainedModel` client. This method initiates the snapshot loading process and provides an operation response that includes the status and metadata about the operation.
 
 ```C# Snippet:Sample10_ConversationsAuthoring_LoadSnapshot
-Operation operation = authoringClient.LoadSnapshot(
-    waitUntil: WaitUntil.Completed,
-    projectName: projectName,
-    trainedModelLabel: trainedModelLabel
+string projectName = "SampleProject";
+string trainedModelLabel = "SampleModel";
+ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
+
+Operation operation = trainedModelClient.LoadSnapshot(
+    waitUntil: WaitUntil.Completed
 );
 
  // Extract the operation-location header
-string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
 Console.WriteLine($"Operation Location: {operationLocation}");
 
 Console.WriteLine($"Snapshot loaded with operation status: {operation.GetRawResponse().Status}");
 ```
-
-To load a snapshot, call LoadSnapshot on the AnalyzeConversationAuthoring client. This method initiates the snapshot loading process and provides an operation response that includes the status and metadata about the operation.

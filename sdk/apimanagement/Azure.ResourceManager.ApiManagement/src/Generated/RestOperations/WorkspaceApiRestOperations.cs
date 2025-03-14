@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         ApiListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApiListResult.DeserializeApiListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         ApiListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApiListResult.DeserializeApiListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         ApiData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApiData.DeserializeApiData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         ApiData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApiData.DeserializeApiData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         ApiData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApiData.DeserializeApiData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         ApiData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApiData.DeserializeApiData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         ApiListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApiListResult.DeserializeApiListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         ApiListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApiListResult.DeserializeApiListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

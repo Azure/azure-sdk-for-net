@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         NamedValueListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NamedValueListResult.DeserializeNamedValueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         NamedValueListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NamedValueListResult.DeserializeNamedValueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         ApiManagementNamedValueData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         ApiManagementNamedValueData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         NamedValueSecretContract value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NamedValueSecretContract.DeserializeNamedValueSecretContract(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         NamedValueSecretContract value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NamedValueSecretContract.DeserializeNamedValueSecretContract(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -994,7 +994,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         NamedValueListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NamedValueListResult.DeserializeNamedValueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1031,7 +1031,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         NamedValueListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NamedValueListResult.DeserializeNamedValueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CosmosDBLocationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CosmosDBLocationListResult.DeserializeCosmosDBLocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CosmosDBLocationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CosmosDBLocationListResult.DeserializeCosmosDBLocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CosmosDBLocationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CosmosDBLocationData.DeserializeCosmosDBLocationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CosmosDBLocationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CosmosDBLocationData.DeserializeCosmosDBLocationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

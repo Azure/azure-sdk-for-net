@@ -712,5 +712,50 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.AreEqual(expectedDepth, newUriBuilder.Sas.DirectoryDepth);
         }
+
+        [RecordedTest]
+        public async Task SasCredentialRequiresUriWithoutSasError_RedactedSasUri()
+        {
+            // Arrange
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+            string directoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
+
+            DataLakeDirectoryClient directory = test.FileSystem.GetDirectoryClient(directoryName);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            // Make a SAS with the DirectoryDepth/sdd
+            DataLakeSasBuilder dataLakeSasBuilder = new(DataLakeSasPermissions.All, Recording.UtcNow.AddHours(1))
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                Path = directoryName,
+                IsDirectory = true
+            };
+
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(test.Container.Uri)
+            {
+                Sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.Container.AccountName)
+            };
+
+            Uri sasUri = uriBuilder.ToUri();
+
+            UriBuilder uriBuilder2 = new UriBuilder(sasUri);
+            uriBuilder2.Query = "[REDACTED]";
+            string redactedUri = uriBuilder2.Uri.ToString();
+
+            ArgumentException ex = Errors.SasCredentialRequiresUriWithoutSas<DataLakeUriBuilder>(sasUri);
+
+            // Assert
+            Assert.IsTrue(ex.Message.Contains(redactedUri));
+            Assert.IsFalse(ex.Message.Contains("st="));
+            Assert.IsFalse(ex.Message.Contains("se="));
+            Assert.IsFalse(ex.Message.Contains("sig="));
+        }
     }
 }

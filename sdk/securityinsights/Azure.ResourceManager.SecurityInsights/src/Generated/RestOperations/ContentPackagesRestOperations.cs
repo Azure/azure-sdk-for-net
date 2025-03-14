@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         PackageList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PackageList.DeserializePackageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         PackageList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PackageList.DeserializePackageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         SecurityInsightsPackageData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityInsightsPackageData.DeserializeSecurityInsightsPackageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         SecurityInsightsPackageData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityInsightsPackageData.DeserializeSecurityInsightsPackageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         PackageList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PackageList.DeserializePackageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         PackageList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PackageList.DeserializePackageList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

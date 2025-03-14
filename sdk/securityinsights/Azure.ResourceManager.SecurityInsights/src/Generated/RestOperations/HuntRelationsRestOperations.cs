@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         HuntRelationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HuntRelationList.DeserializeHuntRelationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         HuntRelationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HuntRelationList.DeserializeHuntRelationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         SecurityInsightsHuntRelationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityInsightsHuntRelationData.DeserializeSecurityInsightsHuntRelationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         SecurityInsightsHuntRelationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityInsightsHuntRelationData.DeserializeSecurityInsightsHuntRelationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 201:
                     {
                         SecurityInsightsHuntRelationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityInsightsHuntRelationData.DeserializeSecurityInsightsHuntRelationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 201:
                     {
                         SecurityInsightsHuntRelationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityInsightsHuntRelationData.DeserializeSecurityInsightsHuntRelationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         HuntRelationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HuntRelationList.DeserializeHuntRelationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                     {
                         HuntRelationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HuntRelationList.DeserializeHuntRelationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
