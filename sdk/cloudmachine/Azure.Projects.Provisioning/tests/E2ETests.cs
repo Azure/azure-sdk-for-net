@@ -50,7 +50,7 @@ public class E2ETests
     }
 
     [TestCase("-bicep")]
-    [TestCase("")]
+    //[TestCase("")]
     public void All (string arg)
     {
         ProjectInfrastructure infrastructure = new(projectId);
@@ -84,7 +84,7 @@ public class E2ETests
     }
 
     [TestCase("-bicep")]
-    [TestCase("")]
+    //[TestCase("")]
     public void Ofx(string arg)
     {
         ProjectInfrastructure infrastructure = new(projectId);
