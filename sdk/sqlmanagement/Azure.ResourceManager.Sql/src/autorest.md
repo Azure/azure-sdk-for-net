@@ -28,8 +28,8 @@ head-as-boolean: false
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug: 
-#  show-serialized-names: true
+mgmt-debug: 
+ show-serialized-names: true
 
 # this is temporary, to be removed when we find the owner of this feature
 operation-groups-to-omit:
@@ -574,10 +574,10 @@ directive:
       transform: >
           $.push('SecuredByPerimeter');
       reason: Align the enum choices to avoid breaking changes of one enum split into two.
-    # - from: ManagedDatabaseVulnerabilityAssessments.json
-    #   where: $.definitions.DatabaseVulnerabilityAssessment
-    #   transform: >
-    #       $['x-ms-client-name'] = 'ManagedDatabaseVulnerabilityAssessment'
+    - from: DatabaseExtensions.json
+      where: $.definitions.NetworkIsolationSettings
+      transform: >
+          $['x-ms-client-name'] = 'DatabaseExtensionNetworkIsolationSettings'
 ```
 
 ### Tag: package-composite-v5-take-2021-stable

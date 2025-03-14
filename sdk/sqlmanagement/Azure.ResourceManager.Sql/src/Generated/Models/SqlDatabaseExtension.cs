@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="maxSizeBytes"> Database max size in bytes for the newly created database in the case of an import operation. </param>
         /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlDatabaseExtension(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatabaseExtensionOperationMode? operationMode, StorageKeyType? storageKeyType, string storageKey, Uri storageUri, string administratorLogin, string administratorLoginPassword, string authenticationType, string databaseEdition, string serviceObjectiveName, string maxSizeBytes, NetworkIsolationSettings networkIsolation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlDatabaseExtension(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatabaseExtensionOperationMode? operationMode, StorageKeyType? storageKeyType, string storageKey, Uri storageUri, string administratorLogin, string administratorLoginPassword, string authenticationType, string databaseEdition, string serviceObjectiveName, string maxSizeBytes, DatabaseExtensionNetworkIsolationSettings networkIsolation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             OperationMode = operationMode;
             StorageKeyType = storageKeyType;
@@ -117,6 +117,6 @@ namespace Azure.ResourceManager.Sql.Models
         public string MaxSizeBytes { get; set; }
         /// <summary> Optional resource information to enable network isolation for request. </summary>
         [WirePath("properties.networkIsolation")]
-        public NetworkIsolationSettings NetworkIsolation { get; set; }
+        public DatabaseExtensionNetworkIsolationSettings NetworkIsolation { get; set; }
     }
 }
