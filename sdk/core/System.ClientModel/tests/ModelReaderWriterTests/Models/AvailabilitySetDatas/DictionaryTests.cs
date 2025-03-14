@@ -22,12 +22,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 { ModelInstances.s_testAs_3376.Name!, ModelInstances.s_testAs_3376 }
             };
 
+#nullable disable
         public class LocalContext : ModelReaderWriterContext
         {
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
-            private Dictionary_AvailabilitySetData_Builder? _dictionary_AvailabilitySetData_Builder;
+            private Dictionary_AvailabilitySetData_Builder _dictionary_AvailabilitySetData_Builder;
 
-            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)
             {
                 builder = type switch
                 {
@@ -37,9 +38,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return builder is not null;
             }
 
-            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder builder))
                     return builder;
                 return null;
             }
@@ -48,7 +49,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
             {
                 protected override Type BuilderType => typeof(Dictionary<string, AvailabilitySetData>);
 
-                protected override Type? ItemType => typeof(AvailabilitySetData);
+                protected override Type ItemType => typeof(AvailabilitySetData);
 
                 protected override bool IsCollection => true;
 
@@ -58,5 +59,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                     => ((Dictionary<string, AvailabilitySetData>)collection).Add(key, (AvailabilitySetData)item);
             }
         }
+#nullable enable
     }
 }

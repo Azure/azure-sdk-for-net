@@ -20,12 +20,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)
             => AvailabilitySetDataTests.CompareAvailabilitySetData(model, model2, format);
 
+#nullable disable
         public class LocalContext : ModelReaderWriterContext
         {
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
-            private List_AvailabilitySetData_Builder? _list_AvailabilitySet_Builder;
+            private List_AvailabilitySetData_Builder _list_AvailabilitySet_Builder;
 
-            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)
             {
                 builder = type switch
                 {
@@ -35,9 +36,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return builder is not null;
             }
 
-            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder builder))
                     return builder;
                 return null;
             }
@@ -46,7 +47,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
             {
                 protected override Type BuilderType => typeof(List<AvailabilitySetData>);
 
-                protected override Type? ItemType => typeof(AvailabilitySetData);
+                protected override Type ItemType => typeof(AvailabilitySetData);
 
                 protected override bool IsCollection => true;
 
@@ -56,5 +57,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                     => ((List<AvailabilitySetData>)collection).Add((AvailabilitySetData)item);
             }
         }
+#nullable enable
     }
 }

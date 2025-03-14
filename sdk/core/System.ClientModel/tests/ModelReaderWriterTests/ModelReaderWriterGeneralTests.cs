@@ -8,7 +8,6 @@ using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 using NUnit.Framework;
@@ -659,27 +658,28 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             }
         }
 
+#nullable disable
         private class LocalContext : ModelReaderWriterContext
         {
             private static readonly Lazy<TestClientModelReaderWriterContext> _libraryContext = new(() => new());
             private static readonly Lazy<Models.AvailabilitySetDatas.ListTests.LocalContext> _availabilitySetData_ListTests_LocalContext = new(() => new());
 
-            private Dictionary_String_SubType_Builder? _dictionary_String_SubType_Builder;
-            private List_List_SubType_Builder? _list_List_SubType_Builder;
-            private List_SubType_Builder? _list_SubType_Builder;
-            private List_Dictionary_String_SubType_Builder? _list_Dictionary_String_SubType_Builder;
-            private SubType_Builder? _subType_Builder;
-            private DoesNotImplementInterface_Builder? _doesNotImplementInterface_Builder;
-            private NonJWire_Builder? _nonJWire_Builder;
-            private PersistableModel_Builder? _persistableModel_Builder;
-            private List_PersistableModel_Builder? _list_PersistableModel_Builder;
-            private List_List_PersistableModel_Builder? _list_List_PersistableModel_Builder;
-            private List_NonJWire_Builder? _list_NonJWire_Builder;
-            private List_List_NonJWire_Builder? _list_List_NonJWire_Builder;
-            private ReadReturnsNull_Builder? _readReturnsNull_Builder;
-            private Dictionary_String_AvailabilitySetData_Builder? _dictionary_String_AvailabilitySetData_Builder;
+            private Dictionary_String_SubType_Builder _dictionary_String_SubType_Builder;
+            private List_List_SubType_Builder _list_List_SubType_Builder;
+            private List_SubType_Builder _list_SubType_Builder;
+            private List_Dictionary_String_SubType_Builder _list_Dictionary_String_SubType_Builder;
+            private SubType_Builder _subType_Builder;
+            private DoesNotImplementInterface_Builder _doesNotImplementInterface_Builder;
+            private NonJWire_Builder _nonJWire_Builder;
+            private PersistableModel_Builder _persistableModel_Builder;
+            private List_PersistableModel_Builder _list_PersistableModel_Builder;
+            private List_List_PersistableModel_Builder _list_List_PersistableModel_Builder;
+            private List_NonJWire_Builder _list_NonJWire_Builder;
+            private List_List_NonJWire_Builder _list_List_NonJWire_Builder;
+            private ReadReturnsNull_Builder _readReturnsNull_Builder;
+            private Dictionary_String_AvailabilitySetData_Builder _dictionary_String_AvailabilitySetData_Builder;
 
-            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)
             {
                 builder = type switch
                 {
@@ -702,9 +702,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 return builder is not null;
             }
 
-            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder GetFromDependencies(Type type)
             {
-                if (_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
+                if (_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder builder))
                 {
                     return builder;
                 }
@@ -719,7 +719,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             {
                 protected override Type BuilderType => typeof(Dictionary<string, AvailabilitySetData>);
 
-                protected override Type? ItemType => typeof(AvailabilitySetData);
+                protected override Type ItemType => typeof(AvailabilitySetData);
 
                 protected override bool IsCollection => true;
 
@@ -740,7 +740,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             {
                 protected override Type BuilderType => typeof(List<List<NonJWire>>);
 
-                protected override Type? ItemType => typeof(List<NonJWire>);
+                protected override Type ItemType => typeof(List<NonJWire>);
 
                 protected override bool IsCollection => true;
 
@@ -754,7 +754,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             {
                 protected override Type BuilderType => typeof(List<NonJWire>);
 
-                protected override Type? ItemType => typeof(NonJWire);
+                protected override Type ItemType => typeof(NonJWire);
 
                 protected override bool IsCollection => true;
 
@@ -768,21 +768,21 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             {
                 protected override Type BuilderType => typeof(List<List<PersistableModel>>);
 
-                protected override Type? ItemType => typeof(List<PersistableModel>);
+                protected override Type ItemType => typeof(List<PersistableModel>);
 
                 protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new List<List<PersistableModel>>();
 
                 protected override void AddItem(object collection, object item)
-                    => ((List<List<PersistableModel>>)collection).Add((List<PersistableModel>)item);
+                    => ((List<List<PersistableModel>>)collection).Add((List<PersistableModel>)item!);
             }
 
             private class List_PersistableModel_Builder : ModelReaderWriterTypeBuilder
             {
                 protected override Type BuilderType => typeof(List<PersistableModel>);
 
-                protected override Type? ItemType => typeof(PersistableModel);
+                protected override Type ItemType => typeof(PersistableModel);
 
                 protected override bool IsCollection => true;
 
@@ -824,7 +824,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             {
                 protected override Type BuilderType => typeof(List<Dictionary<string, SubType>>);
 
-                protected override Type? ItemType => typeof(Dictionary<string, SubType>);
+                protected override Type ItemType => typeof(Dictionary<string, SubType>);
 
                 protected override bool IsCollection => true;
 
@@ -838,7 +838,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             {
                 protected override Type BuilderType => typeof(List<SubType>);
 
-                protected override Type? ItemType => typeof(SubType);
+                protected override Type ItemType => typeof(SubType);
 
                 protected override bool IsCollection => true;
 
@@ -852,7 +852,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             {
                 protected override Type BuilderType => typeof(List<List<SubType>>);
 
-                protected override Type? ItemType => typeof(List<SubType>);
+                protected override Type ItemType => typeof(List<SubType>);
 
                 protected override bool IsCollection => true;
 
@@ -866,7 +866,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             {
                 protected override Type BuilderType => typeof(Dictionary<string, SubType>);
 
-                protected override Type? ItemType => typeof(SubType);
+                protected override Type ItemType => typeof(SubType);
 
                 protected override bool IsCollection => true;
 
@@ -876,5 +876,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                     => ((Dictionary<string, SubType>)collection).Add(key, (SubType)item);
             }
         }
+#nullable enable
     }
 }

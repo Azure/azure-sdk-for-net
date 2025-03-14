@@ -23,12 +23,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 .Add(ModelInstances.s_testAs_3375.Name!, ModelInstances.s_testAs_3375)
                 .Add(ModelInstances.s_testAs_3376.Name!, ModelInstances.s_testAs_3376);
 
+#nullable disable
         public class LocalContext : ModelReaderWriterContext
         {
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
-            private ImmutableDictionary_AvailabilitySetData_Builder? _immutable_dictionary_AvailabilitySetData_Builder;
+            private ImmutableDictionary_AvailabilitySetData_Builder _immutable_dictionary_AvailabilitySetData_Builder;
 
-            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)
             {
                 builder = type switch
                 {
@@ -38,9 +39,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return builder is not null;
             }
 
-            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder builder))
                     return builder;
                 return null;
             }
@@ -49,7 +50,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
             {
                 protected override Type BuilderType => typeof(ImmutableDictionary<string, AvailabilitySetData>.Builder);
 
-                protected override Type? ItemType => typeof(AvailabilitySetData);
+                protected override Type ItemType => typeof(AvailabilitySetData);
 
                 protected override bool IsCollection => true;
 
@@ -62,5 +63,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                     => ((ImmutableDictionary<string, AvailabilitySetData>.Builder)builder).ToImmutable();
             }
         }
+#nullable enable
     }
 }

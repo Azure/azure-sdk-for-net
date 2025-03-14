@@ -67,7 +67,7 @@ public abstract partial class ModelReaderWriterTypeBuilder
     /// </summary>
     /// <param name="collection">Represents the collection to which the item will be added.</param>
     /// <param name="item">Represents the item that will be added to the collection.</param>
-    protected virtual void AddItem(object collection, object item)
+    protected virtual void AddItem(object collection, object? item)
         => Debug.Fail("AddItem should not be called for non-collections types.");
 
     /// <summary>
@@ -76,6 +76,6 @@ public abstract partial class ModelReaderWriterTypeBuilder
     /// <param name="collection">Represents the collection to which the item will be added.</param>
     /// <param name="key">Represents the key under which the item will be added.</param>
     /// <param name="item">Represents the item that will be added to the collection.</param>
-    protected virtual void AddKeyValuePair(object collection, string key, object item)
+    protected virtual void AddKeyValuePair(object collection, string key, object? item)
         => Debug.Fail("AddKeyValuePair should not be called for non-dictionary collections.");
 }

@@ -21,12 +21,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
         protected override ReadOnlyMemory<AvailabilitySetData> GetModelInstance()
             => new ReadOnlyMemory<AvailabilitySetData>([ModelInstances.s_testAs_3375, ModelInstances.s_testAs_3376]);
 
+#nullable disable
         private class LocalContext : ModelReaderWriterContext
         {
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
-            private ReadOnlyMemory_AvailabilitySetData_Builder? _readOnlyMemory_AvailabilitySetData_Builder;
+            private ReadOnlyMemory_AvailabilitySetData_Builder _readOnlyMemory_AvailabilitySetData_Builder;
 
-            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)
             {
                 builder = type switch
                 {
@@ -36,9 +37,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return builder is not null;
             }
 
-            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder builder))
                     return builder;
                 return null;
             }
@@ -47,7 +48,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
             {
                 protected override Type BuilderType => typeof(List<AvailabilitySetData>);
 
-                protected override Type? ItemType => typeof(AvailabilitySetData);
+                protected override Type ItemType => typeof(AvailabilitySetData);
 
                 protected override bool IsCollection => true;
 
@@ -59,7 +60,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override object ToCollection(object builder)
                     => new ReadOnlyMemory<AvailabilitySetData>([.. (List<AvailabilitySetData>)builder]);
 
-                protected internal override IEnumerable? GetItems(object obj)
+                protected internal override IEnumerable GetItems(object obj)
                 {
                     if (obj is ReadOnlyMemory<AvailabilitySetData> rom)
                     {
@@ -72,5 +73,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 }
             }
         }
+#nullable enable
     }
 }

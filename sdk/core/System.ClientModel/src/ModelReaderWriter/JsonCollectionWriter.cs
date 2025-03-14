@@ -20,7 +20,11 @@ internal class JsonCollectionWriter : CollectionWriter
 
     private static void WriteJson(object model, Utf8JsonWriter writer, ModelReaderWriterOptions options)
     {
-        if (model is IJsonModel<object> jsonModel)
+        if (model is null)
+        {
+            writer.WriteNullValue();
+        }
+        else if (model is IJsonModel<object> jsonModel)
         {
             jsonModel.Write(writer, options);
         }

@@ -23,14 +23,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 { "dictionary2", new(){ { ModelInstances.s_testAs_3377.Name!, ModelInstances.s_testAs_3377 }, { ModelInstances.s_testAs_3378.Name!, ModelInstances.s_testAs_3378 } } },
             };
 
+#nullable disable
         private class LocalContext : ModelReaderWriterContext
         {
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
             private static readonly Lazy<DictionaryTests.LocalContext> s_availabilitySetData_DictionaryTests_LocalContext = new(() => new());
 
-            private Dictionary_String_Dictionary_String_AvailabilitySetData_Builder? _dictionary_String_Dictionary_String_AvailabilitySetData_Builder;
+            private Dictionary_String_Dictionary_String_AvailabilitySetData_Builder _dictionary_String_Dictionary_String_AvailabilitySetData_Builder;
 
-            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)
             {
                 builder = type switch
                 {
@@ -40,9 +41,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return builder is not null;
             }
 
-            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder builder))
                     return builder;
                 if (s_availabilitySetData_DictionaryTests_LocalContext.Value.TryGetModelBuilder(type, out builder))
                     return builder;
@@ -53,7 +54,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
             {
                 protected override Type BuilderType => typeof(Dictionary<string, Dictionary<string, AvailabilitySetData>>);
 
-                protected override Type? ItemType => typeof(Dictionary<string, AvailabilitySetData>);
+                protected override Type ItemType => typeof(Dictionary<string, AvailabilitySetData>);
 
                 protected override bool IsCollection => true;
 
@@ -63,5 +64,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                     => ((Dictionary<string, Dictionary<string, AvailabilitySetData>>)collection).Add(key, (Dictionary<string, AvailabilitySetData>)item);
             }
         }
+#nullable enable
     }
 }

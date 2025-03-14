@@ -75,7 +75,7 @@ internal class JsonCollectionReader : CollectionReader
                         }
                         else
                         {
-                            throw new FormatException("Unexpected StartObject found.");
+                            throw new FormatException("Unexpected JsonTokenType.StartObject found.");
                         }
                     }
                     else
@@ -87,7 +87,7 @@ internal class JsonCollectionReader : CollectionReader
                 case JsonTokenType.StartArray:
                     if (!isInnerCollection || isElementDictionary)
                     {
-                        throw new FormatException("Unexpected StartArray found.");
+                        throw new FormatException("Unexpected JsonTokenType.StartArray found.");
                     }
 
                     var listBuilder = elementInfo.CreateObject() as ModelReaderWriterTypeBuilder.CollectionWrapper;
@@ -102,6 +102,9 @@ internal class JsonCollectionReader : CollectionReader
                     break;
                 case JsonTokenType.EndObject:
                     return;
+                case JsonTokenType.Null:
+                    collectionBuilder.AddItem(null, propertyName);
+                    break;
                 default:
                     throw new FormatException($"Unexpected token {reader.TokenType}.");
             }

@@ -52,6 +52,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         internal static void CompareAvailabilitySetData(AvailabilitySetData model, AvailabilitySetData model2, string format)
         {
+            if (model is null)
+            {
+                Assert.IsNull(model2);
+                return;
+            }
+
             Assert.AreEqual(format == "W" ? null : model.Id, model2.Id);
             Assert.AreEqual(model.Location, model2.Location);
             Assert.AreEqual(format == "W" ? null : model.Name, model2.Name);

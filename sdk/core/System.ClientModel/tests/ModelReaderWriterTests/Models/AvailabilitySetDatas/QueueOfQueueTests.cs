@@ -26,14 +26,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)
             => AvailabilitySetDataTests.CompareAvailabilitySetData(model, model2, format);
 
+#nullable disable
         public class LocalContext : ModelReaderWriterContext
         {
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
             private static readonly Lazy<QueueTests.LocalContext> s_availabilitySetData_QueueTests_LocalContext = new(() => new());
 
-            private Queue_Queue_AvailabilitySetData_Builder? _queue_Queue_AvailabilitySetData_Builder;
+            private Queue_Queue_AvailabilitySetData_Builder _queue_Queue_AvailabilitySetData_Builder;
 
-            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)
             {
                 builder = type switch
                 {
@@ -43,9 +44,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return builder is not null;
             }
 
-            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder builder))
                     return builder;
                 if (s_availabilitySetData_QueueTests_LocalContext.Value.TryGetModelBuilder(type, out builder))
                     return builder;
@@ -56,7 +57,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
             {
                 protected override Type BuilderType => typeof(Queue<Queue<AvailabilitySetData>>);
 
-                protected override Type? ItemType => typeof(Queue<AvailabilitySetData>);
+                protected override Type ItemType => typeof(Queue<AvailabilitySetData>);
 
                 protected override bool IsCollection => true;
 
@@ -66,5 +67,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                     => ((Queue<Queue<AvailabilitySetData>>)collection).Enqueue((Queue<AvailabilitySetData>)item);
             }
         }
+#nullable enable
     }
 }

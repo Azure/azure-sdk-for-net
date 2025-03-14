@@ -88,7 +88,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
                 protected override object CreateInstance() => new List<PersistableModel_NullElement>();
 
-                protected override void AddItem(object collection, object item) => throw new NotImplementedException();
+                protected override void AddItem(object collection, object? item) => throw new NotImplementedException();
             }
 
             private class PersistableModel_NonPersistableElement_Builder : ModelReaderWriterTypeBuilder
@@ -108,7 +108,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
                 protected override object CreateInstance() => new List<PersistableModel_NonPersistableElement>();
 
-                protected override void AddItem(object collection, object item) => throw new NotImplementedException();
+                protected override void AddItem(object collection, object? item) => throw new NotImplementedException();
             }
 
             private class DoesNotImplementInterface_Builder : ModelReaderWriterTypeBuilder

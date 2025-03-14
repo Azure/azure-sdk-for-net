@@ -26,14 +26,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)
             => AvailabilitySetDataTests.CompareAvailabilitySetData(model, model2, format);
 
+#nullable disable
         public class LocalContext : ModelReaderWriterContext
         {
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
             private static readonly Lazy<LinkedListTests.LocalContext> s_availabilitySetData_LinkedListTests_LocalContext = new(() => new());
 
-            private LinkedList_LinkedList_AvailabilitySetData_Builder? _linkedList_LinkedList_AvailabilitySetData_Builder;
+            private LinkedList_LinkedList_AvailabilitySetData_Builder _linkedList_LinkedList_AvailabilitySetData_Builder;
 
-            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)
             {
                 builder = type switch
                 {
@@ -43,9 +44,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 return builder is not null;
             }
 
-            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder builder))
                     return builder;
                 if (s_availabilitySetData_LinkedListTests_LocalContext.Value.TryGetModelBuilder(type, out builder))
                     return builder;
@@ -56,7 +57,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
             {
                 protected override Type BuilderType => typeof(LinkedList<LinkedList<AvailabilitySetData>>);
 
-                protected override Type? ItemType => typeof(LinkedList<AvailabilitySetData>);
+                protected override Type ItemType => typeof(LinkedList<AvailabilitySetData>);
 
                 protected override bool IsCollection => true;
 
@@ -66,5 +67,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                     => ((LinkedList<LinkedList<AvailabilitySetData>>)collection).AddLast((LinkedList<AvailabilitySetData>)item);
             }
         }
+#nullable enable
     }
 }

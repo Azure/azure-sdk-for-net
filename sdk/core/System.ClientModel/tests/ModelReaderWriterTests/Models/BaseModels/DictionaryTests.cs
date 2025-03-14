@@ -40,12 +40,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
             }
         }
 
+#nullable disable
         public class LocalContext : ModelReaderWriterContext
         {
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
-            private Dictionary_BaseModel_Builder? _Dictionary_BaseModel_Builder;
+            private Dictionary_BaseModel_Builder _Dictionary_BaseModel_Builder;
 
-            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
+            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)
             {
                 builder = type switch
                 {
@@ -55,9 +56,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
                 return builder is not null;
             }
 
-            private ModelReaderWriterTypeBuilder? GetFromDependencies(Type type)
+            private ModelReaderWriterTypeBuilder GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
+                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder builder))
                     return builder;
                 return null;
             }
@@ -66,7 +67,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
             {
                 protected override Type BuilderType => typeof(Dictionary<string, BaseModel>);
 
-                protected override Type? ItemType => typeof(BaseModel);
+                protected override Type ItemType => typeof(BaseModel);
 
                 protected override bool IsCollection => true;
 
@@ -76,5 +77,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
                     => ((Dictionary<string, BaseModel>)collection).Add(key, (BaseModel)item);
             }
         }
+#nullable enable
     }
 }

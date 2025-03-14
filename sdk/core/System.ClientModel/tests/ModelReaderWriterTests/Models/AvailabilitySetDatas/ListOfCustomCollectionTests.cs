@@ -4,23 +4,19 @@
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using static System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas.CustomCollectionTests;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {
-    public class HashSetOfListTests : MrwCollectionTests<HashSet<List<AvailabilitySetData>>, AvailabilitySetData>
+    public class ListOfCustomCollectionTests : MrwCollectionTests<List<CustomCollection<AvailabilitySetData>>, AvailabilitySetData>
     {
         protected override string GetJsonCollectionType() => "ListOfList";
 
         protected override ModelReaderWriterContext Context => new LocalContext();
 
-        protected override HashSet<List<AvailabilitySetData>> GetModelInstance()
+        protected override List<CustomCollection<AvailabilitySetData>> GetModelInstance()
         {
-            return
-            [
-                new([ModelInstances.s_testAs_3375, ModelInstances.s_testAs_3376]),
-                new([ModelInstances.s_testAs_3377, ModelInstances.s_testAs_3378])
-            ];
+            return [[ModelInstances.s_testAs_3375, ModelInstances.s_testAs_3376], [ModelInstances.s_testAs_3377, ModelInstances.s_testAs_3378]];
         }
 
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)
@@ -30,15 +26,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
         public class LocalContext : ModelReaderWriterContext
         {
             private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
-            private static readonly Lazy<ListTests.LocalContext> s_availabilitySetData_ListTests_LocalContext = new(() => new());
+            private static readonly Lazy<CustomCollectionTests.LocalContext> s_availabilitySetData_CustomCollectionTests_LocalContext = new(() => new());
 
-            private HashSet_List_AvailabilitySetData_Builder _hashSet_List_AvailabilitySetData_Builder;
+            private List_CustomCollection_AvailabilitySetData_Builder _list_customCollection_AvailabilitySet_Builder;
 
             protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)
             {
                 builder = type switch
                 {
-                    Type t when t == typeof(HashSet<List<AvailabilitySetData>>) => _hashSet_List_AvailabilitySetData_Builder ??= new(),
+                    Type t when t == typeof(List<CustomCollection<AvailabilitySetData>>) => _list_customCollection_AvailabilitySet_Builder ??= new(),
                     _ => GetFromDependencies(type)
                 };
                 return builder is not null;
@@ -48,23 +44,23 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
             {
                 if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder builder))
                     return builder;
-                if (s_availabilitySetData_ListTests_LocalContext.Value.TryGetModelBuilder(type, out builder))
+                if (s_availabilitySetData_CustomCollectionTests_LocalContext.Value.TryGetModelBuilder(type, out builder))
                     return builder;
                 return null;
             }
 
-            private class HashSet_List_AvailabilitySetData_Builder : ModelReaderWriterTypeBuilder
+            private class List_CustomCollection_AvailabilitySetData_Builder : ModelReaderWriterTypeBuilder
             {
-                protected override Type BuilderType => typeof(HashSet<List<AvailabilitySetData>>);
+                protected override Type BuilderType => typeof(List<CustomCollection<AvailabilitySetData>>);
 
-                protected override Type ItemType => typeof(List<AvailabilitySetData>);
+                protected override Type ItemType => typeof(CustomCollection<AvailabilitySetData>);
 
                 protected override bool IsCollection => true;
 
-                protected override object CreateInstance() => new HashSet<List<AvailabilitySetData>>();
+                protected override object CreateInstance() => new List<CustomCollection<AvailabilitySetData>>();
 
                 protected override void AddItem(object collection, object item)
-                    => ((HashSet<List<AvailabilitySetData>>)collection).Add((List<AvailabilitySetData>)item);
+                    => ((List<CustomCollection<AvailabilitySetData>>)collection).Add((CustomCollection<AvailabilitySetData>)item);
             }
         }
 #nullable enable
