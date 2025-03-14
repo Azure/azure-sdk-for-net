@@ -1417,7 +1417,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new SubscriptionIsAllowedToCreateJobValidationResult(DataBoxValidationInputDiscriminator.ValidateSubscriptionIsAllowedToCreateJob, error, serializedAdditionalRawData: null, status);
         }
 
-        /// <summary> Initializes a new instance of DataBoxJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DataBox.DataBoxJobData" />. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1452,7 +1452,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return DataBoxJobData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, transferType: transferType, isCancellable: isCancellable, isDeletable: isDeletable, isShippingAddressEditable: isShippingAddressEditable, reverseShippingDetailsUpdate: reverseShippingDetailsUpdate, reverseTransportPreferenceUpdate: reverseTransportPreferenceUpdate, isPrepareToShipEnabled: isPrepareToShipEnabled, status: status, delayedStage: default, startOn: startOn, error: error, details: details, cancellationReason: cancellationReason, deliveryType: deliveryType, deliveryInfoScheduledOn: deliveryInfoScheduledOn, isCancellableWithoutFee: isCancellableWithoutFee, areAllDevicesLost: default, sku: sku, identity: identity);
         }
 
-        /// <summary> Initializes a new instance of DataBoxJobStage. </summary>
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DataBox.Models.DataBoxJobStage" />. </summary>
         /// <param name="stageName"> Name of the job stage. </param>
         /// <param name="displayName"> Display name of the job stage. </param>
         /// <param name="stageStatus"> Status of the job stage. </param>
@@ -1465,7 +1465,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return DataBoxJobStage(stageName: stageName, displayName: displayName, stageStatus: stageStatus, stageTime: stageTime, jobStageDetails: jobStageDetails, delayInformation: default);
         }
 
-        /// <summary> Initializes a new instance of DataBoxSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DataBox.Models.DataBoxSkuCapacity" />. </summary>
         /// <param name="usable"> Usable capacity in TB. </param>
         /// <param name="maximum"> Maximum capacity in TB. </param>
         /// <returns> A new <see cref="T:Azure.ResourceManager.DataBox.Models.DataBoxSkuCapacity" /> instance for mocking. </returns>
@@ -1475,7 +1475,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return DataBoxSkuCapacity(usable: usable, maximum: maximum, individualSkuUsable: default);
         }
 
-        /// <summary> Initializes a new instance of RegionConfigurationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DataBox.Models.RegionConfigurationResult" />. </summary>
         /// <param name="scheduleAvailabilityResponseAvailableDates"> Schedule availability for given sku in a region. </param>
         /// <param name="transportAvailabilityDetails"> Transport options available for given sku in a region. </param>
         /// <param name="dataCenterAddressResponse">
