@@ -31,7 +31,6 @@ export async function createEmitterTestHost(): Promise<TestHost> {
 
 export interface TypeSpecCompileOptions {
   IsNamespaceNeeded?: boolean;
-  IsAzureCoreNeeded?: boolean;
   IsTCGCNeeded?: boolean;
   IsXmlNeeded?: boolean;
   AuthDecorator?: string;
@@ -43,7 +42,6 @@ export async function typeSpecCompile(
   options?: TypeSpecCompileOptions,
 ) {
   const needNamespaces = options?.IsNamespaceNeeded ?? true;
-  const needAzureCore = options?.IsAzureCoreNeeded ?? false;
   const needTCGC = options?.IsTCGCNeeded ?? false;
   const needXml = options?.IsXmlNeeded ?? false;
   const authDecorator =
@@ -51,14 +49,14 @@ export async function typeSpecCompile(
   const namespace = `
     @versioned(Versions)
     ${authDecorator}
-    @service({
+    @service(#{
       title: "Azure Csharp emitter Testing",
     })
 
     namespace Azure.Csharp.Testing;
 
     enum Versions {
-    ${needAzureCore ? "@useDependency(Azure.Core.Versions.v1_0_Preview_1)" : ""}
+    ${"@useDependency(Azure.Core.Versions.v1_0_Preview_1)"}
     "2023-01-01-preview"
     }
     
@@ -68,13 +66,13 @@ export async function typeSpecCompile(
     import "@typespec/http";
     import "@typespec/versioning";
     ${needXml ? 'import  "@typespec/xml";' : ""}
-    ${needAzureCore ? 'import "@azure-tools/typespec-azure-core";' : ""}
+    ${'import "@azure-tools/typespec-azure-core";'}
     ${needTCGC ? 'import "@azure-tools/typespec-client-generator-core";' : ""}
     using TypeSpec.Rest; 
     using TypeSpec.Http;
     using TypeSpec.Versioning;
     ${needXml ? "using TypeSpec.Xml;" : ""}
-    ${needAzureCore ? "using Azure.Core;\nusing Azure.Core.Traits;" : ""}
+    ${"using Azure.Core;\nusing Azure.Core.Traits;"}
     ${needTCGC ? "using Azure.ClientGenerator.Core;" : ""}
     
     ${needNamespaces ? namespace : ""}
@@ -119,6 +117,7 @@ export async function createCSharpSdkContext(
     ...context,
     logger: new Logger(program.program, LoggerLevel.INFO),
     __typeCache: {
+      crossLanguageDefinitionIds: new Map(),
       types: new Map(),
       models: new Map(),
       enums: new Map(),

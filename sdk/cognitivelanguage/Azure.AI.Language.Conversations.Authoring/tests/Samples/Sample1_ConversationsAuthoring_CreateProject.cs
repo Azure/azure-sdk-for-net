@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample1_ConversationsAuthoring_CreateProject
             string projectName = "MyNewProject";
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
-            CreateProjectDetails projectData = new CreateProjectDetails(
+            ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
                   projectKind: "Conversation",
                   language: "en-us"
                 )

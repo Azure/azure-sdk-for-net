@@ -2,18 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
+using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Messaging.EventGrid;
 using Azure.Messaging.EventGrid.SystemEvents;
-using Azure.Core;
+using Azure.Messaging.ServiceBus;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Messaging.ServiceBus;
 using ContentType = Azure.Core.ContentType;
-using System.ComponentModel;
-using System.ClientModel.Primitives;
 
 namespace Azure.Projects;
 

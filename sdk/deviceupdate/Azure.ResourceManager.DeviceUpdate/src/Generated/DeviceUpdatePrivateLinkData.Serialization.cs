@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeviceUpdatePrivateLinkData(document.RootElement, options);
                     }
                 default:

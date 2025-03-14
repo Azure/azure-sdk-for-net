@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncAgentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncAgentData.DeserializeSyncAgentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncAgentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncAgentData.DeserializeSyncAgentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncAgentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncAgentListResult.DeserializeSyncAgentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncAgentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncAgentListResult.DeserializeSyncAgentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncAgentKeyProperties value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncAgentKeyProperties.DeserializeSyncAgentKeyProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncAgentKeyProperties value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncAgentKeyProperties.DeserializeSyncAgentKeyProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncAgentLinkedDatabaseListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncAgentLinkedDatabaseListResult.DeserializeSyncAgentLinkedDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncAgentLinkedDatabaseListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncAgentLinkedDatabaseListResult.DeserializeSyncAgentLinkedDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncAgentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncAgentListResult.DeserializeSyncAgentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncAgentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncAgentListResult.DeserializeSyncAgentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncAgentLinkedDatabaseListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncAgentLinkedDatabaseListResult.DeserializeSyncAgentLinkedDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncAgentLinkedDatabaseListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncAgentLinkedDatabaseListResult.DeserializeSyncAgentLinkedDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

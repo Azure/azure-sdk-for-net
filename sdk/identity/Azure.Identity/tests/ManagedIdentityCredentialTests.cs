@@ -551,7 +551,16 @@ namespace Azure.Identity.Tests
             var mockTransport = new MockTransport(response);
             var options = new TokenCredentialOptions() { Transport = mockTransport };
 
-            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(new ResourceIdentifier(_expectedResourceId), options));
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(
+                new ManagedIdentityClient(
+                    new ManagedIdentityClientOptions()
+                    {
+                        Pipeline = CredentialPipeline.GetInstance(options),
+                        ManagedIdentityId = ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(_expectedResourceId)),
+                        IsForceRefreshEnabled = true,
+                        Options = options
+                    })
+            ));
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -1180,6 +1189,40 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(ExpectedToken, actualToken.Token);
 
             Assert.That(messages, Does.Contain(expectedMessage));
+        }
+
+        [NonParallelizable]
+        [Test]
+        public async Task VerifyImdsRequestWithCAEMockAsync()
+        {
+            string caeClaims = """{"access_token":{"nbf":{"essential":true, "value":"1724337680"}}}""";
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            var mockTransport = new MockTransport(_ => CreateMockResponse(200, Guid.NewGuid().ToString()));
+            var options = new TokenCredentialOptions { Transport = mockTransport };
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(
+                new ManagedIdentityClient(
+                    new ManagedIdentityClientOptions()
+                    {
+                        Pipeline = CredentialPipeline.GetInstance(options),
+                        ManagedIdentityId = ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(_expectedResourceId)),
+                        IsForceRefreshEnabled = false,
+                        Options = options
+                    })
+            ));
+
+            AccessToken tokenWithoutCAE1 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            AccessToken tokenWithoutCAE2 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            AccessToken tokenWithCAE1 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isCaeEnabled: true, claims: caeClaims));
+            AccessToken tokenWithoutCAE3 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            // TokenWithoutCAE1 and TokenWithoutCAE2 should be the same since subsequent calls to GetTokenAsync should return the same token if no claims were provided
+            Assert.AreEqual(tokenWithoutCAE2.Token, tokenWithoutCAE1.Token);
+            // TokenWithCAE1 and TokenWithoutCAE3 should be the same since subsequent calls to GetTokenAsync should return the same token if no claims were provided.
+            Assert.AreEqual(tokenWithoutCAE3.Token, tokenWithCAE1.Token);
+            // TokenWithCAE1 and TokenWithoutCAE1 should be different since the first token was requested with claims.
+            Assert.AreNotEqual(tokenWithCAE1.Token, tokenWithoutCAE1.Token);
         }
 
         private static IEnumerable<TestCaseData> ResourceAndClientIds()

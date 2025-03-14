@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.TrustedSigning
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTrustedSigningCertificateProfileData(document.RootElement, options);
                     }
                 default:

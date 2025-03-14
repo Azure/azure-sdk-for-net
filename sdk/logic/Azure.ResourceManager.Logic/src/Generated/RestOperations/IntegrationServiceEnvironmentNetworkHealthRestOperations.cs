@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IReadOnlyDictionary<string, IntegrationServiceEnvironmentSubnetNetworkHealth> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         Dictionary<string, IntegrationServiceEnvironmentSubnetNetworkHealth> dictionary = new Dictionary<string, IntegrationServiceEnvironmentSubnetNetworkHealth>();
                         foreach (var property in document.RootElement.EnumerateObject())
                         {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IReadOnlyDictionary<string, IntegrationServiceEnvironmentSubnetNetworkHealth> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         Dictionary<string, IntegrationServiceEnvironmentSubnetNetworkHealth> dictionary = new Dictionary<string, IntegrationServiceEnvironmentSubnetNetworkHealth>();
                         foreach (var property in document.RootElement.EnumerateObject())
                         {

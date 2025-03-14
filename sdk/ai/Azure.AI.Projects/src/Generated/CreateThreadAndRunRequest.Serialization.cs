@@ -35,7 +35,7 @@ namespace Azure.AI.Projects
             }
 
             writer.WritePropertyName("assistant_id"u8);
-            writer.WriteStringValue(AssistantId);
+            writer.WriteStringValue(AgentId);
             if (Optional.IsDefined(Thread))
             {
                 writer.WritePropertyName("thread"u8);
@@ -167,7 +167,7 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ToolChoice);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(ToolChoice))
+                    using (JsonDocument document = JsonDocument.Parse(ToolChoice, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -186,7 +186,7 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ResponseFormat);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(ResponseFormat))
+                    using (JsonDocument document = JsonDocument.Parse(ResponseFormat, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -228,7 +228,7 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -484,7 +484,7 @@ namespace Azure.AI.Projects
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCreateThreadAndRunRequest(document.RootElement, options);
                     }
                 default:
@@ -498,7 +498,7 @@ namespace Azure.AI.Projects
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static CreateThreadAndRunRequest FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCreateThreadAndRunRequest(document.RootElement);
         }
 

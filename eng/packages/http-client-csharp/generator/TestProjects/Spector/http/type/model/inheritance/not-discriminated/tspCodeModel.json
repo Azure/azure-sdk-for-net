@@ -8,7 +8,7 @@
    "$id": "2",
    "kind": "model",
    "name": "Siamese",
-   "clientNamespace": "Type.Model.Inheritance.NotDiscriminated",
+   "namespace": "Type.Model.Inheritance.NotDiscriminated",
    "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Siamese",
    "usage": "Input,Output,Json",
    "doc": "The third level model in the normal multiple levels inheritance.",
@@ -17,7 +17,7 @@
     "$id": "3",
     "kind": "model",
     "name": "Cat",
-    "clientNamespace": "Type.Model.Inheritance.NotDiscriminated",
+    "namespace": "Type.Model.Inheritance.NotDiscriminated",
     "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Cat",
     "usage": "Input,Output,Json",
     "doc": "The second level model in the normal multiple levels inheritance.",
@@ -26,7 +26,7 @@
      "$id": "4",
      "kind": "model",
      "name": "Pet",
-     "clientNamespace": "Type.Model.Inheritance.NotDiscriminated",
+     "namespace": "Type.Model.Inheritance.NotDiscriminated",
      "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Pet",
      "usage": "Input,Output,Json",
      "doc": "This is base model for not-discriminated normal multiple levels inheritance.",
@@ -129,7 +129,7 @@
   {
    "$id": "17",
    "Name": "NotDiscriminatedClient",
-   "ClientNamespace": "Type.Model.Inheritance.NotDiscriminated",
+   "Namespace": "Type.Model.Inheritance.NotDiscriminated",
    "Doc": "Illustrates not-discriminated inheritance model.",
    "Operations": [
     {
@@ -190,13 +190,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/model/inheritance/not-discriminated/valid",
      "RequestMediaTypes": [
@@ -251,7 +249,6 @@
        "BodyType": {
         "$ref": "2"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -260,7 +257,6 @@
       }
      ],
      "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/type/model/inheritance/not-discriminated/valid",
      "BufferResponse": true,
@@ -357,7 +353,6 @@
        "BodyType": {
         "$ref": "2"
        },
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false,
        "ContentTypes": [
@@ -366,7 +361,6 @@
       }
      ],
      "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/type/model/inheritance/not-discriminated/valid",
      "RequestMediaTypes": [
@@ -415,7 +409,8 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated"
   }
  ]
 }

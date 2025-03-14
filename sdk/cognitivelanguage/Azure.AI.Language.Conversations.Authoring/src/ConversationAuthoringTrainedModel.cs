@@ -20,8 +20,8 @@ namespace Azure.AI.Language.Conversations.Authoring
     [CodeGenSuppress("GetLoadSnapshotStatus", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetModelEvaluationResultsAsync", typeof(string), typeof(string), typeof(StringIndexType), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
     [CodeGenSuppress("GetModelEvaluationResults", typeof(string), typeof(string), typeof(StringIndexType), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("EvaluateModelAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(EvaluationDetails), typeof(CancellationToken))]
-    [CodeGenSuppress("EvaluateModel", typeof(WaitUntil), typeof(string), typeof(string), typeof(EvaluationDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("EvaluateModelAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(ConversationAuthoringEvaluationDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("EvaluateModel", typeof(WaitUntil), typeof(string), typeof(string), typeof(ConversationAuthoringEvaluationDetails), typeof(CancellationToken))]
     [CodeGenSuppress("DeleteTrainedModelAsync", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("DeleteTrainedModel", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("LoadSnapshotAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(RequestContext))]
@@ -73,7 +73,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Gets the details of a trained model. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ProjectTrainedModel>> GetTrainedModelAsync(
+        public virtual async Task<Response<ConversationAuthoringProjectTrainedModel>> GetTrainedModelAsync(
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -81,12 +81,12 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTrainedModelAsync(context).ConfigureAwait(false);
-            return Response.FromValue(ProjectTrainedModel.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringProjectTrainedModel.FromResponse(response), response);
         }
 
         /// <summary> Gets the details of a trained model. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ProjectTrainedModel> GetTrainedModel(
+        public virtual Response<ConversationAuthoringProjectTrainedModel> GetTrainedModel(
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -94,13 +94,13 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTrainedModel(context);
-            return Response.FromValue(ProjectTrainedModel.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringProjectTrainedModel.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for an evaluation job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EvaluationOperationState>> GetEvaluationStatusAsync(
+        public virtual async Task<Response<ConversationAuthoringEvaluationState>> GetEvaluationStatusAsync(
             string jobId,
             CancellationToken cancellationToken = default)
         {
@@ -110,13 +110,13 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetEvaluationStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(EvaluationOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringEvaluationState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for an evaluation job. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EvaluationOperationState> GetEvaluationStatus(
+        public virtual Response<ConversationAuthoringEvaluationState> GetEvaluationStatus(
             string jobId,
             CancellationToken cancellationToken = default)
         {
@@ -126,12 +126,12 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetEvaluationStatus(jobId, context);
-            return Response.FromValue(EvaluationOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringEvaluationState.FromResponse(response), response);
         }
 
         /// <summary> Gets the evaluation summary of a trained model. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EvaluationSummary>> GetModelEvaluationSummaryAsync(
+        public virtual async Task<Response<ConversationAuthoringEvalSummary>> GetModelEvaluationSummaryAsync(
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -139,12 +139,12 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetModelEvaluationSummaryAsync(context).ConfigureAwait(false);
-            return Response.FromValue(EvaluationSummary.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringEvalSummary.FromResponse(response), response);
         }
 
         /// <summary> Gets the evaluation summary of a trained model. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EvaluationSummary> GetModelEvaluationSummary(
+        public virtual Response<ConversationAuthoringEvalSummary> GetModelEvaluationSummary(
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -152,13 +152,13 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetModelEvaluationSummary(context);
-            return Response.FromValue(EvaluationSummary.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringEvalSummary.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for loading a snapshot. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LoadSnapshotOperationState>> GetLoadSnapshotStatusAsync(
+        public virtual async Task<Response<ConversationAuthoringLoadSnapshotState>> GetLoadSnapshotStatusAsync(
             string jobId,
             CancellationToken cancellationToken = default)
         {
@@ -168,13 +168,13 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetLoadSnapshotStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(LoadSnapshotOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringLoadSnapshotState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for loading a snapshot. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LoadSnapshotOperationState> GetLoadSnapshotStatus(
+        public virtual Response<ConversationAuthoringLoadSnapshotState> GetLoadSnapshotStatus(
             string jobId,
             CancellationToken cancellationToken = default)
         {
@@ -184,7 +184,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetLoadSnapshotStatus(jobId, context);
-            return Response.FromValue(LoadSnapshotOperationState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringLoadSnapshotState.FromResponse(response), response);
         }
 
         /// <summary> Gets the detailed results of the evaluation for a trained model. </summary>
@@ -235,9 +235,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="details"> The training input parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Operation<EvaluationJobResult>> EvaluateModelAsync(
+        public virtual async Task<Operation<ConversationAuthoringEvaluationJobResult>> EvaluateModelAsync(
             WaitUntil waitUntil,
-            EvaluationDetails details,
+            ConversationAuthoringEvaluationDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -247,16 +247,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await EvaluateModelAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchEvaluationJobResultFromEvaluationOperationState, ClientDiagnostics, "ConversationAuthoringTrainedModel.EvaluateModel");
+            return ProtocolOperationHelpers.Convert(response, FetchConversationAuthoringEvaluationJobResultFromConversationAuthoringEvaluationState, ClientDiagnostics, "ConversationAuthoringTrainedModel.EvaluateModel");
         }
 
         /// <summary> Triggers evaluation operation on a trained model. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="details"> The training input parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Operation<EvaluationJobResult> EvaluateModel(
+        public virtual Operation<ConversationAuthoringEvaluationJobResult> EvaluateModel(
             WaitUntil waitUntil,
-            EvaluationDetails details,
+            ConversationAuthoringEvaluationDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
@@ -266,7 +266,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = EvaluateModel(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, FetchEvaluationJobResultFromEvaluationOperationState, ClientDiagnostics, "ConversationAuthoringTrainedModel.EvaluateModel");
+            return ProtocolOperationHelpers.Convert(response, FetchConversationAuthoringEvaluationJobResultFromConversationAuthoringEvaluationState, ClientDiagnostics, "ConversationAuthoringTrainedModel.EvaluateModel");
         }
 
         /// <summary> Deletes a trained model. </summary>
@@ -703,7 +703,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="EvaluateModelAsync(WaitUntil,EvaluationDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="EvaluateModelAsync(WaitUntil,ConversationAuthoringEvaluationDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -743,7 +743,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="EvaluateModel(WaitUntil,EvaluationDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="EvaluateModel(WaitUntil,ConversationAuthoringEvaluationDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

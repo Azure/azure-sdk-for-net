@@ -45,7 +45,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
         AgentsClient agentClient = projectClient.GetAgentsClient();
 
         Response<Agent> agentResponse = await agentClient.CreateAgentAsync(
-           model: "gpt-4-1106-preview",
+           model: "gpt-4",
            name: "my-assistant",
            instructions: "You are a helpful assistant.",
            tools: new List<ToolDefinition> { new AzureAISearchToolDefinition() },

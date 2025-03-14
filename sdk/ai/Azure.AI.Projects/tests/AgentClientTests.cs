@@ -99,7 +99,7 @@ namespace Azure.AI.Projects.Tests
             if (argType == ArgumentType.Metadata)
             {
                 Response<Agent> agentResponse = await client.UpdateAgentAsync(
-                assistantId: agent.Id,
+                agentId: agent.Id,
                 model: "gpt-4",
                 name: AGENT_NAME2,
                 instructions: "You are helpful assistant."
@@ -371,7 +371,7 @@ namespace Azure.AI.Projects.Tests
                 Response<ThreadRun> resResp = await client.GetRunAsync(thread.Id, GetFieldFromJson(rawRun.Content, "id"));
                 result = resResp.Value;
             }
-            Assert.AreEqual(agent.Id, result.AssistantId);
+            Assert.AreEqual(agent.Id, result.AgentId);
             Assert.AreEqual(thread.Id, result.ThreadId);
             //  Check run status
             result = await WaitForRun(client, result);
@@ -403,7 +403,7 @@ namespace Azure.AI.Projects.Tests
             if (argType == ArgumentType.Metadata)
             {
                 result = await client.CreateThreadAndRunAsync(
-                    assistantId: agent.Id,
+                    agentId: agent.Id,
                     thread: threadOp,
                     metadata: new Dictionary<string, string> {
                             { "key1", "value1"},
@@ -437,7 +437,7 @@ namespace Azure.AI.Projects.Tests
                     GetFieldFromJson(rawRun.Content, "thread_id"),
                     GetFieldFromJson(rawRun.Content, "id"));
             }
-            Assert.AreEqual(agent.Id, result.AssistantId);
+            Assert.AreEqual(agent.Id, result.AgentId);
             //  Check run status
             result = await WaitForRun(client, result);
             Response<PageableList<ThreadMessage>> msgResp = await client.GetMessagesAsync(result.ThreadId);
@@ -552,7 +552,7 @@ namespace Azure.AI.Projects.Tests
                     content: "Tell me the favourite word of Mike?"
                 ));
                 toolRun = await client.CreateThreadAndRunAsync(
-                    assistantId: agent.Id,
+                    agentId: agent.Id,
                     thread: threadOp,
                     parallelToolCalls: parallelToolCalls
                 );
@@ -563,7 +563,7 @@ namespace Azure.AI.Projects.Tests
                 await client.CreateMessageAsync(thread.Id, MessageRole.User, "Tell me the favourite word of Mike?");
                 toolRun = await client.CreateRunAsync(
                     threadId: thread.Id,
-                    assistantId: agent.Id,
+                    agentId: agent.Id,
                     parallelToolCalls: parallelToolCalls
                 );
             }
@@ -613,7 +613,7 @@ namespace Azure.AI.Projects.Tests
                 || toolRun.Status == RunStatus.InProgress
                 || toolRun.Status == RunStatus.RequiresAction);
             Assert.True(functionCalled);
-            Assert.AreEqual(toolRun.Status, RunStatus.Completed);
+            Assert.AreEqual(RunStatus.Completed, toolRun.Status, message: toolRun.LastError?.Message);
             PageableList<ThreadMessage> messages = await client.GetMessagesAsync(toolRun.ThreadId, toolRun.Id);
             Assert.Greater(messages.Data.Count, 1);
             Assert.AreEqual(parallelToolCalls, toolRun.ParallelToolCalls);
@@ -721,7 +721,7 @@ namespace Azure.AI.Projects.Tests
             else
             {
                 fileSearchRun = await client.CreateThreadAndRunAsync(
-                    assistantId: agent.Id,
+                    agentId: agent.Id,
                     thread: threadOp
                 );
                 fileSearchRun = await WaitForRun(client, fileSearchRun);
@@ -1258,7 +1258,7 @@ namespace Azure.AI.Projects.Tests
             while (run.Status == RunStatus.Queued
                 || run.Status == RunStatus.InProgress
                 || run.Status == RunStatus.RequiresAction);
-            Assert.AreEqual(RunStatus.Completed, run.Status, message: run.LastError?.ToString());
+            Assert.AreEqual(RunStatus.Completed, run.Status, message: run.LastError?.Message?.ToString());
             return run;
         }
 

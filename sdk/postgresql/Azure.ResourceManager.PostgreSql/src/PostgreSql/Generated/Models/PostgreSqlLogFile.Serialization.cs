@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePostgreSqlLogFile(document.RootElement, options);
                     }
                 default:

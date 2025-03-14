@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountSessionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountSessionListResult.DeserializeIntegrationAccountSessionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountSessionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountSessionListResult.DeserializeIntegrationAccountSessionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountSessionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountSessionData.DeserializeIntegrationAccountSessionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountSessionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountSessionData.DeserializeIntegrationAccountSessionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Logic
                 case 201:
                     {
                         IntegrationAccountSessionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountSessionData.DeserializeIntegrationAccountSessionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Logic
                 case 201:
                     {
                         IntegrationAccountSessionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountSessionData.DeserializeIntegrationAccountSessionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountSessionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationAccountSessionListResult.DeserializeIntegrationAccountSessionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationAccountSessionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationAccountSessionListResult.DeserializeIntegrationAccountSessionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
