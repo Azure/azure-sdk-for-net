@@ -102,7 +102,7 @@ namespace Azure.Security.KeyVault.Certificates
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual CertificateOperation StartCreateCertificate(string certificateName, CertificatePolicy policy, bool? enabled, IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            return StartCreateCertificate(certificateName, policy, enabled, tags, preserveCertOrder: null, cancellationToken);
+            return StartCreateCertificate(certificateName, policy, enabled, tags, preserveCertificateOrder: null, cancellationToken);
         }
 
         /// <summary>
@@ -116,18 +116,18 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="policy">The <see cref="CertificatePolicy"/> which governs the properties and lifecycle of the created certificate.</param>
         /// <param name="enabled">Specifies whether the certificate should be created in an enabled state. If null, the server default will be used.</param>
         /// <param name="tags">Tags to be applied to the created certificate.</param>
-        /// <param name="preserveCertOrder">Specifies whether the certificate chain preserves its original order. The default value is false, which sets the leaf certificate at index 0.</param>
+        /// <param name="preserveCertificateOrder">Specifies whether the certificate chain preserves its original order. The default value is false, which sets the leaf certificate at index 0.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="CertificateOperation"/> which contains details on the create operation, and can be used to retrieve updated status.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> or <paramref name="policy"/> is null.</exception>
         [CallerShouldAudit(CallerShouldAuditReason)]
-        public virtual CertificateOperation StartCreateCertificate(string certificateName, CertificatePolicy policy, bool? enabled = default, IDictionary<string, string> tags = default, bool? preserveCertOrder = default, CancellationToken cancellationToken = default)
+        public virtual CertificateOperation StartCreateCertificate(string certificateName, CertificatePolicy policy, bool? enabled = default, IDictionary<string, string> tags = default, bool? preserveCertificateOrder = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(policy, nameof(policy));
 
-            var parameters = new CertificateCreateParameters(policy, enabled, tags, preserveCertOrder);
+            var parameters = new CertificateCreateParameters(policy, enabled, tags, preserveCertificateOrder);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartCreateCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
@@ -165,7 +165,7 @@ namespace Azure.Security.KeyVault.Certificates
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<CertificateOperation> StartCreateCertificateAsync(string certificateName, CertificatePolicy policy, bool? enabled, IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            return await StartCreateCertificateAsync(certificateName, policy, enabled, tags, preserveCertOrder: null, cancellationToken).ConfigureAwait(false);
+            return await StartCreateCertificateAsync(certificateName, policy, enabled, tags, preserveCertificateOrder: null, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -179,18 +179,18 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="policy">The <see cref="CertificatePolicy"/> which governs the properties and lifecycle of the created certificate.</param>
         /// <param name="enabled">Specifies whether the certificate should be created in an enabled state. If null, the server default will be used.</param>
         /// <param name="tags">Tags to be applied to the created certificate.</param>
-        /// <param name="preserveCertOrder">Specifies whether the certificate chain preserves its original order. The default value is false, which sets the leaf certificate at index 0.</param>
+        /// <param name="preserveCertificateOrder">Specifies whether the certificate chain preserves its original order. The default value is false, which sets the leaf certificate at index 0.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="CertificateOperation"/> which contains details on the create operation, and can be used to retrieve updated status.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> or <paramref name="policy"/> is null.</exception>
         [CallerShouldAudit(CallerShouldAuditReason)]
-        public virtual async Task<CertificateOperation> StartCreateCertificateAsync(string certificateName, CertificatePolicy policy, bool? enabled = default, IDictionary<string, string> tags = default, bool? preserveCertOrder = default, CancellationToken cancellationToken = default)
+        public virtual async Task<CertificateOperation> StartCreateCertificateAsync(string certificateName, CertificatePolicy policy, bool? enabled = default, IDictionary<string, string> tags = default, bool? preserveCertificateOrder = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(policy, nameof(policy));
 
-            var parameters = new CertificateCreateParameters(policy, enabled, tags, preserveCertOrder);
+            var parameters = new CertificateCreateParameters(policy, enabled, tags, preserveCertificateOrder);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartCreateCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);

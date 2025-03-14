@@ -1142,7 +1142,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 policy,
                 enabled: true,
                 tags: tags,
-                preserveCertOrder: preserveOrder);
+                preserveCertificateOrder: preserveOrder);
 
             Assert.That(operation, Is.Not.Null);
             Assert.That(operation.Properties.Name, Is.EqualTo(certName));
@@ -1150,9 +1150,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             KeyVaultCertificateWithPolicy cert = await operation.WaitForCompletionAsync();
 
             Assert.That(cert, Is.Not.Null);
-            Assert.That(cert.Name, Is.EqualTo(certName));
+            Assert.AreEqual(cert.Name, certName);
             Assert.That(cert.Properties.Enabled, Is.True);
             Assert.That(cert.Properties.Tags, Is.EquivalentTo(tags));
+            Assert.AreEqual(cert.PreserveCertificateOrder, preserveOrder, "Certificate should preserve the certificate order");
         }
 
         [RecordedTest]
@@ -1169,7 +1170,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                     ContentType = CertificateContentType.Pem,
                     Exportable = true
                 },
-                PreserveCertOrder = preserveOrder
+                PreserveCertificateOrder = preserveOrder
             };
 
             KeyVaultCertificateWithPolicy cert =  await client.ImportCertificateAsync(importOptions);
@@ -1177,7 +1178,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.NotNull(cert.Cer, "Certificate should have a cer");
             Assert.AreEqual(certName, cert.Name, "Certificate name should match the expected name");
             Assert.IsTrue(cert.Properties.Enabled, "Certificate should be enabled");
-            Assert.IsTrue(cert.PreserveCertOrder, "Certificate should preserve the certificate order");
+            Assert.AreEqual(cert.PreserveCertificateOrder, preserveOrder, "Certificate should preserve the certificate order");
         }
     }
 }

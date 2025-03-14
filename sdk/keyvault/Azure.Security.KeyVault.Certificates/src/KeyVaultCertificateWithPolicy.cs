@@ -11,7 +11,7 @@ namespace Azure.Security.KeyVault.Certificates
     public class KeyVaultCertificateWithPolicy : KeyVaultCertificate
     {
         private const string PolicyPropertyName = "policy";
-        private const string PreserveCertOrderPropertyName = "preserveCertOrder";
+        private const string PreserveCertificateOrderPropertyName = "preserveCertOrder";
 
         internal KeyVaultCertificateWithPolicy(CertificateProperties properties = null) : base(properties)
         {
@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// Gets a value indicating whether the certificate chain preserves its original order.
         /// The default value is false, which sets the leaf certificate at index 0.
         /// </summary>
-        public bool? PreserveCertOrder { get; internal set; }
+        public bool? PreserveCertificateOrder { get; internal set; }
 
         internal override void ReadProperty(JsonProperty prop)
         {
@@ -37,8 +37,8 @@ namespace Azure.Security.KeyVault.Certificates
                     ((IJsonDeserializable)Policy).ReadProperties(prop.Value);
                     break;
 
-                case PreserveCertOrderPropertyName:
-                    PreserveCertOrder = prop.Value.GetBoolean();
+                case PreserveCertificateOrderPropertyName:
+                    PreserveCertificateOrder = prop.Value.GetBoolean();
                     break;
 
                 default:

@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- New `preserveCertOrder` option when creating and importing certificates. It can be set as an optional paremeter in `StartCreateCertificate`, as an option in `ImportCertificateOptions`, and it can be retrieved from certificates of type `KeyVaultCertificateWithPolicy`
+- New `preserveCertificateOrder` option when creating and importing certificates. It can be set as an optional paremeter in `StartCreateCertificate`, as an option in `ImportCertificateOptions`, and it can be retrieved from certificates of type `KeyVaultCertificateWithPolicy`
 
 ### Breaking Changes
 
