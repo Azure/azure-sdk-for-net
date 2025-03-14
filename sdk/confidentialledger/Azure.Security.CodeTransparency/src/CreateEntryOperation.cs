@@ -77,17 +77,17 @@ namespace Azure.Security.CodeTransparency
                 response.Status != (int)HttpStatusCode.Accepted)
             {
                 RequestFailedException ex = new(response);
-                return OperationState.Failure(response, new RequestFailedException($"Operation status check failed. 3 OperationId '{Id}'", ex));
+                return OperationState.Failure(response, new RequestFailedException($"Operation status check failed. OperationId '{Id}'", ex));
             }
 
-            string status = string.Empty;
-
-            // The content of the response is null when the operation is still running.
-            if (response.Content == null)
+            // The content of the response may be empty if we check the OprationStatus immediately after submitting an entry
+            if (response.Content == null || response.Content.ToArray().Length == 0)
             {
                 RequestFailedException ex = new(response);
                 return OperationState.Pending(response);
             }
+
+            string status = string.Empty;
 
             // Read GetOperation Cbor response
             CborReader cborReader = new(response.Content);
@@ -107,7 +107,7 @@ namespace Azure.Security.CodeTransparency
             if (!Enum.TryParse(status, true, out OperationStatus parsedStatus))
             {
                 RequestFailedException ex = new(response);
-                return OperationState.Failure(response, new RequestFailedException($"Operation status check failed. 1 OperationId '{Id}'", ex));
+                return OperationState.Failure(response, new RequestFailedException($"Operation status check failed. OperationId '{Id}'", ex));
             }
             else
             {

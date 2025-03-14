@@ -152,7 +152,7 @@ namespace Azure.Security.CodeTransparency.Tests
             byte[] inputSignedStatement = readFileBytes("input_signed_claims");
             byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
             #region Snippet:CodeTransparencyVerification
-#if !SNIPPET
+#if SNIPPET
             client.RunTransparentStatementVerification(transparentStatementBytes, inputSignedStatement);
 #endif
             #endregion
