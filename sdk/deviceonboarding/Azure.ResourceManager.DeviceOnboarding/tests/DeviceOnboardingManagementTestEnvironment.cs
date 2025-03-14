@@ -3,7 +3,7 @@
 
 using Azure.Core.TestFramework;
 
-namespace deviceonboarding.Tests
+namespace Azure.ResourceManager.DeviceOnboarding.Tests
 {
     public class DeviceOnboardingManagementTestEnvironment : TestEnvironment
     {

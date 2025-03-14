@@ -20,5 +20,5 @@ extends:
     ServiceDirectory: deviceonboarding
     LimitForPullRequest: true
     Artifacts:
-    - name: deviceonboarding
-      safeName: deviceonboarding
+    - name: Azure.ResourceManager.DeviceOnboarding
+      safeName: AzureResourceManagerDeviceOnboarding
