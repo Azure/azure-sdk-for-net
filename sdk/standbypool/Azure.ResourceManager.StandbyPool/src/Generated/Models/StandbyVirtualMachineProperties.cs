@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineProperties"/>. </summary>
         /// <param name="virtualMachineResourceId"> Resource id of the virtual machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineResourceId"/> is null. </exception>
-        internal StandbyVirtualMachineProperties(ResourceIdentifier virtualMachineResourceId)
+        public StandbyVirtualMachineProperties(ResourceIdentifier virtualMachineResourceId)
         {
             Argument.AssertNotNull(virtualMachineResourceId, nameof(virtualMachineResourceId));
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         }
 
         /// <summary> Resource id of the virtual machine. </summary>
-        public ResourceIdentifier VirtualMachineResourceId { get; }
+        public ResourceIdentifier VirtualMachineResourceId { get; set; }
         /// <summary> The status of the last operation. </summary>
         public StandbyProvisioningState? ProvisioningState { get; }
     }

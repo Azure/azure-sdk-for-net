@@ -33,63 +33,6 @@ namespace Azure.ResourceManager.StandbyPool
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StandbyVirtualMachinePoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StandbyVirtualMachinePoolResource.CreateResourceIdentifier" /> to create a <see cref="StandbyVirtualMachinePoolResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableStandbyPoolArmClient.GetStandbyVirtualMachinePoolResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StandbyVirtualMachinePoolResource"/> object. </returns>
-        public static StandbyVirtualMachinePoolResource GetStandbyVirtualMachinePoolResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableStandbyPoolArmClient(client).GetStandbyVirtualMachinePoolResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StandbyVirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StandbyVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="StandbyVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableStandbyPoolArmClient.GetStandbyVirtualMachineResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StandbyVirtualMachineResource"/> object. </returns>
-        public static StandbyVirtualMachineResource GetStandbyVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableStandbyPoolArmClient(client).GetStandbyVirtualMachineResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StandbyVirtualMachinePoolRuntimeViewResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StandbyVirtualMachinePoolRuntimeViewResource.CreateResourceIdentifier" /> to create a <see cref="StandbyVirtualMachinePoolRuntimeViewResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableStandbyPoolArmClient.GetStandbyVirtualMachinePoolRuntimeViewResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StandbyVirtualMachinePoolRuntimeViewResource"/> object. </returns>
-        public static StandbyVirtualMachinePoolRuntimeViewResource GetStandbyVirtualMachinePoolRuntimeViewResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableStandbyPoolArmClient(client).GetStandbyVirtualMachinePoolRuntimeViewResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="StandbyContainerGroupPoolResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StandbyContainerGroupPoolResource.CreateResourceIdentifier" /> to create a <see cref="StandbyContainerGroupPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -106,6 +49,25 @@ namespace Azure.ResourceManager.StandbyPool
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStandbyPoolArmClient(client).GetStandbyContainerGroupPoolResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StandbyVirtualMachinePoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StandbyVirtualMachinePoolResource.CreateResourceIdentifier" /> to create a <see cref="StandbyVirtualMachinePoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStandbyPoolArmClient.GetStandbyVirtualMachinePoolResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StandbyVirtualMachinePoolResource"/> object. </returns>
+        public static StandbyVirtualMachinePoolResource GetStandbyVirtualMachinePoolResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableStandbyPoolArmClient(client).GetStandbyVirtualMachinePoolResource(id);
         }
 
         /// <summary>
@@ -128,96 +90,41 @@ namespace Azure.ResourceManager.StandbyPool
         }
 
         /// <summary>
-        /// Gets a collection of StandbyVirtualMachinePoolResources in the ResourceGroupResource.
+        /// Gets an object representing a <see cref="StandbyVirtualMachinePoolRuntimeViewResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StandbyVirtualMachinePoolRuntimeViewResource.CreateResourceIdentifier" /> to create a <see cref="StandbyVirtualMachinePoolRuntimeViewResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableStandbyPoolResourceGroupResource.GetStandbyVirtualMachinePools()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStandbyPoolArmClient.GetStandbyVirtualMachinePoolRuntimeViewResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of StandbyVirtualMachinePoolResources and their operations over a StandbyVirtualMachinePoolResource. </returns>
-        public static StandbyVirtualMachinePoolCollection GetStandbyVirtualMachinePools(this ResourceGroupResource resourceGroupResource)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StandbyVirtualMachinePoolRuntimeViewResource"/> object. </returns>
+        public static StandbyVirtualMachinePoolRuntimeViewResource GetStandbyVirtualMachinePoolRuntimeViewResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableStandbyPoolResourceGroupResource(resourceGroupResource).GetStandbyVirtualMachinePools();
+            return GetMockableStandbyPoolArmClient(client).GetStandbyVirtualMachinePoolRuntimeViewResource(id);
         }
 
         /// <summary>
-        /// Get a StandbyVirtualMachinePoolResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachinePoolResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyVirtualMachinePoolResource"/></description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="StandbyVirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StandbyVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="StandbyVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableStandbyPoolResourceGroupResource.GetStandbyVirtualMachinePoolAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStandbyPoolArmClient.GetStandbyVirtualMachineResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="standbyVirtualMachinePoolName"> Name of the standby virtual machine pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="standbyVirtualMachinePoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="standbyVirtualMachinePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<StandbyVirtualMachinePoolResource>> GetStandbyVirtualMachinePoolAsync(this ResourceGroupResource resourceGroupResource, string standbyVirtualMachinePoolName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StandbyVirtualMachineResource"/> object. </returns>
+        public static StandbyVirtualMachineResource GetStandbyVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableStandbyPoolResourceGroupResource(resourceGroupResource).GetStandbyVirtualMachinePoolAsync(standbyVirtualMachinePoolName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a StandbyVirtualMachinePoolResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachinePoolResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyVirtualMachinePoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableStandbyPoolResourceGroupResource.GetStandbyVirtualMachinePool(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="standbyVirtualMachinePoolName"> Name of the standby virtual machine pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="standbyVirtualMachinePoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="standbyVirtualMachinePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<StandbyVirtualMachinePoolResource> GetStandbyVirtualMachinePool(this ResourceGroupResource resourceGroupResource, string standbyVirtualMachinePoolName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableStandbyPoolResourceGroupResource(resourceGroupResource).GetStandbyVirtualMachinePool(standbyVirtualMachinePoolName, cancellationToken);
+            return GetMockableStandbyPoolArmClient(client).GetStandbyVirtualMachineResource(id);
         }
 
         /// <summary>
@@ -246,11 +153,11 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolResource_Get</description>
+        /// <description>StandbyContainerGroupPools_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -284,11 +191,11 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolResource_Get</description>
+        /// <description>StandbyContainerGroupPools_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -314,55 +221,36 @@ namespace Azure.ResourceManager.StandbyPool
         }
 
         /// <summary>
-        /// List StandbyVirtualMachinePoolResource resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachinePoolResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyVirtualMachinePoolResource"/></description>
-        /// </item>
-        /// </list>
+        /// Gets a collection of StandbyVirtualMachinePoolResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableStandbyPoolSubscriptionResource.GetStandbyVirtualMachinePools(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStandbyPoolResourceGroupResource.GetStandbyVirtualMachinePools()"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="StandbyVirtualMachinePoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StandbyVirtualMachinePoolResource> GetStandbyVirtualMachinePoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of StandbyVirtualMachinePoolResources and their operations over a StandbyVirtualMachinePoolResource. </returns>
+        public static StandbyVirtualMachinePoolCollection GetStandbyVirtualMachinePools(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableStandbyPoolSubscriptionResource(subscriptionResource).GetStandbyVirtualMachinePoolsAsync(cancellationToken);
+            return GetMockableStandbyPoolResourceGroupResource(resourceGroupResource).GetStandbyVirtualMachinePools();
         }
 
         /// <summary>
-        /// List StandbyVirtualMachinePoolResource resources by subscription ID
+        /// Get a StandbyVirtualMachinePoolResource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachinePoolResource_ListBySubscription</description>
+        /// <description>StandbyVirtualMachinePools_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -371,18 +259,58 @@ namespace Azure.ResourceManager.StandbyPool
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableStandbyPoolSubscriptionResource.GetStandbyVirtualMachinePools(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStandbyPoolResourceGroupResource.GetStandbyVirtualMachinePoolAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="standbyVirtualMachinePoolName"> Name of the standby virtual machine pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="StandbyVirtualMachinePoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StandbyVirtualMachinePoolResource> GetStandbyVirtualMachinePools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="standbyVirtualMachinePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="standbyVirtualMachinePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<StandbyVirtualMachinePoolResource>> GetStandbyVirtualMachinePoolAsync(this ResourceGroupResource resourceGroupResource, string standbyVirtualMachinePoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableStandbyPoolSubscriptionResource(subscriptionResource).GetStandbyVirtualMachinePools(cancellationToken);
+            return await GetMockableStandbyPoolResourceGroupResource(resourceGroupResource).GetStandbyVirtualMachinePoolAsync(standbyVirtualMachinePoolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a StandbyVirtualMachinePoolResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StandbyVirtualMachinePools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StandbyVirtualMachinePoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStandbyPoolResourceGroupResource.GetStandbyVirtualMachinePool(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="standbyVirtualMachinePoolName"> Name of the standby virtual machine pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="standbyVirtualMachinePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="standbyVirtualMachinePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<StandbyVirtualMachinePoolResource> GetStandbyVirtualMachinePool(this ResourceGroupResource resourceGroupResource, string standbyVirtualMachinePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableStandbyPoolResourceGroupResource(resourceGroupResource).GetStandbyVirtualMachinePool(standbyVirtualMachinePoolName, cancellationToken);
         }
 
         /// <summary>
@@ -394,11 +322,11 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolResource_ListBySubscription</description>
+        /// <description>StandbyContainerGroupPools_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -430,11 +358,11 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolResource_ListBySubscription</description>
+        /// <description>StandbyContainerGroupPools_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -455,6 +383,78 @@ namespace Azure.ResourceManager.StandbyPool
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStandbyPoolSubscriptionResource(subscriptionResource).GetStandbyContainerGroupPools(cancellationToken);
+        }
+
+        /// <summary>
+        /// List StandbyVirtualMachinePoolResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StandbyVirtualMachinePools_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StandbyVirtualMachinePoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStandbyPoolSubscriptionResource.GetStandbyVirtualMachinePools(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="StandbyVirtualMachinePoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<StandbyVirtualMachinePoolResource> GetStandbyVirtualMachinePoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStandbyPoolSubscriptionResource(subscriptionResource).GetStandbyVirtualMachinePoolsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List StandbyVirtualMachinePoolResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StandbyVirtualMachinePools_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StandbyVirtualMachinePoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStandbyPoolSubscriptionResource.GetStandbyVirtualMachinePools(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="StandbyVirtualMachinePoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<StandbyVirtualMachinePoolResource> GetStandbyVirtualMachinePools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStandbyPoolSubscriptionResource(subscriptionResource).GetStandbyVirtualMachinePools(cancellationToken);
         }
     }
 }
