@@ -176,8 +176,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 
             private class PersistableModelInfo : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new DoesNotImplementPersistableModel();
+                protected override object CreateInstance() => new DoesNotImplementPersistableModel();
             }
         }
 

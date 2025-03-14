@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections;
+using System.Diagnostics;
 
 namespace System.ClientModel.Primitives;
 
@@ -10,19 +11,16 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public abstract class ModelBuilder
 {
-    private bool? _isCollection;
-    private bool IsCollection => _isCollection ??= AddItem is not null || CreateElementInstance is not null;
-
-    private readonly Func<object, object> _defaultToCollection = (original) => original;
-
     internal object CreateObject()
     {
         if (IsCollection)
         {
-            AssertFuncDefined(AddItem, nameof(AddItem));
-            AssertFuncDefined(CreateElementInstance, nameof(CreateElementInstance));
-
-            return new CollectionWrapper(CreateInstance, ToCollection, AddItem!, CreateElementInstance!);
+            return new CollectionWrapper(
+                CreateInstance,
+                ToCollection,
+                AddKeyValuePair,
+                AddItem,
+                CreateElementInstance);
         }
         else
         {
@@ -30,13 +28,10 @@ public abstract class ModelBuilder
         }
     }
 
-    private void AssertFuncDefined(object? func, string name)
-    {
-        if (func is null)
-        {
-            throw new InvalidOperationException($"{name} must be set for collections.");
-        }
-    }
+    /// <summary>
+    /// Gets a value indicating whether the object is a collection.
+    /// </summary>
+    protected virtual bool IsCollection => false;
 
     /// <summary>
     /// Gets an <see cref="IEnumerable"/> representation of the object.
@@ -45,31 +40,44 @@ public abstract class ModelBuilder
     protected internal virtual IEnumerable? GetItems(object obj) => null;
 
     /// <summary>
-    /// Provides a factory to create an instance of the object.
+    /// Creates and returns a new instance of the object type that this builder represents.
     /// </summary>
-    protected abstract Func<object> CreateInstance { get; }
+    protected abstract object CreateInstance();
 
     /// <summary>
-    /// Provides a factory convert the collection builder instance to the final type.
+    /// Converts the input builder collection into the requested collection format.
     /// </summary>
-    protected virtual Func<object, object> ToCollection => _defaultToCollection;
+    /// <param name="builder">The builder collection that is being transformed.</param>
+    /// <returns>The requested collection format.</returns>
+    protected virtual object ToCollection(object builder) => builder;
 
     /// <summary>
-    /// Provides a factory to add an item to a collection.
+    /// Adds an item to a specified collection.
     /// </summary>
-    /// <remarks>
-    /// The key parameter is used for dictionaries and is ignored for other collections.
-    /// </remarks>
-    protected virtual Action<object, object, string?>? AddItem => null;
+    /// <param name="collection">Represents the collection to which the item will be added.</param>
+    /// <param name="item">Represents the item that will be added to the collection.</param>
+    protected virtual void AddItem(object collection, object item) => Debug.Fail("AddItem should not be called for non-collections types.");
 
     /// <summary>
-    /// Provides a factory to create an instance of the innermost element type.
+    /// Adds an item to a specified dictionary under the specified key.
+    /// </summary>
+    /// <param name="collection">Represents the collection to which the item will be added.</param>
+    /// <param name="key">Represents the key under which the item will be added.</param>
+    /// <param name="item">Represents the item that will be added to the collection.</param>
+    protected virtual void AddKeyValuePair(object collection, string key, object item) => Debug.Fail("AddKeyValuePair should not be called for non-dictionary collections.");
+
+    /// <summary>
+    /// Creates an instance of the inner most element.
     /// </summary>
     /// <remarks>
     /// If the <see cref="ModelBuilder"/> is representing List&lt;list&lt;Foo&gt;&gt;
     /// then this factory should return an instance of Foo".
     /// </remarks>
-    protected virtual Func<object>? CreateElementInstance => null;
+    protected virtual object CreateElementInstance()
+    {
+        Debug.Fail("CreateElementInstance should not be called for non-collection types.");
+        return null!;
+    }
 
     /// <summary>
     /// Asserts the item is the desired type <typeparamref name="T"/>.

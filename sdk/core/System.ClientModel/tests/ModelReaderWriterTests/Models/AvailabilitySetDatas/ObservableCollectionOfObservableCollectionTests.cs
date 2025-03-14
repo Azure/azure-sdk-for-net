@@ -3,6 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 
@@ -54,17 +55,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
             private class ObservableCollection_ObservableCollection_AvailabilitySetData_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new ObservableCollection<ObservableCollection<AvailabilitySetData>>();
+                protected override bool IsCollection => true;
 
-                private Action<object, object, string?>? _addItem;
-                protected override Action<object, object, string?>? AddItem
-                    => _addItem ??= (collection, item, _) => AssertCollection<ObservableCollection<ObservableCollection<AvailabilitySetData>>>(collection)
-                    .Add(AssertItem<ObservableCollection<AvailabilitySetData>>(item));
+                protected override object CreateInstance() => new ObservableCollection<ObservableCollection<AvailabilitySetData>>();
 
-                private Func<object>? _createElementInstance;
-                protected override Func<object>? CreateElementInstance
-                    => _createElementInstance ??= () => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                protected override void AddItem(object collection, object item)
+                    => AssertCollection<ObservableCollection<ObservableCollection<AvailabilitySetData>>>(collection).Add(AssertItem<ObservableCollection<AvailabilitySetData>>(item));
+
+                protected override object CreateElementInstance()
+                    => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
             }
         }
     }

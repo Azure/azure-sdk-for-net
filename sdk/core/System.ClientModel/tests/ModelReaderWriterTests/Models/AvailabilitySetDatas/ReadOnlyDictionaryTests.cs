@@ -50,20 +50,18 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
             private class ReadOnlyDictionary_AvailabilitySetData_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new Dictionary<string, AvailabilitySetData>();
+                protected override bool IsCollection => true;
 
-                private Action<object, object, string?>? _addItem;
-                protected override Action<object, object, string?>? AddItem
-                    => _addItem ??= (collection, item, key) => AssertCollection<Dictionary<string, AvailabilitySetData>>(collection).Add(AssertKey(key), AssertItem<AvailabilitySetData>(item));
+                protected override object CreateInstance() => new Dictionary<string, AvailabilitySetData>();
 
-                private Func<object>? _createElementInstance;
-                protected override Func<object>? CreateElementInstance
-                    => _createElementInstance ??= () => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                protected override void AddKeyValuePair(object collection, string key, object item)
+                    => AssertCollection<Dictionary<string, AvailabilitySetData>>(collection).Add(AssertKey(key), AssertItem<AvailabilitySetData>(item));
 
-                private Func<object, object>? _toCollection;
-                protected override Func<object, object> ToCollection
-                    => _toCollection ??= collection => new ReadOnlyDictionary<string, AvailabilitySetData>(AssertCollection<Dictionary<string, AvailabilitySetData>>(collection));
+                protected override object CreateElementInstance()
+                    => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+
+                protected override object ToCollection(object builder)
+                    => new ReadOnlyDictionary<string, AvailabilitySetData>(AssertCollection<Dictionary<string, AvailabilitySetData>>(builder));
             }
         }
     }

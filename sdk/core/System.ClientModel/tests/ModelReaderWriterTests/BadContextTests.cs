@@ -73,41 +73,39 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             private class PersistableModel_NullElement_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new PersistableModel_NullElement();
+                protected override object CreateInstance() => new PersistableModel_NullElement();
             }
 
             private class List_PersistableModel_NullElement_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new List<PersistableModel_NullElement>();
+                protected override bool IsCollection => true;
 
-                protected override Action<object, object, string?>? AddItem => (_, _, _) => throw new NotImplementedException();
+                protected override object CreateInstance() => new List<PersistableModel_NullElement>();
 
-                protected override Func<object>? CreateElementInstance => () => null!;
+                protected override void AddItem(object collection, object item) => throw new NotImplementedException();
+
+                protected override object CreateElementInstance() => null!;
             }
 
             private class PersistableModel_NonPersistableElement_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new PersistableModel_NonPersistableElement();
+                protected override object CreateInstance() => new PersistableModel_NonPersistableElement();
             }
 
             private class List_PersistableModel_NonPersistableElement_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new List<PersistableModel_NonPersistableElement>();
+                protected override bool IsCollection => true;
 
-                protected override Action<object, object, string?>? AddItem => (_, _, _) => throw new NotImplementedException();
+                protected override object CreateInstance() => new List<PersistableModel_NonPersistableElement>();
 
-                private Func<object>? _createElementInstance;
-                protected override Func<object>? CreateElementInstance => _createElementInstance ??= () => new DoesNotImplementInterface();
+                protected override void AddItem(object collection, object item) => throw new NotImplementedException();
+
+                protected override object CreateElementInstance() => new DoesNotImplementInterface();
             }
 
             private class DoesNotImplementInterface_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new DoesNotImplementInterface();
+                protected override object CreateInstance() => new DoesNotImplementInterface();
             }
         }
 

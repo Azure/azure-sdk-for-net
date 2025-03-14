@@ -9,7 +9,6 @@ namespace System.ClientModel.Primitives;
 internal class ReflectionModelInfo : ModelBuilder
 {
     private Type _type;
-    private Func<object>? _createInstance;
 
     public ReflectionModelInfo(Type type)
     {
@@ -19,7 +18,7 @@ internal class ReflectionModelInfo : ModelBuilder
     //This will be replaced with RequiresUnreferencedCode when this issue is fixed https://github.com/Azure/azure-sdk-for-net/issues/48294
     [UnconditionalSuppressMessage("Trimming", "IL2077",
       Justification = "We will only call this when we went through ModelReaderWriter.Read which has DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors).")]
-    protected override Func<object> CreateInstance => _createInstance ??= () => GetInstance(_type);
+    protected override object CreateInstance() => GetInstance(_type);
 
     private static IPersistableModel<object> GetInstance(
         [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)

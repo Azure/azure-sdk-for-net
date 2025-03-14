@@ -54,16 +54,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
             private class LinkedList_LinkedList_AvailabilitySetData_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new LinkedList<LinkedList<AvailabilitySetData>>();
+                protected override bool IsCollection => true;
 
-                private Action<object, object, string?>? _addItem;
-                protected override Action<object, object, string?>? AddItem
-                    => _addItem ??= (collection, item, key) => AssertCollection<LinkedList<LinkedList<AvailabilitySetData>>>(collection).AddLast(AssertItem<LinkedList<AvailabilitySetData>>(item));
+                protected override object CreateInstance() => new LinkedList<LinkedList<AvailabilitySetData>>();
 
-                private Func<object>? _createElementInstance;
-                protected override Func<object>? CreateElementInstance
-                    => _createElementInstance ??= () => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                protected override void AddItem(object collection, object item)
+                    => AssertCollection<LinkedList<LinkedList<AvailabilitySetData>>>(collection).AddLast(AssertItem<LinkedList<AvailabilitySetData>>(item));
+
+                protected override object CreateElementInstance()
+                    => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
             }
         }
     }

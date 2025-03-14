@@ -3,6 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 
@@ -46,20 +47,18 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
             private class ImmutableArray_AvailabilitySetData_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= ImmutableArray<AvailabilitySetData>.Empty.ToBuilder;
+                protected override bool IsCollection => true;
 
-                private Action<object, object, string?>? _addItem;
-                protected override Action<object, object, string?>? AddItem
-                    => _addItem ??= (collection, item, key) => AssertCollection<ImmutableArray<AvailabilitySetData>.Builder>(collection).Add(AssertItem<AvailabilitySetData>(item));
+                protected override object CreateInstance() => ImmutableArray<AvailabilitySetData>.Empty.ToBuilder();
 
-                private Func<object>? _createElementInstance;
-                protected override Func<object>? CreateElementInstance
-                    => _createElementInstance ??= () => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                protected override void AddItem(object collection, object item)
+                    => AssertCollection<ImmutableArray<AvailabilitySetData>.Builder>(collection).Add(AssertItem<AvailabilitySetData>(item));
 
-                private Func<object, object>? _toCollection;
-                protected override Func<object, object> ToCollection
-                    => _toCollection ??= (collection) => AssertCollection<ImmutableArray<AvailabilitySetData>.Builder>(collection).ToImmutable();
+                protected override object CreateElementInstance()
+                    => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+
+                protected override object ToCollection(object builder)
+                    => AssertCollection<ImmutableArray<AvailabilitySetData>.Builder>(builder).ToImmutable();
             }
         }
     }

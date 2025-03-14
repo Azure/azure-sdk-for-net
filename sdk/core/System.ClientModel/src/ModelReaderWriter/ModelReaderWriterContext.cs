@@ -19,7 +19,7 @@ public abstract class ModelReaderWriterContext
     {
         if (!TryGetModelBuilder(type, out ModelBuilder? builder))
         {
-            throw new InvalidOperationException($"No model info found for {type.Name}.");
+            throw new InvalidOperationException($"No ModelBuilder found for {type.Name}.");
         }
         return builder;
     }

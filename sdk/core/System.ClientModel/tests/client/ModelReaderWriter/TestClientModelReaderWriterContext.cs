@@ -39,50 +39,42 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         private class ModelY_Builder : ModelBuilder
         {
-            private Func<object>? _createInstance;
-            protected override Func<object> CreateInstance => _createInstance ??= () => new ModelY();
+            protected override object CreateInstance() => new ModelY();
         }
 
         private class UnknownBaseModel_Builder : ModelBuilder
         {
-            private Func<object>? _createInstance;
-            protected override Func<object> CreateInstance => _createInstance ??= () => new UnknownBaseModel();
+            protected override object CreateInstance() => new UnknownBaseModel();
         }
 
         private class ResourceProviderData_Builder : ModelBuilder
         {
-            private Func<object>? _createInstance;
-            protected override Func<object> CreateInstance => _createInstance ??= () => new ResourceProviderData();
+            protected override object CreateInstance() => new ResourceProviderData();
         }
 
         private class ModelX_Builder : ModelBuilder
         {
-            private Func<object>? _createInstance;
-            protected override Func<object> CreateInstance => _createInstance ??= () => new ModelX();
+            protected override object CreateInstance() => new ModelX();
         }
 
         private class ModelWithPersistableOnly_Builder : ModelBuilder
         {
-            private Func<object>? _createInstance;
-            protected override Func<object> CreateInstance => _createInstance ??= () => new ModelWithPersistableOnly();
+            protected override object CreateInstance() => new ModelWithPersistableOnly();
         }
 
         private class ModelAsStruct_Builder : ModelBuilder
         {
-            private Func<object>? _createInstance;
-            protected override Func<object> CreateInstance => _createInstance ??= () => new ModelAsStruct();
+            protected override object CreateInstance() => new ModelAsStruct();
         }
 
         private class BaseModel_Builder : ModelBuilder
         {
-            private Func<object>? _createInstance;
-            protected override Func<object> CreateInstance => _createInstance ??= () => new UnknownBaseModel();
+            protected override object CreateInstance() => new UnknownBaseModel();
         }
 
         private class AvailabilitySetData_Builder : ModelBuilder
         {
-            private Func<object>? _createInstance;
-            protected override Func<object> CreateInstance => _createInstance ??= () => new AvailabilitySetData();
+            protected override object CreateInstance() => new AvailabilitySetData();
         }
     }
 }

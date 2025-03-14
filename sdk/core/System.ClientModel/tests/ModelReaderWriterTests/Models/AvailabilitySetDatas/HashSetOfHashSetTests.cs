@@ -54,16 +54,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
             private class HashSet_HashSet_AvailabilitySetData_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new HashSet<HashSet<AvailabilitySetData>>();
+                protected override bool IsCollection => true;
 
-                private Action<object, object, string?>? _addItem;
-                protected override Action<object, object, string?>? AddItem
-                    => _addItem ??= (collection, item, key) => AssertCollection<HashSet<HashSet<AvailabilitySetData>>>(collection).Add(AssertItem<HashSet<AvailabilitySetData>>(item));
+                protected override object CreateInstance() => new HashSet<HashSet<AvailabilitySetData>>();
 
-                private Func<object>? _createElementInstance;
-                protected override Func<object>? CreateElementInstance
-                    => _createElementInstance ??= () => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                protected override void AddItem(object collection, object item)
+                    => AssertCollection<HashSet<HashSet<AvailabilitySetData>>>(collection).Add(AssertItem<HashSet<AvailabilitySetData>>(item));
+
+                protected override object CreateElementInstance()
+                    => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
             }
         }
     }

@@ -226,14 +226,16 @@ namespace System.ClientModel.Primitives
     public abstract partial class ModelBuilder
     {
         protected ModelBuilder() { }
-        protected virtual System.Action<object, object, string?>? AddItem { get { throw null; } }
-        protected virtual System.Func<object>? CreateElementInstance { get { throw null; } }
-        protected abstract System.Func<object> CreateInstance { get; }
-        protected virtual System.Func<object, object> ToCollection { get { throw null; } }
+        protected virtual bool IsCollection { get { throw null; } }
+        protected virtual void AddItem(object collection, object item) { }
+        protected virtual void AddKeyValuePair(object collection, string key, object item) { }
         protected static T AssertCollection<T>(object collection) { throw null; }
         protected static T AssertItem<T>(object item) { throw null; }
         protected static string AssertKey(string? key) { throw null; }
+        protected virtual object CreateElementInstance() { throw null; }
+        protected abstract object CreateInstance();
         protected internal virtual System.Collections.IEnumerable? GetItems(object obj) { throw null; }
+        protected virtual object ToCollection(object builder) { throw null; }
     }
     public static partial class ModelReaderWriter
     {

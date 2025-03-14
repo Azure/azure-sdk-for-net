@@ -179,7 +179,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var data = BinaryData.FromString(File.ReadAllText(TestData.GetLocation("AvailabilitySetData/AvailabilitySetDataList.json")).TrimEnd());
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<SortedDictionary<string, AvailabilitySetData>>(data, ModelReaderWriterOptions.Json, s_readerWriterContext));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("No model info found for SortedDictionary`2.", ex!.Message);
+            Assert.AreEqual("No ModelBuilder found for SortedDictionary`2.", ex!.Message);
         }
 
         [Test]
@@ -396,7 +396,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "{}";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<NoActivator>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, s_readerWriterContext));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("No model info found for NoActivator.", ex!.Message);
+            Assert.AreEqual("No ModelBuilder found for NoActivator.", ex!.Message);
         }
 
         [Test]
@@ -405,7 +405,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "[{}]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<NoActivator>>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, s_readerWriterContext));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("No model info found for List`1.", ex!.Message);
+            Assert.AreEqual("No ModelBuilder found for List`1.", ex!.Message);
         }
 
         [Test]
@@ -414,7 +414,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "[[{}]]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<List<NoActivator>>>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, s_readerWriterContext));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("No model info found for List`1.", ex!.Message);
+            Assert.AreEqual("No ModelBuilder found for List`1.", ex!.Message);
         }
 
         [Test]
@@ -661,7 +661,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         private class LocalContext : ModelReaderWriterContext
         {
-            private static readonly Lazy<TestClientModelReaderWriterContext> _LibraryContext = new(() => new());
+            private static readonly Lazy<TestClientModelReaderWriterContext> _libraryContext = new(() => new());
             private static readonly Lazy<Models.AvailabilitySetDatas.ListTests.LocalContext> _availabilitySetData_ListTests_LocalContext = new(() => new());
 
             private Dictionary_String_SubType_Builder? _dictionary_String_SubType_Builder;
@@ -704,7 +704,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             private ModelBuilder? GetFromDependencies(Type type)
             {
-                if (_LibraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? builder))
+                if (_libraryContext.Value.TryGetModelBuilder(type, out ModelBuilder? builder))
                 {
                     return builder;
                 }
@@ -717,150 +717,136 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             private class Dictionary_String_AvailabilitySetData_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new Dictionary<string, AvailabilitySetData>();
+                protected override bool IsCollection => true;
 
-                private Action<object, object, string?>? _addItem;
-                protected override Action<object, object, string?> AddItem
-                    => _addItem ??= (collection, item, key) => AssertCollection<Dictionary<string, AvailabilitySetData>>(collection).Add(AssertKey(key), AssertItem<AvailabilitySetData>(item));
+                protected override object CreateInstance() => new Dictionary<string, AvailabilitySetData>();
 
-                private Func<object>? _createElementInstance;
-                protected override Func<object> CreateElementInstance
-                    => _createElementInstance ??= () => _LibraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                protected override void AddKeyValuePair(object collection, string key, object item)
+                    => AssertCollection<Dictionary<string, AvailabilitySetData>>(collection).Add(AssertKey(key), AssertItem<AvailabilitySetData>(item));
+
+                protected override object CreateElementInstance()
+                    => _libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
             }
 
             private class ReadReturnsNull_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new ReadReturnsNull();
+                protected override object CreateInstance() => new ReadReturnsNull();
             }
 
             private class List_List_NonJWire_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new List<List<NonJWire>>();
+                protected override bool IsCollection => true;
 
-                private Action<object, object, string?>? _addItem;
-                protected override Action<object, object, string?> AddItem
-                    => _addItem ??= (collection, item, _) => AssertCollection<List<List<NonJWire>>>(collection).Add(AssertItem<List<NonJWire>>(item));
+                protected override object CreateInstance() => new List<List<NonJWire>>();
 
-                private Func<object>? _createElementInstance;
-                protected override Func<object> CreateElementInstance => _createElementInstance ??= () => new NonJWire();
+                protected override void AddItem(object collection, object item)
+                    => AssertCollection<List<List<NonJWire>>>(collection).Add(AssertItem<List<NonJWire>>(item));
+
+                protected override object CreateElementInstance() => new NonJWire();
             }
 
             private class List_NonJWire_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new List<NonJWire>();
+                protected override bool IsCollection => true;
 
-                private Action<object, object, string?>? _addItem;
-                protected override Action<object, object, string?> AddItem
-                    => _addItem ??= (collection, item, _) => AssertCollection<List<NonJWire>>(collection).Add(AssertItem<NonJWire>(item));
+                protected override object CreateInstance() => new List<NonJWire>();
 
-                private Func<object>? _createElementInstance;
-                protected override Func<object> CreateElementInstance => _createElementInstance ??= () => new NonJWire();
+                protected override void AddItem(object collection, object item)
+                    => AssertCollection<List<NonJWire>>(collection).Add(AssertItem<NonJWire>(item));
+
+                protected override object CreateElementInstance() => new NonJWire();
             }
 
             private class List_List_PersistableModel_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new List<List<PersistableModel>>();
+                protected override bool IsCollection => true;
 
-                private Action<object, object, string?>? _addItem;
-                protected override Action<object, object, string?> AddItem
-                    => _addItem ??= (collection, item, _) => AssertCollection<List<List<PersistableModel>>>(collection).Add(AssertItem<List<PersistableModel>>(item));
+                protected override object CreateInstance() => new List<List<PersistableModel>>();
 
-                private Func<object>? _createElementInstance;
-                protected override Func<object> CreateElementInstance => _createElementInstance ??= () => new PersistableModel();
+                protected override void AddItem(object collection, object item)
+                    => AssertCollection<List<List<PersistableModel>>>(collection).Add(AssertItem<List<PersistableModel>>(item));
+
+                protected override object CreateElementInstance() => new PersistableModel();
             }
 
             private class List_PersistableModel_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new List<PersistableModel>();
+                protected override bool IsCollection => true;
 
-                private Action<object, object, string?>? _addItem;
-                protected override Action<object, object, string?> AddItem
-                    => _addItem ??= (collection, item, _) => AssertCollection<List<PersistableModel>>(collection).Add(AssertItem<PersistableModel>(item));
+                protected override object CreateInstance() => new List<PersistableModel>();
 
-                private Func<object>? _createElementInstance;
-                protected override Func<object> CreateElementInstance => _createElementInstance ??= () => new PersistableModel();
+                protected override void AddItem(object collection, object item)
+                    => AssertCollection<List<PersistableModel>>(collection).Add(AssertItem<PersistableModel>(item));
+
+                protected override object CreateElementInstance() => new PersistableModel();
             }
 
             private class PersistableModel_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new PersistableModel();
+                protected override object CreateInstance() => new PersistableModel();
             }
 
             private class NonJWire_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new NonJWire();
+                protected override object CreateInstance() => new NonJWire();
             }
 
             private class DoesNotImplementInterface_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new DoesNotImplementInterface();
+                protected override object CreateInstance() => new DoesNotImplementInterface();
             }
 
             private class SubType_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new SubType();
+                protected override object CreateInstance() => new SubType();
             }
 
             private class List_Dictionary_String_SubType_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new List<Dictionary<string, SubType>>();
+                protected override bool IsCollection => true;
 
-                private Action<object, object, string?>? _addItem;
-                protected override Action<object, object, string?> AddItem
-                    => _addItem ??= (collection, item, _) => AssertCollection<List<Dictionary<string, SubType>>>(collection).Add(AssertItem<Dictionary<string, SubType>>(item));
+                protected override object CreateInstance() => new List<Dictionary<string, SubType>>();
 
-                private Func<object>? _createElementInstance;
-                protected override Func<object> CreateElementInstance => _createElementInstance ??= () => new SubType();
+                protected override void AddItem(object collection, object item)
+                    => AssertCollection<List<Dictionary<string, SubType>>>(collection).Add(AssertItem<Dictionary<string, SubType>>(item));
+
+                protected override object CreateElementInstance() => new SubType();
             }
 
             private class List_SubType_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new List<SubType>();
+                protected override bool IsCollection => true;
 
-                private Action<object, object, string?>? _addItem;
-                protected override Action<object, object, string?> AddItem
-                    => _addItem ??= (collection, item, _) => AssertCollection<List<SubType>>(collection).Add(AssertItem<SubType>(item));
+                protected override object CreateInstance() => new List<SubType>();
 
-                private Func<object>? _createElementInstance;
-                protected override Func<object> CreateElementInstance => _createElementInstance ??= () => new SubType();
+                protected override void AddItem(object collection, object item)
+                    => AssertCollection<List<SubType>>(collection).Add(AssertItem<SubType>(item));
+
+                protected override object CreateElementInstance() => new SubType();
             }
 
             private class List_List_SubType_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new List<List<SubType>>();
+                protected override bool IsCollection => true;
 
-                private Action<object, object, string?>? _addItem;
-                protected override Action<object, object, string?> AddItem
-                    => _addItem ??= (collection, item, _) => AssertCollection<List<List<SubType>>>(collection).Add(AssertItem<List<SubType>>(item));
+                protected override object CreateInstance() => new List<List<SubType>>();
 
-                private Func<object>? _createElementInstance;
-                protected override Func<object> CreateElementInstance => _createElementInstance ??= () => new SubType();
+                protected override void AddItem(object collection, object item)
+                    => AssertCollection<List<List<SubType>>>(collection).Add(AssertItem<List<SubType>>(item));
+
+                protected override object CreateElementInstance() => new SubType();
             }
 
             private class Dictionary_String_SubType_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new Dictionary<string, SubType>();
+                protected override bool IsCollection => true;
 
-                private Action<object, object, string?>? _addItem;
-                protected override Action<object, object, string?> AddItem
-                    => _addItem ??= (collection, item, key) => AssertCollection<Dictionary<string, SubType>>(collection).Add(AssertKey(key), AssertItem<SubType>(item));
+                protected override object CreateInstance() => new Dictionary<string, SubType>();
 
-                private Func<object>? _createElementInstance;
-                protected override Func<object> CreateElementInstance => _createElementInstance ??= () => new SubType();
+                protected override void AddKeyValuePair(object collection, string key, object item)
+                    => AssertCollection<Dictionary<string, SubType>>(collection).Add(AssertKey(key), AssertItem<SubType>(item));
+
+                protected override object CreateElementInstance() => new SubType();
             }
         }
     }

@@ -66,16 +66,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
             private class Stack_List_AvailabilitySetData_Builder : ModelBuilder
             {
-                private Func<object>? _createInstance;
-                protected override Func<object> CreateInstance => _createInstance ??= () => new Stack<List<AvailabilitySetData>>();
+                protected override bool IsCollection => true;
 
-                private Action<object, object, string?>? _addItem;
-                protected override Action<object, object, string?>? AddItem
-                    => _addItem ??= (collection, item, key) => AssertCollection<Stack<List<AvailabilitySetData>>>(collection).Push(AssertItem<List<AvailabilitySetData>>(item));
+                protected override object CreateInstance() => new Stack<List<AvailabilitySetData>>();
 
-                private Func<object>? _createElementInstance;
-                protected override Func<object>? CreateElementInstance
-                    => _createElementInstance ??= () => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
+                protected override void AddItem(object collection, object item)
+                    => AssertCollection<Stack<List<AvailabilitySetData>>>(collection).Push(AssertItem<List<AvailabilitySetData>>(item));
+
+                protected override object CreateElementInstance()
+                    => s_libraryContext.Value.GetModelBuilder(typeof(AvailabilitySetData)).CreateObject();
             }
         }
     }
