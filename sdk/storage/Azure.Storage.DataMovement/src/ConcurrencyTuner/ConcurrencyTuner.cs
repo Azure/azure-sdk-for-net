@@ -29,6 +29,7 @@ namespace Azure.Storage.DataMovement
         private CancellationToken _cancellationToken;
 
         internal ConcurrencyTuner(
+            ResourceMonitor resourceMonitor,
             TimeSpan monitoringInterval,
             double maxMemoryUsage,
             int initialConcurrency,
@@ -39,7 +40,7 @@ namespace Azure.Storage.DataMovement
             _maxConcurrency = maxConcurrency;
             _maxMemoryUsage = maxMemoryUsage;
             _maxCpuUsage = maxCpuUsage;
-            _resourceMonitor = new ResourceMonitor(monitoringInterval);
+            _resourceMonitor = resourceMonitor;
             _finalReason = (int) ConcurrencyTunerState.ConcurrencyReasonNone;
             _finalConcurrency = _initialConcurrency;
             _observations = Channel.CreateUnbounded<ConcurrencyObservation>();
