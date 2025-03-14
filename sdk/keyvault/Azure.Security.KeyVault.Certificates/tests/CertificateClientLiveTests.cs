@@ -1125,7 +1125,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         };
 
         [RecordedTest]
-        public async Task StartCreateCertificateWithPreserveCertOrder()
+        public async Task StartCreateCertificateWithPreserveCertificateOrder([Values(true, false)] bool preserveOrder)
         {
             string certName = Recording.GenerateId();
             CertificateClient client = GetClient();
@@ -1142,7 +1142,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 policy,
                 enabled: true,
                 tags: tags,
-                preserveCertOrder: true);
+                preserveCertOrder: preserveOrder);
 
             Assert.That(operation, Is.Not.Null);
             Assert.That(operation.Properties.Name, Is.EqualTo(certName));
@@ -1156,7 +1156,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [RecordedTest]
-        public async Task ImportCertificateWithPreserveCertOrder()
+        public async Task ImportCertificateWithPreserveCertificateOrder([Values(true, false)] bool preserveOrder)
         {
             string certName = $"cert-{Recording.GenerateId()}";
             CertificateClient client = GetClient();
@@ -1169,7 +1169,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                     ContentType = CertificateContentType.Pem,
                     Exportable = true
                 },
-                PreserveCertOrder = true
+                PreserveCertOrder = preserveOrder
             };
 
             KeyVaultCertificateWithPolicy cert =  await client.ImportCertificateAsync(importOptions);
