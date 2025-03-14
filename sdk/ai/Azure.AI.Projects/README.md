@@ -359,9 +359,10 @@ the reference placeholder by the actual reference and url. Please note, that to
 get sensible result, the index needs to have fields "title" and "url".
 
 ```C# Snippet:PopulateReferencesAgentWithAzureAISearchTool
-Response<PageableList<ThreadMessage>> afterRunMessagesResponse
-    = await agentClient.GetMessagesAsync(thread.Id);
-IReadOnlyList<ThreadMessage> messages = afterRunMessagesResponse.Value.Data;
+PageableList<ThreadMessage> messages = await agentClient.GetMessagesAsync(
+    threadId: thread.Id,
+    order: ListSortOrder.Ascending
+);
 
 // Note: messages iterate from newest to oldest, with the messages[0] being the most recent
 foreach (ThreadMessage threadMessage in messages)

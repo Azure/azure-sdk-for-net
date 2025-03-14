@@ -81,9 +81,10 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
             runResponse.Value.Status,
             runResponse.Value.LastError?.Message);
         #region Snippet:PopulateReferencesAgentWithAzureAISearchTool
-        Response<PageableList<ThreadMessage>> afterRunMessagesResponse
-            = await agentClient.GetMessagesAsync(thread.Id);
-        IReadOnlyList<ThreadMessage> messages = afterRunMessagesResponse.Value.Data;
+        PageableList<ThreadMessage> messages = await agentClient.GetMessagesAsync(
+            threadId: thread.Id,
+            order: ListSortOrder.Ascending
+        );
 
         // Note: messages iterate from newest to oldest, with the messages[0] being the most recent
         foreach (ThreadMessage threadMessage in messages)
