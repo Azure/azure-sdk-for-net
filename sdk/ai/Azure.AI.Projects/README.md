@@ -322,7 +322,7 @@ It integrates with Azure OpenAI Service and Azure Machine Learning, offering adv
 search technologies like vector search and full-text search. Ideal for knowledge base
 insights, information discovery, and automation. Creating an Agent with Azure AI
 Search requires an existing Azure AI Search Index. For more information and setup
-guides, see [Azure AI Search Tool Guide](https://learn.microsoft.com/azure/ai-services/agents/how-to/tools/azure-ai-search?tabs=azurecli%2Cpython&pivots=overview-azure-ai-search).
+guides, see [Azure AI Search Tool Guide](https://learn.microsoft.com/azure/ai-services/agents/how-to/tools/azure-ai-search).
 
 ```C# Snippet:CreateAgentWithAzureAISearchTool
 ListConnectionsResponse connections = await projectClient.GetConnectionsClient().GetConnectionsAsync(ConnectionType.AzureAISearch).ConfigureAwait(false);
