@@ -62,7 +62,7 @@ public class ConnectionTests
         TestConnectionStore store = new();
         ProjectInfrastructure infrastructure = new(store, projectId);
         infrastructure.AddFeature(new AppConfigurationFeature());
-        infrastructure.AddFeature(new CloudMachineFeature());
+        infrastructure.AddFeature(new OfxProjectFeature());
         infrastructure.Build();
 
         ProjectClient project = new(projectId, store.Provider);

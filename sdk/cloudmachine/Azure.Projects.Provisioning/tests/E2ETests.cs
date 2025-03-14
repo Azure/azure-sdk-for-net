@@ -3,6 +3,8 @@
 
 #nullable enable
 
+using System;
+using System.Threading;
 using Azure.AI.OpenAI;
 using Azure.Data.AppConfiguration;
 using Azure.Messaging.ServiceBus;
@@ -12,6 +14,7 @@ using Azure.Projects.OpenAI;
 using Azure.Projects.Storage;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using NUnit.Framework;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
@@ -47,7 +50,7 @@ public class E2ETests
     }
 
     [TestCase("-bicep")]
-    //[TestCase("")]
+    [TestCase("")]
     public void All (string arg)
     {
         ProjectInfrastructure infrastructure = new(projectId);
@@ -67,11 +70,55 @@ public class E2ETests
         ServiceBusClient sb = project.GetServiceBusClient();
         ServiceBusSender sender = project.GetServiceBusSender("cm_servicebus_topic_private", "cm_servicebus_subscription_private");
         //ServiceBusReceiver receiver = project.GetServiceBusReceiver("cm_servicebus_topic_private", "cm_servicebus_subscription_private");
+
+        try
+        {
+            testContainer.UploadBlob("test", BinaryData.FromString("test"));
+            BlobDownloadResult result = testContainer.GetBlobClient("test").DownloadContent();
+            Assert.AreEqual("test", result.Content.ToString());
+        }
+        finally
+        {
+            testContainer.DeleteBlobIfExists("test");
+        }
+    }
+
+    [TestCase("-bicep")]
+    [TestCase("")]
+    public void Ofx(string arg)
+    {
+        ProjectInfrastructure infrastructure = new(projectId);
+        infrastructure.AddFeature(new OfxProjectFeature());
+
+        if (infrastructure.TryExecuteCommand([arg]))
+            return;
+
+        OfxProjectClient project = new(projectId, default);
+        string? uploadedPath = null;
+        long done = 0;
+        try
+        {
+            project.Storage.WhenUploaded((file) =>
+            {
+                string downloaded = file.Download().ToString();
+                Assert.AreEqual("hello world", downloaded);
+                Interlocked.Increment(ref done);
+            });
+
+            uploadedPath = project.Storage.Upload(BinaryData.FromString("hello world"));
+            string downloaded = project.Storage.Download(uploadedPath).ToString();
+            Assert.AreEqual("hello world", downloaded);
+            while (Interlocked.Read(ref done)==0);
+        }
+        finally
+        {
+            if (uploadedPath!=null) project.Storage.Delete(uploadedPath);
+        }
     }
 
     internal void AddAllFeratures(ProjectInfrastructure infrastructure)
     {
-        infrastructure.AddFeature(new CloudMachineFeature());
+        infrastructure.AddFeature(new OfxProjectFeature());
         infrastructure.AddFeature(new KeyVaultFeature());
         infrastructure.AddFeature(new OpenAIChatFeature("gpt-35-turbo", "0125"));
         infrastructure.AddFeature(new OpenAIEmbeddingFeature("text-embedding-ada-002", "2"));

@@ -15,14 +15,12 @@ infrastructure.AddFeature(new AppServiceFeature());
 // the app can be called with -init switch to generate bicep and prepare for azd deployment.
 if (infrastructure.TryExecuteCommand(args)) return;
 
-ProjectClient client = new();
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
 
 // Add ProjectClient to the DI container
-CloudMachineClient ofx = builder.AddCloudMachineClient();
+OfxProjectClient client = builder.AddOfxClient();
 
 var app = builder.Build();
 app.MapRazorPages();
@@ -32,9 +30,9 @@ EmbeddingsStore vectorDb = new(client.GetOpenAIEmbeddingClient());
 List<ChatMessage> prompt = [];
 
 // Register the vector db to be updated when a new file is uploaded
-ofx.Storage.WhenUploaded(vectorDb.Add);
+client.Storage.WhenUploaded(vectorDb.Add);
 
-app.MapPost("/upload", async (HttpRequest request, CloudMachineClient client)
+app.MapPost("/upload", async (HttpRequest request, OfxProjectClient client)
     => await client.Storage.UploadFormAsync(request));
 
 app.MapPost("/chat", async (HttpRequest request) =>

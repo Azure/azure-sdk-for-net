@@ -6,11 +6,11 @@ using Azure.Projects.Storage;
 
 namespace Azure.Projects.Ofx;
 
-public class CloudMachineFeature : AzureProjectFeature
+public class OfxProjectFeature : AzureProjectFeature
 {
     private readonly BlobContainerFeature _blobContainer;
 
-    public CloudMachineFeature()
+    public OfxProjectFeature()
     {
         _blobContainer = new BlobContainerFeature("default", isObservable: true);
     }

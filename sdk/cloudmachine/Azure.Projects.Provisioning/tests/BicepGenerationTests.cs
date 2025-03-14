@@ -106,10 +106,10 @@ public class BicepGenerationTests
     }
 
     [Test]
-    public void CloudMachine()
+    public void Ofx()
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
-        infrastructure.AddFeature(new CloudMachineFeature());
+        infrastructure.AddFeature(new OfxProjectFeature());
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
         File.WriteAllText("d:\\cm.bicep", actualBicep);

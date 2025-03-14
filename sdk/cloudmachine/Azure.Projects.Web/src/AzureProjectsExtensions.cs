@@ -35,9 +35,9 @@ public static class AzureProjectsExtensions
     /// Adds the project client to the DI container.
     /// </summary>
     /// <param name="builder"></param>
-    public static CloudMachineClient AddCloudMachineClient(this WebApplicationBuilder builder)
+    public static OfxProjectClient AddOfxClient(this WebApplicationBuilder builder)
     {
-        CloudMachineClient client = new();
+        OfxProjectClient client = new();
         builder.Services.AddSingleton(client);
         return client;
     }
