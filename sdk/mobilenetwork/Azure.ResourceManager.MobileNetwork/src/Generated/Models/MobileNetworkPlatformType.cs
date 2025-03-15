@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         private const string AKSHCIValue = "AKS-HCI";
-        private const string ThreePAzureStackHCIValue = "3P-AZURE-STACK-HCI";
+        private const string ThreePAzureStackHciValue = "3P-AZURE-STACK-HCI";
 
         /// <summary>
         /// If this option is chosen, you must set one of "azureStackEdgeDevice", "connectedCluster" or "customLocation". If multiple are set, they must be consistent with each other.
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// If this option is chosen, you must set one of "azureStackHciCluster", "connectedCluster" or "customLocation". If multiple are set, they must be consistent with each other.
         /// Serialized Name: PlatformType.3P-AZURE-STACK-HCI
         /// </summary>
-        public static MobileNetworkPlatformType ThreePAzureStackHCI { get; } = new MobileNetworkPlatformType(ThreePAzureStackHCIValue);
+        public static MobileNetworkPlatformType ThreePAzureStackHci { get; } = new MobileNetworkPlatformType(ThreePAzureStackHciValue);
         /// <summary> Determines if two <see cref="MobileNetworkPlatformType"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkPlatformType left, MobileNetworkPlatformType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobileNetworkPlatformType"/> values are not the same. </summary>
