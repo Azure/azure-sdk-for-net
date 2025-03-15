@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary>
     /// Recovery point model custom properties.
     /// Please note <see cref="RecoveryPointModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="HyperVToAzStackHciRecoveryPointModelCustomProperties"/>.
+    /// The available derived classes include <see cref="HyperVToAzStackHCIRecoveryPointModelCustomProperties"/> and <see cref="VMwareToAzStackHCIRecoveryPointModelCustomProperties"/>.
     /// </summary>
     public abstract partial class RecoveryPointModelCustomProperties
     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPointModelCustomProperties"/>. </summary>
-        /// <param name="instanceType"> Gets or sets the instance type. </param>
+        /// <param name="instanceType"> Discriminator property for RecoveryPointModelCustomProperties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RecoveryPointModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the instance type. </summary>
+        /// <summary> Discriminator property for RecoveryPointModelCustomProperties. </summary>
         internal string InstanceType { get; set; }
     }
 }

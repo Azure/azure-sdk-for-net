@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType.Value);
+                writer.WriteStringValue(ResourceType);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceName))
             {
@@ -86,6 +86,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             writer.WritePropertyName("customProperties"u8);
             writer.WriteObjectValue(CustomProperties, options);
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -123,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            ResourceType? resourceType = default;
+            string resourceType = default;
             string resourceName = default;
             string eventType = default;
             string eventName = default;
@@ -133,17 +138,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             string correlationId = default;
             IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             EventModelCustomProperties customProperties = default;
+            DataReplicationProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceType = new ResourceType(property.Value.GetString());
+                    resourceType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceName"u8))
@@ -204,6 +206,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     customProperties = EventModelCustomProperties.DeserializeEventModelCustomProperties(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new DataReplicationProvisioningState(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -221,6 +232,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 correlationId,
                 healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(),
                 customProperties,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

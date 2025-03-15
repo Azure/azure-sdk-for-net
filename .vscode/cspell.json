@@ -1174,6 +1174,7 @@
       "filename": "**/sdk/recoveryservices-datareplication/**/*.cs",
       "words": [
         "dras",
+        "fqdns",
         "nics",
         "reprotect"
       ]

@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         private const string PrimaryValue = "Primary";
         private const string RecoveryValue = "Recovery";
 
-        /// <summary> Primary. </summary>
+        /// <summary> Protected item is active on Primary. </summary>
         public static ProtectedItemActiveLocation Primary { get; } = new ProtectedItemActiveLocation(PrimaryValue);
-        /// <summary> Recovery. </summary>
+        /// <summary> Protected item is active on Recovery. </summary>
         public static ProtectedItemActiveLocation Recovery { get; } = new ProtectedItemActiveLocation(RecoveryValue);
         /// <summary> Determines if two <see cref="ProtectedItemActiveLocation"/> values are the same. </summary>
         public static bool operator ==(ProtectedItemActiveLocation left, ProtectedItemActiveLocation right) => left.Equals(right);

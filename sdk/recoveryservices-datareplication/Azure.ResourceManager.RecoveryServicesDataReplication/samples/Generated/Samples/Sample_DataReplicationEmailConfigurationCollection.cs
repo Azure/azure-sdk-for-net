@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_EmailConfigurationCreate()
+        public async Task CreateOrUpdate_CreatesEmailConfigurationSettings()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/EmailConfiguration_Create.json
-            // this example is just showing the usage of "EmailConfiguration_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/EmailConfiguration_Create.json
+            // this example is just showing the usage of "EmailConfigurationModel_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             // this example assumes you already have this DataReplicationVaultResource created on azure
             // for more information of creating DataReplicationVaultResource, please refer to the document of DataReplicationVaultResource
             string subscriptionId = "930CEC23-4430-4513-B855-DBA237E2F3BF";
-            string resourceGroupName = "rgrecoveryservicesdatareplication";
+            string resourceGroupName = "rgswagger_2024-09-01";
             string vaultName = "4";
             ResourceIdentifier dataReplicationVaultResourceId = DataReplicationVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
             DataReplicationVaultResource dataReplicationVault = client.GetDataReplicationVaultResource(dataReplicationVaultResourceId);
@@ -41,11 +41,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
             // invoke the operation
             string emailConfigurationName = "0";
-            DataReplicationEmailConfigurationData data = new DataReplicationEmailConfigurationData(new DataReplicationEmailConfigurationProperties(true)
+            DataReplicationEmailConfigurationData data = new DataReplicationEmailConfigurationData
             {
-                CustomEmailAddresses = { "ketvbducyailcny" },
-                Locale = "vpnjxjvdqtebnucyxiyrjiko",
-            });
+                Properties = new DataReplicationEmailConfigurationProperties(true)
+                {
+                    CustomEmailAddresses = { "ketvbducyailcny" },
+                    Locale = "vpnjxjvdqtebnucyxiyrjiko",
+                },
+            };
             ArmOperation<DataReplicationEmailConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, emailConfigurationName, data);
             DataReplicationEmailConfigurationResource result = lro.Value;
 
@@ -58,10 +61,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_EmailConfigurationGet()
+        public async Task Get_GetsTheEmailConfigurationSetting()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/EmailConfiguration_Get.json
-            // this example is just showing the usage of "EmailConfiguration_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/EmailConfiguration_Get.json
+            // this example is just showing the usage of "EmailConfigurationModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             // this example assumes you already have this DataReplicationVaultResource created on azure
             // for more information of creating DataReplicationVaultResource, please refer to the document of DataReplicationVaultResource
             string subscriptionId = "930CEC23-4430-4513-B855-DBA237E2F3BF";
-            string resourceGroupName = "rgrecoveryservicesdatareplication";
+            string resourceGroupName = "rgswagger_2024-09-01";
             string vaultName = "4";
             ResourceIdentifier dataReplicationVaultResourceId = DataReplicationVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
             DataReplicationVaultResource dataReplicationVault = client.GetDataReplicationVaultResource(dataReplicationVaultResourceId);
@@ -92,10 +95,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_EmailConfigurationList()
+        public async Task GetAll_ListsTheEmailConfigurationSettings()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/EmailConfiguration_List.json
-            // this example is just showing the usage of "EmailConfiguration_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/EmailConfiguration_List.json
+            // this example is just showing the usage of "EmailConfigurationModel_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -105,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             // this example assumes you already have this DataReplicationVaultResource created on azure
             // for more information of creating DataReplicationVaultResource, please refer to the document of DataReplicationVaultResource
             string subscriptionId = "930CEC23-4430-4513-B855-DBA237E2F3BF";
-            string resourceGroupName = "rgrecoveryservicesdatareplication";
+            string resourceGroupName = "rgswagger_2024-09-01";
             string vaultName = "4";
             ResourceIdentifier dataReplicationVaultResourceId = DataReplicationVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
             DataReplicationVaultResource dataReplicationVault = client.GetDataReplicationVaultResource(dataReplicationVaultResourceId);
@@ -128,10 +131,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_EmailConfigurationGet()
+        public async Task Exists_GetsTheEmailConfigurationSetting()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/EmailConfiguration_Get.json
-            // this example is just showing the usage of "EmailConfiguration_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/EmailConfiguration_Get.json
+            // this example is just showing the usage of "EmailConfigurationModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -141,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             // this example assumes you already have this DataReplicationVaultResource created on azure
             // for more information of creating DataReplicationVaultResource, please refer to the document of DataReplicationVaultResource
             string subscriptionId = "930CEC23-4430-4513-B855-DBA237E2F3BF";
-            string resourceGroupName = "rgrecoveryservicesdatareplication";
+            string resourceGroupName = "rgswagger_2024-09-01";
             string vaultName = "4";
             ResourceIdentifier dataReplicationVaultResourceId = DataReplicationVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
             DataReplicationVaultResource dataReplicationVault = client.GetDataReplicationVaultResource(dataReplicationVaultResourceId);
@@ -158,10 +161,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_EmailConfigurationGet()
+        public async Task GetIfExists_GetsTheEmailConfigurationSetting()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/EmailConfiguration_Get.json
-            // this example is just showing the usage of "EmailConfiguration_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/EmailConfiguration_Get.json
+            // this example is just showing the usage of "EmailConfigurationModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -171,7 +174,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             // this example assumes you already have this DataReplicationVaultResource created on azure
             // for more information of creating DataReplicationVaultResource, please refer to the document of DataReplicationVaultResource
             string subscriptionId = "930CEC23-4430-4513-B855-DBA237E2F3BF";
-            string resourceGroupName = "rgrecoveryservicesdatareplication";
+            string resourceGroupName = "rgswagger_2024-09-01";
             string vaultName = "4";
             ResourceIdentifier dataReplicationVaultResourceId = DataReplicationVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
             DataReplicationVaultResource dataReplicationVault = client.GetDataReplicationVaultResource(dataReplicationVaultResourceId);

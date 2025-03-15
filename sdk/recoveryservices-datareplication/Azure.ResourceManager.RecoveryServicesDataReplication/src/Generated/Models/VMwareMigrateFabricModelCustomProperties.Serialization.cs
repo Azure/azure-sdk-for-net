@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("vmwareSiteId"u8);
-            writer.WriteStringValue(VMwareSiteId);
+            writer.WriteStringValue(VmwareSiteId);
             writer.WritePropertyName("migrationSolutionId"u8);
             writer.WriteStringValue(MigrationSolutionId);
         }

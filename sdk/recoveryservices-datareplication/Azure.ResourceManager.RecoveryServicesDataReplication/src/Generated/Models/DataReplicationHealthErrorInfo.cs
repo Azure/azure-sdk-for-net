@@ -54,11 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationHealthErrorInfo"/>. </summary>
         /// <param name="affectedResourceType"> Gets or sets the type of affected resource type. </param>
-        /// <param name="affectedResourceCorrelationIds">
-        /// Gets or sets the list of affected resource correlation Ids. This can be used to
-        /// uniquely identify the count of items affected by a specific category and severity
-        /// as well as count of item affected by an specific issue.
-        /// </param>
+        /// <param name="affectedResourceCorrelationIds"> Gets or sets the list of affected resource correlation Ids. This can be used to uniquely identify the count of items affected by a specific category and severity as well as count of item affected by an specific issue. </param>
         /// <param name="childErrors"> Gets or sets a list of child health errors associated with this error. </param>
         /// <param name="code"> Gets or sets the error code. </param>
         /// <param name="healthCategory"> Gets or sets the health category. </param>
@@ -93,11 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Gets or sets the type of affected resource type. </summary>
         public string AffectedResourceType { get; }
-        /// <summary>
-        /// Gets or sets the list of affected resource correlation Ids. This can be used to
-        /// uniquely identify the count of items affected by a specific category and severity
-        /// as well as count of item affected by an specific issue.
-        /// </summary>
+        /// <summary> Gets or sets the list of affected resource correlation Ids. This can be used to uniquely identify the count of items affected by a specific category and severity as well as count of item affected by an specific issue. </summary>
         public IReadOnlyList<string> AffectedResourceCorrelationIds { get; }
         /// <summary> Gets or sets a list of child health errors associated with this error. </summary>
         public IReadOnlyList<DataReplicationInnerHealthErrorInfo> ChildErrors { get; }

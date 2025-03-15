@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="serviceResourceId"> Gets or sets the service resource Id. </param>
         /// <param name="vaultType"> Gets or sets the type of vault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationVaultProperties(DataReplicationProvisioningState? provisioningState, ResourceIdentifier serviceResourceId, DataReplicationReplicationVaultType? vaultType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataReplicationVaultProperties(DataReplicationProvisioningState? provisioningState, ResourceIdentifier serviceResourceId, DataReplicationVaultType? vaultType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ServiceResourceId = serviceResourceId;
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Gets or sets the service resource Id. </summary>
         public ResourceIdentifier ServiceResourceId { get; }
         /// <summary> Gets or sets the type of vault. </summary>
-        public DataReplicationReplicationVaultType? VaultType { get; set; }
+        public DataReplicationVaultType? VaultType { get; set; }
     }
 }
