@@ -330,30 +330,30 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Retrieves an existing agent. </summary>
-        /// <param name="agentId"> Identifier of the agent. </param>
+        /// <param name="assistantId"> Identifier of the agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Agent>> GetAgentAsync(string agentId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<Agent>> GetAgentAsync(string assistantId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAgentAsync(agentId, context).ConfigureAwait(false);
+            Response response = await GetAgentAsync(assistantId, context).ConfigureAwait(false);
             return Response.FromValue(Agent.FromResponse(response), response);
         }
 
         /// <summary> Retrieves an existing agent. </summary>
-        /// <param name="agentId"> Identifier of the agent. </param>
+        /// <param name="assistantId"> Identifier of the agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Agent> GetAgent(string agentId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<Agent> GetAgent(string assistantId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAgent(agentId, context);
+            Response response = GetAgent(assistantId, context);
             return Response.FromValue(Agent.FromResponse(response), response);
         }
 
@@ -372,21 +372,21 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="agentId"> Identifier of the agent. </param>
+        /// <param name="assistantId"> Identifier of the agent. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAgentAsync(string agentId, RequestContext context)
+        public virtual async Task<Response> GetAgentAsync(string assistantId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             using var scope = ClientDiagnostics.CreateScope("AgentsClient.GetAgent");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAgentRequest(agentId, context);
+                using HttpMessage message = CreateGetAgentRequest(assistantId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -411,21 +411,21 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="agentId"> Identifier of the agent. </param>
+        /// <param name="assistantId"> Identifier of the agent. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetAgent(string agentId, RequestContext context)
+        public virtual Response GetAgent(string assistantId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             using var scope = ClientDiagnostics.CreateScope("AgentsClient.GetAgent");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAgentRequest(agentId, context);
+                using HttpMessage message = CreateGetAgentRequest(assistantId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -436,7 +436,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Modifies an existing agent. </summary>
-        /// <param name="agentId"> The ID of the agent to modify. </param>
+        /// <param name="assistantId"> The ID of the agent to modify. </param>
         /// <param name="model"> The ID of the model to use. </param>
         /// <param name="name"> The modified name for the agent to use. </param>
         /// <param name="description"> The modified description for the agent to use. </param>
@@ -459,11 +459,11 @@ namespace Azure.AI.Projects
         /// <param name="responseFormat"> The response format of the tool calls used by this agent. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Agent>> UpdateAgentAsync(string agentId, string model = null, string name = null, string description = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, ToolResources toolResources = null, float? temperature = null, float? topP = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<Agent>> UpdateAgentAsync(string assistantId, string model = null, string name = null, string description = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, ToolResources toolResources = null, float? temperature = null, float? topP = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             UpdateAgentRequest updateAgentRequest = new UpdateAgentRequest(
                 model,
@@ -478,12 +478,12 @@ namespace Azure.AI.Projects
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UpdateAgentAsync(agentId, updateAgentRequest.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await UpdateAgentAsync(assistantId, updateAgentRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(Agent.FromResponse(response), response);
         }
 
         /// <summary> Modifies an existing agent. </summary>
-        /// <param name="agentId"> The ID of the agent to modify. </param>
+        /// <param name="assistantId"> The ID of the agent to modify. </param>
         /// <param name="model"> The ID of the model to use. </param>
         /// <param name="name"> The modified name for the agent to use. </param>
         /// <param name="description"> The modified description for the agent to use. </param>
@@ -506,11 +506,11 @@ namespace Azure.AI.Projects
         /// <param name="responseFormat"> The response format of the tool calls used by this agent. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Agent> UpdateAgent(string agentId, string model = null, string name = null, string description = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, ToolResources toolResources = null, float? temperature = null, float? topP = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<Agent> UpdateAgent(string assistantId, string model = null, string name = null, string description = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, ToolResources toolResources = null, float? temperature = null, float? topP = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             UpdateAgentRequest updateAgentRequest = new UpdateAgentRequest(
                 model,
@@ -525,7 +525,7 @@ namespace Azure.AI.Projects
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UpdateAgent(agentId, updateAgentRequest.ToRequestContent(), context);
+            Response response = UpdateAgent(assistantId, updateAgentRequest.ToRequestContent(), context);
             return Response.FromValue(Agent.FromResponse(response), response);
         }
 
@@ -544,23 +544,23 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="agentId"> The ID of the agent to modify. </param>
+        /// <param name="assistantId"> The ID of the agent to modify. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateAgentAsync(string agentId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> UpdateAgentAsync(string assistantId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AgentsClient.UpdateAgent");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateAgentRequest(agentId, content, context);
+                using HttpMessage message = CreateUpdateAgentRequest(assistantId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -585,23 +585,23 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="agentId"> The ID of the agent to modify. </param>
+        /// <param name="assistantId"> The ID of the agent to modify. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response UpdateAgent(string agentId, RequestContent content, RequestContext context = null)
+        public virtual Response UpdateAgent(string assistantId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AgentsClient.UpdateAgent");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateAgentRequest(agentId, content, context);
+                using HttpMessage message = CreateUpdateAgentRequest(assistantId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -612,30 +612,30 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Deletes an agent. </summary>
-        /// <param name="agentId"> Identifier of the agent. </param>
+        /// <param name="assistantId"> Identifier of the agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<InternalAgentDeletionStatus>> InternalDeleteAgentAsync(string agentId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual async Task<Response<InternalAgentDeletionStatus>> InternalDeleteAgentAsync(string assistantId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await InternalDeleteAgentAsync(agentId, context).ConfigureAwait(false);
+            Response response = await InternalDeleteAgentAsync(assistantId, context).ConfigureAwait(false);
             return Response.FromValue(InternalAgentDeletionStatus.FromResponse(response), response);
         }
 
         /// <summary> Deletes an agent. </summary>
-        /// <param name="agentId"> Identifier of the agent. </param>
+        /// <param name="assistantId"> Identifier of the agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<InternalAgentDeletionStatus> InternalDeleteAgent(string agentId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual Response<InternalAgentDeletionStatus> InternalDeleteAgent(string assistantId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = InternalDeleteAgent(agentId, context);
+            Response response = InternalDeleteAgent(assistantId, context);
             return Response.FromValue(InternalAgentDeletionStatus.FromResponse(response), response);
         }
 
@@ -654,21 +654,21 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="agentId"> Identifier of the agent. </param>
+        /// <param name="assistantId"> Identifier of the agent. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> InternalDeleteAgentAsync(string agentId, RequestContext context)
+        internal virtual async Task<Response> InternalDeleteAgentAsync(string assistantId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             using var scope = ClientDiagnostics.CreateScope("AgentsClient.InternalDeleteAgent");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalDeleteAgentRequest(agentId, context);
+                using HttpMessage message = CreateInternalDeleteAgentRequest(assistantId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -693,21 +693,21 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="agentId"> Identifier of the agent. </param>
+        /// <param name="assistantId"> Identifier of the agent. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response InternalDeleteAgent(string agentId, RequestContext context)
+        internal virtual Response InternalDeleteAgent(string assistantId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(agentId, nameof(agentId));
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
             using var scope = ClientDiagnostics.CreateScope("AgentsClient.InternalDeleteAgent");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalDeleteAgentRequest(agentId, context);
+                using HttpMessage message = CreateInternalDeleteAgentRequest(assistantId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1669,7 +1669,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Creates a new run for an agent thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="agentId"> The ID of the agent that should run the thread. </param>
+        /// <param name="assistantId"> The ID of the agent that should run the thread. </param>
         /// <param name="overrideModelName"> The overridden model name that the agent should use to run the thread. </param>
         /// <param name="overrideInstructions"> The overridden system instructions that the agent should use to run the thread. </param>
         /// <param name="additionalInstructions">
@@ -1713,15 +1713,15 @@ namespace Azure.AI.Projects
         /// Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content` to fetch the file search result content.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="agentId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ThreadRun>> CreateRunAsync(string threadId, string agentId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<RunAdditionalFieldList> include = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadRun>> CreateRunAsync(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<RunAdditionalFieldList> include = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNull(agentId, nameof(agentId));
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
 
             CreateRunRequest createRunRequest = new CreateRunRequest(
-                agentId,
+                assistantId,
                 overrideModelName,
                 overrideInstructions,
                 additionalInstructions,
@@ -1745,7 +1745,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Creates a new run for an agent thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="agentId"> The ID of the agent that should run the thread. </param>
+        /// <param name="assistantId"> The ID of the agent that should run the thread. </param>
         /// <param name="overrideModelName"> The overridden model name that the agent should use to run the thread. </param>
         /// <param name="overrideInstructions"> The overridden system instructions that the agent should use to run the thread. </param>
         /// <param name="additionalInstructions">
@@ -1789,15 +1789,15 @@ namespace Azure.AI.Projects
         /// Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content` to fetch the file search result content.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="agentId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ThreadRun> CreateRun(string threadId, string agentId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<RunAdditionalFieldList> include = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadRun> CreateRun(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<RunAdditionalFieldList> include = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNull(agentId, nameof(agentId));
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
 
             CreateRunRequest createRunRequest = new CreateRunRequest(
-                agentId,
+                assistantId,
                 overrideModelName,
                 overrideInstructions,
                 additionalInstructions,
@@ -2382,7 +2382,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Creates a new agent thread and immediately starts a run using that new thread. </summary>
-        /// <param name="agentId"> The ID of the agent for which the thread should be created. </param>
+        /// <param name="assistantId"> The ID of the agent for which the thread should be created. </param>
         /// <param name="thread"> The details used to create the new thread. If no thread is provided, an empty one will be created. </param>
         /// <param name="overrideModelName"> The overridden model that the agent should use to run the thread. </param>
         /// <param name="overrideInstructions"> The overridden system instructions the agent should use to run the thread. </param>
@@ -2419,13 +2419,13 @@ namespace Azure.AI.Projects
         /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> is null. </exception>
-        public virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(string agentId, AgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        public virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(string assistantId, AgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(agentId, nameof(agentId));
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
 
             CreateThreadAndRunRequest createThreadAndRunRequest = new CreateThreadAndRunRequest(
-                agentId,
+                assistantId,
                 thread,
                 overrideModelName,
                 overrideInstructions,
@@ -2448,7 +2448,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Creates a new agent thread and immediately starts a run using that new thread. </summary>
-        /// <param name="agentId"> The ID of the agent for which the thread should be created. </param>
+        /// <param name="assistantId"> The ID of the agent for which the thread should be created. </param>
         /// <param name="thread"> The details used to create the new thread. If no thread is provided, an empty one will be created. </param>
         /// <param name="overrideModelName"> The overridden model that the agent should use to run the thread. </param>
         /// <param name="overrideInstructions"> The overridden system instructions the agent should use to run the thread. </param>
@@ -2485,13 +2485,13 @@ namespace Azure.AI.Projects
         /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> is null. </exception>
-        public virtual Response<ThreadRun> CreateThreadAndRun(string agentId, AgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        public virtual Response<ThreadRun> CreateThreadAndRun(string assistantId, AgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(agentId, nameof(agentId));
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
 
             CreateThreadAndRunRequest createThreadAndRunRequest = new CreateThreadAndRunRequest(
-                agentId,
+                assistantId,
                 thread,
                 overrideModelName,
                 overrideInstructions,
@@ -4931,7 +4931,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetAgentRequest(string agentId, RequestContext context)
+        internal HttpMessage CreateGetAgentRequest(string assistantId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4945,14 +4945,14 @@ namespace Azure.AI.Projects
             uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendRaw(_projectName, true);
             uri.AppendPath("/assistants/", false);
-            uri.AppendPath(agentId, true);
+            uri.AppendPath(assistantId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateUpdateAgentRequest(string agentId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateAgentRequest(string assistantId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4966,7 +4966,7 @@ namespace Azure.AI.Projects
             uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendRaw(_projectName, true);
             uri.AppendPath("/assistants/", false);
-            uri.AppendPath(agentId, true);
+            uri.AppendPath(assistantId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -4975,7 +4975,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal HttpMessage CreateInternalDeleteAgentRequest(string agentId, RequestContext context)
+        internal HttpMessage CreateInternalDeleteAgentRequest(string assistantId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4989,7 +4989,7 @@ namespace Azure.AI.Projects
             uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendRaw(_projectName, true);
             uri.AppendPath("/assistants/", false);
-            uri.AppendPath(agentId, true);
+            uri.AppendPath(assistantId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

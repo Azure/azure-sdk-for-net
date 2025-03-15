@@ -46,19 +46,19 @@ namespace Azure.AI.Projects
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CreateThreadAndRunRequest"/>. </summary>
-        /// <param name="agentId"> The ID of the agent for which the thread should be created. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> is null. </exception>
-        internal CreateThreadAndRunRequest(string agentId)
+        /// <param name="assistantId"> The ID of the agent for which the thread should be created. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        internal CreateThreadAndRunRequest(string assistantId)
         {
-            Argument.AssertNotNull(agentId, nameof(agentId));
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
 
-            AgentId = agentId;
+            AssistantId = assistantId;
             OverrideTools = new ChangeTrackingList<ToolDefinition>();
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateThreadAndRunRequest"/>. </summary>
-        /// <param name="agentId"> The ID of the agent for which the thread should be created. </param>
+        /// <param name="assistantId"> The ID of the agent for which the thread should be created. </param>
         /// <param name="thread"> The details used to create the new thread. If no thread is provided, an empty one will be created. </param>
         /// <param name="overrideModelName"> The overridden model that the agent should use to run the thread. </param>
         /// <param name="overrideInstructions"> The overridden system instructions the agent should use to run the thread. </param>
@@ -99,9 +99,9 @@ namespace Azure.AI.Projects
         /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateThreadAndRunRequest(string agentId, AgentThreadCreationOptions thread, string overrideModelName, string overrideInstructions, IReadOnlyList<ToolDefinition> overrideTools, UpdateToolResourcesOptions toolResources, bool? stream, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, TruncationObject truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, bool? parallelToolCalls, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateThreadAndRunRequest(string assistantId, AgentThreadCreationOptions thread, string overrideModelName, string overrideInstructions, IReadOnlyList<ToolDefinition> overrideTools, UpdateToolResourcesOptions toolResources, bool? stream, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, TruncationObject truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, bool? parallelToolCalls, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AgentId = agentId;
+            AssistantId = assistantId;
             Thread = thread;
             OverrideModelName = overrideModelName;
             OverrideInstructions = overrideInstructions;
@@ -126,7 +126,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The ID of the agent for which the thread should be created. </summary>
-        public string AgentId { get; }
+        public string AssistantId { get; }
         /// <summary> The details used to create the new thread. If no thread is provided, an empty one will be created. </summary>
         public AgentThreadCreationOptions Thread { get; }
         /// <summary> The overridden model that the agent should use to run the thread. </summary>
