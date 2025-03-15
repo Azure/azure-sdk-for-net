@@ -108,18 +108,20 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="collectionId"> The collection id. </param>
+        /// <param name="tags"> The tags. </param>
         /// <param name="context"> The request context. </param>
         public virtual Operation PostLedgerEntry(
             WaitUntil waitUntil,
             RequestContent content,
             string collectionId = null,
+            string tags = null,
             RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, context);
+                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, context);
                 var response = _pipeline.ProcessMessage(message, context);
                 response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
 
@@ -154,18 +156,20 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="collectionId"> The collection id. </param>
+        /// <param name="tags"> The tags. </param>
         /// <param name="context"> The request context. </param>
         public virtual async Task<Operation> PostLedgerEntryAsync(
             WaitUntil waitUntil,
             RequestContent content,
             string collectionId = null,
+            string tags = null,
             RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, context);
+                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, context);
                 var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
 
