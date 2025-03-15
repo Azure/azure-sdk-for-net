@@ -52,9 +52,8 @@ Invoke-LoggedCommand "dotnet build $packageRoot/generator/TestProjects/Local/Bas
 Write-Host "Generating MgmtTypeSpec" -ForegroundColor Cyan
 Invoke-LoggedCommand (Get-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject)
 
-# temporarily disable building MgmtTypeSpec because now the generated code of this project cannot build
-# Write-Host "Building BasicTypeSpec" -ForegroundColor Cyan
-# Invoke-LoggedCommand "dotnet build $packageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/MgmtTypeSpec.csproj"
+Write-Host "Building MgmtTypeSpec" -ForegroundColor Cyan
+Invoke-LoggedCommand "dotnet build $packageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/MgmtTypeSpec.csproj"
 
 Pop-Location
 
