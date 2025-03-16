@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                     // "Azure Event Grid SDK" subscription.
                     Destination = new WebHookEventSubscriptionDestination
                     {
-                        Endpoint = new Uri("https://prod-71.eastus.logic.azure.com:443/workflows/b60c5432896846608c05de3a96be6de2/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=SANITIZED_FUNCTION_KEY"),
+                        Endpoint = new Uri("https://prod-71.eastus.logic.azure.com:443/workflows/b60c5432896846608c05de3a96be6de2/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=Sanitized&sig=Sanitized"),
                     }
                 }
             };
