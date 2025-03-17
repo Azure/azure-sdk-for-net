@@ -239,11 +239,11 @@
     <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
     <PackageReference Update="Microsoft.Azure.Functions.Worker.Extensions.Abstractions" Version="1.1.0" />
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.8.0" /> <!-- Latest confirmed as compatible by the Functions team. DO NOT BUMP-->
-    <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
-    <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.1" />
+    <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.1" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.1" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="2.1.0" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="2.1.1" />
     <PackageReference Update="Microsoft.Extensions.Options" Version="2.1.0" />
   </ItemGroup>
 
