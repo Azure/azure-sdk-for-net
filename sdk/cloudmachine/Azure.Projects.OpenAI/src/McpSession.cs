@@ -33,10 +33,10 @@ internal class McpSession : IDisposable
 
     public async Task EnsureInitializedAsync()
     {
-        Console.WriteLine("Ensuring session is initialized...");
+        DebugPrint("Ensuring session is initialized...");
         if (_isInitialized && _activeHandshake != null)
         {
-            Console.WriteLine("Session is already initialized.");
+            DebugPrint("Session is already initialized.");
             return;
         }
 
@@ -45,7 +45,7 @@ internal class McpSession : IDisposable
         {
             if (_isInitialized && _activeHandshake != null)
             {
-                Console.WriteLine("Session is already initialized.");
+                DebugPrint("Session is already initialized.");
                 return;
             }
 
@@ -60,16 +60,16 @@ internal class McpSession : IDisposable
     public async Task StopAsync()
     {
         await _cancellationSource.CancelAsync().ConfigureAwait(false);
-        Console.WriteLine("Stopping session...");
+        DebugPrint("Stopping session...");
         CleanupCurrentSession();
         _isInitialized = false;
         _cancellationSource = new CancellationTokenSource();
-        Console.WriteLine("Session stopped.");
+        DebugPrint("Session stopped.");
     }
 
     private async Task InitializeSessionAsync()
     {
-        Console.WriteLine("Initializing session...");
+        DebugPrint("Initializing session...");
         CleanupCurrentSession();
 
         _activeHandshake = CreateHandshakeMessage();
@@ -108,7 +108,7 @@ internal class McpSession : IDisposable
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"SSE processing failed: {ex.Message}");
+                DebugPrint($"SSE processing failed: {ex.Message}");
                 _isInitialized = false;
             }
         }, _cancellationSource.Token);
@@ -145,11 +145,11 @@ internal class McpSession : IDisposable
                     dataBuilder.Clear();
                 }
             }
-            Console.WriteLine("SSE stream processing stopped.");
+            DebugPrint("SSE stream processing stopped.");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error processing SSE stream: {ex.Message}");
+            DebugPrint($"Error processing SSE stream: {ex.Message}");
         }
     }
 
@@ -168,12 +168,12 @@ internal class McpSession : IDisposable
                 break;
 
             case "message":
-                Console.WriteLine($"Received message: {sseEvent.Data}");
+                DebugPrint($"Received message: {sseEvent.Data}");
                 await _messageRouter.RouteMessageAsync(sseEvent).ConfigureAwait(false);
                 break;
 
             default:
-                Console.WriteLine($"Unknown event: {sseEvent.Event}");
+                DebugPrint($"Unknown event: {sseEvent.Event}");
                 break;
         }
     }
@@ -349,7 +349,7 @@ internal class McpSession : IDisposable
 
     public async Task SendAsync(string json)
     {
-        Console.WriteLine($"sending:\n {json}\n");
+        DebugPrint($"sending:\n {json}\n");
         using PipelineMessage message = _pipeline.CreateMessage();
         using PipelineRequest request = message.Request;
         request.Uri = new Uri(_messageEndpoint);
@@ -362,7 +362,6 @@ internal class McpSession : IDisposable
         request.Content = BinaryContent.Create(jsonBytes);
         await _pipeline.SendAsync(message).ConfigureAwait(false);
         var response = message.Response;
-        Console.WriteLine(response!.Status);
     }
 
     private void CleanupCurrentSession()
@@ -439,7 +438,7 @@ internal class McpSession : IDisposable
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error in message handler for ID {id}: {ex.Message}");
+                    DebugPrint($"Error in message handler for ID {id}: {ex.Message}");
                 }
             }
         }
@@ -486,9 +485,19 @@ internal class McpSession : IDisposable
             }
             catch (JsonException ex)
             {
-                Console.WriteLine($"Error parsing JSON: {ex.Message}");
+                DebugPrint($"Error parsing JSON: {ex.Message}");
                 return -1;
             }
         }
+    }
+
+    private static void DebugPrint(string message)
+    {
+        #if DEBUG
+        var color = Console.ForegroundColor;
+        Console.ForegroundColor = ConsoleColor.DarkGray;// This is a placeholder for a debug print functi
+        Console.WriteLine(message);
+        Console.ForegroundColor = color;
+        #endif
     }
 }

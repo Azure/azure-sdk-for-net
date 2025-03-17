@@ -25,26 +25,28 @@ ChatProcessor processor = new(
     tools
 );
 
+await tools.AddMcpServerAsync("http://localhost:3001/sse");
+
 while (true)
 {
     Console.Write("> ");
-    await tools.AddMcpServerAsync("http://localhost:3001/sse");
-    string prompt = "can you get detailed information about the storage account 'stchriss2334910047646422' in resourec group 'cm0ddf918b146443b' in subscription 'faa080af-c1d8-40ad-9cce-e1a450ca5b57'";
-    // string prompt = Console.ReadLine();
-    // if (string.IsNullOrEmpty(prompt)) continue;
-    // if (string.Equals(prompt, "bye", StringComparison.OrdinalIgnoreCase)) break;
-    // if (prompt.StartsWith("fact:", StringComparison.OrdinalIgnoreCase))
-    // {
-    //     string fact = prompt[5..].Trim();
-    //     processor.VectorDb.Add(fact);
-    //     continue;
-    // }
-    // if (prompt.StartsWith("addmcp:", StringComparison.OrdinalIgnoreCase))
-    // {
-    //     string mcp = prompt[7..].Trim();
-    //     await tools.AddMcpServerAsync(mcp);
-    //     continue;
-    // }
+    string prompt = Console.ReadLine();
+    if (string.IsNullOrEmpty(prompt))
+        continue;
+    if (string.Equals(prompt, "bye", StringComparison.OrdinalIgnoreCase))
+        break;
+    if (prompt.StartsWith("fact:", StringComparison.OrdinalIgnoreCase))
+    {
+        string fact = prompt[5..].Trim();
+        processor.VectorDb.Add(fact);
+        continue;
+    }
+    if (prompt.StartsWith("addmcp:", StringComparison.OrdinalIgnoreCase))
+    {
+        string mcp = prompt[7..].Trim();
+        await tools.AddMcpServerAsync(mcp);
+        continue;
+    }
 
     ChatCompletion completion = await processor.TakeTurnAsync(conversation, prompt).ConfigureAwait(false);
 

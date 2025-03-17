@@ -33,7 +33,6 @@ internal class McpClient
         if (_session == null)
             throw new InvalidOperationException("Session is not initialized. Call StartAsync() first.");
 
-        Console.WriteLine("Listing tools...");
         return await _session.SendMethod("tools/list").ConfigureAwait(false);
     }
 
