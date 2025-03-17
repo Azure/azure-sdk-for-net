@@ -10,7 +10,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Azure.AI.OpenAI" />
     <PackageReference Include="Azure.Provisioning.Deployment" />
-    <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1"/>
+    <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,7 +21,7 @@
   <ItemGroup>
     <None Update="Data/*" CopyToOutputDirectory="Always" />
     <None Update="appsettings.json" CopyToOutputDirectory="Always" />
-    <None Update="Data\ofx.bicep">
+    <None Update="Data\blobsObservable.bicep">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

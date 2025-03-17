@@ -34,11 +34,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="writeBehavior"> The write behavior for the operation. </param>
         /// <param name="ignoreNullValues"> The flag indicating whether to ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="alternateKeyName"> The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string). </param>
-        internal DynamicsCrmSink(string copySinkType, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DynamicsSinkWriteBehavior writeBehavior, DataFactoryElement<bool> ignoreNullValues, DataFactoryElement<string> alternateKeyName) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        /// <param name="bypassBusinessLogicExecution"> Controls the bypass of Dataverse custom business logic. Type: string (or Expression with resultType string). Type: string (or Expression with resultType string). </param>
+        /// <param name="bypassPowerAutomateFlows"> Controls the bypass of Power Automate flows. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        internal DynamicsCrmSink(string copySinkType, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DynamicsSinkWriteBehavior writeBehavior, DataFactoryElement<bool> ignoreNullValues, DataFactoryElement<string> alternateKeyName, DataFactoryElement<string> bypassBusinessLogicExecution, DataFactoryElement<bool> bypassPowerAutomateFlows) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             WriteBehavior = writeBehavior;
             IgnoreNullValues = ignoreNullValues;
             AlternateKeyName = alternateKeyName;
+            BypassBusinessLogicExecution = bypassBusinessLogicExecution;
+            BypassPowerAutomateFlows = bypassPowerAutomateFlows;
             CopySinkType = copySinkType ?? "DynamicsCrmSink";
         }
 
@@ -53,5 +57,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<bool> IgnoreNullValues { get; set; }
         /// <summary> The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> AlternateKeyName { get; set; }
+        /// <summary> Controls the bypass of Dataverse custom business logic. Type: string (or Expression with resultType string). Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> BypassBusinessLogicExecution { get; set; }
+        /// <summary> Controls the bypass of Power Automate flows. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        public DataFactoryElement<bool> BypassPowerAutomateFlows { get; set; }
     }
 }

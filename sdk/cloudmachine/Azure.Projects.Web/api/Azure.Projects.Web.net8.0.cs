@@ -2,8 +2,8 @@ namespace Azure.Projects
 {
     public static partial class AzureProjectsExtensions
     {
-        public static void MapAzureProjectsApplication<T>(this Microsoft.AspNetCore.Builder.WebApplication application) where T : class { }
-        public static void Map<T>(this Microsoft.AspNetCore.Routing.IEndpointRouteBuilder routeBuilder, T serviceImplementation) where T : class { }
+        public static Azure.Projects.OfxProjectClient AddOfxClient(this Microsoft.AspNetCore.Builder.WebApplicationBuilder builder) { throw null; }
+        public static Azure.Projects.ProjectClient AddProjectClient(this Microsoft.AspNetCore.Builder.WebApplicationBuilder builder) { throw null; }
         public static System.Threading.Tasks.Task UploadFormAsync(this Azure.Projects.StorageServices storage, Microsoft.AspNetCore.Http.HttpRequest multiPartFormData) { throw null; }
     }
     public partial class TspCommands
