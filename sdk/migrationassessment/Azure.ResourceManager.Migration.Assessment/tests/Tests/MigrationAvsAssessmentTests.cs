@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             ResourceGroupResource rg = await DefaultSubscription.GetResourceGroups().GetAsync("venkatjakka-rvtools");
 
             var response =
-                await rg.GetMigrationAssessmentProjectAsync("anf-boliden1307project");
+                await rg.GetMigrationAssessmentProjectAsync("anfboliden-prod45e2project");
             var assessmentProjectResource = response.Value;
             Assert.IsNotNull(assessmentProjectResource);
 

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             Assert.GreaterOrEqual(allAssessments.Count, 1);
 
             // add wait period of 10 mins
-            await Task.Delay(360000);
+            //await Task.Delay(360000);
 
             // Download Assessment Report
             BinaryData body = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
