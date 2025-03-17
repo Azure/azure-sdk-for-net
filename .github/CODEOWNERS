@@ -834,9 +834,6 @@
 # PRLabel: %Service Bus %Functions
 /sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/     @JoshLove-msft @jsquire
 
-# ServiceLabel: %Secret Store Extension
-# ServiceOwners:                                                   @cjoprey @locomotiveviaduct
-
 # ServiceLabel: %Service Bus
 # AzureSdkOwners:                                                  @JoshLove-msft
 # ServiceOwners:                                                   @shankarsama @EldertGrootenboer
@@ -1074,6 +1071,12 @@
 
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
+
+# PRLabel: %Secret Store Extension
+/sdk/edgeworkloadsecurity/Azure.ResourceManager.*/                 @cjoprey @locomotiveviaduct
+
+# ServiceLabel: %Secret Store Extension %Mgmt
+# ServiceOwners:                                                   @cjoprey @locomotiveviaduct
 
 # PRLabel: %Self Help
 /sdk/selfhelp/Azure.ResourceManager.*/                             @ArcturusZhang @ArthurMa1978
