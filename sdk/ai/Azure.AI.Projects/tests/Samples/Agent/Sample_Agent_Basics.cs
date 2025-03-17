@@ -28,7 +28,7 @@ public partial class Sample_Agent_Basics : SamplesBase<AIProjectsTestEnvironment
         // Step 1: Create an agent
         #region Snippet:OverviewCreateAgent
         Response<Agent> agentResponse = await client.CreateAgentAsync(
-            model: "gpt-4-1106-preview",
+            model: "gpt-4",
             name: "Math Tutor",
             instructions: "You are a personal math tutor. Write and run code to answer math questions.",
             tools: new List<ToolDefinition> { new CodeInterpreterToolDefinition() });

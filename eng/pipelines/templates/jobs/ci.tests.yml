@@ -120,6 +120,10 @@ jobs:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
 
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+        parameters:
+          NuGetCacheKey: Test
+
       # this section is only included when invoking with a dynamic set of packages (EG net - pullrequest)
       - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
         - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
@@ -133,10 +137,6 @@ jobs:
             }
           displayName: Install Azurite If Necessary
           condition: ne(variables['ProjectNames'], '')
-
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
-        parameters:
-          NuGetCacheKey: Test
 
       # ProjectListOverrideFile is set by the customization within dependency.tests.yml
       # OR it is set by the PR built to target a set of packages outside of a single target service directory.
@@ -172,7 +172,6 @@ jobs:
           /p:EnableSourceLink=false
           /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
           /p:EnableOverrideExclusions=true
-          /p:RemoveTrack1Projects=true
           $(AdditionalTestArguments)
           $(DiagnosticArguments)
         displayName: "Build & Test ($(TestTargetFramework))"

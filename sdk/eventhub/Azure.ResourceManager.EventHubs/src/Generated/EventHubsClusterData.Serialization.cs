@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEventHubsClusterData(document.RootElement, options);
                     }
                 default:

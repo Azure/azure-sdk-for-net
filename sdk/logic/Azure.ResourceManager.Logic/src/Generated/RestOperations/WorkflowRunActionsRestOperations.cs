@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowRunActionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogicWorkflowRunActionListResult.DeserializeLogicWorkflowRunActionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowRunActionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogicWorkflowRunActionListResult.DeserializeLogicWorkflowRunActionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowRunActionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogicWorkflowRunActionData.DeserializeLogicWorkflowRunActionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowRunActionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogicWorkflowRunActionData.DeserializeLogicWorkflowRunActionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         ExpressionTraces value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExpressionTraces.DeserializeExpressionTraces(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         ExpressionTraces value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExpressionTraces.DeserializeExpressionTraces(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowRunActionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogicWorkflowRunActionListResult.DeserializeLogicWorkflowRunActionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowRunActionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogicWorkflowRunActionListResult.DeserializeLogicWorkflowRunActionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

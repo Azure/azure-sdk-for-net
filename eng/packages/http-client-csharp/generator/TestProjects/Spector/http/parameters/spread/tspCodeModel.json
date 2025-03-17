@@ -8,7 +8,7 @@
    "$id": "2",
    "kind": "model",
    "name": "SpreadAsRequestBodyRequest",
-   "clientNamespace": "Parameters.Spread.Alias",
+   "namespace": "Parameters.Spread.Alias",
    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestBody.Request.anonymous",
    "usage": "Spread,Json",
    "decorators": [],
@@ -45,7 +45,7 @@
    "$id": "7",
    "kind": "model",
    "name": "SpreadParameterWithInnerModelRequest",
-   "clientNamespace": "",
+   "namespace": "",
    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.Request.anonymous",
    "usage": "Spread,Json",
    "decorators": [],
@@ -82,7 +82,7 @@
    "$id": "12",
    "kind": "model",
    "name": "SpreadAsRequestParameterRequest",
-   "clientNamespace": "",
+   "namespace": "",
    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.Request.anonymous",
    "usage": "Spread,Json",
    "decorators": [],
@@ -119,7 +119,7 @@
    "$id": "17",
    "kind": "model",
    "name": "SpreadWithMultipleParametersRequest",
-   "clientNamespace": "",
+   "namespace": "",
    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.Request.anonymous",
    "usage": "Spread,Json",
    "decorators": [],
@@ -252,7 +252,7 @@
    "$id": "36",
    "kind": "model",
    "name": "SpreadParameterWithInnerAliasRequest",
-   "clientNamespace": "",
+   "namespace": "",
    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.Request.anonymous",
    "usage": "Spread,Json",
    "decorators": [],
@@ -317,7 +317,7 @@
    "$id": "45",
    "kind": "model",
    "name": "BodyParameter",
-   "clientNamespace": "Parameters.Spread.Model",
+   "namespace": "Parameters.Spread.Model",
    "crossLanguageDefinitionId": "Parameters.Spread.Model.BodyParameter",
    "usage": "Input,Spread,Json",
    "doc": "This is a simple model.",
@@ -355,7 +355,7 @@
    "$id": "50",
    "kind": "model",
    "name": "SpreadCompositeRequestMixRequest",
-   "clientNamespace": "",
+   "namespace": "",
    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.Request.anonymous",
    "usage": "Spread,Json",
    "decorators": [],
@@ -393,7 +393,7 @@
   {
    "$id": "55",
    "Name": "SpreadClient",
-   "ClientNamespace": "Parameters.Spread",
+   "Namespace": "Parameters.Spread",
    "Doc": "Test for the spread operator.",
    "Operations": [],
    "Protocol": {
@@ -432,12 +432,13 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Parameters.Spread"
   },
   {
    "$id": "61",
    "Name": "Model",
-   "ClientNamespace": "Parameters.Spread.Model",
+   "Namespace": "Parameters.Spread.Model",
    "Operations": [
     {
      "$id": "62",
@@ -497,13 +498,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/parameters/spread/model/request-body",
      "RequestMediaTypes": [
@@ -573,13 +572,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/parameters/spread/model/composite-request-only-with-body",
      "RequestMediaTypes": [
@@ -646,13 +643,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PUT",
-     "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
      "Path": "/parameters/spread/model/composite-request-without-body/{name}",
      "BufferResponse": true,
@@ -761,13 +756,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/parameters/spread/model/composite-request/{name}",
      "RequestMediaTypes": [
@@ -879,13 +872,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/parameters/spread/model/composite-request-mix/{name}",
      "RequestMediaTypes": [
@@ -935,12 +926,13 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Parameters.Spread.Model"
   },
   {
    "$id": "105",
    "Name": "Alias",
-   "ClientNamespace": "Parameters.Spread.Alias",
+   "Namespace": "Parameters.Spread.Alias",
    "Operations": [
     {
      "$id": "106",
@@ -1000,13 +992,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/parameters/spread/alias/request-body",
      "RequestMediaTypes": [
@@ -1118,13 +1108,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/parameters/spread/alias/inner-model-parameter/{id}",
      "RequestMediaTypes": [
@@ -1236,13 +1224,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/parameters/spread/alias/request-parameter/{id}",
      "RequestMediaTypes": [
@@ -1354,13 +1340,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/parameters/spread/alias/multiple-parameters/{id}",
      "RequestMediaTypes": [
@@ -1473,13 +1457,11 @@
        "StatusCodes": [
         204
        ],
-       "BodyMediaType": "Json",
        "Headers": [],
        "IsErrorResponse": false
       }
      ],
      "HttpMethod": "POST",
-     "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
      "Path": "/parameters/spread/alias/inner-alias-parameter/{id}",
      "RequestMediaTypes": [
@@ -1529,7 +1511,8 @@
      }
     }
    ],
-   "Decorators": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Parameters.Spread.Alias"
   }
  ]
 }

@@ -58,12 +58,14 @@ namespace Azure.ResourceManager.DataBox.Models
         /// Please note <see cref="DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
         /// </param>
+        /// <param name="deviceCapabilityResponse"> Device capabilities available for a given sku in a region. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RegionConfigurationResult(ScheduleAvailabilityResponse scheduleAvailabilityResponse, TransportAvailabilityResponse transportAvailabilityResponse, DataCenterAddressResult dataCenterAddressResponse, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RegionConfigurationResult(ScheduleAvailabilityResponse scheduleAvailabilityResponse, TransportAvailabilityResponse transportAvailabilityResponse, DataCenterAddressResult dataCenterAddressResponse, DeviceCapabilityResponse deviceCapabilityResponse, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ScheduleAvailabilityResponse = scheduleAvailabilityResponse;
             TransportAvailabilityResponse = transportAvailabilityResponse;
             DataCenterAddressResponse = dataCenterAddressResponse;
+            DeviceCapabilityResponse = deviceCapabilityResponse;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -89,5 +91,12 @@ namespace Azure.ResourceManager.DataBox.Models
         /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
         /// </summary>
         public DataCenterAddressResult DataCenterAddressResponse { get; }
+        /// <summary> Device capabilities available for a given sku in a region. </summary>
+        internal DeviceCapabilityResponse DeviceCapabilityResponse { get; }
+        /// <summary> List of device capabilities available for a given region and a given sku. </summary>
+        public IReadOnlyList<DeviceCapabilityDetails> DeviceCapabilityDetails
+        {
+            get => DeviceCapabilityResponse?.DeviceCapabilityDetails;
+        }
     }
 }

@@ -88,6 +88,26 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(fileClient.ClientConfiguration.SharedKeyCredential);
         }
 
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var fileSystemName = "fileSystemName";
+            var directoryName = "directoryName";
+            var fileName = "fileName";
+            var pathName = $"{directoryName}/{fileName}";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var blobEndpoint = new Uri($"https://customdomain/{fileSystemName}/{pathName}");
+
+            DataLakeFileClient datalakeFileClient = new DataLakeFileClient(blobEndpoint, credentials);
+
+            Assert.AreEqual(accountName, datalakeFileClient.AccountName);
+            Assert.AreEqual(fileSystemName, datalakeFileClient.FileSystemName);
+            Assert.AreEqual(pathName, datalakeFileClient.Path);
+        }
+
         [RecordedTest]
         public async Task Ctor_TokenCredential()
         {

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Billing
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBillingRoleAssignmentData(document.RootElement, options);
                     }
                 default:
