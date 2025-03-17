@@ -218,6 +218,20 @@ namespace Azure.Communication.Identity.Samples
         }
 
         [Test]
+        public async Task CreateUserWithExternalId()
+        {
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+            var client = new CommunicationIdentityClient(connectionString);
+            client = CreateClient();
+            #region Snippet:CreateCommunicationUserWithExternalId
+            var externalId = "alice@contoso.com";
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(externalId);
+            CommunicationUserIdentifier user = userResponse.Value;
+            Console.WriteLine($"User id: {user.Id}");
+            #endregion Snippet:CreateCommunicationUserWithExternalId
+        }
+
+        [Test]
         public async Task CreateIdentityWithToken()
         {
             #region Snippet:CreateCommunicationIdentityFromToken
