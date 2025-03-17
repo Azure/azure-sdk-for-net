@@ -106,6 +106,7 @@ steps:
         -SdkType "${{ parameters.SDKType }}"
         -ProjectNames "$(ProjectNames)"
         -DiagnosticArguments "$(DiagnosticArguments)"
+        -BuildConfiguration "$(BuildConfiguration)"
       pwsh: true
 
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:

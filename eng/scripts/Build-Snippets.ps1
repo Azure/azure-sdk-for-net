@@ -6,6 +6,8 @@ param(
     [Parameter(Mandatory=$true)]
     [string] $ProjectNames,
     [Parameter(Mandatory=$false)]
+    [string] $BuildConfiguration,
+    [Parameter(Mandatory=$false)]
     [string] $DiagnosticArguments
 )
 . $PSScriptRoot/splittestdependencies/generate-dependency-functions.ps1
@@ -34,7 +36,7 @@ if ($snippetEnabledProjects) {
     /p:IncludePerf=false `
     /p:IncludeStress=false `
     /p:PublicSign=false `
-    /p:Configuration=$(BuildConfiguration) `
+    /p:Configuration="$BuildConfiguration" `
     /p:EnableSourceLink=false `
     /p:BuildSnippets=true `
     /p:ProjectListOverrideFile="$scopedFile" `
