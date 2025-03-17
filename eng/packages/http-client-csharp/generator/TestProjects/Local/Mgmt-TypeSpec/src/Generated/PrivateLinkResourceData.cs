@@ -12,13 +12,13 @@ using Azure.Core;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class PrivateLinkResource : ProxyResource
+    public partial class PrivateLinkResourceData : ProxyResource
     {
-        internal PrivateLinkResource()
+        internal PrivateLinkResourceData()
         {
         }
 
-        internal PrivateLinkResource(ResourceIdentifier id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkResourceProperties properties, ManagedServiceIdentity identity) : base(id, name, @type, systemData, additionalBinaryDataProperties)
+        internal PrivateLinkResourceData(ResourceIdentifier id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkResourceProperties properties, ManagedServiceIdentity identity) : base(id, name, @type, systemData, additionalBinaryDataProperties)
         {
             Properties = properties;
             Identity = identity;

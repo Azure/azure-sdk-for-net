@@ -170,10 +170,11 @@ namespace Azure.Generator.Tests.Common
             string? discriminatedKind = null,
             InputType? additionalProperties = null,
             IDictionary<string, InputModelType>? discriminatedModels = null,
-            IEnumerable<InputModelType>? derivedModels = null)
+            IEnumerable<InputModelType>? derivedModels = null,
+            IReadOnlyList<InputDecoratorInfo>? decorators = null)
         {
             IEnumerable<InputModelProperty> propertiesList = properties ?? [Property("StringProperty", InputPrimitiveType.String)];
-            return new InputModelType(
+            var model = new InputModelType(
                 name,
                 clientNamespace,
                 name,
@@ -191,6 +192,13 @@ namespace Azure.Generator.Tests.Common
                 additionalProperties,
                 modelAsStruct,
                 new());
+            if (decorators is not null)
+            {
+                var decoratorProperty = typeof(InputModelType).GetProperty(nameof(InputModelType.Decorators));
+                var setDecoratorMethod = decoratorProperty?.GetSetMethod(true);
+                setDecoratorMethod!.Invoke(model, [decorators]);
+            }
+            return model;
         }
 
         public static InputType Array(InputType elementType)
@@ -213,9 +221,11 @@ namespace Azure.Generator.Tests.Common
             string access = "public",
             IEnumerable<InputParameter>? parameters = null,
             IEnumerable<InputOperationResponse>? responses = null,
-            IEnumerable<string>? requestMediaTypes = null)
+            IEnumerable<string>? requestMediaTypes = null,
+            string? path = null,
+            IReadOnlyList<InputDecoratorInfo>? decorators = null)
         {
-            return new InputOperation(
+            var operation = new InputOperation(
                 name,
                 null,
                 null,
@@ -225,8 +235,8 @@ namespace Azure.Generator.Tests.Common
                 parameters is null ? [] : [.. parameters],
                 responses is null ? [OperationResponse()] : [.. responses],
                 "GET",
-                "",
-                "",
+                string.Empty,
+                path ?? string.Empty,
                 null,
                 requestMediaTypes is null ? null : [.. requestMediaTypes],
                 false,
@@ -235,6 +245,13 @@ namespace Azure.Generator.Tests.Common
                 true,
                 true,
                 name);
+            if (decorators is not null)
+            {
+                var decoratorProperty = typeof(InputOperation).GetProperty(nameof(InputOperation.Decorators));
+                var setDecoratorMethod = decoratorProperty?.GetSetMethod(true);
+                setDecoratorMethod!.Invoke(operation, [decorators]);
+            }
+            return operation;
         }
 
         public static InputOperationResponse OperationResponse(IEnumerable<int>? statusCodes = null, InputType? bodytype = null)
@@ -249,7 +266,7 @@ namespace Azure.Generator.Tests.Common
 
         public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputOperation>? operations = null, IEnumerable<InputParameter>? parameters = null, string? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null)
         {
-            return new InputClient(
+            var client = new InputClient(
                 name,
                 clientNamespace,
                 crossLanguageDefinitionId ?? $"{clientNamespace}.{name}",
@@ -258,6 +275,13 @@ namespace Azure.Generator.Tests.Common
                 operations is null ? [] : [.. operations],
                 parameters is null ? [] : [.. parameters],
                 parent);
+            if (decorators is not null)
+            {
+                var decoratorProperty = typeof(InputClient).GetProperty(nameof(InputClient.Decorators));
+                var setDecoratorMethod = decoratorProperty?.GetSetMethod(true);
+                setDecoratorMethod!.Invoke(client, [decorators]);
+            }
+            return client;
         }
     }
 }
