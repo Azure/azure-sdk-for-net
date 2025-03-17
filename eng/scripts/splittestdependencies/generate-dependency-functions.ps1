@@ -24,6 +24,8 @@ function Split-Project-File-To-Groups($ProjectFile, $NumberOfTestsPerJob, $Exclu
 }
 
 function Write-PkgInfoToDependencyGroupFile([string]$OutputPath, [string]$PackageInfoFolder, [string[]]$ProjectNames) {
+  $packageProperties = Get-ChildItem -Recurse "$PackageInfoFolder" *.json `
+  | Foreach-Object { Get-Content -Raw -Path $_.FullName | ConvertFrom-Json }
   $changedProjects = $packageProperties | Where-Object { $ProjectNames -contains $_.ArtifactName }
     | ForEach-Object { "$($_.DirectoryPath)/**/*.csproj"; }
 
