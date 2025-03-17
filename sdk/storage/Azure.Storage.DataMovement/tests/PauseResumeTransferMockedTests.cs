@@ -166,6 +166,7 @@ public class PauseResumeTransferMockedTests
             jobBuilder2,
             checkpointer,
             resumeProviders2,
+            default,
             default);
 
         return (transferManager2, jobsProcessor2, partsProcessor2, chunksProcessor2);
@@ -1595,6 +1596,7 @@ public class PauseResumeTransferMockedTests
             jobBuilder,
             checkpointer,
             resumeProviders,
+            default,
             default);
 
         List<TransferOperation> transfers = new();
