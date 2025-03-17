@@ -80,6 +80,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             builder.Services.ConfigureOpenTelemetryMeterProvider((serviceProvider, meterProviderBuilder) =>
             {
+                // Ensure that the AzureMonitorMetricExporter is registered only once
+                serviceProvider!.EnsureSingleUseAzureMonitorExporterRegistration();
+
                 var exporterOptions = serviceProvider!.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
                 meterProviderBuilder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions))
                     { TemporalityPreference = MetricReaderTemporalityPreference.Delta });
