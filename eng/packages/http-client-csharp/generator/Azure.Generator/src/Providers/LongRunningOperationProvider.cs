@@ -19,7 +19,7 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers
 {
-    internal class MgmtLongRunningOperationProvider : TypeProvider
+    internal class LongRunningOperationProvider : TypeProvider
     {
         private class Template<T> { }
         private readonly CSharpType _t = typeof(Template<>).GetGenericArguments()[0];
@@ -30,7 +30,7 @@ namespace Azure.Generator.Providers
         private FieldProvider _nextLinkOperationField;
         private FieldProvider _operationIdField;
 
-        public MgmtLongRunningOperationProvider(bool isGeneric)
+        public LongRunningOperationProvider(bool isGeneric)
         {
             _isGeneric = isGeneric;
             _operationField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, isGeneric ? new CSharpType(typeof(OperationInternal<>), _t) : typeof(OperationInternal), "_operation", this);
@@ -174,7 +174,7 @@ namespace Azure.Generator.Providers
                     skipApiVersionOverrideParameter,
                     apiVersionOverrideValueParameter,
                 };
-            var signature = new ConstructorSignature(Type, $"", MethodSignatureModifiers.Internal, parameters, null);
+            var signature = new ConstructorSignature(Type, $"", MethodSignatureModifiers.Internal, parameters);
             var responseDeclaration = Declare("nextLinkOperation", typeof(IOperation), Static(typeof(NextLinkOperationImplementation)).Invoke("Create", [pipelineParameter, requestParameter.Property("Method"), requestParameter.Property("Uri").Invoke("ToUri"), responseParameter, finalStateViaParameter, skipApiVersionOverrideParameter, apiVersionOverrideValueParameter]), out var nextLinkOperationVariable);
 
             var body = new MethodBodyStatement[]
