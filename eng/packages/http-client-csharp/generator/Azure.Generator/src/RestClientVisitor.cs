@@ -15,23 +15,23 @@ namespace Azure.Generator
         /// <inheritdoc/>
         protected override TypeProvider? VisitType(TypeProvider type)
         {
-            if (type is not null && type is ClientProvider)
+            if (type is not null && type is ClientProvider client)
             {
-                type.Update(modifiers: TransfromPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForClient(type));
+                // omit methods for ClientProvider, MPG will implement its own client methods
+                // put create request methods to client directly and remove RestClientProvider
+                type.Update(methods: [.. client.RestClient.Methods], modifiers: TransfromPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForClient(type));
             }
-            // TODO: uncomment this once resources are generated
-            //if (type is RestClientProvider)
-            //{
-            //    type.Update(modifiers: TransfromPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForRestClient(type));
-            //}
+
+            if (type is RestClientProvider)
+            {
+                return null;
+            }
+
             return type;
         }
 
         private static string TransformRelativeFilePathForClient(TypeProvider type)
             => Path.Combine("src", "Generated", "RestOperations", $"{type.Name}RestOperations.cs");
-
-        private static string TransformRelativeFilePathForRestClient(TypeProvider type)
-            => Path.Combine("src", "Generated", "RestOperations", $"{type.Name}.RestClient.cs");
 
         private static TypeSignatureModifiers TransfromPublicModifiersToInternal(TypeProvider type)
         {
