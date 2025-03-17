@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary>
         /// Protected item model custom properties update.
         /// Please note <see cref="ProtectedItemModelCustomPropertiesUpdate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHCIProtectedItemModelCustomPropertiesUpdate"/> and <see cref="VMwareToAzStackHCIProtectedItemModelCustomPropertiesUpdate"/>.
+        /// The available derived classes include <see cref="HyperVToAzStackHciProtectedItemModelCustomPropertiesUpdate"/> and <see cref="VMwareToAzStackHciProtectedItemModelCustomPropertiesUpdate"/>.
         /// </summary>
         public ProtectedItemModelCustomPropertiesUpdate CustomProperties
         {

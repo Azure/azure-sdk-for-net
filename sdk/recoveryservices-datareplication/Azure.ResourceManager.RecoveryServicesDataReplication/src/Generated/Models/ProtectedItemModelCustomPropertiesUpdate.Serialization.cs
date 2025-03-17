@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "HyperVToAzStackHCI": return HyperVToAzStackHCIProtectedItemModelCustomPropertiesUpdate.DeserializeHyperVToAzStackHCIProtectedItemModelCustomPropertiesUpdate(element, options);
-                    case "VMwareToAzStackHCI": return VMwareToAzStackHCIProtectedItemModelCustomPropertiesUpdate.DeserializeVMwareToAzStackHCIProtectedItemModelCustomPropertiesUpdate(element, options);
+                    case "HyperVToAzStackHCI": return HyperVToAzStackHciProtectedItemModelCustomPropertiesUpdate.DeserializeHyperVToAzStackHciProtectedItemModelCustomPropertiesUpdate(element, options);
+                    case "VMwareToAzStackHCI": return VMwareToAzStackHciProtectedItemModelCustomPropertiesUpdate.DeserializeVMwareToAzStackHciProtectedItemModelCustomPropertiesUpdate(element, options);
                 }
             }
             return UnknownProtectedItemModelCustomPropertiesUpdate.DeserializeUnknownProtectedItemModelCustomPropertiesUpdate(element, options);

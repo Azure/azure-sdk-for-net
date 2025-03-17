@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             {
                 Properties = new Models.DataReplicationPolicyProperties
                 {
-                    CustomProperties = new Models.VMwareToAzStackHCIPolicyModelCustomProperties
+                    CustomProperties = new Models.VMwareToAzStackHciPolicyModelCustomProperties
                     {
                         InstanceType = "VMwareToAzStackHCI",
                         RecoveryPointHistoryInMinutes =

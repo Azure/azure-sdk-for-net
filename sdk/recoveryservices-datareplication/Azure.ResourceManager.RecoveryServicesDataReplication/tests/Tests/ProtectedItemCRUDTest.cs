@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             DataReplicationVaultResource vault = await rg.GetDataReplicationVaults().GetAsync(
                 RecoveryServicesDataReplicationManagementTestUtilities.DefaultVaultName);
 
-            var disk = new Models.VMwareToAzStackHCIDiskInput
+            var disk = new Models.VMwareToAzStackHciDiskInput
             {
                 DiskFileFormat = RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemDiskFileFormat,
                 DiskSizeGB = RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemDiskSizeInGB,
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                 IsOSDisk = true
             };
 
-            var nic = new Models.VMwareToAzStackHCINicInput
+            var nic = new Models.VMwareToAzStackHciNicInput
             {
                 NicId = RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemNicId,
                 TargetNetworkId = RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetNetworkId,
@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                 SelectionTypeForFailover = Models.VmNicSelection.SelectedByUser
             };
 
-            var customeProperties = new Models.VMwareToAzStackHCIProtectedItemModelCustomProperties
+            var customeProperties = new Models.VMwareToAzStackHciProtectedItemModelCustomProperties
                (
                    targetHciClusterId: new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetHciClusterId),
                    targetArcClusterCustomLocationId: new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetArcClusterCustomLocationId),
                    storageContainerId: new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemStorageContainerId),
                    targetResourceGroupId: new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemTargetResourceGroupId),
                    customLocationRegion: RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemCustomLocationRegion,
-                   disksToInclude: new List<Models.VMwareToAzStackHCIDiskInput> { disk },
-                   nicsToInclude: new List<Models.VMwareToAzStackHCINicInput> { nic },
+                   disksToInclude: new List<Models.VMwareToAzStackHciDiskInput> { disk },
+                   nicsToInclude: new List<Models.VMwareToAzStackHciNicInput> { nic },
                    hyperVGeneration: RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemHyperVGeneration,
                    fabricDiscoveryMachineId: new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemFabricDiscoveryMachineId),
                    runAsAccountId: RecoveryServicesDataReplicationManagementTestUtilities.DefaultProtectedItemRunAsAccountId,

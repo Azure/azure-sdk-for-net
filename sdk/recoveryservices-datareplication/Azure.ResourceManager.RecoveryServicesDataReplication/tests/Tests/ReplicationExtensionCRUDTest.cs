@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
             {
                 Properties = new Models.DataReplicationExtensionProperties
                 {
-                    CustomProperties = new Models.VMwareToAzStackHCIReplicationExtensionModelCustomProperties
+                    CustomProperties = new Models.VMwareToAzStackHciReplicationExtensionModelCustomProperties
                     {
                         VmwareFabricArmId = new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultSourceApplianceId),
                         AzStackHciFabricArmId = new ResourceIdentifier(RecoveryServicesDataReplicationManagementTestUtilities.DefaultTargetApplianceId),

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Fabric model custom properties.
         /// Please note <see cref="FabricModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzStackHCIFabricModelCustomProperties"/>, <see cref="HyperVMigrateFabricModelCustomProperties"/> and <see cref="VMwareMigrateFabricModelCustomProperties"/>.
+        /// The available derived classes include <see cref="AzStackHciFabricModelCustomProperties"/>, <see cref="HyperVMigrateFabricModelCustomProperties"/> and <see cref="VMwareMigrateFabricModelCustomProperties"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customProperties"/> is null. </exception>
         public DataReplicationFabricProperties(FabricModelCustomProperties customProperties)
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Fabric model custom properties.
         /// Please note <see cref="FabricModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzStackHCIFabricModelCustomProperties"/>, <see cref="HyperVMigrateFabricModelCustomProperties"/> and <see cref="VMwareMigrateFabricModelCustomProperties"/>.
+        /// The available derived classes include <see cref="AzStackHciFabricModelCustomProperties"/>, <see cref="HyperVMigrateFabricModelCustomProperties"/> and <see cref="VMwareMigrateFabricModelCustomProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataReplicationFabricProperties(DataReplicationProvisioningState? provisioningState, string serviceEndpoint, ResourceIdentifier serviceResourceId, DataReplicationHealthStatus? health, IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors, FabricModelCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary>
         /// Fabric model custom properties.
         /// Please note <see cref="FabricModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzStackHCIFabricModelCustomProperties"/>, <see cref="HyperVMigrateFabricModelCustomProperties"/> and <see cref="VMwareMigrateFabricModelCustomProperties"/>.
+        /// The available derived classes include <see cref="AzStackHciFabricModelCustomProperties"/>, <see cref="HyperVMigrateFabricModelCustomProperties"/> and <see cref="VMwareMigrateFabricModelCustomProperties"/>.
         /// </summary>
         public FabricModelCustomProperties CustomProperties { get; set; }
     }
