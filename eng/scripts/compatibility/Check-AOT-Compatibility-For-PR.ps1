@@ -35,12 +35,12 @@ $filteredPackages = Get-ChildItem -Path $PackageInfoFolder -Filter "*.json" -Fil
 
 $failedAotChecks = $false
 foreach ($package in $filteredPackages) {
-    if ($package.CIParameters["CheckAOTCompat"]) {
-        $aotDetails = $package.CIParameters["AOTArtifact"]
+    if ($package.CIParameters.CheckAOTCompat -and $package.CIParameters.AOTTestInputs) {
+        $aotDetails = $package.CIParameters.AOTTestInputs
         & $PSScriptRoot/Check-AOT-Compatibility.ps1 `
-            -ProjectName $package.ArtifactName `
+            -PackageName $package.ArtifactName `
             -ServiceDirectory $package.ServiceDirectory `
-            -ExpectedWarningsFilePath $aotDetails["ExpectedWarningsFilePath"]
+            -ExpectedWarningsFilePath $aotDetails.ExpectedWarningsFilePath
 
         if ($LASTEXITCODE -ne 0) {
             $failedAotChecks = $true
