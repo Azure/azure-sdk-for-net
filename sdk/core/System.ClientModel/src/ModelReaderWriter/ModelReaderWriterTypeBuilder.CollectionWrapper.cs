@@ -49,7 +49,7 @@ public abstract partial class ModelReaderWriterTypeBuilder
 
             while (builder.IsCollection)
             {
-                builder = _context.GetModelBuilder(builder.ItemType!);
+                builder = _context.GetTypeBuilder(builder.ItemType!);
             }
 
             return builder.CreateInstance();

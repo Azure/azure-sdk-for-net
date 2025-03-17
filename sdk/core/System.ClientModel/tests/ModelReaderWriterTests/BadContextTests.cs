@@ -57,7 +57,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             private List_PersistableModel_NullElement_Builder? _list_PersistableModel_NullElement_Builder;
             private PersistableModel_NullElement_Builder? _persistableModel_NullElement_Builder;
 
-            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
+            protected override bool TryGetTypeBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
             {
                 builder = type switch
                 {

@@ -20,7 +20,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         private UnknownBaseModel_Builder? _unknownBaseModel_Builder;
         private ModelY_Builder? _modelY_Builder;
 
-        protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
+        protected override bool TryGetTypeBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
         {
             builder = type switch
             {

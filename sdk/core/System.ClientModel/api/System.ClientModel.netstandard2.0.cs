@@ -237,9 +237,9 @@ namespace System.ClientModel.Primitives
     public abstract partial class ModelReaderWriterContext
     {
         protected ModelReaderWriterContext() { }
-        public System.ClientModel.Primitives.ModelReaderWriterTypeBuilder GetModelBuilder(System.Type type) { throw null; }
-        public bool TryGetModelBuilder(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder? builder) { throw null; }
-        protected virtual bool TryGetModelBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder? builder) { throw null; }
+        public System.ClientModel.Primitives.ModelReaderWriterTypeBuilder GetTypeBuilder(System.Type type) { throw null; }
+        public bool TryGetTypeBuilder(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder? builder) { throw null; }
+        protected virtual bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder? builder) { throw null; }
     }
     public partial class ModelReaderWriterOptions
     {

@@ -682,7 +682,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             private ReadReturnsNull_Builder _readReturnsNull_Builder;
             private Dictionary_String_AvailabilitySetData_Builder _dictionary_String_AvailabilitySetData_Builder;
 
-            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)
+            protected override bool TryGetTypeBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)
             {
                 builder = type switch
                 {
@@ -707,11 +707,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             private ModelReaderWriterTypeBuilder GetFromDependencies(Type type)
             {
-                if (_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder builder))
+                if (_libraryContext.Value.TryGetTypeBuilder(type, out ModelReaderWriterTypeBuilder builder))
                 {
                     return builder;
                 }
-                if (_availabilitySetData_ListTests_LocalContext.Value.TryGetModelBuilder(type, out builder))
+                if (_availabilitySetData_ListTests_LocalContext.Value.TryGetTypeBuilder(type, out builder))
                 {
                     return builder;
                 }

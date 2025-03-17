@@ -49,7 +49,7 @@ internal class JsonCollectionReader : CollectionReader
         IJsonModel<object>? jsonModel = null;
         string? propertyName = null;
 
-        var itemBuilder = context.GetModelBuilder(builder.GetItemType()!);
+        var itemBuilder = context.GetTypeBuilder(builder.GetItemType()!);
         var itemInstance = itemBuilder.CreateObject();
         if (itemInstance is ModelReaderWriterTypeBuilder.CollectionWrapper itemCollectionWrapper)
         {

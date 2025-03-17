@@ -73,7 +73,7 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
     {
         IJsonModel<object>? AotCompatActivate()
         {
-            return _context.GetModelBuilder(typeToConvert).CreateObject() as IJsonModel<object>;
+            return _context.GetTypeBuilder(typeToConvert).CreateObject() as IJsonModel<object>;
         }
 
         [UnconditionalSuppressMessage("Trimming", "IL2067",
@@ -82,7 +82,7 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
         {
             Debug.Assert(_context is null, "This should only be called when _context is null.");
             var context = new ReflectionContext();
-            return context.GetModelBuilder(typeToConvert).CreateObject() as IJsonModel<object>;
+            return context.GetTypeBuilder(typeToConvert).CreateObject() as IJsonModel<object>;
         }
 
         IJsonModel<object>? iJsonModel = _context is null ? NonAotCompatActivate() : AotCompatActivate();

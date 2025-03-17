@@ -15,9 +15,9 @@ public abstract class ModelReaderWriterContext
     /// </summary>
     /// <param name="type">The type to get info for.</param>
     /// <exception cref="InvalidOperationException">When the context does not contain a <see cref="ModelReaderWriterTypeBuilder"/> for the given <see cref="Type"/>.</exception>
-    public ModelReaderWriterTypeBuilder GetModelBuilder(Type type)
+    public ModelReaderWriterTypeBuilder GetTypeBuilder(Type type)
     {
-        if (!TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder? builder))
+        if (!TryGetTypeBuilder(type, out ModelReaderWriterTypeBuilder? builder))
         {
             throw new InvalidOperationException($"No ModelBuilder found for {type.Name}.");
         }
@@ -30,9 +30,9 @@ public abstract class ModelReaderWriterContext
     /// <param name="type">The type to get info for.</param>
     /// <param name="builder">The <see cref="ModelReaderWriterTypeBuilder"/> if found.</param>
     /// <returns>True if the corresponding <see cref="ModelReaderWriterTypeBuilder"/> if defined in the context otherwise false.</returns>
-    public bool TryGetModelBuilder(Type type, [NotNullWhen(true)] out ModelReaderWriterTypeBuilder? builder)
+    public bool TryGetTypeBuilder(Type type, [NotNullWhen(true)] out ModelReaderWriterTypeBuilder? builder)
     {
-        if (TryGetModelBuilderCore(type, out builder))
+        if (TryGetTypeBuilderCore(type, out builder))
         {
             builder!.Context = this;
             return true;
@@ -48,7 +48,7 @@ public abstract class ModelReaderWriterContext
     /// <param name="type">The type to get info for.</param>
     /// <param name="builder">The <see cref="ModelReaderWriterTypeBuilder"/> if found.</param>
     /// <returns>True if the corresponding <see cref="ModelReaderWriterTypeBuilder"/> if defined in the context otherwise false.</returns>
-    protected virtual bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
+    protected virtual bool TryGetTypeBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
     {
         builder = null;
         return false;

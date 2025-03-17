@@ -172,7 +172,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             private PersistableModelInfo? _persistableModelInfo;
 
-            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
+            protected override bool TryGetTypeBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
             {
                 builder = type switch
                 {

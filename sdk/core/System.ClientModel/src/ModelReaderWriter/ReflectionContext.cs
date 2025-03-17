@@ -10,7 +10,7 @@ internal class ReflectionContext : ModelReaderWriterContext
     private Dictionary<Type, ModelReaderWriterTypeBuilder>? _typeBuilders;
     private Dictionary<Type, ModelReaderWriterTypeBuilder> TypeBuilders => _typeBuilders ??= [];
 
-    protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
+    protected override bool TryGetTypeBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
     {
         if (TypeBuilders.TryGetValue(type, out builder))
         {

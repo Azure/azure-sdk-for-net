@@ -35,7 +35,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
             private ObservableCollection_List_AvailabilitySetData_Builder _observableCollection_List_AvailabilitySetData_Builder;
 
-            protected override bool TryGetModelBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)
+            protected override bool TryGetTypeBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)
             {
                 builder = type switch
                 {
@@ -47,9 +47,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
             private ModelReaderWriterTypeBuilder GetFromDependencies(Type type)
             {
-                if (s_libraryContext.Value.TryGetModelBuilder(type, out ModelReaderWriterTypeBuilder builder))
+                if (s_libraryContext.Value.TryGetTypeBuilder(type, out ModelReaderWriterTypeBuilder builder))
                     return builder;
-                if (s_availabilitySetData_ListTests_LocalContext.Value.TryGetModelBuilder(type, out builder))
+                if (s_availabilitySetData_ListTests_LocalContext.Value.TryGetTypeBuilder(type, out builder))
                     return builder;
                 return null;
             }
