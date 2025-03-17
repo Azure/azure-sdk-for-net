@@ -543,7 +543,7 @@ namespace Azure.AI.Projects
 
             if (connections?.Value == null || connections.Value.Count == 0)
             {
-                throw new InvalidOperationException("No connections found for the specified parameters.");
+                throw new InvalidOperationException($"No connections found for '{category}'. At least one connection is required. Please add a new connection in the Azure AI Foundry portal by following the instructions here: https://aka.ms/azsdk/azure-ai-projects/how-to/connections-add");
             }
 
             ConnectionResponse connection = connections.Value[0];

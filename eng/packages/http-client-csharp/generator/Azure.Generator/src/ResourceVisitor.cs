@@ -1,10 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.IO;
+using System.Linq;
 
 namespace Azure.Generator
 {
@@ -14,20 +16,14 @@ namespace Azure.Generator
         {
             if (type is not null)
             {
-                TransformResource(type);
+                TransformResource(model, type);
             }
             return type;
         }
 
-        protected override TypeProvider? VisitType(TypeProvider type)
+        private void TransformResource(InputModelType model, TypeProvider type)
         {
-            TransformResource(type);
-            return type;
-        }
-
-        private static void TransformResource(TypeProvider type)
-        {
-            if (type is ModelProvider && AzureClientGenerator.Instance.OutputLibrary.IsResource(type.Name))
+            if (type is ModelProvider && model.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmResourceInternal)))
             {
                 type.Update(relativeFilePath: TransformRelativeFilePath(type));
                 type.Type.Update(TransformName(type));

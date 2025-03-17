@@ -17,6 +17,7 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="OpenTelemetry" />
     <PackageReference Include="OpenTelemetry.PersistentStorage.FileSystem" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
