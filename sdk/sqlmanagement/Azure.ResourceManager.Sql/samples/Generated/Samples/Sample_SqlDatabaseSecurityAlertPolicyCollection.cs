@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlDatabaseSecurityAlertPolicyCollection collection = sqlDatabase.GetSqlDatabaseSecurityAlertPolicies();
 
             // invoke the operation
-            SqlSecurityAlertPolicyName securityAlertPolicyName = SqlSecurityAlertPolicyName.Default;
+            SqlSecurityAlertPolicyName securityAlertPolicyName = new SqlSecurityAlertPolicyName("default");
             SqlDatabaseSecurityAlertPolicyData data = new SqlDatabaseSecurityAlertPolicyData
             {
                 State = SecurityAlertsPolicyState.Enabled,
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlDatabaseSecurityAlertPolicyCollection collection = sqlDatabase.GetSqlDatabaseSecurityAlertPolicies();
 
             // invoke the operation
-            SqlSecurityAlertPolicyName securityAlertPolicyName = SqlSecurityAlertPolicyName.Default;
+            SqlSecurityAlertPolicyName securityAlertPolicyName = new SqlSecurityAlertPolicyName("default");
             SqlDatabaseSecurityAlertPolicyData data = new SqlDatabaseSecurityAlertPolicyData
             {
                 State = SecurityAlertsPolicyState.Enabled,
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlDatabaseSecurityAlertPolicyCollection collection = sqlDatabase.GetSqlDatabaseSecurityAlertPolicies();
 
             // invoke the operation
-            SqlSecurityAlertPolicyName securityAlertPolicyName = SqlSecurityAlertPolicyName.Default;
+            SqlSecurityAlertPolicyName securityAlertPolicyName = new SqlSecurityAlertPolicyName("default");
             SqlDatabaseSecurityAlertPolicyResource result = await collection.GetAsync(securityAlertPolicyName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlDatabaseSecurityAlertPolicyCollection collection = sqlDatabase.GetSqlDatabaseSecurityAlertPolicies();
 
             // invoke the operation
-            SqlSecurityAlertPolicyName securityAlertPolicyName = SqlSecurityAlertPolicyName.Default;
+            SqlSecurityAlertPolicyName securityAlertPolicyName = new SqlSecurityAlertPolicyName("default");
             bool result = await collection.ExistsAsync(securityAlertPolicyName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlDatabaseSecurityAlertPolicyCollection collection = sqlDatabase.GetSqlDatabaseSecurityAlertPolicies();
 
             // invoke the operation
-            SqlSecurityAlertPolicyName securityAlertPolicyName = SqlSecurityAlertPolicyName.Default;
+            SqlSecurityAlertPolicyName securityAlertPolicyName = new SqlSecurityAlertPolicyName("default");
             NullableResponse<SqlDatabaseSecurityAlertPolicyResource> response = await collection.GetIfExistsAsync(securityAlertPolicyName);
             SqlDatabaseSecurityAlertPolicyResource result = response.HasValue ? response.Value : null;
 

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Samples
             string resourceGroupName = "securityalert-6852";
             string managedInstanceName = "securityalert-2080";
             string databaseName = "testdb";
-            SqlSecurityAlertPolicyName securityAlertPolicyName = SqlSecurityAlertPolicyName.Default;
+            SqlSecurityAlertPolicyName securityAlertPolicyName = new SqlSecurityAlertPolicyName("default");
             ResourceIdentifier managedDatabaseSecurityAlertPolicyResourceId = ManagedDatabaseSecurityAlertPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName, securityAlertPolicyName);
             ManagedDatabaseSecurityAlertPolicyResource managedDatabaseSecurityAlertPolicy = client.GetManagedDatabaseSecurityAlertPolicyResource(managedDatabaseSecurityAlertPolicyResourceId);
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql.Samples
             string resourceGroupName = "securityalert-4799";
             string managedInstanceName = "securityalert-6440";
             string databaseName = "testdb";
-            SqlSecurityAlertPolicyName securityAlertPolicyName = SqlSecurityAlertPolicyName.Default;
+            SqlSecurityAlertPolicyName securityAlertPolicyName = new SqlSecurityAlertPolicyName("default");
             ResourceIdentifier managedDatabaseSecurityAlertPolicyResourceId = ManagedDatabaseSecurityAlertPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName, securityAlertPolicyName);
             ManagedDatabaseSecurityAlertPolicyResource managedDatabaseSecurityAlertPolicy = client.GetManagedDatabaseSecurityAlertPolicyResource(managedDatabaseSecurityAlertPolicyResourceId);
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Sql.Samples
             string resourceGroupName = "securityalert-4799";
             string managedInstanceName = "securityalert-6440";
             string databaseName = "testdb";
-            SqlSecurityAlertPolicyName securityAlertPolicyName = SqlSecurityAlertPolicyName.Default;
+            SqlSecurityAlertPolicyName securityAlertPolicyName = new SqlSecurityAlertPolicyName("default");
             ResourceIdentifier managedDatabaseSecurityAlertPolicyResourceId = ManagedDatabaseSecurityAlertPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName, securityAlertPolicyName);
             ManagedDatabaseSecurityAlertPolicyResource managedDatabaseSecurityAlertPolicy = client.GetManagedDatabaseSecurityAlertPolicyResource(managedDatabaseSecurityAlertPolicyResourceId);
 
