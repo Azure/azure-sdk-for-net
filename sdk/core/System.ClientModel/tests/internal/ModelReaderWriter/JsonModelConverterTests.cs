@@ -126,6 +126,14 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         }
 
         [Test]
+        public void NullOptionsThrows()
+        {
+            var ex = Assert.Throws<ArgumentNullException>(() => new JsonModelConverter(null!, new TestClientModelReaderWriterContext()));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("options", ex!.ParamName);
+        }
+
+        [Test]
         public void ConvertWithMissingInfo()
         {
             var options = new JsonSerializerOptions();
@@ -133,7 +141,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             options.Converters.Add(converter);
             var ex = Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize("{}", typeof(PersistableModel), options));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("No model info found for PersistableModel.", ex!.Message);
+            Assert.AreEqual("No ModelBuilder found for PersistableModel.", ex!.Message);
         }
 
         [Test]

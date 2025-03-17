@@ -49,11 +49,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write(null!, s_wireOptions));
 
             //validate context overload for read
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(null!, ModelReaderWriterOptions.Json, s_readerWriterContext));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(null!, typeof(BaseWithNoUnknown), ModelReaderWriterOptions.Json, s_readerWriterContext));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(BinaryData.Empty, null!, s_readerWriterContext));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(BinaryData.Empty, s_wireOptions, null!));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(BinaryData.Empty, typeof(BaseWithNoUnknown), null!, s_readerWriterContext));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(BinaryData.Empty, typeof(BaseWithNoUnknown), s_wireOptions, null!));
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(BinaryData.Empty, null!, ModelReaderWriterOptions.Json, s_readerWriterContext));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write<BaseWithNoUnknown>(null!, ModelReaderWriterOptions.Json, s_readerWriterContext));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write(null!, ModelReaderWriterOptions.Json, s_readerWriterContext));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(BinaryData.Empty, typeof(BaseWithNoUnknown), null!, s_readerWriterContext));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write<PersistableModel>(new PersistableModel(), null!, s_readerWriterContext));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write((object)new PersistableModel(), null!, s_readerWriterContext));
 
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(null!, s_wireOptions, s_readerWriterContext));
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(null!, typeof(BaseWithNoUnknown), s_wireOptions, s_readerWriterContext));
@@ -244,7 +247,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "[{\"x\":{}},{\"y\":{}}]";
             var ex = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<List<List<SubType>>>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, s_readerWriterContext));
             Assert.IsNotNull(ex);
-            Assert.IsTrue(ex!.Message.Equals("Unexpected StartObject found."));
+            Assert.AreEqual("Unexpected JsonTokenType.StartObject found.", ex!.Message);
         }
 
         [Test]
@@ -253,16 +256,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "[[{}],[{}]]";
             var ex = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<List<Dictionary<string, SubType>>>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, s_readerWriterContext));
             Assert.IsNotNull(ex);
-            Assert.IsTrue(ex!.Message.Equals("Unexpected StartArray found."));
+            Assert.AreEqual("Unexpected JsonTokenType.StartArray found.", ex!.Message);
         }
 
         [Test]
         public void ReadUnexpectedToken()
         {
-            var json = "[null{}]";
+            var json = "[true,{}]";
             var ex = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<List<SubType>>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, s_readerWriterContext));
             Assert.IsNotNull(ex);
-            Assert.IsTrue(ex!.Message.Equals("Unexpected token Null."));
+            Assert.AreEqual("Unexpected token True.", ex!.Message);
         }
 
         [Test]
@@ -353,7 +356,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<PersistableModel>>(BinaryData.FromString(json), new ModelReaderWriterOptions(format), s_readerWriterContext));
             Assert.IsNotNull(ex);
             var expectedMessage = format == "J"
-                ? "Element type PersistableModel must implement IJsonModel"
+                ? "Item type 'PersistableModel' must implement IJsonModel"
                 : "PersistableModel has a wire format of 'X' it must be 'J' to be read as a collection";
             Assert.AreEqual(expectedMessage, ex!.Message);
         }
@@ -366,7 +369,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<List<PersistableModel>>>(BinaryData.FromString(json), new ModelReaderWriterOptions(format), s_readerWriterContext));
             Assert.IsNotNull(ex);
             var expectedMessage = format == "J"
-                ? "Element type PersistableModel must implement IJsonModel"
+                ? "Item type 'PersistableModel' must implement IJsonModel"
                 : "PersistableModel has a wire format of 'X' it must be 'J' to be read as a collection";
             Assert.AreEqual(expectedMessage, ex!.Message);
         }

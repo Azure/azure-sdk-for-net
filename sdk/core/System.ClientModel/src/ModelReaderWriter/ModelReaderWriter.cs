@@ -114,8 +114,6 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(model));
         }
 
-        options ??= ModelReaderWriterOptions.Json;
-
         return WritePersistableOrEnumerable(model, options, context);
     }
 

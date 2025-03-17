@@ -57,7 +57,7 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
         }
 
         _context = context;
-        _options = options ?? ModelReaderWriterOptions.Json;
+        _options = options;
     }
 
     /// <inheritdoc/>
