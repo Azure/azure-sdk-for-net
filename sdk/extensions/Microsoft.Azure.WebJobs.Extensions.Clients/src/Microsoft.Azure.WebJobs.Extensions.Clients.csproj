@@ -7,15 +7,6 @@
     <Version>1.0.0-beta.1</Version>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <NoWarn>$(NoWarn);CA1812</NoWarn>
-
-    <!--
-      Disallow project references. The extensions package is intentionally
-      locked to a specific version to ensure compatibility with the Azure
-      Functions runtime.
-
-      Newer versions are known to break the runtime.
-    -->
-    <UseProjectReferenceToAzureClients>false</UseProjectReferenceToAzureClients>
   </PropertyGroup>
 
   <ItemGroup>
