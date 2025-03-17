@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// Type of managed service identity (currently only UserAssigned allowed).
-    /// Serialized Name: ManagedServiceIdentityType
-    /// </summary>
+    /// <summary> Type of managed service identity (currently only UserAssigned allowed). </summary>
     public readonly partial struct MobileNetworkManagedServiceIdentityType : IEquatable<MobileNetworkManagedServiceIdentityType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string NoneValue = "None";
         private const string UserAssignedValue = "UserAssigned";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: ManagedServiceIdentityType.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static MobileNetworkManagedServiceIdentityType None { get; } = new MobileNetworkManagedServiceIdentityType(NoneValue);
-        /// <summary>
-        /// UserAssigned
-        /// Serialized Name: ManagedServiceIdentityType.UserAssigned
-        /// </summary>
+        /// <summary> UserAssigned. </summary>
         public static MobileNetworkManagedServiceIdentityType UserAssigned { get; } = new MobileNetworkManagedServiceIdentityType(UserAssignedValue);
         /// <summary> Determines if two <see cref="MobileNetworkManagedServiceIdentityType"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkManagedServiceIdentityType left, MobileNetworkManagedServiceIdentityType right) => left.Equals(right);
