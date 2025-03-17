@@ -22,7 +22,7 @@ namespace Azure.Generator
         private IReadOnlyList<ResourceClientProvider> BuildResources()
         {
             var result = new List<ResourceClientProvider>();
-            foreach (var client in AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients)
+            foreach (var client in AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
             {
                 // A resource client should contain the decorator "Azure.ResourceManager.@resourceMetadata"
                 var resourceMetadata = client.Decorators.FirstOrDefault(d => d.Name.Equals(KnownDecorators.ResourceMetadata));
@@ -31,7 +31,7 @@ namespace Azure.Generator
                     continue;
                 }
                 var resource = new ResourceClientProvider(client);
-                AzureClientPlugin.Instance.AddTypeToKeep(resource.Name);
+                AzureClientGenerator.Instance.AddTypeToKeep(resource.Name);
                 result.Add(resource);
             }
             return result;
@@ -42,7 +42,7 @@ namespace Azure.Generator
         protected override TypeProvider[] BuildTypeProviders()
         {
             var baseProviders = base.BuildTypeProviders();
-            if (AzureClientPlugin.Instance.IsAzureArm.Value == true)
+            if (AzureClientGenerator.Instance.IsAzureArm.Value == true)
             {
                 var resources = BuildResources();
                 return [.. baseProviders, new RequestContextExtensionsDefinition(), ArmOperation, GenericArmOperation, .. resources, .. resources.Select(r => r.Source)];

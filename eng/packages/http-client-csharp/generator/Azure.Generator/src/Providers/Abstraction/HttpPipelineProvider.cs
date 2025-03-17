@@ -37,7 +37,7 @@ namespace Azure.Generator.Providers.Abstraction
             => Static(typeof(HttpPipelineBuilder)).Invoke(nameof(HttpPipelineBuilder.Build), [options, perRetryPolicies]);
 
         public override ValueExpression CreateMessage(HttpRequestOptionsApi requestOptions, ValueExpression responseClassifier)
-            => AzureClientPlugin.Instance.IsAzureArm.Value ? Original.Invoke(nameof(HttpPipeline.CreateMessage)) : Original.Invoke(nameof(HttpPipeline.CreateMessage), requestOptions, responseClassifier).As<HttpMessage>();
+            => AzureClientGenerator.Instance.IsAzureArm.Value ? Original.Invoke(nameof(HttpPipeline.CreateMessage)) : Original.Invoke(nameof(HttpPipeline.CreateMessage), requestOptions, responseClassifier).As<HttpMessage>();
 
         public override ClientPipelineApi FromExpression(ValueExpression expression)
             => new HttpPipelineProvider(expression);
