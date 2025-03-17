@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 using System;
+using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
@@ -64,10 +65,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 builder.Services.Configure(configureAzureMonitor);
             }
 
+            builder.Services.AddSingleton(UseAzureMonitorExporterRegistration.Instance);
+
             // Note: We automatically turn on signals for "UseAzureMonitorExporter"
             builder
                 .WithLogging()
-                .WithMetrics(metrics => metrics.AddAzureMonitorMetricExporter())
+                .WithMetrics()
                 .WithTracing();
 
             builder.Services.Configure<OpenTelemetryLoggerOptions>((loggingOptions) =>
@@ -75,10 +78,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 loggingOptions.IncludeFormattedMessage = true;
             });
 
-            // Register Manager as a singleton
-            builder.Services.TryAddSingleton<LiveMetricsClientManager>(sp =>
+            builder.Services.ConfigureOpenTelemetryMeterProvider((serviceProvider, meterProviderBuilder) =>
             {
-                AzureMonitorExporterOptions exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
+                var exporterOptions = serviceProvider!.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
+                meterProviderBuilder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions))
+                    { TemporalityPreference = MetricReaderTemporalityPreference.Delta });
+            });
+
+            // Register Manager as a singleton
+            builder.Services.TryAddSingleton<LiveMetricsClientManager>(serviceProvider =>
+            {
+                AzureMonitorExporterOptions exporterOptions = serviceProvider.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
                 var azureMonitorLiveMetricsOptions = new AzureMonitorLiveMetricsOptions();
                 exporterOptions.SetValueToLiveMetricsOptions(azureMonitorLiveMetricsOptions);
 
@@ -95,9 +105,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     }
                 });
 
-            builder.Services.AddHostedService(sp =>
+            builder.Services.AddHostedService(serviceProvider =>
             {
-                return new ExporterRegistrationHostedService(sp);
+                return new ExporterRegistrationHostedService(serviceProvider);
             });
 
             return builder;
