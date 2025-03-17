@@ -10,6 +10,8 @@ so that once you learn how to use these APIs in one client library, you will kno
 
 [Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs]
 
+This is a revertable commit
+
 ## Getting started
 
 Typically, you will not need to install Azure.Core;
