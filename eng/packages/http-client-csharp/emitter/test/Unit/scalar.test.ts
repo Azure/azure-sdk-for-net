@@ -6,7 +6,7 @@ import {
   createCSharpSdkContext,
   createEmitterContext,
   createEmitterTestHost,
-  typeSpecCompile,
+  typeSpecCompile
 } from "./test-util.js";
 
 describe("Test GetInputType for scalar", () => {
@@ -21,13 +21,13 @@ describe("Test GetInputType for scalar", () => {
       `
         op test(@query location: azureLocation): void;
       `,
-      runner,
+      runner
     );
     const context = await createCSharpSdkContext(createEmitterContext(program));
     const model = createModel(context);
 
     const inputParamArray = model.Clients[0].Operations[0].Parameters.filter(
-      (p) => p.Name === "location",
+      (p) => p.Name === "location"
     );
     strictEqual(1, inputParamArray.length);
     const type = inputParamArray[0].Type;
