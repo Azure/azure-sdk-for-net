@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.OperationalInsights.Tests.Scenario
     {
         private ResourceGroupResource _resourceGroup;
 
-        public OperationalInsightsClusterTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public OperationalInsightsClusterTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
