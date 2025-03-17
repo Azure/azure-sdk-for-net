@@ -9,7 +9,7 @@ Use the client library for to:
 
   [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/batch/Azure.Compute.Batch/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://learn.microsoft.com/dotnet/api/overview/azure/batch?view=azure-dotnet) | [Product documentation](https://learn.microsoft.com/azure/batch/)
 
->Note: `Azure.Compute.Batch` replaces 'Microsoft.Azure.Batch`, see the [Migration Guide](https://github.com/Azure/azure-sdk-for-net/blob/0d785e15817cae7cf91d282c6af2786875b0cb1f/sdk/batch/Azure.Compute.Batch/MigrationGuide.md) for migration guidance.
+>Note: `Azure.Compute.Batch` replaces 'Microsoft.Azure.Batch`, see the [Migration Guide](https://github.com/Azure/azure-sdk-for-net/blob/493be9ef186b0d937d4919f5f42aa657d2598a78/sdk/batch/Azure.Compute.Batch/MigrationGuide.md) for migration guidance.
 
 ## Getting started
 
