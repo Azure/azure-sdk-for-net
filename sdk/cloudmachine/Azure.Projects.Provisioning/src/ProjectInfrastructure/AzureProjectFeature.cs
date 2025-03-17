@@ -11,45 +11,29 @@ namespace Azure.Projects.Core;
 
 public abstract partial class AzureProjectFeature
 {
-    private ProvisionableResource? _resource;
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public ProvisionableResource Resource
+    protected AzureProjectFeature(string id)
     {
-        get
-        {
-            if (_resource == null)
-            {
-                throw new InvalidOperationException("Feature has not been emitted yet.");
-            }
-            return _resource;
-        }
+        Id = id;
     }
 
-    protected abstract ProvisionableResource EmitResources(ProjectInfrastructure infrastructure);
+    protected AzureProjectFeature()
+    {
+        Id = this.GetType().FullName!;
+    }
+
+    public string Id { get; }
+
+    protected internal virtual void EmitFeatures(ProjectInfrastructure infrastructure) {
+        infrastructure.Features.Append(this);
+    }
+
+    protected internal abstract void EmitConstructs(ProjectInfrastructure infrastructure);
 
     protected void EmitConnection(ProjectInfrastructure infrastructure, string connectionId, string endpoint)
     {
-        AppConfigurationSettingFeature connection = new(connectionId, endpoint, "cm_connection");
-        infrastructure.AddFeature(connection);
+        infrastructure.Connections.EmitConnection(infrastructure, connectionId, endpoint);
     }
 
-    protected internal virtual void AddImplicitFeatures(FeatureCollection features, string projectId) { }
-
-    internal ProvisionableResource Emit(ProjectInfrastructure infrastructure)
-    {
-        if (_resource == null)
-        {
-            ProvisionableResource namedResource = EmitResources(infrastructure);
-            _resource = namedResource;
-        }
-        return Resource;
-    }
-
-    protected static T EnsureEmits<T>(AzureProjectFeature feature)
-    {
-        if (feature.Resource is T typed)
-            return typed;
-        throw new ArgumentException($"Expected resource of type {typeof(T).Name}, but got {feature.GetType().Name}");
-    }
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override string ToString() => $"{this.GetType().Name} {this.Id}";
 }

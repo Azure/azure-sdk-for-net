@@ -5,7 +5,6 @@ using System;
 using System.ClientModel.Primitives;
 using Azure.Projects.Core;
 using Azure.Provisioning.CognitiveServices;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Projects.OpenAI;
 
@@ -20,7 +19,9 @@ public class OpenAIModelFeature : AzureProjectFeature
     /// <param name="model"></param>
     /// <param name="modelVersion"></param>
     /// <param name="kind"></param>
-    public OpenAIModelFeature(string model, string modelVersion, AIModelKind kind = AIModelKind.Chat) {
+    public OpenAIModelFeature(string model, string modelVersion, AIModelKind kind = AIModelKind.Chat)
+        : base($"{typeof(OpenAIModelFeature).FullName}_{model}")
+    {
         Kind = kind;
         Model = model;
         ModelVersion = modelVersion;
@@ -50,15 +51,13 @@ public class OpenAIModelFeature : AzureProjectFeature
         ClientConnection connection = new("Azure.AI.OpenAI.AzureOpenAIClient", $"https://{cmId}.openai.azure.com", ClientAuthenticationMethod.Credential);
         return connection;
     }
+
     /// <summary>
     /// Emit the feature.
     /// </summary>
-    /// <param name="features"></param>
-    /// <param name="cmId"></param>
-    protected override void AddImplicitFeatures(FeatureCollection features, string cmId)
+    protected override void EmitFeatures(ProjectInfrastructure infrastructure)
     {
-        // TODO: is it OK that we return the first one?
-
+        FeatureCollection features = infrastructure.Features;
         if (!features.TryGet(out OpenAIAccountFeature? openAI))
         {
             openAI = new OpenAIAccountFeature();
@@ -66,33 +65,37 @@ public class OpenAIModelFeature : AzureProjectFeature
         }
 
         Account = openAI!;
+
         features.Append(this);
     }
 
     /// <summary>
     /// Emit the resources.
     /// </summary>
-    /// <param name="cm"></param>
-    /// <returns></returns>
+    /// <param name="infrastructure"></param>
     /// <exception cref="InvalidOperationException"></exception>
     /// <exception cref="NotImplementedException"></exception>
-    protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
+    protected override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
-        if (Account == null) throw new InvalidOperationException("Account must be set before emitting");
-        if (Account.Resource == null) throw new InvalidOperationException("Account must be emitted before emitting");
-
-        string name = Kind switch
+        string suffix = Kind switch
         {
-            AIModelKind.Chat => $"{cm.ProjectId}_chat",
-            AIModelKind.Embedding => $"{cm.ProjectId}_embedding",
+            AIModelKind.Chat => "chat",
+            AIModelKind.Embedding => "embedding",
             _ => throw new NotImplementedException()
         };
 
-        CognitiveServicesAccount parent = (CognitiveServicesAccount)Account.Resource;
+        string resourceName = Kind switch
+        {
+            AIModelKind.Chat => $"{infrastructure.ProjectId}_{suffix}",
+            AIModelKind.Embedding => $"{infrastructure.ProjectId}_{suffix}",
+            _ => throw new NotImplementedException()
+        };
 
-        CognitiveServicesAccountDeployment deployment = new($"openai_{name}", "2024-06-01-preview") {
+        CognitiveServicesAccount parent = infrastructure.GetConstruct<CognitiveServicesAccount>(Account.Id);
+
+        CognitiveServicesAccountDeployment deployment = new($"openai_{suffix}", "2024-06-01-preview") {
             Parent = parent,
-            Name = name,
+            Name = resourceName,
             Properties = new CognitiveServicesAccountDeploymentProperties()
             {
                 Model = new CognitiveServicesAccountDeploymentModel()
@@ -111,27 +114,23 @@ public class OpenAIModelFeature : AzureProjectFeature
             },
         };
 
-        // deployments need to have dependson set!
-        OpenAIModelFeature? previous = FindPrevious(cm, this);
+        // deployments need to have DependsOn property set!
+        OpenAIModelFeature? previous = FindPrevious(infrastructure, this);
         if (previous != null)
         {
-            if (previous.Resource == null) throw new InvalidOperationException("Previous must be emitted");
-            CognitiveServicesAccountDeployment previousDeployment = (CognitiveServicesAccountDeployment)previous.Resource;
+            CognitiveServicesAccountDeployment previousDeployment = infrastructure.GetConstruct<CognitiveServicesAccountDeployment>(previous.Id);
             deployment.DependsOn.Add(previousDeployment);
         }
 
-        cm.AddConstruct(deployment);
+        infrastructure.AddConstruct(Id, deployment);
 
-        string key = Kind == AIModelKind.Chat ? "OpenAI.Chat.ChatClient" : "OpenAI.Embeddings.EmbeddingClient";
-        string locator = Kind == AIModelKind.Chat ? $"{cm.ProjectId}_chat" : $"{cm.ProjectId}_embedding";
-        EmitConnection(cm, key, locator);
+        string clientId = Kind == AIModelKind.Chat ? "OpenAI.Chat.ChatClient" : "OpenAI.Embeddings.EmbeddingClient";
+        EmitConnection(infrastructure, clientId, resourceName);
 
-        return deployment;
-
-        OpenAIModelFeature? FindPrevious(ProjectInfrastructure cm, OpenAIModelFeature current)
+        OpenAIModelFeature? FindPrevious(ProjectInfrastructure infrastructure, OpenAIModelFeature current)
         {
             OpenAIModelFeature? previous = default;
-            foreach (var feature in cm.Features)
+            foreach (var feature in infrastructure.Features)
             {
                 if (feature == current)
                     return previous;
