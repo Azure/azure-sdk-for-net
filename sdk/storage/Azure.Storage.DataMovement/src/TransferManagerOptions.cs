@@ -39,42 +39,38 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Optional. Sets the way errors during a transfer will be handled.
-        /// Default is <see cref="TransferErrorMode.StopOnAnyFailure"/>.
         /// </summary>
-        public TransferErrorMode ErrorMode { get; set; } = TransferErrorMode.StopOnAnyFailure;
+        public TransferErrorMode ErrorMode { get; set; }
 
         /// <summary>
         /// The initial number of workers that may be used in a parallel transfer.
-        /// Default is 1;
         /// </summary>
         public int InitialConcurrency { get; set; } = 1;
 
         /// <summary>
         /// The maximum number of workers that may be used in a parallel transfer.
-        /// Default is <see cref="DataMovementConstants.Channels.MaxJobChunkReaders"/>.
         /// </summary>
-        public int? MaximumConcurrency { get; set; } = DataMovementConstants.Channels.MaxJobChunkReaders;
+        public int? MaximumConcurrency { get; set; }
 
         /// <summary>
         /// Specifies the maximum memory usage allowed for the transfer manager, in bytes.
         /// If no limit is set, the system will use as much memory as possible, potentially leading to increased page faults.
         /// This can slow down transfers as the system moves data between RAM and virtual memory, and handles context switches.
         /// </summary>
-        public double MaximumMemoryUsage { get; set; }
+        public double? MaximumMemoryUsage { get; set; }
 
         /// <summary>
         /// The maximum CPU usage allowed for the transfer manager.
         /// This is a float between 0 and 1.
-        /// Default is 1.0
         /// </summary>
-        public float MaximumCpuUsage { get; set; } = 1.0F;
+        public float? MaximumCpuUsage { get; set; } = 1.0F;
 
         /// <summary>
         /// Specifies the interval at which the monitor checks the system, represented as a TimeSpan.
         /// This value must be greater than zero. Using an interval below one second can result in significant overhead
         /// for the monitor and negatively impact the performance of any application using this library.
         /// </summary>
-        public TimeSpan MonitoringInterval { get; set; }
+        public TimeSpan? MonitoringInterval { get; set; }
 
         /// <summary>
         /// Optional. Defines the options for creating a checkpoint which is used for saving

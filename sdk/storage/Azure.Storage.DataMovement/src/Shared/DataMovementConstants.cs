@@ -35,6 +35,16 @@ namespace Azure.Storage.DataMovement
             internal const double FudgeFactor = 0.2;
         }
 
+        internal static class TransferManagerOptions
+        {
+            internal static TransferErrorMode ErrorMode = TransferErrorMode.StopOnAnyFailure;
+            internal const int InitialConcurrency = 1;
+            internal static int MaxConcurrency = Environment.ProcessorCount * 8;
+            internal const double MaxMemoryUsage = double.MaxValue;
+            internal const float MaxCpuUsage = 1.0F;
+            internal static TimeSpan MonitoringInterval = TimeSpan.FromSeconds(1);
+        }
+
         /// <summary>
         /// If there are multiple log files or job state files
         ///

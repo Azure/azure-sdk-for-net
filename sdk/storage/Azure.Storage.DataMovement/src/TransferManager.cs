@@ -66,22 +66,22 @@ namespace Azure.Storage.DataMovement
                 readers: DataMovementConstants.Channels.MaxJobPartReaders,
                 capacity: DataMovementConstants.Channels.JobPartCapacity),
             ChannelProcessing.NewProcessor<Func<Task>>(
-                readers: (int)options.MaximumConcurrency,
+                readers: options?.MaximumConcurrency ?? DataMovementConstants.Channels.MaxJobChunkReaders,
                 capacity: DataMovementConstants.Channels.JobChunkCapacity),
             new(ArrayPool<byte>.Shared,
-                options.ErrorMode,
+                options?.ErrorMode ?? TransferErrorMode.StopOnAnyFailure,
                 new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default)),
-                CheckpointerExtensions.BuildCheckpointer(options?.CheckpointStoreOptions),
-                options?.ProvidersForResuming != null ? new List<StorageResourceProvider>(options.ProvidersForResuming) : new(),
-                new ConcurrencyTuner(
+            CheckpointerExtensions.BuildCheckpointer(options?.CheckpointStoreOptions),
+            options?.ProvidersForResuming != null ? new List<StorageResourceProvider>(options.ProvidersForResuming) : new(),
+            new ConcurrencyTuner(
                     new ResourceMonitor(),
-                    options.MonitoringInterval,
-                    options.MaximumMemoryUsage,
-                    options.InitialConcurrency,
-                    (int)options.MaximumConcurrency,
-                    options.MaximumCpuUsage
+                    options?.MonitoringInterval ?? DataMovementConstants.TransferManagerOptions.MonitoringInterval,
+                    options?.MaximumMemoryUsage ?? DataMovementConstants.TransferManagerOptions.MaxMemoryUsage,
+                    options?.InitialConcurrency ?? DataMovementConstants.TransferManagerOptions.InitialConcurrency,
+                    options?.MaximumConcurrency ?? DataMovementConstants.TransferManagerOptions.MaxConcurrency,
+                    options?.MaximumCpuUsage ?? DataMovementConstants.TransferManagerOptions.MaxCpuUsage
                     ),
-                default)
+            default)
         {}
 
         /// <summary>
@@ -106,7 +106,14 @@ namespace Azure.Storage.DataMovement
             _resumeProviders.Add(new LocalFilesStorageResourceProvider());
             _checkpointer = checkpointer;
             _generateTransferId = generateTransferId ?? (() => Guid.NewGuid().ToString());
-            _concurrencyTuner = concurrencyTuner;
+            _concurrencyTuner = concurrencyTuner ?? new ConcurrencyTuner(
+                    new ResourceMonitor(),
+                    DataMovementConstants.TransferManagerOptions.MonitoringInterval,
+                    DataMovementConstants.TransferManagerOptions.MaxMemoryUsage,
+                    DataMovementConstants.TransferManagerOptions.InitialConcurrency,
+                    DataMovementConstants.TransferManagerOptions.MaxConcurrency,
+                    DataMovementConstants.TransferManagerOptions.MaxCpuUsage
+                    );
 
             ConfigureProcessorCallbacks();
         }
@@ -408,8 +415,9 @@ namespace Azure.Storage.DataMovement
 
                 DataMovementEventSource.Singleton.TransferQueued(transferId, sourceResource, destinationResource);
 
-                StartConcurrencyTuner(cancellationToken);
-                StopConcurrencyTunerWhenTransfersComplete(cancellationToken);
+                StartConcurrencyTuner();
+                //TODO: If we need to shut off the concurrency tuner in the future after perf testing, then we can
+                //StopConcurrencyTunerWhenTransfersComplete();
 
                 return transferOperation;
             }
@@ -431,19 +439,18 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        private void StopConcurrencyTunerWhenTransfersComplete(CancellationToken cancellationToken)
+        private void StopConcurrencyTunerWhenTransfersComplete()
         {
             // TaskContinuationOptions.OnlyOnRanToCompletion ensures that this only executes when successful
             // TaskScheduler.FromCurrentSchronizationContext ensures that this executes on the main thread
             Task.WhenAll(_transfers.Values
-                .Where(transfer => transfer.Status.HasCompletedSuccessfully)
-                .Select(transfer => transfer.WaitForCompletionAsync(cancellationToken)))
-                .ContinueWith((_) => _cancellationTokenSource.Cancel(), cancellationToken, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());
+                .Select(transfer => transfer.WaitForCompletionAsync(_cancellationToken)))
+                .ContinueWith((_) => _cancellationTokenSource.Cancel());
         }
 
-        private void StartConcurrencyTuner(CancellationToken cancellationToken)
+        private void StartConcurrencyTuner()
         {
-            _concurrencyTuner.Start(cancellationToken);
+            _concurrencyTuner.Start(_cancellationToken);
         }
 
         private async Task<TransferOperation> BuildAndAddTransferJobAsync(
